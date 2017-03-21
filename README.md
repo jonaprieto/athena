@@ -2,7 +2,7 @@
 
 
 
-**Athena** is a [Haskell][haskell] program that translate proofs given by [Metis][metis] ATP in [TSTP][tstp] format to [Agda][agda] code.
+**Athena** is a [Haskell][haskell] program that translates proofs given by [Metis][metis] ATP in [TSTP][tstp] format to [Agda][agda] code.
 
 <p align="center">
   ![diagram]
