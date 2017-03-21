@@ -4,9 +4,7 @@
 
 **Athena** is a [Haskell][haskell] program that translate proofs given by [Metis][metis] ATP in [TSTP][tstp] format to [Agda][agda] code.
 
-<p align="center">
-  ![diagram]
-</p>
+<div style="text-align:center"><img src ="https://raw.githubusercontent.com/jonaprieto/athena/master/slides/diagram.png" /></div>
 
 [diagram]: https://raw.githubusercontent.com/jonaprieto/athena/master/slides/diagram.png
 [haskell]: http://www.haskell.org
