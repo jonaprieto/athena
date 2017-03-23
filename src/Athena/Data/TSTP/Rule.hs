@@ -7,6 +7,7 @@ module Data.TSTP.Rule where
 
 -- | Deduction rule applied.
 data Rule = Canonicalize
+          | Clausify
           | Conjunct
           | Negate
           | NewRule String
