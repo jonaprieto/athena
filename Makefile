@@ -8,6 +8,8 @@ hlint :
 	hlint --color=never \
 							--cpp-file=dist/build/autogen/cabal_macros.h \
 							--cpp-include=src/ \
+							--ignore=src/Athena/TSTP/Lexer.hs \
+							--ignore=src/Athena/TSTP/Parser.hs \
 							src/
 	@echo "$@ succeeded!"
 
@@ -43,6 +45,8 @@ TODO :
 .PHONY : clean
 clean :
 	@rm -f ${SRC_DIR}/TSTP/Lexer.hs
+	@rm -f ${SRC_DIR}/TSTP/Lexer.hi
+	@rm -f ${SRC_DIR}/TSTP/Lexer.o
 	@rm -f ${SRC_DIR}/TSTP/Parser.hs
 	@find ${SRC_DIR} -regex ".*\(\.hi\|\.o\|\.agdai\)$$" -delete
 	@rm -f cnf*

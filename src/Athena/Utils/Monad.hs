@@ -11,7 +11,7 @@ module Athena.Utils.Monad
 
 ------------------------------------------------------------------------------
 
-import Utils.PrettyPrint  ( Doc, prettyShow )
+import Athena.Utils.PrettyPrint  ( Doc, prettyShow )
 
 import System.Environment ( getProgName )
 import System.Exit        ( exitFailure )
