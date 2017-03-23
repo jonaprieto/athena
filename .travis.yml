@@ -1,12 +1,12 @@
 language: c
 
 sudo: true
-
 matrix:
   include:
     - env: TEST=main GHC_VER=8.0.2 CABAL_VER=1.24
       addons:
         apt:
+          packages:
             - alex-3.1.7
             - cabal-install-1.24
             - ghc-8.0.2
