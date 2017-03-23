@@ -9,7 +9,7 @@
 {-# OPTIONS -fno-warn-name-shadowing            #-}
 {-# OPTIONS -fno-warn-unused-matches            #-}
 
-module TSTP.Lexer where
+module Athena.TSTP.Lexer where
 
 ------------------------------------------------------------------------------
 
@@ -116,7 +116,7 @@ stripPlus xs = xs
 
 readDecimalFraction :: String -> Rational
 readDecimalFraction ('-':cs) = -(readUnsignedDecimalFraction cs)
-readDecimalFraction cs = readUnsignedDecimalFraction cs
+readDecimalFraction cs       = readUnsignedDecimalFraction cs
 
 readInteger :: String -> Integer
 readInteger = read
@@ -125,11 +125,11 @@ readUnsignedDecimalFraction :: String -> Rational
 readUnsignedDecimalFraction cs =
     case break (=='.') cs of
          (_,"") -> case breakExponent cs of
-                        (cs2,_:cs2') -> readIntegerRat cs2 * readExponent cs2'
+            (cs2,_:cs2') -> readIntegerRat cs2 * readExponent cs2'
 
          (cs1,_:cs1') -> case breakExponent cs1' of
-                            (_,"") -> readIntegerRat cs1 + readFraction cs1'
-                            (cs2,_:cs2') -> (readIntegerRat cs1 + readFraction cs2) * readExponent cs2'
+            (_,"") -> readIntegerRat cs1 + readFraction cs1'
+            (cs2,_:cs2') -> (readIntegerRat cs1 + readFraction cs2) * readExponent cs2'
   where
     breakExponent = break (`elem` "Ee")
 

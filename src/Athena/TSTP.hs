@@ -2,17 +2,18 @@
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module TSTP
+module Athena.TSTP
   ( parse
   , parseFile
   ) where
 
 ------------------------------------------------------------------------------
 
+import  Athena.TSTP.Lexer  ( alexScanTokens )
+import  Athena.TSTP.Parser ( parseTSTP )
+
 import  Data.TSTP.F
 
-import  TSTP.Lexer  ( alexScanTokens )
-import  TSTP.Parser ( parseTSTP )
 ------------------------------------------------------------------------------
 
 -- | Parse a TSTP file and return a list of `F` formulas in no
@@ -38,7 +39,7 @@ import  TSTP.Parser ( parseTSTP )
 -- @
 
 parse ∷ String → [F]
-parse = parseTSTP . map snd . alexScanTokens
+parse = parseTSTP . fmap snd . alexScanTokens
 
 parseFile ∷ FilePath → IO [F]
 parseFile path = parse <$> readFile path

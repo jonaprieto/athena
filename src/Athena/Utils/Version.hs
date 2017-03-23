@@ -4,9 +4,11 @@
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Utils.Version ( progNameVersion ) where
+module Athena.Utils.Version ( progNameVersion ) where
 
 ------------------------------------------------------------------------------
+
+import Athena.Utils.PrettyPrint  ( (<>) )
 
 import Data.Char          ( toUpper )
 import Data.Version       ( showVersion )
@@ -29,4 +31,4 @@ toUpperFirst (x : xs) = toUpper x : xs
 progNameVersion ∷ IO String
 progNameVersion = do
  progName ← getProgName
- return $ toUpperFirst progName ++ " version " ++ showVersion version
+ return $ toUpperFirst progName <> " version " <> showVersion version

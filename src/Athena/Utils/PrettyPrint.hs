@@ -4,12 +4,13 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE UnicodeSyntax     #-}
 
-module Utils.PrettyPrint
+module Athena.Utils.PrettyPrint
   ( module Text.PrettyPrint
   , bquotes
   , Pretty(pretty)
   , prettyShow
-  -- , sspaces
+  , spaces
+  , sspaces
   , squotes
   ) where
 
@@ -23,9 +24,18 @@ import Text.PrettyPrint
 bquotes ∷ Doc → Doc
 bquotes d = char '‘' <> d <> char '’'
 
+-- | Wrap a document in spaces.
+spaces ∷ Doc → Doc
+spaces d = space <> d <> space
+
 -- | Wrap a string in ‘...’.
 squotes ∷ String → Doc
 squotes = bquotes . text
+
+-- | Wrap a string in spaces.
+sspaces ∷ String → Doc
+sspaces = spaces . text
+
 
 -- | Use instead of 'show' when printing to world.
 prettyShow ∷ Pretty a ⇒ a → String

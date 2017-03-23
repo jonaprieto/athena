@@ -20,7 +20,7 @@ haddock :
 	@echo "$@ succeeded!"
 
 .PHONY : install-bin
-install-bin:
+install-bin :
 	- cabal configure --enable-tests --enable-benchmarks -v2
 	- cabal build
 	- cabal install --disable-documentation
@@ -40,6 +40,7 @@ TODO :
 	| xargs grep -I -s 'TODO' \
 	| sort
 
+.PHONY : clean
 clean :
 	@rm -f ${SRC_DIR}/TSTP/Lexer.hs
 	@rm -f ${SRC_DIR}/TSTP/Parser.hs

@@ -4,22 +4,16 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax       #-}
 
-module Translation.Core (mainCore) where
+module Athena.Translation.Core ( mainCore ) where
 
 ------------------------------------------------------------------------------
 
-import Options
-  (
-    Options
-    ( optHelp
-    , optInputFile
+import Athena.Options
+  ( Options
+    ( optInputFile
     , optOutputFile
-    , optProofName
-    , optVersion
     )
-    , printUsage
-    , processOptions
-    )
+  )
 
 import Data.List
 import Data.List.Split
@@ -29,8 +23,8 @@ import Data.Maybe ( fromJust, Maybe, fromMaybe )
 import Data.Proof
   ( buildProofMap
   , buildProofTree
-  , ProofTree(..)
-  , ProofMap(..)
+  , ProofTree
+  , ProofMap
   , ProofTreeGen(..)
   )
 import Data.TSTP
@@ -46,19 +40,11 @@ import Data.TSTP
 import Data.TSTP.Formula    ( getFreeVars )
 import Data.TSTP.AtomicWord ( AtomicWord(..) )
 import Data.TSTP.BinOp      ( BinOp(..) )
-import Data.TSTP.InfixPred  ( InfixPred(..) )
-import Data.TSTP.Quant      ( Quant(..) )
-import Data.TSTP.Term       ( Term(..) )
 import Data.TSTP.V          ( V(..) )
 
-import System.Environment ( getArgs )
-import System.Exit        ( exitSuccess )
+import Athena.Utils.Monad          ( stdout2file )
 
-import Utils.Monad        ( die , stdout2file )
-import Utils.PrettyPrint  ( text )
-import Utils.Version      ( progNameVersion )
-
-import Translation.Functions
+import Athena.Translation.Functions
   ( getAxioms
   , getConjeture
   , getRefutes
@@ -66,16 +52,17 @@ import Translation.Functions
   , printPreamble
   )
 
-import TSTP (parseFile)
+import Athena.TSTP                 (parseFile)
 
 ------------------------------------------------------------------------------
 
+debug :: Bool
 debug = True
 
 mainCore ∷ Options → IO ()
 mainCore opts = do
 
-  tstp ∷ [F] ← parseFile $ fromJust $ optInputFile opts
+  tstp ∷ [F] ← parseFile . fromJust $ optInputFile opts
 
   let subgoals ∷ [F]
       subgoals = getSubGoals tstp
@@ -96,7 +83,6 @@ mainCore opts = do
 
   let rulesTrees ∷ [ProofTree]
       rulesTrees = map (buildProofTree rulesMap) refutes
-
 
   stdout2file $ optOutputFile opts
 
@@ -125,8 +111,8 @@ printVar ∷ V → Int → String
 printVar f n = intercalate "\n"
   [  show f ++ " : Prop"
   ,  show f ++ case show f of
-       "$true" → " = ⊤"
-       "$false"→ " = ⊥"
+       "$true"  → " = ⊤"
+       "$false" → " = ⊥"
        s → " = Var (# " ++ show n ++ ")"
   ]
 
@@ -150,7 +136,7 @@ subIndex '9' = '₉'
 subIndex s   = s
 
 stdName ∷ String → String
-stdName nm = map subIndex $ concat $ splitOn "-" nm
+stdName nm = map subIndex . concat $ splitOn "-" nm
 
 printAxiom ∷ F → String
 printAxiom f =
@@ -255,9 +241,9 @@ printSteps sname n [Root Simplify tag subtree] dict goal axioms =
         , getIdent m , ")\n"
         ]
 
-      andIntro m []       = ""
-      andIntro m [x]      = printSteps sname m [x] dict goal axioms
-      andIntro m (x:y:[]) = concatMap (innerStep m) [x , y]
+      andIntro m []     = ""
+      andIntro m [x]    = printSteps sname m [x] dict goal axioms
+      andIntro m [x,y]  = concatMap (innerStep m) [x , y]
       andIntro m (x:xs) = concat
         [ innerStep m x
         , getIdent m , "(\n"
@@ -267,8 +253,7 @@ printSteps sname n [Root Simplify tag subtree] dict goal axioms =
         ]
 
 printSteps sname n [Root Resolve tag ((left@(Root _ fTag _)):(right@(Root _ gTag _)):_)] dict goal axioms =
-  (concat
-    [ getIdent n , resolveCase , "\n" ]) ++
+  concat [ getIdent n , resolveCase , "\n" ] ++
     if not swap
       then concat
           [ getIdent (n+1) , "(\n"
@@ -289,7 +274,7 @@ printSteps sname n [Root Resolve tag ((left@(Root _ fTag _)):(right@(Root _ gTag
 
     where
       ϕ  ∷ Formula
-      ϕ = formula $ fromJust $ Map.lookup tag dict
+      ϕ = formula . fromJust $ Map.lookup tag dict
 
       --  (f)      (g)
       --  _|_      _|_
@@ -302,13 +287,13 @@ printSteps sname n [Root Resolve tag ((left@(Root _ fTag _)):(right@(Root _ gTag
       ---       ϕ
 
       f , g ∷ Formula
-      f = formula $ fromJust $ Map.lookup fTag dict
-      g = formula $ fromJust $ Map.lookup gTag dict
+      f = formula . fromJust $ Map.lookup fTag dict
+      g = formula . fromJust $ Map.lookup gTag dict
 
       ℓ ∷ Formula
       ℓ = let sourceInfo ∷ Source
-              sourceInfo = source $ fromJust $ Map.lookup tag dict
-          in getResolveLiteral $ sourceInfo
+              sourceInfo = source . fromJust $ Map.lookup tag dict
+          in getResolveLiteral sourceInfo
 
       resolveCase ∷ String
       swap ∷ Bool
@@ -316,34 +301,34 @@ printSteps sname n [Root Resolve tag ((left@(Root _ fTag _)):(right@(Root _ gTag
 
       atpResolve ∷ Formula → Formula → Formula → (String, Bool)
       atpResolve f g  (PredApp (AtomicWord "$false") [])
-        | f == ((:~:) g) = ("atp-resolve₈", False)
-        | ((:~:) f) == g = ("atp-resolve₈", True)
+        | f == (:~:) g = ("atp-resolve₈", False)
+        | (:~:) f == g = ("atp-resolve₈", True)
       -- I guess l literal is always positive.
       atpResolve (BinOp f₁ (:|:) f₂) (BinOp g₁ (:|:) g₂) l
-        | f₁ == l && g₁ == ((:~:) l) = ("atp-resolve₀", False)
-        | f₂ == l && g₂ == ((:~:) l) = ("atp-resolve₁", False)
-        | f₁ == l && g₂ == ((:~:) l) = ("atp-resolve₂", False)
-        | f₂ == l && g₁ == ((:~:) l) = ("atp-resolve₃", False)
+        | f₁ == l && g₁ == (:~:) l = ("atp-resolve₀", False)
+        | f₂ == l && g₂ == (:~:) l = ("atp-resolve₁", False)
+        | f₁ == l && g₂ == (:~:) l = ("atp-resolve₂", False)
+        | f₂ == l && g₁ == (:~:) l = ("atp-resolve₃", False)
         | otherwise = ("id -- resolve 1.", False)
       atpResolve (BinOp f₁ (:|:) f₂) g l
-        | f₁ == ((:~:) l) && g == l = ("atp-resolve₄", False)
-        | f₂ == ((:~:) l) && g == l = ("atp-resolve₅", False)
-        | f₂ == l && g == ((:~:) l) = ("atp-resolve₆", False)
-        | f₁ == l && g == ((:~:) l) = ("atp-resolve₇", False)
+        | f₁ == (:~:) l && g == l = ("atp-resolve₄", False)
+        | f₂ == (:~:) l && g == l = ("atp-resolve₅", False)
+        | f₂ == l && g == (:~:) l = ("atp-resolve₆", False)
+        | f₁ == l && g == (:~:) l = ("atp-resolve₇", False)
         | otherwise = ("id -- resolve 2.", False)
       atpResolve f (BinOp g₁ (:|:) g₂) l
-        | f == l && g₁ == ((:~:) l) = ("atp-resolve₄", True)
-        | f == l && g₂ == ((:~:) l) = ("atp-resolve₅", True)
-        | f == ((:~:) l) && g₂ == l = ("atp-resolve₆", True)
-        | f == ((:~:) l) && g₁ == l = ("atp-resolve₇", True)
+        | f == l && g₁ == (:~:) l = ("atp-resolve₄", True)
+        | f == l && g₂ == (:~:) l = ("atp-resolve₅", True)
+        | f == (:~:) l && g₂ == l = ("atp-resolve₆", True)
+        | f == (:~:) l && g₁ == l = ("atp-resolve₇", True)
         | otherwise = ("id -- resolve 3.", False)
       atpResolve _ _ _ = ("id -- resolve 4.", False)
 
       getResolveLiteral ∷ Source → Formula
       getResolveLiteral
-        (Inference Resolve ((Function _ (GTerm (GWord l):_) ) :_) _) =
+        (Inference Resolve (Function _ (GTerm (GWord l):_) :_) _) =
           PredApp l []
-      getResolveLiteral _ = (PredApp (AtomicWord "$false") [])
+      getResolveLiteral _ = PredApp (AtomicWord "$false") []
 
 
 
@@ -354,8 +339,8 @@ printSteps sname n [Root Conjunct tag subtree@[Root _ fms _]] dict goal axioms =
    ]
    where
      ϕ , ψ∷ Formula
-     ϕ = formula $ fromJust $ Map.lookup tag dict
-     ψ = formula $ fromJust $ Map.lookup fms dict
+     ϕ = formula . fromJust $ Map.lookup tag dict
+     ψ = formula . fromJust $ Map.lookup fms dict
 
      atpConjunct ∷ Formula → Formula → String
      atpConjunct (BinOp f₁ (:&:) f₂) ϕ
@@ -364,11 +349,12 @@ printSteps sname n [Root Conjunct tag subtree@[Root _ fms _]] dict goal axioms =
        where
          next ∷ String
          next = atpConjunct f₁ ϕ
-         atpConjunct fm@(BinOp f₁ _ f₂) ϕ = "-- 1: "++ show fm ++ "\n"
-         atpConjunct fm@(InfixPred _ _ _) _ ="-- 2: " ++ show fm ++ "\n"
-         atpConjunct fm@(PredApp _ _) _ = "-- 3: " ++ show fm ++ "\n"
-         atpConjunct fm@(Quant _ _ _) _ = "-- 4: " ++ show fm ++ "\n"
-         atpConjunct fm@((:~:) _) _ = "-- 5: " ++ show fm ++ "\n"
+
+     atpConjunct fm@(BinOp _ _ _) _     = "-- 1: "++ show fm ++ "\n"
+     atpConjunct fm@(InfixPred _ _ _) _ ="-- 2: " ++ show fm ++ "\n"
+     atpConjunct fm@(PredApp _ _) _     = "-- 3: " ++ show fm ++ "\n"
+     atpConjunct fm@(Quant _ _ _) _     = "-- 4: " ++ show fm ++ "\n"
+     atpConjunct fm@((:~:) _) _         = "-- 5: " ++ show fm ++ "\n"
 
 
 printSteps sname n [Root inf tag subtree] dict goal axioms =

@@ -10,9 +10,11 @@ category:      Language
 homepage:      https://github.com/jonaprieto/athena
 bug-reports:   https://github.com/jonaprieto/athena/issues/
 synopsis:      TSTP to Agda
+tested-with:   GHC == 8.0.2
 description:
   Athena is a Haskell program that translates proofs given by Metis ATP in
   TSTP format to Agda code.
+
 extra-source-files:
   README.md
 
@@ -23,11 +25,9 @@ source-repository head
 executable athena
   default-language: Haskell2010
 
-  main-is:        Main.hs
-  hs-source-dirs: src/Athena
-  include-dirs:   src/Athena/Data
-                  src/Athena/TSTP
-                  src/Athena/Utils
+  main-is:        Athena/Main.hs
+  hs-source-dirs: src
+  include-dirs:   src/Athena
 
   build-depends:  array >= 0.4 && < 1.0
                 , base >= 4.6.0.1 && < 4.10
@@ -41,6 +41,15 @@ executable athena
   build-tools: cpphs >= 1.19
 
   other-modules:
+    Athena.Options
+    Athena.TSTP
+    Athena.TSTP.Base
+    Athena.TSTP.Lexer
+    Athena.TSTP.Parser
+    Athena.Translation.Core
+    Athena.Translation.Functions
+    Athena.Utils.Monad
+    Athena.Utils.PrettyPrint
     Data.Proof
     Data.Proof.ProofTreeGen
     Data.TSTP
@@ -60,19 +69,11 @@ executable athena
     Data.TSTP.Term
     Data.TSTP.Theory
     Data.TSTP.V
-    Options
+    Athena.Utils.Version
     Paths_athena
-    TSTP
-    TSTP.Base
-    TSTP.Lexer
-    TSTP.Parser
-    Translation.Core
-    Translation.Functions
-    Utils.Monad
-    Utils.PrettyPrint
-    Utils.Version
 
   ghc-options: -w
+               -Werror
                -- Using cpphs as the C preprocessor.
                -pgmP cpphs -optP --cpp
 

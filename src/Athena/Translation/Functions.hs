@@ -4,9 +4,8 @@
 {-# OPTIONS -fno-warn-missing-signatures  #-}
 {-# LANGUAGE UnicodeSyntax                #-}
 
-module Translation.Functions (
-   -- * Getters
-     getSubGoals
+module Athena.Translation.Functions
+  (  getSubGoals
    , getAxioms
    , getConjeture
    , getRefutes

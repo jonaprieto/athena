@@ -4,7 +4,7 @@
 {-# OPTIONS_HADDOCK hide   #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module TSTP.Base where
+module Athena.TSTP.Base where
 
 ------------------------------------------------------------------------------
 

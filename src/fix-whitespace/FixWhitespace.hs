@@ -65,7 +65,7 @@ excludedDirs =
 -- Auxiliary functions.
 
 filesFilter :: FindClause Bool
-filesFilter = foldr1 (||?) $ map (extension ==?) extensions
+filesFilter = foldr1 (||?) $ fmap (extension ==?) extensions
 
 -- ASR (12 June 2014). Adapted from the examples of fileManip 0.3.6.2.
 --
@@ -98,9 +98,9 @@ main = do
 
 usage ∷ String
 usage = unlines
-  [ "fix-agda-whitespace: Fixes whitespace issues."
+  [ "fix-whitespace: Fixes whitespace issues."
   , ""
-  , "Usage: fix-agda-whitespace [--check]"
+  , "Usage: fix-whitespace [--check]"
   , ""
   , "This program should be run in the base directory."
   , ""

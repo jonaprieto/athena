@@ -3,7 +3,7 @@
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Utils.Monad
+module Athena.Utils.Monad
   ( die
   , failureMsg
   , stdout2file

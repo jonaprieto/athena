@@ -9,9 +9,12 @@
 {-# OPTIONS -fno-warn-name-shadowing            #-}
 {-# OPTIONS -fno-warn-unused-matches            #-}
 
-module TSTP.Parser where
+module Athena.TSTP.Parser where
 
 ------------------------------------------------------------------------------
+
+import Athena.TSTP.Base
+import Athena.TSTP.Lexer
 
 import Control.Monad
 import Control.Monad.Identity
@@ -45,8 +48,6 @@ import Data.TSTP
 
 import System.IO
 import System.IO.Unsafe
-import TSTP.Base
-import TSTP.Lexer
 
 ------------------------------------------------------------------------------
 
@@ -66,11 +67,8 @@ import TSTP.Lexer
  tok_dot                { Dot }
  tok_lbra               { Lbrack }
  tok_lp                 { LP }
- tok_plus               { Plus }
- tok_rangle             { Rangle }
  tok_rbra               { Rbrack }
  tok_rp                 { RP }
- tok_star               { Star }
 
  tok_equals             { Oper "=" }
  tok_iff                { Oper "<=>"}
@@ -353,9 +351,6 @@ arguments :: {[Term]}
 arguments : term {[$1]}
           | term comma arguments { $1 : $3 }
 
-general_source :: {GTerm}
-general_source : general_term {$1}
-
 source :: {Source}
 source : dag_source       {$1}
        | internal_source  {$1}
@@ -507,9 +502,9 @@ general_data : atomic_word  lp general_terms  rp { GApp $1 $3 }
 
 
 formula_data :: {GData}
-formula_data : tok_fd_fof lp fof_formula  rp { GFormulaData "$fof" $3 }
-             | tok_fd_cnf lp cnf_formula  rp { GFormulaData "$cnf" $3 }
-             | tok_fd_fot lp term rp         { GFormulaTerm "$fot" $3 }
+formula_data : tok_fd_cnf lp cnf_formula rp { GFormulaData "$cnf" $3 }
+             | tok_fd_fof lp fof_formula rp { GFormulaData "$fof" $3 }
+             | tok_fd_fot lp term rp        { GFormulaTerm "$fot" $3 }
 
 general_list :: {[GTerm]}
 general_list : lbra rbra {[]}
@@ -572,15 +567,6 @@ comma              : tok_comma               comment_list { $1 }
 dot                :: {Token}
 dot                : tok_dot                 comment_list { $1 }
 
-star               :: {Token}
-star               : tok_star                comment_list { $1 }
-
-plus               :: {Token}
-plus               : tok_plus                comment_list { $1 }
-
-rangle             :: {Token}
-rangle             : tok_rangle              comment_list { $1 }
-
 colon              :: {Token}
 colon              : tok_colon               comment_list { $1 }
 
@@ -630,8 +616,8 @@ cnf                :: {Token}
 cnf                : tok_cnf                 comment_list { $1 }
 
 
-dollarCnf           :: {Token}
-dollarCnf          : tok_fd_cnf             comment_list { $1 }
+dollarCnf          :: {Token}
+dollarCnf          : tok_fd_cnf              comment_list { $1 }
 
 include_           :: {Token}
 include_           : tok_include_            comment_list { $1 }
