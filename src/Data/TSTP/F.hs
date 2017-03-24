@@ -1,7 +1,7 @@
 
 -- | Data.TSTP.F module
 
-{-# LANGUAGE UnicodeSyntax        #-}
+{-# LANGUAGE UnicodeSyntax #-}
 
 module Data.TSTP.F where
 

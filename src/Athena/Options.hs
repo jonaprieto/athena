@@ -3,7 +3,7 @@
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Options
+module Athena.Options
   ( options
   , OM
   , Options
@@ -20,9 +20,9 @@ module Options
 
 ------------------------------------------------------------------------------
 
-import Data.List          ( foldl' )
+import Athena.Utils.PrettyPrint  ( Doc, Pretty(pretty), scquotes, (<>) )
 
-import Utils.PrettyPrint  ( Doc, Pretty(pretty), squotes, (<>) )
+import Data.List                 ( foldl' )
 
 import System.Console.GetOpt
   ( ArgDescr ( NoArg, ReqArg )
@@ -73,7 +73,7 @@ outputFileOpt file opts =
 
 proofNameOpt ∷ String → OM
 proofNameOpt [] _ = Left $
-  pretty "option " <> squotes "--proof-name" <> pretty " requires an argument NAME"
+  pretty "option " <> scquotes "--proof-name" <> pretty " requires an argument NAME"
 proofNameOpt pname opts = Right opts { optProofName = pname}
 
 versionOpt ∷ OM
@@ -105,7 +105,7 @@ processOptionsHelper ∷ [String] → (FilePath → OM) → OM
 processOptionsHelper argv f defaults =
   case getOpt (ReturnInOrder f) options argv of
     (o, _, [])   → foldl' (>>=) (return defaults) o
-    (_, _, errs) → Left $ pretty $ unlines errs
+    (_, _, errs) → Left . pretty $ unlines errs
 
 -- | Processing the command-line 'Options'.
 processOptions ∷ [String] → Either Doc Options

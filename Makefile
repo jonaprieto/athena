@@ -1,4 +1,4 @@
-SRC_DIR=src/Athena
+SRC_DIR=src
 
 # Requires HLint >= 1.9.36 and run `cabal build` or `cabal install`
 # before.
@@ -8,7 +8,9 @@ hlint :
 	hlint --color=never \
 							--cpp-file=dist/build/autogen/cabal_macros.h \
 							--cpp-include=src/ \
-							src/
+							--ignore=src/Athena/TSTP/Lexer.hs \
+							--ignore=src/Athena/TSTP/Parser.hs \
+							${SRC_DIR}/
 	@echo "$@ succeeded!"
 
 .PHONY : haddock
@@ -20,7 +22,7 @@ haddock :
 	@echo "$@ succeeded!"
 
 .PHONY : install-bin
-install-bin:
+install-bin :
 	- cabal configure --enable-tests --enable-benchmarks -v2
 	- cabal build
 	- cabal install --disable-documentation
@@ -29,6 +31,10 @@ install-bin:
 .PHONY : install-fix-whitespace
 install-fix-whitespace :
 	cd src/fix-whitespace && cabal install
+
+.PHONY : fix-whitespace
+fix-whitespace :
+	fix-whitespace
 
 .PHONY : check-whitespace
 check-whitespace :
@@ -40,8 +46,11 @@ TODO :
 	| xargs grep -I -s 'TODO' \
 	| sort
 
+.PHONY : clean
 clean :
 	@rm -f ${SRC_DIR}/TSTP/Lexer.hs
+	@rm -f ${SRC_DIR}/TSTP/Lexer.hi
+	@rm -f ${SRC_DIR}/TSTP/Lexer.o
 	@rm -f ${SRC_DIR}/TSTP/Parser.hs
 	@find ${SRC_DIR} -regex ".*\(\.hi\|\.o\|\.agdai\)$$" -delete
 	@rm -f cnf*

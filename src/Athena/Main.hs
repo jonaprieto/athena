@@ -1,14 +1,15 @@
+
 -- | Main module
 
 {-# LANGUAGE MultiWayIf          #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax       #-}
 
-module Main (main) where
+module Main ( main ) where
 
 ------------------------------------------------------------------------------
 
-import Options
+import Athena.Options
   (
     Options
     ( optHelp
@@ -19,14 +20,15 @@ import Options
     , processOptions
     )
 
-import System.Environment ( getArgs )
-import System.Exit        ( exitSuccess )
+import Athena.Translation.Core   ( mainCore )
 
-import Translation.Core   ( mainCore )
+import Athena.Utils.Monad        ( die )
+import Athena.Utils.PrettyPrint  ( text )
+import Athena.Utils.Version      ( progNameVersion )
 
-import Utils.Monad        ( die )
-import Utils.PrettyPrint  ( text )
-import Utils.Version      ( progNameVersion )
+import System.Environment        ( getArgs )
+import System.Exit               ( exitSuccess )
+
 
 ------------------------------------------------------------------------------
 

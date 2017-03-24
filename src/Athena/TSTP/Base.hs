@@ -4,16 +4,16 @@
 {-# OPTIONS_HADDOCK hide   #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module TSTP.Base where
+module Athena.TSTP.Base where
 
 ------------------------------------------------------------------------------
 
-import Data.Set (toList)
+import Data.Set ( toList )
 
 import Data.TSTP
-  ( AtomicWord (..)
+  ( AtomicWord(..)
   , BinOp
-  , Formula (..)
+  , Formula(..)
   , freeVarsF
   , IntroType
       ( Assumption_
@@ -50,7 +50,7 @@ import Data.TSTP
     , Specialize
     , Strip
     )
-  , Status (..)
+  , Status(..)
   , V
   )
 

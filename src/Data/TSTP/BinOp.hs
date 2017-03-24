@@ -1,7 +1,7 @@
 
 -- | Data.TSTP.BinOp module
 
-{-# LANGUAGE UnicodeSyntax        #-}
+{-# LANGUAGE UnicodeSyntax #-}
 
 module Data.TSTP.BinOp where
 

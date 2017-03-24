@@ -1,7 +1,7 @@
 
 -- | Data.TSTP.InfixPred module
 
-{-# LANGUAGE UnicodeSyntax        #-}
+{-# LANGUAGE UnicodeSyntax #-}
 
 module Data.TSTP.InfixPred where
 

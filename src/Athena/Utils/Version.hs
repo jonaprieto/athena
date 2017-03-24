@@ -4,7 +4,7 @@
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Utils.Version ( progNameVersion ) where
+module Athena.Utils.Version ( progNameVersion ) where
 
 ------------------------------------------------------------------------------
 

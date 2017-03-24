@@ -33,10 +33,10 @@ import Data.Proof.ProofTreeGen
   )
 
 import Data.TSTP
-  ( F (..)
-  , Parent (..)
-  , Role (..)
-  , Source (..)
+  ( F(..)
+  , Parent(..)
+  , Role(..)
+  , Source(..)
   )
 
 ------------------------------------------------------------------------------
@@ -72,7 +72,7 @@ buildProofMap = foldl buildMap empty
 getParentsTree ∷ ProofMap    -- ^ 'Map'
                → [Parent]    -- ^ List of parents
                → [ProofTree] -- ^ List of parents subtrees
-getParentsTree m p = map (buildProofTree m) $ getParents m p
+getParentsTree m p = buildProofTree m <$> getParents m p
 
 -- | 'getParents' 'm' 'p', from a 'Map' 'm' and a list of parents 'p'
 -- returns a list of corresponding parent formulas.
@@ -82,7 +82,7 @@ getParents ∷ ProofMap -- ^ 'Map'
 getParents m p = mapMaybe (`M.lookup` m) parents
     where
       parents ∷ [String]
-      parents = map (\(Parent s _) → s) p
+      parents = fmap (\(Parent s _) → s) p
 
 -- | When an unknown 'Rule', 'Source', or other unexpected data type
 -- is found a 'Leaf' With an 'Unknown' 'Role' and error message is

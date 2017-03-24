@@ -1,7 +1,6 @@
 
 -- | Data.TSTP module
 
-{-# LANGUAGE CPP                  #-}
 {-# LANGUAGE FlexibleInstances    #-}
 {-# LANGUAGE UnicodeSyntax        #-}
 
