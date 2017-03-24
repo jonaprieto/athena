@@ -1,8 +1,7 @@
 
 -- | Data.TSTP.AtomicWord module
 
-{-# LANGUAGE UnicodeSyntax        #-}
-
+{-# LANGUAGE UnicodeSyntax #-}
 
 module Data.TSTP.AtomicWord where
 

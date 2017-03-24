@@ -2,9 +2,6 @@
 -- | Data.TSTP.Formula module
 
 {-# OPTIONS -fno-warn-incomplete-patterns #-}
-
-{-# LANGUAGE CPP                          #-}
-{-# LANGUAGE FlexibleInstances            #-}
 {-# LANGUAGE UnicodeSyntax                #-}
 
 module Data.TSTP.Formula where

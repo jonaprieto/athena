@@ -2,7 +2,6 @@
 
 -- | TSTP.Parser module
 
-{-# ANN module "HLint: ignore"                  #-}
 {-# OPTIONS -fno-warn-incomplete-patterns       #-}
 {-# OPTIONS -fno-warn-incomplete-uni-patterns   #-}
 {-# OPTIONS -fno-warn-missing-signatures        #-}

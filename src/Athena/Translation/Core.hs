@@ -213,11 +213,11 @@ atpConjunct (BinOp f₁ (:&:) f₂) g
     next ∷ String
     next = atpConjunct f₁ g
 
-atpConjunct fm@(BinOp _ _ _) _     = "-- 1: " ++ show fm  ++ "\n"
-atpConjunct fm@(InfixPred _ _ _) _ = "-- 2: " ++ show fm ++ "\n"
-atpConjunct fm@(PredApp _ _) _     = "-- 3: " ++ show fm ++ "\n"
-atpConjunct fm@(Quant _ _ _) _     = "-- 4: " ++ show fm ++ "\n"
-atpConjunct fm@((:~:) _) _         = "-- 5: " ++ show fm ++ "\n"
+atpConjunct BinOp{} _       = "-- case 1. \n"
+atpConjunct InfixPred{} _   = "-- case 2. \n"
+atpConjunct (PredApp _ _) _ = "-- case 3. \n"
+atpConjunct Quant{} _       = "-- case 4. \n"
+atpConjunct ((:~:) _) _     = "-- case 5. \n"
 
 atpResolve ∷ Formula → Formula → Formula → (String, Bool)
 atpResolve f g  (PredApp (AtomicWord "$false") [])

@@ -5,7 +5,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax       #-}
 
-module Athena.Main ( main ) where
+module Main ( main ) where
 
 ------------------------------------------------------------------------------
 

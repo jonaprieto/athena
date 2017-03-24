@@ -10,7 +10,6 @@ category:      Language
 homepage:      https://github.com/jonaprieto/athena
 bug-reports:   https://github.com/jonaprieto/athena/issues/
 synopsis:      TSTP to Agda
-tested-with:   GHC == 8.0.2
 description:
   Athena is a Haskell program that translates proofs given by Metis ATP in
   TSTP format to Agda code.
@@ -22,12 +21,9 @@ source-repository head
   type:     git
   location: git://github.com/jonaprieto/athena.git
 
-executable athena
+library
   default-language: Haskell2010
-
-  main-is:        Athena/Main.hs
   hs-source-dirs: src
-  include-dirs:   src/Athena
 
   build-depends:  array >= 0.4 && < 1.0
                 , base >= 4.6.0.1 && < 4.10
@@ -35,21 +31,12 @@ executable athena
                 , containers >= 0.5.0.0 && < 0.6
                 , mtl >= 2.2.1 && < 2.3
                 , pretty >= 1.1.1.0 && < 1.1.1.2 || >= 1.1.2 && < 1.2
+                , pretty-show >= 1.5 && < 1.7
+                , pretty-show >= 1.5 && < 1.7
                 , text >= 0.11.3.1 && < 1.3
                 , split >= 0.2.3.1 && < 0.3
 
-  build-tools: cpphs >= 1.19
-
-  other-modules:
-    Athena.Options
-    Athena.TSTP
-    Athena.TSTP.Base
-    Athena.TSTP.Lexer
-    Athena.TSTP.Parser
-    Athena.Translation.Core
-    Athena.Translation.Functions
-    Athena.Utils.Monad
-    Athena.Utils.PrettyPrint
+  exposed-modules:
     Data.Proof
     Data.Proof.ProofTreeGen
     Data.TSTP
@@ -69,6 +56,36 @@ executable athena
     Data.TSTP.Term
     Data.TSTP.Theory
     Data.TSTP.V
+
+executable athena
+  default-language: Haskell2010
+
+  main-is:          Athena/Main.hs
+  hs-source-dirs:   src
+  include-dirs:     src/Athena
+
+  build-depends:  array >= 0.4 && < 1.0
+                , base >= 4.6.0.1 && < 4.10
+                , bytestring >= 0.10.0.2 && < 0.11
+                , containers >= 0.5.0.0 && < 0.6
+                , mtl >= 2.2.1 && < 2.3
+                , pretty >= 1.1.1.0 && < 1.1.1.2 || >= 1.1.2 && < 1.2
+                , text >= 0.11.3.1 && < 1.3
+                , split >= 0.2.3.1 && < 0.3
+
+  build-tools: cpphs >= 1.20.2
+
+  other-modules:
+    Athena.Options
+    Athena.Translation.Core
+    Athena.Translation.Functions
+    Athena.TSTP
+    Athena.TSTP.Base
+    Athena.TSTP.Lexer
+    Athena.TSTP.Parser
+    Athena.Utils.Monad
+    Athena.Utils.PrettyPrint
+    Athena.Utils.Show
     Athena.Utils.Version
     Paths_athena
 

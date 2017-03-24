@@ -1,4 +1,4 @@
-SRC_DIR=src/Athena
+SRC_DIR=src
 
 # Requires HLint >= 1.9.36 and run `cabal build` or `cabal install`
 # before.
@@ -10,7 +10,7 @@ hlint :
 							--cpp-include=src/ \
 							--ignore=src/Athena/TSTP/Lexer.hs \
 							--ignore=src/Athena/TSTP/Parser.hs \
-							src/
+							${SRC_DIR}/
 	@echo "$@ succeeded!"
 
 .PHONY : haddock
@@ -31,6 +31,10 @@ install-bin :
 .PHONY : install-fix-whitespace
 install-fix-whitespace :
 	cd src/fix-whitespace && cabal install
+
+.PHONY : fix-whitespace
+fix-whitespace :
+	fix-whitespace
 
 .PHONY : check-whitespace
 check-whitespace :

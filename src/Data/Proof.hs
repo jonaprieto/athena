@@ -33,10 +33,10 @@ import Data.Proof.ProofTreeGen
   )
 
 import Data.TSTP
-  ( F (..)
-  , Parent (..)
-  , Role (..)
-  , Source (..)
+  ( F(..)
+  , Parent(..)
+  , Role(..)
+  , Source(..)
   )
 
 ------------------------------------------------------------------------------

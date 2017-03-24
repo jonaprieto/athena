@@ -5,12 +5,12 @@ module Data.TSTP.Source where
 
 ------------------------------------------------------------------------------
 
-import Data.TSTP.GData     (GTerm(..) )
-import Data.TSTP.IntroType (IntroType(..) )
-import Data.TSTP.Parent    (Parent(..) )
-import Data.TSTP.Rule      (Rule(..) )
-import Data.TSTP.Status    (Status(..) )
-import Data.TSTP.Theory    (Theory(..) )
+import Data.TSTP.GData     ( GTerm(..) )
+import Data.TSTP.IntroType ( IntroType(..) )
+import Data.TSTP.Parent    ( Parent(..) )
+import Data.TSTP.Rule      ( Rule(..) )
+import Data.TSTP.Status    ( Status(..) )
+import Data.TSTP.Theory    ( Theory(..) )
 
 ------------------------------------------------------------------------------
 
