@@ -1,6 +1,5 @@
--- | Main module
+-- | Translation.Core module
 
-{-# LANGUAGE MultiWayIf          #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax       #-}
 
@@ -8,14 +7,14 @@ module Athena.Translation.Core ( mainCore ) where
 
 ------------------------------------------------------------------------------
 
-import Athena.Utils.Monad          ( stdout2file )
-
 import Athena.Options
   ( Options
     ( optInputFile
     , optOutputFile
     )
   )
+
+import Athena.Translation.Rules ( atpConjunct, atpResolve )
 
 import Athena.Translation.Functions
   ( getAxioms
@@ -25,7 +24,8 @@ import Athena.Translation.Functions
   , printPreamble
   )
 
-import Athena.TSTP                 (parseFile)
+import Athena.Utils.Monad       ( stdout2file )
+import Athena.TSTP              ( parseFile )
 
 import Data.List
 import Data.List.Split
@@ -45,10 +45,8 @@ import Data.TSTP
   , Rule(..)
   , Role(..)
   )
-import Data.TSTP.Formula    ( getFreeVars )
-import Data.TSTP.AtomicWord ( AtomicWord(..) )
-import Data.TSTP.BinOp      ( BinOp(..) )
-import Data.TSTP.V          ( V(..) )
+import Data.TSTP.Formula        ( getFreeVars )
+import Data.TSTP.V              ( V(..) )
 
 ------------------------------------------------------------------------------
 
@@ -205,44 +203,6 @@ type Ident = Int
 getIdent ∷ Ident → String
 getIdent n = concat $ replicate (2 * n) " "
 
-atpConjunct ∷ Formula → Formula → String
-atpConjunct (BinOp f₁ (:&:) f₂) g
-  | f₂ /= g   = "∧-proj₁ $" ++ if null next then "\n" else " " ++ next
-  | otherwise = "∧-proj₂ $ -- (" ++ show f₂ ++" ≟ " ++ show g ++ ")\n"
-  where
-    next ∷ String
-    next = atpConjunct f₁ g
-
-atpConjunct BinOp{} _       = "-- case 1. \n"
-atpConjunct InfixPred{} _   = "-- case 2. \n"
-atpConjunct (PredApp _ _) _ = "-- case 3. \n"
-atpConjunct Quant{} _       = "-- case 4. \n"
-atpConjunct ((:~:) _) _     = "-- case 5. \n"
-
-atpResolve ∷ Formula → Formula → Formula → (String, Bool)
-atpResolve f g  (PredApp (AtomicWord "$false") [])
-  | f == (:~:) g = ("atp-resolve₈", False)
-  | (:~:) f == g = ("atp-resolve₈", True)
--- I guess l literal is always positive.
-atpResolve (BinOp f₁ (:|:) f₂) (BinOp g₁ (:|:) g₂) l
-  | f₁ == l && g₁ == (:~:) l = ("atp-resolve₀", False)
-  | f₂ == l && g₂ == (:~:) l = ("atp-resolve₁", False)
-  | f₁ == l && g₂ == (:~:) l = ("atp-resolve₂", False)
-  | f₂ == l && g₁ == (:~:) l = ("atp-resolve₃", False)
-  | otherwise = ("id -- resolve 1.", False)
-atpResolve (BinOp f₁ (:|:) f₂) g l
-  | f₁ == (:~:) l && g == l = ("atp-resolve₄", False)
-  | f₂ == (:~:) l && g == l = ("atp-resolve₅", False)
-  | f₂ == l && g == (:~:) l = ("atp-resolve₆", False)
-  | f₁ == l && g == (:~:) l = ("atp-resolve₇", False)
-  | otherwise = ("id -- resolve 2.", False)
-atpResolve f (BinOp g₁ (:|:) g₂) l
-  | f == l && g₁ == (:~:) l = ("atp-resolve₄", True)
-  | f == l && g₂ == (:~:) l = ("atp-resolve₅", True)
-  | f == (:~:) l && g₂ == l = ("atp-resolve₆", True)
-  | f == (:~:) l && g₁ == l = ("atp-resolve₇", True)
-  | otherwise = ("id -- resolve 3.", False)
-atpResolve _ _ _ = ("id -- resolve 4.", False)
 
 printInnerFormula ∷ Ident → ProofMap → String → String -> String
 printInnerFormula n dict tag ctxt =
