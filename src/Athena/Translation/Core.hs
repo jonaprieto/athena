@@ -7,15 +7,6 @@ module Athena.Translation.Core ( mainCore ) where
 
 ------------------------------------------------------------------------------
 
-import Athena.Options
-  ( Options
-    ( optInputFile
-    , optOutputFile
-    )
-  )
-
-import Athena.Translation.Rules ( atpConjunct, atpResolve )
-
 import Athena.Translation.Functions
   ( getAxioms
   , getConjeture
@@ -23,14 +14,20 @@ import Athena.Translation.Functions
   , getSubGoals
   , printPreamble
   )
-
+import Athena.Translation.Rules ( atpConjunct, atpResolve )
 import Athena.Utils.Monad       ( stdout2file )
+import Athena.Options
+  ( Options
+    ( optInputFile
+    , optOutputFile
+    )
+  )
 import Athena.TSTP              ( parseFile )
 
 import Data.List
 import Data.List.Split
 import qualified Data.Map as Map
-import Data.Maybe ( fromJust, Maybe, fromMaybe )
+import Data.Maybe               ( fromJust, fromMaybe, Maybe )
 
 import Data.Proof
   ( buildProofMap
@@ -111,7 +108,7 @@ printVar f n = intercalate "\n"
   ]
 
 printVars ∷ [V] → Int → IO String
-printVars [] _ = return ""
+printVars [] _       = return ""
 printVars (f : fs) n = do
   putStrLn $ printVar f n ++ "\n"
   printVars fs (n+1)
@@ -134,18 +131,18 @@ stdName nm = map subIndex . concat $ splitOn "-" nm
 
 printAxiom ∷ F → String
 printAxiom f =
-  let axiom = stdName $ name f
+  let axiom  = stdName $ name f
   in concat
     [  axiom , " : Prop\n"
     ,  axiom , " = " ,  show (formula f) , "\n"
     ]
 
 printAxioms ∷ [F] → IO ()
-printAxioms [] = return ()
+printAxioms []  = return ()
 printAxioms [a] = do
   putStrLn "-- Axiom"
   putStrLn $ printAxiom a ++ "\n"
-printAxioms as = do
+printAxioms as  = do
   putStrLn "-- Axioms"
   putStrLn . intercalate "\n\n" $ map printAxiom as
   putStrLn ""

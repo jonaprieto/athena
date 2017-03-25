@@ -8,9 +8,7 @@ module Athena.Translation.Rules.Conjunct ( atpConjunct ) where
 
 ------------------------------------------------------------------------------
 
-import Data.TSTP
-  ( Formula(..)
-  )
+import Data.TSTP       ( Formula(..) )
 import Data.TSTP.BinOp ( BinOp(..) )
 
 ------------------------------------------------------------------------------

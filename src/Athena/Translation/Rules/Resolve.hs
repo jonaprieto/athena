@@ -8,9 +8,7 @@ module Athena.Translation.Rules.Resolve ( atpResolve ) where
 
 ------------------------------------------------------------------------------
 
-import Data.TSTP
-  ( Formula(..)
-  )
+import Data.TSTP            ( Formula(..) )
 import Data.TSTP.AtomicWord ( AtomicWord(..) )
 import Data.TSTP.BinOp      ( BinOp(..) )
 

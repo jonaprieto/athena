@@ -1,9 +1,6 @@
 
 -- | Translation.Rules module.
 
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE UnicodeSyntax       #-}
-
 module Athena.Translation.Rules
   ( atpConjunct
   , atpResolve
