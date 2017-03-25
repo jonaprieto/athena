@@ -31,7 +31,7 @@ import System.Console.GetOpt
   , OptDescr ( Option )
   , usageInfo
   )
-import System.Environment ( getProgName )
+import System.Environment        ( getProgName )
 
 ------------------------------------------------------------------------------
 

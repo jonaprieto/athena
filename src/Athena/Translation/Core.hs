@@ -1,4 +1,5 @@
--- | Translation.Core module
+
+-- | Athena.Translation.Core module
 
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax       #-}
@@ -12,9 +13,25 @@ import Athena.Translation.Functions
   , getConjeture
   , getRefutes
   , getSubGoals
+  , printAxiom
+  , printAxioms
+  , printConjecture
   , printPreamble
+  -- , printSubGoals
+  -- , printVar
+  , printVars
   )
-import Athena.Translation.Rules ( atpConjunct, atpResolve )
+import Athena.Translation.Rules
+  (
+    -- atpCanonicalize
+  -- , atpClausify
+    atpConjunct
+  -- , atpNegate
+  , atpResolve
+  -- , atpSimplify
+  -- , atpStrip
+  )
+import Athena.Translation.Utils ( Ident, getIdent, stdName)
 import Athena.Utils.Monad       ( stdout2file )
 import Athena.Options
   ( Options
@@ -25,15 +42,14 @@ import Athena.Options
 import Athena.TSTP              ( parseFile )
 
 import Data.List
-import Data.List.Split
 import qualified Data.Map as Map
 import Data.Maybe               ( fromJust, fromMaybe, Maybe )
 
 import Data.Proof
   ( buildProofMap
   , buildProofTree
-  , ProofTree
   , ProofMap
+  , ProofTree
   , ProofTreeGen(..)
   )
 import Data.TSTP
@@ -98,54 +114,7 @@ mainCore opts = do
 
   printProof axioms subgoals conj rulesMap rulesTrees
 
-printVar ∷ V → Int → String
-printVar f n = intercalate "\n"
-  [  show f ++ " : Prop"
-  ,  show f ++ case show f of
-       "$true"  → " = ⊤"
-       "$false" → " = ⊥"
-       _        → " = Var (# " ++ show n ++ ")"
-  ]
 
-printVars ∷ [V] → Int → IO String
-printVars [] _       = return ""
-printVars (f : fs) n = do
-  putStrLn $ printVar f n ++ "\n"
-  printVars fs (n+1)
-
-subIndex ∷ Char → Char
-subIndex '0' = '₀'
-subIndex '1' = '₁'
-subIndex '2' = '₂'
-subIndex '3' = '₃'
-subIndex '4' = '₄'
-subIndex '5' = '₅'
-subIndex '6' = '₆'
-subIndex '7' = '₇'
-subIndex '8' = '₈'
-subIndex '9' = '₉'
-subIndex s   = s
-
-stdName ∷ String → String
-stdName nm = map subIndex . concat $ splitOn "-" nm
-
-printAxiom ∷ F → String
-printAxiom f =
-  let axiom  = stdName $ name f
-  in concat
-    [  axiom , " : Prop\n"
-    ,  axiom , " = " ,  show (formula f) , "\n"
-    ]
-
-printAxioms ∷ [F] → IO ()
-printAxioms []  = return ()
-printAxioms [a] = do
-  putStrLn "-- Axiom"
-  putStrLn $ printAxiom a ++ "\n"
-printAxioms as  = do
-  putStrLn "-- Axioms"
-  putStrLn . intercalate "\n\n" $ map printAxiom as
-  putStrLn ""
 
 printPremises ∷ [F] → IO ()
 printPremises premises = do
@@ -157,12 +126,6 @@ printPremises premises = do
     ps  → putStrLn $ "Γ = ∅ , " ++ intercalate " , " (map name ps)
   putStrLn ""
 
-printConjecture ∷ F → IO ()
-printConjecture f = putStrLn $
-  concat
-    [  "-- Conjecture\n"
-    , printAxiom f , "\n"
-    ]
 
 printSubGoals' ∷ [F] → IO ()
 printSubGoals' [] = return ()
@@ -194,12 +157,6 @@ printProofSubgoal no axioms subgoals goal rmap (tree:strees) = do
         ]
   putStrLn proof
   printProofSubgoal (no+1) axioms subgoals goal rmap strees
-
-type Ident = Int
-
-getIdent ∷ Ident → String
-getIdent n = concat $ replicate (2 * n) " "
-
 
 printInnerFormula ∷ Ident → ProofMap → String → String -> String
 printInnerFormula n dict tag ctxt =
@@ -373,13 +330,3 @@ printProofGoal subgoals _ _ _ = putStrLn $
     , andIntroSubgoals 3 0 subgoals
     , getIdent 2 , ")\n"
     ]
-
-{-
-orComm ∷ String → Formula → Formula → String
-orComm name (BinOp f₁ (:|:) f₂) ((:~:) ϕ)
-  | f₁ /= ϕ = "∨-comm $" ++ orComm name f₂ ϕ
-  | otherwise = name
-orComm name (BinOp ((:~:) f₁) (:|:) f₂) ϕ
-  | f₁ /= ϕ = "∨-comm $" ++ orComm name f₂ ϕ
-  | otherwise = name
--}

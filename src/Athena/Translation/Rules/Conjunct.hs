@@ -1,5 +1,5 @@
 
--- | Translation.Rule.Conjunct module.
+-- | Athena.Translation.Rule.Conjunct module.
 
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax       #-}

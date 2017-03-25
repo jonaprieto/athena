@@ -1,9 +1,8 @@
 
 -- | Main module
 
-{-# LANGUAGE MultiWayIf          #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE UnicodeSyntax       #-}
+{-# LANGUAGE MultiWayIf    #-}
+{-# LANGUAGE UnicodeSyntax #-}
 
 module Main ( main ) where
 
@@ -28,7 +27,6 @@ import Athena.Utils.Version      ( progNameVersion )
 
 import System.Environment        ( getArgs )
 import System.Exit               ( exitSuccess )
-
 
 ------------------------------------------------------------------------------
 

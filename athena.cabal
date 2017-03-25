@@ -78,7 +78,19 @@ executable athena
   other-modules:
     Athena.Options
     Athena.Translation.Core
+    Athena.Translation.Core
     Athena.Translation.Functions
+    Athena.Translation.Rules
+    Athena.Translation.Rules.Canonicalize
+    Athena.Translation.Rules.Clausify
+    Athena.Translation.Rules.Conjunct
+    Athena.Translation.Rules.Negate
+    Athena.Translation.Rules.Resolve
+    Athena.Translation.Rules.Simplify
+    Athena.Translation.Rules.Skolemize
+    Athena.Translation.Rules.Specialize
+    Athena.Translation.Rules.Strip
+    Athena.Translation.Utils
     Athena.TSTP
     Athena.TSTP.Base
     Athena.TSTP.Lexer
