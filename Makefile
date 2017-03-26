@@ -89,3 +89,12 @@ prove :
 		-type f -name "*.tstp" \
 		-print \
 		-exec sh -c "athena {}" \;;
+
+.PHONY : check-proofs
+check :
+	@echo "Checking Agda files"
+	@echo "==================="
+	@cd test && find prop-pack/problems \
+		-type f -name "*.agda" \
+		-print \
+		-exec sh -c "agda {} --verbose=0" \;;

@@ -1,0 +1,15 @@
+name : test
+depend:
+  standard-library
+  agda-prop
+  agda-metis
+include:
+  prop-pack/
+  prop-pack/problems
+  prop-pack/problems/
+  prop-pack/problems/basic
+  prop-pack/problems/biconditional
+  prop-pack/problems/conjunction
+  prop-pack/problems/disjunction
+  prop-pack/problems/implication
+  prop-pack/problems/negation
