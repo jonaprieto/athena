@@ -65,3 +65,14 @@ tests :
 	- make check-whitespace
 	- make haddock
 	- @echo "$@ succeeded!"
+
+.PHONY : get-problems
+get-problems :
+	- git submodule init
+	- git submodule update
+	- cd test/prop-pack && make
+
+
+.PHONY : update-problems
+update-problems :
+	- git submodule update --remote
