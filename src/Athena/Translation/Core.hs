@@ -45,6 +45,7 @@ import Data.TSTP
 import Data.TSTP.Formula        ( getFreeVars )
 import Data.TSTP.V              ( V(..) )
 
+import System.FilePath          ( replaceExtension )
 ------------------------------------------------------------------------------
 
 mainCore ∷ Options → IO ()
@@ -72,7 +73,10 @@ mainCore opts = do
   let rulesTrees ∷ [ProofTree]
       rulesTrees = fmap (buildProofTree rulesMap) refutes
 
-  stdout2file $ optOutputFile opts
+  stdout2file $ Just (fromMaybe
+    (replaceExtension (fromJust (optInputFile opts)) ".agda")
+    (optOutputFile opts)
+    )
 
   let formulas ∷ [Formula]
       formulas = fmap formula tstp

@@ -85,7 +85,7 @@ options =
   [ Option ['h'] ["help"] (NoArg helpOpt)
       "Prints help message"
   , Option ['o'] ["output"] (ReqArg outputFileOpt "FILE")
-      "Output to file      (default: STDOUT)"
+      "Output to file"
   , Option ['p'] ["proof-name"] (ReqArg proofNameOpt "NAME")
       "Main proof name     (default: proof)"
   , Option []    ["version"] (NoArg versionOpt)
