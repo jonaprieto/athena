@@ -43,7 +43,7 @@ data Formula = BinOp Formula BinOp Formula    -- ^ Binary connective application
 
 -- TODO: use of PrettyPrinter
 instance Show Formula where
-  show ((:~:) f )            = "(" ++ "¬" ++ show f ++ ")"
+  show ((:~:) f )            = "(" ++ "¬ " ++ show f ++ ")"
   show (BinOp f₁ (:=>:) f₂)  = "(" ++ show f₁ ++ "⇒" ++ show f₂ ++ ")"
   show (BinOp f₁ (:<=>:) f₂) = "(" ++ show f₁ ++ "⇔" ++ show f₂ ++ ")"
   show (BinOp f₁ op f₂)      = "(" ++ show f₁ ++ show op ++ show f₂ ++ ")"
