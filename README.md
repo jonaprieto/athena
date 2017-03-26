@@ -19,6 +19,25 @@ $ cd athena
 $ cabal install
 ```
 
+### Test
+
+To test this application satisfies the requirements. Then, your agda file for libraries should look something like:
+
+```
+$ cat ~/.agda/libraries
+/Users/jonaprieto/agda-stdlib/standard-library.agda-lib
+/Users/jonaprieto/agda-prop/agda-prop.agda-lib
+/Users/jonaprieto/agda-metis/agda-metis.agda-lib
+/Users/jonaprieto/athena/test/test.agda-lib
+```
+and
+
+```bash
+$ make problems
+$ make reconstruct
+$ make check
+```
+
 [diagram]: https://raw.githubusercontent.com/jonaprieto/athena/master/slides/diagram.png
 [haskell]: http://www.haskell.org
 [tstp]:    http://www.cs.miami.edu/~tptp/TPTP/QuickGuide/

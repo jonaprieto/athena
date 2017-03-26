@@ -81,8 +81,8 @@ update-problems :
 	git submodule update --remote
 	make --directory test/prop-pack solutions
 
-.PHONY : prove
-prove :
+.PHONY : reconstruct
+reconstruct :
 	@echo "Generating Agda files"
 	@echo "====================="
 	@find test/prop-pack/problems \
