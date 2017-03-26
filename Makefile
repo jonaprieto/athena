@@ -53,8 +53,11 @@ clean :
 	@rm -f ${SRC_DIR}/TSTP/Lexer.o
 	@rm -f ${SRC_DIR}/TSTP/Parser.hs
 	@find ${SRC_DIR} -regex ".*\(\.hi\|\.o\|\.agdai\)$$" -delete
-	@rm -f cnf*
-	@rm -f saturation.tptp
+	@find ${SRC_DIR} -name "cnf*" -delete
+	@find . -name "cnf*" -delete
+	@find . -name "saturation*" -delete
+	@find . -name "*.tstp" -delete
+	@make --directory test/prop-pack clean
 	@rm -rf dist
 
 
@@ -66,13 +69,13 @@ tests :
 	- make haddock
 	- @echo "$@ succeeded!"
 
-.PHONY : get-problems
-get-problems :
+.PHONY : problems
+problems :
 	- git submodule init
 	- git submodule update
-	- cd test/prop-pack && make
-
+	- make --directory test/prop-pack solutions
 
 .PHONY : update-problems
 update-problems :
 	- git submodule update --remote
+	- make --directory test/prop-pack solutions
