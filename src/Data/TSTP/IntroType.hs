@@ -1,5 +1,5 @@
 
--- | Data.TSTP.IntroType module
+-- | Data.TSTP.IntroType module.
 
 module Data.TSTP.IntroType where
 

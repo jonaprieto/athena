@@ -1,6 +1,6 @@
 {
 
--- | TSTP.Lexer module
+-- | Athena.TSTP.Lexer module
 
 {-# OPTIONS -fno-warn-incomplete-patterns       #-}
 {-# OPTIONS -fno-warn-incomplete-uni-patterns   #-}

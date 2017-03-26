@@ -1,5 +1,5 @@
 
--- | Data.TSTP.Parent module
+-- | Data.TSTP.Parent module.
 
 module Data.TSTP.Parent where
 

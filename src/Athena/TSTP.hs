@@ -1,4 +1,4 @@
--- | TSTP module.
+-- | Athena.TSTP module.
 
 {-# LANGUAGE UnicodeSyntax #-}
 

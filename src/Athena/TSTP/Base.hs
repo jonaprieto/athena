@@ -1,5 +1,5 @@
 
--- | TSTP.Base module.
+-- | Athena.TSTP.Base module.
 
 {-# OPTIONS_HADDOCK hide   #-}
 {-# LANGUAGE UnicodeSyntax #-}

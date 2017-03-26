@@ -1,5 +1,5 @@
 
--- | Monads utilities.
+-- | Athena.Utils.Monads utilities.
 
 {-# LANGUAGE UnicodeSyntax #-}
 

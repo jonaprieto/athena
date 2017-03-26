@@ -1,6 +1,6 @@
 {
 
--- | TSTP.Parser module
+-- | Athena.TSTP.Parser module
 
 {-# OPTIONS -fno-warn-incomplete-patterns       #-}
 {-# OPTIONS -fno-warn-incomplete-uni-patterns   #-}

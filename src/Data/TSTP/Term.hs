@@ -1,5 +1,5 @@
 
--- | Data.TSTP.Term module
+-- | Data.TSTP.Term module.
 
 module Data.TSTP.Term where
 

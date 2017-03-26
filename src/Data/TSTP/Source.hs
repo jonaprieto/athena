@@ -1,5 +1,5 @@
 
--- | Data.TSTP.Source module
+-- | Data.TSTP.Source module.
 
 module Data.TSTP.Source where
 

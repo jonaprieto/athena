@@ -1,5 +1,5 @@
 
--- | Utilities related to 'Show'.
+-- | Athena.Utils.Show module.
 
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}

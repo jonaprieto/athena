@@ -1,5 +1,5 @@
 
--- | Data.TSTP.Quant module
+-- | Data.TSTP.Quant module.
 
 {-# LANGUAGE UnicodeSyntax #-}
 

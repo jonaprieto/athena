@@ -1,5 +1,5 @@
 
--- | Data.TSTP.Role module
+-- | Data.TSTP.Role module.
 
 module Data.TSTP.Role where
 

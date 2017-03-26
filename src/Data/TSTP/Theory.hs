@@ -1,5 +1,5 @@
 
--- | Data.TSTP.Theory module
+-- | Data.TSTP.Theory module.
 
 module Data.TSTP.Theory where
 

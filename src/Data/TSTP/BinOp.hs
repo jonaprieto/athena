@@ -1,5 +1,5 @@
 
--- | Data.TSTP.BinOp module
+-- | Data.TSTP.BinOp module.
 
 {-# LANGUAGE UnicodeSyntax #-}
 

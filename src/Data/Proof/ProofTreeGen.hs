@@ -1,5 +1,5 @@
 
--- | Data.Proof.ProofTreeGen module
+-- | Data.Proof.ProofTreeGen module.
 
 module Data.Proof.ProofTreeGen where
 

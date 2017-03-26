@@ -1,5 +1,5 @@
 
--- | Data.TSTP.Formula module
+-- | Data.TSTP.Formula module.
 
 {-# OPTIONS -fno-warn-incomplete-patterns #-}
 {-# LANGUAGE UnicodeSyntax                #-}

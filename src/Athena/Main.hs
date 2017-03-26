@@ -1,5 +1,5 @@
 
--- | Main module
+-- | Main module.
 
 {-# LANGUAGE MultiWayIf    #-}
 {-# LANGUAGE UnicodeSyntax #-}

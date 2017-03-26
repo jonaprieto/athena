@@ -1,5 +1,6 @@
 
--- | Utilities related to representation of versions.
+-- | Athena.Utils.Version module.
+-- Utilities related to representation of versions.
 
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}

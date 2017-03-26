@@ -7,7 +7,7 @@
 module Athena.Utils.PrettyPrint
   ( module Text.PrettyPrint.HughesPJ
   , cquotes
-  , Pretty(pretty)
+  , Pretty ( pretty )
   , prettyShow
   , scquotes
   , spaces

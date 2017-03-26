@@ -1,5 +1,5 @@
 
--- | Athena.Translation.Core module
+-- | Athena.Translation.Core module.
 
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax       #-}

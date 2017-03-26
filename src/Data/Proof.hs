@@ -1,5 +1,5 @@
 
--- | Data.Proof module
+-- | Data.Proof module.
 
 {-# LANGUAGE UnicodeSyntax #-}
 

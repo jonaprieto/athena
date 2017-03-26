@@ -1,5 +1,5 @@
 
--- | Data.TSTP.InfixPred module
+-- | Data.TSTP.InfixPred module.
 
 {-# LANGUAGE UnicodeSyntax #-}
 

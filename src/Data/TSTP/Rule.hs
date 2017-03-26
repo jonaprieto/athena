@@ -1,5 +1,5 @@
 
--- | Data.TSTP.Rule module
+-- | Data.TSTP.Rule module.
 
 module Data.TSTP.Rule where
 

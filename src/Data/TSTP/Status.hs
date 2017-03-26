@@ -1,5 +1,5 @@
 
--- | Data.TSTP.Status module
+-- | Data.TSTP.Status module.
 
 module Data.TSTP.Status where
 

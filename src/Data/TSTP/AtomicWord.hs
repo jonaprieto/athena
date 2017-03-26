@@ -1,5 +1,5 @@
 
--- | Data.TSTP.AtomicWord module
+-- | Data.TSTP.AtomicWord module.
 
 {-# LANGUAGE UnicodeSyntax #-}
 

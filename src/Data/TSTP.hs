@@ -1,5 +1,5 @@
 
--- | Data.TSTP module
+-- | Data.TSTP module.
 
 {-# LANGUAGE FlexibleInstances    #-}
 {-# LANGUAGE UnicodeSyntax        #-}

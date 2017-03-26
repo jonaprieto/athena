@@ -1,5 +1,5 @@
 
--- | Options module.
+-- | Athena.Options module.
 
 {-# LANGUAGE UnicodeSyntax #-}
 

@@ -1,5 +1,5 @@
 
--- | Data.TSTP.F module
+-- | Data.TSTP.F module.
 
 {-# LANGUAGE UnicodeSyntax #-}
 

@@ -1,5 +1,5 @@
 
--- | Data.TSTP.V module
+-- | Data.TSTP.V module.
 
 module Data.TSTP.V where
 

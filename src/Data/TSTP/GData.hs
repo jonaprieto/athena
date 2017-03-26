@@ -1,5 +1,5 @@
 
--- | Data.TSTP.GData module
+-- | Data.TSTP.GData module.
 
 module Data.TSTP.GData where
 
