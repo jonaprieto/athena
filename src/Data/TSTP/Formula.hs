@@ -50,7 +50,7 @@ instance Show Formula where
   show (InfixPred t₁ r t₂)   = "(" ++ show t₁ ++ show r  ++ show t₂ ++ ")"
   show (PredApp (AtomicWord "$false") []) = "⊥"
   show (PredApp (AtomicWord "$true")  []) = "⊤"
-  show (PredApp (AtomicWord p)  [])       = show p
+  show (PredApp (AtomicWord p)  [])       = p
   show (PredApp ρ ϕ ) = "(" ++ show ρ ++ ":" ++ show ϕ ++ "⇒ ⊤" ++ ")"
   show (Quant     All []     _ ) = "-- not supported yet."
   show (Quant     All _      _ ) = "-- not supported yet."
