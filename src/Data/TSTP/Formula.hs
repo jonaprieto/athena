@@ -51,7 +51,7 @@ instance Show Formula where
   show (PredApp (AtomicWord "$false") []) = "⊥"
   show (PredApp (AtomicWord "$true")  []) = "⊤"
   show (PredApp (AtomicWord p)  [])       = p
-  show (PredApp ρ ϕ )            = "-- not supported yet."
+  show (PredApp _ _ )            = "-- not supported yet."
   show (Quant     All []     _ ) = "-- not supported yet."
   show (Quant     All _      _ ) = "-- not supported yet."
   show (Quant     Exists _   _ ) = "-- not supported yet."

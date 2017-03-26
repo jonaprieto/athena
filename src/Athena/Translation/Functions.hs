@@ -146,10 +146,12 @@ printSubGoals subgoals = putStrLn $
 printPreamble ∷ Int → IO ()
 printPreamble n = do
   version <- progNameVersion
-  putStrLn $ "\n-- " ++ version ++ " reconstructed this proof.\n"
-  putStrLn $ "open import Data.Prop " ++ show n ++ " public"
+  putStrLn $ "\n-- " ++ version ++ "\n"
+  putStrLn $ replicate 78 '-'
+  putStrLn $ "\nopen import Data.Prop " ++ show n ++ " public"
   putStrLn $ "open import ATP.Metis " ++ show n ++ " public\n"
-
+  putStrLn $ replicate 78 '-'
+  putStrLn ""
 
 -- | Print out the premises in the Agda file.
 printPremises ∷ [F] → IO ()
@@ -180,7 +182,11 @@ printInnerFormula n dict tag ctxt =
 printProof ∷ [F] → [F] → F → ProofMap → [ProofTree] → IO ()
 printProof _ _  _ _ [] = return ()
 printProof axioms subgoals goal rmap rtree = do
-  putStrLn "-- Metis Proof."
+  putStrLn ""
+  putStrLn $ replicate 78 '-'
+  putStrLn "-- Proof"
+  putStrLn $ replicate 78 '-'
+  putStrLn "\n"
   printProofSubgoal 0 axioms subgoals goal rmap rtree
   printProofGoal subgoals goal rmap rtree
 
