@@ -43,16 +43,18 @@ data Formula = BinOp Formula BinOp Formula    -- ^ Binary connective application
 
 -- TODO: use of PrettyPrinter
 instance Show Formula where
+  show ((:~:) f )            = "(" ++ "¬" ++ show f ++ ")"
   show (BinOp f₁ (:=>:) f₂)  = "(" ++ show f₁ ++ "⇒" ++ show f₂ ++ ")"
   show (BinOp f₁ (:<=>:) f₂) = "(" ++ show f₁ ++ "⇔" ++ show f₂ ++ ")"
   show (BinOp f₁ op f₂)      = "(" ++ show f₁ ++ show op ++ show f₂ ++ ")"
   show (InfixPred t₁ r t₂)   = "(" ++ show t₁ ++ show r  ++ show t₂ ++ ")"
   show (PredApp (AtomicWord "$false") []) = "⊥"
   show (PredApp (AtomicWord "$true")  []) = "⊤"
-  show (PredApp ρ []) = show ρ
+  show (PredApp (AtomicWord p)  [])       = show p
   show (PredApp ρ ϕ ) = "(" ++ show ρ ++ ":" ++ show ϕ ++ "⇒ ⊤" ++ ")"
-  show ((:~:)f )      = "(" ++ "¬" ++ show f ++ ")"
-
+  show (Quant     All []     _ ) = "-- not supported yet."
+  show (Quant     All _      _ ) = "-- not supported yet."
+  show (Quant     Exists _   _ ) = "-- not supported yet."
 
 -- | 'freeVarsF' 'f', returns a 'Set' of all free variables of 'f'.
 freeVarsF ∷ Formula → Set V
