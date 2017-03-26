@@ -122,12 +122,15 @@ src/TSTP/Lexer.hs
 src/TSTP/Parser.hs
 cnf*
 
+*.dvi
 *.fdb_latexmk
 *.fls
 *.log
+*.lol
+*.nav
 *.out
 *.pdf
-*.dvi
+*.snm
 *.soc
 *.synctex.gz
-*.lol
+*.toc
