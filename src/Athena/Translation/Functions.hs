@@ -146,7 +146,7 @@ printSubGoals subgoals = putStrLn $
 printPreamble ∷ Int → IO ()
 printPreamble n = do
   version <- progNameVersion
-  putStrLn $ "\n-- Athena v" ++ version ++ " reconstructs this proof.\n"
+  putStrLn $ "\n-- " ++ version ++ " reconstructed this proof.\n"
   putStrLn $ "open import Data.Prop " ++ show n ++ " public"
   putStrLn $ "open import ATP.Metis " ++ show n ++ " public\n"
 
