@@ -57,6 +57,7 @@ clean :
 	@find . -name "cnf*" -delete
 	@find . -name "saturation*" -delete
 	@find . -name "*.tstp" -delete
+	@find . -name "*.agda" -delete
 	@make --directory test/prop-pack clean
 	@rm -rf dist
 
@@ -71,11 +72,20 @@ tests :
 
 .PHONY : problems
 problems :
-	- git submodule init
-	- git submodule update
-	- make --directory test/prop-pack solutions
+	git submodule init
+	git submodule update
+	make --directory test/prop-pack solutions
 
 .PHONY : update-problems
 update-problems :
-	- git submodule update --remote
-	- make --directory test/prop-pack solutions
+	git submodule update --remote
+	make --directory test/prop-pack solutions
+
+.PHONY : prove
+prove :
+	@echo "Generating Agda files"
+	@echo "====================="
+	@find test/prop-pack/problems \
+		-type f -name "*.tstp" \
+		-print \
+		-exec sh -c "athena {}" \;;
