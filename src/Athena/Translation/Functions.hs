@@ -321,9 +321,10 @@ printSteps _ n [Leaf Conjecture gname] _ _ _ =
     [ getIdent n , gname , "\n"
     ]
 
+printSteps sname n [Leaf Axiom gname] _ _ _ =
   concat
     [ getIdent n , "weaken (atp-neg " , stdName sname , ") $\n"
-    , getIdent (n+1) , "(assume {Γ = ∅} " , stdName gname , ")\n"
+    , getIdent (n+1) , "(assume {Γ = ∅} " , gname , ")\n"
     ]
 printSteps _ n _ _ _ _ = getIdent n ++ "? -- no supported yet\n"
 
