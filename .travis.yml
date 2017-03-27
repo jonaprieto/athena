@@ -63,6 +63,7 @@ install:
  - cabal install hlint
  - cabal install shelltestrunner
  - cabal install agda
+ - pwd
  - cd /home/travis/
  - mkdir -p .agda
  - cd .agda
@@ -81,7 +82,7 @@ install:
 
  - git clone https://github.com/jonaprieto/agda-metis.git
  - echo "/home/travis/agda-metis/agda-metis.agda-lib" >> /home/travis/.agda/libraries
-
+ - cd /home/travis/jonaprieto/athena
 
 
 # Here starts the actual work to be performed for the package under test;
