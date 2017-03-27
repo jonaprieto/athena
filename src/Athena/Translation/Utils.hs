@@ -23,7 +23,7 @@ getIdent ∷ Ident → String
 getIdent n = concat $ replicate (2 * n) " "
 
 stdName ∷ String → String
-stdName nm = map subIndex . concat $ splitOn "-" nm
+stdName name = map subIndex . concat $ splitOn "-" name
 
 subIndex ∷ Char → Char
 subIndex '0' = '₀'

@@ -160,8 +160,8 @@ printPremises premises = do
   putStrLn "Γ : Ctxt"
   case premises of
     []  → putStrLn "Γ = ∅"
-    [p] → putStrLn $ "Γ = [ " ++ name p ++ " ]"
-    ps  → putStrLn $ "Γ = ∅ , " ++ intercalate " , " (map name ps)
+    [p] → putStrLn $ "Γ = [ " ++ stdName (name p) ++ " ]"
+    ps  → putStrLn $ "Γ = ∅ , " ++ intercalate " , " (map (stdName . name) ps)
   putStrLn ""
 
 
@@ -173,7 +173,7 @@ printInnerFormula n dict tag ctxt =
       let fm ∷ Maybe F
           fm = Map.lookup tag dict
       let strFm ∷ String
-          strFm = show . formula $ fromJust fm
+          strFm = stdName . show . formula $ fromJust fm
       concat [ getIdent n , "-- " , ctxt , " ⊢ " , strFm ]
     else ""
 
@@ -321,10 +321,9 @@ printSteps _ n [Leaf Conjecture gname] _ _ _ =
     [ getIdent n , gname , "\n"
     ]
 
-printSteps sname n [Leaf Axiom gname] _ _ _ =
   concat
     [ getIdent n , "weaken (atp-neg " , stdName sname , ") $\n"
-    , getIdent (n+1) , "(assume {Γ = ∅} " , gname , ")\n"
+    , getIdent (n+1) , "(assume {Γ = ∅} " , stdName gname , ")\n"
     ]
 printSteps _ n _ _ _ _ = getIdent n ++ "? -- no supported yet\n"
 
