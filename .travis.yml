@@ -62,6 +62,26 @@ install:
  - make install-fix-whitespace
  - cabal install hlint
  - cabal install shelltestrunner
+ - cabal install agda
+ - cd /home/travis/
+ - mkdir -p .agda
+ - cd .agda
+ - touch libraries
+ - touch defaults
+ - cd /home/travis/.agda
+ - git clone https://github.com/agda/agda-stdlib.git
+ - echo "standard-library" >> /home/travis/.agda/defaults
+ - echo "/home/travis/agda-stdlib/standard-library.agda-lib" >> /home/travis/.agda/libraries
+
+ - git clone http://github.com/jonaprieto/athena.git
+ - echo "/home/travis/athena/test/test.agda-lib" >> /home/travis/.agda/libraries
+
+ - git clone https://github.com/jonaprieto/agda-prop.git
+ - echo "/home/travis/agda-prop/agda-prop.agda-lib" >> /home/travis/.agda/libraries
+
+ - git clone https://github.com/jonaprieto/agda-metis.git
+ - echo "/home/travis/agda-metis/agda-metis.agda-lib" >> /home/travis/.agda/libraries
+
 
 
 # Here starts the actual work to be performed for the package under test;
@@ -79,3 +99,6 @@ script:
 # `cabal install --force-reinstalls dist/*-*.tar.gz`
  - SRC_TGZ=$(cabal info . | awk '{print $2;exit}').tar.gz &&
    (cd dist && cabal install --force-reinstalls "$SRC_TGZ")
+# testing the reconstruction
+ - make problems
+ - make test-basic
