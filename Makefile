@@ -101,10 +101,9 @@ check :
 
 .PHONY : test-basic
 test-basic :
-		@echo "Testing prop-pack/problems/basic"
-		@echo "================================="
+		@echo "Testing test/prop-pack/problems/basic"
+		@echo "====================================="
 		@cd test && find prop-pack/problems/basic \
 		-type f -name "*.agda" \
 		-print \
 		-exec sh -c "agda {} --verbose=0" \;;
-

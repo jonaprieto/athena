@@ -21,8 +21,8 @@ atpConjunct (BinOp f₁ (:&:) f₂) g
     next ∷ String
     next = atpConjunct f₁ g
 
-atpConjunct BinOp{} _       = "-- case 1. \n"
-atpConjunct InfixPred{} _   = "-- case 2. \n"
-atpConjunct (PredApp _ _) _ = "-- case 3. \n"
-atpConjunct Quant{} _       = "-- case 4. \n"
-atpConjunct ((:~:) _) _     = "-- case 5. \n"
+atpConjunct BinOp{} _       = "-- case 1.\n"
+atpConjunct InfixPred{} _   = "-- case 2.\n"
+atpConjunct (PredApp _ _) _ = "-- case 3.\n"
+atpConjunct Quant{} _       = "-- case 4.\n"
+atpConjunct ((:~:) _) _     = "-- case 5.\n"
