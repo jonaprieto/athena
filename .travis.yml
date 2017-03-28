@@ -57,12 +57,48 @@ install:
       cp -a $HOME/.ghc $HOME/.cabsnap/ghc;
       cp -a $HOME/.cabal/lib $HOME/.cabal/share $HOME/.cabal/bin installplan.txt $HOME/.cabsnap/;
    fi
+
+ # Haskell tools.
  - cabal install cabal-install
  - cabal install cpphs-1.20.2
  - make install-fix-whitespace
  - cabal install hlint
  - cabal install shelltestrunner
 
+ # Installing Agda
+ - cabal install agda
+ - cd /home/travis/
+ - mkdir -p .agda
+ - cd .agda
+ - touch libraries
+ - touch defaults
+ - cd /home/travis/
+
+ # Installing Agda standard library.
+ - git clone https://github.com/agda/agda-stdlib.git
+ - echo "standard-library" >> /home/travis/.agda/defaults
+ - echo "/home/travis/agda-stdlib/standard-library.agda-lib" >> /home/travis/.agda/libraries
+
+ # installing agda-prop library.
+ - git clone https://github.com/jonaprieto/agda-prop.git
+ - echo "/home/travis/agda-prop/agda-prop.agda-lib" >> /home/travis/.agda/libraries
+
+ # installing agda-metis library.
+ - git clone https://github.com/jonaprieto/agda-metis.git
+ - echo "/home/travis/agda-metis/agda-metis.agda-lib" >> /home/travis/.agda/libraries
+
+ # installing online-atps.
+ - cd /home/travis
+ - git clone https://github.com/jonaprieto/online-atps.git
+ - cd online-atps
+ - cabal install
+ - export ATP="online-atps --atp=metis"
+
+ # installing to test library for the reconstruction test.
+ - git clone http://github.com/jonaprieto/athena.git
+ - echo "/home/travis/build/jonaprieto/athena/test/test.agda-lib" >> /home/travis/.agda/libraries
+
+ - cd /home/travis/build/jonaprieto/athena
 
 # Here starts the actual work to be performed for the package under test;
 # any command which exits with a non-zero exit code causes the build to fail.
@@ -75,7 +111,20 @@ script:
  - cabal sdist -v   # tests that a source-distribution can be generated
 
  # Check that the resulting source distribution can be built & installed.
-# If there are no other `.tar.gz` files in `dist`, this can be even simpler:
-# `cabal install --force-reinstalls dist/*-*.tar.gz`
+ # If there are no other `.tar.gz` files in `dist`, this can be even simpler:
+ # `cabal install --force-reinstalls dist/*-*.tar.gz`
  - SRC_TGZ=$(cabal info . | awk '{print $2;exit}').tar.gz &&
    (cd dist && cabal install --force-reinstalls "$SRC_TGZ")
+
+# testing the reconstruction
+ - make hlint
+ # - make check-whitespace
+
+ - export ATP="online-atps --atp=metis"
+ - echo $ATP
+ - cat test/prop-pack/Makefile
+ - make problems
+ - make update-problems
+
+ - make reconstruct
+ - make test-basic
