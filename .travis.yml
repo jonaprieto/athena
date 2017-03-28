@@ -86,10 +86,6 @@ install:
  # installing agda-metis library.
  - git clone https://github.com/jonaprieto/agda-metis.git
  - echo "/home/travis/agda-metis/agda-metis.agda-lib" >> /home/travis/.agda/libraries
-<<<<<<< HEAD
- - cd /home/travis/build/jonaprieto/athena
-=======
->>>>>>> 31f8353bb6ab0f45510227b8547141ef06725447
 
  # installing online-atps.
  - cd /home/travis
@@ -115,15 +111,20 @@ script:
  - cabal sdist -v   # tests that a source-distribution can be generated
 
  # Check that the resulting source distribution can be built & installed.
-# If there are no other `.tar.gz` files in `dist`, this can be even simpler:
-# `cabal install --force-reinstalls dist/*-*.tar.gz`
+ # If there are no other `.tar.gz` files in `dist`, this can be even simpler:
+ # `cabal install --force-reinstalls dist/*-*.tar.gz`
  - SRC_TGZ=$(cabal info . | awk '{print $2;exit}').tar.gz &&
    (cd dist && cabal install --force-reinstalls "$SRC_TGZ")
 
 # testing the reconstruction
  - make hlint
  # - make check-whitespace
- 
+
+ - export ATP="online-atps --atp=metis"
+ - echo $ATP
+ - cat test/prop-pack/Makefile
  - make problems
+ - make update-problems
+
  - make reconstruct
  - make test-basic
