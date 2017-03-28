@@ -70,10 +70,12 @@ tests :
 	- make haddock
 	- @echo "$@ succeeded!"
 
+.ONESHELL :
 .PHONY : problems
 problems :
 	git submodule init
 	git submodule update
+	export ATP="online-atps --atp=metis"
 	make --directory test/prop-pack solutions
 
 .PHONY : update-problems

@@ -119,6 +119,7 @@ script:
 # testing the reconstruction
  - make hlint
  # - make check-whitespace
+ 
  - make problems
  - make reconstruct
  - make test-basic
