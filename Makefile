@@ -70,10 +70,13 @@ tests :
 	- make haddock
 	- @echo "$@ succeeded!"
 
+.ONESHELL :
 .PHONY : problems
 problems :
 	git submodule init
 	git submodule update
+	export ATP="online-atps --atp=metis"
+	cat test/prop-pack/Makefile
 	make --directory test/prop-pack solutions
 
 .PHONY : update-problems
@@ -101,10 +104,9 @@ check :
 
 .PHONY : test-basic
 test-basic :
-		@echo "Testing prop-pack/problems/basic"
-		@echo "================================="
+		@echo "Testing test/prop-pack/problems/basic"
+		@echo "====================================="
 		@cd test && find prop-pack/problems/basic \
 		-type f -name "*.agda" \
 		-print \
 		-exec sh -c "agda {} --verbose=0" \;;
-
