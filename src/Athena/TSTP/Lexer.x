@@ -1,6 +1,7 @@
 {
 
 -- | Athena.TSTP.Lexer module
+-- Adapted from https://github.com/agomezl/tstp2agda.
 
 {-# OPTIONS -fno-warn-incomplete-patterns       #-}
 {-# OPTIONS -fno-warn-incomplete-uni-patterns   #-}

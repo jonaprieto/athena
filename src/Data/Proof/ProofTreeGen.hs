@@ -1,5 +1,6 @@
 
 -- | Data.Proof.ProofTreeGen module.
+-- Adapted from https://github.com/agomezl/tstp2agda.
 
 module Data.Proof.ProofTreeGen where
 

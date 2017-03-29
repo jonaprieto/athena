@@ -1,5 +1,6 @@
 
 -- | Data.TSTP module.
+-- Adapted from https://github.com/agomezl/tstp2agda.
 
 {-# LANGUAGE FlexibleInstances    #-}
 {-# LANGUAGE UnicodeSyntax        #-}

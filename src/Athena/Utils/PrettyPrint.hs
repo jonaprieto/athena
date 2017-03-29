@@ -1,5 +1,6 @@
 
 -- | Athena.Utils.PrettyPrint module.
+-- Adapted from https://github.com/asr/apia.
 
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE UnicodeSyntax     #-}

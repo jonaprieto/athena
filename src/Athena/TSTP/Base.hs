@@ -1,5 +1,6 @@
 
 -- | Athena.TSTP.Base module.
+-- Adapted from https://github.com/agomezl/tstp2agda.
 
 {-# OPTIONS_HADDOCK hide   #-}
 {-# LANGUAGE UnicodeSyntax #-}

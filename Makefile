@@ -1,7 +1,5 @@
 SRC_DIR=src
 
-# Requires HLint >= 1.9.36 and run `cabal build` or `cabal install`
-# before.
 .PHONY : hlint
 hlint :
 	hlint --color=never Setup.hs
@@ -64,11 +62,11 @@ clean :
 
 .PHONY : tests
 tests :
-	- make clean
-	- make hlint
-	- make check-whitespace
-	- make haddock
-	- @echo "$@ succeeded!"
+	make clean
+	make hlint
+	make check-whitespace
+	make haddock
+	@echo "$@ succeeded!"
 
 .ONESHELL :
 .PHONY : problems
@@ -104,9 +102,9 @@ check :
 
 .PHONY : test-basic
 test-basic :
-		@echo "Testing test/prop-pack/problems/basic"
-		@echo "====================================="
-		@cd test && find prop-pack/problems/basic \
-		-type f -name "*.agda" \
-		-print \
-		-exec sh -c "agda {} --verbose=0" \;;
+	@e“cho "Testing test/prop-pack/problems/basic"
+	@echo "====================================="
+	@cd test && find prop-pack/problems/basic \
+	-type f -name "*.agda" \
+	-print \
+	-exec” sh -c "agda {} --verbose=0" \;;
