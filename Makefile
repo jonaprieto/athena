@@ -1,4 +1,5 @@
-SRC_DIR=src
+SRC_DIR = src
+ATP     = "online-atps --atp=metis"
 
 .PHONY : hlint
 hlint :

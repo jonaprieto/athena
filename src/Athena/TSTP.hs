@@ -1,8 +1,9 @@
-
 -- | Athena.TSTP module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
-{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE UnicodeSyntax       #-}
+
 
 module Athena.TSTP
   ( parse
@@ -15,6 +16,8 @@ import  Athena.TSTP.Lexer  ( alexScanTokens )
 import  Athena.TSTP.Parser ( parseTSTP )
 
 import  Data.TSTP.F
+
+import Data.List           ( isPrefixOf )
 
 ------------------------------------------------------------------------------
 
@@ -44,4 +47,10 @@ parse ∷ String → [F]
 parse = parseTSTP . fmap snd . alexScanTokens
 
 parseFile ∷ FilePath → IO [F]
-parseFile path = parse <$> readFile path
+parseFile path = do
+  contents ∷ String ← readFile path
+
+  let vlines ∷ String
+      vlines = unlines . filter (not . isPrefixOf "%") . lines $ contents
+
+  return $ parse vlines
