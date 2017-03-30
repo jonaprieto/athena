@@ -117,6 +117,4 @@ script:
 
 # testing the reconstruction
  - make clean
- - make problems
- - make reconstruct
- - make test-basic
+ - make basic

@@ -99,20 +99,20 @@ check :
 		-print \
 		-exec sh -c "agda {} --verbose=0" \;;
 
-.ONESHELL :
+# More specific targets:
+
 .PHONY : basic
 basic :
-	@cd test/prop-pack
 	@make --directory test/prop-pack basic
 	@echo "Reconstructing test/prop-pack/problems/basic TSTP files"
 	@echo "======================================================="
-	@find problems/basic \
+	@cd test/prop-pack && find problems/basic \
 		-type f -name "*.tstp" \
 		-print \
 		-exec sh -c "athena {}" \;;
 	@echo "Type-cheking test/prop-pack/problems/basic files"
 	@echo "================================================"
-	@find problems/basic \
-	-type f -name "*.agda" \
-	-print \
-	-exec sh -c "agda {} --verbose=0" \;;
+	@cd test/prop-pack && find problems/basic \
+		-type f -name "*.agda" \
+		-print \
+		-exec sh -c "agda {} --verbose=0" \;;
