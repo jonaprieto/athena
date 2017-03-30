@@ -79,10 +79,10 @@ problems :
 .ONESHELL :
 .PHONY : reconstruct
 reconstruct :
-	@cd test/prop-pack
+	@cd test/prop-pack/problems/
 	@echo "Generating Agda files"
 	@echo "====================="
-	@find problems \
+	@find . \
 		-type f -name "*.tstp" \
 		-print \
 		-exec sh -c "athena {}" \;;
@@ -91,21 +91,19 @@ reconstruct :
 .ONESHELL :
 .PHONY : check-proofs
 check :
-	@cd test/prop-pack
+	@cd test/prop-pack/problems/
 	@echo "Checking Agda files"
 	@echo "==================="
-	@find problems \
+	@find . \
 		-type f -name "*.agda" \
 		-print \
 		-exec sh -c "agda {} --verbose=0" \;;
 
-.ONESHELL :
 .PHONY : test-basic
 test-basic :
-	@cd test/prop-pack
 	@echo "Testing test/prop-pack/problems/basic"
 	@echo "====================================="
-	@find problems/basic \
+	@cd test/prop-pack && find problems/basic \
 	-type f -name "*.agda" \
 	-print \
 	-exec sh -c "agda {} --verbose=0" \;;

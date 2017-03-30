@@ -324,15 +324,15 @@ printSteps _ n [Leaf Conjecture gname] _ _ _ =
 printSteps sname n [Leaf Axiom gname] _ _ _ =
   concat
     [ getIdent n , "weaken (atp-neg " , stdName sname , ") $\n"
-    , getIdent (n+1) , "(assume {Γ = ∅} " , gname , ")\n"
+    , getIdent (n+1) , "(assume {Γ = ∅} " , stdName gname , ")\n"
     ]
 printSteps _ n _ _ _ _ = getIdent n ++ "? -- no supported yet\n"
 
 
 andIntroSubgoals ∷ Ident → Int → [F] → String
-andIntroSubgoals _ _ []       = ""
-andIntroSubgoals m n [_]      = getIdent m ++ "subgoal" ++ stdName (show n)
-andIntroSubgoals m n [_,_]    =
+andIntroSubgoals _ _ []    = ""
+andIntroSubgoals m n [_]   = getIdent m ++ "subgoal" ++ stdName (show n)
+andIntroSubgoals m n [_,_] =
   concat
     [ getIdent m , "subgoal" , stdName (show n) , "\n"
     , getIdent m , "subgoal" , stdName (show (n+1)) , "\n"
