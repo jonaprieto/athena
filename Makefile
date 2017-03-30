@@ -74,8 +74,6 @@ tests :
 problems :
 	git submodule init
 	git submodule update
-	export ATP="online-atps --atp=metis"
-	cat test/prop-pack/Makefile
 	make --directory test/prop-pack solutions
 
 .PHONY : update-problems

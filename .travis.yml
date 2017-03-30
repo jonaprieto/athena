@@ -92,7 +92,6 @@ install:
  - git clone https://github.com/jonaprieto/online-atps.git
  - cd online-atps
  - cabal install
- - export ATP="online-atps --atp=metis"
 
  # installing to test library for the reconstruction test.
  - git clone http://github.com/jonaprieto/athena.git
@@ -115,16 +114,10 @@ script:
  # `cabal install --force-reinstalls dist/*-*.tar.gz`
  - SRC_TGZ=$(cabal info . | awk '{print $2;exit}').tar.gz &&
    (cd dist && cabal install --force-reinstalls "$SRC_TGZ")
+ - make hlint
 
 # testing the reconstruction
- - make hlint
- # - make check-whitespace
-
- - export ATP="online-atps --atp=metis"
- - echo $ATP
- - cat test/prop-pack/Makefile
+ - make clean
  - make problems
- - make update-problems
-
  - make reconstruct
  - make test-basic
