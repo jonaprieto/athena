@@ -1,5 +1,6 @@
 
 -- | Data.TSTP.Quant module.
+-- Adapted from https://github.com/agomezl/tstp2agda.
 
 {-# LANGUAGE UnicodeSyntax #-}
 

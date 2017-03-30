@@ -1,5 +1,6 @@
 
 -- | Data.TSTP.Term module.
+-- Adapted from https://github.com/agomezl/tstp2agda.
 
 module Data.TSTP.Term where
 

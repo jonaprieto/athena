@@ -12,12 +12,12 @@ module Athena.TSTP
 
 ------------------------------------------------------------------------------
 
-import  Athena.TSTP.Lexer  ( alexScanTokens )
-import  Athena.TSTP.Parser ( parseTSTP )
+import Athena.TSTP.Lexer  ( alexScanTokens )
+import Athena.TSTP.Parser ( parseTSTP )
 
-import  Data.TSTP.F
+import Data.TSTP.F
 
-import Data.List           ( isPrefixOf )
+import Data.List          ( isPrefixOf )
 
 ------------------------------------------------------------------------------
 

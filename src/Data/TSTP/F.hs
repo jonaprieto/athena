@@ -1,5 +1,6 @@
 
 -- | Data.TSTP.F module.
+-- Adapted from https://github.com/agomezl/tstp2agda.
 
 {-# LANGUAGE UnicodeSyntax #-}
 
@@ -7,9 +8,9 @@ module Data.TSTP.F where
 
 ------------------------------------------------------------------------------
 
-import Data.TSTP.Formula    ( Formula(..) )
-import Data.TSTP.Role       ( Role(..) )
-import Data.TSTP.Source     ( Source(..) )
+import Data.TSTP.Formula ( Formula(..) )
+import Data.TSTP.Role    ( Role(..) )
+import Data.TSTP.Source  ( Source(..) )
 
 ------------------------------------------------------------------------------
 

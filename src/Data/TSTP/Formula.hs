@@ -1,5 +1,6 @@
 
 -- | Data.TSTP.Formula module.
+-- Adapted from https://github.com/agomezl/tstp2agda.
 
 {-# OPTIONS -fno-warn-incomplete-patterns #-}
 {-# LANGUAGE UnicodeSyntax                #-}
@@ -27,11 +28,6 @@ import Data.TSTP.Term       ( Term(..))
 import Data.TSTP.V          ( V(..) )
 
 ------------------------------------------------------------------------------
-
--- The following code is based on:
--- https://github.com/DanielSchuessler/logic-TPTP
--- and is just a simplified version of the the datatypes
--- (without the Indirect composite)
 
 -- | first-order logic formula.
 data Formula = BinOp Formula BinOp Formula    -- ^ Binary connective application

@@ -1,5 +1,6 @@
 
 -- | Data.TSTP.Status module.
+-- Adapted from https://github.com/agomezl/tstp2agda.
 
 module Data.TSTP.Status where
 

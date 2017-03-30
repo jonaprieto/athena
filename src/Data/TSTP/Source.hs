@@ -1,5 +1,6 @@
 
 -- | Data.TSTP.Source module.
+-- Adapted from https://github.com/agomezl/tstp2agda.
 
 module Data.TSTP.Source where
 
