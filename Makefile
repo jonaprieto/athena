@@ -72,13 +72,7 @@ tests :
 .ONESHELL :
 .PHONY : problems
 problems :
-	git submodule init
-	git submodule update
-	make --directory test/prop-pack solutions
-
-.PHONY : update-problems
-update-problems :
-	git submodule update --remote
+	git submodule update --init --recursive
 	make --directory test/prop-pack solutions
 
 .PHONY : reconstruct

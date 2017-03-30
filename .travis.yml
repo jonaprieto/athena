@@ -94,7 +94,6 @@ install:
  - cabal install
 
  # installing to test library for the reconstruction test.
- - git clone http://github.com/jonaprieto/athena.git
  - echo "/home/travis/build/jonaprieto/athena/test/test.agda-lib" >> /home/travis/.agda/libraries
 
  - cd /home/travis/build/jonaprieto/athena
