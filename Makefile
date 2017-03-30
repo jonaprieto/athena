@@ -72,32 +72,40 @@ tests :
 .ONESHELL :
 .PHONY : problems
 problems :
-	git submodule update --init --recursive
-	make --directory test/prop-pack solutions
+	@cd test/prop-pack
+	@git submodule update --init --recursive
+	@make --directory test/prop-pack solutions
 
+.ONESHELL :
 .PHONY : reconstruct
 reconstruct :
+	@cd test/prop-pack
 	@echo "Generating Agda files"
 	@echo "====================="
-	@find test/prop-pack/problems \
+	@find problems \
 		-type f -name "*.tstp" \
 		-print \
 		-exec sh -c "athena {}" \;;
 
+
+.ONESHELL :
 .PHONY : check-proofs
 check :
+	@cd test/prop-pack
 	@echo "Checking Agda files"
 	@echo "==================="
-	@cd test && find prop-pack/problems \
+	@find problems \
 		-type f -name "*.agda" \
 		-print \
 		-exec sh -c "agda {} --verbose=0" \;;
 
+.ONESHELL :
 .PHONY : test-basic
 test-basic :
+	@cd test/prop-pack
 	@echo "Testing test/prop-pack/problems/basic"
 	@echo "====================================="
-	@cd test && find prop-pack/problems/basic \
+	@find problems/basic \
 	-type f -name "*.agda" \
 	-print \
 	-exec sh -c "agda {} --verbose=0" \;;
