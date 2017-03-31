@@ -34,3 +34,6 @@ instance Pretty Term where
   pretty (DistinctObjectTerm t )      = pretty t
   pretty (FunApp (AtomicWord w ) [])  = pretty w
   pretty (FunApp (AtomicWord _ ) _)   = error "Don't really know what this is"
+
+instance Pretty [Term] where
+  pretty = hcat . map pretty
