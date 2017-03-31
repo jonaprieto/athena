@@ -17,7 +17,7 @@ Athena was tested with:
 To install Metis ATP, we recommend use a client of TPTP World:
 * [OnlineATPs][online-atps]
 
-But you would probably want to install locally [Metis][metis] ATP.
+But you would probably want to install [Metis][metis] ATP locally.
 
 Lastly, Athena needs these Agda libraries:
 
