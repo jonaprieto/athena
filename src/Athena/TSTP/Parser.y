@@ -431,12 +431,6 @@ info_items : info_item                    {[$1]}
 info_item :: {Info}
 info_item : formula_item     {$1}
           | inference_item   {$1}
-          | general_function {$1}
-
-
-general_function :: {Info}
-general_function :  atomic_word lp general_terms rp { Function (readWord $1) $3}
-
 
 formula_item :: {Info}
 formula_item : description_item {$1}
