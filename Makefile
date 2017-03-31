@@ -1,5 +1,14 @@
-SRC_DIR = src
-ATP     = "online-atps --atp=metis"
+SHELL    =bash
+SRC_DIR  =src
+TEST_DIR =src
+ATP      ?=online-atps --atp=metis
+
+.PHONY : default
+default : install-bin
+
+.PHONY : install-bin
+install-bin :
+	cabal install --disable-documentation
 
 .PHONY : hlint
 hlint :
@@ -20,13 +29,6 @@ haddock :
 								--hyperlink-source
 	@echo "$@ succeeded!"
 
-.PHONY : install-bin
-install-bin :
-	- cabal configure --enable-tests --enable-benchmarks -v2
-	- cabal build
-	- cabal install --disable-documentation
-	- cabal sdist
-
 .PHONY : install-fix-whitespace
 install-fix-whitespace :
 	cd src/fix-whitespace && cabal install
@@ -45,58 +47,56 @@ TODO :
 	| xargs grep -I -s 'TODO' \
 	| sort
 
+
+
+
 .PHONY : clean
 clean :
-	@rm -f ${SRC_DIR}/TSTP/Lexer.hs
-	@rm -f ${SRC_DIR}/TSTP/Lexer.hi
-	@rm -f ${SRC_DIR}/TSTP/Lexer.o
-	@rm -f ${SRC_DIR}/TSTP/Parser.hs
-	@find ${SRC_DIR} -regex ".*\(\.hi\|\.o\|\.agdai\)$$" -delete
-	@find ${SRC_DIR} -name "cnf*" -delete
-	@find . -name "cnf*" -delete
-	@find . -name "saturation*" -delete
-	@find . -name "*.tstp" -delete
-	@find . -name "*.agda" -delete
-	@make --directory test/prop-pack clean
-	@rm -rf dist
+	rm -f ${SRC_DIR}/TSTP/Lexer.hs
+	rm -f ${SRC_DIR}/TSTP/Lexer.hi
+	rm -f ${SRC_DIR}/TSTP/Lexer.o
+	rm -f ${SRC_DIR}/TSTP/Parser.hs
+	find ${SRC_DIR} -regex ".*\(\.hi\|\.o\|\.agdai\)$$" -delete
+	find ${SRC_DIR} -name "cnf*" -delete
+	find . -name "cnf*" -delete
+	find . -name "saturation*" -delete
+	find . -name "*.tstp" -delete
+	find . -name "*.agda" -delete
+	make --directory test/prop-pack clean
+	rm -rf dist
 
 
-.PHONY : tests
-tests :
-	make clean
-	make hlint
-	make check-whitespace
-	make haddock
-	@echo "$@ succeeded!"
+.PHONY : prop-pack
+prop-pack :
+	@echo "==================================================================="
+	@echo "============ Updating repository of problems Prop-Pack ============"
+	@echo "==================================================================="
+	git submodule update --init test/prop-pack
 
-.ONESHELL :
 .PHONY : problems
-problems :
-	@echo "Updating prop-pack repository"
-	@echo "============================="
-	@cd test/prop-pack && git submodule update --init --recursive
-	@echo "Generating TSTP files of proofs"
-	@echo "==============================="
-	@make --directory test/prop-pack solutions
+problems : clean prop-pack
+	@echo "==================================================================="
+	@echo "================== Generating TSTP files of proofs ================"
+	@echo "==================================================================="
+	make --directory test/prop-pack solutions
 
 .PHONY : reconstruct
-reconstruct :
-	@echo "Generating Agda files"
-	@echo "====================="
-	@cd test/prop-pack/problems && \
-		find . \
-			-type f \
-			-name "*.tstp" \
-			-print \
-			-exec sh -c "athena {}" \;;
+reconstruct : problems
+	@echo "==================================================================="
+	@echo "====================== Generating Agda files ======================"
+	@echo "==================================================================="
+	@find test/prop-pack/problems \
+		-type f \
+		-name "*.tstp" \
+		-print \
+		-exec sh -c "athena {}" \;;
 
 .PHONY : check
-check :
-	@make problems
-	@make reconstruct
-	@echo "Checking Agda files"
-	@echo "==================="
-	@cd test/prop-pack/problems &&
+check : problems reconstruct
+	@echo "==================================================================="
+	@echo "================== Type-checking Agda files ======================="
+	@echo "==================================================================="
+	@cd test/prop-pack/problems && \
 		find . \
 			-type f \
 			-name "*.agda" \
@@ -104,21 +104,24 @@ check :
 			-exec sh -c "agda {} --verbose=0" \;;
 
 .PHONY : basic
-basic :
-	@cd test/prop-pack && git submodule update --init --recursive
+basic : clean prop-pack
+	@echo "==================================================================="
+	@echo "======= Generating TSTP files of test/prop-pack/basic files ======="
+	@echo "==================================================================="
 	@make --directory test/prop-pack basic
-	@echo "Reconstructing test/prop-pack/problems/basic TSTP files"
-	@echo "======================================================="
+	@echo "==================================================================="
+	@echo "========= Generating Agda files from test/prop-pack/basic ========="
+	@echo "==================================================================="
+	@find test/prop-pack/problems/basic \
+		-type f \
+		-name "*.tstp" \
+		-print \
+		-exec sh -c "athena {}" \;;
+	@echo "==================================================================="
+	@echo "========= Type-checking test/prop-pack/basic Agda files ==========="
+	@echo "==================================================================="
 	@cd test/prop-pack/problems/basic && \
 		find . \
-			-type f \
-			-name "*.tstp" \
-			-print \
-			-exec sh -c "athena {}" \;;
-	@echo "Type-cheking test/prop-pack/problems/basic files"
-	@echo "================================================"
-	@cd test/prop-pack/problems/basic && \
-		find problems/basic \
 			-type f \
 			-name "*.agda" \
 			-print \

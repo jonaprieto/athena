@@ -116,5 +116,4 @@ script:
  - make hlint
 
 # testing the reconstruction
- - make clean
  - make basic
