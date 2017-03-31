@@ -51,6 +51,7 @@ $viewable_char      = [$printable_char\n]
 tokens :-
 
   $white+                                      ;
+  "%".*                                        ;  -- TPTP or TSTP comment line
   "("                                          { withPos $ const LP }
   "["                                          { withPos $ const Lbrack }
   "]"                                          { withPos $ const Rbrack }
@@ -59,7 +60,7 @@ tokens :-
   "!="|"="|"<=>"|"<="|"=>"|"<~>"|"&"|"|"
       |"~|"|"~&"|"!"|"?"|":"|"~"               { withPos $ Oper }
   "."                                          { withPos $ const Dot }
-  ("%"|"#")$printable_char*                    { withPos $ CommentToken } -- comment line
+  "#"$printable_char*                          { withPos $ CommentToken } -- comment line
   "/*" @not_star_slash "*"("*"*)"/"            { withPos $ CommentToken } -- comment block
   "SZS"$printable_char*                        ;
   @metis_sep                                   ;
