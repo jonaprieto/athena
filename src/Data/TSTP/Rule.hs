@@ -17,4 +17,4 @@ data Rule = Canonicalize
           | Skolemize
           | Specialize
           | Strip
-          deriving (Eq, Ord, Show, Read)
+          deriving (Eq, Ord, Read, Show)

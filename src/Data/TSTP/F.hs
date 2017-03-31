@@ -8,9 +8,13 @@ module Data.TSTP.F where
 
 ------------------------------------------------------------------------------
 
+import Athena.Utils.PrettyPrint ( Pretty(pretty) )
+
 import Data.TSTP.Formula ( Formula(..) )
 import Data.TSTP.Role    ( Role(..) )
 import Data.TSTP.Source  ( Source(..) )
+
+import qualified Text.Show.Pretty as Pr
 
 ------------------------------------------------------------------------------
 
@@ -24,4 +28,7 @@ data F = F
   , role    ∷ Role
   , source  ∷ Source
   }
-  deriving (Eq, Ord, Show, Read)
+  deriving (Eq, Ord, Read, Show)
+
+instance Pretty F where
+  pretty = Pr.ppDoc

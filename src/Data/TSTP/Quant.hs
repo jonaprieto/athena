@@ -8,7 +8,15 @@ module Data.TSTP.Quant where
 
 ------------------------------------------------------------------------------
 
+import Athena.Utils.PrettyPrint ( Pretty(pretty) )
+
+------------------------------------------------------------------------------
+
 -- | Quantifier specification.
 data Quant = All    -- ^ ∀
            | Exists -- ^ ∃
-           deriving (Eq, Ord, Show, Read)
+           deriving (Eq, Ord, Read, Show)
+
+instance Pretty Quant where
+  pretty All    = pretty "∀"
+  pretty Exists = pretty "∃"

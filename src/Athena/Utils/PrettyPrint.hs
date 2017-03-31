@@ -8,9 +8,11 @@
 module Athena.Utils.PrettyPrint
   ( module Text.PrettyPrint.HughesPJ
   , cquotes
+  , cparentesis
   , Pretty ( pretty )
   , prettyShow
   , scquotes
+  , sparentesis
   , spaces
   , sspaces
   ) where
@@ -26,6 +28,10 @@ import Text.PrettyPrint.HughesPJ
 cquotes ∷ Doc → Doc
 cquotes d = char '‘' <> d <> char '’'
 
+-- | Wrap a document in parentesis (‘...’).
+cparentesis ∷ Doc → Doc
+cparentesis d = char '(' <> d <> char ')'
+
 -- | Wrap a document in spaces.
 spaces ∷ Doc → Doc
 spaces d = space <> d <> space
@@ -33,6 +39,10 @@ spaces d = space <> d <> space
 -- | Wrap a string in ‘...’.
 scquotes ∷ String → Doc
 scquotes = cquotes . text
+
+-- | Wrap a string in ‘...’.
+sparentesis ∷ String → Doc
+sparentesis = cparentesis . text
 
 -- | Wrap a string in spaces.
 sspaces ∷ String → Doc

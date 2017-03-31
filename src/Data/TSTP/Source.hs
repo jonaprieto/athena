@@ -28,7 +28,7 @@ data Source = Creator String [Info]
             | NoSource
             | Source String
             | Theory Theory [Info]
-            deriving (Eq, Ord, Show, Read)
+            deriving (Eq, Ord, Read, Show)
 
 data Info   = AssumptionR [String]
             | Description String
@@ -37,4 +37,4 @@ data Info   = AssumptionR [String]
             | IQuote String
             | Refutation Source
             | Status Status
-            deriving (Eq, Ord, Show, Read)
+            deriving (Eq, Ord, Read, Show)

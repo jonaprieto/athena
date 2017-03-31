@@ -8,9 +8,13 @@ module Data.TSTP.AtomicWord where
 
 ------------------------------------------------------------------------------
 
-newtype AtomicWord = AtomicWord String
-    deriving (Eq, Ord, Read)
+import Athena.Utils.PrettyPrint ( Pretty(pretty) )
 
-instance Show AtomicWord where
-  show (AtomicWord "$false") = "⊥"
-  show (AtomicWord a) = a
+------------------------------------------------------------------------------
+
+newtype AtomicWord = AtomicWord String
+    deriving (Eq, Ord, Read, Show)
+
+instance Pretty AtomicWord where
+  pretty (AtomicWord "$false") = pretty "⊥"
+  pretty (AtomicWord a) = pretty a
