@@ -2,7 +2,6 @@
 -- | Data.TSTP.Formula module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
-{-# OPTIONS -fno-warn-incomplete-patterns #-}
 {-# LANGUAGE UnicodeSyntax                #-}
 
 module Data.TSTP.Formula where
@@ -10,11 +9,9 @@ module Data.TSTP.Formula where
 ------------------------------------------------------------------------------
 
 import Athena.Utils.PrettyPrint
-  ( (<>)
-  , (<+>)
+  ( (<+>)
   , parens
   , Pretty(pretty)
-  , spaces
   )
 import Data.Function        ( on )
 import Data.Monoid          ( mappend )
@@ -47,7 +44,7 @@ data Formula = BinOp Formula BinOp Formula    -- ^ Binary connective application
 instance Pretty Formula where
   pretty ((:~:) f )          = parens $ pretty "¬" <+> pretty f
   pretty (BinOp f₁ op f₂)    = parens $ pretty f₁ <+> pretty op <+> pretty f₂
-  pretty (InfixPred t₁ r t₂) = parens $ pretty t₁ <+> pretty <+> pretty t₂
+  pretty (InfixPred t₁ r t₂) = parens $ pretty t₁ <+> pretty r <+> pretty t₂
   pretty (PredApp a [])      = pretty a
   pretty (PredApp p l )      = pretty p <+> parens (pretty l)
   pretty (Quant All x p)     = pretty All <+> pretty x <+> parens (pretty p)
@@ -66,6 +63,7 @@ freeVarsF (Quant _ vars x)                    = difference fvarsx lvars
     fvarsx ∷ Set V
     fvarsx = freeVarsF x
 
+    lvars ∷ Set V
     lvars  = fromList vars
 
 -- | 'freeVarsT' 't', returns a 'Set' of all free variables of 't'.

@@ -11,6 +11,7 @@ module Data.TSTP.Term where
 import Athena.Utils.PrettyPrint
   ( hcat
   , Pretty(pretty)
+  , rational
   )
 
 import Data.TSTP.AtomicWord ( AtomicWord(..) )
@@ -29,10 +30,7 @@ data Term = Var V                             -- ^ Variable
 
 instance Pretty Term where
   pretty (Var             (V v))      = pretty v
-  pretty (NumberLitTerm      r )      = pretty . show $ r
+  pretty (NumberLitTerm      r )      = rational r
   pretty (DistinctObjectTerm t )      = pretty t
   pretty (FunApp (AtomicWord w ) [])  = pretty w
   pretty (FunApp (AtomicWord _ ) _)   = error "Don't really know what this is"
-
-instance Pretty [Term] where
-  pretty = hcat . map pretty

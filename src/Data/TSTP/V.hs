@@ -26,6 +26,3 @@ newtype V = V String
 
 instance Pretty V where
   pretty (V a) = pretty a
-
-instance Pretty [V] where
-  pretty = hcat . map pretty
