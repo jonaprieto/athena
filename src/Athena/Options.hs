@@ -73,7 +73,8 @@ outputFileOpt file opts =
 
 proofNameOpt ∷ String → OM
 proofNameOpt [] _ = Left $
-  pretty "option " <> squotes (pretty "--proof-name") <> pretty " requires an argument NAME"
+  pretty "option " <> squotes (pretty "--proof-name") <>
+    pretty " requires an argument NAME"
 proofNameOpt pname opts = Right opts { optProofName = pname}
 
 versionOpt ∷ OM

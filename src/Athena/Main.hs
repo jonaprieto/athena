@@ -28,8 +28,6 @@ import Athena.Utils.Version      ( progNameVersion )
 import System.Environment        ( getArgs )
 import System.Exit               ( exitSuccess )
 
-import Text.PrettyPrint.Leijen          ( putDoc )
-
 ------------------------------------------------------------------------------
 
 main ∷ IO ()
@@ -47,6 +45,6 @@ main = do
 
       | otherwise → do
           _ ← case optInputFile opts of
-            Nothing → putDoc $ text "missing input file (try --help)"
+            Nothing → die $ text "missing input file (try --help)"
             Just f  → return f
           mainCore opts

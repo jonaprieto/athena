@@ -24,8 +24,6 @@ data ProofTreeGen a =
   | Root Rule a [ProofTreeGen a]
   deriving (Eq, Ord, Read, Show)
 
-
-
 -- | Simple type for sets of identifiers whit associated scopes
 type IdSet = Set (Int,String)
 

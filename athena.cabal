@@ -104,7 +104,7 @@ executable athena
     Paths_athena
 
   ghc-options: -w
-               -Werror
+              --  -Werror
                -- Using cpphs as the C preprocessor.
                -pgmP cpphs -optP --cpp
 

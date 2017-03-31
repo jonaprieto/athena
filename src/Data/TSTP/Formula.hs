@@ -2,7 +2,7 @@
 -- | Data.TSTP.Formula module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
-{-# LANGUAGE UnicodeSyntax                #-}
+{-# LANGUAGE UnicodeSyntax #-}
 
 module Data.TSTP.Formula where
 
