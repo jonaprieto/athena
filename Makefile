@@ -72,47 +72,54 @@ tests :
 .ONESHELL :
 .PHONY : problems
 problems :
-	@cd test/prop-pack
-	@git submodule update --init --recursive
+	@echo "Updating prop-pack repository"
+	@echo "============================="
+	@cd test/prop-pack && git submodule update --init --recursive
+	@echo "Generating TSTP files of proofs"
+	@echo "==============================="
 	@make --directory test/prop-pack solutions
 
-.ONESHELL :
 .PHONY : reconstruct
 reconstruct :
-	@cd test/prop-pack/problems/
 	@echo "Generating Agda files"
 	@echo "====================="
-	@find . \
-		-type f -name "*.tstp" \
-		-print \
-		-exec sh -c "athena {}" \;;
+	@cd test/prop-pack/problems && \
+		find . \
+			-type f \
+			-name "*.tstp" \
+			-print \
+			-exec sh -c "athena {}" \;;
 
-
-.ONESHELL :
-.PHONY : check-proofs
+.PHONY : check
 check :
-	@cd test/prop-pack/problems/
+	@make problems
+	@make reconstruct
 	@echo "Checking Agda files"
 	@echo "==================="
-	@find . \
-		-type f -name "*.agda" \
-		-print \
-		-exec sh -c "agda {} --verbose=0" \;;
-
-# More specific targets:
+	@cd test/prop-pack/problems &&
+		find . \
+			-type f \
+			-name "*.agda" \
+			-print \
+			-exec sh -c "agda {} --verbose=0" \;;
 
 .PHONY : basic
 basic :
+	@cd test/prop-pack && git submodule update --init --recursive
 	@make --directory test/prop-pack basic
 	@echo "Reconstructing test/prop-pack/problems/basic TSTP files"
 	@echo "======================================================="
-	@cd test/prop-pack && find problems/basic \
-		-type f -name "*.tstp" \
-		-print \
-		-exec sh -c "athena {}" \;;
+	@cd test/prop-pack/problems/basic && \
+		find . \
+			-type f \
+			-name "*.tstp" \
+			-print \
+			-exec sh -c "athena {}" \;;
 	@echo "Type-cheking test/prop-pack/problems/basic files"
 	@echo "================================================"
-	@cd test/prop-pack && find problems/basic \
-		-type f -name "*.agda" \
-		-print \
-		-exec sh -c "agda {} --verbose=0" \;;
+	@cd test/prop-pack/problems/basic && \
+		find problems/basic \
+			-type f \
+			-name "*.agda" \
+			-print \
+			-exec sh -c "agda {} --verbose=0" \;;
