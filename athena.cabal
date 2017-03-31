@@ -2,7 +2,7 @@ name:          athena
 version:       0.1
 build-type:    Simple
 cabal-version: >= 1.18
-author:        Jonathan Prieto-Cubides with contributions by Alejandro Gómez-Londoño
+author:        Jonathan Prieto-Cubides with contributions by Andrés Sicard-Ramírez
 license:       MIT
 license-file:  LICENSE
 maintainer:    Jonathan Prieto-Cubides <jprieto9@eafit.edu.co>
