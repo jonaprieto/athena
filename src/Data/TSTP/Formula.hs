@@ -11,7 +11,8 @@ module Data.TSTP.Formula where
 
 import Athena.Utils.PrettyPrint
   ( (<>)
-  , cparentesis
+  , (<+>)
+  , parens
   , Pretty(pretty)
   , spaces
   )
@@ -44,19 +45,13 @@ data Formula = BinOp Formula BinOp Formula    -- ^ Binary connective application
              deriving (Eq, Ord, Read, Show)
 
 instance Pretty Formula where
-  pretty ((:~:) f )          =
-    cparentesis $ pretty "¬ " <> pretty f
-  pretty (BinOp f₁ op f₂)    =
-    cparentesis $ pretty f₁ <> spaces (pretty op) <> pretty f₂
-  pretty (InfixPred t₁ r t₂) =
-    cparentesis $ pretty t₁ <> spaces (pretty r) <> pretty t₂
+  pretty ((:~:) f )          = parens $ pretty "¬" <+> pretty f
+  pretty (BinOp f₁ op f₂)    = parens $ pretty f₁ <+> pretty op <+> pretty f₂
+  pretty (InfixPred t₁ r t₂) = parens $ pretty t₁ <+> pretty <+> pretty t₂
   pretty (PredApp a [])      = pretty a
-  pretty (PredApp p l )      =
-    pretty p <> cparentesis (pretty l)
-  pretty (Quant All x p)     =
-    pretty All <> pretty x <> cparentesis (pretty p)
-  pretty (Quant Exists x p ) =
-    pretty Exists <> pretty x <> cparentesis (pretty p)
+  pretty (PredApp p l )      = pretty p <+> parens (pretty l)
+  pretty (Quant All x p)     = pretty All <+> pretty x <+> parens (pretty p)
+  pretty (Quant Exists x p ) = pretty Exists <+> pretty x <+> parens (pretty p)
 
 -- | 'freeVarsF' 'f', returns a 'Set' of all free variables of 'f'.
 freeVarsF ∷ Formula → Set V

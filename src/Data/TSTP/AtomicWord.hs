@@ -17,4 +17,4 @@ newtype AtomicWord = AtomicWord String
 
 instance Pretty AtomicWord where
   pretty (AtomicWord "$false") = pretty "⊥"
-  pretty (AtomicWord a) = pretty a
+  pretty (AtomicWord a)        = pretty a

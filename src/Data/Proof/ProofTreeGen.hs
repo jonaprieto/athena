@@ -2,6 +2,8 @@
 -- | Data.Proof.ProofTreeGen module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
+-- {-# LANGUAGE FlexibleInstances #-}
+
 module Data.Proof.ProofTreeGen where
 
 ------------------------------------------------------------------------------
@@ -16,11 +18,13 @@ import Data.TSTP ( Role, Rule, F )
 data ProofTreeGen a =
     -- | 'Leaf' 'r' 'a' is a node with 'Role' 'r' and content 'a' (usually
     -- 'String', 'F' or 'Formula') and with no dependencies in other nodes.
-    Leaf Role a |
+    Leaf Role a
     -- | 'Root' 'r' 'a' 'd' is a node with deduction 'Rule' 'r', content 'a'
     -- (usually 'String', 'F' or 'Formula'),  and dependencies 'd'.
-    Root Rule a [ProofTreeGen a]
-         deriving (Eq,Ord,Show)
+  | Root Rule a [ProofTreeGen a]
+  deriving (Eq, Ord, Read, Show)
+
+
 
 -- | Simple type for sets of identifiers whit associated scopes
 type IdSet = Set (Int,String)
