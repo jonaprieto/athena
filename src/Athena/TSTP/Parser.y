@@ -117,8 +117,6 @@ import System.IO.Unsafe
  tok_unsigned_integer   { UnsignedInt $$ }
  tok_upper_word         { UpperWord $$ }
 
- comment                { CommentToken $$ }
-
 %%
 
 TSTP_file :: {[F]}
@@ -551,145 +549,142 @@ lower_word_ : cnf {"cnf"}
 --
 
 lp                 :: {Token}
-lp                 : tok_lp                  comment_list { $1 }
+lp                 : tok_lp                  { $1 }
 
 rp                 :: {Token}
-rp                 : tok_rp                  comment_list { $1 }
+rp                 : tok_rp                  { $1 }
 
 lbra               :: {Token}
-lbra               : tok_lbra                comment_list { $1 }
+lbra               : tok_lbra                { $1 }
 
 rbra               :: {Token}
-rbra               : tok_rbra                comment_list { $1 }
+rbra               : tok_rbra                { $1 }
 
 comma              :: {Token}
-comma              : tok_comma               comment_list { $1 }
+comma              : tok_comma               { $1 }
 
 dot                :: {Token}
-dot                : tok_dot                 comment_list { $1 }
+dot                : tok_dot                 { $1 }
 
 colon              :: {Token}
-colon              : tok_colon               comment_list { $1 }
+colon              : tok_colon               { $1 }
 
 iff                :: {Token}
-iff                : tok_iff                 comment_list { $1 }
+iff                : tok_iff                 { $1 }
 
 implies            :: {Token}
-implies            : tok_implies             comment_list { $1 }
+implies            : tok_implies             { $1 }
 
 xor                :: {Token}
-xor                : tok_xor                 comment_list { $1 }
+xor                : tok_xor                 { $1 }
 
 nor                :: {Token}
-nor                : tok_nor                 comment_list { $1 }
+nor                : tok_nor                 { $1 }
 
 nand               :: {Token}
-nand               : tok_nand                comment_list { $1 }
+nand               : tok_nand                { $1 }
 
 impliedby          :: {Token}
-impliedby          : tok_impliedby           comment_list { $1 }
+impliedby          : tok_impliedby           { $1 }
 
 equals             :: {Token}
-equals             : tok_equals              comment_list { $1 }
+equals             : tok_equals              { $1 }
 
 nequals            :: {Token}
-nequals            : tok_nequals             comment_list { $1 }
+nequals            : tok_nequals             { $1 }
 
 exclam             :: {Token}
-exclam             : tok_exclam              comment_list { $1 }
+exclam             : tok_exclam              { $1 }
 
 question           :: {Token}
-question           : tok_question            comment_list { $1 }
+question           : tok_question            { $1 }
 
 ampersand          :: {Token}
-ampersand          : tok_ampersand           comment_list { $1 }
+ampersand          : tok_ampersand           { $1 }
 
 vline              :: {Token}
-vline              : tok_vline               comment_list { $1 }
+vline              : tok_vline               { $1 }
 
 tilde              :: {Token}
-tilde              : tok_tilde               comment_list { $1 }
+tilde              : tok_tilde               { $1 }
 
 fof                :: {Token}
-fof                : tok_fof                 comment_list { $1 }
+fof                : tok_fof                 { $1 }
 
 cnf                :: {Token}
-cnf                : tok_cnf                 comment_list { $1 }
+cnf                : tok_cnf                 { $1 }
 
 
 dollarCnf          :: {Token}
-dollarCnf          : tok_fd_cnf              comment_list { $1 }
+dollarCnf          : tok_fd_cnf              { $1 }
 
 include_           :: {Token}
-include_           : tok_include_            comment_list { $1 }
+include_           : tok_include_            { $1 }
 
 single_quoted      :: {String}
-single_quoted      : tok_single_quoted       comment_list { $1 }
+single_quoted      : tok_single_quoted       { $1 }
 
 distinct_object    :: {String}
-distinct_object    : tok_distinct_object     comment_list { $1 }
+distinct_object    : tok_distinct_object     { $1 }
 
 dollar_word        :: {String}
-dollar_word        : tok_dollar_word         comment_list { $1 }
+dollar_word        : tok_dollar_word         { $1 }
 
 dollar_dollar_word :: {String}
-dollar_dollar_word : tok_dollar_dollar_word  comment_list { $1 }
+dollar_dollar_word : tok_dollar_dollar_word  { $1 }
 
 upper_word         :: {String}
-upper_word         : tok_upper_word          comment_list { $1 }
+upper_word         : tok_upper_word          { $1 }
 
 lower_word         :: {String}
-lower_word         : tok_lower_word          comment_list { $1 }
+lower_word         : tok_lower_word          { $1 }
 
 signed_integer     :: {Integer}
-signed_integer     : tok_signed_integer      comment_list { $1 }
+signed_integer     : tok_signed_integer      { $1 }
 
 unsigned_integer   :: {Integer}
-unsigned_integer   : tok_unsigned_integer    comment_list { $1 }
+unsigned_integer   : tok_unsigned_integer    { $1 }
 
 real               :: {Rational}
-real               : tok_real                comment_list { $1 }
+real               : tok_real                { $1 }
 
 --
 
 inference          :: {Token}
-inference          : tok_inference           comment_list {$1}
+inference          : tok_inference           {$1}
 
 file               :: {Token}
-file               : tok_file                comment_list {$1}
+file               : tok_file                {$1}
 
 theory             :: {Token}
-theory             : tok_theory              comment_list {$1}
+theory             : tok_theory              {$1}
 
 introduced         :: {Token}
-introduced         : tok_introduced          comment_list {$1}
+introduced         : tok_introduced          {$1}
 
 ac                 :: {Token}
-ac                 : tok_ac                  comment_list {$1}
+ac                 : tok_ac                  {$1}
 
 equality           :: {Token}
-equality           : tok_equality           comment_list {$1}
+equality           : tok_equality            {$1}
 
 creator            :: {Token}
-creator            : tok_creator             comment_list {$1}
+creator            : tok_creator             {$1}
 
 iquote             :: {Token}
-iquote             : tok_iquote              comment_list {$1}
+iquote             : tok_iquote              {$1}
 
 status             :: {Token}
-status             : tok_status              comment_list {$1}
+status             : tok_status              {$1}
 
 assumptions        :: {Token}
-assumptions        : tok_assumptions         comment_list {$1}
+assumptions        : tok_assumptions         {$1}
 
 refutation         :: {Token}
-refutation         : tok_refutation          comment_list {$1}
+refutation         : tok_refutation          {$1}
 
 description        :: {Token}
-description        : tok_description         comment_list {$1}
-
-comment_list :: {[String]}
-comment_list : {[]} | comment comment_list { $1 : $2 }
+description        : tok_description         {$1}
 
 {
 

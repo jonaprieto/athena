@@ -60,8 +60,6 @@ tokens :-
   "!="|"="|"<=>"|"<="|"=>"|"<~>"|"&"|"|"
       |"~|"|"~&"|"!"|"?"|":"|"~"               { withPos $ Oper }
   "."                                          { withPos $ const Dot }
-  "#"$printable_char*                          { withPos $ CommentToken } -- comment line
-  "/*" @not_star_slash "*"("*"*)"/"            { withPos $ CommentToken } -- comment block
   "SZS"$printable_char*                        ;
   @metis_sep                                   ;
   [\'] @sq_char* [\']                          { withPos SingleQuoted }
@@ -86,7 +84,6 @@ withPos f pos s = (pos, f s)
 
 -- The token type:
 data Token = Comma
-           | CommentToken String
            | DollarDollarWord String
            | DollarWord String
            | Dot
