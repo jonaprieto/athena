@@ -13,7 +13,7 @@ module Athena.Translation.Functions
   --  , printAxiom
   --  , printAxioms
   --  , printConjecture
-   , printHeader
+   , fileHeader
   --  , printPremises
   --  , printProof
   --  , printSubGoals
@@ -36,8 +36,15 @@ import Athena.Translation.Rules
 import Athena.Translation.Utils  ( Ident, getIdent, stdName )
 import Athena.Utils.PrettyPrint
   ( (<+>)
+  , (<@>)
+  , (<>)
   , parens
   , Pretty(pretty)
+  , putDoc
+  , comment
+  , Doc
+  , int
+  , linebreak
   )
 import Athena.Utils.Version      ( progNameVersion )
 
@@ -62,12 +69,13 @@ import Data.TSTP.V              ( V(..) )
 ------------------------------------------------------------------------------
 
 -- | Print out the header part of the Agda file.
-printHeader ∷ Int → IO ()
-printHeader n = do
+fileHeader ∷ Int → IO Doc
+fileHeader n = do
   version <- progNameVersion
-  putStrLn $ "\n-- " ++ version ++ "\n"
-  putStrLn $ "\nopen import Data.Prop " ++ show n ++ " public"
-  putStrLn $ "open import ATP.Metis " ++ show n ++ " public\n"
+  return $ comment (pretty version) <@>
+    pretty "open import Data.Prop " <+> int n <+> pretty "public" <> linebreak
+
+  -- putStrLn $ "open import ATP.Metis " ++ show n ++ " public\n"
 
 --
 -- -- Vars.

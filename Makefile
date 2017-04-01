@@ -47,9 +47,6 @@ TODO :
 	| xargs grep -I -s 'TODO' \
 	| sort
 
-
-
-
 .PHONY : clean
 clean :
 	rm -f ${SRC_DIR}/TSTP/Lexer.hs
@@ -104,7 +101,7 @@ check : problems reconstruct
 			-exec sh -c "agda {} --verbose=0" \;;
 
 .PHONY : basic
-basic : clean prop-pack
+basic : install-bin prop-pack
 	@echo "==================================================================="
 	@echo "======= Generating TSTP files of test/prop-pack/basic files ======="
 	@echo "==================================================================="

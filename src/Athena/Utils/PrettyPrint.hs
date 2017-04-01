@@ -19,9 +19,10 @@ module Athena.Utils.PrettyPrint
 
    -- * Alignment
    align, hang, indent, encloseSep, list, tupled, semiBraces,
+   comment,
 
    -- * Operators
-   (<+>), (<++>), (<$>), (</>), (<$$>), (<//>),
+   (<+>), (<++>), (<@>), (</>), (<$$>), (<//>),
 
    -- * List combinators
    hsep, vsep, fillSep, sep, hcat, vcat, fillCat, cat, punctuate,
@@ -35,6 +36,7 @@ module Athena.Utils.PrettyPrint
    -- * Character documents
    lparen, rparen, langle, rangle, lbrace, rbrace, lbracket, rbracket,
    squote, dquote, semi, colon, comma, space, dot, backslash, equals,
+   hypen,
 
    -- * Primitive type documents
    string, stringStrict, int, integer, float, double, rational, bool,
@@ -47,7 +49,8 @@ module Athena.Utils.PrettyPrint
 
    -- * Rendering
    SimpleDoc(..), renderPretty, renderCompact, renderOneLine,
-   displayB, displayT, displayTStrict, displayIO, putDoc, hPutDoc
+   displayB, displayT, displayTStrict, displayIO, putDoc, hPutDoc,
+   prettyShow
 
    ) where
 
@@ -79,7 +82,7 @@ import System.IO              ( Handle, hPutChar, stdout )
 
 ------------------------------------------------------------------------------
 
-infixr 5 </>, <//>, <$>, <$$>
+infixr 5 </>, <//>, <@>, <$$>
 infixr 6 <+>, <++>
 
 ------------------------------------------------------------------------------
@@ -142,10 +145,13 @@ encloseSep left right sp ds =
    [d] → left <> d <> right
    _   → align (cat (zipWith (<>) (left : repeat sp) ds) <> right)
 
+-- | The document @comment@ contains a comment, \",\".
+comment ∷ Doc -> Doc
+comment doc = hypen <> hypen <+> doc <> linebreak
+
 ------------------------------------------------------------------------------
 -- punctuate p [d1,d2,...,dn] => [d1 <> p,d2 <> p, ... ,dn]
 ------------------------------------------------------------------------------
-
 
 -- | @(punctuate p xs)@ concatenates all documents in @xs@ with
 --   document @p@ except for the last document.
@@ -234,7 +240,7 @@ hsep = fold (<+>)
 --        out
 --   @
 vsep ∷ [Doc] → Doc
-vsep = fold (<$>)
+vsep = fold (<@>)
 
 -- | The document @(cat xs)@ concatenates all documents @xs@ either
 --   horizontally with @(\<\>)@, if it fits the page, or vertically
@@ -304,8 +310,8 @@ splitWithBreak f a     b     = a <> group (Line f) <> b
 
 -- | The document @(x \<$\> y)@ concatenates document @x@ and @y@ with
 --   a 'line' in between. (infixr 5)
-(<$>) ∷ Doc → Doc → Doc
-(<$>) = splitWithLine False
+(<@>) ∷ Doc → Doc → Doc
+(<@>) = splitWithLine False
 
 -- | The document @(x \<$$\> y)@ concatenates document @x@ and @y@
 --   with a 'linebreak' in between. (infixr 5)
@@ -425,6 +431,10 @@ colon = char ':'
 comma ∷ Doc
 comma = char ','
 
+-- | The document @hypen@ contains a hypen, \",\".
+hypen ∷ Doc
+hypen = char '-'
+
 -- | The document @space@ contains a single space, \" \".
 --
 --   > x <+> y = x <> space <> y
@@ -461,32 +471,32 @@ stringStrict = mconcat . intersperse line . map textStrict . TS.lines
 
 -- | The document @(bool b)@ shows the literal boolean @b@ using
 --   'text'.
-bool   ∷ Bool → Doc
+bool ∷ Bool → Doc
 bool = text'
 
 -- | The document @(int i)@ shows the literal integer @i@ using
 --   'text'.
-int   ∷ Int → Doc
+int ∷ Int → Doc
 int = text'
 
 -- | The document @(integer i)@ shows the literal integer @i@ using
 --   'text'.
-integer   ∷ Integer → Doc
+integer ∷ Integer → Doc
 integer = text'
 
 -- | The document @(float f)@ shows the literal float @f@ using
 --   'text'.
-float   ∷ Float → Doc
+float ∷ Float → Doc
 float = text'
 
 -- | The document @(double d)@ shows the literal double @d@ using
 --   'text'.
-double   ∷ Double → Doc
+double ∷ Double → Doc
 double = text'
 
 -- | The document @(rational r)@ shows the literal rational @r@ using
 --   'text'.
-rational   ∷ Rational → Doc
+rational ∷ Rational → Doc
 rational = text'
 
 text' ∷ (Show a) => a → Doc
@@ -576,7 +586,7 @@ instance Pretty a => Pretty (Maybe a) where
 --       linebreak
 --              ∷ Doc
 --   @
-fillBreak     ∷ Int → Doc → Doc
+fillBreak ∷ Int → Doc → Doc
 fillBreak f x = width x (\w →
                           if w > f
                             then nest f linebreak
@@ -667,7 +677,7 @@ hang i d = align (nest i d)
 --   As an example, we will put a document right above another one,
 --   regardless of the current nesting level:
 --
---   > x $$ y = align (x <$> y)
+--   > x $$ y = align (x <@> y)
 --
 --   > test = text "hi" <+> (text "nice" $$ text "world")
 --
@@ -691,7 +701,7 @@ align d = column (\k →
 --   prints document @doc@ with a page width of 100 characters and a
 --   ribbon width of 40 characters.
 --
---   > show (text "hello" <$> text "world")
+--   > show (text "hello" <@> text "world")
 --
 --   Which would return the string \"hello\\nworld\", i.e.
 --
@@ -792,7 +802,7 @@ beside l     r     = Cat l r
 --   indentation level increased by @i@ (See also 'hang', 'align' and
 --   'indent').
 --
---   > nest 2 (text "hello" <$> text "world") <$> text "!"
+--   > nest 2 (text "hello" <@> text "world") <@> text "!"
 --
 --   outputs as:
 --
@@ -1044,3 +1054,7 @@ indentation ∷ Int64 → Builder
 indentation = spaces
 
 --  LocalWords:  PPrint combinators Wadler Wadler's encloseSep
+
+-- | Use instead of 'show' when printing to world.
+prettyShow :: Pretty a ⇒ a → String
+prettyShow = show . pretty

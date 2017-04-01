@@ -9,19 +9,20 @@ module Athena.Translation.Core ( mainCore ) where
 ------------------------------------------------------------------------------
 
 import Athena.Translation.Functions
-  ( getAxioms
-  , getConjeture
-  , getRefutes
-  , getSubGoals
+  (
+    -- getAxioms
+  -- , getConjeture
+  -- , getRefutes
+  -- , getSubGoals
   -- , printAxioms
   -- , printConjecture
-  , printHeader
+  fileHeader
   -- , printPremises
   -- , printProof
   -- , printSubGoals
   -- , printVars
   )
-import Athena.Utils.Monad       ( stdout2file )
+import Athena.Utils.PrettyPrint  ( hPutDoc, Doc, pretty, comment )
 import Athena.Options
   ( Options
     ( optInputFile
@@ -32,12 +33,12 @@ import Athena.TSTP              ( parseFile )
 
 import Data.Maybe               ( fromJust, fromMaybe )
 
-import Data.Proof
-  ( buildProofMap
-  , buildProofTree
-  , ProofMap
-  , ProofTree
-  )
+-- import Data.Proof
+--   ( buildProofMap
+--   , buildProofTree
+--   , ProofMap
+--   , ProofTree
+--   )
 import Data.TSTP
   ( F(..)
   , Formula(..)
@@ -46,6 +47,13 @@ import Data.TSTP.Formula        ( getFreeVars )
 import Data.TSTP.V              ( V(..) )
 
 import System.FilePath          ( replaceExtension )
+import System.IO
+  (
+  hClose
+  , IOMode(WriteMode)
+  , openFile
+  )
+
 ------------------------------------------------------------------------------
 
 mainCore ∷ Options → IO ()
@@ -53,30 +61,25 @@ mainCore opts = do
 
   tstp ∷ [F] ← parseFile . fromJust $ optInputFile opts
 
-  let subgoals ∷ [F]
-      subgoals = getSubGoals tstp
+  -- let subgoals ∷ [F]
+  --     subgoals = getSubGoals tstp
 
-  let refutes ∷ [F]
-      refutes = getRefutes tstp
+  -- let refutes ∷ [F]
+  --     refutes = getRefutes tstp
 
-  let axioms ∷ [F]
-      axioms = getAxioms tstp
+  -- let axioms ∷ [F]
+  --     axioms = getAxioms tstp
 
-  let conj ∷ F
-      conj = fromMaybe
-        (error "Couldn't find a conjecture, or it was not unique")
-        (getConjeture tstp)
+  -- let conj ∷ F
+  --     conj = fromMaybe
+  --       (error "Couldn't find a conjecture, or it was not unique")
+  --       (getConjeture tstp)
 
-  let rulesMap ∷ ProofMap
-      rulesMap = buildProofMap tstp
+  -- let rulesMap ∷ ProofMap
+  --     rulesMap = buildProofMap tstp
 
-  let rulesTrees ∷ [ProofTree]
-      rulesTrees = fmap (buildProofTree rulesMap) refutes
-
-  stdout2file $ Just (fromMaybe
-    (replaceExtension (fromJust (optInputFile opts)) ".agda")
-    (optOutputFile opts)
-    )
+  -- let rulesTrees ∷ [ProofTree]
+  --     rulesTrees = fmap (buildProofTree rulesMap) refutes
 
   let formulas ∷ [Formula]
       formulas = fmap formula tstp
@@ -84,10 +87,23 @@ mainCore opts = do
   let freevars ∷ [V]
       freevars = getFreeVars formulas
 
-  printHeader $ length freevars
-  -- printVars freevars
-  -- printAxioms axioms
-  -- printPremises axioms
-  -- printConjecture conj
-  -- printSubGoals subgoals
-  -- printProof axioms subgoals conj rulesMap rulesTrees
+  let filename :: FilePath
+      filename =
+        fromMaybe
+          (replaceExtension (fromJust (optInputFile opts)) ".agda")
+          (optOutputFile opts)
+
+  --
+  -- --
+  -- -- Agda file.
+  -- --
+  --
+  agdaFile <- openFile filename WriteMode
+  --
+  -- -- * Header
+  header :: Doc <- fileHeader (length freevars)
+
+  hPutDoc agdaFile header
+  --
+  -- -- Close the file.
+  hClose agdaFile
