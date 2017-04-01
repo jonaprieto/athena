@@ -2,13 +2,17 @@
 -- | Data.TSTP.Formula module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
-{-# OPTIONS -fno-warn-incomplete-patterns #-}
-{-# LANGUAGE UnicodeSyntax                #-}
+{-# LANGUAGE UnicodeSyntax #-}
 
 module Data.TSTP.Formula where
 
 ------------------------------------------------------------------------------
 
+import Athena.Utils.PrettyPrint
+  ( (<+>)
+  , parens
+  , Pretty(pretty)
+  )
 import Data.Function        ( on )
 import Data.Monoid          ( mappend )
 import Data.Set
@@ -35,22 +39,16 @@ data Formula = BinOp Formula BinOp Formula    -- ^ Binary connective application
              | PredApp AtomicWord [Term]      -- ^ Predicate application
              | Quant Quant [V] Formula        -- ^ Quantified Formula
              | (:~:) Formula                  -- ^ Negation
-             deriving (Eq, Ord, Read)
+             deriving (Eq, Ord, Read, Show)
 
--- TODO: use of PrettyPrinter
-instance Show Formula where
-  show ((:~:) f )            = "(" ++ "¬ " ++ show f ++ ")"
-  show (BinOp f₁ (:=>:) f₂)  = "(" ++ show f₁ ++ " ⇒ " ++ show f₂ ++ ")"
-  show (BinOp f₁ (:<=>:) f₂) = "(" ++ show f₁ ++ " ⇔ " ++ show f₂ ++ ")"
-  show (BinOp f₁ op f₂)      = "(" ++ show f₁ ++ " " ++ show op ++ " " ++ show f₂ ++ ")"
-  show (InfixPred t₁ r t₂)   = "(" ++ show t₁ ++ " " ++ show r  ++ " " ++ show t₂ ++ ")"
-  show (PredApp (AtomicWord "$false") []) = "⊥"
-  show (PredApp (AtomicWord "$true")  []) = "⊤"
-  show (PredApp (AtomicWord p)  [])       = p
-  show (PredApp _ _ )            = "-- not supported yet."
-  show (Quant     All []     _ ) = "-- not supported yet."
-  show (Quant     All _      _ ) = "-- not supported yet."
-  show (Quant     Exists _   _ ) = "-- not supported yet."
+instance Pretty Formula where
+  pretty ((:~:) f )          = parens $ pretty "¬" <+> pretty f
+  pretty (BinOp f₁ op f₂)    = parens $ pretty f₁ <+> pretty op <+> pretty f₂
+  pretty (InfixPred t₁ r t₂) = parens $ pretty t₁ <+> pretty r <+> pretty t₂
+  pretty (PredApp a [])      = pretty a
+  pretty (PredApp p l )      = pretty p <+> parens (pretty l)
+  pretty (Quant All x p)     = pretty All <+> pretty x <+> parens (pretty p)
+  pretty (Quant Exists x p ) = pretty Exists <+> pretty x <+> parens (pretty p)
 
 -- | 'freeVarsF' 'f', returns a 'Set' of all free variables of 'f'.
 freeVarsF ∷ Formula → Set V
@@ -65,6 +63,7 @@ freeVarsF (Quant _ vars x)                    = difference fvarsx lvars
     fvarsx ∷ Set V
     fvarsx = freeVarsF x
 
+    lvars ∷ Set V
     lvars  = fromList vars
 
 -- | 'freeVarsT' 't', returns a 'Set' of all free variables of 't'.

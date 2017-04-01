@@ -12,4 +12,4 @@ data IntroType = Assumption_
                | Definition_
                | Tautology
                | UnknownType
-               deriving (Eq, Ord, Show, Read)
+               deriving (Eq, Ord, Read, Show)

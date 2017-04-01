@@ -2,7 +2,7 @@ name:          athena
 version:       0.1
 build-type:    Simple
 cabal-version: >= 1.18
-author:        Jonathan Prieto-Cubides with contributions by Alejandro Gómez-Londoño
+author:        Jonathan Prieto-Cubides with contributions by Andrés Sicard-Ramírez
 license:       MIT
 license-file:  LICENSE
 maintainer:    Jonathan Prieto-Cubides <jprieto9@eafit.edu.co>
@@ -10,6 +10,7 @@ category:      Language
 homepage:      https://github.com/jonaprieto/athena
 bug-reports:   https://github.com/jonaprieto/athena/issues/
 synopsis:      TSTP to Agda
+tested-with:   GHC == 8.0.2
 description:
   Athena is a Haskell program that translates proofs given by Metis ATP in
   TSTP format to Agda code.
@@ -31,7 +32,6 @@ library
                 , containers >= 0.5.0.0 && < 0.6
                 , mtl >= 2.2.1 && < 2.3
                 , pretty >= 1.1.1.0 && < 1.1.1.2 || >= 1.1.2 && < 1.2
-                , pretty-show >= 1.5 && < 1.7
                 , pretty-show >= 1.5 && < 1.7
                 , text >= 0.11.3.1 && < 1.3
                 , split >= 0.2.3.1 && < 0.3
@@ -71,6 +71,7 @@ executable athena
                 , filepath   >= 1.4 && < 1.5
                 , mtl >= 2.2.1 && < 2.3
                 , pretty >= 1.1.1.0 && < 1.1.1.2 || >= 1.1.2 && < 1.2
+                , pretty-show >= 1.5 && < 1.7
                 , text >= 0.11.3.1 && < 1.3
                 , split >= 0.2.3.1 && < 0.3
 
@@ -103,7 +104,7 @@ executable athena
     Paths_athena
 
   ghc-options: -w
-               -Werror
+              --  -Werror
                -- Using cpphs as the C preprocessor.
                -pgmP cpphs -optP --cpp
 

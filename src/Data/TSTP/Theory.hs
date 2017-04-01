@@ -8,4 +8,4 @@ module Data.TSTP.Theory where
 
 -- NOT BEING USED YET
 data Theory = Equality | AC
-            deriving (Eq, Ord, Show, Read)
+            deriving (Eq, Ord, Read, Show)

@@ -12,4 +12,4 @@ import Data.TSTP.GData ( GTerm(..) )
 
 -- | Parent formula information.
 data Parent = Parent String [GTerm]
-              deriving (Eq, Ord, Show, Read)
+              deriving (Eq, Ord, Read, Show)

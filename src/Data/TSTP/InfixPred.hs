@@ -8,11 +8,15 @@ module Data.TSTP.InfixPred where
 
 ------------------------------------------------------------------------------
 
+import Athena.Utils.PrettyPrint ( Pretty(pretty) )
+
+------------------------------------------------------------------------------
+
 -- | Infix connectives of the form /Term → Term → Formula/.
 data InfixPred = (:=:)  -- ^ =
                | (:!=:) -- ^ ≠
-               deriving (Eq, Ord, Read)
+               deriving (Eq, Ord, Read, Show)
 
-instance Show InfixPred where
-  show (:=:)  = "="
-  show (:!=:) = "≠"
+instance Pretty InfixPred where
+  pretty (:=:)  = pretty "="
+  pretty (:!=:) = pretty "≠"

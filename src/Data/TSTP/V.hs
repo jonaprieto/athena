@@ -2,7 +2,16 @@
 -- | Data.TSTP.V module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
+{-# LANGUAGE FlexibleInstances #-}
+
 module Data.TSTP.V where
+
+------------------------------------------------------------------------------
+
+import Athena.Utils.PrettyPrint
+  ( hcat
+  , Pretty(pretty)
+  )
 
 ------------------------------------------------------------------------------
 
@@ -13,7 +22,10 @@ module Data.TSTP.V where
 
 -- | Variable
 newtype V = V String
-    deriving (Eq, Ord, Read)
+          deriving (Eq, Ord, Read, Show)
 
-instance Show V where
-    show (V a) = a
+instance Pretty V where
+  pretty (V a) = pretty a
+
+instance Pretty [V] where
+  pretty = hcat . map pretty

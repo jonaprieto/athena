@@ -13,13 +13,13 @@ import Athena.Translation.Functions
   , getConjeture
   , getRefutes
   , getSubGoals
-  , printAxioms
-  , printConjecture
-  , printPreamble
-  , printPremises
-  , printProof
-  , printSubGoals
-  , printVars
+  -- , printAxioms
+  -- , printConjecture
+  , printHeader
+  -- , printPremises
+  -- , printProof
+  -- , printSubGoals
+  -- , printVars
   )
 import Athena.Utils.Monad       ( stdout2file )
 import Athena.Options
@@ -84,13 +84,10 @@ mainCore opts = do
   let freevars ∷ [V]
       freevars = getFreeVars formulas
 
-  printPreamble $ length freevars
-
-  putStrLn "-- Vars"
-  _ <- printVars freevars 0
-
-  printAxioms axioms
-  printPremises axioms
-  printConjecture conj
-  printSubGoals subgoals
-  printProof axioms subgoals conj rulesMap rulesTrees
+  printHeader $ length freevars
+  -- printVars freevars
+  -- printAxioms axioms
+  -- printPremises axioms
+  -- printConjecture conj
+  -- printSubGoals subgoals
+  -- printProof axioms subgoals conj rulesMap rulesTrees
