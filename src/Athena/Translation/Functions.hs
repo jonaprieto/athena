@@ -11,8 +11,7 @@ module Athena.Translation.Functions
    , getConjeture
    , getRefutes
    , getSubGoals
-  --  , printAxiom
-  --  , printAxioms
+   , docAxioms
   --  , printConjecture
    , docHeader
   --  , printPremises
@@ -54,6 +53,7 @@ import Athena.Utils.PrettyPrint
   , equals
   , hashtag
   , hcat
+  -- , softline
   )
 import Athena.Utils.Version      ( progNameVersion )
 
@@ -77,6 +77,9 @@ import Data.TSTP.V              ( V(..) )
 
 ------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------
+-- Header.
+
 -- | Print out the header part of the Agda file.
 docHeader ∷ Options -> Int → IO Doc
 docHeader opts n = do
@@ -92,6 +95,8 @@ docHeader opts n = do
      <@> hypenline
     )
 
+------------------------------------------------------------------------------
+-- Variables.
 
 prettyVar :: V -> Int -> Doc
 prettyVar var n = case show var of
@@ -114,42 +119,47 @@ docVars vars  =
     docVars' [] n         = empty
     docVars' (var : vs) n =
            pretty var <+> colon  <+> pretty "Prop" <> line
-      <>   pretty var <+> equals <+> (prettyVar var n)
+      <>   pretty var <+> equals <+> (prettyVar var n) <> line
       <@>  docVars' vs (n+1)
 
+------------------------------------------------------------------------------
+-- Axioms.
 
---
--- printVars ∷ [V] → Int → IO String
--- printVars [] _       = return ""
--- printVars (f : fs) n = do
---   putStrLn $ printVar f n ++ "\n"
---   printVars fs (n+1)
---
--- -- Axioms.
---
 -- | Extract axioms from a list of formulae.
 getAxioms ∷ [F] → [F]
 getAxioms = filter ((==) Axiom . role)
 
--- -- | Print an axiom.
--- printAxiom ∷ F → String
--- printAxiom f =
---   let axiom  = stdName $ name f
---   in concat
---     [  axiom , " : Prop\n"
---     ,  axiom , " = " ,  show (formula f) , "\n"
---     ]
---
--- -- | Print out in the Agda file the axioms.
--- printAxioms ∷ [F] → IO ()
--- printAxioms []  = return ()
--- printAxioms [a] = do
---   putStrLn "-- Axiom"
---   putStrLn $ printAxiom a ++ "\n"
--- printAxioms as  = do
---   putStrLn "-- Axioms"
---   putStrLn . intercalate "\n\n" $ map printAxiom as
---   putStrLn ""
+
+docAxioms :: [F] -> Doc
+docAxioms []   = empty
+docAxioms [fm] =
+      comment (pretty "Axiom" <> dot) <> line
+  <>  pretty nameF <+> colon  <+> pretty "Prop"   <> line
+  <>  pretty nameF <+> equals <+> pretty formulaF <> line
+  where
+    nameF :: String
+    nameF = stdName . name $ fm
+
+    formulaF :: Formula
+    formulaF = formula fm
+
+docAxioms fms  =
+     comment (pretty "Axioms" <> dot) <> line
+  <> docAxioms' fms <> line
+  where
+    docAxioms' :: [F] -> Doc
+    docAxioms' []         = empty
+    docAxioms' (fm : fms) =
+           pretty nameF <+> colon  <+> pretty "Prop"   <> line
+      <>   pretty nameF <+> equals <+> pretty formulaF <> line
+      <@>  docAxioms' fms
+      where
+        nameF :: String
+        nameF = stdName . name $ fm
+
+        formulaF :: Formula
+        formulaF = formula fm
+
 --
 -- -- Conjecture.
 --
@@ -166,7 +176,7 @@ getConjeture rules =
 -- printConjecture f = putStrLn $
 --   concat
 --     [ "-- Conjecture\n"
---     , printAxiom f , "\n"
+--     , docAxioms f , "\n"
 --     ]
 --
 
@@ -188,7 +198,7 @@ getSubGoals = filter (isPrefixOf "subgoal" . name)
 -- printSubGoals subgoals = putStrLn $
 --   concat
 --     [ "-- Subgoal", if length subgoals < 2 then "" else "s" , "\n"
---     , intercalate "\n\n" (map printAxiom subgoals)
+--     , intercalate "\n\n" (map docAxioms subgoals)
 --     ]
 --
 -- -- | Print out the premises in the Agda file.

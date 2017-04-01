@@ -10,13 +10,13 @@ module Athena.Translation.Core ( mainCore ) where
 
 import Athena.Translation.Functions
   (
-    -- getAxioms
+    getAxioms
   -- , getConjeture
   -- , getRefutes
   -- , getSubGoals
-  -- , printAxioms
+  , docAxioms
   -- , printConjecture
-  docHeader
+  , docHeader
   -- , printPremises
   -- , printProof
   -- , printSubGoals
@@ -67,8 +67,8 @@ mainCore opts = do
   -- let refutes ∷ [F]
   --     refutes = getRefutes tstp
 
-  -- let axioms ∷ [F]
-  --     axioms = getAxioms tstp
+  let axioms ∷ [F]
+      axioms = getAxioms tstp
 
   -- let conj ∷ F
   --     conj = fromMaybe
@@ -97,12 +97,16 @@ mainCore opts = do
 
   agdaFile <- openFile filename WriteMode
 
-  -- * Header
+  -- * Header.
   header :: Doc <- docHeader opts (length freevars)
   hPutDoc agdaFile header
 
-  -- * Variables
+  -- * Variables.
   hPutDoc agdaFile (docVars freevars)
+
+  -- * Axioms.
+  hPutDoc agdaFile (docAxioms axioms)
+
 
   -- Close the file.
   hClose agdaFile
