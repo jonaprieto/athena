@@ -28,7 +28,7 @@ module Athena.Utils.PrettyPrint
    hsep, vsep, fillSep, sep, hcat, vcat, fillCat, cat, punctuate,
 
    -- * Fillers
-   fill, fillBreak,
+   fill, fillBreak, hypenline,
 
    -- * Bracketing combinators
    enclose, squotes, dquotes, parens, angles, braces, brackets,
@@ -36,7 +36,7 @@ module Athena.Utils.PrettyPrint
    -- * Character documents
    lparen, rparen, langle, rangle, lbrace, rbrace, lbracket, rbracket,
    squote, dquote, semi, colon, comma, space, dot, backslash, equals,
-   hypen,
+   hypen, hashtag,
 
    -- * Primitive type documents
    string, stringStrict, int, integer, float, double, rational, bool,
@@ -445,6 +445,10 @@ space = char ' '
 dot ∷ Doc
 dot = char '.'
 
+-- | The document @hashtag@ contains a single hashtag, \"#\".
+hashtag ∷ Doc
+hashtag = char '#'
+
 -- | The document @backslash@ contains a back slash, \"\\\".
 backslash ∷ Doc
 backslash = char '\\'
@@ -616,15 +620,18 @@ fillBreak f x = width x (\w →
 --       nest   ∷ Int → Doc → Doc
 --       linebreak ∷ Doc
 --   @
-fill     ∷ Int → Doc → Doc
+fill ∷ Int → Doc → Doc
 fill f d = width d (\w →
                      if w >= f
                        then empty
                        else spaced (f - w)
                    )
 
+hypenline :: Doc
+hypenline = (hcat . replicate 78 $ hypen) <> line
 
-width     ∷ Doc → (Int → Doc) → Doc
+
+width ∷ Doc → (Int → Doc) → Doc
 width d f = column (\k1 → d <> column (\k2 → f (k2 - k1)))
 
 ------------------------------------------------------------------------------

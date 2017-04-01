@@ -16,11 +16,11 @@ import Athena.Translation.Functions
   -- , getSubGoals
   -- , printAxioms
   -- , printConjecture
-  fileHeader
+  docHeader
   -- , printPremises
   -- , printProof
   -- , printSubGoals
-  -- , printVars
+  , docVars
   )
 import Athena.Utils.PrettyPrint  ( hPutDoc, Doc, pretty, comment )
 import Athena.Options
@@ -93,17 +93,16 @@ mainCore opts = do
           (replaceExtension (fromJust (optInputFile opts)) ".agda")
           (optOutputFile opts)
 
-  --
-  -- --
-  -- -- Agda file.
-  -- --
-  --
-  agdaFile <- openFile filename WriteMode
-  --
-  -- -- * Header
-  header :: Doc <- fileHeader (length freevars)
+  -- Agda file.
 
+  agdaFile <- openFile filename WriteMode
+
+  -- * Header
+  header :: Doc <- docHeader opts (length freevars)
   hPutDoc agdaFile header
-  --
-  -- -- Close the file.
+
+  -- * Variables
+  hPutDoc agdaFile (docVars freevars)
+
+  -- Close the file.
   hClose agdaFile

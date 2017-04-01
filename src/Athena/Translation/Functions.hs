@@ -3,21 +3,22 @@
 
 {-# OPTIONS -fno-warn-missing-signatures  #-}
 {-# LANGUAGE UnicodeSyntax                #-}
+{-# LANGUAGE ScopedTypeVariables          #-}
 
 module Athena.Translation.Functions
    (
-    getAxioms
+     getAxioms
    , getConjeture
    , getRefutes
    , getSubGoals
   --  , printAxiom
   --  , printAxioms
   --  , printConjecture
-   , fileHeader
+   , docHeader
   --  , printPremises
   --  , printProof
   --  , printSubGoals
-  --  , printVars
+   , docVars
    ) where
 
 ------------------------------------------------------------------------------
@@ -32,19 +33,27 @@ import Athena.Translation.Rules
   -- , atpSimplify
   -- , atpStrip
   )
-
+import Athena.Options            ( Options ( optInputFile ) )
 import Athena.Translation.Utils  ( Ident, getIdent, stdName )
 import Athena.Utils.PrettyPrint
   ( (<+>)
   , (<@>)
   , (<>)
+  , (</>)
+  , comment
+  , Doc
+  , dot
+  , empty
+  , hypenline
+  , int
+  , line
   , parens
   , Pretty(pretty)
   , putDoc
-  , comment
-  , Doc
-  , int
-  , linebreak
+  , colon
+  , equals
+  , hashtag
+  , hcat
   )
 import Athena.Utils.Version      ( progNameVersion )
 
@@ -69,29 +78,46 @@ import Data.TSTP.V              ( V(..) )
 ------------------------------------------------------------------------------
 
 -- | Print out the header part of the Agda file.
-fileHeader ∷ Int → IO Doc
-fileHeader n = do
-  version <- progNameVersion
-  return $ comment (pretty version) <@>
-    pretty "open import Data.Prop " <+> int n <+> pretty "public" <> linebreak
+docHeader ∷ Options -> Int → IO Doc
+docHeader opts n = do
+  version :: String <- progNameVersion
+  return
+     (   hypenline
+     <>  comment (pretty version <> dot)
+     <>  comment (pretty "Tstp file:" <+> pretty (optInputFile opts) <> dot)
+     <>  hypenline
+     <@> hypenline
+     <@> pretty "open import ATP.Metis" <+> int n <+> pretty "public" <> line
+     <>  pretty "open import Data.Prop" <+> int n <+> pretty "public" <> line
+     <@> hypenline
+    )
 
-  -- putStrLn $ "open import ATP.Metis " ++ show n ++ " public\n"
 
---
--- -- Vars.
---
--- printVar ∷ V → Int → String
--- printVar f n =
---   intercalate "\n"
---     [ show f ++ " : Prop"
---     , show f ++ varStr
---     ]
---     where
---       varStr ∷ String
---       varStr = case show f of
---         "$true"  → " = ⊤"
---         "$false" → " = ⊥"
---         _        → " = Var (# " ++ show n ++ ")"
+prettyVar :: V -> Int -> Doc
+prettyVar var n = case show var of
+  "$true"  → pretty '⊤'
+  "$false" → pretty '⊥'
+  _        → pretty "Var" <+> parens (hashtag <+> int n)
+
+docVars :: [V] -> Doc
+docVars []    = empty
+docVars [variable] =
+      comment (pretty "Variable" <> dot) <> line
+  <>  pretty variable <+> colon  <+> pretty "Prop" <> line
+  <>  pretty variable <+> equals <+> (prettyVar variable 0) <> line
+
+docVars vars  =
+     comment (pretty "Variables" <> dot) <> line
+  <> docVars' vars 0 <> line
+  where
+    docVars' :: [V] -> Int -> Doc
+    docVars' [] n         = empty
+    docVars' (var : vs) n =
+           pretty var <+> colon  <+> pretty "Prop" <> line
+      <>   pretty var <+> equals <+> (prettyVar var n)
+      <@>  docVars' vs (n+1)
+
+
 --
 -- printVars ∷ [V] → Int → IO String
 -- printVars [] _       = return ""
