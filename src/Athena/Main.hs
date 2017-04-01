@@ -18,11 +18,9 @@ import Athena.Options
     , printUsage
     , processOptions
     )
-
 import Athena.Translation.Core   ( mainCore )
-
 import Athena.Utils.Monad        ( die )
-import Athena.Utils.PrettyPrint  ( text )
+import Athena.Utils.PrettyPrint  ( pretty )
 import Athena.Utils.Version      ( progNameVersion )
 
 import System.Environment        ( getArgs )
@@ -45,6 +43,6 @@ main = do
 
       | otherwise → do
           _ ← case optInputFile opts of
-            Nothing → die $ text "missing input file (try --help)"
+            Nothing → die $ pretty "missing input file (try --help)"
             Just f  → return f
           mainCore opts

@@ -12,7 +12,7 @@ module Athena.Utils.Monad
 
 ------------------------------------------------------------------------------
 
-import Athena.Utils.PrettyPrint  ( Doc, prettyShow )
+import Athena.Utils.PrettyPrint  ( Doc, pretty , (<>), hPutDoc )
 
 import System.Environment ( getProgName )
 import System.Exit        ( exitFailure )
@@ -31,7 +31,7 @@ import System.IO
 -- | Failure message.
 failureMsg ∷ Doc → IO ()
 failureMsg err =
-  getProgName >>= \prg → hPutStrLn stderr $ prg ++ ": " ++ prettyShow err
+  getProgName >>= \prg → hPutDoc stderr $ pretty prg <> pretty ": " <> err
 
 -- | Exit with an error message.
 die ∷ Doc → IO a

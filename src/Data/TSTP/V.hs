@@ -2,8 +2,6 @@
 -- | Data.TSTP.V module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
-{-# LANGUAGE FlexibleInstances #-}
-
 module Data.TSTP.V where
 
 ------------------------------------------------------------------------------
@@ -26,6 +24,3 @@ newtype V = V String
 
 instance Pretty V where
   pretty (V a) = pretty a
-
-instance Pretty [V] where
-  pretty = hcat . map pretty
