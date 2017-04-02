@@ -6,18 +6,17 @@
 {-# LANGUAGE ScopedTypeVariables          #-}
 
 module Athena.Translation.Functions
-   (
-     getAxioms
+   ( docAxioms
+   , docConjecture
+   , docHeader
+   , docPremises
+   , docSubgoals
+   , docVars
+   , getAxioms
    , getConjeture
    , getRefutes
    , getSubgoals
-   , docAxioms
-   , docConjecture
-   , docHeader
-  --  , printPremises
   --  , printProof
-   , docSubgoals
-   , docVars
    ) where
 
 ------------------------------------------------------------------------------
@@ -41,6 +40,9 @@ import Athena.Utils.PrettyPrint
   , (</>)
   , colon
   , comment
+  , lbracket
+  , rbracket
+  , comma
   , Doc
   , dot
   , empty
@@ -49,10 +51,12 @@ import Athena.Utils.PrettyPrint
   , hcat
   , hypenline
   , int
+  , space
   , line
   , parens
   , Pretty(pretty)
   , putDoc
+  , encloseSep
   -- , softline
   )
 import Athena.Utils.Version      ( progNameVersion )
@@ -112,7 +116,7 @@ docVars []   = empty
 docVars vars =
      line
   <> comment (pretty "Variable" <> s <> dot) <> line
-  <> docVars' vars 0 <> line
+  <> docVars' vars 0
   where
     s :: Doc
     s = if length vars > 1 then pretty 's' else empty
@@ -130,12 +134,9 @@ docVars vars =
 
 definition :: F -> Doc
 definition fm =
-     pretty nameF <+> colon  <+> pretty "Prop"   <> line
-  <> pretty nameF <+> equals <+> pretty formulaF <> line
+     pretty fm <+> colon  <+> pretty "Prop"   <> line
+  <> pretty fm <+> equals <+> pretty formulaF <> line
   where
-    nameF :: String
-    nameF = stdName . name $ fm
-
     formulaF :: Formula
     formulaF = formula fm
 
@@ -149,7 +150,7 @@ docAxioms []  = empty
 docAxioms fms =
      line
   <> comment (pretty "Axiom" <> s <> dot) <> line
-  <> docAxioms' fms <> line
+  <> docAxioms' fms
   where
     s :: Doc
     s = if length fms > 1 then pretty 's' else empty
@@ -159,6 +160,30 @@ docAxioms fms =
     docAxioms' (fm : fms) =
           definition fm
       <@> docAxioms' fms
+
+------------------------------------------------------------------------------
+-- Premises.
+------------------------------------------------------------------------------
+
+-- | Pretty a list of premises.
+docPremises ∷ [F] → Doc
+docPremises premises =
+    line
+  <> comment (pretty "Premise" <> s <> dot) <> line
+  <> pretty 'Γ' <+> colon  <+> pretty "Ctxt" <> line
+  <> pretty 'Γ' <+> equals <+> pms <> line
+  where
+    s :: Doc
+    s = if length premises > 1 then pretty 's' else empty
+
+    pms :: Doc
+    pms = case premises of
+      []  → pretty '∅'
+      [p] → lbracket <+> pretty (stdName (name p)) <+> rbracket
+      ps  → pretty '∅' <+> comma <+> f (map pretty ps)
+
+    f :: [Doc]  -> Doc
+    f = encloseSep empty empty (space <> comma <> space)
 
 ------------------------------------------------------------------------------
 -- Conjecture.
@@ -183,18 +208,16 @@ docConjecture fm =
 -- Subgoals.
 ------------------------------------------------------------------------------
 
-
 -- | Extract subgoals from a list of formulae.
 getSubgoals ∷ [F] → [F]
 getSubgoals = filter (isPrefixOf "subgoal" . name)
-
 
 docSubgoals :: [F] -> Doc
 docSubgoals []  = empty
 docSubgoals fms =
      line
   <> comment (pretty "Subgoal" <> s <> dot) <> line
-  <> docSubgoals' fms <> line
+  <> docSubgoals' fms
   where
     s :: Doc
     s = if length fms > 1 then pretty 's' else empty
@@ -205,25 +228,15 @@ docSubgoals fms =
           definition fm
       <@> docSubgoals' fms
 
-
+------------------------------------------------------------------------------
 -- Refutes.
---
+------------------------------------------------------------------------------
+
 -- | Extract refuting steps from a list of formulae.
 getRefutes ∷ [F] → [F]
 getRefutes = filter (isPrefixOf "refute"  . name)
 
 
--- | Print out the premises in the Agda file.
--- printPremises ∷ [F] → IO ()
--- printPremises premises = do
---   putStrLn $ "-- Premise" ++ (if length premises < 2 then "" else "s")
---   putStrLn "Γ : Ctxt"
---   case premises of
---     []  → putStrLn "Γ = ∅"
---     [p] → putStrLn $ "Γ = [ " ++ stdName (name p) ++ " ]"
---     ps  → putStrLn $ "Γ = ∅ , " ++ intercalate " , " (map (stdName . name) ps)
---   putStrLn ""
---
 --
 -- -- | Print out a formula by name with a identation.
 -- printInnerFormula ∷ Ident → ProofMap → String → String -> String

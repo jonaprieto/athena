@@ -9,6 +9,7 @@ module Data.TSTP.AtomicWord where
 ------------------------------------------------------------------------------
 
 import Athena.Utils.PrettyPrint ( Pretty(pretty) )
+import Athena.Translation.Utils ( stdName )
 
 ------------------------------------------------------------------------------
 
@@ -17,4 +18,4 @@ newtype AtomicWord = AtomicWord String
 
 instance Pretty AtomicWord where
   pretty (AtomicWord "$false") = pretty "⊥"
-  pretty (AtomicWord a)        = pretty a
+  pretty (AtomicWord a)        = pretty . stdName $ a

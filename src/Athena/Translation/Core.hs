@@ -17,7 +17,7 @@ import Athena.Translation.Functions
   , docAxioms
   , docConjecture
   , docHeader
-  -- , printPremises
+  , docPremises
   -- , printProof
   , docSubgoals
   , docVars
@@ -105,6 +105,9 @@ mainCore opts = do
 
   -- Axioms.
   hPutDoc agdaFile (docAxioms axioms)
+
+  -- Premises.
+  hPutDoc agdaFile (docPremises axioms)
 
   -- Conjecture.
   hPutDoc agdaFile (docConjecture conj)
