@@ -20,7 +20,9 @@ import Athena.Translation.Functions
   , getConjeture
   , getRefutes
   , getSubgoals
-  , AgdaFile
+  )
+import Athena.Translation.AgdaFile
+  ( AgdaFile
      ( AgdaFile
      , fileAxioms
      , fileConjecture

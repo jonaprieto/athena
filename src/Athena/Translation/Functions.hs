@@ -17,16 +17,6 @@ module Athena.Translation.Functions
    , getConjeture
    , getRefutes
    , getSubgoals
-   , AgdaFile
-      ( AgdaFile
-      , fileVariables
-      , fileAxioms
-      , fileConjecture
-      , fileInfo
-      , filePremises
-      , fileSubgoals
-      , fileTree
-      )
    ) where
 
 ------------------------------------------------------------------------------
@@ -249,27 +239,6 @@ getRefutes = filter (isPrefixOf "refute"  . name)
 -- Proof.
 ------------------------------------------------------------------------------
 
--- | Auxiliar data type to handle all information in the Agda file.
-data AgdaFile = AgdaFile
-  { fileAxioms     :: [F]
-  , fileConjecture :: F
-  , fileInfo       :: ProofMap
-  , filePremises   :: [F]
-  , fileSubgoals   :: [F]
-  , fileTree       :: [ProofTree]
-  , fileVariables  :: [V]
-  }
-
-instance Pretty AgdaFile where
-  pretty problem =
-   vsep
-     [ docImports (length (fileVariables problem))
-     , docVars (fileVariables problem)
-     , docAxioms (fileAxioms problem)
-     , docPremises (filePremises problem)
-     , docConjecture (fileConjecture problem)
-     , docSubgoals (fileSubgoals problem)
-     ]
 
 -- printProof ∷ [F] → [F] → F → ProofMap → [ProofTree] → IO ()
 -- printProof _ _  _ _ [] = return ()
