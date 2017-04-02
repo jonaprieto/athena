@@ -11,15 +11,15 @@ module Athena.Translation.Core ( mainCore ) where
 import Athena.Translation.Functions
   (
     getAxioms
-  -- , getConjeture
+  , getConjeture
   -- , getRefutes
-  -- , getSubGoals
+  , getSubgoals
   , docAxioms
-  -- , printConjecture
+  , docConjecture
   , docHeader
   -- , printPremises
   -- , printProof
-  -- , printSubGoals
+  , docSubgoals
   , docVars
   )
 import Athena.Utils.PrettyPrint  ( hPutDoc, Doc, pretty, comment )
@@ -61,8 +61,8 @@ mainCore opts = do
 
   tstp ∷ [F] ← parseFile . fromJust $ optInputFile opts
 
-  -- let subgoals ∷ [F]
-  --     subgoals = getSubGoals tstp
+  let subgoals ∷ [F]
+      subgoals = getSubgoals tstp
 
   -- let refutes ∷ [F]
   --     refutes = getRefutes tstp
@@ -70,10 +70,10 @@ mainCore opts = do
   let axioms ∷ [F]
       axioms = getAxioms tstp
 
-  -- let conj ∷ F
-  --     conj = fromMaybe
-  --       (error "Couldn't find a conjecture, or it was not unique")
-  --       (getConjeture tstp)
+  let conj ∷ F
+      conj = fromMaybe
+        (error "Couldn't find a conjecture, or it was not unique")
+        (getConjeture tstp)
 
   -- let rulesMap ∷ ProofMap
   --     rulesMap = buildProofMap tstp
@@ -94,19 +94,23 @@ mainCore opts = do
           (optOutputFile opts)
 
   -- Agda file.
-
   agdaFile <- openFile filename WriteMode
 
-  -- * Header.
+  -- Header.
   header :: Doc <- docHeader opts (length freevars)
   hPutDoc agdaFile header
 
-  -- * Variables.
+  -- Variables.
   hPutDoc agdaFile (docVars freevars)
 
-  -- * Axioms.
+  -- Axioms.
   hPutDoc agdaFile (docAxioms axioms)
 
+  -- Conjecture.
+  hPutDoc agdaFile (docConjecture conj)
+
+  -- Subgoals.
+  hPutDoc agdaFile (docSubgoals subgoals)
 
   -- Close the file.
   hClose agdaFile

@@ -10,6 +10,7 @@ import Athena.Utils.PrettyPrint
   ( Pretty(pretty)
   , rational
   )
+import Athena.Translation.Utils  ( stdName )
 
 import Data.TSTP.AtomicWord ( AtomicWord(..) )
 import Data.TSTP.V          ( V(..) )
@@ -26,7 +27,7 @@ data Term = Var V                             -- ^ Variable
           deriving (Eq, Ord, Read, Show)
 
 instance Pretty Term where
-  pretty (Var             (V v))      = pretty v
+  pretty (Var             (V v))      = pretty . stdName $ v
   pretty (NumberLitTerm      r )      = rational r
   pretty (DistinctObjectTerm t )      = pretty t
   pretty (FunApp (AtomicWord w ) [])  = pretty w

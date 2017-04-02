@@ -769,7 +769,7 @@ isEmpty _     = False
 -- | The document @(char c)@ contains the literal character @c@. The
 --   character shouldn't be a newline (@'\n'@), the function 'line'
 --   should be used for line breaks.
-char      ∷ Char → Doc
+char ∷ Char → Doc
 char '\n' = line
 char  c   = Char c
 
@@ -800,7 +800,7 @@ line = Line False
 linebreak ∷ Doc
 linebreak = Line True
 
-beside             ∷ Doc → Doc → Doc
+beside ∷ Doc → Doc → Doc
 beside Empty r     = r
 beside l     Empty = l
 beside l     r     = Cat l r

@@ -10,13 +10,13 @@ module Athena.Translation.Functions
      getAxioms
    , getConjeture
    , getRefutes
-   , getSubGoals
+   , getSubgoals
    , docAxioms
-  --  , printConjecture
+   , docConjecture
    , docHeader
   --  , printPremises
   --  , printProof
-  --  , printSubGoals
+   , docSubgoals
    , docVars
    ) where
 
@@ -33,26 +33,26 @@ import Athena.Translation.Rules
   -- , atpStrip
   )
 import Athena.Options            ( Options ( optInputFile ) )
-import Athena.Translation.Utils  ( Ident, getIdent, stdName )
+import Athena.Translation.Utils  ( stdName )
 import Athena.Utils.PrettyPrint
   ( (<+>)
   , (<@>)
   , (<>)
   , (</>)
+  , colon
   , comment
   , Doc
   , dot
   , empty
+  , equals
+  , hashtag
+  , hcat
   , hypenline
   , int
   , line
   , parens
   , Pretty(pretty)
   , putDoc
-  , colon
-  , equals
-  , hashtag
-  , hcat
   -- , softline
   )
 import Athena.Utils.Version      ( progNameVersion )
@@ -79,8 +79,9 @@ import Data.TSTP.V              ( V(..) )
 
 ------------------------------------------------------------------------------
 -- Header.
+------------------------------------------------------------------------------
 
--- | Print out the header part of the Agda file.
+-- | Pretty the header in the Agda file.
 docHeader ∷ Options -> Int → IO Doc
 docHeader opts n = do
   version :: String <- progNameVersion
@@ -93,10 +94,11 @@ docHeader opts n = do
      <@> pretty "open import ATP.Metis" <+> int n <+> pretty "public" <> line
      <>  pretty "open import Data.Prop" <+> int n <+> pretty "public" <> line
      <@> hypenline
-    )
+     )
 
 ------------------------------------------------------------------------------
 -- Variables.
+------------------------------------------------------------------------------
 
 prettyVar :: V -> Int -> Doc
 prettyVar var n = case show var of
@@ -104,38 +106,32 @@ prettyVar var n = case show var of
   "$false" → pretty '⊥'
   _        → pretty "Var" <+> parens (hashtag <+> int n)
 
+-- | Pretty a list of variables.
 docVars :: [V] -> Doc
-docVars []    = empty
-docVars [variable] =
-      comment (pretty "Variable" <> dot) <> line
-  <>  pretty variable <+> colon  <+> pretty "Prop" <> line
-  <>  pretty variable <+> equals <+> (prettyVar variable 0) <> line
-
-docVars vars  =
-     comment (pretty "Variables" <> dot) <> line
+docVars []   = empty
+docVars vars =
+     line
+  <> comment (pretty "Variable" <> s <> dot) <> line
   <> docVars' vars 0 <> line
   where
+    s :: Doc
+    s = if length vars > 1 then pretty 's' else empty
+
     docVars' :: [V] -> Int -> Doc
-    docVars' [] n         = empty
+    docVars' [] _         = empty
     docVars' (var : vs) n =
-           pretty var <+> colon  <+> pretty "Prop" <> line
-      <>   pretty var <+> equals <+> (prettyVar var n) <> line
-      <@>  docVars' vs (n+1)
+          pretty var <+> colon  <+> pretty "Prop" <> line
+      <>  pretty var <+> equals <+> (prettyVar var n) <> line
+      <@> docVars' vs (n+1)
 
 ------------------------------------------------------------------------------
 -- Axioms.
+------------------------------------------------------------------------------
 
--- | Extract axioms from a list of formulae.
-getAxioms ∷ [F] → [F]
-getAxioms = filter ((==) Axiom . role)
-
-
-docAxioms :: [F] -> Doc
-docAxioms []   = empty
-docAxioms [fm] =
-      comment (pretty "Axiom" <> dot) <> line
-  <>  pretty nameF <+> colon  <+> pretty "Prop"   <> line
-  <>  pretty nameF <+> equals <+> pretty formulaF <> line
+definition :: F -> Doc
+definition fm =
+     pretty nameF <+> colon  <+> pretty "Prop"   <> line
+  <> pretty nameF <+> equals <+> pretty formulaF <> line
   where
     nameF :: String
     nameF = stdName . name $ fm
@@ -143,26 +139,31 @@ docAxioms [fm] =
     formulaF :: Formula
     formulaF = formula fm
 
-docAxioms fms  =
-     comment (pretty "Axioms" <> dot) <> line
+-- | Extract axioms from a list of formulae.
+getAxioms ∷ [F] → [F]
+getAxioms = filter ((==) Axiom . role)
+
+-- | Pretty a list of axioms.
+docAxioms :: [F] -> Doc
+docAxioms []  = empty
+docAxioms fms =
+     line
+  <> comment (pretty "Axiom" <> s <> dot) <> line
   <> docAxioms' fms <> line
   where
+    s :: Doc
+    s = if length fms > 1 then pretty 's' else empty
+
     docAxioms' :: [F] -> Doc
     docAxioms' []         = empty
     docAxioms' (fm : fms) =
-           pretty nameF <+> colon  <+> pretty "Prop"   <> line
-      <>   pretty nameF <+> equals <+> pretty formulaF <> line
-      <@>  docAxioms' fms
-      where
-        nameF :: String
-        nameF = stdName . name $ fm
+          definition fm
+      <@> docAxioms' fms
 
-        formulaF :: Formula
-        formulaF = formula fm
+------------------------------------------------------------------------------
+-- Conjecture.
+------------------------------------------------------------------------------
 
---
--- -- Conjecture.
---
 -- | Try to extract a conjecture from a list of formulae and checks
 -- for uniqueness.
 getConjeture ∷ [F] → Maybe F
@@ -171,14 +172,39 @@ getConjeture rules =
     [l] → Just l
     _   → Nothing
 
--- -- | Print out in the Agda file the conjecture.
--- printConjecture ∷ F → IO ()
--- printConjecture f = putStrLn $
---   concat
---     [ "-- Conjecture\n"
---     , docAxioms f , "\n"
---     ]
---
+-- | Pretty the conjecture.
+docConjecture ∷ F → Doc
+docConjecture fm =
+     line
+  <> comment (pretty "Conjecture" <> dot) <> line
+  <> definition fm
+
+------------------------------------------------------------------------------
+-- Subgoals.
+------------------------------------------------------------------------------
+
+
+-- | Extract subgoals from a list of formulae.
+getSubgoals ∷ [F] → [F]
+getSubgoals = filter (isPrefixOf "subgoal" . name)
+
+
+docSubgoals :: [F] -> Doc
+docSubgoals []  = empty
+docSubgoals fms =
+     line
+  <> comment (pretty "Subgoal" <> s <> dot) <> line
+  <> docSubgoals' fms <> line
+  where
+    s :: Doc
+    s = if length fms > 1 then pretty 's' else empty
+
+    docSubgoals' :: [F] -> Doc
+    docSubgoals' []         = empty
+    docSubgoals' (fm : fms) =
+          definition fm
+      <@> docSubgoals' fms
+
 
 -- Refutes.
 --
@@ -186,22 +212,8 @@ getConjeture rules =
 getRefutes ∷ [F] → [F]
 getRefutes = filter (isPrefixOf "refute"  . name)
 
--- Subgoals.
 
--- | Extract subgoals from a list of formulae.
-getSubGoals ∷ [F] → [F]
-getSubGoals = filter (isPrefixOf "subgoal" . name)
-
--- -- | Print out in the Agda file the subgoals.
--- printSubGoals ∷ [F] → IO ()
--- printSubGoals []       = return ()
--- printSubGoals subgoals = putStrLn $
---   concat
---     [ "-- Subgoal", if length subgoals < 2 then "" else "s" , "\n"
---     , intercalate "\n\n" (map docAxioms subgoals)
---     ]
---
--- -- | Print out the premises in the Agda file.
+-- | Print out the premises in the Agda file.
 -- printPremises ∷ [F] → IO ()
 -- printPremises premises = do
 --   putStrLn $ "-- Premise" ++ (if length premises < 2 then "" else "s")

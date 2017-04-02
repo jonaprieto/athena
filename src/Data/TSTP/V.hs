@@ -10,6 +10,7 @@ import Athena.Utils.PrettyPrint
   ( hcat
   , Pretty(pretty)
   )
+import Athena.Translation.Utils  ( stdName )
 
 ------------------------------------------------------------------------------
 
@@ -23,4 +24,4 @@ newtype V = V String
           deriving (Eq, Ord, Read, Show)
 
 instance Pretty V where
-  pretty (V a) = pretty a
+  pretty (V a) = pretty . stdName $ a
