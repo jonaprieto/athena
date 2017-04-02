@@ -9,6 +9,7 @@ module Athena.Translation.Functions
    ( docAxioms
    , docConjecture
    , docHeader
+   , docImports
    , docPremises
    , docSubgoals
    , docVars
@@ -16,7 +17,16 @@ module Athena.Translation.Functions
    , getConjeture
    , getRefutes
    , getSubgoals
-  --  , printProof
+   , AgdaFile
+      ( AgdaFile
+      , fileVariables
+      , fileAxioms
+      , fileConjecture
+      , fileInfo
+      , filePremises
+      , fileSubgoals
+      , fileTree
+      )
    ) where
 
 ------------------------------------------------------------------------------
@@ -57,6 +67,7 @@ import Athena.Utils.PrettyPrint
   , Pretty(pretty)
   , putDoc
   , encloseSep
+  , vsep
   -- , softline
   )
 import Athena.Utils.Version      ( progNameVersion )
@@ -86,19 +97,22 @@ import Data.TSTP.V              ( V(..) )
 ------------------------------------------------------------------------------
 
 -- | Pretty the header in the Agda file.
-docHeader ∷ Options -> Int → IO Doc
-docHeader opts n = do
+docHeader ∷ Options → IO Doc
+docHeader opts = do
   version :: String <- progNameVersion
   return
      (   hypenline
      <>  comment (pretty version <> dot)
      <>  comment (pretty "Tstp file:" <+> pretty (optInputFile opts) <> dot)
-     <>  hypenline
-     <@> hypenline
-     <@> pretty "open import ATP.Metis" <+> int n <+> pretty "public" <> line
-     <>  pretty "open import Data.Prop" <+> int n <+> pretty "public" <> line
-     <@> hypenline
+     <>  hypenline <> line
      )
+
+docImports :: Int -> Doc
+docImports n =
+       hypenline
+   <@> pretty "open import ATP.Metis" <+> int n <+> pretty "public" <> line
+   <>  pretty "open import Data.Prop" <+> int n <+> pretty "public" <> line
+   <@> hypenline
 
 ------------------------------------------------------------------------------
 -- Variables.
@@ -114,8 +128,7 @@ prettyVar var n = case show var of
 docVars :: [V] -> Doc
 docVars []   = empty
 docVars vars =
-     line
-  <> comment (pretty "Variable" <> s <> dot) <> line
+     comment (pretty "Variable" <> s <> dot) <> line
   <> docVars' vars 0
   where
     s :: Doc
@@ -148,8 +161,7 @@ getAxioms = filter ((==) Axiom . role)
 docAxioms :: [F] -> Doc
 docAxioms []  = empty
 docAxioms fms =
-     line
-  <> comment (pretty "Axiom" <> s <> dot) <> line
+     comment (pretty "Axiom" <> s <> dot) <> line
   <> docAxioms' fms
   where
     s :: Doc
@@ -168,8 +180,7 @@ docAxioms fms =
 -- | Pretty a list of premises.
 docPremises ∷ [F] → Doc
 docPremises premises =
-    line
-  <> comment (pretty "Premise" <> s <> dot) <> line
+     comment (pretty "Premise" <> s <> dot) <> line
   <> pretty 'Γ' <+> colon  <+> pretty "Ctxt" <> line
   <> pretty 'Γ' <+> equals <+> pms <> line
   where
@@ -200,8 +211,7 @@ getConjeture rules =
 -- | Pretty the conjecture.
 docConjecture ∷ F → Doc
 docConjecture fm =
-     line
-  <> comment (pretty "Conjecture" <> dot) <> line
+     comment (pretty "Conjecture" <> dot) <> line
   <> definition fm
 
 ------------------------------------------------------------------------------
@@ -215,8 +225,7 @@ getSubgoals = filter (isPrefixOf "subgoal" . name)
 docSubgoals :: [F] -> Doc
 docSubgoals []  = empty
 docSubgoals fms =
-     line
-  <> comment (pretty "Subgoal" <> s <> dot) <> line
+     comment (pretty "Subgoal" <> s <> dot) <> line
   <> docSubgoals' fms
   where
     s :: Doc
@@ -236,22 +245,32 @@ docSubgoals fms =
 getRefutes ∷ [F] → [F]
 getRefutes = filter (isPrefixOf "refute"  . name)
 
+------------------------------------------------------------------------------
+-- Proof.
+------------------------------------------------------------------------------
 
---
--- -- | Print out a formula by name with a identation.
--- printInnerFormula ∷ Ident → ProofMap → String → String -> String
--- printInnerFormula n dict tag ctxt =
---   if debug
---     then do
---       let fm ∷ Maybe F
---           fm = Map.lookup tag dict
---       let strFm ∷ String
---           strFm = stdName . show . formula $ fromJust fm
---       concat [ getIdent n , "-- " , ctxt , " ⊢ " , strFm ]
---     else ""
---
--- -- Proof.
---
+-- | Auxiliar data type to handle all information in the Agda file.
+data AgdaFile = AgdaFile
+  { fileAxioms     :: [F]
+  , fileConjecture :: F
+  , fileInfo       :: ProofMap
+  , filePremises   :: [F]
+  , fileSubgoals   :: [F]
+  , fileTree       :: [ProofTree]
+  , fileVariables  :: [V]
+  }
+
+instance Pretty AgdaFile where
+  pretty problem =
+   vsep
+     [ docImports (length (fileVariables problem))
+     , docVars (fileVariables problem)
+     , docAxioms (fileAxioms problem)
+     , docPremises (filePremises problem)
+     , docConjecture (fileConjecture problem)
+     , docSubgoals (fileSubgoals problem)
+     ]
+
 -- printProof ∷ [F] → [F] → F → ProofMap → [ProofTree] → IO ()
 -- printProof _ _  _ _ [] = return ()
 -- printProof axioms subgoals goal rmap rtree = do

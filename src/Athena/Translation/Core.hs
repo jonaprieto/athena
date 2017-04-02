@@ -9,18 +9,27 @@ module Athena.Translation.Core ( mainCore ) where
 ------------------------------------------------------------------------------
 
 import Athena.Translation.Functions
-  (
-    getAxioms
-  , getConjeture
-  -- , getRefutes
-  , getSubgoals
-  , docAxioms
+  ( docAxioms
   , docConjecture
   , docHeader
+  , docImports
   , docPremises
-  -- , printProof
   , docSubgoals
   , docVars
+  , getAxioms
+  , getConjeture
+  , getRefutes
+  , getSubgoals
+  , AgdaFile
+     ( AgdaFile
+     , fileAxioms
+     , fileConjecture
+     , fileInfo
+     , filePremises
+     , fileSubgoals
+     , fileTree
+     , fileVariables
+     )
   )
 import Athena.Utils.PrettyPrint  ( hPutDoc, Doc, pretty, comment )
 import Athena.Options
@@ -33,12 +42,12 @@ import Athena.TSTP              ( parseFile )
 
 import Data.Maybe               ( fromJust, fromMaybe )
 
--- import Data.Proof
---   ( buildProofMap
---   , buildProofTree
---   , ProofMap
---   , ProofTree
---   )
+import Data.Proof
+  ( buildProofMap
+  , buildProofTree
+  , ProofMap
+  , ProofTree
+  )
 import Data.TSTP
   ( F(..)
   , Formula(..)
@@ -61,31 +70,22 @@ mainCore opts = do
 
   tstp ∷ [F] ← parseFile . fromJust $ optInputFile opts
 
-  let subgoals ∷ [F]
-      subgoals = getSubgoals tstp
-
-  -- let refutes ∷ [F]
-  --     refutes = getRefutes tstp
-
-  let axioms ∷ [F]
-      axioms = getAxioms tstp
-
   let conj ∷ F
       conj = fromMaybe
         (error "Couldn't find a conjecture, or it was not unique")
         (getConjeture tstp)
 
-  -- let rulesMap ∷ ProofMap
-  --     rulesMap = buildProofMap tstp
+  let rulesMap ∷ ProofMap
+      rulesMap = buildProofMap tstp
 
-  -- let rulesTrees ∷ [ProofTree]
-  --     rulesTrees = fmap (buildProofTree rulesMap) refutes
+  let refutes ∷ [F]
+      refutes = getRefutes tstp
+
+  let tree ∷ [ProofTree]
+      tree = fmap (buildProofTree rulesMap) refutes
 
   let formulas ∷ [Formula]
       formulas = fmap formula tstp
-
-  let freevars ∷ [V]
-      freevars = getFreeVars formulas
 
   let filename :: FilePath
       filename =
@@ -97,23 +97,21 @@ mainCore opts = do
   agdaFile <- openFile filename WriteMode
 
   -- Header.
-  header :: Doc <- docHeader opts (length freevars)
+  header :: Doc <- docHeader opts
   hPutDoc agdaFile header
 
-  -- Variables.
-  hPutDoc agdaFile (docVars freevars)
+  let problem :: AgdaFile
+      problem = AgdaFile
+        { fileAxioms     = getAxioms tstp
+        , fileConjecture = conj
+        , fileInfo       = rulesMap
+        , filePremises   = getAxioms tstp
+        , fileSubgoals   = getSubgoals tstp
+        , fileTree       = tree
+        , fileVariables  = getFreeVars formulas
+        }
 
-  -- Axioms.
-  hPutDoc agdaFile (docAxioms axioms)
-
-  -- Premises.
-  hPutDoc agdaFile (docPremises axioms)
-
-  -- Conjecture.
-  hPutDoc agdaFile (docConjecture conj)
-
-  -- Subgoals.
-  hPutDoc agdaFile (docSubgoals subgoals)
+  hPutDoc agdaFile (pretty problem)
 
   -- Close the file.
   hClose agdaFile
