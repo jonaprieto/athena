@@ -21,23 +21,23 @@ module Athena.Translation.Functions
 
 ------------------------------------------------------------------------------
 
-import Athena.Translation.Rules
-  (
-  -- atpCanonicalize
-  -- , atpClausify
-    atpConjunct
-  -- , atpNegate
-  , atpResolve
-  -- , atpSimplify
-  -- , atpStrip
-  )
+-- import Athena.Translation.Rules
+--   (
+--   -- atpCanonicalize
+--   -- , atpClausify
+--     atpConjunct
+--   -- , atpNegate
+--   , atpResolve
+--   -- , atpSimplify
+--   -- , atpStrip
+--   )
 import Athena.Options            ( Options ( optInputFile ) )
 import Athena.Translation.Utils  ( stdName )
 import Athena.Utils.PrettyPrint
   ( (<+>)
   , (<@>)
   , (<>)
-  , (</>)
+  -- , (</>)
   , colon
   , comment
   , lbracket
@@ -48,35 +48,34 @@ import Athena.Utils.PrettyPrint
   , empty
   , equals
   , hashtag
-  , hcat
+  -- , hcat
   , hypenline
   , int
   , space
   , line
   , parens
   , Pretty(pretty)
-  , putDoc
   , encloseSep
-  , vsep
+  -- , vsep
   -- , softline
   )
 import Athena.Utils.Version      ( progNameVersion )
 
-import Data.Proof
-  ( ProofMap
-  , ProofTree
-  , ProofTreeGen(..)
-  )
+-- import Data.Proof
+--   ( ProofMap
+--   , ProofTree
+--   , ProofTreeGen(..)
+--   )
 
-import Data.List                ( isPrefixOf, intercalate )
-import Data.Maybe               ( fromJust, Maybe )
-import qualified Data.Map as Map
+-- import Data.List                ( isPrefixOf, intercalate )
+-- import Data.Maybe               ( fromJust, Maybe )
+-- import qualified Data.Map as Map
 
 import Data.TSTP
   ( F    ( name, role, formula )
   , Formula(..)
   , Role ( Axiom, Conjecture )
-  , Rule(..)
+  -- , Rule(..)
   )
 import Data.TSTP.V              ( V(..) )
 
@@ -214,9 +213,9 @@ getSubgoals = filter (isPrefixOf "subgoal" . name)
 
 docSubgoals :: [F] -> Doc
 docSubgoals []  = empty
-docSubgoals fms =
+docSubgoals formulas =
      comment (pretty "Subgoal" <> s <> dot) <> line
-  <> docSubgoals' fms
+  <> docSubgoals' formulas
   where
     s :: Doc
     s = if length fms > 1 then pretty 's' else empty
