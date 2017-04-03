@@ -47,6 +47,10 @@ TODO :
 	| xargs grep -I -s 'TODO' \
 	| sort
 
+.PHONY : TAGS
+TAGS :
+	fast-tags -e -R src/
+
 .PHONY : clean
 clean :
 	rm -f ${SRC_DIR}/TSTP/Lexer.hs
