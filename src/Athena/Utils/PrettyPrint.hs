@@ -1,4 +1,3 @@
-
 -- | Athena.Utils.PrettyPrint module.
 -- Adapted from: Text.PrettyPrint.Leijen.Text
 -- https://github.com/ivan-m/wl-pprint-text/.

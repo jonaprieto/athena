@@ -1,4 +1,3 @@
-
 -- | Athena.Translation.Rule.Negate module.
 
 {-# LANGUAGE ScopedTypeVariables #-}

@@ -1,4 +1,3 @@
-
 -- | Athena.Translation.Core module.
 
 {-# LANGUAGE ScopedTypeVariables #-}
@@ -18,7 +17,8 @@ import Athena.Translation.Functions
      ( AgdaFile
      , fileAxioms
      , fileConjecture
-     , fileInfo
+     , fileDict
+     , fileName
      , filePremises
      , fileSubgoals
      , fileTrees
@@ -99,7 +99,8 @@ mainCore opts = do
       problem = AgdaFile
         { fileAxioms     = getAxioms tstp
         , fileConjecture = conj
-        , fileInfo       = rulesMap
+        , fileDict       = rulesMap
+        , fileName       = filename
         , filePremises   = getAxioms tstp
         , fileSubgoals   = getSubgoals tstp
         , fileTrees      = trees
