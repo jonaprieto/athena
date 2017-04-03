@@ -42,7 +42,7 @@ import Data.TSTP
 ------------------------------------------------------------------------------
 
 
--- | Auxiliar data type to handle all information in the Agda file.
+-- | Agda file.
 data AgdaFile = AgdaFile
   { fileAxioms     :: [F]
   , fileConjecture :: F

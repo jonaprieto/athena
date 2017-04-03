@@ -8,24 +8,22 @@ module Athena.Translation.Core ( mainCore ) where
 
 ------------------------------------------------------------------------------
 
-import Athena.Translation.AgdaFile
-  ( AgdaFile
-     ( AgdaFile
-     , fileAxioms
-     , fileConjecture
-     , fileInfo
-     , filePremises
-     , fileSubgoals
-     , fileTree
-     , fileVariables
-     )
-  )
 import Athena.Translation.Functions
   ( getAxioms
   , getConjeture
   , getRefutes
   , getSubgoals
   , docHeader
+  , AgdaFile
+     ( AgdaFile
+     , fileAxioms
+     , fileConjecture
+     , fileInfo
+     , filePremises
+     , fileSubgoals
+     , fileTrees
+     , fileVariables
+     )
   )
 import Athena.Utils.PrettyPrint
   ( hPutDoc
@@ -78,8 +76,8 @@ mainCore opts = do
   let refutes ∷ [F]
       refutes = getRefutes tstp
 
-  let tree ∷ [ProofTree]
-      tree = fmap (buildProofTree rulesMap) refutes
+  let trees ∷ [ProofTree]
+      trees = fmap (buildProofTree rulesMap) refutes
 
   let formulas ∷ [Formula]
       formulas = fmap formula tstp
@@ -91,11 +89,11 @@ mainCore opts = do
           (optOutputFile opts)
 
   -- Agda file.
-  agdaFile <- openFile filename WriteMode
+  hAgdaFile <- openFile filename WriteMode
 
   -- Header.
   header :: Doc <- docHeader opts
-  hPutDoc agdaFile header
+  hPutDoc hAgdaFile header
 
   let problem :: AgdaFile
       problem = AgdaFile
@@ -104,11 +102,11 @@ mainCore opts = do
         , fileInfo       = rulesMap
         , filePremises   = getAxioms tstp
         , fileSubgoals   = getSubgoals tstp
-        , fileTree       = tree
+        , fileTrees      = trees
         , fileVariables  = getFreeVars formulas
         }
 
-  hPutDoc agdaFile (pretty problem)
+  hPutDoc hAgdaFile (pretty problem)
 
   -- Close the file.
-  hClose agdaFile
+  hClose hAgdaFile

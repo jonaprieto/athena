@@ -17,6 +17,16 @@ module Athena.Translation.Functions
    , getConjeture
    , getRefutes
    , getSubgoals
+   , AgdaFile
+      ( AgdaFile
+      , fileVariables
+      , fileAxioms
+      , fileConjecture
+      , fileInfo
+      , filePremises
+      , fileSubgoals
+      , fileTrees
+      )
    ) where
 
 ------------------------------------------------------------------------------
@@ -38,36 +48,40 @@ import Athena.Utils.PrettyPrint
   , (<@>)
   , (<>)
   -- , (</>)
+  -- , hcat
   , colon
-  , comment
-  , lbracket
-  , rbracket
   , comma
+  , comment
   , Doc
+  , dollar
   , dot
+  , hypen
   , empty
+  , encloseSep
   , equals
   , hashtag
-  -- , hcat
   , hypenline
+  , indent2
+  , indent
   , int
-  , space
+  , lbracket
   , line
   , parens
   , Pretty(pretty)
-  , encloseSep
-  -- , vsep
+  , rbracket
+  , space
+  , vsep
   -- , softline
   )
 import Athena.Utils.Version      ( progNameVersion )
 
--- import Data.Proof
---   ( ProofMap
---   , ProofTree
+import Data.Proof
+  ( ProofMap
+  , ProofTree
 --   , ProofTreeGen(..)
---   )
+  )
 
--- import Data.List                ( isPrefixOf, intercalate )
+import Data.List                ( isPrefixOf )
 -- import Data.Maybe               ( fromJust, Maybe )
 -- import qualified Data.Map as Map
 
@@ -81,6 +95,29 @@ import Data.TSTP.V              ( V(..) )
 
 ------------------------------------------------------------------------------
 
+-- | Agda file.
+data AgdaFile = AgdaFile
+  { fileAxioms     :: [F]
+  , fileConjecture :: F
+  , fileInfo       :: ProofMap
+  , filePremises   :: [F]
+  , fileSubgoals   :: [F]
+  , fileTrees      :: [ProofTree]
+  , fileVariables  :: [V]
+  }
+
+instance Pretty AgdaFile where
+  pretty problem =
+   vsep
+     [ docImports (length (fileVariables problem))
+     , docVars (fileVariables problem)
+     , docAxioms (fileAxioms problem)
+     , docPremises (filePremises problem)
+     , docConjecture (fileConjecture problem)
+     , docSubgoals (fileSubgoals problem)
+     , docProof problem
+     ]
+
 ------------------------------------------------------------------------------
 -- Header.
 ------------------------------------------------------------------------------
@@ -90,10 +127,10 @@ docHeader ∷ Options → IO Doc
 docHeader opts = do
   version :: String <- progNameVersion
   return
-     (   hypenline
-     <>  comment (pretty version <> dot)
-     <>  comment (pretty "Tstp file:" <+> pretty (optInputFile opts) <> dot)
-     <>  hypenline <> line
+     (  hypenline
+     <> comment (pretty version <> dot)
+     <> comment (pretty "Tstp file:" <+> pretty (optInputFile opts) <> dot)
+     <> hypenline <> line
      )
 
 docImports :: Int -> Doc
@@ -218,7 +255,7 @@ docSubgoals formulas =
   <> docSubgoals' formulas
   where
     s :: Doc
-    s = if length fms > 1 then pretty 's' else empty
+    s = if length formulas > 1 then pretty 's' else empty
 
     docSubgoals' :: [F] -> Doc
     docSubgoals' []         = empty
@@ -238,35 +275,93 @@ getRefutes = filter (isPrefixOf "refute"  . name)
 -- Proof.
 ------------------------------------------------------------------------------
 
+docProof :: AgdaFile -> Doc
+docProof agdaFile =
+     hypenline
+  <> comment (pretty "Proof" <> dot)
+  <> hypenline
+  <@> vsep
+       [ docProofSubgoals agdaFile
+       , docProofGoal agdaFile
+       ]
 
--- printProof ∷ [F] → [F] → F → ProofMap → [ProofTree] → IO ()
--- printProof _ _  _ _ [] = return ()
--- printProof axioms subgoals goal rmap rtree = do
---   putStrLn ""
---   putStrLn $ replicate 78 '-'
---   putStrLn "-- Proof"
---   putStrLn $ replicate 78 '-'
---   putStrLn "\n"
---   printProofSubgoal 0 axioms subgoals goal rmap rtree
---   printProofGoal subgoals goal rmap rtree
+docProofSubgoal :: Int -> ProofTree -> AgdaFile -> Doc
+docProofSubgoal n tree agdaFile =
+     pName <+> colon <+> pretty 'Γ' <+> pretty '⊢' <+> pretty sName <> line
+  <> pName <+> equals <> line
+  <> indent2 (pretty "RAA" <+> dollar <> line <>
+              indent2 (docSteps n tree agdaFile))
+  where
+    pName ::  Doc
+    pName = pretty "proof" <> (pretty . stdName . show) n
+
+    sName :: Doc
+    sName = pretty "subgoal" <> (pretty . stdName . show) n
+
+docProofSubgoals :: AgdaFile -> Doc
+docProofSubgoals agdaFile =
+  vsep $
+    map
+      (\(n, tree) -> docProofSubgoal n tree agdaFile)
+      (zip [0..] trees)
+  where
+      trees :: [ProofTree]
+      trees = fileTrees agdaFile
+
+
+docSteps :: Int -> ProofTree -> AgdaFile -> Doc
+docSteps n tree agdaFile = pretty "?" <> line
+
+docProofGoal :: AgdaFile -> Doc
+docProofGoal agdaFile =
+     pretty "proof" <+> colon <+> pretty "Γ ⊢ goal" <> line
+  <> pretty "proof" <+> equals <> line
+  <> indent 2 (pretty '⇒' <> hypen <> pretty "elim" <> line)
+  <> indent 2 (pretty "atp" <> hypen <> pretty "splitGoal" <> line)
+  <> indent 2 sgoals <> line
+  where
+    sgoals :: Doc
+    sgoals = case fileSubgoals agdaFile of
+      []       -> pretty '?' -- Imposible.
+      [_]      -> pretty "proof₀"
+      [_, _]   -> parens $ pretty "∧-intro"
+              <+> (pretty . stdName) "subgoal0"
+              <+> (pretty . stdName) "subgoal1"
+      subgoals ->
+        foldr
+          (\x y ->
+            parens $
+              vsep
+                [ pretty "∧-intro"
+                , indent 2
+                    ( vsep
+                        [ pretty "subgoal" <> (pretty . stdName . show) x
+                        , y
+                        ]
+                     )
+                 ]
+          )
+          (pretty "subgoal" <> (pretty . stdName . show) (length subgoals -1))
+          ([0..(length subgoals - 2)])
+
+
+-- andIntroSubgoals ∷ Int -> Doc
+-- andIntroSubgoals _ _ []    = ""
+-- andIntroSubgoals m n [_]   = getIdent m ++ "subgoal" ++ stdName (show n)
+-- andIntroSubgoals m n [_,_] =
+--   concat
+--     [ getIdent m , "subgoal" , stdName (show n) , "\n"
+--     , getIdent m , "subgoal" , stdName (show (n+1)) , "\n"
+--     ]
+-- andIntroSubgoals m n (_:xs) =
+--   concat
+--     [ getIdent m , "subgoal", stdName (show n) , "\n"
+--     , getIdent m, "(∧-intro\n"
+--     , andIntroSubgoals (m+1) (n+1) xs
+--     , getIdent m, ")\n"
+--     ]
 --
--- printProofSubgoal ∷ Int → [F] → [F] → F → ProofMap → [ProofTree] → IO ()
--- printProofSubgoal _ _ _ _ _ [] = return ()
--- printProofSubgoal no axioms subgoals goal rmap (tree:strees) = do
---   let strNo       = stdName $ show no
---   let proofName   = stdName $ "proof" ++ strNo
---   let subgoalName = "subgoal" ++ strNo
---   let proof ∷ String
---       proof = concat
---         [ proofName , " : Γ ⊢ " , subgoalName , "\n"
---         , proofName , " =\n"
---         , "  RAA $" , "\n"
---         , printSteps subgoalName 2 [tree] rmap goal axioms
---         ]
---   putStrLn proof
---   printProofSubgoal (no+1) axioms subgoals goal rmap strees
---
---
+
 -- printSteps ∷ String → Ident → [ProofTree] → ProofMap → F → [F] → String
 -- printSteps sname n [Root Negate tag [Root Strip subgoalname _]] dict _ _ =
 --   concat
@@ -389,42 +484,3 @@ getRefutes = filter (isPrefixOf "refute"  . name)
 -- printSteps _ n _ _ _ _ = getIdent n ++ "? -- no supported yet\n"
 --
 --
--- andIntroSubgoals ∷ Ident → Int → [F] → String
--- andIntroSubgoals _ _ []    = ""
--- andIntroSubgoals m n [_]   = getIdent m ++ "subgoal" ++ stdName (show n)
--- andIntroSubgoals m n [_,_] =
---   concat
---     [ getIdent m , "subgoal" , stdName (show n) , "\n"
---     , getIdent m , "subgoal" , stdName (show (n+1)) , "\n"
---     ]
--- andIntroSubgoals m n (_:xs) =
---   concat
---     [ getIdent m , "subgoal", stdName (show n) , "\n"
---     , getIdent m, "(\n"
---     , getIdent m , "∧-intro\n"
---     , andIntroSubgoals (m+1) (n+1) xs
---     , getIdent m, ")\n"
---     ]
---
--- printProofGoal ∷ [F] → F → ProofMap → [ProofTree] → IO ()
--- printProofGoal [] _ _ _  = putStrLn "-- Proof not available.\n"
--- printProofGoal [_] _ _ _ = putStrLn $
---   concat
---     [ "proof : Γ ⊢ goal" , "\n"
---     , "proof =" , "\n"
---     , getIdent 1 , "⇒-elim", "\n"
---     , getIdent 2 , "atp-splitGoal" , "\n"
---     , getIdent 2 , "proof₀" , "\n"
---     ]
---
--- printProofGoal subgoals _ _ _ = putStrLn $
---   concat
---     [ "proof : Γ ⊢ goal" , "\n"
---     , "proof =" , "\n"
---     , getIdent 1 , "⇒-elim", "\n"
---     , getIdent 2 , "atp-splitGoal" , "\n"
---     , getIdent 2 , "(\n"
---     , getIdent 2 , "∧-intro\n"
---     , andIntroSubgoals 3 0 subgoals
---     , getIdent 2 , ")\n"
---     ]
