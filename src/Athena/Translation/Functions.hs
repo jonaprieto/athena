@@ -81,7 +81,7 @@ import Data.Proof
   , ProofTreeGen ( Root, Leaf )
   )
 
-import Data.List                ( isPrefixOf )
+import Data.List                ( isPrefixOf, break )
 import Data.Maybe               ( fromJust )
 import qualified Data.Map as Map
 
@@ -193,7 +193,7 @@ docVars vars =
     docVars' [] _         = empty
     docVars' (var : vs) n =
           pretty var <+> colon  <+> pretty "Prop" <> line
-      <>  pretty var <+> equals <+> (prettyVar var n) <> line
+      <>  pretty var <+> equals <+> prettyVar var n <> line
       <@> docVars' vs (n+1)
 
 ------------------------------------------------------------------------------
@@ -232,6 +232,10 @@ docAxioms fms =
 -- Premises.
 ------------------------------------------------------------------------------
 
+toCtxt ∷ [Doc]  → Doc
+toCtxt = encloseSep empty empty (space <> comma <> space)
+
+
 -- | Pretty a list of premises.
 docPremises ∷ [F] → Doc
 docPremises premises =
@@ -246,10 +250,7 @@ docPremises premises =
     pms = case premises of
       []  → pretty '∅'
       [p] → lbracket <+> pretty (stdName (name p)) <+> rbracket
-      ps  → pretty '∅' <+> comma <+> f (map pretty ps)
-
-    f ∷ [Doc]  → Doc
-    f = encloseSep empty empty (space <> comma <> space)
+      ps  → pretty '∅' <+> comma <+> toCtxt (map pretty ps)
 
 ------------------------------------------------------------------------------
 -- Conjecture.
@@ -318,8 +319,8 @@ docProofSubgoal ∷ Int → ProofTree → AgdaFile → Doc
 docProofSubgoal n tree agdaFile =
      pName <+> colon <+> pretty "Γ ⊢" <+> pretty sName <> line
   <> pName <+> equals <> line
-  <> indent 2 (pretty "RAA" <> line <>
-              indent 2 (parens (docSteps sName tree agdaFile))) <> line
+  <> indent 2  (parens (pretty "RAA" <> line <>
+              indent 2 (docSteps sName tree agdaFile))) <> line
   where
     pName ∷  Doc
     pName = pretty "proof" <> (pretty . stdName . show) n
@@ -347,7 +348,7 @@ docProofGoal agdaFile =
   where
     sgoals ∷ Doc
     sgoals = case fileSubgoals agdaFile of
-      []       → pretty '?' -- Imposible.
+      []       → pretty '?' -- TODO
       [_]      → pretty "proof₀"
       [_, _]   → parens $ pretty "∧-intro"
               <+> pretty "proof₀"
@@ -367,7 +368,7 @@ docProofGoal agdaFile =
                  ]
           )
           (pretty "proof" <> (pretty . stdName . show) (length subgoals -1))
-          ([0..(length subgoals - 2)])
+          [0..(length subgoals - 2)]
 
 ------------------------------------------------------------------------------
 
@@ -379,20 +380,57 @@ docSteps ∷ Doc → ProofTree → AgdaFile → Doc
 -- Axiom.
 ------------------------------------------------------------------------------
 
-docSteps sName (Leaf Axiom axiom) _ =
-     pretty "weaken" <+> parens (pretty Negate <+> sName) <> line
-  <> indent 2 (parens (pretty "assume" <+> pretty "{Γ = ∅}" <+> pAxiom))
+docSteps sName (Leaf Axiom axiom) agdaFile =
+  parens $
+      prettyWeaken <> line
+    <> indent 2 (parens (prettyAssume <+> pAxiom))
   where
+    dict ∷ ProofMap
+    dict = fileDict agdaFile
+
     pAxiom ∷ Doc
     pAxiom = pretty . stdName $ axiom
+
+    premises ∷ [F]
+    premises = filePremises agdaFile
+
+    aᵢ ∷ F
+    aᵢ = fromJust .  Map.lookup axiom $ dict
+
+    toWeak ∷ [F]
+    toWeak =
+      case dropWhile (/= aᵢ) premises of
+        []  → []
+        [a] → []
+        ps  → tail ps
+
+    prettyWeaken ∷ Doc
+    prettyWeaken =
+      case toWeak of
+        [] → pretty "weaken"  <+> parens (pretty Negate <+> sName)
+        ps → pretty "weaken-\916\8321" <+> parens
+          (toCtxt
+           ([pretty '\8709'] ++ map pretty ps ++ [pretty Negate <+> sName]))
+
+    toAssume ∷ [F]
+    toAssume = takeWhile (/= aᵢ) premises
+
+    prettyAssume ∷ Doc
+    prettyAssume = pretty "assume" <+> pretty "{Γ =" <+>
+      case toAssume of
+        []  → pretty "∅}"
+        [a] → lbracket <+> pretty a <+> rbracket <> pretty "}"
+        axs → braces $ pretty 'Γ' <+> equals <+> toCtxt (map pretty axs)
+
 
 ------------------------------------------------------------------------------
 -- Canonicalize.
 ------------------------------------------------------------------------------
 
 docSteps sName (Root Canonicalize _ [subtree]) agdaFile =
-     pretty Canonicalize <> line
-  <> indent 2 (parens (docSteps sName subtree agdaFile))
+  parens $
+       pretty Canonicalize <> line
+    <> indent 2 (docSteps sName subtree agdaFile)
 
 ------------------------------------------------------------------------------
 -- Conjecture.
@@ -406,8 +444,9 @@ docSteps sName (Leaf Conjecture conjecture) _ =
 ------------------------------------------------------------------------------
 
 docSteps sName (Root Conjunct tag [subtree]) agdaFile =
-     pretty Conjunct <+> parens (pretty ω) <> line
-  <> indent 2 (parens (docSteps sName subtree agdaFile))
+   parens $
+        pretty Conjunct <+> parens (pretty ω) <> line
+     <> indent 2 (docSteps sName subtree agdaFile)
    where
      ω ∷ Formula
      ω = formula . fromJust $ Map.lookup tag dict
@@ -420,25 +459,28 @@ docSteps sName (Root Conjunct tag [subtree]) agdaFile =
 ------------------------------------------------------------------------------
 
 docSteps sName (Root Negate tag [Root Strip _ _]) agdaFile =
-     pretty Strip <> line
-  <> indent 2 (parens (pretty "assume {Γ = Γ}" <> line
-      <> indent 2  (parens (pretty Negate <+> sName))))
+  parens $
+       pretty Strip <> line
+    <> indent 2 (parens (pretty "assume {Γ = Γ}" <> line
+    <> indent 2 (parens (pretty Negate <+> sName))))
 
 ------------------------------------------------------------------------------
 -- Resolve.
 ------------------------------------------------------------------------------
 
---       left    right
---      -----    -----
---       (f)      (g)
---       _|_      _|_
---      /   \    /    \
---      ϕ₁ ∨ l  ϕ₂ ∨ ¬ l
---      ---------------- (resolve ℓ)
---          ϕ₁ ∨ ϕ₂
---          \____/
---             |
---             ϕ
+{-
+      left    right
+     -----    -----
+      (f)      (g)
+      _|_      _|_
+     /   \    /    \
+     ϕ₁ ∨ l  ϕ₂ ∨ ¬ l
+     ---------------- (resolve ℓ)
+         ϕ₁ ∨ ϕ₂
+         \____/
+            |
+            ϕ
+-}
 
 docSteps sName
          (Root Resolve tag
@@ -446,12 +488,15 @@ docSteps sName
            , right@(Root _ gTag _)
            ])
          agdaFile =
-     pretty thm <+> parens (pretty l) <> line
-  <> if swap
-      then (indent 2 (parens (docSteps sName left agdaFile)) <> line
-         <> indent 2 (parens (docSteps sName right agdaFile)))
-      else (indent 2 (parens (docSteps sName right agdaFile)) <> line
-         <> indent 2 (parens (docSteps sName left agdaFile)))
+  parens $
+    pretty thm <+> parens (pretty l) <> line <>
+  if swap then
+    indent 2 (parens (docSteps sName left agdaFile)) <> line <>
+      indent 2 (parens (docSteps sName right agdaFile))
+    else
+    indent 2 (parens (docSteps sName right agdaFile)) <> line <>
+      indent 2 (parens (docSteps sName left agdaFile))
+
   where
     dict ∷ ProofMap
     dict = fileDict agdaFile
@@ -483,8 +528,7 @@ docSteps sName
 ------------------------------------------------------------------------------
 
 docSteps sName (Root Simplify tag nodes) agdaFile =
-     pretty Simplify <> line
-  <> indent 2 simplification
+  simplification
   where
     rNodes :: [ProofTree]
     rNodes = reverse nodes
@@ -498,13 +542,13 @@ docSteps sName (Root Simplify tag nodes) agdaFile =
               [ pretty Simplify
               , indent 2
                   (vsep
-                    [ parens (docSteps sName node agdaFile)
+                    [ docSteps sName node agdaFile
                     , y
                     ]
                    )
                ]
         )
-        (parens (docSteps sName (last rNodes) agdaFile))
+        (docSteps sName (last rNodes) agdaFile)
         (init rNodes)
 
 
@@ -517,27 +561,3 @@ docSteps sName (Root Strip _ [subtree]) agdaFile =
   <> indent 2 (parens (docSteps sName subtree agdaFile))
 
 docSteps n tree agdaFile = pretty "?" <> line
-
---
--- docSteps sname n [Root Resolve tag ((left@(Root _ fTag _)):(right@(Root _ gTag _)):_)] dict goal axioms =
---   concat [ getIdent n , resolveCase , "\n" ] ++
---     if not swap
---       then concat
---           [ getIdent (n+1) , "(\n"
---           , getIdent (n+1) , docSteps sname (n+2) [left] dict goal axioms
---           , getIdent (n+1) , ")\n"
---           , getIdent (n+1) , "(\n"
---           , getIdent (n+1) , docSteps sname (n+2) [right] dict goal axioms
---           , getIdent (n+1) , ")\n"
---           ]
---       else concat
---           [ getIdent (n+1) , "(\n"
---           , getIdent (n+1) , docSteps sname (n+2) [right] dict goal axioms
---           , getIdent (n+1) , ")\n"
---           , getIdent (n+1) , "(\n"
---           , getIdent (n+1) , docSteps sname (n+2) [left] dict goal axioms
---           , getIdent (n+1) , ")\n"
---           ]
---
---     where
---
