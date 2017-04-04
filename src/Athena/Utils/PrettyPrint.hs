@@ -17,7 +17,7 @@ module Athena.Utils.PrettyPrint
    softline, softbreak, spacebreak,
 
    -- * Alignment
-   align, hang, indent,  indent2, encloseSep, list, tupled, semiBraces,
+   align, hang, indent, encloseSep, list, tupled, semiBraces,
    comment,
 
    -- * Operators
@@ -654,14 +654,9 @@ width d f = column (\k1 → d <> column (\k2 → f (k2 - k1)))
 --       indents these
 --       words !
 --   @
-indent         ∷ Int → Doc → Doc
+indent ∷ Int → Doc → Doc
 indent _ Empty = Empty
 indent i d     = hang i (spaced i <> d)
-
--- | Same as `indent` by using two spaces by default.
-indent2 ∷ Doc → Doc
-indent2 Empty = Empty
-indent2 d     = hang 2 (spaced 2 <> d)
 
 -- | The hang combinator implements hanging indentation. The document
 --   @(hang i x)@ renders document @x@ with a nesting level set to the

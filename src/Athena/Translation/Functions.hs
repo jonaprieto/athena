@@ -31,16 +31,16 @@ module Athena.Translation.Functions
 
 ------------------------------------------------------------------------------
 
--- import Athena.Translation.Rules
---   (
+import Athena.Translation.Rules
+  (
 --   -- atpCanonicalize
 --   -- , atpClausify
 --     atpConjunct
 --   -- , atpNegate
---   , atpResolve
+  atpResolve
 --   -- , atpSimplify
 --   -- , atpStrip
---   )
+  )
 import Athena.Options            ( Options ( optInputFile ) )
 import Athena.Translation.Utils  ( stdName )
 import Athena.Utils.PrettyPrint
@@ -62,7 +62,6 @@ import Athena.Utils.PrettyPrint
   , equals
   , hashtag
   , hypenline
-  , indent2
   , indent
   , int
   , lbracket
@@ -87,10 +86,11 @@ import Data.Maybe               ( fromJust )
 import qualified Data.Map as Map
 
 import Data.TSTP
-  ( F    ( name, role, formula )
+  ( F    ( name, role, formula, source )
   , Formula(..)
+  , Info(Function), GData(..), GTerm(..), Source(..)
   , Role ( Axiom, Conjecture )
-  , Rule ( Negate, Strip, Conjunct, Canonicalize )
+  , Rule ( Negate, Strip, Conjunct, Canonicalize, Simplify, Resolve )
   )
 import Data.TSTP.V              ( V(..) )
 import System.FilePath          ( takeBaseName )
@@ -123,6 +123,7 @@ instance Pretty AgdaFile where
      , docSubgoals (fileSubgoals problem)
      , docProof problem
      ]
+
 
 ------------------------------------------------------------------------------
 -- Header.
@@ -315,10 +316,10 @@ docProof agdaFile =
 
 docProofSubgoal ∷ Int → ProofTree → AgdaFile → Doc
 docProofSubgoal n tree agdaFile =
-     pName <+> colon <+> pretty 'Γ' <+> pretty '⊢' <+> pretty sName <> line
+     pName <+> colon <+> pretty "Γ ⊢" <+> pretty sName <> line
   <> pName <+> equals <> line
-  <> indent2 (pretty "RAA" <> line <>
-              indent2 (parens (docSteps sName tree agdaFile))) <> line
+  <> indent 2 (pretty "RAA" <> line <>
+              indent 2 (parens (docSteps sName tree agdaFile))) <> line
   where
     pName ∷  Doc
     pName = pretty "proof" <> (pretty . stdName . show) n
@@ -340,8 +341,8 @@ docProofGoal ∷ AgdaFile → Doc
 docProofGoal agdaFile =
      pretty "proof" <+> colon <+> pretty "Γ ⊢ goal" <> line
   <> pretty "proof" <+> equals <> line
-  <> indent 2 (pretty '⇒' <> hypen <> pretty "elim" <> line)
-  <> indent 2 (pretty "atp" <> hypen <> pretty "splitGoal" <> line)
+  <> indent 2 (pretty "⇒-elim" <> line)
+  <> indent 2 (pretty "atp-splitGoal" <> line)
   <> indent 0 sgoals <> line
   where
     sgoals ∷ Doc
@@ -380,7 +381,7 @@ docSteps ∷ Doc → ProofTree → AgdaFile → Doc
 
 docSteps sName (Leaf Axiom axiom) _ =
      pretty "weaken" <+> parens (pretty Negate <+> sName) <> line
-  <> indent 2 (parens (pretty "assume" <+> pretty "{Γ = ∅}" <+> pAxiom)) <> line
+  <> indent 2 (parens (pretty "assume" <+> pretty "{Γ = ∅}" <+> pAxiom))
   where
     pAxiom ∷ Doc
     pAxiom = pretty . stdName $ axiom
@@ -398,7 +399,7 @@ docSteps sName (Root Canonicalize _ [subtree]) agdaFile =
 ------------------------------------------------------------------------------
 
 docSteps sName (Leaf Conjecture conjecture) _ =
-  pretty conjecture <> line
+  pretty conjecture
 
 ------------------------------------------------------------------------------
 -- Conjunct.
@@ -424,8 +425,92 @@ docSteps sName (Root Negate tag [Root Strip _ _]) agdaFile =
       <> indent 2  (parens (pretty Negate <+> sName))))
 
 ------------------------------------------------------------------------------
+-- Resolve.
+------------------------------------------------------------------------------
+
+--       left    right
+--      -----    -----
+--       (f)      (g)
+--       _|_      _|_
+--      /   \    /    \
+--      ϕ₁ ∨ l  ϕ₂ ∨ ¬ l
+--      ---------------- (resolve ℓ)
+--          ϕ₁ ∨ ϕ₂
+--          \____/
+--             |
+--             ϕ
+
+docSteps sName
+         (Root Resolve tag
+           [ left@(Root _ fTag _)
+           , right@(Root _ gTag _)
+           ])
+         agdaFile =
+     pretty thm <+> parens (pretty l) <> line
+  <> if swap
+      then (indent 2 (parens (docSteps sName left agdaFile)) <> line
+         <> indent 2 (parens (docSteps sName right agdaFile)))
+      else (indent 2 (parens (docSteps sName right agdaFile)) <> line
+         <> indent 2 (parens (docSteps sName left agdaFile)))
+  where
+    dict ∷ ProofMap
+    dict = fileDict agdaFile
+
+    ϕ  ∷ Formula
+    ϕ = formula . fromJust $ Map.lookup tag dict
+
+    f , g ∷ Formula
+    f = formula . fromJust $ Map.lookup fTag dict
+    g = formula . fromJust $ Map.lookup gTag dict
+
+    thm ∷ String
+    swap ∷ Bool
+    (thm, swap) = atpResolve f g l
+
+    l ∷ Formula
+    l = let sourceInfo ∷ Source
+            sourceInfo = source . fromJust $ Map.lookup tag dict
+        in getResolveLiteral sourceInfo
+
+    getResolveLiteral ∷ Source → Formula
+    getResolveLiteral
+      (Inference Resolve (Function _ (GTerm (GWord l):_) :_) _) =
+        PredApp l []
+    getResolveLiteral _ = error "I expected a literal, nothing more."
+
+------------------------------------------------------------------------------
+-- Simplify.
+------------------------------------------------------------------------------
+
+docSteps sName (Root Simplify tag nodes) agdaFile =
+     pretty Simplify <> line
+  <> indent 2 simplification
+  where
+    rNodes :: [ProofTree]
+    rNodes = reverse nodes
+
+    simplification :: Doc
+    simplification =
+      foldr
+        (\node y →
+          parens $
+            vsep
+              [ pretty Simplify
+              , indent 2
+                  (vsep
+                    [ parens (docSteps sName node agdaFile)
+                    , y
+                    ]
+                   )
+               ]
+        )
+        (parens (docSteps sName (last rNodes) agdaFile))
+        (init rNodes)
+
+
+------------------------------------------------------------------------------
 -- Strip.
------------------------------------------------]-------------------------------
+------------------------------------------------------------------------------
 
 docSteps sName (Root Strip _ [subtree]) agdaFile =
      pretty Strip <> line
@@ -433,31 +518,6 @@ docSteps sName (Root Strip _ [subtree]) agdaFile =
 
 docSteps n tree agdaFile = pretty "?" <> line
 
-
---
--- docSteps sname n [Root Simplify tag subtree] dict goal axioms =
---   concat
---     [ getIdent n , "atp-simplify $" , printInnerFormula 1 dict tag "Γ" , "\n"
---     , getIdent (n+1) , "∧-intro\n"
---     , andIntro (n+2) subtree
---     ]
---     where
---       innerStep m step = concat
---         [ getIdent m , "(\n"
---         , docSteps sname m [step] dict goal axioms
---         , getIdent m , ")\n"
---         ]
---
---       andIntro _ []     = ""
---       andIntro m [x]    = docSteps sname m [x] dict goal axioms
---       andIntro m [x,y]  = concatMap (innerStep m) [x , y]
---       andIntro m (x:xs) = concat
---         [ innerStep m x
---         , getIdent m , "(\n"
---         , getIdent m , "∧-intro\n"
---         , andIntro (m+1) xs
---         , getIdent m , ")\n"
---         ]
 --
 -- docSteps sname n [Root Resolve tag ((left@(Root _ fTag _)):(right@(Root _ gTag _)):_)] dict goal axioms =
 --   concat [ getIdent n , resolveCase , "\n" ] ++
@@ -480,35 +540,4 @@ docSteps n tree agdaFile = pretty "?" <> line
 --           ]
 --
 --     where
---       ϕ  ∷ Formula
---       ϕ = formula . fromJust $ Map.lookup tag dict
---
---       --  (f)      (g)
---       --  _|_      _|_
---       -- /   \    /    \
---       -- ϕ₁ ∨ ℓ  ϕ₂ ∨ ¬ ℓ
---       -- ---------------- resolve ℓ
---       --     ϕ₁ ∨ ϕ₂
---       --     \____/
---       --        |
---       ---       ϕ
---
---       f , g ∷ Formula
---       f = formula . fromJust $ Map.lookup fTag dict
---       g = formula . fromJust $ Map.lookup gTag dict
---
---       -- ℓ ∷ Formula
---       -- ℓ = let sourceInfo ∷ Source
---       --         sourceInfo = source . fromJust $ Map.lookup tag dict
---       --     in getResolveLiteral sourceInfo
---
---       resolveCase ∷ String
---       swap ∷ Bool
---       (resolveCase, swap) = atpResolve f g ϕ
---
---       -- getResolveLiteral ∷ Source → Formula
---       -- getResolveLiteral
---       --   (Inference Resolve (Function _ (GTerm (GWord l):_) :_) _) =
---       --     PredApp l []
---       -- getResolveLiteral _ = PredApp (AtomicWord "$false") []
 --

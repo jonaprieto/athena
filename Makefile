@@ -1,4 +1,3 @@
-SHELL    =bash
 SRC_DIR  =src
 TEST_DIR =src
 ATP      ?=online-atps --atp=metis
@@ -8,7 +7,7 @@ default : install-bin
 
 .PHONY : install-bin
 install-bin :
-	cabal install --disable-documentation
+	cabal install --disable-documentation -v2 --jobs=1 -g --ghc
 
 .PHONY : hlint
 hlint :
@@ -82,7 +81,7 @@ problems : clean prop-pack
 	make --directory test/prop-pack solutions
 
 .PHONY : reconstruct
-reconstruct : problems
+reconstruct : install-bin problems
 	@echo "==================================================================="
 	@echo "====================== Generating Agda files ======================"
 	@echo "==================================================================="
@@ -93,7 +92,7 @@ reconstruct : problems
 		-exec sh -c "athena {}" \;;
 
 .PHONY : check
-check : problems reconstruct
+check : reconstruct
 	@echo "==================================================================="
 	@echo "================== Type-checking Agda files ======================="
 	@echo "==================================================================="
