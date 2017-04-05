@@ -106,8 +106,9 @@ check : reconstruct
 		agda basic-3.agda --verbose=0 && echo "basic-3.agda" && \
 		agda basic-4.agda --verbose=0 && echo "basic-4.agda"
 	@cd test/prop-pack/problems/conjunction && \
-		agda conj-1.agda --verbose=0 && echo "conj-1.agda"
-
+		agda conj-1.agda --verbose=0 && echo "conj-1.agda" && \
+		agda conj-2.agda --verbose=0 && echo "conj-2.agda" && \
+		agda conj-3.agda --verbose=0 && echo "conj-3.agda"
 
 .PHONY : basic
 basic : install-bin prop-pack
