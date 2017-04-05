@@ -1,4 +1,3 @@
-
 -- | Athena.Translation.Core module.
 
 {-# LANGUAGE ScopedTypeVariables #-}
@@ -12,16 +11,25 @@ import Athena.Translation.Functions
   ( getAxioms
   , getConjeture
   , getRefutes
-  , getSubGoals
-  , printAxioms
-  , printConjecture
-  , printPreamble
-  , printPremises
-  , printProof
-  , printSubGoals
-  , printVars
+  , getSubgoals
+  , docHeader
+  , AgdaFile
+     ( AgdaFile
+     , fileAxioms
+     , fileConjecture
+     , fileDict
+     , fileName
+     , filePremises
+     , fileSubgoals
+     , fileTrees
+     , fileVariables
+     )
   )
-import Athena.Utils.Monad       ( stdout2file )
+import Athena.Utils.PrettyPrint
+  ( hPutDoc
+  , Doc
+  , pretty
+  )
 import Athena.Options
   ( Options
     ( optInputFile
@@ -29,7 +37,6 @@ import Athena.Options
     )
   )
 import Athena.TSTP              ( parseFile )
-
 import Data.Maybe               ( fromJust, fromMaybe )
 
 import Data.Proof
@@ -43,24 +50,20 @@ import Data.TSTP
   , Formula(..)
   )
 import Data.TSTP.Formula        ( getFreeVars )
-import Data.TSTP.V              ( V(..) )
 
 import System.FilePath          ( replaceExtension )
+import System.IO
+  ( hClose
+  , IOMode(WriteMode)
+  , openFile
+  )
+
 ------------------------------------------------------------------------------
 
 mainCore ∷ Options → IO ()
 mainCore opts = do
 
   tstp ∷ [F] ← parseFile . fromJust $ optInputFile opts
-
-  let subgoals ∷ [F]
-      subgoals = getSubGoals tstp
-
-  let refutes ∷ [F]
-      refutes = getRefutes tstp
-
-  let axioms ∷ [F]
-      axioms = getAxioms tstp
 
   let conj ∷ F
       conj = fromMaybe
@@ -70,27 +73,41 @@ mainCore opts = do
   let rulesMap ∷ ProofMap
       rulesMap = buildProofMap tstp
 
-  let rulesTrees ∷ [ProofTree]
-      rulesTrees = fmap (buildProofTree rulesMap) refutes
+  let refutes ∷ [F]
+      refutes = getRefutes tstp
 
-  stdout2file $ Just (fromMaybe
-    (replaceExtension (fromJust (optInputFile opts)) ".agda")
-    (optOutputFile opts)
-    )
+  let trees ∷ [ProofTree]
+      trees = fmap (buildProofTree rulesMap) refutes
 
   let formulas ∷ [Formula]
       formulas = fmap formula tstp
 
-  let freevars ∷ [V]
-      freevars = getFreeVars formulas
+  let filename :: FilePath
+      filename =
+        fromMaybe
+          (replaceExtension (fromJust (optInputFile opts)) ".agda")
+          (optOutputFile opts)
 
-  printPreamble $ length freevars
+  -- Agda file.
+  hAgdaFile <- openFile filename WriteMode
 
-  putStrLn "-- Vars"
-  _ <- printVars freevars 0
+  -- Header.
+  header :: Doc <- docHeader opts
+  hPutDoc hAgdaFile header
 
-  printAxioms axioms
-  printPremises axioms
-  printConjecture conj
-  printSubGoals subgoals
-  printProof axioms subgoals conj rulesMap rulesTrees
+  let problem :: AgdaFile
+      problem = AgdaFile
+        { fileAxioms     = getAxioms tstp
+        , fileConjecture = conj
+        , fileDict       = rulesMap
+        , fileName       = filename
+        , filePremises   = getAxioms tstp
+        , fileSubgoals   = getSubgoals tstp
+        , fileTrees      = trees
+        , fileVariables  = getFreeVars formulas
+        }
+
+  hPutDoc hAgdaFile (pretty problem)
+
+  -- Close the file.
+  hClose hAgdaFile

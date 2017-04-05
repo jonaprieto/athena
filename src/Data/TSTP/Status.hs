@@ -42,4 +42,4 @@ data Status = Cax
             | Wtc
             | Wth
             | Wuc
-            deriving (Eq, Ord, Show, Read)
+            deriving (Eq, Ord, Read, Show)

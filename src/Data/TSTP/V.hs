@@ -6,6 +6,14 @@ module Data.TSTP.V where
 
 ------------------------------------------------------------------------------
 
+import Athena.Utils.PrettyPrint
+  ( hcat
+  , Pretty(pretty)
+  )
+import Athena.Translation.Utils  ( stdName )
+
+------------------------------------------------------------------------------
+
 -- The following code is from:
 -- https://github.com/DanielSchuessler/logic-TPTP
 -- and is used with the propose of reuses his
@@ -13,7 +21,7 @@ module Data.TSTP.V where
 
 -- | Variable
 newtype V = V String
-    deriving (Eq, Ord, Read)
+          deriving (Eq, Ord, Read, Show)
 
-instance Show V where
-    show (V a) = a
+instance Pretty V where
+  pretty (V a) = pretty . stdName $ a

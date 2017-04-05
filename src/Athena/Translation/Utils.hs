@@ -4,9 +4,7 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Athena.Translation.Utils
-  ( Ident
-  , getIdent
-  , stdName
+  ( stdName
   , subIndex
   )
   where
@@ -16,11 +14,6 @@ module Athena.Translation.Utils
 import Data.List.Split ( splitOn )
 
 ------------------------------------------------------------------------------
-
-type Ident = Int
-
-getIdent ∷ Ident → String
-getIdent n = concat $ replicate (2 * n) " "
 
 stdName ∷ String → String
 stdName name = map subIndex . concat $ splitOn "-" name

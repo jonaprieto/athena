@@ -8,6 +8,10 @@ module Data.TSTP.BinOp where
 
 ------------------------------------------------------------------------------
 
+import Athena.Utils.PrettyPrint ( Pretty(pretty) )
+
+------------------------------------------------------------------------------
+
 -- | Binary formula connectives.
 data BinOp = (:<=>:)  -- ^ ⇔ /Equivalence/
            | (:=>:)   -- ^ ⇒ /Implication/
@@ -17,14 +21,14 @@ data BinOp = (:<=>:)  -- ^ ⇔ /Equivalence/
            | (:~&:)   -- ^ ⊼ /NAND/
            | (:~|:)   -- ^ ⊽ /NOR/
            | (:<~>:)  -- ^ ⊕ /XOR/
-           deriving (Eq, Ord, Read)
+           deriving (Eq, Ord, Read, Show)
 
-instance Show BinOp where
-  show (:<=>:) = "⇔"
-  show (:=>:)  = "⇒"
-  show (:<=:)  = "⇐"
-  show (:&:)   = "∧"
-  show (:|:)   = "∨"
-  show (:~&:)  = "⊼"
-  show (:~|:)  = "⊽"
-  show (:<~>:) = "⊕"
+instance Pretty BinOp where
+  pretty (:<=>:) = pretty "⇔"
+  pretty (:=>:)  = pretty "⇒"
+  pretty (:<=:)  = pretty "⇐"
+  pretty (:&:)   = pretty "∧"
+  pretty (:|:)   = pretty "∨"
+  pretty (:~&:)  = pretty "⊼"
+  pretty (:~|:)  = pretty "⊽"
+  pretty (:<~>:) = pretty "⊕"

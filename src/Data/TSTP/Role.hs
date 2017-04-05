@@ -21,4 +21,4 @@ data Role = Assumption
           | Theorem
           | Type
           | Unknown
-          deriving (Eq, Ord, Show, Read)
+          deriving (Eq, Ord, Read, Show)

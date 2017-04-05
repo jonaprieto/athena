@@ -20,7 +20,7 @@ module Athena.Options
 
 ------------------------------------------------------------------------------
 
-import Athena.Utils.PrettyPrint  ( Doc, Pretty(pretty), scquotes, (<>) )
+import Athena.Utils.PrettyPrint  ( Doc, Pretty(pretty), squotes, (<>) )
 
 import Data.List                 ( foldl' )
 
@@ -73,7 +73,8 @@ outputFileOpt file opts =
 
 proofNameOpt ∷ String → OM
 proofNameOpt [] _ = Left $
-  pretty "option " <> scquotes "--proof-name" <> pretty " requires an argument NAME"
+  pretty "option " <> squotes (pretty "--proof-name") <>
+    pretty " requires an argument NAME"
 proofNameOpt pname opts = Right opts { optProofName = pname}
 
 versionOpt ∷ OM

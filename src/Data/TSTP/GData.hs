@@ -21,11 +21,11 @@ data GData = GApp AtomicWord [GTerm]
            | GNumber Rational
            | GVar V
            | GWord AtomicWord
-           deriving (Eq, Ord, Show, Read)
+           deriving (Eq, Ord, Read, Show)
 
 -- | Metadata (the /general_term/ rule in
 --   <http://www.cs.miami.edu/~tptp/ TPTP>'s grammar)
 data GTerm = ColonSep GData GTerm
            | GList [GTerm]
            | GTerm GData
-           deriving (Eq, Ord, Show, Read)
+           deriving (Eq, Ord, Read, Show)

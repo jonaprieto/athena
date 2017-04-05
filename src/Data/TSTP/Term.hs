@@ -6,6 +6,12 @@ module Data.TSTP.Term where
 
 ------------------------------------------------------------------------------
 
+import Athena.Utils.PrettyPrint
+  ( Pretty(pretty)
+  , rational
+  )
+import Athena.Translation.Utils  ( stdName )
+
 import Data.TSTP.AtomicWord ( AtomicWord(..) )
 import Data.TSTP.V          ( V(..) )
 
@@ -18,11 +24,11 @@ data Term = Var V                             -- ^ Variable
           | FunApp AtomicWord [Term]          -- ^ Function symbol application
                                               -- (constants are encoded as
                                               -- nullary functions)
-          deriving (Eq, Ord, Read)
+          deriving (Eq, Ord, Read, Show)
 
-instance Show Term where
-  show (Var             (V v))      =      v
-  show (NumberLitTerm      r )      = show r
-  show (DistinctObjectTerm t )      =      t
-  show (FunApp (AtomicWord w ) [])  =      w
-  show (FunApp (AtomicWord _ ) _) = error "Don't really know what this is"
+instance Pretty Term where
+  pretty (Var             (V v))      = pretty . stdName $ v
+  pretty (NumberLitTerm      r )      = rational r
+  pretty (DistinctObjectTerm t )      = pretty t
+  pretty (FunApp (AtomicWord w ) [])  = pretty w
+  pretty (FunApp (AtomicWord _ ) _)   = error "Don't really know what this is"

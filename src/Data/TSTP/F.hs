@@ -8,6 +8,9 @@ module Data.TSTP.F where
 
 ------------------------------------------------------------------------------
 
+import Athena.Utils.PrettyPrint ( Pretty(pretty) )
+import Athena.Translation.Utils ( stdName )
+
 import Data.TSTP.Formula ( Formula(..) )
 import Data.TSTP.Role    ( Role(..) )
 import Data.TSTP.Source  ( Source(..) )
@@ -24,4 +27,7 @@ data F = F
   , role    ∷ Role
   , source  ∷ Source
   }
-  deriving (Eq, Ord, Show, Read)
+  deriving (Eq, Ord, Read, Show)
+
+instance Pretty F where
+  pretty = pretty . stdName . name
