@@ -6,10 +6,7 @@ module Data.TSTP.V where
 
 ------------------------------------------------------------------------------
 
-import Athena.Utils.PrettyPrint
-  ( hcat
-  , Pretty(pretty)
-  )
+import Athena.Utils.PrettyPrint  ( Pretty ( pretty ) )
 import Athena.Translation.Utils  ( stdName )
 
 ------------------------------------------------------------------------------

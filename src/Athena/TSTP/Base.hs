@@ -9,13 +9,13 @@ module Athena.TSTP.Base where
 
 ------------------------------------------------------------------------------
 
-import Data.Set ( toList )
+-- import Data.Set ( toList )
 
 import Data.TSTP
   ( AtomicWord(..)
   , BinOp
   , Formula(..)
-  , freeVarsF
+  -- , freeVarsF
   , IntroType
       ( Assumption_
       , AxiomOfChoice
@@ -23,7 +23,7 @@ import Data.TSTP
       , Tautology
       , UnknownType
       )
-  , Quant (All)
+  -- , Quant (All)
   , Role
       ( Assumption
       , Axiom
@@ -52,7 +52,7 @@ import Data.TSTP
     , Strip
     )
   , Status(..)
-  , V
+  -- , V
   )
 
 ------------------------------------------------------------------------------
