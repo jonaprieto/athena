@@ -1,6 +1,8 @@
 Tue Apr  4 16:36:01 COT 2017
 ====
 
+* Contexts:
+
 I found a problem related with the contexts. When in a deduction tree,
 the leaves assume some axiom, the context is not trivial and some
 weaken steps are necessary.
@@ -14,3 +16,27 @@ The axiom in the leaf is aᵢ:
 1. use this context Γ₁ = {a₁, ⋯, aᵢ₋₁}, (in Haskell `takeWhile (/= a₁)` and
 2. The result should be the step:
      `weaken₁ (Γ₂ ∪ (atp-negate subgoal̰) (assume {Γ = Γ₁} aᵢ)`
+
+* Resolve:
+
+I removed temporally the use of quantifiers because I am
+working without them at this moment.
+
+```Haskell
+-- Athena.TSTP.Base.hs
+univquantFreeVars ∷ Formula → Formula
+univquantFreeVars cnf = Quant All freeVars cnf
+    where
+      freeVars ∷ [V]
+      freeVars = toList $ freeVarsF cnf
+
+-- Athena.TSTP.Parser.hs
+cnf_annotated :: {F}
+cnf_annotated : cnf lp name  comma formula_role  comma cnf_formula  annotations  rp dot
+              { F { formula = univquantFreeVars $7
+                  , name    = readWord $3
+                  , role    = $5
+                  , source  = $8
+                  }
+              }
+```

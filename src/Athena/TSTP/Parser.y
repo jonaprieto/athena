@@ -142,7 +142,7 @@ fof_annotated : fof lp name  comma formula_role  comma fof_formula  annotations 
 
 cnf_annotated :: {F}
 cnf_annotated : cnf lp name  comma formula_role  comma cnf_formula  annotations  rp dot
-              { F { formula = univquantFreeVars $7
+              { F { formula = $7
                   , name    = readWord $3
                   , role    = $5
                   , source  = $8

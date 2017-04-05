@@ -56,12 +56,12 @@ import Data.TSTP
   )
 
 ------------------------------------------------------------------------------
-
-univquantFreeVars ∷ Formula → Formula
-univquantFreeVars cnf = Quant All freeVars cnf
-    where
-      freeVars ∷ [V]
-      freeVars = toList $ freeVarsF cnf
+--
+-- univquantFreeVars ∷ Formula → Formula
+-- univquantFreeVars cnf = Quant All freeVars cnf
+--     where
+--       freeVars ∷ [V]
+--       freeVars = toList $ freeVarsF cnf
 
 readRole ∷ String → Role
 readRole "assumption"         = Assumption
