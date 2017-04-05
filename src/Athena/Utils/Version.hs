@@ -1,4 +1,3 @@
-
 -- | Athena.Utils.Version module.
 -- Utilities related to representation of versions.
 
@@ -9,11 +8,13 @@ module Athena.Utils.Version ( progNameVersion ) where
 
 ------------------------------------------------------------------------------
 
-import Data.Char          ( toUpper )
-import Data.Version       ( showVersion )
+import Athena.Utils.CommitVersion ( getVersion )
 
-import Paths_athena       ( version )
-import System.Environment ( getProgName )
+import Data.Char                  ( toUpper )
+import Data.Version               ( showVersion )
+
+import Paths_athena               ( version )
+import System.Environment         ( getProgName )
 
 ------------------------------------------------------------------------------
 
@@ -29,5 +30,6 @@ toUpperFirst (x : xs) = toUpper x : xs
 -- | Return program name and version information.
 progNameVersion ∷ IO String
 progNameVersion = do
+ commitversion ← getVersion version
  progName ← getProgName
- return $ toUpperFirst progName ++ " version " ++ showVersion version
+ return $ toUpperFirst progName ++ " version " ++ showVersion commitversion
