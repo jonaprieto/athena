@@ -54,9 +54,9 @@ import Athena.Utils.PrettyPrint
   , comment
   , Doc
   , braces
-  , dollar
+  -- , dollar
   , dot
-  , hypen
+  -- , hypen
   , empty
   , encloseSep
   , equals
@@ -81,7 +81,7 @@ import Data.Proof
   , ProofTreeGen ( Root, Leaf )
   )
 
-import Data.List                ( isPrefixOf, break )
+import Data.List                ( isPrefixOf)
 import Data.Maybe               ( fromJust )
 import qualified Data.Map as Map
 
@@ -163,12 +163,6 @@ docImports n =
    <>  pretty "open import Data.Prop" <+> int n <+> pretty "public" <> line
    <@> hypenline
 
-docProblemComment ∷ Doc
-docProblemComment =
-     hypenline
-  <> comment (pretty "Problem" <> dot)
-  <> hypenline
-
 ------------------------------------------------------------------------------
 -- Variables.
 ------------------------------------------------------------------------------
@@ -223,10 +217,7 @@ docAxioms fms =
     s = if length fms > 1 then pretty 's' else empty
 
     docAxioms' ∷ [F] → Doc
-    docAxioms' []         = empty
-    docAxioms' (fm : fms) =
-          definition fm
-      <@> docAxioms' fms
+    docAxioms' = foldr ((<@>) . definition) empty
 
 ------------------------------------------------------------------------------
 -- Premises.
@@ -279,7 +270,7 @@ getSubgoals ∷ [F] → [F]
 getSubgoals = filter (isPrefixOf "subgoal" . name)
 
 docSubgoals ∷ [F] → Doc
-docSubgoals []  = empty
+docSubgoals []       = empty
 docSubgoals formulas =
      comment (pretty "Subgoal" <> s <> dot) <> line
   <> docSubgoals' formulas
@@ -288,10 +279,7 @@ docSubgoals formulas =
     s = if length formulas > 1 then pretty 's' else empty
 
     docSubgoals' ∷ [F] → Doc
-    docSubgoals' []         = empty
-    docSubgoals' (fm : fms) =
-          definition fm
-      <@> docSubgoals' fms
+    docSubgoals' = foldr ((<@>) . definition) empty
 
 ------------------------------------------------------------------------------
 -- Refutes.
@@ -401,7 +389,7 @@ docSteps sName (Leaf Axiom axiom) agdaFile =
     toWeak =
       case dropWhile (/= aᵢ) premises of
         []  → []
-        [a] → []
+        [_] → []
         ps  → tail ps
 
     prettyWeaken ∷ Doc
@@ -436,7 +424,7 @@ docSteps sName (Root Canonicalize _ [subtree]) agdaFile =
 -- Conjecture.
 ------------------------------------------------------------------------------
 
-docSteps sName (Leaf Conjecture conjecture) _ =
+docSteps _ (Leaf Conjecture conjecture) _ =
   pretty conjecture
 
 ------------------------------------------------------------------------------
@@ -458,7 +446,7 @@ docSteps sName (Root Conjunct tag [subtree]) agdaFile =
 -- Negate.
 ------------------------------------------------------------------------------
 
-docSteps sName (Root Negate tag [Root Strip _ _]) agdaFile =
+docSteps sName (Root Negate _ [Root Strip _ _]) _ =
   parens $
        pretty Strip <> line
     <> indent 2 (parens (pretty "assume {Γ = Γ}" <> line
@@ -501,8 +489,8 @@ docSteps sName
     dict ∷ ProofMap
     dict = fileDict agdaFile
 
-    ϕ  ∷ Formula
-    ϕ = formula . fromJust $ Map.lookup tag dict
+    -- ϕ  ∷ Formula
+    -- ϕ = formula . fromJust $ Map.lookup tag dict
 
     f , g ∷ Formula
     f = formula . fromJust $ Map.lookup fTag dict
@@ -519,15 +507,15 @@ docSteps sName
 
     getResolveLiteral ∷ Source → Formula
     getResolveLiteral
-      (Inference Resolve (Function _ (GTerm (GWord l):_) :_) _) =
-        PredApp l []
+      (Inference Resolve (Function _ (GTerm (GWord lit):_) :_) _) =
+        PredApp lit []
     getResolveLiteral _ = error "I expected a literal, nothing more."
 
 ------------------------------------------------------------------------------
 -- Simplify.
 ------------------------------------------------------------------------------
 
-docSteps sName (Root Simplify tag nodes) agdaFile =
+docSteps sName (Root Simplify _ nodes) agdaFile =
   simplification
   where
     rNodes :: [ProofTree]
@@ -560,4 +548,4 @@ docSteps sName (Root Strip _ [subtree]) agdaFile =
      pretty Strip <> line
   <> indent 2 (parens (docSteps sName subtree agdaFile))
 
-docSteps n tree agdaFile = pretty "?" <> line
+docSteps _ _ _ = pretty "?" <> line
