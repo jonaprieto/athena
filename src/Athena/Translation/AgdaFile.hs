@@ -407,8 +407,9 @@ docSteps sName (Leaf Axiom axiom) agdaFile =
     prettyWeaken =
       case toWeak of
         [] → pretty "weaken"  <+> parens (pretty Negate <+> sName)
-        ps → pretty "weaken-Δ₁" <+> parens
-          (toCtxt $
+        ps → pretty "weaken-Δ₁" <> line <>
+          parens (
+            toCtxt $
              [pretty '∅'] ++ map pretty ps ++ [pretty Negate <+> sName])
 
     toAssume ∷ [F]
