@@ -113,6 +113,20 @@ check : reconstruct
 			-print \
 			-exec sh -c "agda {} --verbose=0" \;;
 
+	@cd test/prop-pack/problems/implication && \
+		agda impl-1.agda --verbose=0 && echo "impl-1.agda"
+
+	@cd test/prop-pack/problems/negation && \
+		agda neg-1.agda --verbose=0 && echo "neg-1.agda" && \
+		agda neg-2.agda --verbose=0 && echo "neg-2.agda" && \
+		agda neg-4.agda --verbose=0 && echo "neg-4.agda" && \
+		agda neg-10.agda --verbose=0 && echo "neg-10.agda" && \
+		agda neg-15.agda --verbose=0 && echo "neg-15.agda" && \
+		agda neg-16.agda --verbose=0 && echo "neg-16.agda" && \
+		agda neg-20.agda --verbose=0 && echo "neg-20.agda" && \
+		agda neg-30.agda --verbose=0 && echo "neg-30.agda" && \
+		agda neg-31.agda --verbose=0 && echo "neg-31.agda"
+
 .PHONY : basic
 basic : install-bin prop-pack
 	@echo "==================================================================="
