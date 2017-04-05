@@ -1,22 +1,12 @@
 -- | Athena.Translation.Functions module.
 
-{-# OPTIONS -fno-warn-missing-signatures  #-}
-{-# LANGUAGE UnicodeSyntax                #-}
 {-# LANGUAGE ScopedTypeVariables          #-}
+{-# LANGUAGE UnicodeSyntax                #-}
+{-# OPTIONS -fno-warn-missing-signatures  #-}
 
-module Athena.Translation.Functions
-   ( docAxioms
-   , docConjecture
-   , docHeader
-   , docImports
-   , docPremises
-   , docSubgoals
-   , docVars
-   , getAxioms
-   , getConjeture
-   , getRefutes
-   , getSubgoals
-   , AgdaFile
+module Athena.Translation.AgdaFile
+   (
+   AgdaFile
       ( AgdaFile
       , fileVariables
       , fileAxioms
@@ -27,6 +17,17 @@ module Athena.Translation.Functions
       , fileSubgoals
       , fileTrees
       )
+   , docAxioms
+   , docConjecture
+   , docHeader
+   , docImports
+   , docPremises
+   , docSubgoals
+   , docVars
+   , getAxioms
+   , getConjeture
+   , getRefutes
+   , getSubgoals
    ) where
 
 ------------------------------------------------------------------------------
@@ -45,18 +46,15 @@ import Athena.Options            ( Options ( optInputFile ) )
 import Athena.Translation.Utils  ( stdName )
 import Athena.Utils.PrettyPrint
   ( (<+>)
-  , (<@>)
   , (<>)
-  -- , (</>)
-  -- , hcat
+  , (<@>)
+  , Doc
+  , Pretty(pretty)
+  , braces
   , colon
   , comma
   , comment
-  , Doc
-  , braces
-  -- , dollar
   , dot
-  -- , hypen
   , empty
   , encloseSep
   , equals
@@ -67,10 +65,13 @@ import Athena.Utils.PrettyPrint
   , lbracket
   , line
   , parens
-  , Pretty(pretty)
   , rbracket
   , space
   , vsep
+  -- , (</>)
+  -- , dollar
+  -- , hcat
+  -- , hypen
   -- , softline
   )
 import Athena.Utils.Version      ( progNameVersion )
@@ -86,15 +87,18 @@ import Data.Maybe               ( fromJust )
 import qualified Data.Map as Map
 
 import Data.TSTP
-  ( F    ( name, role, formula, source )
+  ( F ( name, role, formula, source )
   , Formula(..)
-  , Info(Function), GData(..), GTerm(..), Source(..)
+  , GData(..)
+  , GTerm(..)
+  , Info ( Function )
   , Role ( Axiom, Conjecture )
-  , Rule ( Negate, Strip, Conjunct, Canonicalize, Simplify, Resolve )
+  , Rule ( Canonicalize, Conjunct, Negate, Simplify, Strip, Resolve )
+  , Source(..)
+  , V(..)
   )
-import Data.TSTP.V              ( V(..) )
-import System.FilePath          ( takeBaseName )
 
+import System.FilePath          ( takeBaseName )
 
 ------------------------------------------------------------------------------
 
@@ -113,8 +117,7 @@ data AgdaFile = AgdaFile
 instance Pretty AgdaFile where
   pretty problem =
    vsep
-     [
-       docModule (fileName problem)
+     [ docModule (fileName problem)
      , docImports (length (fileVariables problem))
      , docVars (fileVariables problem)
      , docAxioms (fileAxioms problem)
@@ -370,8 +373,8 @@ docSteps ∷ Doc → ProofTree → AgdaFile → Doc
 
 docSteps sName (Leaf Axiom axiom) agdaFile =
   parens $
-      prettyWeaken <> line
-    <> indent 2 (parens (prettyAssume <+> pAxiom))
+       prettyWeaken <> line
+    <> indent 2 (parens $ prettyAssume <+> pAxiom)
   where
     dict ∷ ProofMap
     dict = fileDict agdaFile
@@ -396,9 +399,9 @@ docSteps sName (Leaf Axiom axiom) agdaFile =
     prettyWeaken =
       case toWeak of
         [] → pretty "weaken"  <+> parens (pretty Negate <+> sName)
-        ps → pretty "weaken-\916\8321" <+> parens
-          (toCtxt
-           ([pretty '\8709'] ++ map pretty ps ++ [pretty Negate <+> sName]))
+        ps → pretty "weaken-Δ₁" <+> parens
+          (toCtxt $
+             [pretty '∅'] ++ map pretty ps ++ [pretty Negate <+> sName])
 
     toAssume ∷ [F]
     toAssume = takeWhile (/= aᵢ) premises
@@ -424,8 +427,7 @@ docSteps sName (Root Canonicalize _ [subtree]) agdaFile =
 -- Conjecture.
 ------------------------------------------------------------------------------
 
-docSteps _ (Leaf Conjecture conjecture) _ =
-  pretty conjecture
+docSteps _ (Leaf Conjecture conjecture) _ = pretty conjecture
 
 ------------------------------------------------------------------------------
 -- Conjunct.
@@ -457,17 +459,12 @@ docSteps sName (Root Negate _ [Root Strip _ _]) _ =
 ------------------------------------------------------------------------------
 
 {-
-      left    right
-     -----    -----
-      (f)      (g)
-      _|_      _|_
-     /   \    /    \
-     ϕ₁ ∨ l  ϕ₂ ∨ ¬ l
-     ---------------- (resolve ℓ)
-         ϕ₁ ∨ ϕ₂
-         \____/
-            |
-            ϕ
+     left         right
+   ────────     ──────────
+   f: ϕ₁ ∨ ℓ    g:ϕ₂ ∨ ¬ ℓ
+   ────────────────────────  (resolve ℓ)
+        φ: ϕ₁ ∨ ϕ₂
+
 -}
 
 docSteps sName
@@ -478,13 +475,11 @@ docSteps sName
          agdaFile =
   parens $
     pretty thm <+> parens (pretty l) <> line <>
-  if swap then
-    indent 2 (parens (docSteps sName left agdaFile)) <> line <>
-      indent 2 (parens (docSteps sName right agdaFile))
-    else
-    indent 2 (parens (docSteps sName right agdaFile)) <> line <>
-      indent 2 (parens (docSteps sName left agdaFile))
-
+  if swap
+  then indent 2 (parens (docSteps sName left agdaFile)) <> line
+    <> indent 2 (parens (docSteps sName right agdaFile))
+  else indent 2 (parens (docSteps sName right agdaFile)) <> line
+    <> indent 2 (parens (docSteps sName left agdaFile))
   where
     dict ∷ ProofMap
     dict = fileDict agdaFile

@@ -62,8 +62,12 @@ clean :
 	find . -name "saturation*" -delete
 	find . -name "*.tstp" -delete
 	find . -name "*.agda" -delete
-	make --directory test/prop-pack clean
 	rm -rf dist
+	if [ -a test/prop/Makefile ] ; \
+	then \
+		make --directory test/prop-pack clean ; \
+	fi;
+
 
 
 .PHONY : prop-pack
@@ -74,7 +78,7 @@ prop-pack :
 	git submodule update --init test/prop-pack
 
 .PHONY : problems
-problems : clean prop-pack
+problems : prop-pack
 	@echo "==================================================================="
 	@echo "================== Generating TSTP files of proofs ================"
 	@echo "==================================================================="

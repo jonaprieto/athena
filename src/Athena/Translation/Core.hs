@@ -7,13 +7,8 @@ module Athena.Translation.Core ( mainCore ) where
 
 ------------------------------------------------------------------------------
 
-import Athena.Translation.Functions
-  ( getAxioms
-  , getConjeture
-  , getRefutes
-  , getSubgoals
-  , docHeader
-  , AgdaFile
+import Athena.Translation.AgdaFile
+  ( AgdaFile
      ( AgdaFile
      , fileAxioms
      , fileConjecture
@@ -24,18 +19,14 @@ import Athena.Translation.Functions
      , fileTrees
      , fileVariables
      )
+  , docHeader
+  , getAxioms
+  , getConjeture
+  , getRefutes
+  , getSubgoals
   )
-import Athena.Utils.PrettyPrint
-  ( hPutDoc
-  , Doc
-  , pretty
-  )
-import Athena.Options
-  ( Options
-    ( optInputFile
-    , optOutputFile
-    )
-  )
+import Athena.Utils.PrettyPrint ( hPutDoc, Doc, pretty )
+import Athena.Options           ( Options ( optInputFile, optOutputFile ) )
 import Athena.TSTP              ( parseFile )
 import Data.Maybe               ( fromJust, fromMaybe )
 
@@ -52,11 +43,7 @@ import Data.TSTP
 import Data.TSTP.Formula        ( getFreeVars )
 
 import System.FilePath          ( replaceExtension )
-import System.IO
-  ( hClose
-  , IOMode(WriteMode)
-  , openFile
-  )
+import System.IO                ( hClose, IOMode( WriteMode ), openFile )
 
 ------------------------------------------------------------------------------
 
