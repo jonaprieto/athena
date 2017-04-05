@@ -353,21 +353,21 @@ docProofGoal agdaFile =
               <+> pretty "proof₀"
               <+> pretty "proof₁"
       subgoals →
-        foldr
+        foldl
           (\x y →
             parens $
               vsep
                 [ pretty "∧-intro"
                 , indent 2
                     (vsep
-                      [ pretty "proof" <> (pretty . stdName . show) x
-                      , y
+                      [ x
+                      , pretty "proof" <> y
                       ]
                      )
                  ]
           )
-          (pretty "proof" <> (pretty . stdName . show) (length subgoals -1))
-          [0..(length subgoals - 2)]
+          (pretty "proof₀")
+          (map (pretty . stdName . show)  [1..(length subgoals - 1)])
 
 ------------------------------------------------------------------------------
 

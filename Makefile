@@ -101,14 +101,17 @@ check : reconstruct
 	@echo "================== Type-checking Agda files ======================="
 	@echo "==================================================================="
 	@cd test/prop-pack/problems/basic && \
-		agda basic-1.agda --verbose=0 && echo "basic-1.agda" && \
-		agda basic-2.agda --verbose=0 && echo "basic-2.agda" && \
-		agda basic-3.agda --verbose=0 && echo "basic-3.agda" && \
-		agda basic-4.agda --verbose=0 && echo "basic-4.agda"
+		find . \
+			-type f \
+			-name "*.agda" \
+			-print \
+			-exec sh -c "agda {} --verbose=0" \;;
 	@cd test/prop-pack/problems/conjunction && \
-		agda conj-1.agda --verbose=0 && echo "conj-1.agda" && \
-		agda conj-2.agda --verbose=0 && echo "conj-2.agda" && \
-		agda conj-3.agda --verbose=0 && echo "conj-3.agda"
+		find . \
+			-type f \
+			-name "*.agda" \
+			-print \
+			-exec sh -c "agda {} --verbose=0" \;;
 
 .PHONY : basic
 basic : install-bin prop-pack
