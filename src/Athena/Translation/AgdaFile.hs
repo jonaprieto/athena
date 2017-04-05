@@ -93,7 +93,15 @@ import Data.TSTP
   , GTerm(..)
   , Info ( Function )
   , Role ( Axiom, Conjecture )
-  , Rule ( Canonicalize, Conjunct, Negate, Simplify, Strip, Resolve )
+  , Rule
+    ( Canonicalize
+    , Clausify
+    , Conjunct
+    , Negate
+    , Simplify
+    , Strip
+    , Resolve
+    )
   , Source(..)
   , V(..)
   )
@@ -413,7 +421,6 @@ docSteps sName (Leaf Axiom axiom) agdaFile =
         [a] → lbracket <+> pretty a <+> rbracket <> pretty "}"
         axs → braces $ pretty 'Γ' <+> equals <+> toCtxt (map pretty axs)
 
-
 ------------------------------------------------------------------------------
 -- Canonicalize.
 ------------------------------------------------------------------------------
@@ -428,6 +435,15 @@ docSteps sName (Root Canonicalize _ [subtree]) agdaFile =
 ------------------------------------------------------------------------------
 
 docSteps _ (Leaf Conjecture conjecture) _ = pretty conjecture
+
+------------------------------------------------------------------------------
+-- Clausify.
+------------------------------------------------------------------------------
+
+docSteps sName (Root Clausify _ [subtree]) agdaFile =
+  parens $
+       pretty Clausify <> line
+    <> indent 2 (docSteps sName subtree agdaFile)
 
 ------------------------------------------------------------------------------
 -- Conjunct.
