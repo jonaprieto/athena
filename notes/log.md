@@ -1,5 +1,5 @@
 Tue Apr  4 16:36:01 COT 2017
-====
+---
 
 * Contexts:
 
@@ -39,4 +39,37 @@ cnf_annotated : cnf lp name  comma formula_role  comma cnf_formula  annotations 
                   , source  = $8
                   }
               }
+```
+
+Wed Apr  5 11:07:41 COT 2017
+---
+
+I committed a mistake reasoning about the right associative in the splitGoal,
+when I was doing the following with `splitGoal` but it didn't type-checked.
+
+```agda
+proof : Γ ⊢ goal
+proof =
+  ⇒-elim
+    atp-splitGoal
+    (∧-intro
+      proof₀
+      (∧-intro
+        proof₁
+        proof₂))
+```
+
+I've type-checked:
+
+```agda
+proof : Γ ⊢ goal
+proof =
+  ⇒-elim
+    atp-splitGoal
+    (∧-intro
+      (∧-intro
+        proof₀
+        proof₁)
+      proof₂
+      )
 ```
