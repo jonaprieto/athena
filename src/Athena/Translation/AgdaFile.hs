@@ -147,7 +147,7 @@ docHeader opts = do
   return
      (  hypenline
      <> comment (pretty version <> dot)
-     <> comment (pretty "Tstp file:" <+> pretty (optInputFile opts) <> dot)
+     <> comment (pretty "TSTP file:" <+> pretty (optInputFile opts) <> dot)
      <> hypenline <> line
      )
 
@@ -298,7 +298,7 @@ docSubgoals formulas =
 
 -- | Extract refuting steps from a list of formulae.
 getRefutes ∷ [F] → [F]
-getRefutes = filter (isPrefixOf "refute"  . name)
+getRefutes = filter (isPrefixOf "refute" . name)
 
 ------------------------------------------------------------------------------
 -- Proof.

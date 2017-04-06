@@ -1,4 +1,3 @@
-
 -- | Data.TSTP.Formula module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
@@ -33,7 +32,7 @@ import Data.TSTP.V          ( V(..) )
 
 ------------------------------------------------------------------------------
 
--- | first-order logic formula.
+-- | First-order logic formula.
 data Formula = BinOp Formula BinOp Formula    -- ^ Binary connective application
              | InfixPred Term InfixPred Term  -- ^ Infix predicate application
              | PredApp AtomicWord [Term]      -- ^ Predicate application
@@ -50,7 +49,7 @@ instance Pretty Formula where
   pretty (Quant All x p)     = pretty All <+> pretty x <+> parens (pretty p)
   pretty (Quant Exists x p ) = pretty Exists <+> pretty x <+> parens (pretty p)
 
--- | 'freeVarsF' 'f', returns a 'Set' of all free variables of 'f'.
+-- | 'freeVarsF f', returns a 'Set' of all free variables of 'f'.
 freeVarsF ∷ Formula → Set V
 freeVarsF ((:~:) x)                           = freeVarsF x
 freeVarsF (BinOp x _ y)                       = (mappend `on` freeVarsF) x y
@@ -66,13 +65,13 @@ freeVarsF (Quant _ vars x)                    = difference fvarsx lvars
     lvars ∷ Set V
     lvars  = fromList vars
 
--- | 'freeVarsT' 't', returns a 'Set' of all free variables of 't'.
+-- | 'freeVarsT t', returns a 'Set' of all free variables of 't'.
 freeVarsT ∷ Term → Set V
 freeVarsT (FunApp _ args) = unions (fmap freeVarsT args)
 freeVarsT (Var x)         = singleton x
 freeVarsT _               = empty
 
--- | 'getFreeVars' 'f', given a list of formulas 'f' return all free
+-- | 'getFreeVars f', given a list of formulas 'f' return all free
 -- variables in the formulas.
 getFreeVars ∷ [Formula] → [V]
 getFreeVars = toList . unions . map freeVarsF
