@@ -8,11 +8,11 @@ the leaves assume some axiom, the context is not trivial and some
 weaken steps are necessary.
 
 hint:
-Γ = {a₁, a₂, ⋯ , aᵢ , ⋯ , aₙ }
+Γ = {a₁, a₂, ⋯ , aᵢ , ⋯ }
 
 The axiom in the leaf is aᵢ:
 
-0. Γ₂ = {aᵢ₊₁, ⋯, aₙ}  (in Haskell) `tail . dropWhile (/= aᵢ)`, and
+0. Γ₂ = {aᵢ₊₁, ⋯}  (in Haskell) `tail . dropWhile (/= aᵢ)`, and
 1. use this context Γ₁ = {a₁, ⋯, aᵢ₋₁}, (in Haskell `takeWhile (/= a₁)` and
 2. The result should be the step:
      `weaken₁ (Γ₂ ∪ (atp-negate subgoal̰) (assume {Γ = Γ₁} aᵢ)`
@@ -73,3 +73,37 @@ proof =
       proof₂
       )
 ```
+
+Mon Apr 10 10:15:34 COT 2017
+---
+
+In agda-metis, simplify is a function of two arguments, and I split the cases
+over the first one (to have definitional equalities).
+
+Because, at this moment, when I found the simplify inference
+in the tstp with a list of formulas, I fold right the list (in reverse order
+for readibility) applying `atp-simplify`. This function, `atp-simplify` applies
+the simplification of the first formula using the second one in the input.
+
+- tstp: `fof(_, _, inference(simplify, _, [a,b,c]))`.
+- agda:
+
+  * Wrong:
+
+  ```haskell
+  (atp-simplify
+    c
+    (atp-simplify
+      b
+      a))
+  ```
+
+  * Good:
+
+  ```haskell
+  (atp-simplify
+    c
+    (atp-simplify
+      a
+      b))
+  ```

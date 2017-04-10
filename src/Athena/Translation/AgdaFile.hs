@@ -531,7 +531,11 @@ docSteps sName (Root Simplify _ nodes) agdaFile =
   simplification
   where
     rNodes :: [ProofTree]
-    rNodes = if length nodes > 2 then reverse nodes else nodes
+    rNodes = case nodes of
+      []       → []
+      [x]      → [x]
+      [x,y]    → [x,y]
+      (x:y:ys) → reverse ys ++ [x, y]
 
     simplification :: Doc
     simplification =
