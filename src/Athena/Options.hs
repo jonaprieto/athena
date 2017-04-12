@@ -1,4 +1,3 @@
-
 -- | Athena.Options module.
 
 {-# LANGUAGE UnicodeSyntax #-}

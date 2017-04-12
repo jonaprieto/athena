@@ -1,8 +1,11 @@
-
 -- | Data.TSTP.GData module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
-module Data.TSTP.GData where
+module Data.TSTP.GData
+  ( GData (..)
+  , GTerm (..)
+  )
+  where
 
 ------------------------------------------------------------------------------
 

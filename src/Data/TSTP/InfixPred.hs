@@ -1,10 +1,15 @@
-
 -- | Data.TSTP.InfixPred module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Data.TSTP.InfixPred where
+module Data.TSTP.InfixPred
+  ( InfixPred
+    ( (:=:)
+    , (:!=:)
+    )
+  )
+  where
 
 ------------------------------------------------------------------------------
 

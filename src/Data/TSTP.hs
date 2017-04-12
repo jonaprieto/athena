@@ -8,12 +8,12 @@ module Data.TSTP
   ( F(..)
   , Role(..)
   -- * Formulas and terms
-  , Formula(..)
-  , Term(..)
   , AtomicWord(..)
   , BinOp(..)
+  , Formula(..)
   , InfixPred(..)
   , Quant(..)
+  , Term(..)
   , V(..)
   -- * Source information
   , Parent(..)

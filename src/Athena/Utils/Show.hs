@@ -1,4 +1,3 @@
-
 -- | Athena.Utils.Show module.
 -- Adapted from https://github.com/asr/apia.
 

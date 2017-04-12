@@ -1,5 +1,4 @@
-
--- | Main module.
+-- | Athena.Main module.
 
 {-# LANGUAGE MultiWayIf    #-}
 {-# LANGUAGE UnicodeSyntax #-}

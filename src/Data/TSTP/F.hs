@@ -1,10 +1,17 @@
-
 -- | Data.TSTP.F module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Data.TSTP.F where
+module Data.TSTP.F
+  ( F
+    ( F
+    , formula
+    , name
+    , role
+    , source
+    )
+  ) where
 
 ------------------------------------------------------------------------------
 

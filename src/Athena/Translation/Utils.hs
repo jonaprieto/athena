@@ -1,4 +1,3 @@
-
 -- | Athena.Translation.Utils module.
 
 {-# LANGUAGE UnicodeSyntax #-}
@@ -6,8 +5,7 @@
 module Athena.Translation.Utils
   ( stdName
   , subIndex
-  )
-  where
+  ) where
 
 ------------------------------------------------------------------------------
 

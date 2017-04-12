@@ -3,7 +3,12 @@
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Data.TSTP.Formula where
+module Data.TSTP.Formula
+  ( Formula (..)
+  , freeVarsF
+  , freeVarsT
+  , getFreeVars
+  ) where
 
 ------------------------------------------------------------------------------
 

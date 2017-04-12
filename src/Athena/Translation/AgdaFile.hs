@@ -68,11 +68,6 @@ import Athena.Utils.PrettyPrint
   , rbracket
   , space
   , vsep
-  -- , (</>)
-  -- , dollar
-  -- , hcat
-  -- , hypen
-  -- , softline
   )
 import Athena.Utils.Version      ( progNameVersion )
 

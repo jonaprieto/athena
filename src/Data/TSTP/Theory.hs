@@ -1,11 +1,14 @@
-
 -- | Data.TSTP.Theory module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
-module Data.TSTP.Theory where
+module Data.TSTP.Theory
+  ( Theory
+    ( AC
+    , Equality
+    )
+  ) where
 
 ------------------------------------------------------------------------------
 
--- NOT BEING USED YET
-data Theory = Equality | AC
+data Theory = AC | Equality
             deriving (Eq, Ord, Read, Show)

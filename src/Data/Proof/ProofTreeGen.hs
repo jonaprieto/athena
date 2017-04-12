@@ -1,10 +1,17 @@
-
 -- | Data.Proof.ProofTreeGen module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
 -- {-# LANGUAGE FlexibleInstances #-}
 
-module Data.Proof.ProofTreeGen where
+module Data.Proof.ProofTreeGen
+  ( ProofTreeGen
+    ( Leaf
+    , Root
+    )
+  , IdSet
+  , ProofMap
+  , ProofTree
+  )where
 
 ------------------------------------------------------------------------------
 

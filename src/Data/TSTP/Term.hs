@@ -1,13 +1,19 @@
-
 -- | Data.TSTP.Term module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
-module Data.TSTP.Term where
+module Data.TSTP.Term
+  ( Term
+    ( Var
+    , NumberLitTerm
+    , DistinctObjectTerm
+    , FunApp
+    )
+  ) where
 
 ------------------------------------------------------------------------------
 
 import Athena.Utils.PrettyPrint
-  ( Pretty(pretty)
+  ( Pretty ( pretty )
   , rational
   )
 import Athena.Translation.Utils  ( stdName )

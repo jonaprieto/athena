@@ -1,7 +1,28 @@
 -- | Data.TSTP.Source module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
-module Data.TSTP.Source where
+module Data.TSTP.Source
+  ( Source
+    ( Creator
+    , File
+    , Inference
+    , Introduced
+    , Name
+    , NoSource
+    , Source
+    , Theory
+    )
+  , Info
+    ( AssumptionR
+    , Description
+    , Function
+    , InferenceInfo
+    , IQuote
+    , Refutation
+    , Status
+    )
+  )
+  where
 
 ------------------------------------------------------------------------------
 

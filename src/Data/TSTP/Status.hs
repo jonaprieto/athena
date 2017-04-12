@@ -1,8 +1,9 @@
-
 -- | Data.TSTP.Status module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
-module Data.TSTP.Status where
+module Data.TSTP.Status
+  ( module Data.TSTP.Status
+  ) where
 
 ------------------------------------------------------------------------------
 

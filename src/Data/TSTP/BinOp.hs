@@ -1,10 +1,20 @@
-
 -- | Data.TSTP.BinOp module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Data.TSTP.BinOp where
+module Data.TSTP.BinOp
+  ( BinOp
+    ( (:<=>:)
+    , (:=>:)
+    , (:<=:)
+    , (:&:)
+    , (:|:)
+    , (:~&:)
+    , (:~|:)
+    , (:<~>:)
+    )
+  ) where
 
 ------------------------------------------------------------------------------
 

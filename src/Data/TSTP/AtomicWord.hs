@@ -1,10 +1,11 @@
-
 -- | Data.TSTP.AtomicWord module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Data.TSTP.AtomicWord where
+module Data.TSTP.AtomicWord
+  ( AtomicWord ( AtomicWord )
+  ) where
 
 ------------------------------------------------------------------------------
 

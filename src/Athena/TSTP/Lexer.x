@@ -1,5 +1,4 @@
 {
-
 -- | Athena.TSTP.Lexer module
 -- Adapted from https://github.com/agomezl/tstp2agda.
 

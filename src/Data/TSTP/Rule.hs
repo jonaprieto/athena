@@ -1,12 +1,24 @@
-
 -- | Data.TSTP.Rule module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
-module Data.TSTP.Rule where
+module Data.TSTP.Rule
+  ( Rule
+    ( Canonicalize
+    , Clausify
+    , Conjunct
+    , Negate
+    , NewRule
+    , Resolve
+    , Simplify
+    , Skolemize
+    , Specialize
+    , Strip
+    )
+  ) where
 
 ------------------------------------------------------------------------------
 
-import Athena.Utils.PrettyPrint ( Pretty(pretty), hypen, (<>) )
+import Athena.Utils.PrettyPrint ( Pretty ( pretty ), hypen, (<>) )
 
 ------------------------------------------------------------------------------
 

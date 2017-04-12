@@ -1,4 +1,3 @@
-
 -- | Athena.Utils.Monads utilities.
 -- Adapted from https://github.com/asr/apia.
 

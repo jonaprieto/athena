@@ -1,8 +1,9 @@
-
 -- | Data.TSTP.Parent module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
-module Data.TSTP.Parent where
+module Data.TSTP.Parent
+  ( Parent ( Parent )
+  ) where
 
 ------------------------------------------------------------------------------
 

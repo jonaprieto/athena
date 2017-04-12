@@ -1,4 +1,3 @@
-
 -- | Athena.Translation.Rules module.
 
 module Athena.Translation.Rules
@@ -11,8 +10,7 @@ module Athena.Translation.Rules
   , atpSkolemize
   , atpSpecialize
   , atpStrip
-  )
-  where
+  ) where
 
 ------------------------------------------------------------------------------
 

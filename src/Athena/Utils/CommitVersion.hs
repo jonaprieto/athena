@@ -2,7 +2,6 @@
 -- Adapted from Apia.Utils.CommitVersion.hs
 -- http://github.com/asr/apia.
 
-
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax       #-}
 

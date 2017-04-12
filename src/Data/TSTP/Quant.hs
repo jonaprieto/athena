@@ -1,10 +1,14 @@
-
 -- | Data.TSTP.Quant module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Data.TSTP.Quant where
+module Data.TSTP.Quant
+  ( Quant
+    ( All
+    , Exists
+    )
+  ) where
 
 ------------------------------------------------------------------------------
 

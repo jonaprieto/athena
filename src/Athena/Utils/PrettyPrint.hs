@@ -2,10 +2,10 @@
 -- Adapted from: Text.PrettyPrint.Leijen.Text
 -- https://github.com/ivan-m/wl-pprint-text/.
 
-{-# OPTIONS -fno-warn-monomorphism-restriction      #-}
-{-# OPTIONS -fno-warn-noncanonical-monoid-instances #-}
 {-# LANGUAGE CPP                                    #-}
 {-# LANGUAGE UnicodeSyntax                          #-}
+{-# OPTIONS -fno-warn-monomorphism-restriction      #-}
+{-# OPTIONS -fno-warn-noncanonical-monoid-instances #-}
 
 module Athena.Utils.PrettyPrint
   (
