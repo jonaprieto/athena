@@ -33,9 +33,9 @@ import Data.TSTP.V          ( V(..) )
 ------------------------------------------------------------------------------
 
 -- | First-order logic formula.
-data Formula = BinOp Formula BinOp Formula    -- ^ Binary connective application
-             | InfixPred Term InfixPred Term  -- ^ Infix predicate application
-             | PredApp AtomicWord [Term]      -- ^ Predicate application
+data Formula = BinOp Formula BinOp Formula    -- ^ Binary connective
+             | InfixPred Term InfixPred Term  -- ^ Infix predicate
+             | PredApp AtomicWord [Term]      -- ^ Predicate
              | Quant Quant [V] Formula        -- ^ Quantified Formula
              | (:~:) Formula                  -- ^ Negation
              deriving (Eq, Ord, Read, Show)

@@ -699,7 +699,7 @@ hang i d = align (nest i d)
 --   @
 align   ∷ Doc → Doc
 align d = column (\k →
-                   nesting (\i → nest (k - i) d))   --nesting might be negative :-)
+                   nesting (\i → nest (k - i) d))
 
 ------------------------------------------------------------------------------
 -- Primitives
@@ -722,10 +722,12 @@ align d = column (\k →
 data Doc = Empty
          | Char Char             -- invariant: char is not '\n'
          | Text !Int64 Builder   -- invariant: text doesn't contain '\n'
-         | Line !Bool            -- True <=> when undone by group, do not insert a space
+         | Line !Bool            -- True <=> when undone by group
+                                 -- do not insert a space
          | Cat Doc Doc
          | Nest !Int64 Doc
-         | Union Doc Doc         -- invariant: first lines of first doc longer than the first lines of the second doc
+         | Union Doc Doc         -- invariant: first lines of first doc longer
+                                 -- than the first lines of the second doc
          | Column  (Int64 → Doc)
          | Nesting (Int64 → Doc)
          | Spaces !Int64
@@ -896,12 +898,14 @@ renderPretty rfrac w doc
                                     (best n k $ Cons i y ds)
             Column f  → best n k (Cons i (f k) ds)
             Nesting f → best n k (Cons i (f i) ds)
-            Spaces l  → let k' = k+l in seq k' $ SText l (spaces l) (best n k' ds)
+            Spaces l  →
+              let k' = k+l in seq k' $ SText l (spaces l) (best n k' ds)
 
       --nicest ∷ r = ribbon width, w = page width,
       --          n = indentation of current line, k = current column
       --          x and y, the (simple) documents to chose from.
-      --          precondition: first lines of x are longer than the first lines of y.
+      --          precondition: first lines of x are longer than the
+      --          first lines of y.
       nicest n k x y
         | fits wth x = x
         | otherwise    = y

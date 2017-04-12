@@ -33,9 +33,13 @@ import Data.TSTP.F
 --
 -- @
 --   [
---     F {name = "a1", role = Axiom, formula = a, source = NoSource},
---     F {name = "a2", role = Axiom, formula = b, source = NoSource},
---     F {name = "a3", role = Axiom, formula = ( a ∧ b → z ), source = NoSource},
+--     F { name = "a1", role = Axiom, formula = a, source = NoSource},
+--     F { name = "a2", role = Axiom, formula = b, source = NoSource},
+--     F { name = "a3"
+--       , role = Axiom
+--       , formula = ( a ∧ b ⇒ z )
+--       , source = NoSource
+--       },
 --     ...
 --   ]
 -- @

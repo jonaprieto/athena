@@ -75,9 +75,6 @@ install:
  - cd online-atps
  - cabal install
 
- # installing to test library for the reconstruction test.
- - echo "/home/travis/build/jonaprieto/athena/test/test.agda-lib" >> /home/travis/.agda/libraries
-
  - cd /home/travis/build/jonaprieto/athena
 
 # Here starts the actual work to be performed for the package under test;
@@ -96,7 +93,7 @@ script:
  - SRC_TGZ=$(cabal info . | awk '{print $2;exit}').tar.gz &&
    (cd dist && cabal install --force-reinstalls "$SRC_TGZ")
  - make hlint
-
+ - make checklines
 # testing the reconstruction
  - make install-libraries
- - make check
+ - make reconstruct

@@ -1,4 +1,3 @@
-
 -- | Data.TSTP.Source module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
@@ -18,7 +17,6 @@ import Data.TSTP.Theory    ( Theory(..) )
 -- | 'Source' main purpose is to provide all the information regarding
 -- the deductive process that lead to a given formula. Information
 -- about the rules applied along with parent formulas and
--- <http://www.cs.miami.edu/~tptp/TPTP/TPTPTParty/2007/PositionStatements/GeoffSutcliffe_SZS.html SZS>
 -- status are among the information you might expect from this field.
 data Source = Creator String [Info]
             | File String (Maybe String)

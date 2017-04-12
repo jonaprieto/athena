@@ -411,11 +411,14 @@ docSteps subgoalN (Leaf Axiom axiom) agdaFile =
     prettyWeaken ∷ Doc
     prettyWeaken =
       case toWeak of
-        [] → pretty "weaken"  <+> parens (pretty Negate <+> (subgoalName subgoalN))
+        [] → pretty "weaken" <+>
+          parens (pretty Negate <+> subgoalName subgoalN)
         ps → pretty "weaken-Δ₁" <> line <>
           parens (
             toCtxt $
-             [pretty '∅'] ++ map pretty ps ++ [pretty Negate <+> (subgoalName subgoalN)])
+                [pretty '∅']
+             ++ map pretty ps
+             ++ [pretty Negate <+> subgoalName subgoalN])
 
     toAssume ∷ [F]
     toAssume = takeWhile (/= aᵢ) premises
@@ -474,7 +477,7 @@ docSteps subgoalN (Root Negate _ [Root Strip _ _]) _ =
   parens $
        pretty Strip <> line
     <> indent 2 (parens (pretty "assume {Γ = Γ}" <> line
-    <> indent 2 (parens (pretty Negate <+> (subgoalName subgoalN)))))
+    <> indent 2 (parens (pretty Negate <+> subgoalName subgoalN))))
 
 ------------------------------------------------------------------------------
 -- Resolve.

@@ -1,4 +1,3 @@
-
 -- | Data.TSTP module.
 -- Adapted from https://github.com/agomezl/tstp2agda.
 
@@ -11,29 +10,6 @@ module Data.TSTP
   -- * Formulas and terms
   , Formula(..)
   , Term(..)
-  -- ** 'Show' instances
-  -- | 'Formula', 'Term' and other data types in this section
-  -- have 'Show' instances that allow pretty-printing
-  -- of 'Formulas' and 'Show' @['Formula']@ is an
-  -- especial instance that print its contents as
-  -- sequence of implications
-  --
-  -- >>> let f1 = PredApp (AtomicWord "a") []
-  -- >>> let f2 = PredApp (AtomicWord "b") []
-  -- >>> let f3 = (BinOp (PredApp (AtomicWord "a") []) (:&:) (PredApp (AtomicWord "b") []))
-  -- >>> f1
-  -- a
-  -- >>> f2
-  -- b
-  -- >>> f3
-  -- a ∧ b
-  -- >>> [f1,f2,f3]
-  -- { a b : Set} → a → b → a ∧ b
-  --
-  -- Some syntax sugar is also present
-  --
-  -- >>> PredApp (AtomicWord "$false") []
-  -- ⊥
   , AtomicWord(..)
   , BinOp(..)
   , InfixPred(..)

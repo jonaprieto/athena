@@ -35,7 +35,8 @@ tryIO = try
 
 commitInfo ∷ IO (Maybe String)
 commitInfo = do
-  res ← tryIO $ readProcessWithExitCode "git" ["log", "--format=%h", "-n", "1"] ""
+  res ← tryIO $
+    readProcessWithExitCode "git" ["log", "--format=%h", "-n", "1"] ""
   case res of
     Right (ExitSuccess, hash, _) → do
       (_, _, _) ← readProcessWithExitCode "git" ["diff", "--quiet"] ""
