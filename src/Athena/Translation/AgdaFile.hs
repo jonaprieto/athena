@@ -304,6 +304,9 @@ getRefutes = filter (isPrefixOf "refute" . name)
 -- Proof.
 ------------------------------------------------------------------------------
 
+subgoalName ∷ Int → Doc
+subgoalName n = pretty "subgoal" <> (pretty . stdName . show) n
+
 docProof ∷ AgdaFile → Doc
 docProof agdaFile =
      hypenline
@@ -316,16 +319,13 @@ docProof agdaFile =
 
 docProofSubgoal ∷ Int → ProofTree → AgdaFile → Doc
 docProofSubgoal n tree agdaFile =
-     pName <+> colon <+> pretty "Γ ⊢" <+> pretty sName <> line
+     pName <+> colon <+> pretty "Γ ⊢" <+> pretty (subgoalName n) <> line
   <> pName <+> equals <> line
   <> indent 2  (parens (pretty "RAA" <> line <>
-              indent 2 (docSteps sName tree agdaFile))) <> line
+              indent 2 (docSteps n tree agdaFile))) <> line
   where
     pName ∷  Doc
     pName = pretty "proof" <> (pretty . stdName . show) n
-
-    sName ∷ Doc
-    sName = pretty "subgoal" <> (pretty . stdName . show) n
 
 docProofSubgoals ∷ AgdaFile → Doc
 docProofSubgoals agdaFile =
@@ -334,8 +334,8 @@ docProofSubgoals agdaFile =
       (\(n, tree) → docProofSubgoal n tree agdaFile)
       (zip [0..] trees)
   where
-      trees ∷ [ProofTree]
-      trees = fileTrees agdaFile
+    trees ∷ [ProofTree]
+    trees = fileTrees agdaFile
 
 docProofGoal ∷ AgdaFile → Doc
 docProofGoal agdaFile =
@@ -373,17 +373,22 @@ docProofGoal agdaFile =
 
 -- | docSteps generates the document with the proof making recursion
 -- over the deduction tree.
-docSteps ∷ Doc → ProofTree → AgdaFile → Doc
+
+docSteps ∷ Int        -- ^ The number of the subgoal.
+         → ProofTree  -- ^ Deduction tree.
+         → AgdaFile   -- ^ Agda file.
+         → Doc        -- ^ Doc of the step.
 
 ------------------------------------------------------------------------------
 -- Axiom.
 ------------------------------------------------------------------------------
 
-docSteps sName (Leaf Axiom axiom) agdaFile =
+docSteps subgoalN (Leaf Axiom axiom) agdaFile =
   parens $
        prettyWeaken <> line
     <> indent 2 (parens $ prettyAssume <+> pAxiom)
   where
+
     dict ∷ ProofMap
     dict = fileDict agdaFile
 
@@ -406,11 +411,11 @@ docSteps sName (Leaf Axiom axiom) agdaFile =
     prettyWeaken ∷ Doc
     prettyWeaken =
       case toWeak of
-        [] → pretty "weaken"  <+> parens (pretty Negate <+> sName)
+        [] → pretty "weaken"  <+> parens (pretty Negate <+> (subgoalName subgoalN))
         ps → pretty "weaken-Δ₁" <> line <>
           parens (
             toCtxt $
-             [pretty '∅'] ++ map pretty ps ++ [pretty Negate <+> sName])
+             [pretty '∅'] ++ map pretty ps ++ [pretty Negate <+> (subgoalName subgoalN)])
 
     toAssume ∷ [F]
     toAssume = takeWhile (/= aᵢ) premises
@@ -426,10 +431,10 @@ docSteps sName (Leaf Axiom axiom) agdaFile =
 -- Canonicalize.
 ------------------------------------------------------------------------------
 
-docSteps sName (Root Canonicalize _ [subtree]) agdaFile =
+docSteps subgoalN (Root Canonicalize _ [subtree]) agdaFile =
   parens $
        pretty Canonicalize <> line
-    <> indent 2 (docSteps sName subtree agdaFile)
+    <> indent 2 (docSteps subgoalN subtree agdaFile)
 
 ------------------------------------------------------------------------------
 -- Conjecture.
@@ -441,19 +446,19 @@ docSteps _ (Leaf Conjecture conjecture) _ = pretty conjecture
 -- Clausify.
 ------------------------------------------------------------------------------
 
-docSteps sName (Root Clausify _ [subtree]) agdaFile =
+docSteps subgoalN (Root Clausify _ [subtree]) agdaFile =
   parens $
        pretty Clausify <> line
-    <> indent 2 (docSteps sName subtree agdaFile)
+    <> indent 2 (docSteps subgoalN subtree agdaFile)
 
 ------------------------------------------------------------------------------
 -- Conjunct.
 ------------------------------------------------------------------------------
 
-docSteps sName (Root Conjunct tag [subtree]) agdaFile =
+docSteps subgoalN (Root Conjunct tag [subtree]) agdaFile =
    parens $
         pretty Conjunct <+> parens (pretty ω) <> line
-     <> indent 2 (docSteps sName subtree agdaFile)
+     <> indent 2 (docSteps subgoalN subtree agdaFile)
    where
      ω ∷ Formula
      ω = formula . fromJust $ Map.lookup tag dict
@@ -465,11 +470,11 @@ docSteps sName (Root Conjunct tag [subtree]) agdaFile =
 -- Negate.
 ------------------------------------------------------------------------------
 
-docSteps sName (Root Negate _ [Root Strip _ _]) _ =
+docSteps subgoalN (Root Negate _ [Root Strip _ _]) _ =
   parens $
        pretty Strip <> line
     <> indent 2 (parens (pretty "assume {Γ = Γ}" <> line
-    <> indent 2 (parens (pretty Negate <+> sName))))
+    <> indent 2 (parens (pretty Negate <+> (subgoalName subgoalN)))))
 
 ------------------------------------------------------------------------------
 -- Resolve.
@@ -484,7 +489,7 @@ docSteps sName (Root Negate _ [Root Strip _ _]) _ =
 
 -}
 
-docSteps sName
+docSteps subgoalN
          (Root Resolve tag
            [ left@(Root _ fTag _)
            , right@(Root _ gTag _)
@@ -493,10 +498,10 @@ docSteps sName
   parens $
     pretty thm <+> parens (pretty l) <> line <>
   if swap
-  then indent 2 (parens (docSteps sName left agdaFile)) <> line
-    <> indent 2 (parens (docSteps sName right agdaFile))
-  else indent 2 (parens (docSteps sName right agdaFile)) <> line
-    <> indent 2 (parens (docSteps sName left agdaFile))
+  then indent 2 (parens (docSteps subgoalN left agdaFile)) <> line
+    <> indent 2 (parens (docSteps subgoalN right agdaFile))
+  else indent 2 (parens (docSteps subgoalN right agdaFile)) <> line
+    <> indent 2 (parens (docSteps subgoalN left agdaFile))
   where
     dict ∷ ProofMap
     dict = fileDict agdaFile
@@ -527,7 +532,7 @@ docSteps sName
 -- Simplify.
 ------------------------------------------------------------------------------
 
-docSteps sName (Root Simplify _ nodes) agdaFile =
+docSteps subgoalN (Root Simplify _ nodes) agdaFile =
   simplification
   where
     rNodes :: [ProofTree]
@@ -546,22 +551,21 @@ docSteps sName (Root Simplify _ nodes) agdaFile =
               [ pretty Simplify
               , indent 2
                   (vsep
-                    [ docSteps sName node agdaFile
+                    [ docSteps subgoalN node agdaFile
                     , y
                     ]
                    )
                ]
         )
-        (docSteps sName (last rNodes) agdaFile)
+        (docSteps subgoalN (last rNodes) agdaFile)
         (init rNodes)
-
 
 ------------------------------------------------------------------------------
 -- Strip.
 ------------------------------------------------------------------------------
 
-docSteps sName (Root Strip _ [subtree]) agdaFile =
+docSteps subgoalN (Root Strip _ [subtree]) agdaFile =
      pretty Strip <> line
-  <> indent 2 (parens (docSteps sName subtree agdaFile))
+  <> indent 2 (parens (docSteps subgoalN subtree agdaFile))
 
 docSteps _ _ _ = pretty "?" <> line
