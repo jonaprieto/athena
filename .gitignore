@@ -135,3 +135,6 @@ cnf*
 *.toc
 
 TAGS
+cabal.config
+lib/agda-stdlib
+lib/.agda

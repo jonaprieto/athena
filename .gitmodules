@@ -1,3 +1,9 @@
 [submodule "test/prop-pack"]
 	path = test/prop-pack
 	url = https://github.com/jonaprieto/prop-pack
+[submodule "lib/agda-prop"]
+	path = lib/agda-prop
+	url = https://github.com/jonaprieto/agda-prop.git
+[submodule "lib/agda-metis"]
+	path = lib/agda-metis
+	url = https://github.com/jonaprieto/agda-metis.git
