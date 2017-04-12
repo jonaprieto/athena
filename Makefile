@@ -94,7 +94,7 @@ checklines :
 		-l --recursive src; \
 		status=$$?; \
 		if [ $$status = 0 ]; \
-		then echo "Lines found with more than 80 characters!"; \
+		then echo "Lines were found with more than 80 characters!"; \
 		else echo "Succeed!"; \
 		fi
 
