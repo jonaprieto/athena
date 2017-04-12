@@ -16,6 +16,7 @@ matrix:
 
 before_install:
  - unset CC
+ - export AGDA_DIR=/home/travis/build/jonaprieto/athena/lib/.agda
  - export MY_HOME=${HOME}/build/jonaprieto
  - mkdir ${HOME}/bin
  - export PATH=/home/travis/.cabal/bin:${MY_HOME}/bin:/opt/ghc/${GHC_VER}/bin:/opt/cabal/${CABAL_VER}/bin:/opt/alex/3.1.7/bin:/opt/happy/1.19.5/bin:${PATH}
@@ -67,25 +68,6 @@ install:
 
  # Installing Agda
  - cabal install agda
- - cd /home/travis/
- - mkdir -p .agda
- - cd .agda
- - touch libraries
- - touch defaults
- - cd /home/travis/
-
- # Installing Agda standard library.
- - git clone https://github.com/agda/agda-stdlib.git
- - echo "standard-library" >> /home/travis/.agda/defaults
- - echo "/home/travis/agda-stdlib/standard-library.agda-lib" >> /home/travis/.agda/libraries
-
- # installing agda-prop library.
- - git clone https://github.com/jonaprieto/agda-prop.git
- - echo "/home/travis/agda-prop/agda-prop.agda-lib" >> /home/travis/.agda/libraries
-
- # installing agda-metis library.
- - git clone https://github.com/jonaprieto/agda-metis.git
- - echo "/home/travis/agda-metis/agda-metis.agda-lib" >> /home/travis/.agda/libraries
 
  # installing online-atps.
  - cd /home/travis
@@ -116,4 +98,5 @@ script:
  - make hlint
 
 # testing the reconstruction
+ - make install-libraries
  - make check
