@@ -409,11 +409,10 @@ docSteps subgoalN (Leaf Axiom axiom) agdaFile =
         [] → pretty "weaken" <+>
           parens (pretty Negate <+> subgoalName subgoalN)
         ps → pretty "weaken-Δ₁" <> line <>
-          parens (
-            toCtxt $
+          indent 2 (parens (toCtxt (
                 [pretty '∅']
              ++ map pretty ps
-             ++ [pretty Negate <+> subgoalName subgoalN])
+             ++ [pretty Negate <+> subgoalName subgoalN])))
 
     toAssume ∷ [F]
     toAssume = takeWhile (/= aᵢ) premises
@@ -495,11 +494,11 @@ docSteps subgoalN
          agdaFile =
   parens $
     pretty thm <+> parens (pretty l) <> line <>
-  if swap
-  then indent 2 (parens (docSteps subgoalN left agdaFile)) <> line
-    <> indent 2 (parens (docSteps subgoalN right agdaFile))
-  else indent 2 (parens (docSteps subgoalN right agdaFile)) <> line
-    <> indent 2 (parens (docSteps subgoalN left agdaFile))
+    if swap
+    then indent 2 (docSteps subgoalN left agdaFile)  <> line
+      <> indent 0 (docSteps subgoalN right agdaFile)
+    else indent 2 (docSteps subgoalN right agdaFile) <> line
+      <> indent 0 (docSteps subgoalN left agdaFile)
   where
     dict ∷ ProofMap
     dict = fileDict agdaFile
@@ -518,7 +517,7 @@ docSteps subgoalN
     l ∷ Formula
     l = let sourceInfo ∷ Source
             sourceInfo = source . fromJust $ Map.lookup tag dict
-        in getResolveLiteral sourceInfo
+        in  getResolveLiteral sourceInfo
 
     getResolveLiteral ∷ Source → Formula
     getResolveLiteral
