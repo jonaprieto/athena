@@ -16,7 +16,6 @@ matrix:
 
 before_install:
  - unset CC
- - export AGDA_DIR=/home/travis/build/jonaprieto/athena/lib/.agda
  - export MY_HOME=${HOME}/build/jonaprieto
  - mkdir ${HOME}/bin
  - export PATH=/home/travis/.cabal/bin:${MY_HOME}/bin:/opt/ghc/${GHC_VER}/bin:/opt/cabal/${CABAL_VER}/bin:/opt/alex/3.1.7/bin:/opt/happy/1.19.5/bin:${PATH}
@@ -63,13 +62,15 @@ install:
  - cabal install cpphs-1.20.2
  - make install-fix-whitespace
  - cabal install hlint
+ - hlint --version
  - cabal install agda
+ - agda --version
 
  # Online-atps.
  - cd /home/travis
  - git clone https://github.com/jonaprieto/online-atps.git
  - cd online-atps
- - cabal install
+ - cabal install --force-reinstalls
  - cd /home/travis/build/jonaprieto/athena
 
 # Here starts the actual work to be performed for the package under test;
@@ -90,5 +91,5 @@ script:
  - make hlint
  - make checklines
 # testing the reconstruction
- - make install-libraries
  - make reconstruct
+ - make check
