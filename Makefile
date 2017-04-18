@@ -166,7 +166,7 @@ clean :
 	find . -name 'saturation*' -delete
 	find . -name '*.tstp' -delete
 	find . \
-		\( -path './lib' -prune \) \
+		\( -path './lib' \) \
 		-name '*.agda' -delete
 	rm -rf dist
 	rm -rf lib/.agda
@@ -187,6 +187,7 @@ online-atps:
 		--single-branch \
 		https://github.com/jonaprieto/online-atps.git \
 		bin/online-atps
+	 @cabal update
 	 @cd bin/online-atps && cabal install
 	 @rm -Rf bin
 
@@ -247,12 +248,13 @@ install-bin :
 	@echo "==================================================================="
 	@echo "================ Installing Athena v0.1 ==========================="
 	@echo "==================================================================="
+	cabal update
 	cabal install --disable-documentation -v0 --jobs=1 -g --ghc
 
 .PHONY: install
 install :
-	@make install-bin
-	@make install-libraries
+	@make reconstruct
+	@make check
 
 .PHONY : prop-pack
 prop-pack :
@@ -322,6 +324,9 @@ check : install-libraries \
 
 	@echo "$(IMPL)/impl-1.agda"
 	@agda $(IMPL)/impl-1.agda --verbose=0
+
+	@echo "$(IMPL)/impl-11.agda"
+	@agda $(IMPL)/impl-11.agda --verbose=0
 
 	@echo "$(NEG)/neg-1.agda"
 	@agda $(NEG)/neg-1.agda --verbose=0
