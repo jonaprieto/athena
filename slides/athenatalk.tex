@@ -58,10 +58,12 @@ Medell\'in, Colombia}
 
 \begin{frame}{Keywords}
   \begin{block}{Proof Assistant}
-  is a software program that work together with a human in order to give formal proofs to problems in a wide range of topics.\footnote{Matita development team, Matita website, http://matita.cs.unibo.it/index.shtml}
+    is a software program that work together with a human in order to give formal proofs to problems in a wide range of topics.\\
+    - Agda, Isabelle/HOL, HOL Light, Coq.
   \end{block}
-  \begin{block}{ATP}
-  An \text{A}utomatic \textbf{T}heorem \textbf{P}rover is software program 
+  \begin{block}{\text{A}utomatic \textbf{T}heorem \textbf{P}rover}
+    Is software program that tries to prove conjecture based on a list of hypothesis.\\
+    - Metis, Z3, Vampire, EProver, iProver, SPSS.
   \end{block}
 \end{frame}
 
@@ -94,13 +96,42 @@ Medell\'in, Colombia}
 }
 \end{frame}
 
-%% \begin{frame}{Agda}
-%%   A proof verified of the previous derivation output by Athena.
-%% {\footnotesize
-%%   \problemtptp[basic-4.agda]{../test/prop-pack/problems/basic/basic-4.agda}{0}
-%% }
-%% \end{frame}
+\begin{frame}{Agda}
+   A verified proof of the previous derivation output by Athena.
 
+  \begin{figure}
+    \includegraphics[scale=0.35]{basic-4}
+    \label{im:basic}
+    \caption{Type-checked Proof.}
+  \end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Natural deduction tree}
+  $\Gamma , p \vdash p$
+\begin{proof}\hfill
+\label{basic-der}
+\begin{prooftree}
+\AxiomC{$\Gamma \vdash a_1$}
+\RightLabel{\scriptsize({\bfseries weaken $\neg\ \text{subgoal}_0$})}
+\UnaryInfC{$\Gamma, \neg\ \text{subgoal}_0\,\vdash a_1$}
+\RightLabel{\scriptsize({\bfseries canonicalize})}
+\UnaryInfC{$\Gamma, \neg\ \text{subgoal}_0\,\vdash p$}
+\AxiomC{$\Gamma \vdash p$}
+\RightLabel{\scriptsize({\bfseries assume})}
+\UnaryInfC{$\Gamma, \neg\ \text{subgoal}_0\,\vdash \neg p$}
+\RightLabel{\scriptsize({\bfseries canonicalize})}
+\UnaryInfC{$\Gamma, \neg\ \text{subgoal}_0\,\vdash \neg p$}
+\RightLabel{\scriptsize({\bfseries simplify})}
+\UnaryInfC{$\Gamma, \neg\ \text{subgoal}_0\,\vdash \neg p$}
+\BinaryInfC{$\bot$}
+\RightLabel{\scriptsize({\bfseries RAA})}
+\UnaryInfC{$\Gamma \vdash p$}
+\end{prooftree}
+% A tree deduction of problem \ref{prob1}
+\end{proof}
+\end{frame}
 % The tool : Athena.
 % Its components:
 % - agda-prop (logic framework)
