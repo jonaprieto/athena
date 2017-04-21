@@ -1,0 +1,122 @@
+\ProvidesPackage{lstagda}
+
+% --------------------------------------------------------------------------
+% Color definitions.
+% --------------------------------------------------------------------------
+\usepackage{xcolor}
+\definecolor{amethyst}{rgb}{0.6, 0.4, 0.8}
+\definecolor{antiquefuchsia}{rgb}{0.57, 0.36, 0.51}
+\definecolor{ballblue}{rgb}{0.13, 0.67, 0.8}
+\definecolor{blue(munsell)}{rgb}{0.0, 0.5, 0.69}
+\definecolor{blue(pigment)}{rgb}{0.2, 0.2, 0.6}
+\definecolor{brightmaroon}{rgb}{0.76, 0.13, 0.28}
+\definecolor{bondiblue}{rgb}{0.0, 0.58, 0.71}
+\definecolor{cadet}{rgb}{0.33, 0.41, 0.47}
+\definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}
+% --------------------------------------------------------------------------
+
+\usepackage{listings}
+\lstdefinestyle{TPTP}{
+    aboveskip=10pt
+  , backgroundcolor=\color{aliceblue}
+  , basicstyle=\ttfamily
+  , belowskip=10pt
+  , frame=trbl
+  , keywords=[2]{axiom, conjecture,inference, negated_conjecture, plain}
+  , keywords=[3]{fof, cnf}
+  , keywords=[4]{canonicalize, resolve, conjunct,
+    strip, simplify, negate, clausify}
+  , keywordstyle=[2]\color{cadet}%\underbar,%\bfseries
+  , keywordstyle=[3]\color{bondiblue}\bfseries
+  , keywordstyle=[4]\bfseries
+  , showstringspaces=false
+}
+
+\lstnewenvironment{tptp}
+  {\lstset{style=TPTP,columns=fullflexible}\csname lst@SetFirstLabel\endcsname}
+  {\csname lst@SaveFirstLabel\endcsname}
+
+\lstloadlanguages{Haskell}
+\lstdefinestyle{agda}{
+    tabsize=4
+  , aboveskip={0.4\baselineskip}
+  , belowcaptionskip=0.4\baselineskip
+  , columns=fixed
+  , showstringspaces=false
+  , extendedchars=true
+  , breaklines=true
+  , frame=trbl
+  , xleftmargin=\parindent
+  , basicstyle=\footnotesize\SourceCode
+  , comment=[l]--
+  , commentstyle=\color{gray}\SourceCodeIt
+  , frame=trbl
+  , keywords=[2]{data,where,open,import,let,with,module,using,infixr
+    ,rewrite,mutual,in,case,of,infix,infixl}
+  , keywords=[3]{-intro, -elim, weaken}
+  , keywords=[4]{atp-canonicalize, atp-resolve, atp-conjunct,
+    atp-strip, atp-simplify, atp-negate, atp-clausify}
+  , keywordstyle=[2]\color{bondiblue}\SourceCode
+  , keywordstyle=[3]\color{blue}\SourceCode
+  , keywordstyle=[4]\color{green}\SourceCode
+  , showstringspaces=true
+  , literate=
+     {⊢}{{$\vdash\,$}}1
+     {|-}{{$\vdash\,$}}1
+     {+}{{$+\;$}}1
+        {/}{{$/$}}1
+        {*}{{$*$}}1
+        {=}{{$=\;$}}1
+        {>}{{$>$}}1
+        {<}{{$<$}}1
+        {\\lam}{{$\lambda$}}1
+        {\\\\}{{\char`\\\char`\\}}1
+        {->}{{$\rightarrow\;$}}2
+        {→}{{$\rightarrow\;$}}2
+        {>=}{{$\geq$}}2
+        {<-}{{$\leftarrow$}}2
+        {<=}{{$\leq$}}2
+        {=>}{{$\Rightarrow\;$}}2
+        {\\...}{{$\cdots\;$}}2
+        {\ .}{{$\circ$}}2
+        {\ .\ }{{$\circ$}}2
+        {>>}{{>>}}2
+        {>>=}{{>>=}}2
+        {|}{{$\mid\:$}}1
+        {Nat}{{$\mathbb{N}\;$}}1
+        {forall}{{$\forall\;$}}1
+        {\\scons}{{\scons}}1
+        {\\sconsh}{{\sconsh}}1
+        {\\void}{{\void}}1
+  {\\o}{{$\circ\;$}}1
+  {\\NIL}{{[\,]\;}}1
+        {\\tick}{{\tick}}1
+      {\\nil}{{$\varepsilon\;$}}1
+      {\\bN}{{$\bN\;$}}1
+      {\\x}{{$\times$}}1
+      {\\excp}{{\excp}}1
+      {==}{{$\equiv\;$}}1
+    {<|}{{$\lhd\;\,$}}1
+        {\\app}{{$\lhd\!\lhd\;\,$}}1
+  {\\and}{{$\wedge\;$}}1
+  {\\leq}{{$\leq\;$}}1
+        {~}{{$\neg\:$}}1
+        {[[}{{[\![\;}}1
+        {]]}{{]\!]\;}}1
+        {\\;}{{\;}}1
+        {\\-}{{-}}1
+        {\\qed}{{$\qed$}}1
+        {==<}{{$\equiv\!\!\langle\;$}}1
+        {\\>}{{$\rangle$}}1
+        {\\_}{{\!\!\_}}1
+}
+
+\lstnewenvironment{code}
+  {\lstset{style=agda,columns=fullflexible}\csname lst@SetFirstLabel\endcsname}
+  {\csname lst@SaveFirstLabel\endcsname}
+
+\lstnewenvironment{codei}
+  {\lstset{style=agda,columns=flexible}\csname lst@SetFirstLabel\endcsname}
+  {\csname lst@SaveFirstLabel\endcsname}

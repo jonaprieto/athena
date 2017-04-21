@@ -1,43 +1,96 @@
-\documentclass[hyperref={pdfpagelabels=false}]{beamer}
-\beamertemplatenavigationsymbolsempty
-\usepackage[utf8x]{inputenc}
-\usepackage{amsmath, amsthm, amssymb}
-%\usepackage{bm}
-\usepackage{bussproofs}
-\usepackage{graphicx}
-\usepackage{listings}
-\usepackage{lmodern}
-\usepackage{url}
-\usepackage[T1]{fontenc}
+\documentclass[xetex, mathserif, serif,hyperref={pdfpagelabels=false}]{beamer}
 
-\definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}
+% --------------------------------------------------------------------------
+% Color definitions.
+% --------------------------------------------------------------------------
+\usepackage{xcolor}
+\definecolor{amethyst}{rgb}{0.6, 0.4, 0.8}
+\definecolor{antiquefuchsia}{rgb}{0.57, 0.36, 0.51}
+\definecolor{ballblue}{rgb}{0.13, 0.67, 0.8}
+\definecolor{blue(munsell)}{rgb}{0.0, 0.5, 0.69}
+\definecolor{blue(pigment)}{rgb}{0.2, 0.2, 0.6}
+\definecolor{blu}{RGB}{1,0,102}
+\definecolor{brightmaroon}{rgb}{0.76, 0.13, 0.28}
 \definecolor{bondiblue}{rgb}{0.0, 0.58, 0.71}
 \definecolor{cadet}{rgb}{0.33, 0.41, 0.47}
+\definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}
+% --------------------------------------------------------------------------
 
-\lstset{
-    aboveskip=10pt
-  , backgroundcolor=\color{aliceblue}
-  , basicstyle=\ttfamily
-  , belowskip=9pt
-  , frame=trbl
-  , keywords=[2]{axiom, conjecture,inference, negated_conjecture, plain}
-  , keywords=[3]{fof, cnf}
-  , keywords=[4]{canonicalize, resolve, conjunct, strip, simplify, negate, clausify}
-  , keywordstyle=[2]\color{cadet}%\underbar,%\bfseries
-  , keywordstyle=[3]\color{bondiblue}\bfseries
-  , keywordstyle=[4]\bfseries
-  , showstringspaces=false
+% --------------------------------------------------------------------------
+% Beamer configuration.
+% --------------------------------------------------------------------------
+\usetheme{default}
+\usecolortheme{default}
+\beamertemplatenavigationsymbolsempty
+\hypersetup{pdfpagemode=UseNone}
+
+\setbeamertemplate{footline}{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.8\paperwidth,ht=2.25ex,dp=1ex,left]{headFoot}%
+    \hspace*{2ex}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,right]{headFoot}%
+    \insertframenumber{}/\inserttotalframenumber\hspace*{2ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
 }
 
-\newcommand{\problemtptp}[3][c]{\lstinputlisting[caption=#2, firstline=#3, label=custom#1]{#2}}
-\newcommand{\solutiontstp}[2][c]{\lstinputlisting[caption=#2, firstline=5, label=custom#1]{#2}}
+\setbeamercolor{headFoot}{fg=gray,bg=aliceblue}
+\setbeamercolor{institute}{fg=blu}
+\setbeamercolor{normal text}{fg=blu}
+\setbeamercolor{subtitle}{fg=blu}
+\setbeamercolor{titlelike}{fg=blu}
+\setbeamerfont{footnote}{size=\tiny}
+\setbeamercolor{block title}{bg=blue,fg=blu}
+\setbeamercolor{block body}{bg=aliceblue}
+\setbeamercolor{item}{fg=blu} % color of bullets
+\setbeamercolor{subitem}{fg=blu}
+\setbeamercolor{itemize/enumerate subbody}{fg=blu}
+\setbeamertemplate{itemize subitem}{{\textendash}}
+\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
+\setbeamerfont{itemize/enumerate subitem}{size=\footnotesize}
+% --------------------------------------------------------------------------
 
+
+\usepackage[english]{babel}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{bussproofs}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{url}
+\usepackage{lstagda}
+
+
+\usefonttheme{professionalfonts}
+\usefonttheme{serif}
+\usepackage{fontspec}
+\setmainfont[ExternalLocation=fonts/
+  , BoldFont=Vollkorn-Bold.ttf
+  , ItalicFont=Vollkorn-Italic.ttf
+  , BoldItalicFont=Vollkorn-BoldItalic.ttf
+  ]{Vollkorn-Regular.ttf}
+
+\usepackage{mathtools}
+\usepackage{unicode-math}
+
+
+%\setmainfont{xits-regular.otf}
+\setmathfont{xits-mathbold.otf}
+
+\newfontfamily\SourceCode{SourceCodePro-Semibold.ttf}
+\newfontfamily\SourceCodeIt{SourceCodePro-It.ttf}
+\setmonofont{SourceCodePro-Semibold.ttf}
+
+\newcommand{\problemtptp}[3][c]{\lstinputlisting[style=tptp,caption=#2, firstline=#3, label=custom#1]{#2}}
+\newcommand{\solutiontstp}[2][c]{\lstinputlisting[style=tptp,caption=#2, firstline=5, label=custom#1]{#2}}
 
 
 \title{Proof Reconstruction with Athena\\(Work in Progress)}
-
 \date{Agda Implementors’ Meeting XXV}
-
 \author{Jonathan Prieto-Cubides}
 
 \institute{
