@@ -1,0 +1,15 @@
+fof(a1, axiom, (p)).
+fof(goal, conjecture, (p)).
+fof(subgoal_0, plain, (p),
+  inference(strip, [], [goal])).
+fof(negate_0_0, plain, (~ p),
+  inference(negate, [], [subgoal_0])).
+fof(normalize_0_0, plain, (~ p),
+  inference(canonicalize, [], [negate_0_0])).
+fof(normalize_0_1, plain, (p),
+  inference(canonicalize, [], [a1])).
+fof(normalize_0_2, plain, ($false),
+  inference(simplify, [],
+    [normalize_0_0, normalize_0_1])).
+cnf(refute_0_0, plain, ($false),
+  inference(canonicalize, [], [normalize_0_2])).
