@@ -1,15 +1,15 @@
-[1] Config.pm:343> INFO - This is Biber 2.5
-[2] Config.pm:346> INFO - Logfile is '/Users/jonaprieto/athena/slides/slides.blg'
-[199] biber-darwin:290> INFO - === Sun Apr 23, 2017, 17:05:56
-[287] Biber.pm:351> INFO - Reading '/Users/jonaprieto/athena/slides/slides.bcf'
-[688] Biber.pm:776> INFO - Found 1 citekeys in bib section 0
-[749] Biber.pm:3493> INFO - Processing section 0
-[822] Biber.pm:3657> INFO - Looking for bibtex format file 'ref.bib' for section 0
-[827] bibtex.pm:1187> INFO - Decoding LaTeX character macros into UTF-8
-[832] bibtex.pm:1048> INFO - Found BibTeX data source 'ref.bib'
-[894] UCollate.pm:66> INFO - Overriding locale 'en_US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[894] UCollate.pm:66> INFO - Overriding locale 'en_US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[894] Biber.pm:3306> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en_US'
-[895] Biber.pm:3310> INFO - No sort tailoring available for locale 'en_US'
-[899] bbl.pm:526> INFO - Writing '/Users/jonaprieto/athena/slides/slides.bbl' with encoding 'UTF-8'
-[901] bbl.pm:619> INFO - Output to /Users/jonaprieto/athena/slides/slides.bbl
+[0] Config.pm:324> INFO - This is Biber 2.1
+[0] Config.pm:327> INFO - Logfile is '/home/hotel/athena/slides/slides.blg'
+[22] biber:273> INFO - === Mon Apr 24, 2017, 16:58:49
+[22] Biber.pm:333> INFO - Reading '/home/hotel/athena/slides/slides.bcf'
+[78] Biber.pm:645> INFO - Found 1 citekeys in bib section 0
+[88] Biber.pm:2977> INFO - Processing section 0
+[96] Biber.pm:3115> INFO - Looking for bibtex format file 'ref.bib' for section 0
+[96] bibtex.pm:1019> INFO - Decoding LaTeX character macros into UTF-8
+[97] bibtex.pm:893> INFO - Found BibTeX data source 'ref.bib'
+[112] UCollate.pm:66> INFO - Overriding locale 'en_US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[112] UCollate.pm:66> INFO - Overriding locale 'en_US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[112] Biber.pm:2854> INFO - Sorting list 'nyt' of type 'entry' with scheme 'nyt' and locale 'en_US'
+[112] Biber.pm:2858> INFO - No sort tailoring available for locale 'en_US'
+[114] bbl.pm:505> INFO - Writing '/home/hotel/athena/slides/slides.bbl' with encoding 'UTF-8'
+[114] bbl.pm:596> INFO - Output to /home/hotel/athena/slides/slides.bbl

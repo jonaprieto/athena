@@ -1,0 +1,41 @@
+\frametitle{Proof Reconstruction}
+
+\begin{tikzpicture}
+\node(problem) at (0,0)
+   {\includegraphics[scale=0.7]{figures/problem}};
+
+\node[right = 0.8cm of problem, hyperlink node=tptp-syntax](tptp){
+\includegraphics[scale=0.7]{figures/tptp}
+};
+
+\node[right= 0.8cm of tptp, hyperlink node=metis] (metis)
+  {\includegraphics[scale=0.7]{figures/metis}};
+
+\node[right= 0.8cm of metis, hyperlink node=tstp-syntax] (tstp)
+  {\includegraphics[scale=0.7]{figures/tstp}};
+
+\node[below= 2cm of tstp, hyperlink node=athena] (athena)
+  {\includegraphics[scale=0.7]{figures/athena}};
+
+\node[left = 0.5cm of athena, hyperlink node=agda-file] (agdafile)
+  {\includegraphics[scale=0.7]{figures/agdafile}};
+
+\node[left = 0.5cm of agdafile, hyperlink node=agda] (agda)
+  {\includegraphics[scale=0.7]{figures/agda}};
+
+\node[below = 0.2cm of problem, hyperlink node=verified-example] (verified)
+  {\includegraphics[scale=0.7]{figures/verified}};
+
+\node[below = 0.2cm of verified, opacity=0.5] (failure)
+  {\includegraphics[scale=0.7]{figures/failure}};
+
+\draw[->, thick] (problem) to (tptp);
+\draw[->, thick] (tptp) to (metis);
+\draw[->, thick] (metis) to (tstp);
+\draw[->, thick] (tstp) to (athena);
+\draw[->, thick] (athena) to (agdafile);
+\draw[->, thick] (agdafile) to (agda);
+\draw[->, thick] (agda) to (verified);
+\draw[->, thick, gray] (agda) to (failure);
+\end{tikzpicture}
+\vfill

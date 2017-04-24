@@ -1,5 +1,5 @@
 % $ biblatex auxiliary file $
-% $ biblatex bbl format version 2.7 $
+% $ biblatex bbl format version 2.5 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
@@ -18,14 +18,10 @@
 
 
 \refsection{0}
-  \sortlist[entry]{nyt/global/}
+  \sortlist{nyt}{nyt}
     \entry{Sicard2015}{book}{}
       \name{author}{1}{}{%
-        {{uniquename=0,hash=68868e3e70c9781004e7cf754a5ded39}{%
-           family={Sicard-Ramírez},
-           family_i={S\bibinithyphendelim R\bibinitperiod},
-           given={Andrés},
-           given_i={A\bibinitperiod}}}%
+        {{uniquename=0,hash=68868e3e70c9781004e7cf754a5ded39}{Sicard-Ramírez}{S\bibinithyphendelim R\bibinitperiod}{Andrés}{A\bibinitperiod}{}{}{}{}}%
       }
       \list{publisher}{1}{%
         {PEDECIBA Informática, Universidad de la República.}%

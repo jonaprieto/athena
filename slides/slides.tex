@@ -1,4 +1,4 @@
-\documentclass[xetex,hyperref={pdfpagelabels=false}]{beamer}
+\documentclass[xetex, hyperref={pdfpagelabels=false}]{beamer}
 
 % --------------------------------------------------------------------------
 % Color definitions.
@@ -16,7 +16,6 @@
 \definecolor{bondiblue}{rgb}{0.0, 0.58, 0.71}
 \definecolor{brightmaroon}{rgb}{0.76, 0.13, 0.28}
 \definecolor{cadet}{rgb}{0.33, 0.41, 0.47}
-
 
 % --------------------------------------------------------------------------
 % My palette.
@@ -68,7 +67,9 @@
 \setbeamercolor{normal text}{fg=black}
 
 % \setbeamercolor{institute}{fg=blu}
+\setbeamercolor{title}{fg=plum}
 % \setbeamercolor{subtitle}{fg=blu}
+
 % \setbeamercolor{titlelike}{fg=blu}
 \setbeamerfont{footnote}{size=\tiny}
 \setbeamercolor{footnote}{fg=gray}
@@ -90,8 +91,11 @@
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{lmodern}
-\usepackage{lstagda}
+\usepackage{mylst}
 \usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+
 \usepackage{url}
 
 \usefonttheme{professionalfonts}
@@ -156,17 +160,35 @@ Medell\'in, Colombia}
 \newsavebox\agdapragma
 
 \begin{document}
-
-
 \setcounter{page}{1}
 
-\begin{frame}[plain]
-% \tikz[overlay,remember picture] \node[opacity=0.05, at=(6,6)] {
-% $Γ ⊢ ϕ$
-% };
-\titlepage
-\end{frame}
+\tikzset{
+    hyperlink node/.style={
+        alias=sourcenode,
+        append after command={
+            let     \p1 = (sourcenode.north west),
+                \p2=(sourcenode.south east),
+                \n1={\x2-\x1},
+                \n2={\y1-\y2} in
+            node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\p1)] {\hyperlink{#1}{\XeTeXLinkBox{\phantom{\rule{\n1}{\n2}}}}}
+                    %xelatex needs \XeTeXLinkBox, won't create a link unless it
+                    %finds text --- rules don't work without \XeTeXLinkBox.
+                    %Still builds correctly with pdflatex and lualatex
+        }
+    }
+}
 
+
+
+\begin{frame}
+\titlepage
+\begin{tikzpicture}[overlay,remember picture, scale=0.5]
+\foreach \x in {0,4,..., \textwidth}
+  \foreach \y in {0,1,..., 20} {
+    \node[opacity=0.05](tptp) at (\x,\y){$Γ ⊢ ϕ$};
+  }
+\end{tikzpicture}
+\end{frame}
 
 \begin{frame}
   \frametitle{Outline}
@@ -174,6 +196,51 @@ Medell\'in, Colombia}
 \end{frame}
 
 \section{Introduction}
+
+
+\begin{frame}[fragile, label=reconstruction]{Proof Reconstruction}
+
+\begin{tikzpicture}
+\node(problem) at (0,0)
+   {\includegraphics[scale=0.7]{figures/problem}};
+
+\node[right = 0.8cm of problem, hyperlink node=tptp-syntax](tptp){
+\includegraphics[scale=0.7]{figures/tptp}
+};
+
+\node[right= 0.8cm of tptp, hyperlink node=metis] (metis)
+  {\includegraphics[scale=0.7]{figures/metis}};
+
+\node[right= 0.8cm of metis, hyperlink node=tstp-syntax] (tstp)
+  {\includegraphics[scale=0.7]{figures/tstp}};
+
+\node[below= 2cm of tstp, hyperlink node=athena] (athena)
+  {\includegraphics[scale=0.7]{figures/athena}};
+
+\node[left = 0.5cm of athena, hyperlink node=agda-file] (agdafile)
+  {\includegraphics[scale=0.7]{figures/agdafile}};
+
+\node[left = 0.5cm of agdafile, hyperlink node=agda] (agda)
+  {\includegraphics[scale=0.7]{figures/agda}};
+
+\node[below = 0.2cm of problem, hyperlink node=verified-example] (verified)
+  {\includegraphics[scale=0.7]{figures/verified}};
+
+\node[below = 0.2cm of verified, opacity=0.5] (failure)
+  {\includegraphics[scale=0.7]{figures/failure}};
+
+\draw[->, thick] (problem) to (tptp);
+\draw[->, thick] (tptp) to (metis);
+\draw[->, thick] (metis) to (tstp);
+\draw[->, thick] (tstp) to (athena);
+\draw[->, thick] (athena) to (agdafile);
+\draw[->, thick] (agdafile) to (agda);
+\draw[->, thick] (agda) to (verified);
+\draw[->, thick, gray] (agda) to (failure);
+\end{tikzpicture}
+\vfill
+\end{frame}
+
 \subsection{Motivation}
 
 
@@ -193,14 +260,16 @@ postulate
 \end{lstlisting}
 \end{lrbox}
 
-\begin{frame}[fragile]{Translation}
+\begin{frame}[fragile]{Previous Work: Apia}{Proving first-order theorems written in Agda using automatic theorem provers for first-order logic}
 
 \only<1-2>{At the moment, the communication between Agda and
-the ATPs is unidirectional because the ATPs are being used as oracles.\citep{Sicard2015}.}
+the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sicard2015}.}
 \only<1-2>{\vfill}
 
+
+
 \begin{tikzpicture}[scale=2]
-\only<1->{ \node(agda-pragmas) at (0,0){\includegraphics{figures/agda-pragmas.pdf}}};
+\only<1->{ \node(agda-pragmas) at (0,0){\includegraphics{figures/agda-pragmas}}};
 \only<1>{
   \node[fill=aliceblue, rectangle](atp-pragma) at (3,0){
   \scalebox{0.7}{\usebox\agdapragma}
@@ -208,20 +277,20 @@ the ATPs is unidirectional because the ATPs are being used as oracles.\citep{Sic
 
 
 \only<2->{ \node(eagda) at (2,0){
-  \includegraphics{figures/eagda.pdf}
+  \includegraphics{figures/eagda}
   \footnote{Development version of Agda in order to handle a new built-in ATP-pragma.
     \url{https://github.com/asr/eagda}}
   }};
 
 \only<3->{ \node(apia) at (4,0){
-  \includegraphics{figures/apia.pdf}
+  \includegraphics{figures/apia}
   \footnote{Haskell program for proving first-order theorems written in Agda using ATPs.
     \url{https://github.com/asr/apia}}}
   };
 
-\only<3->{ \node(tptp) at (2,-2){\includegraphics{figures/tptp.pdf}}};
+\only<3->{ \node(tptp) at (2,-2){\includegraphics{figures/tptp}}};
 
-\only<3->{ \node(atp) at (4,-2){\includegraphics{figures/atp.pdf}}};
+\only<3->{ \node(atp) at (4,-2){\includegraphics{figures/atp}}};
 
 \only<2->{\draw[->,ultra thick] (agda-pragmas) to (eagda)};
 
@@ -239,12 +308,19 @@ the ATPs is unidirectional because the ATPs are being used as oracles.\citep{Sic
 % \subsubsection{Sledgehammer}
 % \subsubsection{Waldemesiter}
 
-\subsection{Automatic Provers}
+% \subsection{Automatic Provers}
 
-\subsubsection{TPTP Syntax}
 
-\begin{frame}[fragile]{TPTP Syntax}{Thousands of Problems for Theorem Provers}
-\label{tptp-syntax}
+
+% \subsubsection{TPTP Syntax}
+
+\begin{frame}{}
+{\Huge Bonus Slides}
+\end{frame}
+
+
+\begin{frame}[fragile, label=tptp-syntax]{TPTP Syntax}{Thousands of Problems for Theorem Provers}
+
  \tikz[overlay,remember picture]
   \node at (0.92\textwidth, 0cm)
     {\includegraphics[width=0.15\textwidth]{figures/tptp}};
@@ -261,15 +337,17 @@ language(name, role, formula).
 \end{verbatim}
     \end{center}
     \begin{itemize}
-      \item[\texttt{language}] THF, TFF, FOF, or CNF
+      \item[\texttt{language}] FOF, or CNF %THF, TFF,
       \item[\texttt{name}] to identify the formula within the problem
       \item[\texttt{role}] axiom, definition, hypothesis, conjecture, among others
       \item[\texttt{formula}] the logic formula in the language
     \end{itemize}
   \end{itemize}
+
+\hyperlink{reconstruction}{Go to Reconstruction}
 \end{frame}
 
-\begin{frame}[fragile]{TPTP Examples}{Prop-Pack Repository}
+\begin{frame}[fragile]{TPTP Examples}{From Prop-Pack repository\footnote{Is available at \url{http://github.com/jonaprieto/pro-pack}}}
 \label{tptp-examples}
 Problems in Propositional Logic:
   \begin{itemize}
@@ -295,8 +373,8 @@ fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
 
 \subsubsection{TSTP Derivations}
 
-\begin{frame}[fragile]{TSTP Syntax}
-\label{tstp-syntax}
+\begin{frame}[fragile, label=tstp-syntax]{TSTP Syntax}
+
  \tikz[overlay,remember picture]
   \node at (0.92\textwidth, -0.5cm)
     {\includegraphics[width=0.15\textwidth]{figures/tstp}};
@@ -312,29 +390,28 @@ A TSTP derivation
     \item[\texttt{root}] the final derived formulae
   \end{itemize}
   \item Is a list of annotated formulae:
+  \end{itemize}
+
+\begin{center}
   {\footnotesize
-    \begin{center}
 \begin{verbatim}
-language(name,role,formula,source[,useful info]).
+language(name, role, formula, source [,useful info]).
+\end{verbatim}}
+\end{center}
+
+where \textbf{source} typically is a inference record:
+\begin{center}
+{\footnotesize
+\begin{verbatim}
+inference(rule, useful information, parents)
 \end{verbatim}
-  \end{center}}
-\begin{itemize}
-  \item[\texttt{source}] typically is a inference record:
-    {\footnotesize
-\begin{verbatim}
-  inference(rule, [], [])
-  \end{verbatim}}
-\begin{itemize}
-    \item[-] The inference rule name,
-    \item[-] a list of useful inference information, and
-    \item[-] a list of references to its parent formulae.
-\end{itemize}
-\end{itemize}
-\end{itemize}
+}
+\end{center}
+
 \end{frame}
 
-\begin{frame}[fragile]{TSTP Example}
-\label{tstp-example}
+\begin{frame}[fragile, label=tstp-example]{TSTP Example}
+
  \tikz[overlay,remember picture]
   \node at (0.93\textwidth, -0.3cm)
     {\includegraphics[width=0.15\textwidth]{figures/metis}};
@@ -363,25 +440,20 @@ cnf(refute_0_0, plain, ($false),
 \end{frame}
 
 
-\begin{frame}[fragile]{DAG for the previous TSTP derivation found by \texttt{Metis} ATP}
-\label{tstp-dag}
+\begin{frame}[fragile, label=tstp-dag]{DAG for the previous TSTP derivation found by \texttt{Metis} ATP}
+
 \vfill
 \begin{center}
 \includegraphics[height=0.8\textheight]{figures/derivation.png}
 \end{center}
 \end{frame}
 
-\begin{frame}{Design decisions for the Reconstruction Tool}
-\label{agda}
-
+\begin{frame}[label=haskell]{Design Decisions for the Reconstruction Tool}
  \tikz[overlay,remember picture]
   \node at (0.93\textwidth, 0cm)
     {\includegraphics[width=0.2\textwidth]{figures/athena}};
 
-\textbf{Programming Languages}
-\begin{itemize}
-\item \texttt{Haskell} is a standardized, general-purpose purely functional programming language.\\
-Our usages:
+\texttt{Haskell} % is a standardized, general-purpose purely functional programming language.\\ Our usages: 
 \begin{itemize}
     \item Parsing
     \item AST construction
@@ -389,24 +461,20 @@ Our usages:
     \item Analysis of inference rules used
     \item Generation of Agda code of the proof
 \end{itemize}
+\end{frame}
 
-\item \texttt{Agda} is dependently typed functional programming language and it also a proof assistant.\\
+\begin{frame}[label=agda]{Design Decisions for the Reconstruction Tool}{Programming Languages}
+\texttt{Agda} is a dependently typed functional programming language and it also a proof assistant.\\
 Our usages:
     \begin{itemize}
     \item Logic framework for Classical Propositional Logic
     \item Type-Checker for the Agda code of the proofs generated
     \end{itemize}
-\end{itemize}
-
-
-
-
-
 
 \end{frame}
 
 
-\begin{frame}{References}
+\begin{frame}[label=references]{References}
 \label{references}
 \printbibliography
 \end{frame}
