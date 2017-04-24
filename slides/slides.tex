@@ -26,6 +26,8 @@
 \definecolor{faded}{RGB}{76,117,195}
 \definecolor{plum}{RGB}{87,78,164}
 \definecolor{petunias}{RGB}{109,80,139}
+\definecolor{letour}{RGB}{101,41,105}
+
 % --------------------------------------------------------------------------
 
 % --------------------------------------------------------------------------
@@ -65,10 +67,11 @@
 \setbeamercolor{background canvas}{bg=white}
 \setbeamercolor{normal text}{fg=black}
 
-\setbeamercolor{institute}{fg=blu}
+% \setbeamercolor{institute}{fg=blu}
 % \setbeamercolor{subtitle}{fg=blu}
 % \setbeamercolor{titlelike}{fg=blu}
-% \setbeamerfont{footnote}{size=\tiny}
+\setbeamerfont{footnote}{size=\tiny}
+\setbeamercolor{footnote}{fg=gray}
 % \setbeamercolor{block title}{bg=blue,fg=blu}
 % \setbeamercolor{block body}{bg=aliceblue}
 % \setbeamercolor{item}{fg=blu} % color of bullets
@@ -83,6 +86,7 @@
 \usepackage[english]{babel}
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{bussproofs}
+\usepackage{fancyvrb}
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{lmodern}
@@ -120,11 +124,27 @@
   {\lstinputlisting[style=tptp,caption=#2, firstline=5, label=custom#1]{#2}}
 
 % --------------------------------------------------------------------------
+% References
+\usepackage[autostyle]{csquotes}
+\usepackage[
+    backend=biber
+  , style=authoryear-icomp
+  , sortlocale=en_US
+  , natbib=true
+  , url=false
+  , doi=true
+  , eprint=false
+]{biblatex}
+\addbibresource{ref.bib}
+\renewcommand*{\nameyeardelim}{\addcomma\addspace}
+\usepackage{silence}
+\WarningFilter{biblatex}{Patching footnotes failed}
+
+% --------------------------------------------------------------------------
 % Title Page
 \title{\textbf{Proof Reconstruction in Classical Propositional Logic}}
 \date{Agda Implementors’ Meeting XXV\\
-May 9-15th
-}
+May 9-15th}
 \author{Jonathan Prieto-Cubides}
 
 \institute{
@@ -133,12 +153,18 @@ Universidad EAFIT\\
 Medell\'in, Colombia}
 % --------------------------------------------------------------------------
 
+\newsavebox\agdapragma
+
 \begin{document}
+
 
 \setcounter{page}{1}
 
 \begin{frame}[plain]
-  \titlepage
+% \tikz[overlay,remember picture] \node[opacity=0.05, at=(6,6)] {
+% $Γ ⊢ ϕ$
+% };
+\titlepage
 \end{frame}
 
 
@@ -150,11 +176,61 @@ Medell\'in, Colombia}
 \section{Introduction}
 \subsection{Motivation}
 
-\begin{frame}
-Proof Term Reconstruction
 
-At the moment, the communication between Agda and
-the ATPs is unidirectional because we use the ATPs as oracles
+\begin{lrbox}{\agdapragma}
+\begin{lstlisting}
+$ cat Or.agda
+module Or where
+
+data _or_ (A B : Set) : Set where
+  inj1 : A -> A or B
+  inj2 : B -> A or B
+
+postulate
+  A B    : Set
+  or-comm : A or B -> B or A
+{-# ATP prove or-comm #-}
+\end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile]{Translation}
+
+\only<1-2>{At the moment, the communication between Agda and
+the ATPs is unidirectional because the ATPs are being used as oracles.\citep{Sicard2015}.}
+\only<1-2>{\vfill}
+
+\begin{tikzpicture}[scale=2]
+\only<1->{ \node(agda-pragmas) at (0,0){\includegraphics{figures/agda-pragmas.pdf}}};
+\only<1>{
+  \node[fill=aliceblue, rectangle](atp-pragma) at (3,0){
+  \scalebox{0.7}{\usebox\agdapragma}
+  }};
+
+
+\only<2->{ \node(eagda) at (2,0){
+  \includegraphics{figures/eagda.pdf}
+  \footnote{Development version of Agda in order to handle a new built-in ATP-pragma.
+    \url{https://github.com/asr/eagda}}
+  }};
+
+\only<3->{ \node(apia) at (4,0){
+  \includegraphics{figures/apia.pdf}
+  \footnote{Haskell program for proving first-order theorems written in Agda using ATPs.
+    \url{https://github.com/asr/apia}}}
+  };
+
+\only<3->{ \node(tptp) at (2,-2){\includegraphics{figures/tptp.pdf}}};
+
+\only<3->{ \node(atp) at (4,-2){\includegraphics{figures/atp.pdf}}};
+
+\only<2->{\draw[->,ultra thick] (agda-pragmas) to (eagda)};
+
+\only<3->{\draw[->,ultra thick] (eagda) to (apia)};
+\only<3->{\draw[->, very thick, dashed, gray] (apia) to (tptp)};
+\only<3->{\draw[->, very thick, dashed, gray] (tptp) to (atp)};
+\only<3->{\draw[->, very thick, dashed, gray] (atp) to (apia)};
+
+\end{tikzpicture}
 
 \end{frame}
 
@@ -168,13 +244,15 @@ the ATPs is unidirectional because we use the ATPs as oracles
 \subsubsection{TPTP Syntax}
 
 \begin{frame}[fragile]{TPTP Syntax}{Thousands of Problems for Theorem Provers}
-
+\label{tptp-syntax}
  \tikz[overlay,remember picture]
   \node at (0.92\textwidth, 0cm)
     {\includegraphics[width=0.15\textwidth]{figures/tptp}};
 
   \begin{itemize}
-  \item Is a language\footnote{Is available at \url{http://www.cs.miami.edu/~tptp/TPTP/SyntaxBNF.html}} to encode problems in text files
+  \item Is a language\footnote{Is available at
+        \url{http://www.cs.miami.edu/~tptp/TPTP/SyntaxBNF.html}}
+        to encode problems in text files
   \item Is the input of the ATPs
   \item his problems contains formulas with the form
    \begin{center}
@@ -192,6 +270,7 @@ language(name, role, formula).
 \end{frame}
 
 \begin{frame}[fragile]{TPTP Examples}{Prop-Pack Repository}
+\label{tptp-examples}
 Problems in Propositional Logic:
   \begin{itemize}
     \item $p ⊢ p$
@@ -217,12 +296,14 @@ fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
 \subsubsection{TSTP Derivations}
 
 \begin{frame}[fragile]{TSTP Syntax}
+\label{tstp-syntax}
  \tikz[overlay,remember picture]
   \node at (0.92\textwidth, -0.5cm)
     {\includegraphics[width=0.15\textwidth]{figures/tstp}};
 
 
-A TSTP derivation\footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/QuickGuide/Derivations.html}}
+A TSTP derivation
+\footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/QuickGuide/Derivations.html}}
 \begin{itemize}
   \item Is a Directed Acyclic Graph where
   \begin{itemize}
@@ -239,10 +320,10 @@ language(name,role,formula,source[,useful info]).
   \end{center}}
 \begin{itemize}
   \item[\texttt{source}] typically is a inference record:
-  {\footnotesize \begin{verbatim}
+    {\footnotesize
+\begin{verbatim}
   inference(rule, [], [])
   \end{verbatim}}
-  % Where each slot corresponds to
 \begin{itemize}
     \item[-] The inference rule name,
     \item[-] a list of useful inference information, and
@@ -253,6 +334,7 @@ language(name,role,formula,source[,useful info]).
 \end{frame}
 
 \begin{frame}[fragile]{TSTP Example}
+\label{tstp-example}
  \tikz[overlay,remember picture]
   \node at (0.93\textwidth, -0.3cm)
     {\includegraphics[width=0.15\textwidth]{figures/metis}};
@@ -275,21 +357,58 @@ fof(normalize_0_2, plain, ($false),
   inference(simplify, [],
     [normalize_0_0, normalize_0_1])).
 cnf(refute_0_0, plain, ($false),
-  inference(canonicalize, [], [normalize_0_2])).
+    inference(canonicalize, [], [normalize_0_2])).
 \end{tptp}
 \end{itemize}
 \end{frame}
 
 
 \begin{frame}[fragile]{DAG for the previous TSTP derivation found by \texttt{Metis} ATP}
+\label{tstp-dag}
 \vfill
 \begin{center}
 \includegraphics[height=0.8\textheight]{figures/derivation.png}
 \end{center}
 \end{frame}
 
+\begin{frame}{Design decisions for the Reconstruction Tool}
+\label{agda}
+
+ \tikz[overlay,remember picture]
+  \node at (0.93\textwidth, 0cm)
+    {\includegraphics[width=0.2\textwidth]{figures/athena}};
+
+\textbf{Programming Languages}
+\begin{itemize}
+\item \texttt{Haskell} is a standardized, general-purpose purely functional programming language.\\
+Our usages:
+\begin{itemize}
+    \item Parsing
+    \item AST construction
+    \item Creation and analysis of DAG derivations
+    \item Analysis of inference rules used
+    \item Generation of Agda code of the proof
+\end{itemize}
+
+\item \texttt{Agda} is dependently typed functional programming language and it also a proof assistant.\\
+Our usages:
+    \begin{itemize}
+    \item Logic framework for Classical Propositional Logic
+    \item Type-Checker for the Agda code of the proofs generated
+    \end{itemize}
+\end{itemize}
 
 
 
+
+
+
+\end{frame}
+
+
+\begin{frame}{References}
+\label{references}
+\printbibliography
+\end{frame}
 
 \end{document}

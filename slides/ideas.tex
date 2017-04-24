@@ -1,0 +1,99 @@
+\begin{frame}{Keywords}
+
+ \tikz[overlay,remember picture]
+  \node[opacity=0.2]at (0.8\textwidth, 0.5cm)
+    {\includegraphics[width=0.3\textwidth]{figures/metis}};
+
+  \begin{block}{Proof Assistant}
+    Is a software program that work together with a human in order to give formal proofs to problems in a wide range of topics.\\
+    - Agda, Isabelle/HOL, HOL Light, Coq.
+  \end{block}
+  \begin{block}{\text{A}utomatic \textbf{T}heorem \textbf{P}rover}
+    Is software program that tries to prove conjecture based on a list of hypothesis.\\
+    - Metis, Z3, Vampire, EProver, iProver, SPSS.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Athena}{asdf}
+  Is a Haskell program that translates proofs given by Metis ATP in TSTP format
+  to Agda code.
+
+  \begin{figure}
+    \includegraphics[scale=0.85]{figures/diagram.pdf}
+    \label{im:athena}
+    \caption{Proof reconstruction work flow.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{TPTP}
+  Is a text format to encode problems in different theories. Its goal is provide
+  a standard for all ATPs in the input file format. The version for derivations
+  is named TSTP but this one is not a standard yet.\\[2mm]
+
+  A TPTP file looks like:
+
+  \problemtptp[basic-4.tptp]{../test/prop-pack/problems/basic/basic-4.tptp}{2}
+
+\end{frame}
+
+\begin{frame}{TSTP}
+  A derivation of the previous problem output by Metis ATP.
+{\footnotesize
+  \problemtptp[basic-4.tstp]{../test/prop-pack/problems/basic/basic-4.tstp}{0}
+}
+\end{frame}
+
+\begin{frame}{Agda}
+   A verified proof of the previous derivation output by Athena.
+
+  \begin{figure}
+    \includegraphics[scale=0.35]{basic-4}
+    \label{im:basic}
+    \caption{Type-checked Proof.}
+  \end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Natural deduction tree}
+  $\Gamma , p \vdash p$
+\begin{proof}\hfill
+\label{basic-der}
+\begin{prooftree}
+\AxiomC{$\Gamma \vdash a_1$}
+\RightLabel{\scriptsize({\bfseries weaken $\neg\ \text{subgoal}_0$})}
+\UnaryInfC{$\Gamma, \neg\ \text{subgoal}_0\,\vdash a_1$}
+\RightLabel{\scriptsize({\bfseries canonicalize})}
+\UnaryInfC{$\Gamma, \neg\ \text{subgoal}_0\,\vdash p$}
+\AxiomC{$\Gamma \vdash p$}
+\RightLabel{\scriptsize({\bfseries assume})}
+\UnaryInfC{$\Gamma, \neg\ \text{subgoal}_0\,\vdash \neg p$}
+\RightLabel{\scriptsize({\bfseries canonicalize})}
+\UnaryInfC{$\Gamma, \neg\ \text{subgoal}_0\,\vdash \neg p$}
+\RightLabel{\scriptsize({\bfseries simplify})}
+\UnaryInfC{$\Gamma, \neg\ \text{subgoal}_0\,\vdash \neg p$}
+\BinaryInfC{$\bot$}
+\RightLabel{\scriptsize({\bfseries RAA})}
+\UnaryInfC{$\Gamma \vdash p$}
+\end{prooftree}
+% A tree deduction of problem \ref{prob1}
+\end{proof}
+\end{frame}
+% The tool : Athena.
+% Its components:
+% - agda-prop (logic framework)
+% - agda-metis (ATP rules)
+% - prop-pack (problems)
+
+\begin{frame}{Future work}
+
+  \begin{itemize}
+  \item
+    Extend the libraries Agda-Prop and Agda-Metis to handle predicated logic
+  \item
+    Reconstruct proofs of eprover in Agda-EProver
+  \item
+    Support more versions of GHC in Athena
+  \end{itemize}
+
+\end{frame}

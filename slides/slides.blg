@@ -1,0 +1,15 @@
+[1] Config.pm:343> INFO - This is Biber 2.5
+[2] Config.pm:346> INFO - Logfile is '/Users/jonaprieto/athena/slides/slides.blg'
+[199] biber-darwin:290> INFO - === Sun Apr 23, 2017, 17:05:56
+[287] Biber.pm:351> INFO - Reading '/Users/jonaprieto/athena/slides/slides.bcf'
+[688] Biber.pm:776> INFO - Found 1 citekeys in bib section 0
+[749] Biber.pm:3493> INFO - Processing section 0
+[822] Biber.pm:3657> INFO - Looking for bibtex format file 'ref.bib' for section 0
+[827] bibtex.pm:1187> INFO - Decoding LaTeX character macros into UTF-8
+[832] bibtex.pm:1048> INFO - Found BibTeX data source 'ref.bib'
+[894] UCollate.pm:66> INFO - Overriding locale 'en_US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[894] UCollate.pm:66> INFO - Overriding locale 'en_US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[894] Biber.pm:3306> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en_US'
+[895] Biber.pm:3310> INFO - No sort tailoring available for locale 'en_US'
+[899] bbl.pm:526> INFO - Writing '/Users/jonaprieto/athena/slides/slides.bbl' with encoding 'UTF-8'
+[901] bbl.pm:619> INFO - Output to /Users/jonaprieto/athena/slides/slides.bbl
