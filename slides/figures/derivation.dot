@@ -1,0 +1,18 @@
+digraph proof{
+  rankdir=TB
+  subgraph ax{
+  rank="same";
+  0 [shape=box,fillcolor=lightpink1,style=filled,label="fof(goal, conjecture, (p))."]
+  1 [shape=box,fillcolor=ivory1,style=filled,label="fof(a, axiom, (p))"]
+   }
+  2 [shape=box,fillcolor=lightskyblue1,style=filled,label="fof(subgoal_0, plain, (p),\ninference(strip, [], [goal]))."]
+  0 -> 2
+  3 [shape=box,fillcolor=lightskyblue1,style=filled,label="fof(negate_0_0, plain, (~ p),\ninference(negate, [], [subgoal_0]))."]
+    2 -> 3
+  4 [shape=box,fillcolor=ivory1,style=filled,label="fof(normalize_0_1, plain, (p), \ninference(canonicalize, [], [a]))."]
+    1 -> 4
+  5 [shape=box,fillcolor=lightskyblue1,style=filled,label="fof(normalize_0_2, plain, ($false),\n inference(simplify, [],\n [normalize_0_0, normalize_0_1])). "] 4 -> 5
+    3 -> 5
+  6 [shape=box,fillcolor=lightskyblue1,style=filled,label="cnf(refute_0_0, plain, ($false),\n inference(canonicalize, [], [normalize_0_2]))."]
+    5 -> 6
+}
