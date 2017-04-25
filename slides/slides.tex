@@ -1,6 +1,53 @@
 \documentclass[xetex, hyperref={pdfpagelabels=false}]{beamer}
 
 % --------------------------------------------------------------------------
+% Packages
+% --------------------------------------------------------------------------
+\usepackage[english]{babel}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{bussproofs}
+\usepackage{fancyvrb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{mylst}
+\usepackage{url}
+
+
+% --------------------------------------------------------------------------
+% Tikz Configuration
+% --------------------------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+\usepackage{rotating}
+
+\tikzset{
+    hyperlink node/.style={
+        alias=sourcenode,
+        append after command={
+            let     \p1 = (sourcenode.north west),
+                \p2=(sourcenode.south east),
+                \n1={\x2-\x1},
+                \n2={\y1-\y2} in
+            node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\p1)]
+            {\hyperlink{#1}{\XeTeXLinkBox{\phantom{\rule{\n1}{\n2}}}}}
+                    %xelatex needs \XeTeXLinkBox, won't create a link unless it
+                    %finds text --- rules don't work without \XeTeXLinkBox.
+                    %Still builds correctly with pdflatex and lualatex
+        }
+    }
+}
+% \usetikzlibrary{shapes.geometric,shapes.symbols,shadows}
+
+\newcommand{\gobackreconstruction}{
+  \begin{tikzpicture}[overlay, remember picture, scale=0.5]
+    \tikzset{shift={(current page.center)}, xshift=11.6cm,yshift=-8.3cm}
+    \node[fill=plum,text=white, hyperlink node = reconstruction] (go) at (0,0) {\tiny Go Back};
+  \end{tikzpicture}}
+
+
+% --------------------------------------------------------------------------
 % Color definitions.
 % --------------------------------------------------------------------------
 \usepackage{xcolor}
@@ -53,7 +100,8 @@
     [wd=.2\paperwidth,ht=2.3ex,dp=1ex,right]{headFoot}%
     \insertframenumber{}/\inserttotalframenumber\hspace*{2ex}
   \end{beamercolorbox}}%
-  \vskip0pt%
+  \vskip 0pt%
+  % \vspace*{1mm}%
 }
 
 % title in the frame
@@ -83,20 +131,8 @@
 % \setbeamerfont{itemize/enumerate subitem}{size=\footnotesize}
 
 % --------------------------------------------------------------------------
-
-\usepackage[english]{babel}
-\usepackage{amsmath, amsthm, amssymb}
-\usepackage{bussproofs}
-\usepackage{fancyvrb}
-\usepackage{geometry}
-\usepackage{graphicx}
-\usepackage{lmodern}
-\usepackage{mylst}
-\usepackage{tikz}
-\usetikzlibrary{positioning}
-\usetikzlibrary{calc}
-
-\usepackage{url}
+% Fonts
+% --------------------------------------------------------------------------
 
 \usefonttheme{professionalfonts}
 \usefonttheme{serif}
@@ -129,6 +165,8 @@
 
 % --------------------------------------------------------------------------
 % References
+% --------------------------------------------------------------------------
+
 \usepackage[autostyle]{csquotes}
 \usepackage[
     backend=biber
@@ -145,14 +183,18 @@
 \WarningFilter{biblatex}{Patching footnotes failed}
 
 % --------------------------------------------------------------------------
-% Title Page
-\title{\textbf{Proof Reconstruction in Classical Propositional Logic}}
+% Title and Author
+% --------------------------------------------------------------------------
+
+\title[Proof Reconstruction in Classical Propositional Logic]
+  {\textbf{Proof Reconstruction in Classical Propositional Logic}
+}
+\subtitle{(Work in Progress)}
 \date{Agda Implementors’ Meeting XXV\\
 May 9-15th}
-\author{Jonathan Prieto-Cubides}
-
+\author[Jonathan Prieto-Cubides and Andr\'es Sicard-Ram\'irez]{Jonathan Prieto-Cubides\\
+(Joint work with Andr\'es Sicard-Ram\'irez)}
 \institute{
-Advisor: Andr\'es Sicard-Ram\'irez\\[3mm]
 Universidad EAFIT\\
 Medell\'in, Colombia}
 % --------------------------------------------------------------------------
@@ -162,81 +204,80 @@ Medell\'in, Colombia}
 \begin{document}
 \setcounter{page}{1}
 
-\tikzset{
-    hyperlink node/.style={
-        alias=sourcenode,
-        append after command={
-            let     \p1 = (sourcenode.north west),
-                \p2=(sourcenode.south east),
-                \n1={\x2-\x1},
-                \n2={\y1-\y2} in
-            node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\p1)] {\hyperlink{#1}{\XeTeXLinkBox{\phantom{\rule{\n1}{\n2}}}}}
-                    %xelatex needs \XeTeXLinkBox, won't create a link unless it
-                    %finds text --- rules don't work without \XeTeXLinkBox.
-                    %Still builds correctly with pdflatex and lualatex
-        }
-    }
-}
 
 
-
-\begin{frame}
+\begin{frame}[plain]
 \titlepage
-\begin{tikzpicture}[overlay,remember picture, scale=0.5]
-\foreach \x in {0,4,..., \textwidth}
-  \foreach \y in {0,1,..., 20} {
-    \node[opacity=0.05](tptp) at (\x,\y){$Γ ⊢ ϕ$};
-  }
-\end{tikzpicture}
+% \begin{tikzpicture}[overlay,remember picture, scale=0.5]
+% \foreach \x in {0,4,..., \textwidth}
+%   \foreach \y in {0,1,..., 20} {
+%     \node[opacity=0.05](tptp) at (\x,\y){$Γ ⊢ ϕ$};
+%   }
+% \end{tikzpicture}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Outline}
-  \tableofcontents
-\end{frame}
+% \begin{frame}
+%   \frametitle{Outline}
+%   \tableofcontents
+% \end{frame}
 
 \section{Introduction}
 
-
-\begin{frame}[fragile, label=reconstruction]{Proof Reconstruction}
+\begin{frame}[fragile, label=reconstruction]{Proof Reconstruction: Overview}
 
 \begin{tikzpicture}
-\node(problem) at (0,0)
+\only<1->{\node(problem) at (0,0)
    {\includegraphics[scale=0.7]{figures/problem}};
+}
 
-\node[right = 0.8cm of problem, hyperlink node=tptp-syntax](tptp){
+\only<2->{\node[right = 0.8cm of problem, hyperlink node=tptp-syntax](tptp){
 \includegraphics[scale=0.7]{figures/tptp}
 };
-
+}
+\only<3->{
 \node[right= 0.8cm of tptp, hyperlink node=metis] (metis)
-  {\includegraphics[scale=0.7]{figures/metis}};
-
+  {\includegraphics[scale=0.7]{figures/metis}\,
+  \footnote{It is available at \url{http://www.gilith.com/software/metis}}
+  };
+}
+\only<4->{
 \node[right= 0.8cm of metis, hyperlink node=tstp-syntax] (tstp)
   {\includegraphics[scale=0.7]{figures/tstp}};
-
-\node[below= 2cm of tstp, hyperlink node=athena] (athena)
-  {\includegraphics[scale=0.7]{figures/athena}};
-
+}
+\only<5->{
+\node[below= 1.5cm of tstp, hyperlink node=athena] (athena)
+  {\includegraphics[scale=0.7]{figures/athena}
+  \footnote{It is available at \url{http://github.com/jonaprieto/athena}}
+  };
+}
+\only<6->{
 \node[left = 0.5cm of athena, hyperlink node=agda-file] (agdafile)
-  {\includegraphics[scale=0.7]{figures/agdafile}};
-
+  {\includegraphics[scale=0.7]{figures/agdafile}
+  };
+}
+\only<7->{
 \node[left = 0.5cm of agdafile, hyperlink node=agda] (agda)
-  {\includegraphics[scale=0.7]{figures/agda}};
-
-\node[below = 0.2cm of problem, hyperlink node=verified-example] (verified)
+  {\includegraphics[scale=0.7]{figures/agda}
+  \footnote{It is available at \url{http://github.com/agda/agda}}
+  };
+}
+\only<8->{
+\node[below = 0.18cm of problem, hyperlink node=verified-example] (verified)
   {\includegraphics[scale=0.7]{figures/verified}};
-
-\node[below = 0.2cm of verified, opacity=0.5] (failure)
+}
+\only<8->{
+\node[below = 0.18cm of verified, opacity=0.5, hyperlink node=failure-example] (failure)
   {\includegraphics[scale=0.7]{figures/failure}};
+}
 
-\draw[->, thick] (problem) to (tptp);
-\draw[->, thick] (tptp) to (metis);
-\draw[->, thick] (metis) to (tstp);
-\draw[->, thick] (tstp) to (athena);
-\draw[->, thick] (athena) to (agdafile);
-\draw[->, thick] (agdafile) to (agda);
-\draw[->, thick] (agda) to (verified);
-\draw[->, thick, gray] (agda) to (failure);
+\only<2->{ \draw[->, thick] (problem) to (tptp)};
+\only<3->{ \draw[->, thick] (tptp) to (metis)};
+\only<4->{ \draw[->, thick] (metis) to (tstp)};
+\only<5->{ \draw[->, thick] (tstp) to (athena)};
+\only<6->{ \draw[->, thick] (athena) to (agdafile)};
+\only<7->{ \draw[->, thick] (agdafile) to (agda)};
+\only<8->{ \draw[->, thick] (agda) to (verified)};
+\only<8->{ \draw[->, thick, gray] (agda) to (failure)};
 \end{tikzpicture}
 \vfill
 \end{frame}
@@ -260,12 +301,31 @@ postulate
 \end{lstlisting}
 \end{lrbox}
 
-\begin{frame}[fragile]{Previous Work: Apia}{Proving first-order theorems written in Agda using automatic theorem provers for first-order logic}
+\begin{frame}[fragile, label=hammer]{Related Work}
+\begin{block}{SledgeHammer}
+\begin{itemize}
+\item Isabelle/HOL tool
+\item Metis ported within Isabelle
+\item Reconstruct proofs of well-known ATPs: EProver, Vampire, among others
+\end{itemize}
+\end{block}
+
+\begin{block}{Integrating Waldmeister and Agda}
+\begin{itemize}
+  \item Source code not available
+  \item Equational Logic
+  \item Reflection Layers
+  \end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]{Related Work: Apia}
+  {Proving first-order theorems written in Agda using automatic theorem provers for first-order logic}
 
 \only<1-2>{At the moment, the communication between Agda and
 the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sicard2015}.}
 \only<1-2>{\vfill}
-
 
 
 \begin{tikzpicture}[scale=2]
@@ -314,8 +374,7 @@ the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sic
 
 % \subsubsection{TPTP Syntax}
 
-\begin{frame}{}
-{\Huge Bonus Slides}
+\begin{frame}{Bonus Slides}
 \end{frame}
 
 
@@ -328,47 +387,51 @@ the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sic
   \begin{itemize}
   \item Is a language\footnote{Is available at
         \url{http://www.cs.miami.edu/~tptp/TPTP/SyntaxBNF.html}}
-        to encode problems in text files
+        to encode problems
   \item Is the input of the ATPs
-  \item his problems contains formulas with the form
+  \item Annotated formulas with the form
    \begin{center}
-\begin{verbatim}
+\begin{tptp}
 language(name, role, formula).
-\end{verbatim}
+\end{tptp}
     \end{center}
     \begin{itemize}
-      \item[\texttt{language}] FOF, or CNF %THF, TFF,
+      \item[\texttt{language}] FOF or CNF %THF, TFF,
       \item[\texttt{name}] to identify the formula within the problem
       \item[\texttt{role}] axiom, definition, hypothesis, conjecture, among others
-      \item[\texttt{formula}] the logic formula in the language
+      \item[\texttt{formula}] version in TPTTP format
     \end{itemize}
   \end{itemize}
 
-\hyperlink{reconstruction}{Go to Reconstruction}
+\gobackreconstruction
 \end{frame}
 
-\begin{frame}[fragile]{TPTP Examples}{From Prop-Pack repository\footnote{Is available at \url{http://github.com/jonaprieto/pro-pack}}}
-\label{tptp-examples}
+\begin{frame}[fragile, label=tptp-examples]{TPTP Examples}{From Prop-Pack repository
+  \footnote{Is available at \url{http://github.com/jonaprieto/pro-pack}}}
 Problems in Propositional Logic:
-  \begin{itemize}
-    \item $p ⊢ p$
+
+\begin{itemize}
+  \item $p ⊢ p$
 \begin{tptp}
 $ cat basic-4.tptp
 fof(a, axiom, p).
 fof(goal, conjecture, p).
 \end{tptp}
-    \item $p ∧ q ⊢ q ∧ p$
+
+  \item $p ∧ q ⊢ q ∧ p$
 \begin{tptp}
 $ cat conj-3.tptp
 fof(a, axiom, p & q).
 fof(goal, conjecture, q & p).
 \end{tptp}
-    \item $⊢ ¬ (p ∧ ¬ p) ∨ (q ∧ ¬ q)$
+
+  \item $⊢ ¬ (p ∧ ¬ p) ∨ (q ∧ ¬ q)$
 \begin{tptp}
 $ cat neg-7.tptp
 fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
 \end{tptp}
-    \end{itemize}
+  \end{itemize}
+\gobackreconstruction
 \end{frame}
 
 \subsubsection{TSTP Derivations}
@@ -379,13 +442,12 @@ fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
   \node at (0.92\textwidth, -0.5cm)
     {\includegraphics[width=0.15\textwidth]{figures/tstp}};
 
-
 A TSTP derivation
 \footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/QuickGuide/Derivations.html}}
 \begin{itemize}
-  \item Is a Directed Acyclic Graph where
+  \item Is a \hyperlink{tstp-dag}{Directed Acyclic Graph} where
   \begin{itemize}
-    \item[\texttt{leaf}] is a formulae from the TPTP input
+    \item[\texttt{leaf}] is a formulae from the \hyperlink{tptp-syntax}{TPTP} input
     \item[\texttt{node}] is a formulae inferred from parent formulae
     \item[\texttt{root}] the final derived formulae
   \end{itemize}
@@ -394,20 +456,20 @@ A TSTP derivation
 
 \begin{center}
   {\footnotesize
-\begin{verbatim}
+\begin{tptp}
 language(name, role, formula, source [,useful info]).
-\end{verbatim}}
+\end{tptp}}
 \end{center}
 
 where \textbf{source} typically is a inference record:
 \begin{center}
 {\footnotesize
-\begin{verbatim}
+\begin{tptp}
 inference(rule, useful information, parents)
-\end{verbatim}
+\end{tptp}
 }
 \end{center}
-
+\gobackreconstruction
 \end{frame}
 
 \begin{frame}[fragile, label=tstp-example]{TSTP Example}
@@ -437,6 +499,7 @@ cnf(refute_0_0, plain, ($false),
     inference(canonicalize, [], [normalize_0_2])).
 \end{tptp}
 \end{itemize}
+\gobackreconstruction
 \end{frame}
 
 
@@ -446,37 +509,191 @@ cnf(refute_0_0, plain, ($false),
 \begin{center}
 \includegraphics[height=0.8\textheight]{figures/derivation.png}
 \end{center}
+\gobackreconstruction
 \end{frame}
+
+
+\begin{frame}[fragile, label=athena]{Athena}
+ \tikz[overlay,remember picture]
+  \node at (0.92\textwidth, 1cm)
+    {\includegraphics[width=0.15\textwidth]{figures/athena}};
+\begin{block}{Athena} Is a Haskell program that translates proofs given by Metis Prover
+in TSTP format to Agda code.\\
+It depends on:
+\begin{itemize}
+  \item \texttt{agda-prop} Classical Logic within Agda: Axioms + Theorems
+  \item \texttt{agda-metis} Theorems of the inference rules of Metis Prover
+\end{itemize}
+\end{block}
+\gobackreconstruction
+\end{frame}
+
 
 \begin{frame}[label=haskell]{Design Decisions for the Reconstruction Tool}
  \tikz[overlay,remember picture]
   \node at (0.93\textwidth, 0cm)
     {\includegraphics[width=0.2\textwidth]{figures/athena}};
 
-\texttt{Haskell} % is a standardized, general-purpose purely functional programming language.\\ Our usages: 
+\begin{block}{Haskell} % is a standardized, general-purpose purely functional programming language.\\ Our usages:
 \begin{itemize}
     \item Parsing
     \item AST construction
-    \item Creation and analysis of DAG derivations
+    \item Creation and analysis of \hyperlink{tstp-dag}{DAG} derivations
     \item Analysis of inference rules used
     \item Generation of Agda code of the proof
 \end{itemize}
+\end{block}
+\gobackreconstruction
 \end{frame}
 
 \begin{frame}[label=agda]{Design Decisions for the Reconstruction Tool}{Programming Languages}
-\texttt{Agda} is a dependently typed functional programming language and it also a proof assistant.\\
-Our usages:
-    \begin{itemize}
-    \item Logic framework for Classical Propositional Logic
-    \item Type-Checker for the Agda code of the proofs generated
-    \end{itemize}
 
+ \tikz[overlay,remember picture]
+  \node at (0.92\textwidth, 1cm)
+    {\includegraphics[width=0.15\textwidth]{figures/agda}};
+
+\begin{block}{Agda}
+Is a dependently typed functional programming language and it also a proof assistant.\\
+We used it to type-check the proofs found by Metis Prover
+    \begin{itemize}
+    \item Agda-Prop Libary: Logic framework for Classical Propositional Logic
+    \item Agda-Metis Library: theorems based on the inference rules of Metis Prover
+    \end{itemize}
+\end{block}
+\gobackreconstruction
+\end{frame}
+
+\begin{frame}[label=metis]{Metis Theorem Prover}{\url{http://www.gilith.com/software/metis/}}
+ \tikz[overlay,remember picture]
+  \node at (0.92\textwidth, 0.5cm)
+    {\includegraphics[width=0.15\textwidth]{figures/metis}};
+
+Metis is an automatic theorem prover for First-Order Logic with equality
+\begin{block}{Why Metis?}
+  \begin{itemize}
+    \item \href{https://github.com/gilith/metis}{Open source} implemented in Standard ML
+    \item Reads problem in \hyperlink{tptp-syntax}{\texttt{TPTP} format}
+    \item Outputs detailed proofs in \hyperlink{tstp-format}{\texttt{TSTP} format}
+    \item Each refutation step is one of
+      \href{http://www.gilith.com/software/metis/logical-kernel.txt}{\textbf{6 simple rules}}
+  \end{itemize}
+\end{block}
+\gobackreconstruction
+\end{frame}
+
+
+\begin{frame}[fragile, label=metis-rules]{Inference Rules of Metis}
+With Classical Propositional Logic, \hyperlink{tstp-example}{TSTP} derivations exhibit
+these inferences:
+\begin{itemize}
+\item \hyperlink{atp-canonicalize}
+  {\texttt{Canonicalize} transforms formulas to CNF or NNF}
+\item \hyperlink{atp-clausify}
+  {\texttt{Clausify} performs clausification}
+\item \hyperlink{atp-conjunct}
+  {\texttt{Conjunct} extracts a formula from a conjunction}
+\item \hyperlink{atp-negate}
+  {\texttt{Negate} applies negation to the formula}
+\item \hyperlink{atp-resolve}
+  {\texttt{Resolve} applies theorems of resolution}
+\item \hyperlink{atp-simplify}
+  {\texttt{Simplify} applies over a list of formula to simplify them}
+% \item[\texttt{Skolemize}] ...
+% \item[\texttt{Specialize}] ...
+\item \hyperlink{atp-strip}{\texttt{Strip} splits a formula into subgoals}
+\end{itemize}
+\gobackreconstruction
+\end{frame}
+
+
+\begin{frame}[fragile, label=atp-canonicalize]{Canonicalize}{Inference Rule}
+\begin{block}{canonicalize}
+
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile, label=atp-clausify]{Clausify}{Inference Rule}
+\begin{block}{clausify}
+
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile, label=atp-conjunct]{Conjunct}{Inference Rule}
+\begin{block}{conjunct}
+\begin{lstlisting}
+$ cat ~/agda-metis/src/ATP/Metis/Rules/Conjunct.agda
+...
+conjunct : Prop -> Prop -> Prop
+conjunct (φ ∧ ψ) ω with ⌊ eq φ ω ⌋ | ⌊ eq ψ ω ⌋
+... | true  | _     = φ
+... | false | true  = ψ
+... | false | false = conjunct φ ω
+conjunct φ ω        = φ
+
+atp-conjunct
+  : ∀ {Γ} {φ}
+  -> (ω : Prop)
+  -> Γ ⊢ φ
+  -> Γ ⊢ conjunct φ ω
+\end{lstlisting}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile, label=atp-negate]{Negate}{Inference Rule}
+\begin{block}{negate}
+
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile, label=atp-resolve]{Resolve}{Inference Rule}
+\begin{block}{resolve}
+
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile, label=atp-simplify]{Simplify}{Inference Rule}
+\begin{block}{simplify}
+
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile, label=atp-strip]{Strip}{Inference Rule}
+\begin{block}{strip}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile, label=agda-file]{Agda Code}{Generated by Athena Tool}
+Example goes here
+\gobackreconstruction
+\end{frame}
+
+\begin{frame}[fragile, label=verified-example]{Type-checked Proof}
+Verified Example goes here
+\gobackreconstruction
+\end{frame}
+
+\begin{frame}[fragile, label=failure-example]{Type-checked Proof}
+Failure Example goes here
+\gobackreconstruction
+\end{frame}
+
+
+\begin{frame}[label=future-work]{Future Work}
+\begin{itemize}
+  \item Add shallow embedding in order to work with Apia
+  \item Support First-Order Logic
+  \item Support another prover like EProver
+  \item Support a Intuitionistic Prover
+\end{itemize}
 \end{frame}
 
 
 \begin{frame}[label=references]{References}
-\label{references}
 \printbibliography
 \end{frame}
+
+
 
 \end{document}
