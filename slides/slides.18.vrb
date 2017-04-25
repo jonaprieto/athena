@@ -1,0 +1,20 @@
+\frametitle{Conjunct}\framesubtitle {Inference Rule}
+\begin{block}{conjunct}
+\begin{lstlisting}
+$ cat ~/agda-metis/src/ATP/Metis/Rules/Conjunct.agda
+...
+conjunct : Prop -> Prop -> Prop
+conjunct (φ ∧ ψ) ω with ⌊ eq φ ω ⌋ | ⌊ eq ψ ω ⌋
+... | true  | _     = φ
+... | false | true  = ψ
+... | false | false = conjunct φ ω
+conjunct φ ω        = φ
+
+atp-conjunct
+  : ∀ {Γ} {φ}
+  -> (ω : Prop)
+  -> Γ ⊢ φ
+  -> Γ ⊢ conjunct φ ω
+\end{lstlisting}
+\end{block}
+

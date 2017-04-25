@@ -42,7 +42,7 @@
 
 \newcommand{\gobackreconstruction}{
   \begin{tikzpicture}[overlay, remember picture, scale=0.5]
-    \tikzset{shift={(current page.center)}, xshift=11.6cm,yshift=-8.3cm}
+    \tikzset{shift={(current page.center)}, xshift=11.7cm,yshift=-8.4cm}
     \node[fill=plum,text=white, hyperlink node = reconstruction] (go) at (0,0) {\tiny Go Back};
   \end{tikzpicture}}
 
@@ -192,7 +192,7 @@
 \subtitle{(Work in Progress)}
 \date{Agda Implementors’ Meeting XXV\\
 May 9-15th}
-\author[Jonathan Prieto-Cubides and Andr\'es Sicard-Ram\'irez]{Jonathan Prieto-Cubides\\
+\author[Jonathan Prieto-Cubides and Andr\'es Sicard-Ram\'irez]{Jonathan Prieto-Cubides
 (Joint work with Andr\'es Sicard-Ram\'irez)}
 \institute{
 Universidad EAFIT\\
@@ -408,26 +408,16 @@ language(name, role, formula).
 
 \begin{frame}[fragile, label=tptp-examples]{TPTP Examples}{From Prop-Pack repository
   \footnote{Is available at \url{http://github.com/jonaprieto/pro-pack}}}
-Problems in Propositional Logic:
 
 \begin{itemize}
   \item $p ⊢ p$
 \begin{tptp}
-$ cat basic-4.tptp
 fof(a, axiom, p).
 fof(goal, conjecture, p).
 \end{tptp}
 
-  \item $p ∧ q ⊢ q ∧ p$
-\begin{tptp}
-$ cat conj-3.tptp
-fof(a, axiom, p & q).
-fof(goal, conjecture, q & p).
-\end{tptp}
-
   \item $⊢ ¬ (p ∧ ¬ p) ∨ (q ∧ ¬ q)$
 \begin{tptp}
-$ cat neg-7.tptp
 fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
 \end{tptp}
   \end{itemize}
@@ -445,13 +435,13 @@ fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
 A TSTP derivation
 \footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/QuickGuide/Derivations.html}}
 \begin{itemize}
-  \item Is a \hyperlink{tstp-dag}{Directed Acyclic Graph} where
+  \item Is a \hyperlink{tstp-dag}{\textbf{D}irected \textbf{A}cyclic \textbf{G}raph} where
   \begin{itemize}
-    \item[\texttt{leaf}] is a formulae from the \hyperlink{tptp-syntax}{TPTP} input
-    \item[\texttt{node}] is a formulae inferred from parent formulae
-    \item[\texttt{root}] the final derived formulae
+    \item[\texttt{leaf}] is a formula from the \hyperlink{tptp-syntax}{TPTP} input
+    \item[\texttt{node}] is a formula inferred from parent formula
+    \item[\texttt{root}] the final derived formula
   \end{itemize}
-  \item Is a list of annotated formulae:
+  \item Is a list of annotated formulas with the form:
   \end{itemize}
 
 \begin{center}
@@ -461,11 +451,11 @@ language(name, role, formula, source [,useful info]).
 \end{tptp}}
 \end{center}
 
-where \textbf{source} typically is a inference record:
+where \textbf{source} typically is an inference record:
 \begin{center}
 {\footnotesize
 \begin{tptp}
-inference(rule, useful information, parents)
+inference(rule, useful info, parents)
 \end{tptp}
 }
 \end{center}
@@ -480,6 +470,7 @@ inference(rule, useful information, parents)
 
 \begin{itemize}
   \item Proof found by \texttt{Metis} ATP for the problem $p ⊢ p$
+{\small
 \begin{tptp}
 $ metis --show proof basic-4.tptp
 fof(a, axiom, (p)).
@@ -498,6 +489,7 @@ fof(normalize_0_2, plain, ($false),
 cnf(refute_0_0, plain, ($false),
     inference(canonicalize, [], [normalize_0_2])).
 \end{tptp}
+}
 \end{itemize}
 \gobackreconstruction
 \end{frame}
@@ -583,25 +575,30 @@ Metis is an automatic theorem prover for First-Order Logic with equality
 
 
 \begin{frame}[fragile, label=metis-rules]{Inference Rules of Metis}
-With Classical Propositional Logic, \hyperlink{tstp-example}{TSTP} derivations exhibit
-these inferences:
-\begin{itemize}
-\item \hyperlink{atp-canonicalize}
-  {\texttt{Canonicalize} transforms formulas to CNF or NNF}
-\item \hyperlink{atp-clausify}
-  {\texttt{Clausify} performs clausification}
-\item \hyperlink{atp-conjunct}
-  {\texttt{Conjunct} extracts a formula from a conjunction}
-\item \hyperlink{atp-negate}
-  {\texttt{Negate} applies negation to the formula}
-\item \hyperlink{atp-resolve}
-  {\texttt{Resolve} applies theorems of resolution}
-\item \hyperlink{atp-simplify}
-  {\texttt{Simplify} applies over a list of formula to simplify them}
-% \item[\texttt{Skolemize}] ...
-% \item[\texttt{Specialize}] ...
-\item \hyperlink{atp-strip}{\texttt{Strip} splits a formula into subgoals}
-\end{itemize}
+\hyperlink{tstp-example}{TSTP} derivations exhibit these inferences:
+\vfill
+\begin{table}[!ht]
+\begin{center}
+\scalebox{0.8}{
+{\renewcommand{\arraystretch}{1.3}%
+\begin{tabular}{|cl| }
+\hline
+\textbf{Rule} & \textbf{Task} \\
+\hline
+\hyperlink{atp-canonicalize}{\texttt{canonicalize}} & transforms formulas to CNF, DNF or NNF\\
+\hyperlink{atp-clausify}{\texttt{clausify}} & performs clausification\\
+\hyperlink{atp-conjunct}{\texttt{conjunct}} & extracts a formula from a conjunction\\
+\hyperlink{atp-negate}{\texttt{negate}} & applies negation to the formula\\
+\hyperlink{atp-resolve}{\texttt{resolve}} & applies theorems of resolution\\
+\hyperlink{atp-simplify}{\texttt{simplify}} & applies over a list of formula to simplify them\\
+\hyperlink{atp-strip}{\texttt{strip}} & splits a formula into subgoals\\[1ex]
+\hline
+\end{tabular}}
+}
+\end{center}
+\label{tab:label}
+\end{table}
+\vfill
 \gobackreconstruction
 \end{frame}
 
@@ -682,11 +679,10 @@ Failure Example goes here
 
 \begin{frame}[label=future-work]{Future Work}
 \begin{itemize}
-  \item Add shallow embedding in order to work with Apia
-  \item Support First-Order Logic
-  \item Support another prover like EProver
-  \item Support a Intuitionistic Prover
-\end{itemize}
+  \item Add shallow embedding in order to work with \texttt{Apia}
+  \item Support First-Order Logic with Equality
+  \item Support another prover like \texttt{EProver}\textbf{
+}\end{itemize}
 \end{frame}
 
 
