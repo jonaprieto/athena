@@ -43,7 +43,7 @@
 \newcommand{\gobackreconstruction}{
   \begin{tikzpicture}[overlay, remember picture, scale=0.5]
     \tikzset{shift={(current page.center)}, xshift=11.7cm,yshift=-8.4cm}
-    \node[fill=plum,text=white, hyperlink node = reconstruction] (go) at (0,0) {\tiny Go Back};
+    \node[fill=plum,text=white, hyperlink node = after-reconstruction] (go) at (0,0) {\tiny Go Back};
   \end{tikzpicture}}
 
 
@@ -192,7 +192,7 @@
 \subtitle{(Work in Progress)}
 \date{Agda Implementors’ Meeting XXV\\
 May 9-15th}
-\author[Jonathan Prieto-Cubides and Andr\'es Sicard-Ram\'irez]{Jonathan Prieto-Cubides
+\author[Jonathan Prieto-Cubides and Andr\'es Sicard-Ram\'irez]{Jonathan Prieto-Cubides\\
 (Joint work with Andr\'es Sicard-Ram\'irez)}
 \institute{
 Universidad EAFIT\\
@@ -300,6 +300,9 @@ postulate
 {-# ATP prove or-comm #-}
 \end{lstlisting}
 \end{lrbox}
+
+\begin{frame}[fragile, label=after-reconstruction]
+\end{frame}
 
 \begin{frame}[fragile, label=hammer]{Related Work}
 \begin{block}{SledgeHammer}
