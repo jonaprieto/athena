@@ -1,7 +1,0 @@
-\frametitle{DAG for the previous TSTP derivation found by \texttt {Metis} ATP}
-
-\vfill
-\begin{center}
-\includegraphics[height=0.8\textheight]{figures/derivation.png}
-\end{center}
-\gobackreconstruction

@@ -94,7 +94,7 @@
   \hbox{%
   \begin{beamercolorbox}
     [wd=.8\paperwidth,ht=2.3ex,dp=1ex,left]{headFoot}%
-    \hspace*{2ex}\insertshorttitle\hspace*{2mm}(\insertshortauthor)
+    \hspace*{2ex}\textbf\insertshorttitle\hspace*{2mm}|\hspace*{2mm}\textbf\insertshortauthor
   \end{beamercolorbox}%
   \begin{beamercolorbox}
     [wd=.2\paperwidth,ht=2.3ex,dp=1ex,right]{headFoot}%
@@ -115,7 +115,7 @@
 \setbeamercolor{normal text}{fg=black}
 
 % \setbeamercolor{institute}{fg=blu}
-\setbeamercolor{title}{fg=plum}
+\setbeamercolor{title}{fg=plum!80!black}
 % \setbeamercolor{subtitle}{fg=blu}
 
 % \setbeamercolor{titlelike}{fg=blu}
@@ -196,7 +196,7 @@
 \date{Agda Implementors’ Meeting XXV\\
 May 9-15th}
 \author[Jonathan Prieto-Cubides and Andr\'es Sicard-Ram\'irez]{Jonathan Prieto-Cubides\\
-(Joint work with Andr\'es Sicard-Ram\'irez)}
+Joint work with Andr\'es Sicard-Ram\'irez}
 \institute{
 Universidad EAFIT\\
 Medell\'in, Colombia}
@@ -209,11 +209,12 @@ Medell\'in, Colombia}
 
 \begin{frame}[plain]
 \titlepage
-  \begin{tikzpicture}[overlay, remember picture] (eafit) at (current page.center)
-    \node[xshift=0cm,yshift=0cm]
-      {\includegraphics[width=0.25\textwidth]{figures/eafit}};
-    \node[xshift=3cm,yshift=-2cm] (chalmers) at (current page.center)
-      {\includegraphics[width=0.25\textwidth]{figures/chalmers}};
+  \begin{tikzpicture}[overlay, remember picture]
+   \tikzset{shift={(current page.center)}}
+    \node[xshift=-4.5cm,yshift=-3.5cm] (eafit)
+      {\includegraphics[width=0.2\textwidth]{figures/eafit}};
+    \node[xshift=4.5cm,yshift=-3cm] (chalmers)
+      {\includegraphics[width=0.18\textwidth]{figures/chalmers}};
   \end{tikzpicture}
 \end{frame}
 
@@ -525,22 +526,28 @@ Metis is an automatic theorem prover for First-Order Logic with equality
 
 
 \begin{frame}[fragile, label=atp-conjunct]{Conjunct}{Inference Rule}
-\begin{block}{conjunct}
+\begin{itemize}
+\item In \hyperlink{tstp-syntax}{TSTP}
+\begin{tptp}
+\end{tptp}
+\item Function:
 \begin{agda}
 conjunct : Prop → Prop → Prop
-conjunct (φ ∧ ψ) ω with ⌊ eq φ ω ⌋ | ⌊ eq ψ ω ⌋
-... | true  | _     = φ
-... | false | true  = ψ
-... | false | false = conjunct φ ω
-conjunct φ ω        = φ
-
-atp-conjunct
-  : ∀ {Γ} {φ}
-  → (ω : Prop)
-  → Γ ⊢ φ
-  → Γ ⊢ conjunct φ ω
+conjunct $(φ \wedge ψ)$ $ω$ with $⌊$ eq $φ$ $ω$ $⌋$ | $⌊$ eq ψ $ω$ $⌋$
+... | true  | _     = $φ$
+... | false | true  = $ψ$
+... | false | false = conjunct $φ$ $ω$
+conjunct $φ$ $ω$       = $φ$
 \end{agda}
-\end{block}
+\item Theorem
+\begin{agda}
+atp-conjunct
+  : ∀ $\{Γ\}$ $\{φ\}$
+  → $(ω : Prop)$
+  → $Γ \vdash φ$
+  → $Γ \vdash$ conjunct $φ$ $ω$
+\end{agda}
+\end{itemize}
 \end{frame}
 
 
@@ -610,7 +617,7 @@ the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sic
   \includegraphics[scale=0.8]{figures/agda-pragmas}}};
 \only<1>{
   \node[fill=aliceblue, rectangle, right = 2.5cm of agdafile] (atp-pragmas){
-  \scalebox{0.7}{\usebox\agdapragma}
+  \scalebox{0.9}{\usebox\agdapragma}
   }
   };
 
