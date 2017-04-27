@@ -2,6 +2,7 @@
 
 .PHONY : tex
 tex :
+	make clean
 	xelatex slides.tex
 	biber slides.bcf
 	xelatex slides.tex
