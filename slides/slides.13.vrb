@@ -1,0 +1,26 @@
+\frametitle{Inference Rules of Metis}
+\hyperlink{tstp-example}{TSTP} derivations exhibit these inferences:
+\vfill
+\begin{table}[!ht]
+\begin{center}
+\scalebox{0.8}{
+{\renewcommand{\arraystretch}{1.3}%
+\begin{tabular}{|cl| }
+\hline
+\textbf{Rule} & \textbf{Task} \\
+\hline
+\texttt{canonicalize} & transforms formulas to CNF, DNF or NNF\\
+\texttt{clausify} & performs clausification\\
+\hyperlink{atp-conjunct}{\texttt{conjunct}} & extracts a formula from a conjunction\\
+\texttt{negate} & applies negation to the formula\\
+\texttt{resolve} & applies theorems of resolution\\
+\texttt{simplify} & applies over a list of formula to simplify them\\
+\texttt{strip} & splits a formula into subgoals\\[1ex]
+\hline
+\end{tabular}}
+}
+\end{center}
+\label{tab:label}
+\end{table}
+\vfill
+\gobackreconstruction

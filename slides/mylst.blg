@@ -1,0 +1,5 @@
+[1] Config.pm:343> INFO - This is Biber 2.5
+[2] Config.pm:346> INFO - Logfile is '/Users/jonaprieto/athena/slides/mylst.blg'
+[197] biber-darwin:290> INFO - === Thu Apr 27, 2017, 11:20:59
+[660] Utils.pm:165> ERROR - Cannot find control file '/Users/jonaprieto/athena/slides/mylst.bcf'! - did you pass the "backend=biber" option to BibLaTeX?
+[660] Biber.pm:112> INFO - ERRORS: 1

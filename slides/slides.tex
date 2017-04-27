@@ -143,6 +143,8 @@
 \setmathfont[ExternalLocation=fonts/
   , BoldFont=xits-mathbold.otf
   ]{xits-math.otf}
+\newfontfamily\mathfont{fonts/xits-math.otf}
+
 
 \setmainfont[ExternalLocation=fonts/
   , BoldFont=SourceSansPro-Semibold.otf
@@ -181,6 +183,7 @@
 \renewcommand*{\nameyeardelim}{\addcomma\addspace}
 \usepackage{silence}
 \WarningFilter{biblatex}{Patching footnotes failed}
+\WarningFilter{hyperref}{Token not allowed in a PDF string}
 
 % --------------------------------------------------------------------------
 % Title and Author
@@ -204,22 +207,16 @@ Medell\'in, Colombia}
 \begin{document}
 \setcounter{page}{1}
 
-
-
 \begin{frame}[plain]
 \titlepage
-% \begin{tikzpicture}[overlay,remember picture, scale=0.5]
-% \foreach \x in {0,4,..., \textwidth}
-%   \foreach \y in {0,1,..., 20} {
-%     \node[opacity=0.05](tptp) at (\x,\y){$Γ ⊢ ϕ$};
-%   }
-% \end{tikzpicture}
+  \begin{tikzpicture}[overlay, remember picture] (eafit) at (current page.center)
+    \node[xshift=0cm,yshift=0cm]
+      {\includegraphics[width=0.25\textwidth]{figures/eafit}};
+    \node[xshift=3cm,yshift=-2cm] (chalmers) at (current page.center)
+      {\includegraphics[width=0.25\textwidth]{figures/chalmers}};
+  \end{tikzpicture}
 \end{frame}
 
-% \begin{frame}
-%   \frametitle{Outline}
-%   \tableofcontents
-% \end{frame}
 
 \section{Introduction}
 
@@ -265,7 +262,7 @@ Medell\'in, Colombia}
 \node[below = 0.18cm of problem, hyperlink node=verified-example] (verified)
   {\includegraphics[scale=0.7]{figures/verified}};
 }
-\only<8->{
+\only<9->{
 \node[below = 0.18cm of verified, opacity=0.5, hyperlink node=failure-example] (failure)
   {\includegraphics[scale=0.7]{figures/failure}};
 }
@@ -277,7 +274,7 @@ Medell\'in, Colombia}
 \only<6->{ \draw[->, thick] (athena) to (agdafile)};
 \only<7->{ \draw[->, thick] (agdafile) to (agda)};
 \only<8->{ \draw[->, thick] (agda) to (verified)};
-\only<8->{ \draw[->, thick, gray] (agda) to (failure)};
+\only<9->{ \draw[->, thick, gray] (agda) to (failure)};
 \end{tikzpicture}
 \vfill
 \end{frame}
@@ -285,86 +282,7 @@ Medell\'in, Colombia}
 \subsection{Motivation}
 
 
-\begin{lrbox}{\agdapragma}
-\begin{lstlisting}
-$ cat Or.agda
-module Or where
 
-data _or_ (A B : Set) : Set where
-  inj1 : A -> A or B
-  inj2 : B -> A or B
-
-postulate
-  A B    : Set
-  or-comm : A or B -> B or A
-{-# ATP prove or-comm #-}
-\end{lstlisting}
-\end{lrbox}
-
-\begin{frame}[fragile, label=after-reconstruction]
-\end{frame}
-
-\begin{frame}[fragile, label=hammer]{Related Work}
-\begin{block}{SledgeHammer}
-\begin{itemize}
-\item Isabelle/HOL tool
-\item Metis ported within Isabelle
-\item Reconstruct proofs of well-known ATPs: EProver, Vampire, among others
-\end{itemize}
-\end{block}
-
-\begin{block}{Integrating Waldmeister and Agda}
-\begin{itemize}
-  \item Source code not available
-  \item Equational Logic
-  \item Reflection Layers
-  \end{itemize}
-\end{block}
-\end{frame}
-
-
-\begin{frame}[fragile]{Related Work: Apia}
-  {Proving first-order theorems written in Agda using automatic theorem provers for first-order logic}
-
-\only<1-2>{At the moment, the communication between Agda and
-the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sicard2015}.}
-\only<1-2>{\vfill}
-
-
-\begin{tikzpicture}[scale=2]
-\only<1->{ \node(agda-pragmas) at (0,0){\includegraphics{figures/agda-pragmas}}};
-\only<1>{
-  \node[fill=aliceblue, rectangle](atp-pragma) at (3,0){
-  \scalebox{0.7}{\usebox\agdapragma}
-  }};
-
-
-\only<2->{ \node(eagda) at (2,0){
-  \includegraphics{figures/eagda}
-  \footnote{Development version of Agda in order to handle a new built-in ATP-pragma.
-    \url{https://github.com/asr/eagda}}
-  }};
-
-\only<3->{ \node(apia) at (4,0){
-  \includegraphics{figures/apia}
-  \footnote{Haskell program for proving first-order theorems written in Agda using ATPs.
-    \url{https://github.com/asr/apia}}}
-  };
-
-\only<3->{ \node(tptp) at (2,-2){\includegraphics{figures/tptp}}};
-
-\only<3->{ \node(atp) at (4,-2){\includegraphics{figures/atp}}};
-
-\only<2->{\draw[->,ultra thick] (agda-pragmas) to (eagda)};
-
-\only<3->{\draw[->,ultra thick] (eagda) to (apia)};
-\only<3->{\draw[->, very thick, dashed, gray] (apia) to (tptp)};
-\only<3->{\draw[->, very thick, dashed, gray] (tptp) to (atp)};
-\only<3->{\draw[->, very thick, dashed, gray] (atp) to (apia)};
-
-\end{tikzpicture}
-
-\end{frame}
 
 % \subsection{Proof Reconstruction}
 
@@ -390,7 +308,7 @@ the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sic
   \begin{itemize}
   \item Is a language\footnote{Is available at
         \url{http://www.cs.miami.edu/~tptp/TPTP/SyntaxBNF.html}}
-        to encode problems
+        to encode problems \citep{Sut09}
   \item Is the input of the ATPs
   \item Annotated formulas with the form
    \begin{center}
@@ -410,7 +328,7 @@ language(name, role, formula).
 \end{frame}
 
 \begin{frame}[fragile, label=tptp-examples]{TPTP Examples}{From Prop-Pack repository
-  \footnote{Is available at \url{http://github.com/jonaprieto/pro-pack}}}
+  \footnote{Is available at \url{http://github.com/jonaprieto/prop-pack}}}
 
 \begin{itemize}
   \item $p ⊢ p$
@@ -588,13 +506,13 @@ Metis is an automatic theorem prover for First-Order Logic with equality
 \hline
 \textbf{Rule} & \textbf{Task} \\
 \hline
-\hyperlink{atp-canonicalize}{\texttt{canonicalize}} & transforms formulas to CNF, DNF or NNF\\
-\hyperlink{atp-clausify}{\texttt{clausify}} & performs clausification\\
+\texttt{canonicalize} & transforms formulas to CNF, DNF or NNF\\
+\texttt{clausify} & performs clausification\\
 \hyperlink{atp-conjunct}{\texttt{conjunct}} & extracts a formula from a conjunction\\
-\hyperlink{atp-negate}{\texttt{negate}} & applies negation to the formula\\
-\hyperlink{atp-resolve}{\texttt{resolve}} & applies theorems of resolution\\
-\hyperlink{atp-simplify}{\texttt{simplify}} & applies over a list of formula to simplify them\\
-\hyperlink{atp-strip}{\texttt{strip}} & splits a formula into subgoals\\[1ex]
+\texttt{negate} & applies negation to the formula\\
+\texttt{resolve} & applies theorems of resolution\\
+\texttt{simplify} & applies over a list of formula to simplify them\\
+\texttt{strip} & splits a formula into subgoals\\[1ex]
 \hline
 \end{tabular}}
 }
@@ -606,24 +524,10 @@ Metis is an automatic theorem prover for First-Order Logic with equality
 \end{frame}
 
 
-\begin{frame}[fragile, label=atp-canonicalize]{Canonicalize}{Inference Rule}
-\begin{block}{canonicalize}
-
-\end{block}
-\end{frame}
-
-\begin{frame}[fragile, label=atp-clausify]{Clausify}{Inference Rule}
-\begin{block}{clausify}
-
-\end{block}
-\end{frame}
-
 \begin{frame}[fragile, label=atp-conjunct]{Conjunct}{Inference Rule}
 \begin{block}{conjunct}
-\begin{lstlisting}
-$ cat ~/agda-metis/src/ATP/Metis/Rules/Conjunct.agda
-...
-conjunct : Prop -> Prop -> Prop
+\begin{agda}
+conjunct : Prop → Prop → Prop
 conjunct (φ ∧ ψ) ω with ⌊ eq φ ω ⌋ | ⌊ eq ψ ω ⌋
 ... | true  | _     = φ
 ... | false | true  = ψ
@@ -632,34 +536,10 @@ conjunct φ ω        = φ
 
 atp-conjunct
   : ∀ {Γ} {φ}
-  -> (ω : Prop)
-  -> Γ ⊢ φ
-  -> Γ ⊢ conjunct φ ω
-\end{lstlisting}
-\end{block}
-
-\end{frame}
-
-\begin{frame}[fragile, label=atp-negate]{Negate}{Inference Rule}
-\begin{block}{negate}
-
-\end{block}
-\end{frame}
-
-\begin{frame}[fragile, label=atp-resolve]{Resolve}{Inference Rule}
-\begin{block}{resolve}
-
-\end{block}
-\end{frame}
-
-\begin{frame}[fragile, label=atp-simplify]{Simplify}{Inference Rule}
-\begin{block}{simplify}
-
-\end{block}
-\end{frame}
-
-\begin{frame}[fragile, label=atp-strip]{Strip}{Inference Rule}
-\begin{block}{strip}
+  → (ω : Prop)
+  → Γ ⊢ φ
+  → Γ ⊢ conjunct φ ω
+\end{agda}
 \end{block}
 \end{frame}
 
@@ -677,6 +557,108 @@ Verified Example goes here
 \begin{frame}[fragile, label=failure-example]{Type-checked Proof}
 Failure Example goes here
 \gobackreconstruction
+\end{frame}
+
+
+\begin{frame}[fragile, label=hammer]{Related Work}
+\begin{block}{SledgeHammer}
+\begin{itemize}
+\item Isabelle/HOL tool
+\item Metis ported within Isabelle
+\item Reconstruct proofs of well-known ATPs: EProver, Vampire, among others
+\end{itemize}
+\end{block}
+
+\begin{block}{Integrating Waldmeister and Agda}
+\begin{itemize}
+  \item Source code not available
+  \item Equational Logic
+  \item Reflection Layers
+  \end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{lrbox}{\agdapragma}
+\begin{agda}
+module Or where
+
+data _OR_ (A B : Set) : Set where
+  inj1 : A → A OR B
+  inj2 : B → A OR B
+
+postulate
+  A B    : Set
+  OR-comm : A OR B → B OR A
+{-# ATP prove OR-comm #-}
+\end{agda}
+\end{lrbox}
+
+\begin{frame}[fragile, label=after-reconstruction]
+\end{frame}
+
+\begin{frame}[fragile]{Related Work: Apia}
+  {Proving first-order theorems written in Agda using automatic theorem provers for first-order logic}
+
+\only<1-2>{At the moment, the communication between Agda and
+the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sicard2015}.}
+\only<1-2>{\vfill}
+
+
+\begin{tikzpicture}
+\only<1->{ \node(agdafile) at (0,0){
+  \includegraphics[scale=0.8]{figures/agda-pragmas}}};
+\only<1>{
+  \node[fill=aliceblue, rectangle, right = 2.5cm of agdafile] (atp-pragmas){
+  \scalebox{0.7}{\usebox\agdapragma}
+  }
+  };
+
+
+\only<2->{
+  \node[right=1cm of agdafile] (eagda){
+  \includegraphics[scale=0.8]{figures/eagda}
+  \footnote{Development version of Agda in order to handle a new built-in ATP-pragma.
+    \url{https://github.com/asr/eagda}}
+  }
+};
+
+\only<2->{
+\node[right=1cm of eagda] (agdai){
+  \includegraphics[scale=0.8]{figures/agdai}
+  }
+};
+
+\only<3->{
+  \node[below=0.4cm of agdai] (apia){
+  \includegraphics[scale=0.8]{figures/apia}
+  \footnote{Haskell program for proving first-order theorems written in Agda using ATPs.
+    \url{https://github.com/asr/apia}}}
+  };
+
+\only<4->{
+  \node[left= 1cm of apia] (tptp)
+    {\includegraphics[scale=0.8]{figures/tptp}}};
+
+\only<5->{ \node[below = 0.8cm of apia] (atp)
+  {\includegraphics[scale=0.8]{figures/atp}}};
+
+\only<7->{ \node[below = 2.4 of agdafile, rectangle, text=white,fill=black, align=left, font=\tiny] (proved)
+{
+\texttt{\$ agda Or.agda}\\
+\texttt{\$ apia Or.agda --atp=online-metis}\\
+\texttt{Metis---2.3 proved the conjecture}
+  }
+};
+
+\only<2->{\draw[->, ultra thick] (agdafile) to (eagda)};
+\only<2->{\draw[->, ultra thick] (eagda) to (agdai)};
+\only<3->{\draw[->, ultra thick] (agdai) to (apia)};
+\only<4->{\draw[->, very thick, dashed, gray] (apia) to (tptp)};
+\only<5->{\draw[->, very thick, dashed, gray] (tptp) to (atp)};
+\only<6->{\draw[->, very thick, dashed, gray] (atp) to (apia)};
+
+\end{tikzpicture}
 \end{frame}
 
 

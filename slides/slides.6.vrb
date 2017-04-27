@@ -1,0 +1,34 @@
+\frametitle{TSTP Syntax}
+
+ \tikz[overlay,remember picture]
+  \node at (0.92\textwidth, -0.5cm)
+    {\includegraphics[width=0.15\textwidth]{figures/tstp}};
+
+A TSTP derivation
+\footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/QuickGuide/Derivations.html}}
+\begin{itemize}
+  \item Is a \hyperlink{tstp-dag}{\textbf{D}irected \textbf{A}cyclic \textbf{G}raph} where
+  \begin{itemize}
+    \item[\texttt{leaf}] is a formula from the \hyperlink{tptp-syntax}{TPTP} input
+    \item[\texttt{node}] is a formula inferred from parent formula
+    \item[\texttt{root}] the final derived formula
+  \end{itemize}
+  \item Is a list of annotated formulas with the form:
+  \end{itemize}
+
+\begin{center}
+  {\footnotesize
+\begin{tptp}
+language(name, role, formula, source [,useful info]).
+\end{tptp}}
+\end{center}
+
+where \textbf{source} typically is an inference record:
+\begin{center}
+{\footnotesize
+\begin{tptp}
+inference(rule, useful info, parents)
+\end{tptp}
+}
+\end{center}
+\gobackreconstruction

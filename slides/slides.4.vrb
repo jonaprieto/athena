@@ -1,0 +1,26 @@
+\frametitle{TPTP Syntax}\framesubtitle {Thousands of Problems for Theorem Provers}
+
+ \tikz[overlay,remember picture]
+  \node at (0.92\textwidth, 0cm)
+    {\includegraphics[width=0.15\textwidth]{figures/tptp}};
+
+  \begin{itemize}
+  \item Is a language\footnote{Is available at
+        \url{http://www.cs.miami.edu/~tptp/TPTP/SyntaxBNF.html}}
+        to encode problems \citep{Sut09}
+  \item Is the input of the ATPs
+  \item Annotated formulas with the form
+   \begin{center}
+\begin{tptp}
+language(name, role, formula).
+\end{tptp}
+    \end{center}
+    \begin{itemize}
+      \item[\texttt{language}] FOF or CNF %THF, TFF,
+      \item[\texttt{name}] to identify the formula within the problem
+      \item[\texttt{role}] axiom, definition, hypothesis, conjecture, among others
+      \item[\texttt{formula}] version in TPTTP format
+    \end{itemize}
+  \end{itemize}
+
+\gobackreconstruction

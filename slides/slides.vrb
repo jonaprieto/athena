@@ -1,0 +1,61 @@
+\frametitle{Related Work: Apia}\framesubtitle {Proving first-order theorems written in Agda using automatic theorem provers for first-order logic}
+
+\only<1-2>{At the moment, the communication between Agda and
+the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sicard2015}.}
+\only<1-2>{\vfill}
+
+
+\begin{tikzpicture}
+\only<1->{ \node(agdafile) at (0,0){
+  \includegraphics[scale=0.8]{figures/agda-pragmas}}};
+\only<1>{
+  \node[fill=aliceblue, rectangle, right = 2.5cm of agdafile] (atp-pragmas){
+  \scalebox{0.7}{\usebox\agdapragma}
+  }
+  };
+
+
+\only<2->{
+  \node[right=1cm of agdafile] (eagda){
+  \includegraphics[scale=0.8]{figures/eagda}
+  \footnote{Development version of Agda in order to handle a new built-in ATP-pragma.
+    \url{https://github.com/asr/eagda}}
+  }
+};
+
+\only<2->{
+\node[right=1cm of eagda] (agdai){
+  \includegraphics[scale=0.8]{figures/agdai}
+  }
+};
+
+\only<3->{
+  \node[below=0.4cm of agdai] (apia){
+  \includegraphics[scale=0.8]{figures/apia}
+  \footnote{Haskell program for proving first-order theorems written in Agda using ATPs.
+    \url{https://github.com/asr/apia}}}
+  };
+
+\only<4->{
+  \node[left= 1cm of apia] (tptp)
+    {\includegraphics[scale=0.8]{figures/tptp}}};
+
+\only<5->{ \node[below = 0.8cm of apia] (atp)
+  {\includegraphics[scale=0.8]{figures/atp}}};
+
+\only<7->{ \node[below = 2.4 of agdafile, rectangle, text=white,fill=black, align=left, font=\tiny] (proved)
+{
+\texttt{\$ agda Or.agda}\\
+\texttt{\$ apia Or.agda --atp=online-metis}\\
+\texttt{Metis---2.3 proved the conjecture}
+  }
+};
+
+\only<2->{\draw[->, ultra thick] (agdafile) to (eagda)};
+\only<2->{\draw[->, ultra thick] (eagda) to (agdai)};
+\only<3->{\draw[->, ultra thick] (agdai) to (apia)};
+\only<4->{\draw[->, very thick, dashed, gray] (apia) to (tptp)};
+\only<5->{\draw[->, very thick, dashed, gray] (tptp) to (atp)};
+\only<6->{\draw[->, very thick, dashed, gray] (atp) to (apia)};
+
+\end{tikzpicture}

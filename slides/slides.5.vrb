@@ -1,0 +1,15 @@
+\frametitle{TPTP Examples}\framesubtitle {From Prop-Pack repository \footnote {Is available at \url {http://github.com/jonaprieto/prop-pack}}}
+
+\begin{itemize}
+  \item $p ⊢ p$
+\begin{tptp}
+fof(a, axiom, p).
+fof(goal, conjecture, p).
+\end{tptp}
+
+  \item $⊢ ¬ (p ∧ ¬ p) ∨ (q ∧ ¬ q)$
+\begin{tptp}
+fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
+\end{tptp}
+  \end{itemize}
+\gobackreconstruction

@@ -1,0 +1,16 @@
+\frametitle{Related Work}
+\begin{block}{SledgeHammer}
+\begin{itemize}
+\item Isabelle/HOL tool
+\item Metis ported within Isabelle
+\item Reconstruct proofs of well-known ATPs: EProver, Vampire, among others
+\end{itemize}
+\end{block}
+
+\begin{block}{Integrating Waldmeister and Agda}
+\begin{itemize}
+  \item Source code not available
+  \item Equational Logic
+  \item Reflection Layers
+  \end{itemize}
+\end{block}
