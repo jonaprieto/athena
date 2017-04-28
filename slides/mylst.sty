@@ -32,6 +32,7 @@
   , aboveskip={0.4\baselineskip}
   , belowcaptionskip=0.4\baselineskip
   , backgroundcolor=\color{aliceblue}
+  , columns=fixed
   , showstringspaces=false
   , extendedchars=true
   , breaklines=false
@@ -42,8 +43,9 @@
   , comment=[l]--
   , commentstyle=\color{gray}
   , keywords=[2]{data,where,open,import,let,with,module,using,infixr
-    ,rewrite,mutual,in,case,of,infix,infixl, true, false}
-  , keywords=[3]{intro, elim, weaken, assume}
+    ,rewrite,mutual,in,case,of,infix,infixl, true, false, postulate}
+  , keywords=[3]{intro, elim, weaken, assume, proj, equiv,assoc, comm, axiom
+    ,to,dist, dmorgan, subst, cnf, dnf, nnf, RAA, PEM}
   , keywords=[4]{canonicalize, resolve, atp, conjunct,
     strip, simplify, negate, clausify, conjunct}
   , keywordstyle=[2]\color{plum}
