@@ -49,7 +49,8 @@
 \newcommand{\gobackreconstruction}{
   \begin{tikzpicture}[overlay, remember picture, scale=0.5]
     \tikzset{shift={(current page.center)}, xshift=11.7cm,yshift=-8.4cm}
-    \node[fill=plum,text=white, hyperlink node = reconstruction] (go) at (0,0) {\tiny Go Back};
+    \node[fill=plum,text=white, hyperlink node = reconstruction]
+      (go) at (0,0) {\tiny Go Back};
   \end{tikzpicture}}
 
 
@@ -161,7 +162,7 @@
   , BoldFont=SourceCodePro-Semibold.ttf
   , BoldItalicFont=SourceCodePro-SemiboldIt.ttf
   , ItalicFont=SourceCodePro-It.ttf
-  ]{SourceCodePro-Semibold.ttf}
+  ]{SourceCodePro-Regular.ttf}
 \newfontfamily\SourceCodeIt{fonts/SourceCodePro-It.ttf}
 \newfontfamily\SourceCode{fonts/SourceCodePro-Regular.ttf}
 
@@ -200,8 +201,8 @@
 }
 \subtitle{(Work in Progress)}
 \date{Agda Implementors’ Meeting XXV\\
-May 9-15th}
-\author[Jonathan Prieto-Cubides and Andr\'es Sicard-Ram\'irez]{Jonathan Prieto-Cubides\\
+May 9-15th 2017}
+\author[Jonathan Prieto-Cubides]{Jonathan Prieto-Cubides\\
 Joint work with Andr\'es Sicard-Ram\'irez}
 \institute{
 Master in Applied Mathematics\\
@@ -325,25 +326,8 @@ Medell\'in, Colombia}
 
 \subsection{Motivation}
 
-
-
-
-% \subsection{Proof Reconstruction}
-
-% \subsubsection{Sledgehammer}
-% \subsubsection{Waldemesiter}
-
-% \subsection{Automatic Provers}
-
-
-
-% \subsubsection{TPTP Syntax}
-
-\begin{frame}{Bonus Slides}
-\end{frame}
-
-
-\begin{frame}[fragile, label=tptp-syntax]{TPTP Syntax}{Thousands of Problems for Theorem Provers}
+\begin{frame}[fragile, label=tptp-syntax]{\texttt{TPTP} Syntax}
+  {Thousands of Problems for Theorem Provers}
 
  \tikz[overlay,remember picture]
   \node at (0.92\textwidth, 0cm)
@@ -362,16 +346,15 @@ language(name, role, formula).
     \begin{itemize}
       \item[\texttt{language}] FOF or CNF %THF, TFF,
       \item[\texttt{name}] to identify the formula within the problem
-      \item[\texttt{role}] axiom, definition, hypothesis, conjecture, among others
-      \item[\texttt{formula}] version in TPTTP format
+      \item[\texttt{role}] axiom, definition, hypothesis, conjecture
+      \item[\texttt{formula}] version in \texttt{TPTP} format
     \end{itemize}
   \end{itemize}
 
 \gobackreconstruction
 \end{frame}
 
-\begin{frame}[fragile, label=tptp-examples]{TPTP Examples}{From Prop-Pack repository
-  \footnote{\url{http://github.com/jonaprieto/prop-pack}}}
+\begin{frame}[fragile, label=tptp-examples]{\texttt{TPTP} Examples}
 
 \begin{itemize}
   \item $p ⊢ p$
@@ -388,17 +371,20 @@ fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
 \gobackreconstruction
 \end{frame}
 
-\begin{frame}[label=metis]{Metis Theorem Prover}{\url{http://www.gilith.com/software/metis/}}
+\begin{frame}[label=metis]{\texttt{Metis} Theorem Prover
+  \footnote{\url{http://www.gilith.com/software/metis/}}}
  \tikz[overlay,remember picture]
   \node at (0.92\textwidth, 0.5cm)
     {\includegraphics[width=0.15\textwidth]{figures/metis}};
 
-Metis is an automatic theorem prover for First-Order Logic with equality
+\texttt{Metis} is an automatic theorem prover for First-Order Logic with Equality
+\citep{hurd2003first}
 \begin{block}{Why Metis?}
   \begin{itemize}
-    \item \href{https://github.com/gilith/metis}{Open source} implemented in Standard ML
+    \item \href{https://github.com/gilith/metis}{Open source} implemented in
+       \texttt{Standard ML}
     \item Each refutation step is one of
-      \href{http://www.gilith.com/software/metis/logical-kernel.txt}{\textbf{6 simple rules}}
+      \href{http://www.gilith.com/software/metis/logical-kernel.txt}{\textit{6 rules}}
     \item Reads problem in \hyperlink{tptp-syntax}{\texttt{TPTP} format}
     \item Outputs detailed proofs in \hyperlink{tstp-syntax}{\texttt{TSTP} format}
   \end{itemize}
@@ -407,15 +393,15 @@ Metis is an automatic theorem prover for First-Order Logic with equality
 \end{frame}
 
 
-\begin{frame}[fragile, label=metis-rules]{Inference Rules of Metis}
-\hyperlink{tstp-example}{TSTP} derivations by Metis exhibit these inferences
-\footnote{Inference rules found in proofs of Propositional Logic theorems}:
+\begin{frame}[fragile, label=metis-rules]{Inference Rules of \texttt{Metis}}
+\hyperlink{tstp-example}{TSTP} derivations by \texttt{Metis} exhibit these inferences
+\footnote{Inference rules found in proofs of Propositional Logic theorems}
 \vfill
 \begin{table}[!ht]
 \begin{center}
 \scalebox{0.8}{
 {\renewcommand{\arraystretch}{1.3}%
-\begin{tabular}{|cl| }
+\begin{tabular}{|ll| }
 \hline
 \textbf{Rule} & \textbf{Purpose} \\
 \hline
@@ -436,15 +422,13 @@ Metis is an automatic theorem prover for First-Order Logic with equality
 \gobackreconstruction
 \end{frame}
 
-\subsubsection{TSTP Derivations}
-
-\begin{frame}[fragile, label=tstp-syntax]{TSTP Syntax}
+\begin{frame}[fragile, label=tstp-syntax]{\texttt{TSTP} Syntax}
 
  \tikz[overlay,remember picture]
   \node at (0.92\textwidth, -0.5cm)
     {\includegraphics[width=0.15\textwidth]{figures/tstp}};
 
-A TSTP derivation
+A \texttt{TSTP} derivation
 \footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/QuickGuide/Derivations.html}}
 \begin{itemize}
   \item Is a \hyperlink{tstp-dag}{\textbf{D}irected \textbf{A}cyclic \textbf{G}raph} where
@@ -453,7 +437,7 @@ A TSTP derivation
     \item[\texttt{node}] is a formula inferred from parent formula
     \item[\texttt{root}] the final derived formula
   \end{itemize}
-  \item Is a list of annotated formulas with the form:
+  \item Is a list of annotated formulas with the form
   \end{itemize}
 
 \begin{center}
@@ -463,7 +447,7 @@ language(name, role, formula, source [,useful info]).
 \end{tptp}}
 \end{center}
 
-where \textbf{\color{plum} source} typically is an inference record:
+where \texttt{\color{plum} source} typically is an inference record
 \begin{center}
 {\footnotesize
 \begin{tptp}
@@ -484,7 +468,7 @@ inference(rule, useful info, parents)
   \item Proof found by \texttt{Metis} Prover for the problem $p ⊢ p$
 {\small
 \begin{tptp}
-$ metis --show proof basic-4.tptp
+$ metis --show proof problem.tptp
 fof(a, axiom, p).
 fof(goal, conjecture, p).
 fof(subgoal_0, plain, p),
@@ -507,25 +491,25 @@ cnf(refute_0_0, plain, $false,
 \end{frame}
 
 
-\begin{frame}[fragile, label=tstp-dag]{DAG for the previous TSTP derivation found by \texttt{Metis} Prover}
+\begin{frame}[fragile, label=tstp-dag]{DAG Example}
 
 \vfill
 By refutation, we proved $p ⊢ p$:
 \begin{center}
 \begin{prooftree}
 \AxiomC{$p$}
-\RightLabel{\texttt{assume}}
+\RightLabel{\texttt{\tiny assume}}
 \UnaryInfC{$p$}
-\RightLabel{\texttt{strip}}
+\RightLabel{\texttt{\tiny strip}}
 \UnaryInfC{$p$}
-\RightLabel{\texttt{negate}}
+\RightLabel{\texttt{\tiny negate}}
 \UnaryInfC{$¬ p$}
 \AxiomC{$p$}
-\RightLabel{\texttt{canonicalize}}
+\RightLabel{\texttt{\tiny canonicalize}}
 \UnaryInfC{$p$}
-\RightLabel{\texttt{simplify}}
+\RightLabel{\texttt{\tiny simplify}}
 \BinaryInfC{$⊥$}
-\RightLabel{\texttt{canonicalize}}
+\RightLabel{\texttt{\tiny canonicalize}}
 \UnaryInfC{$⊥$}
 
 \end{prooftree}
@@ -536,8 +520,8 @@ By refutation, we proved $p ⊢ p$:
 \end{frame}
 
 
-\begin{frame}[fragile, label=athena]{Athena}
-  {\url{http://github.com/jonaprieto/athena}}
+\begin{frame}[fragile, label=athena]{\texttt{Athena}
+  \footnote{\url{http://github.com/jonaprieto/athena}}}
 
  \begin{tikzpicture}[overlay,remember picture]
  \tikzset{shift={(current page.north)}, xshift=0cm,yshift=0cm}
@@ -545,25 +529,25 @@ By refutation, we proved $p ⊢ p$:
     {\includegraphics[width=0.15\textwidth]{figures/athena}};
 \end{tikzpicture}
 
-Is a Haskell program
-that translates proofs given by Metis Prover
-in \texttt{TSTP} format to Agda code.\\
+Is a \texttt{Haskell} program
+that translates proofs given by \texttt{Metis} Prover
+in \texttt{TSTP} format to \texttt{Agda} code\\
 
 \begin{itemize}
     \item Parsing of \texttt{TSTP} language
     \item Creation and analysis of \hyperlink{tstp-dag}{\textbf{DAG}} derivations
     \item Analysis of inference rules used in the \texttt{TSTP} derivation
-    \item Agda code generation
+    \item \texttt{Agda} code generation
 \begin{table}[!ht]
 \begin{center}
 \scalebox{0.8}{
 {\renewcommand{\arraystretch}{1.3}%
-\begin{tabular}{|cl| }
+\begin{tabular}{|ll| }
 \hline
 \textbf{Library} & \textbf{Purpose} \\
 \hline
-\texttt{\hyperlink{agda-prop}{Agda-Prop}}& axioms and theorems of Classical Propositional Logic\\
-\texttt{\hyperlink{agda-metis}{Agda-Metis}} & versions of the inference rules used by Metis\\
+\texttt{\hyperlink{agda-prop}{\texttt{Agda-Prop}}}& axioms and theorems of Classical Propositional Logic\\
+\texttt{\hyperlink{agda-metis}{\texttt{Agda-Metis}}} & versions of the inference rules used by \texttt{Metis}\\
 \hline
 \end{tabular}}
 }
@@ -575,10 +559,10 @@ in \texttt{TSTP} format to Agda code.\\
 \gobackreconstruction
 \end{frame}
 
-\begin{frame}[fragile, label=agda-prop-2]{Agda-Prop Library}
-  {\url{https://github.com/jonaprieto/agda-prop}}
+\begin{frame}[fragile, label=agda-prop-2]{\texttt{Agda-Prop} Library
+  \footnote{\url{https://github.com/jonaprieto/agda-prop}}}
 \begin{itemize}
-  \item Propositional Logic + PEM ($Γ ⊢ ϕ ∨ ¬ ϕ$)
+  \item Intuitionistic Propositional Logic + PEM ($Γ ⊢ ϕ ∨ ¬ ϕ$)
   \item A data type for formulas
 \begin{agda}
 data Prop : Set where
@@ -594,8 +578,8 @@ data Prop : Set where
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile, label=agda-prop]{Agda-Prop Library}
-  {\url{https://github.com/jonaprieto/agda-prop}}
+\begin{frame}[fragile, label=agda-prop]{\texttt{Agda-Prop} Library
+  \footnote{\url{https://github.com/jonaprieto/agda-prop}}}
 \begin{itemize}
   \item A data type for theorems
 \begin{agda}
@@ -607,7 +591,7 @@ data _$⊢$_ : ($Γ$ : Ctxt)($φ$ : Prop) → Set
 assume, axiom, weaken, $⊤$-intro, $⊥$-elim, $¬$-intro,
 $¬$-elim, $∧$-intro, $∧$-proj$₁$, $∧$-proj$₂$, $∨$-intro$₁$,
 $∨$-intro$₂$, $∨$-elim, $⇒$-intro, $⇒$-elim, $⇔$-intro,
-$⇔$-elim$₁$, $⇔$-elim$₂$
+$⇔$-elim$₁$, $⇔$-elim$₂$.
 \end{agda}
   \item Natural deduction proofs for more than 71 theorems
 \begin{agda}
@@ -616,20 +600,20 @@ $¬⇔$-to-$¬$, $¬¬$-equiv, $⇒⇒-⇔-∧⇒$, $⇔$-trans, $∧$-assoc,
 $∧$-comm, $∧$-dist, $¬∧$-to-$¬∨¬$, $¬∨¬$-to-$¬∧$, $¬∨¬-⇔-¬∧$,
 subst$⊢∧₁$, subst$⊢∧₂$, $∨$-assoc, $∨$-comm, $∨$-dist,
 $∨$-equiv, $¬∨$-to-$¬∧¬$, $¬∧¬$-to-$¬∨$, $∨$-dmorgan,
-$¬¬∨¬¬$-to-$∨$, cnf, nnf, dnf, RAA, ...
+$¬¬∨¬¬$-to-$∨$, cnf, nnf, dnf, RAA, $\cdots$
 \end{agda}
 \end{itemize}
 \end{frame}
 
 
-\begin{frame}[fragile, label=agda-metis]{Agda-Metis Library}
-  {\url{https://github.com/jonaprieto/agda-metis}}
+\begin{frame}[fragile, label=agda-metis]{\texttt{Agda-Metis} Library
+  \footnote{\url{https://github.com/jonaprieto/agda-metis}}}
 \vfill
 \begin{table}[!ht]
 \begin{center}
 \scalebox{0.7}{
 {\renewcommand{\arraystretch}{1.3}%
-\begin{tabular}{|clc|}
+\begin{tabular}{|lll|}
 \hline
 \textbf{Rule} & \textbf{Purpose} &\textbf{Theorem}\\
 \hline
@@ -639,7 +623,7 @@ $¬¬∨¬¬$-to-$∨$, cnf, nnf, dnf, RAA, ...
 \texttt{negate} & applies negation to the formula &\texttt{atp-negate}\\
 \texttt{resolve} & applies theorems of resolution &\texttt{atp-resolve}\\
 \texttt{simplify} & applies over a list of formula to simplify them &\texttt{atp-simplify}\\
-\texttt{strip} & splits a formula into subgoals &\texttt{strip}\\[1ex]
+\texttt{strip} & splits a formula into subgoals &\texttt{atp-strip}\\[1ex]
 \hline
 \end{tabular}}
 }
@@ -650,15 +634,16 @@ $¬¬∨¬¬$-to-$∨$, cnf, nnf, dnf, RAA, ...
 \end{frame}
 
 
-\begin{frame}[fragile, label=atp-conjunct]{Agda-Metis: Conjunct Inference}
-   {\url{https://github.com/jonaprieto/agda-metis}}
+\begin{frame}[fragile, label=atp-conjunct]{\texttt{Agda-Metis}: Conjunct Inference
+  \footnote{\url{https://github.com/jonaprieto/agda-metis}}}
 \begin{itemize}
 \item Definition
   \begin{equation*}
   conjunct (ϕ₁ ∧  ϕ₂ ∧ ⋯ ∧ \mathbf{ϕᵢ} ∧ ⋯ ∧ \phi_n, \mathbf{ϕᵢ}) ⟶ \mathbf{ϕᵢ}
   \end{equation*}
 
-\item Function\footnote{\label{note-conjunct}Excerpt from the \texttt{Agda-Metis} library available in  \texttt{ATP.Metis.Rules.Conjunct} module.}:
+\item Function\footnote{\label{note-conjunct}Excerpt from the \texttt{Agda-Metis}
+library available in  \texttt{ATP.Metis.Rules.Conjunct} module}:
 \begin{agda}
 conjunct : Prop → Prop → Prop
 conjunct $(φ \wedge ψ)$ $ω$ with $⌊$ eq $φ$ $ω$ $⌋$ | $⌊$ eq ψ $ω$ $⌋$
@@ -699,17 +684,18 @@ atp-conjunct {_} {$⊥$}      _ = id
 atp-conjunct {_} {$φ ∨ φ₁$} _ = id
 atp-conjunct {_} {$φ ⇒ φ₁$} _ = id
 atp-conjunct {_} {$φ ⇔ φ₁$} _ = id
-atp-conjunct {_} {$¬ φ$}    _ = id
+atp-conjunct {_} {$¬\,φ$}   _ = id
 \end{agda}
 \vfill
 \gobackreconstruction
 \end{frame}
 
-\begin{frame}[fragile, label=agda-file]{Agda Code Example}{Generated by Athena Tool}
+\begin{frame}[fragile, label=agda-file]{\texttt{Agda} Code Example}
+  {Generated by \texttt{Athena} Tool}
 
 \begin{itemize}
   \item The problem is $p ∧ q ⊢ q ∧ p$
-  \item In TPTP format
+  \item In \texttt{TPTP} format
 \begin{tptp}
 fof(a, axiom, p & q).
 fof(goal, conjecture, q & p).
@@ -730,7 +716,7 @@ fof(goal, conjecture, q & p).
   \end{prooftree}
 \end{column}
 \begin{column}{0.2\textwidth}  %%<--- here
-   \begin{tikzpicture}[overlay, remember picture]
+   \begin{tikzpicture}[overlay, remember picture, scale=2]
 % \tikzset{shift={(current page.north)}, xshift=cm,yshift=-2cm}
 \node[vertex, fill=black] (d1) {};
 \node[vertex, fill=black, right=0.5cm of d1 ] (d2) {};
@@ -749,7 +735,7 @@ fof(goal, conjecture, q & p).
 \gobackreconstruction
 \end{frame}
 
-\begin{frame}[fragile, allowframebreaks]{TSTP derivation}
+\begin{frame}[fragile, allowframebreaks]{\texttt{TSTP} Derivation}
 \begin{tptp}
 fof(a, axiom, p & q).
 fof(goal, conjecture, q & p).
@@ -788,37 +774,37 @@ cnf(refute_1_0, plain, ($false),
 \end{tptp}
 \end{frame}
 
-\begin{frame}[fragile, label=verified-example]{$p ∧ q ⊢ q ∧ p$}{Reconstructed proof}
+\begin{frame}[fragile, label=verified-example]{$p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
 \vfill
 Definitions
 \begin{agda}
-p : Prop
-p = Var (# 0)
-q : Prop
-q = Var (# 1)
+p, q, a, goal, subgoal$₀$, subgoal$₁$ : Prop
+
 -- Axiom.
-a : Prop
 a = (p $∧$ q)
+
 -- Premise.
 $Γ$ : Ctxt
 $Γ$ = [ a ]
+
 -- Conjecture.
-goal : Prop
 goal = (q $∧$ p)
+
 -- Subgoals.
-subgoal$₀$ : Prop
+
 subgoal$₀$ = q
-subgoal$₁$ : Prop
+
 subgoal$₁$ = (q $⇒$ p)
 \end{agda}
 \end{frame}
 
-\begin{frame}[fragile, label=verified-example-2]{$p ∧ q ⊢ q ∧ p$}{Reconstructed proof}
+\begin{frame}[fragile, label=verified-example-2]{$p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
 \vfill
 \begin{agda}
 -- Axiom.
 a : Prop
 a = (p $∧$ q)
+
 -- Subgoal.
 subgoal$₀$ : Prop
 subgoal$₀$ = q
@@ -839,7 +825,7 @@ proof$₀$ =
 \vfill
 \end{frame}
 
-\begin{frame}[fragile, label=verified-example-3]{$p ∧ q ⊢ q ∧ p$}{Reconstructed proof}
+\begin{frame}[fragile, label=verified-example-3]{$p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
 \vfill
 \begin{agda}
 subgoal$₁$ : Prop
@@ -878,7 +864,7 @@ proof =
 \end{frame}
 
 \begin{frame}[fragile, label=failure-example]{Bug in the Printing of the Proof}
-  {Metis' Issue: \url{https://github.com/gilith/metis/issues/2}}
+  {\texttt{Metis}' Issue: \url{https://github.com/gilith/metis/issues/2}}
 % {}
 % \begin{tptp}
 % $ cat problem.tptp
@@ -910,16 +896,16 @@ fof(normalize_2_4, plain, $false,
 \begin{frame}[fragile, label=hammer]{Related Work}
 \begin{block}{SledgeHammer} \citep{Paulson2007}
 \begin{itemize}
-\item Isabelle/HOL mature tool
-\item Metis ported within Isabelle
+\item \texttt{Isabelle}/\texttt{HOL} mature tool
+\item \texttt{Metis} ported within \texttt{Isabelle}
 \item Reconstruct proofs of well-known ATPs: \texttt{EProver}, \texttt{Vampire},
-among others using SystemOnTPTP server
+among others using \texttt{SystemOnTPTP} server
 \end{itemize}
 \end{block}
 
-\begin{block}{Integrating Waldmeister into Agda} \citep{Foster2011}
+\begin{block}{Integrating \texttt{Waldmeister} into \texttt{Agda}} \citep{Foster2011}
 \begin{itemize}
-  \item Framework for a integration between Agda and ATPs
+  \item Framework for a integration between \texttt{Agda} and ATPs
   \begin{itemize}
     \item Equational Logic
     \item Reflection Layers
@@ -945,13 +931,13 @@ postulate
 \end{agda}
 \end{lrbox}
 
-\begin{frame}[fragile]{Related Work: Apia}
-  {Proving first-order theorems written in Agda using automatic theorem provers for first-order logic}
+\begin{frame}[fragile]{Related Work: \texttt{Apia}}
+  {Proving First-Order theorems written in \texttt{Agda} using automatic theorem provers for First-Order Logic}
 
-\only<1-2>{At the moment, the communication between Agda and
-the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sicard2015}.}
-\only<1-2>{\vfill}
-
+\only<1>{At the moment, the communication between \texttt{Agda} and
+the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sicard2015}
+\vfill
+}
 
 \begin{tikzpicture}
 \only<1->{ \node(agdafile) at (0,0){
@@ -966,8 +952,7 @@ the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sic
 \only<2->{
   \node[right=1cm of agdafile] (eagda){
   \includegraphics[scale=0.8]{figures/eagda}
-  \footnote{Development version of Agda in order to handle a new built-in ATP-pragma.
-    \url{https://github.com/asr/eagda}}
+  \footnote{\url{https://github.com/asr/eagda}}
   }
 };
 
@@ -1020,12 +1005,14 @@ normal form use to transform the formulas
 
 \begin{frame}[label=future-work]{Future Work}
 \begin{itemize}
-  \item Add a shallow embedding in order to work with \texttt{Apia}
+  \item Integration with \texttt{Apia}
   \item Support First-Order Logic with Equality
-  \item Support another prover like EProver or Vampire
+  \item Support another prover like \texttt{EProver} or \texttt{Vampire}
 \end{itemize}
 \end{frame}
 
+\begin{frame}
+\end{frame}
 
 \begin{frame}[label=references]{References}
 \printbibliography
