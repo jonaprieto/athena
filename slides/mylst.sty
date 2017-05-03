@@ -8,7 +8,7 @@
 \lstdefinestyle{TPTP}{
     aboveskip=10pt
   , backgroundcolor=\color{aliceblue}
-  , basicstyle=\footnotesize\ttfamily
+  , basicstyle=\footnotesize\sourcecode
   , belowskip=10pt
   , frame=trbl
   , keywords=[2]{axiom, conjecture,inference, negated_conjecture, plain, source}
@@ -29,87 +29,32 @@
 \lstloadlanguages{Haskell}
 \lstdefinestyle{AGDA}{
     tabsize=2
-  , aboveskip={0.4\baselineskip}
-  , belowcaptionskip=0.4\baselineskip
-  , backgroundcolor=\color{aliceblue}
-  , columns=fixed
-  , showstringspaces=false
+  % , aboveskip={0.4\baselineskip}
+  % , belowcaptionskip=0.4\baselineskip
+  % , backgroundcolor=\color{aliceblue}
+  % , columns=fixed
+  % , showstringspaces=false
   , extendedchars=true
-  , breaklines=false
-  , keepspaces=true
-  , mathescape=true
-  , xleftmargin=\parindent
-  , basicstyle=\footnotesize\ttfamily
-  , comment=[l]--
-  , commentstyle=\color{gray}
-  , keywords=[2]{data,where,open,import,let,with,module,using,infixr
-    ,rewrite,mutual,in,case,of,infix,infixl, true, false, postulate}
-  , keywords=[3]{intro, elim, weaken, assume, proj, equiv,assoc, comm, axiom
-    ,to,dist, dmorgan, subst, cnf, dnf, nnf, RAA, PEM}
-  , keywords=[4]{canonicalize, resolve, atp, conjunct,
-    strip, simplify, negate, clausify, conjunct}
-  , keywordstyle=[2]\color{plum}
-  , keywordstyle=[3]\color{letour}
-  , keywordstyle=[4]\color{plum}
-  , sensitive=true
-  ,%
+  % , breaklines=false
+  % , keepspaces=true
+  % , mathescape=false
+  % , xleftmargin=\parindent
+  , basicstyle=\footnotesize\djvu
+  % , comment=[l]--
+  % , commentstyle=\color{gray}
+  % , keywords=[2]{data,where,open,import,let,with,module,using,infixr
+  %   ,rewrite,mutual,in,case,of,infix,infixl, true, false, postulate}
+  % , keywords=[3]{intro, elim, weaken, assume, proj, equiv,assoc, comm, axiom
+  %   ,to,dist, dmorgan, subst, cnf, dnf, nnf, RAA, PEM}
+  % , keywords=[4]{canonicalize, resolve, atp, conjunct,
+  %   strip, simplify, negate, clausify, conjunct}
+  % , keywordstyle=[2]\color{plum}
+  % , keywordstyle=[3]\color{letour}
+  % , keywordstyle=[4]\color{plum}
+  % , sensitive=false
+  %
     % {replace}{replacement}{lenght of replace}
     % *{-}{-}{1} will not replace in comments and so on
-      literate=
-        {+}{{$+\;$}}1
-        {/}{{$/$}}1
-        {*}{{$*$}}1
-        {=}{{$=\;$}}1
-        {>}{{$>$}}1
-        {<}{{$<$}}1
-        {\\lam}{{$\lambda$}}1
-        {\\\\}{{\char`\\\char`\\}}1
-        {→}{{$\rightarrow\;$}}2
-        {->}{{$\rightarrow\;$}}2
-        {>=}{{$\geq$}}2
-        {<-}{{$\leftarrow$}}2
-        {<=}{{$\leq$}}2
-        {=>}{{$\Rightarrow\;$}}2
-        {\\...}{{$\cdots\;$}}2
-        {\ .}{{$\circ$}}2
-        {\ .\ }{{$\circ$}}2
-        {>>}{{>>}}2
-        {>>=}{{>>=}}2
-        {|}{{$\mid\:$}}1
-        {Nat}{{$\mathbb{N}\;$}}1
-        {forall}{{$\forall\;$}}1
-        {\\scons}{{\scons}}1
-        {\\sconsh}{{\sconsh}}1
-        {\\void}{{\void}}1
-  {\\o}{{$\circ\;$}}1
-  {\\NIL}{{[\,]\;}}1
-        {\\tick}{{\tick}}1
-      {\\nil}{{$\varepsilon\;$}}1
-      {\\bN}{{$\bN\;$}}1
-      {\\x}{{$\times$}}1
-      {\\excp}{{\excp}}1
-      {==}{{$\equiv\;$}}1
-    {<|}{{$\lhd\;\,$}}1
-        {\\app}{{$\lhd\!\lhd\;\,$}}1
-  {OR}{{\color{letour}$\vee$}}1
-  {AND}{{\color{letour}$\wedge$}}1
-  {⌊}{{\color{letour}$\lfloor$}}1
-  {⌋}{{\color{letour}$\rfloor$}}1
-  {⊢}{{\color{letour}$\vdash$}}1
-  {inj1}{{\color{letour}$\text{inj}_1$}}4
-  {inj2}{{\color{letour}$\text{inj}_2$}}4
-  {∧}{{$\wedge\;$}}1
-  {\\and}{{$\wedge\;$}}1
-  {\\leq}{{$\leq\;$}}1
-        {~}{{$\neg\:$}}1
-        {[[}{{[\![\;}}1
-        {]]}{{]\!]\;}}1
-        {\\;}{{\;}}1
-        {\\-}{{-}}1
-        {\\qed}{{$\qed$}}1
-        {==<}{{$\equiv\!\!\langle\;$}}1
-        {\\>}{{$\rangle$}}1
-        {\\_}{{\!\!\_}}1
 }
 
 \lstnewenvironment{agda}

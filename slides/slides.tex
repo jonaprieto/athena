@@ -1,4 +1,4 @@
-\documentclass[xetex, hyperref={pdfpagelabels=false}]{beamer}
+\documentclass[10pt, xetex, hyperref={pdfpagelabels=false}]{beamer}
 
 % --------------------------------------------------------------------------
 % Packages
@@ -13,9 +13,9 @@
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{lmodern}
+
 \usepackage{mylst}
 \usepackage{url}
-
 
 % --------------------------------------------------------------------------
 % Tikz Configuration
@@ -44,11 +44,9 @@
 
 \tikzstyle{vertex}=[auto=left,circle,fill=black!25,minimum size=5pt,inner sep=0pt]
 
-% \usetikzlibrary{shapes.geometric,shapes.symbols,shadows}
-
 \newcommand{\gobackreconstruction}{
   \begin{tikzpicture}[overlay, remember picture, scale=0.5]
-    \tikzset{shift={(current page.center)}, xshift=11.7cm,yshift=-8.4cm}
+    \tikzset{shift={(current page.center)}, xshift=11.8cm,yshift=-8.4cm}
     \node[fill=plum,text=white, hyperlink node = reconstruction]
       (go) at (0,0) {\tiny Go Back};
   \end{tikzpicture}}
@@ -107,10 +105,8 @@
     \insertframenumber{}/\inserttotalframenumber\hspace*{2ex}
   \end{beamercolorbox}}%
   \vskip 0pt%
-  % \vspace*{1mm}%
 }
 
-% title in the frame
 \setbeamerfont{frametitle}{size=\small,series=\bfseries}
 \setbeamercolor{frametitle}{fg=white,bg=plum}
 
@@ -139,18 +135,27 @@
 % --------------------------------------------------------------------------
 % Fonts
 % --------------------------------------------------------------------------
-
 \usefonttheme{professionalfonts}
 \usefonttheme{serif}
 \usepackage{fontspec}
 \usepackage{mathtools}
 \usepackage{unicode-math}
 
-\setmathfont[ExternalLocation=fonts/
-  , BoldFont=xits-mathbold.otf
-  ]{xits-math.otf}
-\newfontfamily\mathfont{fonts/xits-math.otf}
+\newfontfamily\djvu[ExternalLocation=fonts/
+  , BoldFont=DejaVuSansMono-Bold.ttf
+  , BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
+  , ItalicFont=DejaVuSansMono-Oblique.ttf
+  ]{DejaVuSansMono.ttf}
 
+\setmonofont[ExternalLocation=fonts/
+, BoldFont=DejaVuSansMono-Bold.ttf
+, BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
+, ItalicFont=DejaVuSansMono-Oblique.ttf
+]{DejaVuSansMono.ttf}
+
+\setmathfont[ExternalLocation=fonts/
+  ]{DejaVuMathTeXGyre.ttf}
+\newfontfamily\mathfont{fonts/DejaVuMathTeXGyre.ttf}
 
 \setmainfont[ExternalLocation=fonts/
   , BoldFont=SourceSansPro-Semibold.otf
@@ -158,18 +163,29 @@
   , ItalicFont=SourceSansPro-It.otf
   ]{SourceSansPro-Regular.otf}
 
-\setmonofont[ExternalLocation=fonts/
+% \setmonofont[ExternalLocation=fonts/
+%   , BoldFont=SourceCodePro-Semibold.ttf
+%   , BoldItalicFont=SourceCodePro-SemiboldIt.ttf
+%   , ItalicFont=SourceCodePro-It.ttf
+%   ]{SourceCodePro-Regular.ttf}
+
+\newfontfamily\sourcecode[ExternalLocation=fonts/
   , BoldFont=SourceCodePro-Semibold.ttf
   , BoldItalicFont=SourceCodePro-SemiboldIt.ttf
   , ItalicFont=SourceCodePro-It.ttf
   ]{SourceCodePro-Regular.ttf}
-\newfontfamily\SourceCodeIt{fonts/SourceCodePro-It.ttf}
-\newfontfamily\SourceCode{fonts/SourceCodePro-Regular.ttf}
 
-\newcommand{\problemtptp}[3][c]
-  {\lstinputlisting[style=tptp,caption=#2, firstline=#3, label=custom#1]{#2}}
-\newcommand{\solutiontstp}[2][c]
-  {\lstinputlisting[style=tptp,caption=#2, firstline=5, label=custom#1]{#2}}
+
+\usepackage{minted}
+\setminted[cagda]{
+  bgcolor   = aliceblue
+, fontsize  = \footnotesize
+, frame     = none
+% , framerule = 0.4pt
+% , framesep  = 0pt
+, style     = cagda
+}
+
 
 % --------------------------------------------------------------------------
 % References
@@ -178,13 +194,13 @@
 \usepackage[autostyle]{csquotes}
 \usepackage[
     backend=biber
-  , style=authoryear-icomp
-  , sortlocale=en_US
-  , natbib=true
-  , url=false
   , doi=false
-  , isbn=false
   , eprint=false
+  , isbn=false
+  , natbib=true
+  , sortlocale=en_US
+  , style=authoryear-icomp
+  , url=false
 ]{biblatex}
 \addbibresource{ref.bib}
 \renewcommand*{\nameyeardelim}{\addcomma\addspace}
@@ -197,13 +213,12 @@
 % --------------------------------------------------------------------------
 
 \title[Proof Reconstruction in Classical Propositional Logic]
-  {\textbf{Proof Reconstruction in Classical Propositional Logic}
-}
+  {\textbf{Proof Reconstruction in Classical Propositional Logic}}
 \subtitle{(Work in Progress)}
 \date{Agda Implementors’ Meeting XXV\\
 May 9-15th 2017}
 \author[Jonathan Prieto-Cubides]{Jonathan Prieto-Cubides\\
-Joint work with Andr\'es Sicard-Ram\'irez}
+(Joint work with Andr\'es Sicard-Ram\'irez)}
 \institute{
 Master in Applied Mathematics\\
 Universidad EAFIT\\
@@ -225,9 +240,6 @@ Medell\'in, Colombia}
       {\includegraphics[width=0.18\textwidth]{figures/chalmers}};
   \end{tikzpicture}
 \end{frame}
-
-
-\section{Introduction}
 
 \begin{frame}[fragile, label=overview]{Proof Reconstruction: Overview}
 \vfill
@@ -257,7 +269,7 @@ Medell\'in, Colombia}
   };
 }
 \only<6->{
-\node[left = 0.5cm of athena, hyperlink node=agda-file] (agdafile)
+\node[left = 0.6cm of athena, hyperlink node=agda-file] (agdafile)
   {\includegraphics[scale=0.7]{figures/agdafile}
   };
 }
@@ -302,7 +314,7 @@ Medell\'in, Colombia}
   {\includegraphics[scale=0.7]{figures/tstp}};
 \node[below= 1.5cm of tstp, hyperlink node=athena] (athena)
   {\includegraphics[scale=0.7]{figures/athena}};
-\node[left = 0.5cm of athena, hyperlink node=agda-file] (agdafile)
+\node[left = 0.6cm of athena, hyperlink node=agda-file] (agdafile)
   {\includegraphics[scale=0.7]{figures/agdafile}};
 \node[left = 0.5cm of agdafile, hyperlink node=agda] (agda)
   {\includegraphics[scale=0.7]{figures/agda}};
@@ -323,9 +335,6 @@ Medell\'in, Colombia}
 \vfill
 \end{frame}
 
-
-\subsection{Motivation}
-
 \begin{frame}[fragile, label=tptp-syntax]{\texttt{TPTP} Syntax}
   {Thousands of Problems for Theorem Provers}
 
@@ -344,7 +353,7 @@ language(name, role, formula).
 \end{tptp}
     \end{center}
     \begin{itemize}
-      \item[\texttt{language}] FOF or CNF %THF, TFF,
+      \item[\texttt{language}] FOF or CNF
       \item[\texttt{name}] to identify the formula within the problem
       \item[\texttt{role}] axiom, definition, hypothesis, conjecture
       \item[\texttt{formula}] version in \texttt{TPTP} format
@@ -460,9 +469,9 @@ inference(rule, useful info, parents)
 
 \begin{frame}[fragile, label=tstp-example]{\texttt{TSTP} Example}
 
- \tikz[overlay,remember picture]
-  \node at (0.93\textwidth, -0.3cm)
-    {\includegraphics[width=0.15\textwidth]{figures/metis}};
+ % \tikz[overlay,remember picture]
+ %  \node at (0.93\textwidth, -0.3cm)
+ %    {\includegraphics[width=0.15\textwidth]{figures/metis}};
 
 \begin{itemize}
   \item Proof found by \texttt{Metis} Prover for the problem $p ⊢ p$
@@ -564,17 +573,19 @@ in \texttt{TSTP} format to \texttt{Agda} code\\
 \begin{itemize}
   \item Intuitionistic Propositional Logic + PEM ($Γ ⊢ ϕ ∨ ¬ ϕ$)
   \item A data type for formulas
-\begin{agda}
+  \vspace*{1mm}
+
+\begin{minted}{cagda}
 data Prop : Set where
   Var  : Fin n → Prop           -- Variables.
-  $⊤$    : Prop                   -- Top (truth).
-  $⊥$    : Prop                   -- Bottom (falsum).
-  _$∧$_  : ($φ$ $ψ$ : Prop) → Prop    -- Conjunction.
-  _$∨$_  : ($φ$ $ψ$ : Prop) → Prop    -- Disjunction.
-  _$⇒$_  : ($φ$ $ψ$ : Prop) → Prop    -- Implication.
-  _$⇔$_  : ($φ$ $ψ$ : Prop) → Prop    -- Biimplication.
-  $¬$_   : ($φ$ : Prop) → Prop      -- Negation.
-\end{agda}
+  ⊤    : Prop                   -- Top (truth).
+  ⊥    : Prop                   -- Bottom (falsum).
+  _∧_  : (φ ψ : Prop) → Prop    -- Conjunction.
+  _∨_  : (φ ψ : Prop) → Prop    -- Disjunction.
+  _⇒_  : (φ ψ : Prop) → Prop    -- Implication.
+  _⇔_  : (φ ψ : Prop) → Prop    -- Biimplication.
+  ¬_   : (φ : Prop)   → Prop    -- Negation.
+\end{minted}
 \end{itemize}
 \end{frame}
 
@@ -582,26 +593,30 @@ data Prop : Set where
   \footnote{\url{https://github.com/jonaprieto/agda-prop}}}
 \begin{itemize}
   \item A data type for theorems
-\begin{agda}
-data _$⊢$_ : ($Γ$ : Ctxt)($φ$ : Prop) → Set
-\end{agda}
+  \vspace*{1mm}
+\begin{minted}{cagda}
+data _⊢_ : (Γ : Ctxt)(φ : Prop) → Set
+\end{minted}
 
 \item Constructors
-\begin{agda}
-assume, axiom, weaken, $⊤$-intro, $⊥$-elim, $¬$-intro,
-$¬$-elim, $∧$-intro, $∧$-proj$₁$, $∧$-proj$₂$, $∨$-intro$₁$,
-$∨$-intro$₂$, $∨$-elim, $⇒$-intro, $⇒$-elim, $⇔$-intro,
-$⇔$-elim$₁$, $⇔$-elim$₂$.
-\end{agda}
+  \vspace*{1mm}
+
+\begin{minted}{cagda}
+assume, axiom, weaken, ⊤-intro, ⊥-elim, ¬-intro,
+¬-elim, ∧-intro, ∧-proj₁, ∧-proj₂, ∨-intro₁,
+∨-intro₂, ∨-elim, ⇒-intro, ⇒-elim, ⇔-intro,
+⇔-elim₁, ⇔-elim₂.
+\end{minted}
   \item Natural deduction proofs for more than 71 theorems
-\begin{agda}
-$⇔$-equiv, $⇔$-assoc, $⇔$-comm, $⇒-⇔-¬∨$, $⇔-¬$-to-$¬$,
-$¬⇔$-to-$¬$, $¬¬$-equiv, $⇒⇒-⇔-∧⇒$, $⇔$-trans, $∧$-assoc,
-$∧$-comm, $∧$-dist, $¬∧$-to-$¬∨¬$, $¬∨¬$-to-$¬∧$, $¬∨¬-⇔-¬∧$,
-subst$⊢∧₁$, subst$⊢∧₂$, $∨$-assoc, $∨$-comm, $∨$-dist,
-$∨$-equiv, $¬∨$-to-$¬∧¬$, $¬∧¬$-to-$¬∨$, $∨$-dmorgan,
-$¬¬∨¬¬$-to-$∨$, cnf, nnf, dnf, RAA, $\cdots$
-\end{agda}
+  \vspace*{1mm}
+\begin{minted}{cagda}
+⇔-equiv, ⇔-assoc, ⇔-comm, ⇒-⇔-¬∨, ⇔-¬-to-¬,
+¬⇔-to-¬, ¬¬-equiv, ⇒⇒-⇔-∧⇒, ⇔-trans, ∧-assoc,
+∧-comm, ∧-dist, ¬∧-to-¬∨¬, ¬∨¬-to-¬∧, ¬∨¬-⇔-¬∧,
+subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
+∨-equiv, ¬∨-to-¬∧¬, ¬∧¬-to-¬∨, ∨-dmorgan,
+¬¬∨¬¬-to-∨, cnf, nnf, dnf, RAA, ...
+\end{minted}
 \end{itemize}
 \end{frame}
 
@@ -644,48 +659,51 @@ $¬¬∨¬¬$-to-$∨$, cnf, nnf, dnf, RAA, $\cdots$
 
 \item Function\footnote{\label{note-conjunct}Excerpt from the \texttt{Agda-Metis}
 library available in  \texttt{ATP.Metis.Rules.Conjunct} module}:
-\begin{agda}
+\vspace*{1mm}
+\begin{minted}{cagda}
 conjunct : Prop → Prop → Prop
-conjunct $(φ \wedge ψ)$ $ω$ with $⌊$ eq $φ$ $ω$ $⌋$ | $⌊$ eq ψ $ω$ $⌋$
-... | true  | _     = $φ$
-... | false | true  = $ψ$
-... | false | false = conjunct $φ$ $ω$
-conjunct $φ$ $ω$       = $φ$
-\end{agda}
+conjunct (φ ∧ ψ) ω with ⌊ eq φ ω ⌋ | ⌊ eq ψ ω ⌋
+... | true  | _     = φ
+... | false | true  = ψ
+... | false | false = conjunct φ ω
+conjunct φ ω        = φ
+\end{minted}
 \item Theorem\textsuperscript{\ref{note-conjunct}}
-\begin{agda}
+\vspace*{1mm}
+\begin{minted}{cagda}
 atp-conjunct
-  : ∀ $\{Γ\}$ $\{φ\}$
-  → $(ω : Prop)$
-  → $Γ \vdash φ$
-  → $Γ \vdash$ conjunct $φ$ $ω$
-\end{agda}
+  : ∀ {Γ} {φ}
+  → (ω :Prop)
+  → Γ ⊢ φ
+  → Γ ⊢ conjunct φ ω
+\end{minted}
 \end{itemize}
 \end{frame}
 
 
 \begin{frame}[fragile, label=atp-conjunct-proof]{A proof of \texttt{atp-conjunct} theorem}
 \vfill
-\begin{agda}
+\begin{minted}{cagda}
 atp-conjunct
-  : $∀ \{Γ\} \{φ\}$
-  → ($ω$ : Prop)
-  → $Γ ⊢ φ$
-  → $Γ ⊢$ conjunct $φ\ ω$
+  : ∀ {Γ} {φ}
+  → (ω : Prop)
+  → Γ ⊢ φ
+  → Γ ⊢ conjunct φ ω
 
-atp-conjunct $\{Γ\}$ $\{φ ∧ ψ\}$ $ω$ $Γ⊢φ$ with $⌊$ eq $φ$ $ω$ $⌋$ | $⌊$ eq $ψ$ $ω$ $⌋$
-... | true  | _     = $∧$-proj$₁$ $Γ⊢φ$
-... | false | true  = $∧$-proj$₂$ $Γ⊢φ$
+atp-conjunct {Γ} {φ ∧ ψ} ω Γ⊢φ
+  with ⌊ eq φ ω ⌋ | ⌊ eq ψ ω ⌋
+... | true  | _     = ∧-proj₁ Γ⊢φ
+... | false | true  = ∧-proj₂ Γ⊢φ
 ... | false | false =
-  atp-conjunct $\{Γ = Γ\}$ $\{φ = φ\}$ $ω$ ($∧$-proj$₁$ $Γ⊢φ$)
-atp-conjunct {_} {Var x}    _ = id
-atp-conjunct {_} {$⊤$}      _ = id
-atp-conjunct {_} {$⊥$}      _ = id
-atp-conjunct {_} {$φ ∨ φ₁$} _ = id
-atp-conjunct {_} {$φ ⇒ φ₁$} _ = id
-atp-conjunct {_} {$φ ⇔ φ₁$} _ = id
-atp-conjunct {_} {$¬\,φ$}   _ = id
-\end{agda}
+  atp-conjunct {Γ = Γ} {φ = φ} ω (∧-proj₁ Γ⊢φ)
+atp-conjunct {_} {Var x}  _ = id
+atp-conjunct {_} {⊤}      _ = id
+atp-conjunct {_} {⊥}      _ = id
+atp-conjunct {_} {φ ∨ ψ}  _ = id
+atp-conjunct {_} {φ ⇒ ψ}  _ = id
+atp-conjunct {_} {φ ⇔ ψ}  _ = id
+atp-conjunct {_} {¬ φ}    _ = id
+\end{minted}
 \vfill
 \gobackreconstruction
 \end{frame}
@@ -775,91 +793,95 @@ cnf(refute_1_0, plain, ($false),
 \end{frame}
 
 \begin{frame}[fragile, label=verified-example]{$p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
-\vfill
-Definitions
-\begin{agda}
-p, q, a, goal, subgoal$₀$, subgoal$₁$ : Prop
+\begin{minted}{cagda}
+p, q, a, goal, subgoal₀, subgoal₁ : Prop
 
 -- Axiom.
-a = (p $∧$ q)
+
+a = (p ∧ q)
 
 -- Premise.
-$Γ$ : Ctxt
-$Γ$ = [ a ]
+
+Γ : Ctxt
+Γ = [ a ]
 
 -- Conjecture.
-goal = (q $∧$ p)
+
+goal = (q ∧ p)
 
 -- Subgoals.
 
-subgoal$₀$ = q
-
-subgoal$₁$ = (q $⇒$ p)
-\end{agda}
+subgoal₀ = q
+subgoal₁ = (q ⇒ p)
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile, label=verified-example-2]{$p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
 \vfill
-\begin{agda}
--- Axiom.
+\begin{minted}{cagda}
 a : Prop
-a = (p $∧$ q)
+a = (p ∧ q)
 
--- Subgoal.
-subgoal$₀$ : Prop
-subgoal$₀$ = q
+subgoal₀ : Prop
+subgoal₀ = q
 
-proof$₀$ : $Γ ⊢$ subgoal$₀$
-proof$₀$ =
+proof₀ : Γ ⊢ subgoal₀
+proof₀ =
   (RAA
     (atp-canonicalize
       (atp-simplify
         (atp-canonicalize
           (atp-strip
-            (assume $\{Γ = Γ\}$ (atp-negate subgoal$₀$))))
+            (assume {Γ = Γ} (atp-negate subgoal₀))))
         (atp-conjunct (q)
           (atp-canonicalize
-            (weaken (atp-negate subgoal$₀$)
-              (assume $\{Γ = ∅\}$ a)))))))
-\end{agda}
+            (weaken (atp-negate subgoal₀)
+              (assume {Γ = ∅} a)))))))
+\end{minted}
 \vfill
 \end{frame}
 
 \begin{frame}[fragile, label=verified-example-3]{$p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
 \vfill
-\begin{agda}
-subgoal$₁$ : Prop
-subgoal$₁$ = (q $⇒$ p)
+\begin{minted}{cagda}
+subgoal₁ : Prop
+subgoal₁ = (q ⇒ p)
 
-proof$₁$ : $Γ ⊢$ subgoal$₁$
-proof$₁$ =
+proof₁ : Γ ⊢ subgoal₁
+proof₁ =
   (RAA
     (atp-canonicalize
       (atp-simplify
         (atp-conjunct (q)
           (atp-canonicalize
-            (weaken (atp-negate subgoal$₁$)
-              (assume $\{Γ = ∅\}$ a))))
+            (weaken (atp-negate subgoal₁)
+              (assume {Γ = ∅} a))))
         (atp-simplify
           (atp-canonicalize
             (atp-strip
-              (assume $\{Γ = Γ\}$ (atp-negate subgoal$₁$))))
+              (assume {Γ = Γ} (atp-negate subgoal₁))))
           (atp-conjunct (p)
             (atp-canonicalize
-              (weaken (atp-negate subgoal$₁$)
-                (assume $\{Γ = ∅\}$ a))))))))
-\end{agda}
+              (weaken (atp-negate subgoal₁)
+                (assume {Γ = ∅} a))))))))
+\end{minted}
 \vfill
 \end{frame}
 
 \begin{frame}[fragile, label=verified-example-4]{$p ∧ q ⊢ q ∧ p$}{Reconstructed proof}
-\begin{agda}
-proof : $Γ ⊢$ goal
+\begin{minted}{cagda}
+Γ : Ctxt
+Γ = [ a ]
+
+proof₀ : Γ ⊢ subgoal₀
+proof₁ : Γ ⊢ subgoal₁
+
+proof : Γ ⊢ goal
 proof =
-  $⇒$-elim
+  ⇒-elim
     atp-splitGoal
-    ($∧$-intro proof$₀$ proof$₁$)
-\end{agda}
+    (∧-intro proof₀ proof₁)
+\end{minted}
 \gobackreconstruction
 \end{frame}
 
@@ -916,20 +938,6 @@ among others using \texttt{SystemOnTPTP} server
 \end{frame}
 
 
-\begin{lrbox}{\agdapragma}
-\begin{agda}
-module Or where
-
-data _OR_ (A B : Set) : Set where
-  inj1 : A → A OR B
-  inj2 : B → A OR B
-
-postulate
-  A B    : Set
-  OR-comm : A OR B → B OR A
-{-# ATP prove OR-comm #-}
-\end{agda}
-\end{lrbox}
 
 \begin{frame}[fragile]{Related Work: \texttt{Apia}}
   {Proving First-Order theorems written in \texttt{Agda} using automatic theorem provers for First-Order Logic}
@@ -938,16 +946,14 @@ postulate
 the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sicard2015}
 \vfill
 }
+\only<1>{
+\inputminted{cagda}{Or.agda}
+}
 
 \begin{tikzpicture}
-\only<1->{ \node(agdafile) at (0,0){
-  \includegraphics[scale=0.8]{figures/agda-pragmas}}};
-\only<1>{
-  \node[fill=aliceblue, rectangle, right = 2.5cm of agdafile] (atp-pragmas){
-  \scalebox{0.9}{\usebox\agdapragma}
-  }
-  };
 
+\only<2->{ \node(agdafile) at (0,0){
+  \includegraphics[scale=0.8]{figures/agda-pragmas}}};
 
 \only<2->{
   \node[right=1cm of agdafile] (eagda){
@@ -1014,7 +1020,7 @@ normal form use to transform the formulas
 \begin{frame}
 \end{frame}
 
-\begin{frame}[label=references]{References}
+\begin{frame}[label=references, allowframebreaks]{References}
 \printbibliography
 \end{frame}
 
