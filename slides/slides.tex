@@ -275,7 +275,7 @@ Medell\'in, Colombia}
   };
 }
 \only<7->{
-\node[left = 0.5cm of agdafile, hyperlink node=agda] (agda)
+\node[left = 0.5cm of agdafile] (agda)
   {\includegraphics[scale=0.7]{figures/agda}
   \footnote{\url{http://github.com/agda/agda}}
   };
@@ -317,7 +317,7 @@ Medell\'in, Colombia}
   {\includegraphics[scale=0.7]{figures/athena}};
 \node[left = 0.6cm of athena, hyperlink node=agda-file] (agdafile)
   {\includegraphics[scale=0.7]{figures/agdafile}};
-\node[left = 0.5cm of agdafile, hyperlink node=agda] (agda)
+\node[left = 0.5cm of agdafile] (agda)
   {\includegraphics[scale=0.7]{figures/agda}};
 \node[below = 0.18cm of problem, hyperlink node=verified-example] (verified)
   {\includegraphics[scale=0.7]{figures/verified}};
@@ -544,8 +544,8 @@ that translates proofs given by \texttt{Metis} Prover
 in \texttt{TSTP} format to \texttt{Agda} code\\
 
 \begin{itemize}
-    \item Parsing of \texttt{TSTP} language
-    \item Creation and analysis of \hyperlink{tstp-dag}{\textbf{DAG}} derivations
+    \item Parsing of \texttt{TSTP} language\footnote{\label{parsing}\url{https://github.com/agomezl/tstp2agda}}\textsuperscript{,}\footnote{\url{https://github.com/jonaprieto/tstp2agda}}
+    \item Creation\textsuperscript{\ref{parsing}} and analysis of \hyperlink{tstp-dag}{\textbf{DAG}} derivations
     \item Analysis of inference rules used in the \texttt{TSTP} derivation
     \item \texttt{Agda} code generation
 \begin{table}[!ht]
@@ -873,7 +873,6 @@ proof₁ =
 \begin{minted}{cagda}
 -- Premise.
 
-Γ : Ctxt
 Γ = [ a ]
 
 -- Conjecture.
@@ -893,14 +892,14 @@ proof₁ : Γ ⊢ subgoal₁
 proof : Γ ⊢ goal
 proof =
   ⇒-elim
-    atp-splitGoal
+    atp-splitGoal            -- q ∧ (q ⇒ p) ⇒ p
     (∧-intro proof₀ proof₁)
 \end{minted}
 \gobackreconstruction
 \end{frame}
 
-\begin{frame}[fragile, label=failure-example]{Bug in the Printing of the Proof}
-  {\texttt{Metis}' v2.3 (release 20161108) - Issue\footnote{\url{https://github.com/gilith/metis/issues/2}}}
+\begin{frame}[fragile, label=failure-example]{Bug\footnote{\url{https://github.com/gilith/metis/issues/2}} in the Printing of the Proof}
+  {\texttt{Metis}' v2.3 (release 20161108)}
 % {}
 \begin{tptp}
 $ cat problem.tptp
@@ -957,7 +956,7 @@ fof(normalize_2_4, plain, $false,
 The bug was caused by the conversion of \texttt{Xor} sets to \texttt{Iff} lists.
 After reporting this, Joe fixed the printing of \texttt{canonicalize} inference rule
 \[ φ := ¬ p ∧ (¬ q ⇔ ¬ r) ∧ (¬ p ⇔ (¬ q ⇔ {\color{red} r}))\]
-
+\gobackreconstruction
 \end{frame}
 
 
@@ -995,6 +994,11 @@ the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sic
 }
 \only<1>{
 \inputminted{cagda}{Or.agda}
+\begin{tikzpicture}[overlay, remember picture, scale=0.5]
+\tikzset{shift={(current page.center)}, xshift=6cm,yshift=-2cm}
+\node(agdafile) at (0,0){
+  \includegraphics[scale=0.8]{figures/agda-pragmas}};
+\end{tikzpicture}
 }
 
 \begin{tikzpicture}
@@ -1030,7 +1034,7 @@ the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sic
   \footnote{\url{http://github.com/jonaprieto/online-atps}}}
   };
 
-\only<7->{ \node[left= 2.75cm of atp, rectangle, text=white,fill=black, align=left, font=\tiny] (proved)
+\only<7->{ \node[left= 3cm of atp, rectangle, text=white,fill=black, align=left, font=\tiny] (proved)
 {
 \texttt{\$ agda Or.agda}\\
 \texttt{\$ apia Or.agda --atp=online-metis}\\
@@ -1050,10 +1054,10 @@ the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sic
 
 \begin{frame}[label=pending-work]{Pending Work}
 \begin{itemize}
-\item There are missing cases with the \texttt{simplify} inference
-\item Is not clear, how  \texttt{canonicalize} inference choose what
+\item Complete implementation for \texttt{simplify} inference\footnote{\url{https://github.com/gilith/metis/issues/3}}
+\item Complete implementation for \texttt{canonicalize} inference: what
 normal form use to transform the formulas
-\item Splitting a goal in a list of subgoals is not verified yet
+\item Complete implementation for Splitting a goal in a list of subgoals
 \end{itemize}
 \end{frame}
 
@@ -1067,10 +1071,11 @@ normal form use to transform the formulas
 \hline
 \textbf{Name} & \textbf{Purpose} \\
 \hline
-\href{http://github.com/jonaprieto/agda-prop}{\texttt{Agda-Prop}}     & lib. for syntax and theorems of Clasical Propositional Logic\\
-\href{http://github.com/jonaprieto/agda-metis}{\texttt{Agda-Metis}}   & lib. for versions of the inference rules used by \texttt{Metis}\\
-\href{http://github.com/jonaprieto/athena}{\texttt{Athena}}           & soft. Translator in Haskell for \texttt{Metis'} \texttt{TSTP} files to \texttt{Agda}\\
-\href{http://github.com/jonaprieto/online-atps}{\texttt{OnlineATPs}}  & soft. A client in Haskell for \texttt{SystemOnTPTP} of \texttt{TPTP} World\\[1ex]
+\href{http://github.com/jonaprieto/agda-metis}{\texttt{Agda-Metis}}   & Implementation of \texttt{Metis}' inference rules\\
+\href{http://github.com/jonaprieto/agda-prop}{\texttt{Agda-Prop}}     & Syntax and theorems of Classical Propositional Logic\\
+\href{http://github.com/jonaprieto/athena}{\texttt{Athena}}           & Translator for \texttt{Metis'} \texttt{TSTP} files to \texttt{Agda}\\
+\href{http://github.com/jonaprieto/online-atps}{\texttt{OnlineATPs}}  & Client to use ATPs from \texttt{SystemOnTPTP} of \texttt{TPTP} World\\
+\href{http://github.com/jonaprieto/prop-pack}{\texttt{Prop-Pack}}     & Collection of \texttt{TPTP} problems to test \texttt{Athena}\\[1ex]
 \hline
 \end{tabular}}
 }
@@ -1132,10 +1137,10 @@ normal form use to transform the formulas
 \UnaryInfC{$¬ (L[p] = t) ∨ ¬ L ∨ L[ p ↦ t]$}
 \end{prooftree}
 \vfill
-\end{frame}
  \begin{tikzpicture}[overlay, remember picture, scale=0.5]
     \tikzset{shift={(current page.center)}, xshift=11.8cm,yshift=-8.4cm}
     \node[fill=plum,text=white, hyperlink node = metis]
       (go) at (0,0) {\tiny Go Back};
   \end{tikzpicture}
+\end{frame}
 \end{document}
