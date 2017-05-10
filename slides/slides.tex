@@ -111,7 +111,7 @@
 \setbeamerfont{frametitle}{size=\small,series=\bfseries}
 \setbeamercolor{frametitle}{fg=white,bg=plum}
 
-\setbeamerfont{framesubtitle}{size=\normalfont\tiny}
+\setbeamerfont{framesubtitle}{size=\normalfont\scriptsize}
 \setbeamercolor{framesubtitle}{fg=white, bg=plum!80!black}
 
 \setbeamercolor{background canvas}{bg=white}
@@ -215,11 +215,13 @@
 
 \title[Proof Reconstruction in Classical Propositional Logic]
   {\textbf{Proof Reconstruction in Classical Propositional Logic}}
-\subtitle{(Work in Progress)}
+\subtitle{(work in progress)}
 \date{Agda Implementors’ Meeting XXV\\
-May 9-15th 2017}
+Teknikparken, Chalmers, Gothenburg, Sweden\\
+May 11 2017\\
+}
 \author[Jonathan Prieto-Cubides]{Jonathan Prieto-Cubides\\
-(Joint work with Andr\'es Sicard-Ram\'irez)}
+(joint work with Andr\'es Sicard-Ram\'irez)}
 \institute{
 Master in Applied Mathematics\\
 Universidad EAFIT\\
@@ -235,10 +237,10 @@ Medell\'in, Colombia}
 \titlepage
   \begin{tikzpicture}[overlay, remember picture]
    \tikzset{shift={(current page.center)}}
-    \node[xshift=-4.5cm,yshift=-3.5cm] (eafit)
+    \node[xshift=-4.7cm,yshift=-3.2cm] (eafit)
       {\includegraphics[width=0.2\textwidth]{figures/eafit}};
-    \node[xshift=4.5cm,yshift=-3cm] (chalmers)
-      {\includegraphics[width=0.18\textwidth]{figures/chalmers}};
+    \node[xshift=4.7cm,yshift=-3cm] (chalmers)
+      {\includegraphics[width=0.17\textwidth]{figures/chalmers}};
   \end{tikzpicture}
 \end{frame}
 
@@ -256,7 +258,7 @@ Medell\'in, Colombia}
 \only<3->{
 \node[right= 0.8cm of tptp, hyperlink node=metis] (metis)
   {\includegraphics[scale=0.7]{figures/metis}\,
-  \footnote{\url{http://www.gilith.com/software/metis}}
+  \footnote{\url{http://www.gilith.com/software/metis}.}
   };
 }
 \only<4->{
@@ -266,7 +268,7 @@ Medell\'in, Colombia}
 \only<5->{
 \node[below= 1.5cm of tstp, hyperlink node=athena] (athena)
   {\includegraphics[scale=0.7]{figures/athena}
-  \footnote{\url{http://github.com/jonaprieto/athena}}
+  \footnote{\url{http://github.com/jonaprieto/athena}.}
   };
 }
 \only<6->{
@@ -277,7 +279,7 @@ Medell\'in, Colombia}
 \only<7->{
 \node[left = 0.5cm of agdafile] (agda)
   {\includegraphics[scale=0.7]{figures/agda}
-  \footnote{\url{http://github.com/agda/agda}}
+  \footnote{\url{http://github.com/agda/agda}.}
   };
 }
 \only<8->{
@@ -344,7 +346,7 @@ Medell\'in, Colombia}
     {\includegraphics[width=0.15\textwidth]{figures/tptp}};
 
   \begin{itemize}
-  \item Is a language\footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/SyntaxBNF.html}}
+  \item Is a language\footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/SyntaxBNF.html}.}
         to encode problems \citep{Sut09}
   \item Is the input of the ATPs
   \item Annotated formulas with the form
@@ -357,7 +359,7 @@ language(name, role, formula).
       \item[\texttt{language}] FOF or CNF
       \item[\texttt{name}] to identify the formula within the problem
       \item[\texttt{role}] axiom, definition, hypothesis, conjecture
-      \item[\texttt{formula}] version in \texttt{TPTP} format
+      \item[\texttt{formula}] formula in \texttt{TPTP} format
     \end{itemize}
   \end{itemize}
 
@@ -369,7 +371,7 @@ language(name, role, formula).
 \begin{itemize}
   \item $p ⊢ p$
 \begin{tptp}
-fof(a, axiom, p).
+fof(myaxiom, axiom, p).
 fof(goal, conjecture, p).
 \end{tptp}
 
@@ -382,7 +384,7 @@ fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
 \end{frame}
 
 \begin{frame}[label=metis]{\texttt{Metis} Theorem Prover
-  \footnote{\url{http://www.gilith.com/software/metis/}}}
+  \footnote{\url{http://www.gilith.com/software/metis/}.}}
  \tikz[overlay,remember picture]
   \node at (0.92\textwidth, 0.5cm)
     {\includegraphics[width=0.15\textwidth]{figures/metis}};
@@ -396,7 +398,7 @@ fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
     \item Each refutation step is one of
       \hyperlink{metis-inference-rules}{\textit{six rules}}
     \item Reads problem in \hyperlink{tptp-syntax}{\texttt{TPTP} format}
-    \item Outputs detailed proofs in \hyperlink{tstp-syntax}{\texttt{TSTP} format}
+    \item Outputs \textit{detailed} proofs in \hyperlink{tstp-syntax}{\texttt{TSTP} format}
   \end{itemize}
 \end{block}
 \gobackreconstruction
@@ -404,8 +406,7 @@ fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
 
 
 \begin{frame}[fragile, label=metis-rules]{Inference Rules of \texttt{Metis}}
-\hyperlink{tstp-example}{TSTP} derivations by \texttt{Metis} exhibit these inferences
-\footnote{Inference rules found in proofs of Propositional Logic theorems}
+\hyperlink{tstp-example}{\texttt{TSTP}} derivations by \texttt{Metis} exhibit these inferences\footnote{Inference rules found in proofs of Propositional Logic theorems.}
 \vfill
 \begin{table}[!ht]
 \begin{center}
@@ -438,8 +439,7 @@ fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
   \node at (0.92\textwidth, -0.5cm)
     {\includegraphics[width=0.15\textwidth]{figures/tstp}};
 
-A \texttt{TSTP} derivation
-\footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/QuickGuide/Derivations.html}}
+A \texttt{TSTP} derivation\footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/QuickGuide/Derivations.html}.}
 \begin{itemize}
   \item Is a \hyperlink{tstp-dag}{\textbf{D}irected \textbf{A}cyclic \textbf{G}raph} where
   \begin{itemize}
@@ -461,7 +461,7 @@ where \texttt{\color{plum} source} typically is an inference record
 \begin{center}
 {\footnotesize
 \begin{tptp}
-inference(rule, useful info, parents)
+inference(rule, useful info, parents).
 \end{tptp}
 }
 \end{center}
@@ -475,7 +475,7 @@ inference(rule, useful info, parents)
  %    {\includegraphics[width=0.15\textwidth]{figures/metis}};
 
 \begin{itemize}
-  \item Proof found by \texttt{Metis} Prover for the problem $p ⊢ p$
+  \item Proof found by \texttt{Metis} for the problem $p ⊢ p$
 {\small
 \begin{tptp}
 $ metis --show proof problem.tptp
@@ -502,24 +502,23 @@ cnf(refute_0_0, plain, $false,
 
 
 \begin{frame}[fragile, label=tstp-dag]{DAG Example}
-
 \vfill
 By refutation, we proved $p ⊢ p$:
 \begin{center}
 \begin{prooftree}
 \AxiomC{$p$}
-\RightLabel{\texttt{\tiny assume}}
+\RightLabel{\texttt{\scriptsize assume}}
 \UnaryInfC{$p$}
-\RightLabel{\texttt{\tiny strip}}
+\RightLabel{\texttt{\scriptsize strip}}
 \UnaryInfC{$p$}
-\RightLabel{\texttt{\tiny negate}}
+\RightLabel{\texttt{\scriptsize negate}}
 \UnaryInfC{$¬ p$}
 \AxiomC{$p$}
-\RightLabel{\texttt{\tiny canonicalize}}
+\RightLabel{\texttt{\scriptsize canonicalize}}
 \UnaryInfC{$p$}
-\RightLabel{\texttt{\tiny simplify}}
+\RightLabel{\texttt{\scriptsize simplify}}
 \BinaryInfC{$⊥$}
-\RightLabel{\texttt{\tiny canonicalize}}
+\RightLabel{\texttt{\scriptsize canonicalize}}
 \UnaryInfC{$⊥$}
 
 \end{prooftree}
@@ -531,7 +530,7 @@ By refutation, we proved $p ⊢ p$:
 
 
 \begin{frame}[fragile, label=athena]{\texttt{Athena}
-  \footnote{\url{http://github.com/jonaprieto/athena}}}
+  \footnote{\url{http://github.com/jonaprieto/athena}.}}
 
  \begin{tikzpicture}[overlay,remember picture]
  \tikzset{shift={(current page.north)}, xshift=0cm,yshift=0cm}
@@ -540,11 +539,11 @@ By refutation, we proved $p ⊢ p$:
 \end{tikzpicture}
 
 Is a \texttt{Haskell} program
-that translates proofs given by \texttt{Metis} Prover
+that translates proofs given by \texttt{Metis}
 in \texttt{TSTP} format to \texttt{Agda} code\\
 
 \begin{itemize}
-    \item Parsing of \texttt{TSTP} language\footnote{\label{parsing}\url{https://github.com/agomezl/tstp2agda}}\textsuperscript{,}\footnote{\url{https://github.com/jonaprieto/tstp2agda}}
+    \item Parsing of \texttt{TSTP} language\footnote{\label{parsing}\url{https://github.com/agomezl/tstp2agda}.}\textsuperscript{,}\footnote{\url{https://github.com/jonaprieto/tstp2agda}.}
     \item Creation\textsuperscript{\ref{parsing}} and analysis of \hyperlink{tstp-dag}{\textbf{DAG}} derivations
     \item Analysis of inference rules used in the \texttt{TSTP} derivation
     \item \texttt{Agda} code generation
@@ -570,7 +569,7 @@ in \texttt{TSTP} format to \texttt{Agda} code\\
 \end{frame}
 
 \begin{frame}[fragile, label=agda-prop-2]{\texttt{Agda-Prop} Library
-  \footnote{\url{https://github.com/jonaprieto/agda-prop}}}
+  \footnote{\url{https://github.com/jonaprieto/agda-prop}.}}
 \begin{itemize}
   \item Intuitionistic Propositional Logic + PEM ($Γ ⊢ ϕ ∨ ¬ ϕ$)
   \item A data type for formulas
@@ -578,20 +577,20 @@ in \texttt{TSTP} format to \texttt{Agda} code\\
 
 \begin{minted}{cagda}
 data Prop : Set where
-  Var  : Fin n → Prop           -- Variables.
-  ⊤    : Prop                   -- Top (truth).
-  ⊥    : Prop                   -- Bottom (falsum).
-  _∧_  : (φ ψ : Prop) → Prop    -- Conjunction.
-  _∨_  : (φ ψ : Prop) → Prop    -- Disjunction.
-  _⇒_  : (φ ψ : Prop) → Prop    -- Implication.
-  _⇔_  : (φ ψ : Prop) → Prop    -- Biimplication.
-  ¬_   : (φ : Prop)   → Prop    -- Negation.
+  Var  : Fin n → Prop
+  ⊤    : Prop
+  ⊥    : Prop
+  _∧_  : (φ ψ : Prop) → Prop
+  _∨_  : (φ ψ : Prop) → Prop
+  _⇒_  : (φ ψ : Prop) → Prop
+  _⇔_  : (φ ψ : Prop) → Prop
+  ¬_   : (φ : Prop)   → Prop
 \end{minted}
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile, label=agda-prop]{\texttt{Agda-Prop} Library
-  \footnote{\url{https://github.com/jonaprieto/agda-prop}}}
+  \footnote{\url{https://github.com/jonaprieto/agda-prop}.}}
 \begin{itemize}
   \item A data type for theorems
   \vspace*{1mm}
@@ -623,7 +622,7 @@ subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
 
 
 \begin{frame}[fragile, label=agda-metis]{\texttt{Agda-Metis} Library
-  \footnote{\url{https://github.com/jonaprieto/agda-metis}}}
+  \footnote{\url{https://github.com/jonaprieto/agda-metis}.}}
 \vfill
 \begin{table}[!ht]
 \begin{center}
@@ -651,15 +650,14 @@ subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
 
 
 \begin{frame}[fragile, label=atp-conjunct]{\texttt{Agda-Metis}: Conjunct Inference
-  \footnote{\url{https://github.com/jonaprieto/agda-metis}}}
+  \footnote{\url{https://github.com/jonaprieto/agda-metis}.}}
 \begin{itemize}
 \item Definition
   \begin{equation*}
   \text{conjunct}(ϕ₁ ∧  ϕ₂ ∧ ⋯ ∧ \mathbf{ϕᵢ} ∧ ⋯ ∧ \phi_n, \mathbf{ϕᵢ}) ⟶ \mathbf{ϕᵢ}
   \end{equation*}
 
-\item Function\footnote{\label{note-conjunct}Excerpt from the \texttt{Agda-Metis}
-library available in  \texttt{ATP.Metis.Rules.Conjunct} module}:
+\item Function
 \vspace*{1mm}
 \begin{minted}{cagda}
 conjunct : Prop → Prop → Prop
@@ -669,12 +667,12 @@ conjunct (φ ∧ ψ) ω with ⌊ eq φ ω ⌋ | ⌊ eq ψ ω ⌋
 ... | false | false = conjunct φ ω
 conjunct φ ω        = φ
 \end{minted}
-\item Theorem\textsuperscript{\ref{note-conjunct}}
+\item Theorem
 \vspace*{1mm}
 \begin{minted}{cagda}
 atp-conjunct
   : ∀ {Γ} {φ}
-  → (ω :Prop)
+  → (ω : Prop)
   → Γ ⊢ φ
   → Γ ⊢ conjunct φ ω
 \end{minted}
@@ -794,27 +792,25 @@ cnf(refute_1_0, plain, ($false),
 \end{frame}
 
 \begin{frame}[fragile, label=verified-example]{$p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
+\vfill
 \begin{minted}{cagda}
 p, q, a, goal, subgoal₀, subgoal₁ : Prop
 
 -- Axiom.
-
 a = (p ∧ q)
 
 -- Premise.
-
 Γ : Ctxt
 Γ = [ a ]
 
 -- Conjecture.
-
 goal = (q ∧ p)
 
 -- Subgoals.
-
 subgoal₀ = q
 subgoal₁ = (q ⇒ p)
 \end{minted}
+\vfill
 \end{frame}
 
 \begin{frame}[fragile, label=verified-example-2]{$p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
@@ -870,22 +866,19 @@ proof₁ =
 \end{frame}
 
 \begin{frame}[fragile, label=verified-example-4]{$p ∧ q ⊢ q ∧ p$}{Reconstructed proof}
+\vfill
 \begin{minted}{cagda}
 -- Premise.
-
 Γ = [ a ]
 
 -- Conjecture.
-
 goal = (q ∧ p)
 
 -- Subgoals.
-
 subgoal₀ = q
 subgoal₁ = (q ⇒ p)
 
 -- Proof
-
 proof₀ : Γ ⊢ subgoal₀
 proof₁ : Γ ⊢ subgoal₁
 
@@ -895,11 +888,12 @@ proof =
     atp-splitGoal            -- q ∧ (q ⇒ p) ⇒ p
     (∧-intro proof₀ proof₁)
 \end{minted}
+\vfill
 \gobackreconstruction
 \end{frame}
 
-\begin{frame}[fragile, label=failure-example]{Bug\footnote{\url{https://github.com/gilith/metis/issues/2}} in the Printing of the Proof}
-  {\texttt{Metis}' v2.3 (release 20161108)}
+\begin{frame}[fragile, label=failure-example]{Bug\footnote{\url{https://github.com/gilith/metis/issues/2}.} in the Printing of the Proof}
+  {\texttt{Metis} v2.3 (release 20161108)}
 % {}
 \begin{tptp}
 $ cat problem.tptp
@@ -925,8 +919,8 @@ fof(normalize_2_4, plain, $false,
 \end{tptp}
 \end{frame}
 
-\begin{frame}[fragile, label=failure-example]{Bug in the Printing of the Proof}
-  {\texttt{Metis}' v2.3 (release 20161108) - Issue\footnote{\url{https://github.com/gilith/metis/issues/2}}}
+\begin{frame}[fragile, label=failure-example-2]{Bug in the Printing of the Proof}
+  {\texttt{Metis} v2.3 (release 20161108)}
 
 \[ φ := ¬ p ∧ (¬ q ⇔ ¬ r) ∧ (¬ p ⇔ (¬ q ⇔ ¬ r))\]
 
@@ -954,7 +948,7 @@ fof(normalize_2_4, plain, $false,
 \end{prooftree}
 \pause
 The bug was caused by the conversion of \texttt{Xor} sets to \texttt{Iff} lists.
-After reporting this, Joe fixed the printing of \texttt{canonicalize} inference rule
+After reporting this, Hurd fixed the printing of \texttt{canonicalize} inference rule
 \[ φ := ¬ p ∧ (¬ q ⇔ ¬ r) ∧ (¬ p ⇔ (¬ q ⇔ {\color{red} r}))\]
 \gobackreconstruction
 \end{frame}
@@ -964,7 +958,7 @@ After reporting this, Joe fixed the printing of \texttt{canonicalize} inference 
 \begin{block}{SledgeHammer} \citep{Paulson2007}
 \begin{itemize}
 \item \texttt{Isabelle}/\texttt{HOL} mature tool
-\item \texttt{Metis} ported within \texttt{Isabelle}
+\item \texttt{Metis} ported within \texttt{Isabelle/HOL}
 \item Reconstruct proofs of well-known ATPs: \texttt{EProver}, \texttt{Vampire},
 among others using \texttt{SystemOnTPTP} server
 \end{itemize}
@@ -977,7 +971,7 @@ among others using \texttt{SystemOnTPTP} server
     \item Equational Logic
     \item Reflection Layers
   \end{itemize}
-  \item Source code is not available\footnote{\url{http://simon-foster.staff.shef.ac.uk/agdaatp}}
+  \item Source code is not available\footnote{\url{http://simon-foster.staff.shef.ac.uk/agdaatp}.}
   \end{itemize}
 \end{block}
 \end{frame}
@@ -1009,7 +1003,7 @@ the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sic
 \only<2->{
   \node[right=1cm of agdafile] (eagda){
   \includegraphics[scale=0.8]{figures/eagda}
-  \footnote{\url{https://github.com/asr/eagda}}
+  \footnote{\url{https://github.com/asr/eagda}.}
   }
 };
 
@@ -1022,7 +1016,7 @@ the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sic
 \only<3->{
   \node[below=0.4cm of agdai] (apia){
   \includegraphics[scale=0.8]{figures/apia}
-  \footnote{\url{https://github.com/asr/apia}}}
+  \footnote{\url{https://github.com/asr/apia}.}}
   };
 
 \only<4->{
@@ -1031,10 +1025,10 @@ the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sic
 
 \only<5->{ \node[below = 0.8cm of apia] (atp)
   {\includegraphics[scale=0.8]{figures/atp}
-  \footnote{\url{http://github.com/jonaprieto/online-atps}}}
+  \footnote{\url{http://github.com/jonaprieto/online-atps}.}}
   };
 
-\only<7->{ \node[left= 3cm of atp, rectangle, text=white,fill=black, align=left, font=\tiny] (proved)
+\only<7->{ \node[left= 2cm of atp, rectangle, text=white,fill=black, align=left, font=\small] (proved)
 {
 \texttt{\$ agda Or.agda}\\
 \texttt{\$ apia Or.agda --atp=online-metis}\\
@@ -1052,16 +1046,16 @@ the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sic
 \end{frame}
 
 
-\begin{frame}[label=pending-work]{Pending Work}
+\begin{frame}[label=pending-work]{TODO}
 \begin{itemize}
-\item Complete implementation for \texttt{simplify} inference\footnote{\url{https://github.com/gilith/metis/issues/3}}
+\item Complete implementation for \texttt{simplify} inference\footnote{\url{https://github.com/gilith/metis/issues/3}.}
 \item Complete implementation for \texttt{canonicalize} inference: what
 normal form use to transform the formulas
 \item Complete implementation for Splitting a goal in a list of subgoals
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label=future-work]{Contributions and Future Work}
+\begin{frame}[label=contributions]{Contributions}
 \vfill
 \begin{table}[!ht]
 \begin{center}
@@ -1071,9 +1065,9 @@ normal form use to transform the formulas
 \hline
 \textbf{Name} & \textbf{Purpose} \\
 \hline
-\href{http://github.com/jonaprieto/agda-metis}{\texttt{Agda-Metis}}   & Implementation of \texttt{Metis}' inference rules\\
+\href{http://github.com/jonaprieto/agda-metis}{\texttt{Agda-Metis}}   & Implementation of \texttt{Metis} inference rules\\
 \href{http://github.com/jonaprieto/agda-prop}{\texttt{Agda-Prop}}     & Syntax and theorems of Classical Propositional Logic\\
-\href{http://github.com/jonaprieto/athena}{\texttt{Athena}}           & Translator for \texttt{Metis'} \texttt{TSTP} files to \texttt{Agda}\\
+\href{http://github.com/jonaprieto/athena}{\texttt{Athena}}           & Translator for \texttt{Metis} \texttt{TSTP} files to \texttt{Agda}\\
 \href{http://github.com/jonaprieto/online-atps}{\texttt{OnlineATPs}}  & Client to use ATPs from \texttt{SystemOnTPTP} of \texttt{TPTP} World\\
 \href{http://github.com/jonaprieto/prop-pack}{\texttt{Prop-Pack}}     & Collection of \texttt{TPTP} problems to test \texttt{Athena}\\[1ex]
 \hline
@@ -1083,7 +1077,9 @@ normal form use to transform the formulas
 \label{tab:library}
 \end{table}
 \vfill
+\end{frame}
 
+\begin{frame}[label=future-work]{Future Work}
 \begin{itemize}
   \item Integration with \texttt{Apia}
   \item Support First-Order Logic with Equality
@@ -1098,7 +1094,7 @@ normal form use to transform the formulas
 \end{frame}
 
 
-\begin{frame}[fragile,label=metis-inference-rules]{\texttt{Metis}' Inference Rules}
+\begin{frame}[fragile,label=metis-inference-rules]{\texttt{Metis} Inference Rules}
 \vfill
 \begin{prooftree}
 \AxiomC{}
