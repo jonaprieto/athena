@@ -303,6 +303,20 @@ Medell\'in, Colombia}
 \vfill
 \end{frame}
 
+\begin{frame}{Obstacles to Reconstruction with Automatic Provers \citep{Paulson2007}}
+\begin{itemize}
+\item \textit{Ambiguities}: their output typically omits crucial information,
+such as which term is affected by rewriting.
+\item \textit{Lack of standards}: automatic provers generate different output formats
+and employ a variety of inference systems
+\item \textit{Complexity}: a single automatic prover may use numerous inference rules with
+complicated behaviors
+\item \textit{Problem transformations}: ATPs re-order literals and make other changes to the clauses
+they are given
+\end{itemize}
+
+\end{frame}
+
 \begin{frame}[fragile, label=reconstruction]{Proof Reconstruction: Overview}
 \vfill
 \begin{tikzpicture}
@@ -362,8 +376,6 @@ language(name, role, formula).
       \item[\texttt{formula}] formula in \texttt{TPTP} format
     \end{itemize}
   \end{itemize}
-
-\gobackreconstruction
 \end{frame}
 
 \begin{frame}[fragile, label=tptp-examples]{\texttt{TPTP} Examples}
@@ -401,7 +413,6 @@ fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
     \item Outputs \textit{detailed} proofs in \hyperlink{tstp-syntax}{\texttt{TSTP} format}
   \end{itemize}
 \end{block}
-\gobackreconstruction
 \end{frame}
 
 
@@ -465,7 +476,6 @@ inference(rule, useful info, parents).
 \end{tptp}
 }
 \end{center}
-\gobackreconstruction
 \end{frame}
 
 \begin{frame}[fragile, label=tstp-example]{\texttt{TSTP} Example}
@@ -497,33 +507,39 @@ cnf(refute_0_0, plain, $false,
 \end{tptp}
 }
 \end{itemize}
-\gobackreconstruction
 \end{frame}
 
 
 \begin{frame}[fragile, label=tstp-dag]{DAG Example}
 \vfill
 By refutation, we proved $p ⊢ p$:
-\begin{center}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
 \begin{prooftree}
-\AxiomC{$p$}
+\AxiomC{}
 \RightLabel{\texttt{\scriptsize assume}}
-\UnaryInfC{$p$}
-\RightLabel{\texttt{\scriptsize strip}}
-\UnaryInfC{$p$}
-\RightLabel{\texttt{\scriptsize negate}}
 \UnaryInfC{$¬ p$}
-\AxiomC{$p$}
+\RightLabel{\texttt{\scriptsize strip}}
+\UnaryInfC{$¬ p$}
+\AxiomC{}
+\RightLabel{\texttt{\scriptsize axiom}}
+\UnaryInfC{$p$}
 \RightLabel{\texttt{\scriptsize canonicalize}}
 \UnaryInfC{$p$}
 \RightLabel{\texttt{\scriptsize simplify}}
 \BinaryInfC{$⊥$}
 \RightLabel{\texttt{\scriptsize canonicalize}}
 \UnaryInfC{$⊥$}
-
 \end{prooftree}
-% \includegraphics[height=0.8\textheight]{figures/derivation.png}
-\end{center}
+\end{column}
+\begin{column}{0.5\textwidth}  %%<--- here
+    \begin{center}
+    \includegraphics[height=0.8\textwidth]{figures/derivation.png}
+     \end{center}
+\end{column}
+\end{columns}
 \vfill
 \gobackreconstruction
 \end{frame}
@@ -565,7 +581,6 @@ in \texttt{TSTP} format to \texttt{Agda} code\\
 \end{table}
 
 \end{itemize}
-\gobackreconstruction
 \end{frame}
 
 \begin{frame}[fragile, label=agda-prop-2]{\texttt{Agda-Prop} Library
@@ -749,7 +764,6 @@ fof(goal, conjecture, q & p).
 \end{columns}
 
 \end{itemize}
-\gobackreconstruction
 \end{frame}
 
 \begin{frame}[fragile, allowframebreaks]{\texttt{TSTP} Derivation}
