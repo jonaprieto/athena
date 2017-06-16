@@ -118,7 +118,7 @@
 \setbeamercolor{normal text}{fg=black}
 
 % \setbeamercolor{institute}{fg=blu}
-\setbeamercolor{title}{fg=plum!80!black}
+\setbeamercolor{title}{fg=blu}
 % \setbeamercolor{subtitle}{fg=blu}
 
 % \setbeamercolor{titlelike}{fg=blu}
@@ -201,7 +201,7 @@
   , natbib=true
   , sortlocale=en_US
   , style=authoryear-icomp
-  , url=false
+  , url=true
 ]{biblatex}
 \addbibresource{ref.bib}
 \renewcommand*{\nameyeardelim}{\addcomma\addspace}
@@ -216,9 +216,7 @@
 \title[Proof Reconstruction in Classical Propositional Logic]
   {\textbf{Proof Reconstruction in Classical Propositional Logic}}
 \subtitle{(work in progress)}
-\date{Agda Implementors’ Meeting XXV\\
-Teknikparken, Chalmers, Gothenburg, Sweden\\
-11 May2017\\
+\date{May 11, 2017
 }
 \author[Jonathan Prieto-Cubides]{Jonathan Prieto-Cubides\\
 (joint work with Andr\'es Sicard-Ram\'irez)}
@@ -243,6 +241,44 @@ Medell\'in, Colombia}
       {\includegraphics[width=0.17\textwidth]{figures/chalmers}};
   \end{tikzpicture}
 \end{frame}
+
+\begin{frame}[fragile, label=reconstruction]{Proof Reconstruction: Overview}
+\vfill
+\begin{tikzpicture}
+\node(problem) at (0,0)
+   {\includegraphics[scale=0.7]{figures/problem}};
+\node[right = 0.8cm of problem, hyperlink node=tptp-syntax](tptp){
+\includegraphics[scale=0.7]{figures/tptp}
+};
+\node[right= 0.8cm of tptp, hyperlink node=metis] (metis)
+  {\includegraphics[scale=0.7]{figures/metis}};
+\node[right= 0.8cm of metis, hyperlink node=tstp-syntax] (tstp)
+  {\includegraphics[scale=0.7]{figures/tstp}};
+\node[below= 1.5cm of tstp, hyperlink node=athena] (athena)
+  {\includegraphics[scale=0.7]{figures/athena}};
+\node[left = 0.6cm of athena, hyperlink node=agda-file] (agdafile)
+  {\includegraphics[scale=0.7]{figures/agdafile}};
+\node[left = 0.5cm of agdafile] (agda)
+  {\includegraphics[scale=0.7]{figures/agda}};
+\node[below = 0.18cm of problem, hyperlink node=verified-example] (verified)
+  {\includegraphics[scale=0.7]{figures/verified}};
+\node[below = 0.18cm of verified, opacity=0.5, hyperlink node=failure-example] (failure)
+  {\includegraphics[scale=0.7]{figures/failure}};
+
+\draw[->, thick] (problem) to (tptp);
+\draw[->, thick] (tptp) to (metis);
+\draw[->, thick] (metis) to (tstp);
+\draw[->, thick] (tstp) to (athena);
+\draw[->, thick] (athena) to (agdafile);
+\draw[->, thick] (agdafile) to (agda);
+\draw[->, thick] (agda) to (verified);
+\draw[->, thick, gray] (agda) to (failure);
+\end{tikzpicture}
+\vfill
+\end{frame}
+
+
+% Now each step paused.
 
 \begin{frame}[fragile, label=overview]{Proof Reconstruction: Overview}
 \vfill
@@ -545,8 +581,7 @@ By refutation, we proved $p ⊢ p$:
 \end{frame}
 
 
-\begin{frame}[fragile, label=athena]{\texttt{Athena}
-  \footnote{\url{http://github.com/jonaprieto/athena}.}}
+\begin{frame}[fragile, label=athena]{\texttt{Athena}~\citep{Athena}}
 
  \begin{tikzpicture}[overlay,remember picture]
  \tikzset{shift={(current page.north)}, xshift=0cm,yshift=0cm}
@@ -559,7 +594,7 @@ that translates proofs given by \texttt{Metis}
 in \texttt{TSTP} format to \texttt{Agda} code\\
 
 \begin{itemize}
-    \item Parsing of \texttt{TSTP} language\footnote{\label{parsing}\url{https://github.com/agomezl/tstp2agda}.}\textsuperscript{,}\footnote{\url{https://github.com/jonaprieto/tstp2agda}.}
+    \item Parsing of \texttt{TSTP} language\footnote{\label{parsing}\url{https://github.com/agomezl/tstp2agda}.}
     \item Creation\textsuperscript{\ref{parsing}} and analysis of \hyperlink{tstp-dag}{\textbf{DAG}} derivations
     \item Analysis of inference rules used in the \texttt{TSTP} derivation
     \item \texttt{Agda} code generation
@@ -604,8 +639,7 @@ data Prop : Set where
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile, label=agda-prop]{\texttt{Agda-Prop} Library
-  \footnote{\url{https://github.com/jonaprieto/agda-prop}.}}
+\begin{frame}[fragile, label=agda-prop]{\texttt{Agda-Prop} Library~\citep{AgdaProp}}
 \begin{itemize}
   \item A data type for theorems
   \vspace*{1mm}
@@ -637,7 +671,7 @@ subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
 
 
 \begin{frame}[fragile, label=agda-metis]{\texttt{Agda-Metis} Library
-  \footnote{\url{https://github.com/jonaprieto/agda-metis}.}}
+  ~\citep{AgdaMetis}}
 \vfill
 \begin{table}[!ht]
 \begin{center}
@@ -650,7 +684,7 @@ subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
 \texttt{canonicalize} & transforms formulas to CNF, DNF or NNF &\texttt{atp-canonicalize}\\
 \texttt{clausify} & performs clausification &\texttt{atp-clausify}\\
 \hyperlink{atp-conjunct}{\texttt{conjunct}} & takes a formula from a conjunction &\hyperlink{atp-conjunct}{\texttt{atp-conjunct}}\\
-\texttt{negate} & applies negation to the formula &\texttt{atp-negate}\\
+\texttt{negate} & append negation symbol to the formula &\texttt{atp-negate}\\
 \texttt{resolve} & applies theorems of resolution &\texttt{atp-resolve}\\
 \texttt{simplify} & applies over a list of formula to simplify them &\texttt{atp-simplify}\\
 \texttt{strip} & splits a formula into subgoals &\texttt{atp-strip}\\[1ex]
@@ -665,58 +699,148 @@ subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
 
 
 \begin{frame}[fragile, label=atp-conjunct]{\texttt{Agda-Metis}: Conjunct Inference
-  \footnote{\url{https://github.com/jonaprieto/agda-metis}.}}
+  \footnote{\url{https://github.com/jonaprieto/agda-metis}.}
+  }
+
+\vfill
 \begin{itemize}
 \item Definition
-  \begin{equation*}
-  \text{conjunct}(ϕ₁ ∧  ϕ₂ ∧ ⋯ ∧ \mathbf{ϕᵢ} ∧ ⋯ ∧ \phi_n, \mathbf{ϕᵢ}) ⟶ \mathbf{ϕᵢ}
-  \end{equation*}
+\begin{equation*}
+\text{\color{plum!40!black}conjunct}(ϕ₁ ∧ ⋯ ∧ \phi_n, \omega)
+= \begin{cases}
+\phi_{i} \ \ \ \ \text{if }\omega\text{ is equal to some }\phi_i\\
+\phi    \ \ \ \ \text{otherwise}
+\end{cases}
+\end{equation*}
 
-\item Function
-\vspace*{1mm}
+\pause
+\item Inference rules involved
+\begin{center}
+\begin{columns}
+\begin{column}{0.45\textwidth}
+
+ \begin{prooftree}
+  \AxiomC{$ϕ ∧ ψ$}
+  \RightLabel{\scriptsize $∧$-\texttt{proj}$₁$}
+  \UnaryInfC{$ϕ$}
+  \end{prooftree}
+\end{column}
+
+\begin{column}{0.45\textwidth}
+ \begin{prooftree}
+  \AxiomC{$ϕ ∧ ψ$}
+  \RightLabel{\scriptsize $∧$-\texttt{proj}$₂$}
+  \UnaryInfC{$ψ$}
+  \end{prooftree}
+\end{column}
+
+\begin{column}{0.1\textwidth}  %%<--- here
+   \begin{tikzpicture}[overlay, remember picture, scale=2]
+% \tikzset{shift={(current page.north)}, xshift=cm,yshift=-2cm}
+\node[vertex, fill=black] (d1) {};
+\node[vertex, fill=black, below left=0.2cm and 0.1cm of d1] (d2) {};
+\node[vertex, fill=black, below right=0.2cm and 0.1cm of d1] (d3) {};
+
+\node[vertex, fill=black, below left=0.2cm and 0.1cm of d3] (q) {};
+\node[vertex, fill=black, below right=0.2cm and 0.1cm of d3] (w) {};
+
+\node[vertex, fill=black, below right=0.2cm and 0.1cm of q] (s) {};
+
+\draw[-, thick] (d1) to (d2);
+\draw[-, thick] (d1) to (d3);
+\draw[-, thick] (d3) to (q);
+\draw[-, thick] (d3) to (w);
+\draw[-, thick] (q) to (s);
+\end{tikzpicture}
+\end{column}
+\end{columns}
+\end{center}
+\vskip 2mm
+
+\item Target example
+\[ φ := (¬ p ∧ (¬ q ⇔ ¬ r)) ∧ (p ∧ (¬ q ⇔ ¬r))\]
+
+\begin{itemize}
+
+\item
 \begin{minted}{cagda}
-conjunct : Prop → Prop → Prop
-conjunct (φ ∧ ψ) ω with ⌊ eq φ ω ⌋ | ⌊ eq ψ ω ⌋
-... | true  | _     = φ
-... | false | true  = ψ
-... | false | false = conjunct φ ω
-conjunct φ ω        = φ
+ conjunct(φ , ¬ q) ≡ ϕ
 \end{minted}
-\item Theorem
-\vspace*{1mm}
+\vskip 3mm
+\item
 \begin{minted}{cagda}
-atp-conjunct
-  : ∀ {Γ} {φ}
-  → (ω : Prop)
-  → Γ ⊢ φ
-  → Γ ⊢ conjunct φ ω
+ conjunct(φ , ¬ q ⇔ ¬ r) ≡ ¬ q ⇔ ¬ r
 \end{minted}
+\vskip 3mm
+
+\item
+\begin{minted}{cagda}
+ conjunct(φ , p)   ≡ p
+\end{minted}
+
+\end{itemize}
+
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile, label=atp-conjunct]
 
-\begin{frame}[fragile, label=atp-conjunct-proof]{A proof of \texttt{atp-conjunct} theorem}
+\begin{minted}{cagda}
+data ConjView : Prop → Set where
+  conj  : (φ₁ φ₂ : Prop) → ConjView (φ₁ ∧ φ₂)
+  other : (φ : Prop)     → ConjView φ
+
+conj-view : (φ : Prop) → ConjView φ
+conj-view (φ ∧ ψ) = conj _ _
+conj-view φ       = other _
+
+data Step  : Set where
+  pick  : Step
+  proj₁ : Step
+  proj₂ : Step
+
+Path : Set
+Path = List Step
+
+conjunct-path : (φ : Prop) → (ω : Prop) → Path → Path
+conjunct-path φ ω path with ⌊ eq φ ω ⌋
+... | true  = path ∷ʳ pick
+... | false with conj-view φ
+...   | other _   = []
+...   | conj φ₁ φ₂ with conjunct-path φ₁ ω []
+...     | subpath@(_ ∷ _) = (path ∷ʳ proj₁) ++ subpath
+...     | [] with conjunct-path φ₂ ω []
+...         | subpath@(_ ∷ _) = (path ∷ʳ proj₂) ++ subpath
+...         | []              = []
+\end{minted}
+
+\end{frame}
+
+
+\begin{frame}[fragile, label=atp-conjunct-proof]{The \texttt{conjunct} function and its theorem, \texttt{atp-conjunct}}
 \vfill
 \begin{minted}{cagda}
+conjunct : (φ : Prop) → (ω : Prop) → Prop
+conjunct φ ω with conj-view φ | conjunct-path φ ω []
+... | _          | []           = φ
+... | conj φ₁ φ₂ | pick  ∷ path = φ
+... | conj φ₁ φ₂ | proj₁ ∷ path = conjunct φ₁ ω
+... | conj φ₁ φ₂ | proj₂ ∷ path = conjunct φ₂ ω
+... | other .φ   | _            = φ
+
 atp-conjunct
   : ∀ {Γ} {φ}
   → (ω : Prop)
   → Γ ⊢ φ
   → Γ ⊢ conjunct φ ω
 
-atp-conjunct {Γ} {φ ∧ ψ} ω Γ⊢φ
-  with ⌊ eq φ ω ⌋ | ⌊ eq ψ ω ⌋
-... | true  | _     = ∧-proj₁ Γ⊢φ
-... | false | true  = ∧-proj₂ Γ⊢φ
-... | false | false =
-  atp-conjunct {Γ = Γ} {φ = φ} ω (∧-proj₁ Γ⊢φ)
-atp-conjunct {_} {Var x}  _ = id
-atp-conjunct {_} {⊤}      _ = id
-atp-conjunct {_} {⊥}      _ = id
-atp-conjunct {_} {φ ∨ ψ}  _ = id
-atp-conjunct {_} {φ ⇒ ψ}  _ = id
-atp-conjunct {_} {φ ⇔ ψ}  _ = id
-atp-conjunct {_} {¬ φ}    _ = id
+atp-conjunct {Γ} {φ} ω Γ⊢φ
+  with conj-view φ | conjunct-path φ ω []
+...  | _          | []           = Γ⊢φ
+...  | conj φ₁ φ₂ | pick  ∷ path = Γ⊢φ
+...  | conj φ₁ φ₂ | proj₁ ∷ path = atp-conjunct ω (∧-proj₁ Γ⊢φ)
+...  | conj φ₁ φ₂ | proj₂ ∷ path = atp-conjunct ω (∧-proj₂ Γ⊢φ)
+...  | other .φ   | (_ ∷ _)      = Γ⊢φ
 \end{minted}
 \vfill
 \gobackreconstruction
@@ -729,39 +853,20 @@ atp-conjunct {_} {¬ φ}    _ = id
   \item The problem is $p ∧ q ⊢ q ∧ p$
   \item In \texttt{TPTP} format
 \begin{tptp}
+$ cat problem.tptp
 fof(a, axiom, p & q).
 fof(goal, conjecture, q & p).
 \end{tptp}
-  \item A natural deduction proof
-\begin{columns}
-\begin{column}{0.8\textwidth}
- \begin{prooftree}
-  \AxiomC{$ϕ ∧ ψ$}
-  \RightLabel{$∧$-\texttt{proj}$₁$}
-  \UnaryInfC{$ϕ$}
-
-  \AxiomC{$ϕ ∧ ψ$}
-  \RightLabel{$∧$-\texttt{proj}$₂$}
-  \UnaryInfC{$ψ$}
-  \RightLabel{$∧$-\texttt{intro}}
-  \BinaryInfC{$ψ ∧ ϕ$}
-  \end{prooftree}
-\end{column}
-\begin{column}{0.2\textwidth}  %%<--- here
-   \begin{tikzpicture}[overlay, remember picture, scale=2]
-% \tikzset{shift={(current page.north)}, xshift=cm,yshift=-2cm}
-\node[vertex, fill=black] (d1) {};
-\node[vertex, fill=black, right=0.5cm of d1 ] (d2) {};
-\node[vertex, fill=black, below=0.2cm of d1] (d3) {};
-\node[vertex, fill=black, below=0.2cm of d2] (d4) {};
-\node[vertex, fill=black, below right= 0.2cm and  0.25cm of d3] (d5) {};
-\draw[-, thick] (d1) to (d3);
-\draw[-, thick] (d2) to (d4);
-\draw[-, thick] (d3) to (d5);
-\draw[-, thick] (d4) to (d5);
+  \item How to use Athena with your problem
+  \vspace*{5mm}
+\begin{tikzpicture}
+\node[rectangle, text=white,fill=black, align=left, font=\small]
+{
+\texttt{\$ metis --show proof problem.tptp > problem.tstp}\hspace{1cm}\\
+\texttt{\$ athena problem.tstp}\\
+\texttt{\$ agda problem.agda}
+  };
 \end{tikzpicture}
-\end{column}
-\end{columns}
 
 \end{itemize}
 \end{frame}
@@ -1077,13 +1182,13 @@ normal form use to transform the formulas
 {\renewcommand{\arraystretch}{1.3}%
 \begin{tabular}{|ll|}
 \hline
-\textbf{Name} & \textbf{Purpose} \\
+\textbf{Name} & \textbf{References} \\
 \hline
-\href{http://github.com/jonaprieto/agda-metis}{\texttt{Agda-Metis}}   & Implementation of \texttt{Metis} inference rules\\
-\href{http://github.com/jonaprieto/agda-prop}{\texttt{Agda-Prop}}     & Syntax and theorems of Classical Propositional Logic\\
-\href{http://github.com/jonaprieto/athena}{\texttt{Athena}}           & Translator for \texttt{Metis} \texttt{TSTP} files to \texttt{Agda}\\
-\href{http://github.com/jonaprieto/online-atps}{\texttt{OnlineATPs}}  & Client to use ATPs from \texttt{SystemOnTPTP} of \texttt{TPTP} World\\
-\href{http://github.com/jonaprieto/prop-pack}{\texttt{Prop-Pack}}     & Collection of \texttt{TPTP} problems to test \texttt{Athena}\\[1ex]
+\href{http://github.com/jonaprieto/agda-metis}{\texttt{Agda-Metis}}   & \citep{AgdaMetis}\\
+\href{http://github.com/jonaprieto/agda-prop}{\texttt{Agda-Prop}}     & \citep{AgdaProp}\\
+\href{http://github.com/jonaprieto/athena}{\texttt{Athena}}           & \citep{Athena}\\
+\href{http://github.com/jonaprieto/online-atps}{\texttt{OnlineATPs}}  & \citep{OnlineATPs}\\
+\href{http://github.com/jonaprieto/prop-pack}{\texttt{Prop-Pack}}     & \citep{ProPack}\\[1ex]
 \hline
 \end{tabular}}
 }
