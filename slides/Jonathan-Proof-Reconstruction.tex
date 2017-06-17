@@ -825,7 +825,7 @@ conjunct-path φ ψ path with ⌊ eq φ ψ ⌋
 \begin{frame}[fragile, label=atp-conjunct-proof]{The \texttt{conjunct} function and its theorem, \texttt{atp-conjunct}}
 \vfill
 \begin{minted}{cagda}
-conjunct : (φ ψ : Prop) → Prop
+conjunct : Prop → Prop → Prop
 conjunct φ ψ with conj-view φ | conjunct-path φ ψ []
 ... | _          | []        = φ
 ... | conj _ _   | pick  ∷ _ = φ
