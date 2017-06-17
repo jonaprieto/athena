@@ -218,8 +218,7 @@
 \title[Proof Reconstruction in Classical Propositional Logic]
   {\textbf{Proof Reconstruction in Classical Propositional Logic}}
 \subtitle{(work in progress)}
-\date{May 11, 2017
-}
+\date{May 11, 2017\\Updated: \today}
 \author[Jonathan Prieto-Cubides]{Jonathan Prieto-Cubides\\
 (joint work with Andr\'es Sicard-Ram\'irez)}
 \institute{
@@ -708,10 +707,10 @@ subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
 \begin{itemize}
 \item Definition
 \begin{equation*}
-\text{\color{plum!40!black}conjunct}(\overbrace{ϕ₁ ∧ ⋯ ∧ \phi_n}^{\phi}, \psi)
+\text{\color{plum!40!black}conjunct}(\overbrace{\varphi_1 ∧ ⋯ ∧ \varphi_n}^{\varphi}, \psi)
 = \begin{cases}
-\phi_{i} \ \ \ \ \text{if }\psi\text{ is equal to some }\phi_i\\
-\phi    \ \ \ \ \text{otherwise}
+\varphi_{i} \ \ \ \ \text{if }\psi\text{ is equal to some }\varphi_i\\
+\varphi    \ \ \ \ \text{otherwise}
 \end{cases}
 \end{equation*}
 
@@ -722,17 +721,17 @@ subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
 \begin{column}{0.42\textwidth}
 
  \begin{prooftree}
-  \AxiomC{$ϕ₁ ∧ φ₂$}
+  \AxiomC{$\varphi_1 ∧ \varphi_2$}
   \RightLabel{\scriptsize $∧$-\texttt{proj}$₁$}
-  \UnaryInfC{$ϕ₁$}
+  \UnaryInfC{$\varphi_1$}
   \end{prooftree}
 \end{column}
 
 \begin{column}{0.42\textwidth}
  \begin{prooftree}
-  \AxiomC{$ϕ₁ ∧ φ₂$}
+  \AxiomC{$\varphi_1 ∧ \varphi_2$}
   \RightLabel{\scriptsize $∧$-\texttt{proj}$₂$}
-  \UnaryInfC{$φ₂$}
+  \UnaryInfC{$\varphi₂$}
   \end{prooftree}
 \end{column}
 
@@ -749,14 +748,14 @@ subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
   , remember picture
     , transform canvas={scale=.75}
     ]
-  \tikzset{shift={(current page.center)}, xshift=4.5cm,yshift=1cm}
+  \tikzset{shift={(current page.center)}, xshift=4.5cm,yshift=0cm}
     
 
-  \node[state]  (phi)                     {$φ$};
-  \node[state]  (phi1) [below left =1.3cm and 0.1cm of phi]  {$φ₁$};
-  \node[state]  (phi2) [below right=1.3cm and 0.1cm of phi]  {$φ₂$};
-  \node[state]  (phi3)  [below left =1.3cm and 0.1cm of phi2]  {$φ₃$};
-  \node[state]  (phi4)  [below right =1.3cm and 0.1cm of phi2]  {$φ₄$};
+  \node[state]  (phi)                     {$\varphi$};
+  \node[state]  (phi1) [below left =1.3cm and 0.1cm of phi]  {$\varphi_1$};
+  \node[state]  (phi2) [below right=1.3cm and 0.1cm of phi]  {$\varphi_2$};
+  \node[state]  (phi3)  [below left =1.3cm and 0.1cm of phi2]  {$\varphi_3$};
+  \node[state]  (phi4)  [below right =1.3cm and 0.1cm of phi2]  {$\varphi_4$};
 
   \path[every node/.style={sloped,anchor=south,auto=false}]
         (phi) edge node {\tiny $∧$-\texttt{proj}$₁$} (phi1)            
@@ -771,18 +770,18 @@ subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
 \vskip 2mm
 
 \item Example
-\[ φ := φ₁ ∧ \overbrace{(φ₃ ∧ φ₄)}^{φ₂}\]
+\[ \varphi := \varphi_1 ∧ \overbrace{(\varphi_3 ∧ \varphi_4)}^{\varphi_2}\]
 
 \begin{itemize}
 
 \item
-\texttt{conjunct}$(φ , φ₃ ∧ φ₁) ≡ ϕ$
+\texttt{conjunct}$(\varphi , \varphi_3 ∧ \varphi_1) ≡ \varphi$
 \vskip 3mm
 \item
-\texttt{conjunct}$(φ , φ₃)      ≡ ϕ₃$
+\texttt{conjunct}$(\varphi , \varphi_3)      ≡ \varphi_3$
 \vskip 3mm
 \item
-\texttt{conjunct}$(φ , φ₂)      ≡ ϕ₂$
+\texttt{conjunct}$(\varphi , \varphi_2)      ≡ \varphi_2$
 \vskip 3mm
 \end{itemize}
 
@@ -800,7 +799,7 @@ conj-view : (φ : Prop) → ConjView φ
 conj-view (φ ∧ ψ) = conj _ _
 conj-view φ       = other _
 
-data Step  : Set where
+data Step : Set where
   pick  : Step
   proj₁ : Step
   proj₂ : Step
@@ -812,12 +811,12 @@ conjunct-path : (φ ψ : Prop) → Path → Path
 conjunct-path φ ψ path with ⌊ eq φ ψ ⌋
 ... | true  = path ∷ʳ pick
 ... | false with conj-view φ
-...   | other _   = []
+...   | other _ = []
 ...   | conj φ₁ φ₂ with conjunct-path φ₁ ψ []
 ...     | subpath@(_ ∷ _) = (path ∷ʳ proj₁) ++ subpath
 ...     | [] with conjunct-path φ₂ ψ []
-...         | subpath@(_ ∷ _) = (path ∷ʳ proj₂) ++ subpath
-...         | []              = []
+...          | subpath@(_ ∷ _) = (path ∷ʳ proj₂) ++ subpath
+...          | []              = []
 \end{minted}
 
 \end{frame}
@@ -828,25 +827,25 @@ conjunct-path φ ψ path with ⌊ eq φ ψ ⌋
 \begin{minted}{cagda}
 conjunct : (φ ψ : Prop) → Prop
 conjunct φ ψ with conj-view φ | conjunct-path φ ψ []
-... | _          | []           = φ
-... | conj _ _ | pick  ∷ path = φ
-... | conj φ₁ _ | proj₁ ∷ path = conjunct φ₁ ψ
-... | conj _ φ₂ | proj₂ ∷ path = conjunct φ₂ ψ
-... | other .φ   | _            = φ
+... | _          | []        = φ
+... | conj _ _   | pick  ∷ _ = φ
+... | conj φ₁ _  | proj₁ ∷ _ = conjunct φ₁ ψ
+... | conj _ φ₂  | proj₂ ∷ _ = conjunct φ₂ ψ
+... | other .φ   | _         = φ
 
 atp-conjunct
   : ∀ {Γ} {φ}
-  → Γ ⊢ φ
   → (ψ : Prop)
+  → Γ ⊢ φ
   → Γ ⊢ conjunct φ ψ
 
-atp-conjunct {Γ} {φ} Γ⊢φ ψ
+atp-conjunct {Γ} {φ} ψ Γ⊢φ
   with conj-view φ | conjunct-path φ ψ []
-...  | _          | []           = Γ⊢φ
-...  | conj φ₁ φ₂ | pick  ∷ path = Γ⊢φ
-...  | conj φ₁ φ₂ | proj₁ ∷ path = atp-conjunct ψ (∧-proj₁ Γ⊢φ)
-...  | conj φ₁ φ₂ | proj₂ ∷ path = atp-conjunct ψ (∧-proj₂ Γ⊢φ)
-...  | other .φ   | (_ ∷ _)      = Γ⊢φ
+...  | _           | []        = Γ⊢φ
+...  | conj _ _    | pick  ∷ _ = Γ⊢φ
+...  | conj _ _    | proj₁ ∷ _ = atp-conjunct ψ (∧-proj₁ Γ⊢φ)
+...  | conj _ _    | proj₂ ∷ _ = atp-conjunct ψ (∧-proj₂ Γ⊢φ)
+...  | other _     | (_ ∷ _)   = Γ⊢φ
 \end{minted}
 \vfill
 \gobackreconstruction
@@ -918,18 +917,18 @@ cnf(refute_1_0, plain, ($false),
 p, q, a, goal, subgoal₀, subgoal₁ : Prop
 
 -- Axiom.
-a = (p ∧ q)
+a = p ∧ q
 
 -- Premise.
 Γ : Ctxt
 Γ = [ a ]
 
 -- Conjecture.
-goal = (q ∧ p)
+goal = q ∧ p
 
 -- Subgoals.
 subgoal₀ = q
-subgoal₁ = (q ⇒ p)
+subgoal₁ = q ⇒ p
 \end{minted}
 \vfill
 \end{frame}
@@ -938,7 +937,7 @@ subgoal₁ = (q ⇒ p)
 \vfill
 \begin{minted}{cagda}
 a : Prop
-a = (p ∧ q)
+a = p ∧ q
 
 subgoal₀ : Prop
 subgoal₀ = q
@@ -963,7 +962,7 @@ proof₀ =
 \vfill
 \begin{minted}{cagda}
 subgoal₁ : Prop
-subgoal₁ = (q ⇒ p)
+subgoal₁ = q ⇒ p
 
 proof₁ : Γ ⊢ subgoal₁
 proof₁ =
@@ -993,11 +992,11 @@ proof₁ =
 Γ = [ a ]
 
 -- Conjecture.
-goal = (q ∧ p)
+goal = q ∧ p
 
 -- Subgoals.
 subgoal₀ = q
-subgoal₁ = (q ⇒ p)
+subgoal₁ = q ⇒ p
 
 -- Proof
 proof₀ : Γ ⊢ subgoal₀
