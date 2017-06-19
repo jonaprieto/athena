@@ -7,49 +7,32 @@
 
 ## Quick Start
 
-##### Requirements
+For a more detailed explanation about how Athena is about, we invite you
+to see our last [talk](https://github.com/jonaprieto/athena/raw/master/slides/Jonathan-Proof-Reconstruction.pdf)
+
+
+##### Installing
 
 Athena was tested with:
 
 * GHC v8.0.2
-* [Agda][agda] v2.5.2+
+* [Agda][agda] v2.5.2
 
-To install Metis ATP, we recommend use a client of TPTP World:
+To run Athena, you will to install Metis ATP locally. If you
+have some problem install it, we recommend to use our client for TPTP World:
 * [OnlineATPs][online-atps]
 
-But you would probably want to install [Metis][metis] ATP locally.
-
-Lastly, Athena needs these Agda libraries:
-
-* [agda-prop][agda-prop]
-* [agda-metis][agda-metis]
-
-##### Installing
-
-After satisfies all requirements, we can install Athena running:
+Now, installing Athena is very easy, just run this in your terminal:
 
 ```
 $ git clone https://github.com/jonaprieto/athena.git
 $ cd athena
-$ cabal install
+$ make install
 ```
 
-##### Testing
+While running, you should see generation of TPTP problems, its solutions, and
+reconstruction of these problems. Some of these problems were type-checked with Agda.
 
-```bash
-$ make basic
-```
-
-Many errors could show if you don't install the Agda libraries above listed.
-Make you sure the Agda file to manage the libraries looks similar to this one:
-
-```
-$ cat ~/.agda/libraries
-/Users/jonaprieto/agda-stdlib/standard-library.agda-lib
-/Users/jonaprieto/agda-prop/agda-prop.agda-lib
-/Users/jonaprieto/agda-metis/agda-metis.agda-lib
-/Users/jonaprieto/athena/test/test.agda-lib
-```
 
 [diagram]: https://raw.githubusercontent.com/jonaprieto/athena/master/slides/diagram.png
 [haskell]: http://www.haskell.org

@@ -1,17 +1,12 @@
-
-
 .PHONY : tex
 tex :
 	make clean
-	xelatex -shell-escape slides.tex
-	biber slides.bcf
-	xelatex -shell-escape slides.tex
-	make clean
-	open slides.pdf
+	latexmk -pvc -xelatex -shell-escape Jonathan-Proof-Reconstruction.tex
 
 
 .PHONY: clean
 clean :
+	@latexmk -c
 	@rm -f *.vrb
 	@rm -f *.nav
 	@rm -f *.aux
@@ -24,6 +19,8 @@ clean :
 	@rm -f *out
 	@rm -f *bcf
 	@rm -f *blg
+	@rm -f *.xdv
 	@rm -Rf _*
+	@rm -Rf auto
 
 default: tex

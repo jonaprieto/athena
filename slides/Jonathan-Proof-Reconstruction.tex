@@ -22,6 +22,8 @@
 % --------------------------------------------------------------------------
 \usepackage{tikz}
 \usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{automata}
 \usetikzlibrary{calc}
 \usepackage{rotating}
 
@@ -216,8 +218,7 @@
 \title[Proof Reconstruction in Classical Propositional Logic]
   {\textbf{Proof Reconstruction in Classical Propositional Logic}}
 \subtitle{(work in progress)}
-\date{May 11, 2017
-}
+\date{May 11, 2017\\Updated: \today}
 \author[Jonathan Prieto-Cubides]{Jonathan Prieto-Cubides\\
 (joint work with Andr\'es Sicard-Ram\'irez)}
 \institute{
@@ -242,7 +243,7 @@ Medell\'in, Colombia}
   \end{tikzpicture}
 \end{frame}
 
-\begin{frame}[fragile, label=reconstruction]{Proof Reconstruction: Overview}
+\begin{frame}[fragile]{Proof Reconstruction: Overview}
 \vfill
 \begin{tikzpicture}
 \node(problem) at (0,0)
@@ -627,14 +628,14 @@ in \texttt{TSTP} format to \texttt{Agda} code\\
 
 \begin{minted}{cagda}
 data Prop : Set where
-  Var  : Fin n → Prop
-  ⊤    : Prop
-  ⊥    : Prop
-  _∧_  : (φ ψ : Prop) → Prop
-  _∨_  : (φ ψ : Prop) → Prop
-  _⇒_  : (φ ψ : Prop) → Prop
-  _⇔_  : (φ ψ : Prop) → Prop
-  ¬_   : (φ : Prop)   → Prop
+  Var : Fin n → Prop
+  ⊤   : Prop
+  ⊥   : Prop
+  _∧_ : (φ ψ : Prop) → Prop
+  _∨_ : (φ ψ : Prop) → Prop
+  _⇒_ : (φ ψ : Prop) → Prop
+  _⇔_ : (φ ψ : Prop) → Prop
+  ¬_  : (φ : Prop)   → Prop
 \end{minted}
 \end{itemize}
 \end{frame}
@@ -706,10 +707,10 @@ subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
 \begin{itemize}
 \item Definition
 \begin{equation*}
-\text{\color{plum!40!black}conjunct}(ϕ₁ ∧ ⋯ ∧ \phi_n, \omega)
+\text{\color{plum!40!black}conjunct}(\overbrace{\varphi_1 ∧ ⋯ ∧ \varphi_n}^{\varphi}, \psi)
 = \begin{cases}
-\phi_{i} \ \ \ \ \text{if }\omega\text{ is equal to some }\phi_i\\
-\phi    \ \ \ \ \text{otherwise}
+\varphi_{i} \ \ \ \ \text{if }\psi\text{ is equal to some }\varphi_i\\
+\varphi    \ \ \ \ \text{otherwise}
 \end{cases}
 \end{equation*}
 
@@ -717,73 +718,77 @@ subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
 \item Inference rules involved
 \begin{center}
 \begin{columns}
-\begin{column}{0.45\textwidth}
+\begin{column}{0.42\textwidth}
 
  \begin{prooftree}
-  \AxiomC{$ϕ ∧ ψ$}
+  \AxiomC{$\varphi_1 ∧ \varphi_2$}
   \RightLabel{\scriptsize $∧$-\texttt{proj}$₁$}
-  \UnaryInfC{$ϕ$}
+  \UnaryInfC{$\varphi_1$}
   \end{prooftree}
 \end{column}
 
-\begin{column}{0.45\textwidth}
+\begin{column}{0.42\textwidth}
  \begin{prooftree}
-  \AxiomC{$ϕ ∧ ψ$}
+  \AxiomC{$\varphi_1 ∧ \varphi_2$}
   \RightLabel{\scriptsize $∧$-\texttt{proj}$₂$}
-  \UnaryInfC{$ψ$}
+  \UnaryInfC{$\varphi₂$}
   \end{prooftree}
 \end{column}
 
-\begin{column}{0.1\textwidth}  %%<--- here
-   \begin{tikzpicture}[overlay, remember picture, scale=2]
-% \tikzset{shift={(current page.north)}, xshift=cm,yshift=-2cm}
-\node[vertex, fill=black] (d1) {};
-\node[vertex, fill=black, below left=0.2cm and 0.1cm of d1] (d2) {};
-\node[vertex, fill=black, below right=0.2cm and 0.1cm of d1] (d3) {};
+\begin{column}{0.2\textwidth}  %%<--- here
+  \begin{tikzpicture}[
+    ->
+  , >=stealth'
+  , shorten >=1pt
+  , auto
+%  , node distance=2.8cm
+  , thick
+  , every state/.style={fill=plum!45!black,draw=none,text=white}
+  , overlay
+  , remember picture
+    , transform canvas={scale=.75}
+    ]
+  \tikzset{shift={(current page.center)}, xshift=4.5cm,yshift=0cm}
+    
 
-\node[vertex, fill=black, below left=0.2cm and 0.1cm of d3] (q) {};
-\node[vertex, fill=black, below right=0.2cm and 0.1cm of d3] (w) {};
+  \node[state]  (phi)                     {$\varphi$};
+  \node[state]  (phi1) [below left =1.3cm and 0.1cm of phi]  {$\varphi_1$};
+  \node[state]  (phi2) [below right=1.3cm and 0.1cm of phi]  {$\varphi_2$};
+  \node[state]  (phi3)  [below left =1.3cm and 0.1cm of phi2]  {$\varphi_3$};
+  \node[state]  (phi4)  [below right =1.3cm and 0.1cm of phi2]  {$\varphi_4$};
 
-\node[vertex, fill=black, below right=0.2cm and 0.1cm of q] (s) {};
+  \path[every node/.style={sloped,anchor=south,auto=false}]
+        (phi) edge node {\tiny $∧$-\texttt{proj}$₁$} (phi1)            
+        (phi) edge node {\tiny $∧$-\texttt{proj}$₂$} (phi2)
+        (phi2) edge node {\tiny $∧$-\texttt{proj}$₁$} (phi3)
+        (phi2) edge node {\tiny $∧$-\texttt{proj}$₂$} (phi4);
 
-\draw[-, thick] (d1) to (d2);
-\draw[-, thick] (d1) to (d3);
-\draw[-, thick] (d3) to (q);
-\draw[-, thick] (d3) to (w);
-\draw[-, thick] (q) to (s);
 \end{tikzpicture}
 \end{column}
 \end{columns}
 \end{center}
 \vskip 2mm
 
-\item Target example
-\[ φ := (¬ p ∧ (¬ q ⇔ ¬ r)) ∧ (p ∧ (¬ q ⇔ ¬r))\]
+\item Example
+\[ \varphi := \varphi_1 ∧ \overbrace{(\varphi_3 ∧ \varphi_4)}^{\varphi_2}\]
 
 \begin{itemize}
 
 \item
-\begin{minted}{cagda}
- conjunct(φ , ¬ q) ≡ ϕ
-\end{minted}
+\texttt{conjunct}$(\varphi , \varphi_3 ∧ \varphi_1) ≡ \varphi$
 \vskip 3mm
 \item
-\begin{minted}{cagda}
- conjunct(φ , ¬ q ⇔ ¬ r) ≡ ¬ q ⇔ ¬ r
-\end{minted}
+\texttt{conjunct}$(\varphi , \varphi_3)      ≡ \varphi_3$
 \vskip 3mm
-
 \item
-\begin{minted}{cagda}
- conjunct(φ , p)   ≡ p
-\end{minted}
-
+\texttt{conjunct}$(\varphi , \varphi_2)      ≡ \varphi_2$
+\vskip 3mm
 \end{itemize}
 
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile, label=atp-conjunct]
+\begin{frame}[fragile]
 
 \begin{minted}{cagda}
 data ConjView : Prop → Set where
@@ -794,7 +799,7 @@ conj-view : (φ : Prop) → ConjView φ
 conj-view (φ ∧ ψ) = conj _ _
 conj-view φ       = other _
 
-data Step  : Set where
+data Step : Set where
   pick  : Step
   proj₁ : Step
   proj₂ : Step
@@ -802,16 +807,16 @@ data Step  : Set where
 Path : Set
 Path = List Step
 
-conjunct-path : (φ : Prop) → (ω : Prop) → Path → Path
-conjunct-path φ ω path with ⌊ eq φ ω ⌋
+conjunct-path : (φ ψ : Prop) → Path → Path
+conjunct-path φ ψ path with ⌊ eq φ ψ ⌋
 ... | true  = path ∷ʳ pick
 ... | false with conj-view φ
-...   | other _   = []
-...   | conj φ₁ φ₂ with conjunct-path φ₁ ω []
+...   | other _ = []
+...   | conj φ₁ φ₂ with conjunct-path φ₁ ψ []
 ...     | subpath@(_ ∷ _) = (path ∷ʳ proj₁) ++ subpath
-...     | [] with conjunct-path φ₂ ω []
-...         | subpath@(_ ∷ _) = (path ∷ʳ proj₂) ++ subpath
-...         | []              = []
+...     | [] with conjunct-path φ₂ ψ []
+...          | subpath@(_ ∷ _) = (path ∷ʳ proj₂) ++ subpath
+...          | []              = []
 \end{minted}
 
 \end{frame}
@@ -820,27 +825,27 @@ conjunct-path φ ω path with ⌊ eq φ ω ⌋
 \begin{frame}[fragile, label=atp-conjunct-proof]{The \texttt{conjunct} function and its theorem, \texttt{atp-conjunct}}
 \vfill
 \begin{minted}{cagda}
-conjunct : (φ : Prop) → (ω : Prop) → Prop
-conjunct φ ω with conj-view φ | conjunct-path φ ω []
-... | _          | []           = φ
-... | conj φ₁ φ₂ | pick  ∷ path = φ
-... | conj φ₁ φ₂ | proj₁ ∷ path = conjunct φ₁ ω
-... | conj φ₁ φ₂ | proj₂ ∷ path = conjunct φ₂ ω
-... | other .φ   | _            = φ
+conjunct : Prop → Prop → Prop
+conjunct φ ψ with conj-view φ | conjunct-path φ ψ []
+... | _          | []        = φ
+... | conj _ _   | pick  ∷ _ = φ
+... | conj φ₁ _  | proj₁ ∷ _ = conjunct φ₁ ψ
+... | conj _ φ₂  | proj₂ ∷ _ = conjunct φ₂ ψ
+... | other .φ   | _         = φ
 
 atp-conjunct
   : ∀ {Γ} {φ}
-  → (ω : Prop)
+  → (ψ : Prop)
   → Γ ⊢ φ
-  → Γ ⊢ conjunct φ ω
+  → Γ ⊢ conjunct φ ψ
 
-atp-conjunct {Γ} {φ} ω Γ⊢φ
-  with conj-view φ | conjunct-path φ ω []
-...  | _          | []           = Γ⊢φ
-...  | conj φ₁ φ₂ | pick  ∷ path = Γ⊢φ
-...  | conj φ₁ φ₂ | proj₁ ∷ path = atp-conjunct ω (∧-proj₁ Γ⊢φ)
-...  | conj φ₁ φ₂ | proj₂ ∷ path = atp-conjunct ω (∧-proj₂ Γ⊢φ)
-...  | other .φ   | (_ ∷ _)      = Γ⊢φ
+atp-conjunct {Γ} {φ} ψ Γ⊢φ
+  with conj-view φ | conjunct-path φ ψ []
+...  | _           | []        = Γ⊢φ
+...  | conj _ _    | pick  ∷ _ = Γ⊢φ
+...  | conj _ _    | proj₁ ∷ _ = atp-conjunct ψ (∧-proj₁ Γ⊢φ)
+...  | conj _ _    | proj₂ ∷ _ = atp-conjunct ψ (∧-proj₂ Γ⊢φ)
+...  | other _     | (_ ∷ _)   = Γ⊢φ
 \end{minted}
 \vfill
 \gobackreconstruction
@@ -858,20 +863,16 @@ fof(a, axiom, p & q).
 fof(goal, conjecture, q & p).
 \end{tptp}
   \item How to use Athena with your problem
-  \vspace*{5mm}
-\begin{tikzpicture}
-\node[rectangle, text=white,fill=black, align=left, font=\small]
-{
-\texttt{\$ metis --show proof problem.tptp > problem.tstp}\hspace{1cm}\\
-\texttt{\$ athena problem.tstp}\\
-\texttt{\$ agda problem.agda}
-  };
-\end{tikzpicture}
 
+\begin{tptp}
+$ metis --show proof problem.tptp > problem.tstp
+$ athena problem.tstp
+$ agda problem.tstp
+\end{tptp}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile, allowframebreaks]{\texttt{TSTP} Derivation}
+\begin{frame}[fragile, allowframebreaks]{\texttt{TSTP} Derivation given by \texttt{Metis}}
 \begin{tptp}
 fof(a, axiom, p & q).
 fof(goal, conjecture, q & p).
@@ -910,33 +911,33 @@ cnf(refute_1_0, plain, ($false),
 \end{tptp}
 \end{frame}
 
-\begin{frame}[fragile, label=verified-example]{$p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
+\begin{frame}[fragile, label=verified-example]{Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed Proof generated with \texttt{Athena}}
 \vfill
 \begin{minted}{cagda}
 p, q, a, goal, subgoal₀, subgoal₁ : Prop
 
 -- Axiom.
-a = (p ∧ q)
+a = p ∧ q
 
 -- Premise.
 Γ : Ctxt
 Γ = [ a ]
 
 -- Conjecture.
-goal = (q ∧ p)
+goal = q ∧ p
 
 -- Subgoals.
 subgoal₀ = q
-subgoal₁ = (q ⇒ p)
+subgoal₁ = q ⇒ p
 \end{minted}
 \vfill
 \end{frame}
 
-\begin{frame}[fragile, label=verified-example-2]{$p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
+\begin{frame}[fragile, label=verified-example-2]{Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
 \vfill
 \begin{minted}{cagda}
 a : Prop
-a = (p ∧ q)
+a = p ∧ q
 
 subgoal₀ : Prop
 subgoal₀ = q
@@ -957,11 +958,11 @@ proof₀ =
 \vfill
 \end{frame}
 
-\begin{frame}[fragile, label=verified-example-3]{$p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
+\begin{frame}[fragile, label=verified-example-3]{Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
 \vfill
 \begin{minted}{cagda}
 subgoal₁ : Prop
-subgoal₁ = (q ⇒ p)
+subgoal₁ = q ⇒ p
 
 proof₁ : Γ ⊢ subgoal₁
 proof₁ =
@@ -984,18 +985,18 @@ proof₁ =
 \vfill
 \end{frame}
 
-\begin{frame}[fragile, label=verified-example-4]{$p ∧ q ⊢ q ∧ p$}{Reconstructed proof}
+\begin{frame}[fragile, label=verified-example-4]{Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed proof}
 \vfill
 \begin{minted}{cagda}
 -- Premise.
 Γ = [ a ]
 
 -- Conjecture.
-goal = (q ∧ p)
+goal = q ∧ p
 
 -- Subgoals.
 subgoal₀ = q
-subgoal₁ = (q ⇒ p)
+subgoal₁ = q ⇒ p
 
 -- Proof
 proof₀ : Γ ⊢ subgoal₀
@@ -1193,7 +1194,6 @@ normal form use to transform the formulas
 \end{tabular}}
 }
 \end{center}
-\label{tab:library}
 \end{table}
 \vfill
 \end{frame}
