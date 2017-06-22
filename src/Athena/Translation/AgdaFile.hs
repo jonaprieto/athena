@@ -561,6 +561,6 @@ docSteps subgoalN (Root Simplify _ nodes) agdaFile =
 ------------------------------------------------------------------------------
 
 docSteps subgoalN (Root Strip _ _) _ =
-     parens $ pretty "strip" <+> subgoalName subgoalN
+     parens $ pretty "strip goal to" <+> subgoalName subgoalN
 
 docSteps _ _ _ = pretty "?" <> line
