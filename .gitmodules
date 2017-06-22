@@ -7,3 +7,6 @@
 [submodule "lib/agda-metis"]
 	path = lib/agda-metis
 	url = https://github.com/jonaprieto/agda-metis.git
+[submodule "slides/pygments-cagda"]
+	path = slides/pygments-cagda
+	url = https://github.com/jonaprieto/pygments-cagda.git
