@@ -468,10 +468,8 @@ docSteps subgoalN (Root Conjunct tag [subtree]) agdaFile =
 ------------------------------------------------------------------------------
 
 docSteps subgoalN (Root Negate _ [Root Strip _ _]) _ =
-  parens $
-       pretty Strip <> line
-    <> indent 2 (parens (pretty "assume {Γ = Γ}" <> line
-    <> indent 2 (parens (pretty Negate <+> subgoalName subgoalN))))
+  parens $ pretty "assume {Γ = Γ}" <> line
+        <> indent 2 (parens (pretty Negate <+> parens (pretty "strip" <+> (subgoalName subgoalN))))
 
 ------------------------------------------------------------------------------
 -- Resolve.
