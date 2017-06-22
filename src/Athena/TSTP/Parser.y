@@ -175,10 +175,9 @@ assoc_binary :: {Formula}
 assoc_binary : and_formula {$1}
              | or_formula  {$1}
 
-
 or_formula :: {Formula}
-or_formula : unitary_formula   vline  unitary_formula  more_or_formula
-           { L.foldl (binOp (:|:)) (BinOp $1 (:|:) $3) $4 }
+or_formula : unitary_formula  vline  unitary_formula  more_or_formula
+           { L.foldr1 (binOp (:|:)) ($1 : $3 : $4) }
 
 more_or_formula :: {[Formula]}
 more_or_formula : {[]} | vline  unitary_formula more_or_formula
@@ -186,8 +185,7 @@ more_or_formula : {[]} | vline  unitary_formula more_or_formula
 
 and_formula :: {Formula}
 and_formula : unitary_formula  ampersand unitary_formula  more_and_formula
-            { L.foldl (binOp (:&:)) (BinOp $1 (:&:) $3) $4 }
-
+            { L.foldr1 (binOp (:&:)) ($1 : $3 : $4) }
 
 more_and_formula :: {[Formula]}
 more_and_formula : {[]} | ampersand unitary_formula more_and_formula
@@ -218,13 +216,13 @@ unary_formula : fol_infix_unary  {$1}
 --             | lp assoc_binary rp {$2}
 
 cnf_formula :: {Formula}
-cnf_formula : disjunction         {$1}
-            | lp disjunction  rp  {$2}
+cnf_formula : disjunction       {$1}
+            | lp disjunction rp {$2}
 
 
 disjunction :: {Formula}
 disjunction : literal  more_disjunction
-            { L.foldl (binOp (:|:)) $1 $2 }
+            { L.foldr1 (binOp (:|:)) ($1 : $2) }
 
 more_disjunction :: {[Formula]}
 more_disjunction : {[]}
