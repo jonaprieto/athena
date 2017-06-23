@@ -12,6 +12,8 @@ module Data.Proof
   -- * Constructors
   , buildProofMap
   , buildProofTree
+  -- * Methods
+  , simplifyProofTree
   -- * Internals
   , getParents
   , getParentsTree
@@ -22,7 +24,7 @@ module Data.Proof
 
 import Data.Map      ( empty, insert )
 import Data.Map as M ( lookup )
-import Data.Maybe    ( mapMaybe )
+import Data.Maybe    ( mapMaybe, fromJust )
 
 
 import Data.Proof.ProofTreeGen
@@ -34,6 +36,7 @@ import Data.Proof.ProofTreeGen
 
 import Data.TSTP
   ( F(..)
+  , Formula(..)
   , Parent(..)
   , Role(..)
   , Source(..)
@@ -48,16 +51,30 @@ buildProofTree ∷ ProofMap     -- ^ 'Map' for resolving dependencies
                → F            -- ^ Root formula
                → ProofTree    -- ^ Tree of formulas with the given
                               -- formula as root
-buildProofTree m formulaF =
-  let namef ∷ String
-      namef = name formulaF
-  in case role formulaF of
-    Axiom       → Leaf Axiom namef
-    Conjecture  → Leaf Conjecture namef
-    Plain       → case source formulaF of
-      (Inference r _ p) → Root r namef (getParentsTree m p)
-      sname             → unknownTree "Source" sname namef
-    rname       → unknownTree "Role" rname namef
+buildProofTree m formulaF = simplifyProofTree m tree
+  where
+    namef ∷ String
+    namef = name formulaF
+
+    tree ∷ ProofTree
+    tree = case role formulaF of
+      Axiom       → Leaf Axiom namef
+      Conjecture  → Leaf Conjecture namef
+      Plain       → case source formulaF of
+        (Inference r _ p) → Root r namef (getParentsTree m p)
+        sname             → unknownTree "Source" sname namef
+      rname       → unknownTree "Role" rname namef
+
+simplifyProofTree ∷ ProofMap → ProofTree → ProofTree
+simplifyProofTree _ tree@(Leaf _ _) = tree
+simplifyProofTree m (Root inf node [subtree@(Root _ snode _)])
+  | getFm node == getFm snode = simplifyProofTree m subtree
+  | otherwise                 = Root inf node [simplifyProofTree m subtree]
+  where
+    getFm ∷ String → Formula
+    getFm namef = (formula . fromJust) (M.lookup namef m)
+simplifyProofTree m (Root inf a ls) = Root inf a (map (simplifyProofTree m) ls)
+
 
 -- | 'buildProofMap' 'lf', given a list of functions 'lf' builds a 'ProofMap'
 buildProofMap ∷ [F]      -- ^ List of functions

@@ -375,10 +375,12 @@ docSteps ∷ Int        -- ^ The number of the subgoal.
          → Doc        -- ^ Doc of the step.
 
 ------------------------------------------------------------------------------
--- Axiom.
+-- Leafs.
 ------------------------------------------------------------------------------
 
-docSteps subgoalN (Leaf Axiom axiom) agdaFile =
+docSteps _ (Leaf Conjecture conjecture) _ = pretty conjecture
+
+docSteps subgoalN (Leaf _ axiom) agdaFile =
   parens $
        prettyWeaken <> line
     <> indent 2 (parens $ prettyAssume <+> pAxiom)
@@ -432,12 +434,6 @@ docSteps subgoalN (Root Canonicalize _ [subtree]) agdaFile =
   parens $
        pretty Canonicalize <> line
     <> indent 2 (docSteps subgoalN subtree agdaFile)
-
-------------------------------------------------------------------------------
--- Conjecture.
-------------------------------------------------------------------------------
-
-docSteps _ (Leaf Conjecture conjecture) _ = pretty conjecture
 
 ------------------------------------------------------------------------------
 -- Clausify.
