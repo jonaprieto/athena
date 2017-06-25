@@ -23,6 +23,7 @@ module Athena.Translation.AgdaFile
    , docImports
    , docPremises
    , docSubgoals
+   , docProofGoal
    , docVars
    , getAxioms
    , getConjeture
@@ -309,7 +310,7 @@ docProof agdaFile =
   <> hypenline
   <@> vsep
        [ docProofSubgoals agdaFile
-       , docProofGoal agdaFile
+--       , docProofGoal agdaFile  -- TODO
        ]
 
 docProofSubgoal ∷ Int → ProofTree → AgdaFile → Doc
