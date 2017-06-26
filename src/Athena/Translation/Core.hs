@@ -45,6 +45,7 @@ import Data.TSTP.Formula        ( getFreeVars )
 import System.FilePath          ( replaceExtension )
 import System.IO                ( hClose, IOMode( WriteMode ), openFile )
 
+import Data.List (nub, isPrefixOf)
 ------------------------------------------------------------------------------
 
 mainCore ∷ Options → IO ()
@@ -61,7 +62,7 @@ mainCore opts = do
       rulesMap = buildProofMap tstp
 
   let refutes ∷ [F]
-      refutes = getRefutes tstp
+      refutes = getRefutes rulesMap tstp
 
   let trees ∷ [ProofTree]
       trees = fmap (buildProofTree rulesMap) refutes
@@ -69,20 +70,20 @@ mainCore opts = do
   let formulas ∷ [Formula]
       formulas = fmap formula tstp
 
-  let filename :: FilePath
+  let filename ∷ FilePath
       filename =
         fromMaybe
           (replaceExtension (fromJust (optInputFile opts)) ".agda")
           (optOutputFile opts)
 
   -- Agda file.
-  hAgdaFile <- openFile filename WriteMode
+  hAgdaFile ← openFile filename WriteMode
 
   -- Header.
-  header :: Doc <- docHeader opts
+  header ∷ Doc ← docHeader opts
   hPutDoc hAgdaFile header
 
-  let problem :: AgdaFile
+  let problem ∷ AgdaFile
       problem = AgdaFile
         { fileAxioms     = getAxioms tstp
         , fileConjecture = conj

@@ -81,7 +81,6 @@ buildProofMap ∷ [F]      -- ^ List of functions
               → ProofMap -- ^ Map of the given functions indexed by its names
 buildProofMap = foldl buildMap empty
     where
-      -- buildMap ∷ Map String F → F → Map String F
       buildMap m f' = insert (name f') f' m
 
 -- | 'getParentsTree' 'm' 'p', from a 'Map' 'm' and a list of parents 'p'

@@ -51,7 +51,7 @@ import Athena.Utils.PrettyPrint
   , (<@>)
   , Doc
   , Pretty(pretty)
-  , braces
+--  , braces
   , colon
   , comma
   , comment
@@ -78,7 +78,7 @@ import Data.Proof
   , ProofTreeGen ( Root, Leaf )
   )
 
-import Data.List                ( isPrefixOf)
+import Data.List                ( isPrefixOf, nub)
 import Data.Maybe               ( fromJust )
 import qualified Data.Map as Map
 
@@ -131,6 +131,15 @@ instance Pretty AgdaFile where
      , docProof problem
      ]
 
+
+getFormulaByTag ∷ AgdaFile → String → Doc
+getFormulaByTag agdaFile tag = pretty φ <+> pretty "  -- " <+> pretty tag
+  where
+     φ ∷ Formula
+     φ = formula . fromJust $ Map.lookup tag dict
+
+     dict ∷ ProofMap
+     dict = fileDict agdaFile
 
 ------------------------------------------------------------------------------
 -- Header.
@@ -293,8 +302,29 @@ docSubgoals formulas =
 ------------------------------------------------------------------------------
 
 -- | Extract refuting steps from a list of formulae.
-getRefutes ∷ [F] → [F]
-getRefutes = filter (isPrefixOf "refute" . name)
+getRefutes ∷ ProofMap → [F] → [F]
+getRefutes dict tstp = map (\tag → fromJust (Map.lookup tag dict)) names
+  where
+    refutes ∷ [F]
+    refutes = filter (isPrefixOf "refute" . name) tstp
+
+    refutesID ∷ [(Int, Int)]
+    refutesID = map (\ r → extractRefuteId (name r)) refutes
+
+    numRefutes ∷ [Int]
+    numRefutes = nub $ map fst refutesID
+
+    names ∷ [ String ]
+    names = [ "refute-" ++ show n ++ "-" ++ show k | (n,k) <- rootRefutes ]
+
+    rootRefutes ∷ [ (Int, Int) ]
+    rootRefutes = [ maximum (filter (\ l -> (fst l == r)) refutesID) | r ← numRefutes ]
+
+    extractRefuteId ∷ String → (Int, Int)
+    extractRefuteId ref =
+          let nid = drop 7 ref
+          in ( read (takeWhile (/= '-') nid) :: Int
+             , read (tail (dropWhile (/= '-') nid)) :: Int)
 
 ------------------------------------------------------------------------------
 -- Proof.
@@ -313,16 +343,6 @@ docProof agdaFile =
 --       , docProofGoal agdaFile  -- TODO
        ]
 
-docProofSubgoal ∷ Int → ProofTree → AgdaFile → Doc
-docProofSubgoal n tree agdaFile =
-     pName <+> colon <+> pretty "Γ ⊢" <+> pretty (subgoalName n) <> line
-  <> pName <+> equals <> line
-  <> indent 2  (parens (pretty "RAA" <> line <>
-              indent 2 (docSteps n tree agdaFile))) <> line
-  where
-    pName ∷  Doc
-    pName = pretty "proof" <> (pretty . stdName . show) n
-
 docProofSubgoals ∷ AgdaFile → Doc
 docProofSubgoals agdaFile =
   vsep $
@@ -332,6 +352,16 @@ docProofSubgoals agdaFile =
   where
     trees ∷ [ProofTree]
     trees = fileTrees agdaFile
+
+docProofSubgoal ∷ Int → ProofTree → AgdaFile → Doc
+docProofSubgoal n tree agdaFile =
+     pName <+> colon <+> pretty "Γ ⊢" <+> pretty (subgoalName n) <> line
+  <> pName <+> equals <> line
+  <> indent 2 (parens (pretty "RAA" <> line <>
+              indent 2 (docSteps n tree agdaFile))) <> line
+  where
+    pName ∷  Doc
+    pName = pretty "proof" <> (pretty . stdName . show) n
 
 docProofGoal ∷ AgdaFile → Doc
 docProofGoal agdaFile =
@@ -384,7 +414,7 @@ docSteps _ (Leaf Conjecture conjecture) _ = pretty conjecture
 docSteps subgoalN (Leaf _ axiom) agdaFile =
   parens $
        prettyWeaken <> line
-    <> indent 2 (parens $ prettyAssume <+> pAxiom)
+    <> indent 2 (parens prettyAssume)
   where
 
     dict ∷ ProofMap
@@ -397,7 +427,7 @@ docSteps subgoalN (Leaf _ axiom) agdaFile =
     premises = filePremises agdaFile
 
     aᵢ ∷ F
-    aᵢ = fromJust .  Map.lookup axiom $ dict
+    aᵢ = fromJust . Map.lookup axiom $ dict
 
     toWeak ∷ [F]
     toWeak =
@@ -409,8 +439,7 @@ docSteps subgoalN (Leaf _ axiom) agdaFile =
     prettyWeaken ∷ Doc
     prettyWeaken =
       case toWeak of
-        [] → pretty "weaken" <+>
-          parens (pretty "¬" <+> subgoalName subgoalN)
+        [] → pretty "weaken" <+> parens (pretty "¬" <+> subgoalName subgoalN)
         ps → pretty "weaken-Δ₁" <> line <>
           indent 2 (parens (toCtxt (
                 [pretty '∅']
@@ -421,28 +450,30 @@ docSteps subgoalN (Leaf _ axiom) agdaFile =
     toAssume = takeWhile (/= aᵢ) premises
 
     prettyAssume ∷ Doc
-    prettyAssume = pretty "assume" <+> pretty "{Γ =" <+>
+    prettyAssume =
       case toAssume of
-        []  → pretty "∅}"
-        [a] → lbracket <+> pretty a <+> rbracket <> pretty "}"
-        axs → braces $ pretty 'Γ' <+> equals <+> toCtxt (map pretty axs)
+        []  → pretty "assume {Γ = ∅}" <+> pAxiom
+        [a] → pretty "assume {Γ = [" <+> pretty a <+> pretty "]}" <+> pAxiom
+        axs → pretty "assume" <> line
+          <> indent 2
+          (pretty "{Γ = ∅ ," <+> toCtxt (map pretty axs) <> pretty "}" <+> pAxiom)
+
 
 ------------------------------------------------------------------------------
 -- Canonicalize.
 ------------------------------------------------------------------------------
 
-docSteps subgoalN (Root Canonicalize _ [subtree]) agdaFile =
+docSteps subgoalN (Root Canonicalize tag [subtree]) agdaFile =
   parens $
-       pretty Canonicalize <> line
+       pretty Canonicalize <+> getFormulaByTag agdaFile tag <> line
     <> indent 2 (docSteps subgoalN subtree agdaFile)
-
 ------------------------------------------------------------------------------
 -- Clausify.
 ------------------------------------------------------------------------------
 
-docSteps subgoalN (Root Clausify _ [subtree]) agdaFile =
+docSteps subgoalN (Root Clausify tag [subtree]) agdaFile =
   parens $
-       pretty Clausify <> line
+       pretty Clausify <+> getFormulaByTag agdaFile tag <> line
     <> indent 2 (docSteps subgoalN subtree agdaFile)
 
 ------------------------------------------------------------------------------
@@ -451,14 +482,8 @@ docSteps subgoalN (Root Clausify _ [subtree]) agdaFile =
 
 docSteps subgoalN (Root Conjunct tag [subtree]) agdaFile =
    parens $
-        pretty Conjunct <+> parens (pretty ω) <> line
+        pretty Conjunct <+> getFormulaByTag agdaFile tag <> line
      <> indent 2 (docSteps subgoalN subtree agdaFile)
-   where
-     ω ∷ Formula
-     ω = formula . fromJust $ Map.lookup tag dict
-
-     dict ∷ ProofMap
-     dict = fileDict agdaFile
 
 ------------------------------------------------------------------------------
 -- Negate.

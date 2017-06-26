@@ -1,0 +1,377 @@
+
+src/Athena/Main.hs,22
+module Main6
+main30
+
+src/Athena/Options.hs,237
+module Athena.Options5
+data Options38
+  , optOutputFile41
+defaultOptions46
+type OM56
+inputFileOpt61
+outputFileOpt67
+proofNameOpt73
+versionOpt79
+options83
+usageHeader95
+printUsage99
+processOptionsHelper104
+processOptions111
+
+src/Athena/TSTP.hs,43
+module Athena.TSTP7
+parse47
+parseFile50
+
+src/Athena/TSTP/Base.hs,100
+module Athena.TSTP.Base7
+readRole72
+binOp88
+readRule91
+readType102
+readWord109
+readStatus119
+
+src/Athena/Translation/AgdaFile.hs,434
+module Athena.Translation.AgdaFile7
+data AgdaFile110
+  , fileDict113
+  , fileSubgoals116
+getFormulaByTag135
+docHeader149
+docModule163
+docImports175
+prettyVar186
+docVars193
+definition213
+getAxioms222
+docAxioms226
+toCtxt242
+docPremises247
+getConjeture268
+docConjecture275
+getSubgoals285
+docSubgoals288
+getRefutes305
+subgoalName312
+docProof315
+docProofSubgoals325
+docProofSubgoal335
+docProofGoal345
+docSteps382
+
+src/Athena/Translation/Core.hs,45
+module Athena.Translation.Core6
+mainCore50
+
+src/Athena/Translation/Rules.hs,34
+module Athena.Translation.Rules3
+
+src/Athena/Translation/Rules/Canonicalize.hs,66
+module Athena.Translation.Rules.Canonicalize7
+atpCanonicalize15
+
+src/Athena/Translation/Rules/Clausify.hs,58
+module Athena.Translation.Rules.Clausify7
+atpClausify15
+
+src/Athena/Translation/Rules/Conjunct.hs,58
+module Athena.Translation.Rules.Conjunct7
+atpConjunct16
+
+src/Athena/Translation/Rules/Negate.hs,54
+module Athena.Translation.Rules.Negate6
+atpNegate14
+
+src/Athena/Translation/Rules/Resolve.hs,56
+module Athena.Translation.Rules.Resolve7
+atpResolve17
+
+src/Athena/Translation/Rules/Simplify.hs,58
+module Athena.Translation.Rules.Simplify7
+atpSimplify15
+
+src/Athena/Translation/Rules/Skolemize.hs,60
+module Athena.Translation.Rules.Skolemize7
+atpSkolemize15
+
+src/Athena/Translation/Rules/Specialize.hs,62
+module Athena.Translation.Rules.Specialize7
+atpSpecialize15
+
+src/Athena/Translation/Rules/Strip.hs,52
+module Athena.Translation.Rules.Strip7
+atpStrip15
+
+src/Athena/Translation/Utils.hs,57
+module Athena.Translation.Utils5
+stdName16
+subIndex19
+
+src/Athena/Utils/CommitVersion.hs,88
+module Athena.Utils.CommitVersion12
+getVersion25
+tryIO32
+commitInfo35
+gitVersion45
+
+src/Athena/Utils/Monad.hs,64
+module Athena.Utils.Monad6
+failureMsg31
+die36
+stdout2file41
+
+src/Athena/Utils/PrettyPrint.hs,1337
+module Athena.Utils.PrettyPrint10
+list98
+tupled106
+semiBraces114
+encloseSep140
+comment148
+punctuate178
+sep194
+fillSep203
+hsep208
+vsep241
+cat249
+fillCat258
+hcat263
+vcat269
+fold272
+(<+>278
+(<++>285
+(</>295
+(<//>302
+splitWithBreak305
+(<@>312
+(<$$>317
+splitWithLine320
+softline329
+softbreak336
+spacebreak341
+squotes346
+dquotes351
+braces356
+parens361
+angles366
+brackets371
+enclose378
+lparen382
+rparen386
+langle390
+rangle394
+lbrace398
+rbrace402
+lbracket406
+rbracket410
+squote414
+dquote418
+semi422
+colon426
+comma430
+hypen434
+dollar438
+space444
+dot448
+hashtag452
+backslash456
+equals460
+string473
+stringStrict476
+bool481
+int486
+integer491
+float496
+double501
+rational506
+text'509
+class Pretty519
+  prettyList522
+fillBreak596
+fill626
+hypenline633
+width637
+indent657
+hang680
+align700
+data Doc722
+         | Line725
+         | Nest728
+         | Column731
+data SimpleDoc758
+                | SLine761
+empty766
+isEmpty770
+char777
+text785
+textStrict790
+line799
+linebreak805
+beside808
+nest826
+column831
+nesting836
+group844
+flatten847
+data Docs865
+renderPretty876
+fits915
+renderCompact932
+renderOneLine952
+displayB979
+consB985
+displayT993
+displayTStrict996
+displayIO1004
+putDoc1037
+hPutDoc1048
+spaces1056
+spaced1061
+indentation1067
+prettyShow1073
+
+src/Athena/Utils/Show.hs,51
+module Athena.Utils.Show7
+showLn15
+showListLn20
+
+src/Athena/Utils/Version.hs,65
+module Athena.Utils.Version7
+toUpperFirst21
+progNameVersion26
+
+src/Data/Proof.hs,124
+module Data.Proof6
+buildProofTree50
+simplifyProofTree68
+buildProofMap80
+getParentsTree89
+getParents96
+unknownTree107
+
+src/Data/Proof/ProofTreeGen.hs,127
+module Data.Proof.ProofTreeGen6
+data ProofTreeGen25
+    Leaf28
+  | Root31
+type IdSet35
+type ProofTree40
+type ProofMap56
+
+src/Data/TSTP.hs,41
+module Data.TSTP7
+bottom67
+isBottom71
+
+src/Data/TSTP/AtomicWord.hs,52
+module Data.TSTP.AtomicWord6
+newtype AtomicWord17
+
+src/Data/TSTP/BinOp.hs,82
+module Data.TSTP.BinOp6
+data BinOp26
+           | (:&:29
+           | (:~|:32
+
+src/Data/TSTP/F.hs,43
+module Data.TSTP.F6
+data F31
+  , role34
+
+src/Data/TSTP/Formula.hs,108
+module Data.TSTP.Formula6
+data Formula41
+             | Quant44
+freeVarsF58
+freeVarsT74
+getFreeVars81
+
+src/Data/TSTP/GData.hs,104
+module Data.TSTP.GData4
+data GData20
+           | GFormulaTerm23
+           | GWord26
+data GTerm31
+
+src/Data/TSTP/InfixPred.hs,47
+module Data.TSTP.InfixPred6
+data InfixPred21
+
+src/Data/TSTP/IntroType.hs,77
+module Data.TSTP.IntroType4
+data IntroType17
+               | Tautology20
+
+src/Data/TSTP/Parent.hs,41
+module Data.TSTP.Parent4
+data Parent15
+
+src/Data/TSTP/Quant.hs,39
+module Data.TSTP.Quant6
+data Quant20
+
+src/Data/TSTP/Role.hs,144
+module Data.TSTP.Role4
+data Role26
+          | Definition29
+          | FiPredicates32
+          | NegatedConjecture35
+          | Type38
+
+src/Data/TSTP/Rule.hs,104
+module Data.TSTP.Rule4
+data Rule26
+          | Negate29
+          | Simplify32
+          | Strip35
+
+src/Data/TSTP/Source.hs,161
+module Data.TSTP.Source4
+data Source42
+            | Introduced45
+            | Source48
+data Info52
+            | InferenceInfo55
+            | Status58
+
+src/Data/TSTP/Status.hs,272
+module Data.TSTP.Status4
+data Status11
+            | Csp14
+            | Ecs17
+            | Esa20
+            | Fun23
+            | Sat26
+            | Suc29
+            | Tca32
+            | Unc35
+            | Uns38
+            | Wct41
+            | Wth44
+
+src/Data/TSTP/Term.hs,59
+module Data.TSTP.Term4
+data Term27
+          | FunApp30
+
+src/Data/TSTP/Theory.hs,41
+module Data.TSTP.Theory4
+data Theory13
+
+src/Data/TSTP/V.hs,34
+module Data.TSTP.V4
+newtype V22
+
+src/fix-whitespace/FixWhitespace.hs,136
+module Main5
+extensions37
+excludedDirs61
+filesFilter67
+nonRCS74
+data Mode79
+main84
+usage99
+fix132
+transform150
+dropWhile1165
