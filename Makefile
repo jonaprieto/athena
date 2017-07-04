@@ -3,9 +3,14 @@ SRC_DIR  =src
 TEST_DIR =src
 
 ATHENA   =athena
+AGDA     =agda
 ATP      ?=online-atps --atp=metis
 ATHENA_LIB      =$(addprefix $(PWD), /lib)
 ATHENA_AGDA_LIB =$(addprefix $(ATHENA_LIB),/.agda)
+TIMELIMIT =timeout -T240 -t240 -S9
+AGDACALL ="${TIMELIMIT} ${AGDA} {} --verbose=0 && \
+  echo '-------------------------------------------------------------------' && echo"
+
 
 # ============================================================================
 # Propositional problems in TPTP format from
@@ -214,7 +219,7 @@ agda-libraries:
 	@echo "======== Downloading libraries: Agda-Prop and Agda-Metis =========="
 	@echo "==================================================================="
 	git submodule update --init lib/agda-prop
-	# git submodule update --init lib/agda-metis
+	git submodule update --init lib/agda-metis
 
 
 .PHONY: install-libraries
@@ -309,44 +314,39 @@ check : install-libraries \
 	@echo "================== Type-checking Agda files ======================="
 	@echo "==================================================================="
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
-	# @find $(BASIC) \
-	# 				-type f \
-	# 				-name "*.agda" \
-	# 				-print \
-	# 				-exec sh -c "timelimit -T240 -t240 -S9 agda {} --verbose=0 && \
-	# 					echo '-------------------------------------------------------------------'" \;;
+	@find $(BASIC) \
+					-type f \
+					-name "*.agda" \
+					-print \
+					-exec sh -c $(AGDACALL) \;;
 
-	# @find $(CONJ) \
-	# 				-type f \
-	# 				-name "*.agda" \
-	# 				-print \
-	# 				-exec sh -c "timelimit -T240 -t240 -S9 agda {} --verbose=0 && \
-	# 					echo '-------------------------------------------------------------------'" \;;
+	@find $(CONJ) \
+	 				-type f \
+	 				-name "*.agda" \
+	 				-print \
+	 				-exec sh -c $(AGDACALL) \;;
 
 	@find $(IMPL) \
 				-type f \
 				-name "*.agda" \
 				-print \
-				-exec sh -c "timelimit -T240 -t240 -S9 agda {} --verbose=0 && \
-						echo '-------------------------------------------------------------------'" \;;
+				-exec sh -c $(AGDACALL) \;;
 
 	@find $(DISJ) \
 				-type f \
 				-name "*.agda" \
 				-print \
-				-exec sh -c "timelimit -T240 -t240 -S9 agda {} --verbose=0 && \
-						echo '------------------------------------------------------------------'" \;;
+				-exec sh -c $(AGDACALL) \;;
 
 	@find $(NEG) \
 				-type f \
 				-name "*.agda" \
 				-print \
-				-exec sh -c "timelimit -T240 -t240 -S9 agda {} --verbose=0 && \
-						echo '------------------------------------------------------------------'" \;;
+				-exec sh -c $(AGDACALL) \;;	
 
 	@find $(BICOND) \
 			-type f \
 			-name "*.agda" \
 			-print \
-			-exec sh -c "timelimit -T240 -t240 -S9 agda {} --verbose=0 && \
-					echo '------------------------------------------------------------------'" \;;
+		  -exec sh -c $(AGDACALL) \;;
+
