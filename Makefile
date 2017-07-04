@@ -248,7 +248,6 @@ install-bin :
 	@echo "==================================================================="
 	@echo "================ Installing Athena v0.1 ==========================="
 	@echo "==================================================================="
-	cabal update
 	cabal install --disable-documentation -v0 --jobs=1 -g --ghc
 
 .PHONY: install
