@@ -97,6 +97,9 @@ import Data.TSTP
     , Simplify
     , Strip
     , Resolve
+    , Skolemize
+    , Specialize
+    , NewRule
     )
   , Source(..)
   , V(..)
@@ -133,7 +136,7 @@ instance Pretty AgdaFile where
 
 
 getFormulaByTag ∷ AgdaFile → String → Doc
-getFormulaByTag agdaFile tag = pretty φ <+> pretty "  -- " <+> pretty tag
+getFormulaByTag agdaFile tag = pretty φ
   where
      φ ∷ Formula
      φ = formula . fromJust $ Map.lookup tag dict
@@ -467,6 +470,7 @@ docSteps subgoalN (Root Canonicalize tag [subtree]) agdaFile =
   parens $
        pretty Canonicalize <+> getFormulaByTag agdaFile tag <> line
     <> indent 2 (docSteps subgoalN subtree agdaFile)
+
 ------------------------------------------------------------------------------
 -- Clausify.
 ------------------------------------------------------------------------------
@@ -474,7 +478,7 @@ docSteps subgoalN (Root Canonicalize tag [subtree]) agdaFile =
 docSteps subgoalN (Root Clausify tag [subtree]) agdaFile =
   parens $
        pretty Clausify <+> getFormulaByTag agdaFile tag <> line
-    <> indent 2 (docSteps subgoalN subtree agdaFile)
+       <> indent 2 (docSteps subgoalN subtree agdaFile)
 
 ------------------------------------------------------------------------------
 -- Conjunct.
@@ -500,7 +504,7 @@ docSteps subgoalN (Root Negate _ [subtree@(Root Strip _ _)]) agdaFile =
 {-
      left         right
    ────────     ──────────
-   f: ϕ₁ ∨ ℓ    g:ϕ₂ ∨ ¬ ℓ
+   f: ϕ₁ ∨ ℓ    g: ϕ₂ ∨ ¬ ℓ
    ────────────────────────  (resolve ℓ)
         φ: ϕ₁ ∨ ϕ₂
 
@@ -512,13 +516,15 @@ docSteps subgoalN
            , right@(Root _ gTag _)
            ])
          agdaFile =
-  parens $
-    pretty thm <+> parens (pretty l) <> line <>
+  parens $ pretty Resolve <+> getFormulaByTag agdaFile tag
+  <+> pretty "-- " <> pretty f <+> pretty g <+> pretty thm <+> pretty swap
+      <> line <>
+      indent 2 ( pretty l <> line <>
     if swap
-    then indent 2 (docSteps subgoalN left agdaFile)  <> line
-      <> indent 0 (docSteps subgoalN right agdaFile)
-    else indent 2 (docSteps subgoalN right agdaFile) <> line
-      <> indent 0 (docSteps subgoalN left agdaFile)
+    then (docSteps subgoalN right agdaFile  <> line <>
+         docSteps subgoalN left agdaFile)
+    else (docSteps subgoalN left agdaFile <> line <>
+            docSteps subgoalN right agdaFile))
   where
     dict ∷ ProofMap
     dict = fileDict agdaFile
@@ -549,7 +555,7 @@ docSteps subgoalN
 -- Simplify.
 ------------------------------------------------------------------------------
 
-docSteps subgoalN (Root Simplify _ nodes) agdaFile =
+docSteps subgoalN (Root Simplify tag nodes) agdaFile =
   simplification
   where
     rNodes :: [ProofTree]
@@ -565,7 +571,7 @@ docSteps subgoalN (Root Simplify _ nodes) agdaFile =
         (\node y →
           parens $
             vsep
-              [ pretty Simplify
+              [ pretty Simplify <+> getFormulaByTag agdaFile tag
               , indent 2
                   (vsep
                     [ docSteps subgoalN node agdaFile
@@ -584,4 +590,8 @@ docSteps subgoalN (Root Simplify _ nodes) agdaFile =
 docSteps subgoalN (Root Strip _ _) _ =
      parens $ pretty "strip goal to" <+> subgoalName subgoalN
 
-docSteps _ _ _ = pretty "?" <> line
+docSteps _ (Root Skolemize _ _ ) _ = pretty "? skolemie"
+docSteps _ (Root Specialize _ _ ) _ = pretty "? specialize"
+docSteps _ (Root (NewRule r) _ _ ) _ = pretty "?newrule"
+
+-- docSteps _ _ _ = pretty "?" -- pretty inf <+> pretty r <> line

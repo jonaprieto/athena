@@ -310,19 +310,19 @@ check : install-libraries \
 	@echo "================== Type-checking Agda files ======================="
 	@echo "==================================================================="
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
-	@find $(BASIC) \
-					-type f \
-					-name "*.agda" \
-					-print \
-					-exec sh -c "timelimit -T240 -t240 -S9 agda {} --verbose=0 && \
-						echo '-------------------------------------------------------------------'" \;;
+	# @find $(BASIC) \
+	# 				-type f \
+	# 				-name "*.agda" \
+	# 				-print \
+	# 				-exec sh -c "timelimit -T240 -t240 -S9 agda {} --verbose=0 && \
+	# 					echo '-------------------------------------------------------------------'" \;;
 
-	@find $(CONJ) \
-					-type f \
-					-name "*.agda" \
-					-print \
-					-exec sh -c "timelimit -T240 -t240 -S9 agda {} --verbose=0 && \
-						echo '-------------------------------------------------------------------'" \;;
+	# @find $(CONJ) \
+	# 				-type f \
+	# 				-name "*.agda" \
+	# 				-print \
+	# 				-exec sh -c "timelimit -T240 -t240 -S9 agda {} --verbose=0 && \
+	# 					echo '-------------------------------------------------------------------'" \;;
 
 	@find $(IMPL) \
 				-type f \

@@ -1,4 +1,3 @@
-
 -- | Athena.Translation.Rule.Resolve module.
 
 {-# LANGUAGE ScopedTypeVariables #-}
@@ -15,9 +14,9 @@ import Data.TSTP.BinOp      ( BinOp(..) )
 ------------------------------------------------------------------------------
 
 atpResolve ∷ Formula → Formula → Formula → (String, Bool)
-atpResolve f g  (PredApp (AtomicWord "$false") [])
-  | f == (:~:) g = ("atp-resolve₈", False)
-  | (:~:) f == g = ("atp-resolve₈", True)
+atpResolve f g _ -- (PredApp (AtomicWord "$false") [])
+  | f == (:~:) g = ("atp-resolve₈", True)
+  | (:~:) f == g = ("atp-resolve₈", False)
 atpResolve (BinOp f₁ (:|:) f₂) (BinOp g₁ (:|:) g₂) l
   | f₁ == l && g₁ == (:~:) l = ("atp-resolve₀", False)
   | f₂ == l && g₂ == (:~:) l = ("atp-resolve₁", False)
