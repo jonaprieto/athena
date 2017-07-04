@@ -7,7 +7,8 @@ AGDA     =agda
 ATP      ?=online-atps --atp=metis
 ATHENA_LIB      =$(addprefix $(PWD), /lib)
 ATHENA_AGDA_LIB =$(addprefix $(ATHENA_LIB),/.agda)
-TIMELIMIT =timeout -T240 -t240 -S9
+TIMELIMIT =timeout 1m
+# timelimit -T240 -t240 -S9
 AGDACALL ="${TIMELIMIT} ${AGDA} {} --verbose=0 && \
   echo '-------------------------------------------------------------------' && echo"
 
