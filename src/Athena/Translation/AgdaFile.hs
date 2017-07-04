@@ -587,11 +587,10 @@ docSteps subgoalN (Root Simplify tag nodes) agdaFile =
 -- Strip.
 ------------------------------------------------------------------------------
 
-docSteps subgoalN (Root Strip _ _) _ =
-     parens $ pretty "strip goal to" <+> subgoalName subgoalN
+docSteps subgoalN (Root Strip _ _) _ = subgoalName subgoalN
 
-docSteps _ (Root Skolemize _ _ ) _ = pretty "? skolemie"
-docSteps _ (Root Specialize _ _ ) _ = pretty "? specialize"
-docSteps _ (Root (NewRule r) _ _ ) _ = pretty "?newrule"
+docSteps _ (Root Skolemize _ _ ) _ = pretty "? -- skolemie"
+docSteps _ (Root Specialize _ _ ) _ = pretty "? -- specialize"
+docSteps _ (Root (NewRule r) _ _ ) _ = pretty "? -- newrule"
 
 -- docSteps _ _ _ = pretty "?" -- pretty inf <+> pretty r <> line
