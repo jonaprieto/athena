@@ -41,7 +41,7 @@ import Athena.Translation.Rules
 --   -- , atpNegate
   atpResolve
 --   -- , atpSimplify
---   -- , atpStrip
+--   -- , atpSplit
   )
 import Athena.Options            ( Options ( optInputFile ) )
 import Athena.Translation.Utils  ( stdName )
@@ -371,7 +371,7 @@ docProofGoal agdaFile =
      pretty "proof" <+> colon <+> pretty "Γ ⊢ goal" <> line
   <> pretty "proof" <+> equals <> line
   <> indent 2 (pretty "⇒-elim" <> line)
-  <> indent 2 (pretty "atp-splitGoal" <> line)
+  <> indent 2 (pretty "atp-split" <> line)
   <> indent 0 sgoals <> line
   where
     sgoals ∷ Doc
