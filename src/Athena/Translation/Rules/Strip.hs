@@ -30,10 +30,13 @@ unshunt (BinOp x (:=>:) (BinOp y (:&:) z))  =
 unshunt fm = fm
 
 split ∷  Formula → Formula
-split (BinOp φ₁ (:&:) φ₂)           = BinOp unshunt (split φ₁) (:&:) unshunt (φ₁ (:=>:) split φ₂)
-split (BinOp φ₁ (:|:) φ₂)           =unshunt ((:~:) φ₁ (:=>:) (split φ₂))
+split (BinOp φ₁ (:&:) φ₂)           =
+  BinOp (unshunt (split φ₁)) (:&:) (unshunt (BinOp φ₁ (:=>:) (split φ₂)))
+split (BinOp φ₁ (:|:) φ₂)           =
+  unshunt (BinOp ((:~:) φ₁) (:=>:) (split φ₂))
 split (BinOp φ₁ (:=>:) φ₂)          = unshunt (BinOp φ₁ (:=>:) (split φ₂))
-split (BinOp φ₁ (:<=>:) φ₂)         = BinOp unshunt (BinOp φ₁ (:=>:) (split φ₂)) (:&:) unshunt (BinOp φ₂ (:=>:) (split φ₁))
+split (BinOp φ₁ (:<=>:) φ₂)         =
+  BinOp unshunt (BinOp φ₁ (:=>:) (split φ₂)) (:&:) unshunt (BinOp φ₂ (:=>:) (split φ₁))
 split ((:~:) (BinOp φ₁ (:&:) φ₂))   = unshunt (BinOp φ₁ (:=>:) (split ((:~:) φ₂)))
 split ((:~:) (BinOp φ₁ (:|:) φ₂))   = BinOp unshunt (BinOp split ((:~:) φ₁)) (:&:) unshunt (BinOp ((:~:) φ₁) (:=>:) split ((:~:) φ₂))
 split ((:~:) (BinOp φ₁ (:=>:) φ₂))  = BinOp unshunt (split φ₁) (:&:) unshunt (φ₁ (:=>:) split ((:~:) φ₂))
