@@ -5,7 +5,10 @@
 {-# LANGUAGE UnicodeSyntax       #-}
 
 module Athena.Translation.Rules.Strip
-  ( atpSplit )
+  ( atpSplit
+  , split
+  , unshunt
+  )
   where
 
 ------------------------------------------------------------------------------
@@ -31,23 +34,47 @@ unshunt fm = fm
 
 split ∷  Formula → Formula
 split (BinOp φ₁ (:&:) φ₂)           =
-  BinOp (unshunt (split φ₁)) (:&:) (unshunt (BinOp φ₁ (:=>:) (split φ₂)))
+  BinOp
+    (unshunt (split φ₁))
+    (:&:)
+    (unshunt (BinOp φ₁ (:=>:) (split φ₂)))
+
 split (BinOp φ₁ (:|:) φ₂)           =
   unshunt (BinOp ((:~:) φ₁) (:=>:) (split φ₂))
+
 split (BinOp φ₁ (:=>:) φ₂)          = unshunt (BinOp φ₁ (:=>:) (split φ₂))
 split (BinOp φ₁ (:<=>:) φ₂)         =
-  BinOp unshunt (BinOp φ₁ (:=>:) (split φ₂)) (:&:) unshunt (BinOp φ₂ (:=>:) (split φ₁))
-split ((:~:) (BinOp φ₁ (:&:) φ₂))   = unshunt (BinOp φ₁ (:=>:) (split ((:~:) φ₂)))
-split ((:~:) (BinOp φ₁ (:|:) φ₂))   = BinOp unshunt (BinOp split ((:~:) φ₁)) (:&:) unshunt (BinOp ((:~:) φ₁) (:=>:) split ((:~:) φ₂))
-split ((:~:) (BinOp φ₁ (:=>:) φ₂))  = BinOp unshunt (split φ₁) (:&:) unshunt (φ₁ (:=>:) split ((:~:) φ₂))
-split ((:~:) (BinOp φ₁ (:<=>:) φ₂)) = unshunt (BinOp φ₁ (:=>:) split ((:~:) φ₂)) (:&:) unshunt (BinOp φ₂ (:=>:) split ((:~:) φ₁))
+  BinOp
+    (unshunt (BinOp φ₁ (:=>:) (split φ₂)))
+    (:&:)
+    (unshunt (BinOp φ₂ (:=>:) (split φ₁)))
+split ((:~:) (BinOp φ₁ (:&:) φ₂))   =
+  unshunt (BinOp φ₁ (:=>:) (split ((:~:) φ₂)))
+split ((:~:) (BinOp φ₁ (:|:) φ₂))   =
+  BinOp
+    (unshunt (split ((:~:) φ₁)))
+    (:&:)
+    (unshunt (BinOp ((:~:) φ₁) (:=>:) (split ((:~:) φ₂))))
+
+split ((:~:) (BinOp φ₁ (:=>:) φ₂))  =
+  BinOp
+    (unshunt (split φ₁))
+    (:&:)
+    (unshunt (BinOp φ₁ (:=>:) (split ((:~:) φ₂))))
+
+split ((:~:) (BinOp φ₁ (:<=>:) φ₂)) =
+  BinOp
+    (unshunt (BinOp φ₁ (:=>:) (split ((:~:) φ₂))))
+    (:&:)
+    (unshunt (BinOp φ₂ (:=>:) (split ((:~:) φ₁))))
+
 split ((:~:) (PredApp (AtomicWord "$false") [])) = PredApp (AtomicWord "$true") []
-split ((:~:) (PredApp (AtomicWord "$true") [])) = PredApp (AtomicWord "$false") []
-split fm = fm 
+split ((:~:) (PredApp (AtomicWord "$true") []))  = PredApp (AtomicWord "$false") []
+split fm = fm
 
 
 atpSplit ∷ Formula → ProofMap → Formula
-atpSplit fm dict = undefined
+atpSplit _ _ = undefined
 
 
 
