@@ -41,7 +41,7 @@ import Athena.Translation.Rules
 --   -- , atpNegate
   atpResolve
 --   -- , atpSimplify
---   -- , atpStrip
+--   -- , atpSplit
   )
 import Athena.Options            ( Options ( optInputFile ) )
 import Athena.Translation.Utils  ( stdName )
@@ -371,7 +371,7 @@ docProofGoal agdaFile =
      pretty "proof" <+> colon <+> pretty "Γ ⊢ goal" <> line
   <> pretty "proof" <+> equals <> line
   <> indent 2 (pretty "⇒-elim" <> line)
-  <> indent 2 (pretty "atp-splitGoal" <> line)
+  <> indent 2 (pretty "atp-split" <> line)
   <> indent 0 sgoals <> line
   where
     sgoals ∷ Doc
@@ -587,11 +587,10 @@ docSteps subgoalN (Root Simplify tag nodes) agdaFile =
 -- Strip.
 ------------------------------------------------------------------------------
 
-docSteps subgoalN (Root Strip _ _) _ =
-     parens $ pretty "strip goal to" <+> subgoalName subgoalN
+docSteps subgoalN (Root Strip _ _) _ = subgoalName subgoalN
 
-docSteps _ (Root Skolemize _ _ ) _ = pretty "? skolemie"
-docSteps _ (Root Specialize _ _ ) _ = pretty "? specialize"
-docSteps _ (Root (NewRule r) _ _ ) _ = pretty "?newrule"
+docSteps _ (Root Skolemize _ _ ) _ = pretty "? -- skolemie"
+docSteps _ (Root Specialize _ _ ) _ = pretty "? -- specialize"
+docSteps _ (Root (NewRule r) _ _ ) _ = pretty "? -- newrule"
 
 -- docSteps _ _ _ = pretty "?" -- pretty inf <+> pretty r <> line

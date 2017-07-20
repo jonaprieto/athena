@@ -9,7 +9,7 @@ module Athena.Translation.Rules
   , atpSimplify
   , atpSkolemize
   , atpSpecialize
-  , atpStrip
+  , atpSplit
   ) where
 
 ------------------------------------------------------------------------------
@@ -22,6 +22,6 @@ import Athena.Translation.Rules.Resolve      ( atpResolve )
 import Athena.Translation.Rules.Simplify     ( atpSimplify )
 import Athena.Translation.Rules.Skolemize    ( atpSkolemize )
 import Athena.Translation.Rules.Specialize   ( atpSpecialize )
-import Athena.Translation.Rules.Strip        ( atpStrip )
+import Athena.Translation.Rules.Strip        ( atpSplit )
 
 ------------------------------------------------------------------------------
