@@ -43,6 +43,7 @@ split (BinOp φ₁ (:|:) φ₂)           =
   unshunt (BinOp ((:~:) φ₁) (:=>:) (split φ₂))
 
 split (BinOp φ₁ (:=>:) φ₂)          = unshunt (BinOp φ₁ (:=>:) (split φ₂))
+
 split (BinOp φ₁ (:<=>:) φ₂)         =
   BinOp
     (unshunt (BinOp φ₁ (:=>:) (split φ₂)))
@@ -50,6 +51,7 @@ split (BinOp φ₁ (:<=>:) φ₂)         =
     (unshunt (BinOp φ₂ (:=>:) (split φ₁)))
 split ((:~:) (BinOp φ₁ (:&:) φ₂))   =
   unshunt (BinOp φ₁ (:=>:) (split ((:~:) φ₂)))
+
 split ((:~:) (BinOp φ₁ (:|:) φ₂))   =
   BinOp
     (unshunt (split ((:~:) φ₁)))
