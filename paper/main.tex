@@ -64,10 +64,12 @@
 \mainmatter  % start of an individual contribution
 
 % first the title is needed
-\title{Towards Proof-Reconstruction of Problems in Classical Propositional Logic}
+\title{Towards Proof-Reconstruction of Problems in Classical Propositional Logic
+in Agda}
 
 % a short form should be given in case it is too long for the running head
-\titlerunning{Towards Proof-Reconstruction of Problems in Classical Propositional Logic}
+\titlerunning{Towards Proof-Reconstruction of Problems in Classical
+  Propositional Logic in Agda}
 
 \author{Jonathan Prieto-Cubides%
 \and Andr\'es Sicard-Ram\'irez}
@@ -89,9 +91,30 @@ Medell\'in, Colombia\\
 \end{abstract}
 
 \section{Introduction}
-Proof reconstruction is a hard labor, it depends on the integration of two complex systems. On one hand, we have the automatic theorem provers (henceforth ATPs), these are programs designed to answer automatically if a statement, the conjecture, is a theorem, is counter-feasible or is unknown based on a set of hypothesis. Provers often deal with problems in First-Order Logic with or without equality, High-Order Logic, Intuitionistic Logic, and other logics or background theories.
+Proof reconstruction is a hard labor, it integrates two
+complex systems. On one hand, we have the automatic theorem provers (henceforth
+ATPs) that depending on the specification logic and background theories exist
+many alternatives. They are SAT solvers (e.g. \verb!zChaff!~\cite{Moskewicz2001} and \verb!MiniSat!~\cite{Een2004}) to prove unsatisfiability of CNF formulas,
+QBF solvers (e.g.~\verb!GhostQ!~\cite{Klieber2014} and ~\verb!DepQBF!~\cite{Lonsing2017}) to prove satisfiability and invalidity of quantified Boolean
+formulas, SMT solvers (e.g \verb!CVC4!~\cite{Barrett2011}, \verb!veriT!~\cite{bouton2009}, \verb!Z3!~\cite{DeMoura2008}) to
+prove unsatisfiability of formulas from first-order logic with theories,  and
+finally, the ATPs to prove validity of formulas from first-order logic with
+equality (e.g.~\verb!E!~\cite{Schulz:AICOM-2002},~\verb!Gandalf!~\cite{Tammet1997},~\verb!leanCoP!~\cite{Otten2008},~\verb!Metis!~\cite{hurd2003first},~\verb!SPASS!~\cite{Weidenbach2009} and ~\verb!Vampire!~\cite{Riazanov1999}),
+high-order logic (e.g.~\verb!Leo-II!,~\verb!Satallax!), intuitonistic logic
+(e.g.~\verb!ileanCoP!~\cite{Otten2008},~\verb!JProver!~\cite{Schmitt2001},~\verb!Gandalf!~\cite{Tammet1997}), among others.
 
-For proof reconstruction, we are interested in ATP tools that can deliver proof objects in a consistent format to work with, that is, a full   script  describing  step-by-step the table of the derivation to get the proof. Unfortunately, just a few of the ATPs can give us such a proof object. For problems in Classical Propositional Logic (henceforth CPL), from a list of at least forty\footnote{ATPs available in the website  \texttt{SystemOnTPTP} from the TPTP World} ATPs, just a few can deliver proofs (e.g. \verb!CVC4!~\cite{Barrett2011}, \verb!SPASS!~\cite{Weidenbach2009}, \verb!Waldmeister!~\cite{hillenbrand1997}) and a little bit less deliver proofs in the TSTP file format (e.g. \verb!E!~\cite{Schulz:AICOM-2002}, \verb!Metis!~\cite{hurd2003first}, \verb!Vampire!~\cite{Riazanov1999}, \verb!Z3!).
+For proof reconstruction, we are interested in ATP tools that can deliver proof
+objects in a consistent format to work with, that is, a full script describing
+step-by-step the table of the derivation to get the actual proof. Unfortunately,
+just a few of the ATPs generate in their outputs a proof object.
+
+
+For problems in classical propositional logic (henceforth CPL), from a list of
+at least forty\footnote{ATPs available in the website  \texttt{SystemOnTPTP}
+  from the TPTP World} ATPs, just a few deliver proofs (e.g.
+\verb!CVC4!~\cite{Barrett2011}, \verb!SPASS!~\cite{Weidenbach2009},
+\verb!Waldmeister!~\cite{hillenbrand1997}) and a little bit less proofs in file
+format like TSTP (e.g. \verb!E!~\cite{Schulz:AICOM-2002}, \verb!Metis!~\cite{hurd2003first}, \verb!Vampire!~\cite{Riazanov1999}, \verb!Z3!).
 
 On the other hand, we have the proof checkers, Interactive Theorem Provers
 %(henceforth ITP)
@@ -101,13 +124,17 @@ Many approaches have been proposed and some tools have been implemented for proo
 
 \subsection*{Related Work.}\label{Related Work}
 \par
-\verb!Sledgehammer! is a tool for \verb!Isabelle! proof assistant~\cite{paulson1994isabelle} that provides a full integration of automatic theorem provers including ATPs (see, for example, \cite{meng2006automation} and~\cite{blanchette2013extending}) and SMT solvers (see, for example,~\cite{blanchette2013extending}) with \verb!Isabelle/HOL!~\cite{nipkow2002isabelle}, the specialization of \verb!Isabelle! for Higher-Order Logic.
+\verb!Sledgehammer! is a tool for \verb!Isabelle! proof
+assistant~\cite{paulson1994isabelle} that provides a full integration of
+automatic theorem provers including ATPs (see, for example,
+\cite{meng2006automation}, ~\cite{blanchette2013extending} and \cite{Fleury2014}) and SMT solvers (see, for
+example,~\cite{blanchette2013extending},~\cite{bohme2010} and \cite{Fleury2014}) with \verb!Isabelle/HOL!~\cite{nipkow2002isabelle}, the specialization of \verb!Isabelle! for Higher-Order Logic.
 
 \verb!Waldmeister! is an automatic theorem prover for Unit Equational Logic \cite{hillenbrand1997}. Foster and Struth \cite{foster2011integrating} integrate \verb!Waldmeister! into \verb!Agda!~\cite{agdateam}. This integration requires a proof reconstruction step but authors' approach is restricted to Pure Equational Logic --also called Identity Theory \cite{humberstone2011}-- that is, First-Order Logic with Equality but no other predicate symbols and no functions symbols \cite{appel1959}.
 
 An integration between SMT Solvers and \verb!Agda! in \cite{kanso2016light} use a \emph{oracle and reflection} approach to give certificates for propositional problems.
 
-\verb!SMTCoq! \cite{armand2011} is a tool for the \verb!Coq! proof assistant \cite{coqteam} which provides a certified checker for proof witness coming from the SMT solver \verb!veriT! \cite{bouton2009} and adds a new tactic named verit, that calls \verb!veriT! on any \verb!Coq! goal.
+\verb!SMTCoq! (see \cite{armand2011} and \cite{Ekici2017} for more details) is a tool for the \verb!Coq! proof assistant \cite{coqteam} which provides a certified checker for proof witness coming from the SMT solver \verb!veriT! \cite{bouton2009} and adds a new tactic named verit, that calls \verb!veriT! on any \verb!Coq! goal.
 
 Given a fixed but arbitrary First-Order signature, in \cite{bezem2002automated} transform a proof produced by the first-order automatic theorem prover \verb!Bliksem! \cite{deNivelle2003} in a \verb!Coq! proof term.
 
