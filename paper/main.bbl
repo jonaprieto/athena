@@ -9,10 +9,8 @@ Appel, K.I.: {Horn Sentences in Identity Theory}. The Journal of Symbolic Logic
 \bibitem{armand2011}
 Armand, M., Faure, G., Gr{\'{e}}goire, B., Keller, C., Th{\'{e}}ry, L., Werner,
   B.: {A Modular Integration of SAT/SMT Solvers to Coq through Proof
-  Witnesses}. In: Certified Programs and Proofs: First International
-  Conference, CPP 2011, Kenting, Taiwan, December 7-9, 2011. Proceedings, pp.
-  135--150. Springer Berlin Heidelberg, Berlin, Heidelberg (2011),
-  \url{https://doi.org/10.1007/978-3-642-25379-9{\_}12}
+  Witnesses}, pp. 135--150. Springer Berlin Heidelberg, Berlin, Heidelberg
+  (2011), \url{https://doi.org/10.1007/978-3-642-25379-9{\_}12}
 
 \bibitem{Barrett2011}
 Barrett, C., Conway, C.L., Deters, M., Hadarean, L., Jovanovi{\'{c}}, D., King,
@@ -39,18 +37,13 @@ Blanchette, J.C., B{\"{o}}hme, S., Paulson, L.C.: {Extending Sledgehammer with
   \url{https://doi.org/10.1007/s10817-013-9278-5}
 
 \bibitem{bohme2010}
-B{\"{o}}hme, S., Weber, T.: {Fast LCF-Style Proof Reconstruction for Z3}. In:
-  Kaufmann, M., Paulson, L.C. (eds.) Interactive Theorem Proving: First
-  International Conference, ITP 2010, Edinburgh, UK, July 11-14, 2010.
-  Proceedings, pp. 179--194. Springer Berlin Heidelberg, Berlin, Heidelberg
-  (2010)
+B{\"{o}}hme, S., Weber, T.: {Fast LCF-Style Proof Reconstruction for Z3}, pp.
+  179--194. Springer Berlin Heidelberg, Berlin, Heidelberg (2010)
 
 \bibitem{bouton2009}
 Bouton, T., de~Oliveira, D., D{\'{e}}harbe, D., Fontaine, P.: {veriT: An Open,
-  Trustable and Efficient SMT-Solver}. In: Automated Deduction -- CADE-22: 22nd
-  International Conference on Automated Deduction, Montreal, Canada, August
-  2-7, 2009. Proceedings, pp. 151--156. Springer Berlin Heidelberg, Berlin,
-  Heidelberg (2009)
+  Trustable and Efficient SMT-Solver}, pp. 151--156. Springer Berlin
+  Heidelberg, Berlin, Heidelberg (2009)
 
 \bibitem{Brown2012}
 Brown, C.E.: {Satallax: An automatic higher-order prover}. In: Lecture Notes in
@@ -79,16 +72,19 @@ Ekici, B., Mebsout, A., Tinelli, C., Keller, C., Katz, G.: {SMTCoq: A plug-in
   \url{http://web.stanford.edu/{~}guyk/pub/CAV2017{\_}C.pdf}
 
 \bibitem{Fleury2014}
-Fleury, M.{\&}., Blanchette, J.: {Translation of Proofs Provided by External
-  Provers More Automatic Prover Support for Isabelle: Two Higher-Order Provers
-  and a SMT Solver} pp. 2--0 (2014),
+Fleury, M., Blanchette, J.: {Translation of Proofs Provided by External Provers
+  More Automatic Prover Support for Isabelle: Two Higher-Order Provers and a
+  SMT Solver} pp. 2--0 (2014),
   \url{http://perso.eleves.ens-rennes.fr/{~}mfleur01/documents/Fleury{\_}internship2014.pdf}
 
 \bibitem{foster2011integrating}
-Foster, S., Struth, G.: {Integrating an Automated Theorem Prover into Agda}.
-  In: NASA Formal Methods: Third International Symposium, NFM 2011, Pasadena,
-  CA, USA, April 18-20, 2011. Proceedings, pp. 116--130. Springer Berlin
-  Heidelberg, Berlin, Heidelberg (2011)
+Foster, S., Struth, G.: {Integrating an Automated Theorem Prover into Agda},
+  pp. 116--130. Springer Berlin Heidelberg, Berlin, Heidelberg (2011)
+
+\bibitem{Gomez-Londono2015}
+G{\'{o}}mez-Londono, A.: {Proof Reconstruction: Parsing Proofs}. Tech. rep.,
+  EAFIT University (2015),
+  \url{http://repository.eafit.edu.co/handle/10784/5484}
 
 \bibitem{hillenbrand1997}
 Hillenbrand, T., Buch, A., Vogt, R., L{\"{o}}chner, B.: {WALDMEISTER -
@@ -132,7 +128,7 @@ Nipkow, T., Paulson, L.C., Wenzel, M.: {Isabelle/HOL: A Proof Assistant for
   Higher-order Logic}, vol. 2283. Springer Science {\&} Business Media (2002)
 
 \bibitem{norrish2007hol}
-Norrish, M., Slind, K.: {The HOL system description} (2007)
+Norrish, M., Slind, K.: {The HOL system description}  (2007)
 
 \bibitem{Otten2008}
 Otten, J.: {leanCoP 2.0 and ileanCoP 1.2: High Performance Lean Theorem Proving
@@ -183,11 +179,12 @@ Tammet, T.: {Gandalf}. Journal of Automated Reasoning  18(2),  199--204 (1997),
   \url{http://www.scopus.com/inward/record.url?eid=2-s2.0-0031108576{\&}partnerID=tZOtx3y1}
 
 \bibitem{agdateam}
-Team, T.A.D.: {Agda 2.4.2.3} (2015),
+Team, T.A.D.: {Agda 2.4.2.3}, version 8. edn. (2015),
   \url{http://wiki.portal.chalmers.se/agda/pmwiki.php}
 
 \bibitem{coqteam}
-Team, T.C.D.: {The Coq Proof Assistant. Reference Manual} (2015)
+Team, T.C.D.: {The Coq Proof Assistant. Reference Manual}, version 8. edn.
+  (2015), \url{https://coq.inria.fr/distrib/current/files/Reference-Manual.pdf}
 
 \bibitem{Weidenbach2009}
 Weidenbach, C., Dimova, D., Fietzke, A., Kumar, R., Suda, M., Wischnewski, P.:
