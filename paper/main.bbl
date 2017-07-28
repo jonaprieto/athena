@@ -9,8 +9,10 @@ Appel, K.I.: {Horn Sentences in Identity Theory}. The Journal of Symbolic Logic
 \bibitem{armand2011}
 Armand, M., Faure, G., Gr{\'{e}}goire, B., Keller, C., Th{\'{e}}ry, L., Werner,
   B.: {A Modular Integration of SAT/SMT Solvers to Coq through Proof
-  Witnesses}, pp. 135--150. Springer Berlin Heidelberg, Berlin, Heidelberg
-  (2011), \url{https://doi.org/10.1007/978-3-642-25379-9{\_}12}
+  Witnesses}. In: Certified Programs and Proofs: First International
+  Conference, CPP 2011, Kenting, Taiwan, December 7-9, 2011. Proceedings, pp.
+  135--150. Springer Berlin Heidelberg, Berlin, Heidelberg (2011),
+  \url{https://doi.org/10.1007/978-3-642-25379-9{\_}12}
 
 \bibitem{Barrett2011}
 Barrett, C., Conway, C.L., Deters, M., Hadarean, L., Jovanovi{\'{c}}, D., King,
@@ -18,6 +20,13 @@ Barrett, C., Conway, C.L., Deters, M., Hadarean, L., Jovanovi{\'{c}}, D., King,
   (eds.) Computer Aided Verification: 23rd International Conference, CAV 2011,
   Snowbird, UT, USA, July 14-20, 2011. Proceedings, pp. 171--177. Springer
   Berlin Heidelberg, Berlin, Heidelberg (2011)
+
+\bibitem{Benzmuller2008}
+Benzm{\"{u}}ller, C., Paulson, L.C., Theiss, F., Fietzke, A.: {LEO-II - A
+  cooperative automatic theorem prover for classical higher-order logic (system
+  description)}. In: Lecture Notes in Computer Science (including subseries
+  Lecture Notes in Artificial Intelligence and Lecture Notes in
+  Bioinformatics). vol. 5195 LNAI, pp. 162--170 (2008)
 
 \bibitem{bezem2002automated}
 Bezem, M., Hendriks, D., {De Nivelle}, H.: {Automated Proof Construction in
@@ -30,13 +39,24 @@ Blanchette, J.C., B{\"{o}}hme, S., Paulson, L.C.: {Extending Sledgehammer with
   \url{https://doi.org/10.1007/s10817-013-9278-5}
 
 \bibitem{bohme2010}
-B{\"{o}}hme, S., Weber, T.: {Fast LCF-Style Proof Reconstruction for Z3}, pp.
-  179--194. Springer Berlin Heidelberg, Berlin, Heidelberg (2010)
+B{\"{o}}hme, S., Weber, T.: {Fast LCF-Style Proof Reconstruction for Z3}. In:
+  Kaufmann, M., Paulson, L.C. (eds.) Interactive Theorem Proving: First
+  International Conference, ITP 2010, Edinburgh, UK, July 11-14, 2010.
+  Proceedings, pp. 179--194. Springer Berlin Heidelberg, Berlin, Heidelberg
+  (2010)
 
 \bibitem{bouton2009}
 Bouton, T., de~Oliveira, D., D{\'{e}}harbe, D., Fontaine, P.: {veriT: An Open,
-  Trustable and Efficient SMT-Solver}, pp. 151--156. Springer Berlin
-  Heidelberg, Berlin, Heidelberg (2009)
+  Trustable and Efficient SMT-Solver}. In: Automated Deduction -- CADE-22: 22nd
+  International Conference on Automated Deduction, Montreal, Canada, August
+  2-7, 2009. Proceedings, pp. 151--156. Springer Berlin Heidelberg, Berlin,
+  Heidelberg (2009)
+
+\bibitem{Brown2012}
+Brown, C.E.: {Satallax: An automatic higher-order prover}. In: Lecture Notes in
+  Computer Science (including subseries Lecture Notes in Artificial
+  Intelligence and Lecture Notes in Bioinformatics). vol. 7364 LNAI, pp.
+  111--117 (2012)
 
 \bibitem{DeMoura2008}
 {De Moura}, L., Bj{\o}rner, N.: {Z3: An efficient SMT Solver}. In: Lecture
@@ -65,8 +85,10 @@ Fleury, M.{\&}., Blanchette, J.: {Translation of Proofs Provided by External
   \url{http://perso.eleves.ens-rennes.fr/{~}mfleur01/documents/Fleury{\_}internship2014.pdf}
 
 \bibitem{foster2011integrating}
-Foster, S., Struth, G.: {Integrating an Automated Theorem Prover into Agda},
-  pp. 116--130. Springer Berlin Heidelberg, Berlin, Heidelberg (2011)
+Foster, S., Struth, G.: {Integrating an Automated Theorem Prover into Agda}.
+  In: NASA Formal Methods: Third International Symposium, NFM 2011, Pasadena,
+  CA, USA, April 18-20, 2011. Proceedings, pp. 116--130. Springer Berlin
+  Heidelberg, Berlin, Heidelberg (2011)
 
 \bibitem{hillenbrand1997}
 Hillenbrand, T., Buch, A., Vogt, R., L{\"{o}}chner, B.: {WALDMEISTER -
@@ -110,7 +132,7 @@ Nipkow, T., Paulson, L.C., Wenzel, M.: {Isabelle/HOL: A Proof Assistant for
   Higher-order Logic}, vol. 2283. Springer Science {\&} Business Media (2002)
 
 \bibitem{norrish2007hol}
-Norrish, M., Slind, K.: {The HOL system description}  (2007)
+Norrish, M., Slind, K.: {The HOL system description} (2007)
 
 \bibitem{Otten2008}
 Otten, J.: {leanCoP 2.0 and ileanCoP 1.2: High Performance Lean Theorem Proving
@@ -139,6 +161,13 @@ Schmitt, S., Lorigo, L., Kreitz, C., Nogin, A.: {JProver: Integrating
 Schulz, S.: {E -- A Brainiac Theorem Prover}. Journal of AI Communications
   15(2/3),  111--126 (2002)
 
+\bibitem{Stump2008}
+Stump, A., Oe, D.: {Towards an SMT proof format}. In: Proceedings of the Joint
+  Workshops of the 6th International Workshop on Satisfiability Modulo Theories
+  and 1st International Workshop on Bit-Precise Reasoning - SMT '08/BPR '08.
+  p.~27. ACM Press, New York, New York, USA (2008),
+  \url{http://portal.acm.org/citation.cfm?doid=1512464.1512470}
+
 \bibitem{sutcliffe2009}
 Sutcliffe, G.: {The TPTP Problem Library and Associated Infrastructure}.
   Journal of Automated Reasoning  43(4),  337 (jul 2009),
@@ -154,12 +183,11 @@ Tammet, T.: {Gandalf}. Journal of Automated Reasoning  18(2),  199--204 (1997),
   \url{http://www.scopus.com/inward/record.url?eid=2-s2.0-0031108576{\&}partnerID=tZOtx3y1}
 
 \bibitem{agdateam}
-Team, T.A.D.: {Agda 2.4.2.3}, version 8. edn. (2015),
+Team, T.A.D.: {Agda 2.4.2.3} (2015),
   \url{http://wiki.portal.chalmers.se/agda/pmwiki.php}
 
 \bibitem{coqteam}
-Team, T.C.D.: {The Coq Proof Assistant. Reference Manual}, version 8. edn.
-  (2015)
+Team, T.C.D.: {The Coq Proof Assistant. Reference Manual} (2015)
 
 \bibitem{Weidenbach2009}
 Weidenbach, C., Dimova, D., Fietzke, A., Kumar, R., Suda, M., Wischnewski, P.:

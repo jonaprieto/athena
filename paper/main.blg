@@ -1,52 +1,50 @@
-This is BibTeX, Version 0.99d (TeX Live 2015/dev/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2016)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: main.aux
 The style file: splncs03.bst
 Database file #1: ref.bib
-Warning--can't use both author and editor fields in bohme2010
 Warning--empty booktitle in Een2004
 Warning--empty journal in Fleury2014
-Warning--empty journal in norrish2007hol
 Warning--empty booktitle in Schmitt2001
-You've used 34 entries,
+You've used 37 entries,
             2785 wiz_defined-function locations,
-            806 strings with 11103 characters,
-and the built_in function-call counts, 18940 in all, are:
-= -- 1601
-> -- 510
-< -- 38
-+ -- 210
-- -- 176
-* -- 1189
-:= -- 2374
-add.period$ -- 38
-call.type$ -- 34
-change.case$ -- 195
+            828 strings with 11777 characters,
+and the built_in function-call counts, 20981 in all, are:
+= -- 1785
+> -- 558
+< -- 43
++ -- 229
+- -- 192
+* -- 1306
+:= -- 2617
+add.period$ -- 49
+call.type$ -- 37
+change.case$ -- 229
 chr.to.int$ -- 0
-cite$ -- 39
-duplicate$ -- 1686
-empty$ -- 1723
-format.name$ -- 199
-if$ -- 4181
+cite$ -- 40
+duplicate$ -- 1872
+empty$ -- 1920
+format.name$ -- 218
+if$ -- 4650
 int.to.chr$ -- 0
-int.to.str$ -- 34
-missing$ -- 341
-newline$ -- 107
-num.names$ -- 70
-pop$ -- 611
+int.to.str$ -- 37
+missing$ -- 371
+newline$ -- 116
+num.names$ -- 78
+pop$ -- 686
 preamble$ -- 1
-purify$ -- 155
+purify$ -- 168
 quote$ -- 0
-skip$ -- 576
+skip$ -- 639
 stack$ -- 0
-substring$ -- 1185
-swap$ -- 943
-text.length$ -- 38
+substring$ -- 1292
+swap$ -- 1045
+text.length$ -- 43
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 122
-warning$ -- 5
-while$ -- 173
-width$ -- 36
-write$ -- 350
-(There were 5 warnings)
+type$ -- 142
+warning$ -- 3
+while$ -- 190
+width$ -- 39
+write$ -- 386
+(There were 3 warnings)
