@@ -1,0 +1,317 @@
+%if style == newcode
+
+\begin{code}
+
+module paper where
+
+\end{code}
+
+%endif
+
+\documentclass[runningheads,a4paper]{llncs}
+
+\setcounter{tocdepth}{3}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{bussproofs}
+\newenvironment{bprooftree}
+  {\leavevmode\hbox\bgroup}
+  {\DisplayProof\egroup}
+
+% --------------------------------------------------------------------------
+% Tikz Configuration
+% --------------------------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{automata}
+\usetikzlibrary{calc}
+\usepackage{rotating}
+
+\tikzset{
+    hyperlink node/.style={
+        alias=sourcenode,
+        append after command={
+            let     \p1 = (sourcenode.north west),
+                \p2=(sourcenode.south east),
+                \n1={\x2-\x1},
+                \n2={\y1-\y2} in
+            node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\p1)]
+            {\hyperlink{#1}{\XeTeXLinkBox{\phantom{\rule{\n1}{\n2}}}}}
+                    %xelatex needs \XeTeXLinkBox, won't create a link unless it
+                    %finds text --- rules don't work without \XeTeXLinkBox.
+                    %Still builds correctly with pdflatex and lualatex
+        }
+    }
+}
+
+\tikzstyle{vertex}=[auto=left,circle,fill=black!25,minimum size=5pt,inner sep=0pt]
+
+%\usepackage[utf8]{inputenc}
+\usepackage{ucs}
+\usepackage{autofe}
+\usepackage{afterpage}
+\usepackage{comment}
+\usepackage{url}
+\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{stmaryrd}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{fancyvrb}
+
+\DefineVerbatimEnvironment
+  {code}{Verbatim}
+  {} % {fontfamily=\tt} %freemodo
+
+\setcounter{secnumdepth}{5}
+
+%include lhs2TeX.fmt
+
+%include agda.fmt
+
+%include lib.fmt
+
+%format . = "."
+%format $$ = "\!\!"
+
+\renewcommand*\rmdefault{cmr}
+
+\usepackage{url}
+% \urldef{\mailsc}\path|{jprieto9, asr}@eafit.edu.co|
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+\noindent\keywordname\enspace\ignorespaces#1}
+
+\begin{document}
+
+\mainmatter  % start of an individual contribution
+
+% first the title is needed
+\title{Towards Proof-Reconstruction of Problems in Classical Propositional Logic
+in Agda}
+
+% a short form should be given in case it is too long for the running head
+\titlerunning{Towards Proof-Reconstruction of Problems in Classical
+  Propositional Logic in Agda}
+
+\author{Jonathan Prieto-Cubides%
+\and Andr\'es Sicard-Ram\'irez}
+%
+\authorrunning{Proof-Reconstruction in Classical Propositional Logic}
+
+\institute{EAFIT University, School of Sciences and Engineering,\\
+Medell\'in, Colombia\\
+\verb${jprieto9, asr}@eafit.edu.co$}
+
+% \toctitle{Lecture Notes in Computer Science}
+% \tocauthor{Authors' Instructions}
+\maketitle
+
+
+\begin{abstract}
+...
+\keywords{Proof reconstruction, Agda, Automatic theorem prover, Classical Propositional Logic, Metis }
+\end{abstract}
+
+\section{Introduction}
+Proof reconstruction is a hard labor since it depends on the integration of two complex system.
+On one hand, we have the automatic theorem provers (henceforth ATP) and their specification logic.
+These tools are usually classified in at least one of the following categories. A SAT solver (e.g. \verb!zChaff!~\cite{Moskewicz2001} and \verb!MiniSat!~\cite{Een2004}) to prove unsatisfiability of CNF formulas, a QBF solver (e.g. \verb!GhostQ!~\cite{Klieber2014} and \verb!DepQBF!~\cite{Lonsing2017}) to prove satisfiability and invalidity of quantified Boolean formulas, a SMT solver (e.g \verb!CVC4!~\cite{Barrett2011}, \verb!veriT!~\cite{bouton2009}, and \verb!Z3!~\cite{DeMoura2008}) to prove unsatisfiability of formulas from first-order logic with theories, and a prover for validity of formulas from first-order logic with equality (e.g. \verb!E!~\cite{Schulz:AICOM-2002}, \verb!leanCoP!~\cite{Otten2008}, \verb!Metis!~\cite{hurd2003first}, \verb!SPASS!~\cite{Weidenbach2009} and \verb!Vampire!~\cite{Riazanov1999}), high-order logic (e.g. \verb!Leo-II!~\cite{Benzmuller2008} and \verb!Satallax!~\cite{Brown2012}) or intuitionistic logic (e.g. \verb!ileanCoP!~\cite{Otten2008}, \verb!JProver!~\cite{Schmitt2001}, and \verb!Gandalf!~\cite{Tammet1997}), among others.
+
+On the other hand, we have the proof checkers, interactive theorem provers (henceforth ITP) or proof assistants (e.g. \verb!Agda!~\cite{agdateam}, \verb!Coq!~\cite{coqteam}, \verb!Isabelle!~\cite{paulson1994isabelle}, and \verb!HOL4!~\cite{norrish2007hol}). The ITP tools provide us the logic framework to check and validate the reply of the ATPs, since they allow us to define the formal language for the problems like operators, logic variables, axioms, and theorems.
+
+A proof reconstruction tool provides such an integration in one direction, the bridge between ATPs to ITPs. This is mostly a translation of the reply delivered by the prover into the formalism of the proof assistant.
+Because the formalism of the source (the proof generated by the ATP) is not necessarily the same logic in the target, the reconstruction turns out in a ``reverse engineering'' task. Then, reconstructing a proof involves a deep understanding of the algorithms in the ATP
+and the specification logic in the ITP.
+
+What we need from the ATP tools is a proof object in a consistent format to work with, that is, a full script describing
+step-by-step with exhaustive details and without ambiguities, the table of the derivation to get the actual proof.
+For problems in classical propositional logic (henceforth CPL), from a list of
+at least forty\footnote{ATPs available from the web service \texttt{SystemOnTPTP} of the TPTP World.} ATPs, just a few provers are able to deliver proofs (e.g.
+\verb!CVC4!~\cite{Barrett2011}, \verb!SPASS!, and
+\verb!Waldmeister!~\cite{hillenbrand1997}) and a little bit less reply with a proof in a file
+format like TSTP~\cite{sutcliffe2004tstp} (e.g. \verb!E!, \verb!Metis!, \verb!Vampire!, and \verb!Z3!), LFSC~\cite{Stump2008}, or the SMT-LIB~\cite{Bohme2011} format.
+
+Many approaches have been proposed and some tools have been implemented for proof reconstruction in the last decades. These programs are relevant not only because it helps to spread their usage but they also increase the confidence of their users about their algorithms and their correctness (see, for example, bugs in ATPs~\cite{Keller2013}, \cite{Bohme2011}, and \cite{Fleury2014}). We mention some tools in the following.
+\subsection*{Related Work.}\label{Related Work}
+
+\verb!Sledgehammer! is a tool for \verb!Isabelle! proof assistant~\cite{paulson1994isabelle} that provides a full integration of automatic theorem provers including ATPs (see, for example, \cite{meng2006automation}, ~\cite{blanchette2013extending} and \cite{Fleury2014}) and SMT solvers (see, for example, \cite{blanchette2013extending}, \cite{bohme2010} and \cite{Fleury2014}) with \verb!Isabelle/HOL!~\cite{nipkow2002isabelle}, the specialization of \verb!Isabelle! for higher-order logic.
+Sultana, Benzm{\"{u}}ller, and Paulson~\cite{Een2004} integrates \verb!Leo-II! and \verb!Satallax!, two theorem provers for high-order logic with \verb!Isabelle/HOL! proposing a modular proof reconstruction work flow.
+
+\verb!Waldmeister! is an automatic theorem prover for unit equational logic \cite{hillenbrand1997}. Foster and Struth \cite{foster2011integrating} integrate \verb!Waldmeister! into \verb!Agda!~\cite{agdateam}. This integration requires a proof reconstruction step but authors' approach is restricted to pure equational logic --also called identity theory \cite{humberstone2011}-- that is, first-order logic with equality but no other predicate symbols and no functions symbols \cite{appel1959}.
+
+\verb!SMTCoq! (see \cite{armand2011} and \cite{Ekici2017} for more details) is a tool for the \verb!Coq! proof assistant \cite{coqteam} which provides a certified checker for proof witness coming from the SMT solver \verb!veriT! \cite{bouton2009} and adds a new tactic named verit, that calls \verb!veriT! on any \verb!Coq! goal.
+In \cite{bezem2002automated}, given a fixed but arbitrary first-order signature, the authors transform a proof produced by the first-order automatic theorem prover \verb!Bliksem! \cite{deNivelle2003} in a \verb!Coq! proof term.
+
+Hurd~\cite{Hurd1999} integrates the first-order resolution prover \verb!Gandalf! in the theorem prover \verb!HOL! following a LCF model with the tactic named \verb!GANDALF_TAC!.
+
+\verb!PRocH!~\cite{kaliszyk2013} is another proof reconstruction tool that integrates ATPs with the proof assistant \verb!HOL Light! for high-order logic, replaying the detailed inference steps from the ATPs with internal inference methods implemented in the ITP.
+
+Kanso and Setzer~\cite{kanso2016light} integrate SAT solvers (\verb!iProver!, \verb!E!, and \verb!Z3!) in \verb!Agda! using an approach that they call \emph{oracle and reflection}.
+
+% replaying the Otter/Prover9 proofs in Mizar, and
+
+In this paper, we describe the integration of \verb!Metis! with the proof assistant \verb!Agda!. We structure the paper as follows. In section \ref{sec2}, we briefly introduce the \verb!Metis! prover. In section \ref{secproofrecon}, we present our approach to reconstruct proofs deliver by \verb!Metis! in \verb!Agda!. In section 4, we present a complete example of a proof reconstructed with our tool for a CPL problem. In section \ref{secconclusion}, we discuss some limitations and conclusions, for ending up with the future work.
+
+\section{Metis: Language and Proof Terms}\label{sec2}
+\verb!Metis! is an automatic theorem prover for First-order Logic with Equality~\cite{hurd2003first}.
+
+\subsection{Input and Output Language}
+The \verb!TPTP! language --which includes the First-Order Form (FOF) and Clause Normal Form (CNF) formats \cite{sutcliffe2009} -- is de facto input standard language and the \verb!TSTP! language is de facto output standard language~\cite{sutcliffe2004tstp}.
+
+\subsection{Proof Terms}
+
+\verb!Metis!'' proof terms encode natural deduction proofs. Its deduction system uses six simple inference rules and it proves conjectures by refutation.
+
+\[
+\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{}
+\RightLabel{axiom}
+\UnaryInfC{$C$}
+\end{bprooftree}
+\qquad
+\begin{bprooftree}
+\AxiomC{}
+\RightLabel{assume $L$}
+\UnaryInfC{$L \vee \neg L$}
+\end{bprooftree}
+\qquad
+\begin{bprooftree}
+\AxiomC{}
+\RightLabel{refl $t$}
+\UnaryInfC{$t = t$}
+\end{bprooftree}
+\qquad
+\begin{bprooftree}
+\AxiomC{$C$}
+\RightLabel{subst $\sigma$}
+\UnaryInfC{$\sigma\,C$}
+\end{bprooftree}
+\qquad
+}
+\]
+\[
+\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{}
+\RightLabel{equality $L$ $p$ $t$}
+\UnaryInfC{$\neg (L[p] = t) \vee \neg L \vee L[ p \mapsto t]$}
+\end{bprooftree}
+\qquad
+\begin{bprooftree}
+\AxiomC{$L \vee C$}
+\AxiomC{$\neg L \vee D$}
+\RightLabel{resolve $L$}
+\BinaryInfC{$C \vee D$}
+\end{bprooftree}
+}
+\]
+
+\verb!Metis!’ proofs are directed acyclic graphs (henceforth DAG), refutations trees. Each node stands for an application of an inference rule and the leaves in the tree represent formulas in the given problem. Each node is labeled with an axiom or an inference rule name (e.g. \verb!resolve!). Each edge links a premise with one conclusion. All proof graphs have in their root the conclusion ⊥ since \verb!Metis! uses refutation in each deduction step.
+
+\subsection{Proof Rules}
+Using \verb!Metis! to prove CPL problems, we found that their TSTP derivations showed six inference rules, \verb!canonicalize!, \verb!conjunct!, \verb!negate!, \verb!simplify!, \verb!strip! and \verb!resolve!.
+
+The \verb!canonicalize! rule transforms a formula to one of its normal form, CNF, NNF, and DNF.
+This rule also performs simple simplification in the process, applying for instance some of the following theorems assuming commutative properties.
+
+\[
+\begin{bprooftree}
+  \AxiomC{$P \vee \bot$}
+  \UnaryInfC{$P$}
+\end{bprooftree}
+\begin{bprooftree}
+\AxiomC{$P \vee \top$}
+\UnaryInfC{$P$}
+\end{bprooftree}
+\begin{bprooftree}
+\AxiomC{$P \vee \neg P$}
+\UnaryInfC{$\top$}
+\end{bprooftree}
+\begin{bprooftree}
+  \AxiomC{$P \wedge \bot$}
+  \UnaryInfC{$\bot$}
+\end{bprooftree}
+\begin{bprooftree}
+  \AxiomC{$P \wedge \top$}
+  \UnaryInfC{$P$}
+\end{bprooftree}
+\begin{bprooftree}
+  \AxiomC{$P \wedge \neg P$}
+  \UnaryInfC{$\bot$}
+\end{bprooftree}
+\]
+
+The \verb!strip! rule extracts a subgoal from a goal. The splitting process
+takes a goal and recursively recollects all hypothesis required in order to prove the goal.
+At the end, the final hypothesis represent the subgoals.
+
+
+
+
+\section{Proof Reconstruction in Agda}
+\label{secproofrecon}
+As a proof checker, we choose the proof-assistant Agda without a clear reason in mind
+rather than its syntax language shares similarity with Haskell, the programming language
+of our proof-reconstruction tool, Athena.
+
+Such TPTP proofs produced by ATPs on the type-annotated input are the
+starting point for the HOL proof reconstruction.ss
+
+
+\subsection{LCF-Style Theorem Proving}
+
+
+\begin{code}
+data Prop : Set where
+  Var              : Fin n → Prop
+  ⊤                : Prop
+  ⊥                : Prop
+  _∧_ _∨_ _⇒_ _⇔_  : (φ ψ : Prop) → Prop
+  ¬_               : (φ : Prop)   → Prop
+\end{code}
+
+\subsection{The Translation Method}
+\subsection{Reconstruction Work-flow}
+Explain in a diagram like we did in the slides for the AIM ...
+
+\subsection{Emulation of Inference Rules in Agda}
+
+
+% \subsection{Limitations}
+%
+
+% \section{Experimental Results}
+% We could be able to reconstruct 88 problems in CPL.
+
+
+\subsection{Implementation}
+...
+\subsection{Examples}
+...
+
+
+\section{Conclusions}
+\label{secconclusion}
+\verb!simplify! and \verb!canonicalize! coverage.
+Proof-reconstruction can be done in Agda from the Metis' proofs.
+...
+
+\subsubsection*{Future Work.}
+First-Order Logic support.
+
+\subsubsection*{Acknowledgments.}
+We thank EAFIT University of Medell\'in, Colombia for funding support. This is part of Jonathan Prieto-Cubides's Master thesis in Applied Mathematics, written under the supervision of Andr\'es Sicard-Ram\'irez for the Logic and Computation Research Group at the EAFIT University.
+
+We thank Joe Leslie-Hurd for his time answering our questions about his prover in the \verb!Metis! repository.
+We also acknowledge the work done by Alejandro G\'omez-Londo\~no~\cite{Gomez-Londono2015} that deserves as the basis code for our parsing module
+for TSTP files. And last but not least, we gratefully acknowledge Andreas Abel and Chalmers University of Gothenburg, Sweden for inviting us to be part of the Agda Implementors’ Meeting XXV where we presented part of this paper.
+
+\bibliographystyle{splncs03}
+\bibliography{ref}
+\addcontentsline{toc}{section}{References}
+
+\end{document}
