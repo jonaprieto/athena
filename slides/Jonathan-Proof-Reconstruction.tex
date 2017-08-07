@@ -166,11 +166,6 @@
   , ItalicFont=SourceSansPro-It.otf
   ]{SourceSansPro-Regular.otf}
 
-% \setmonofont[ExternalLocation=fonts/
-%   , BoldFont=SourceCodePro-Semibold.ttf
-%   , BoldItalicFont=SourceCodePro-SemiboldIt.ttf
-%   , ItalicFont=SourceCodePro-It.ttf
-%   ]{SourceCodePro-Regular.ttf}
 
 \newfontfamily\sourcecode[ExternalLocation=fonts/
   , BoldFont=SourceCodePro-Semibold.ttf
@@ -218,7 +213,10 @@
 \title[Proof Reconstruction in Classical Propositional Logic]
   {\textbf{Proof Reconstruction in Classical Propositional Logic}}
 \subtitle{(work in progress)}
-\date{May 11, 2017\\Updated: \today}
+\date{Agda Implementors’ Meeting XXV\\
+Teknikparken, Chalmers, Gothenburg, Sweden\\
+May 11 2017\\[2mm]
+Updated: \today}
 \author[Jonathan Prieto-Cubides]{Jonathan Prieto-Cubides\\
 (joint work with Andr\'es Sicard-Ram\'irez)}
 \institute{
@@ -749,7 +747,7 @@ subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
     , transform canvas={scale=.75}
     ]
   \tikzset{shift={(current page.center)}, xshift=4.5cm,yshift=0cm}
-    
+
 
   \node[state]  (phi)                     {$\varphi$};
   \node[state]  (phi1) [below left =1.3cm and 0.1cm of phi]  {$\varphi_1$};
@@ -758,7 +756,7 @@ subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
   \node[state]  (phi4)  [below right =1.3cm and 0.1cm of phi2]  {$\varphi_4$};
 
   \path[every node/.style={sloped,anchor=south,auto=false}]
-        (phi) edge node {\tiny $∧$-\texttt{proj}$₁$} (phi1)            
+        (phi) edge node {\tiny $∧$-\texttt{proj}$₁$} (phi1)
         (phi) edge node {\tiny $∧$-\texttt{proj}$₂$} (phi2)
         (phi2) edge node {\tiny $∧$-\texttt{proj}$₁$} (phi3)
         (phi2) edge node {\tiny $∧$-\texttt{proj}$₂$} (phi4);
@@ -911,7 +909,7 @@ cnf(refute_1_0, plain, ($false),
 \end{tptp}
 \end{frame}
 
-\begin{frame}[fragile, label=verified-example]{Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed Proof generated with \texttt{Athena}}
+\begin{frame}[fragile, label=verified-example]{Problem $p ∧ q ⊢ q ∧ p$}{Proof generated with \texttt{Athena}}
 \vfill
 \begin{minted}{cagda}
 p, q, a, goal, subgoal₀, subgoal₁ : Prop
@@ -945,20 +943,19 @@ subgoal₀ = q
 proof₀ : Γ ⊢ subgoal₀
 proof₀ =
   (RAA
-    (atp-canonicalize
-      (atp-simplify
-        (atp-canonicalize
-          (atp-strip
-            (assume {Γ = Γ} (atp-negate subgoal₀))))
-        (atp-conjunct (q)
-          (atp-canonicalize
-            (weaken (atp-negate subgoal₀)
-              (assume {Γ = ∅} a)))))))
+    (atp-simplify ⊥
+      (assume {Γ = Γ}
+        (¬ subgoal₀))
+      (atp-conjunct q
+        (atp-canonicalize (p ∧ q)
+          (weaken (¬ subgoal₀)
+            (assume {Γ = ∅} a))))))
 \end{minted}
 \vfill
 \end{frame}
 
-\begin{frame}[fragile, label=verified-example-3]{Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
+\begin{frame}[fragile, label=verified-example-3]
+  {Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
 \vfill
 \begin{minted}{cagda}
 subgoal₁ : Prop
@@ -967,20 +964,19 @@ subgoal₁ = q ⇒ p
 proof₁ : Γ ⊢ subgoal₁
 proof₁ =
   (RAA
-    (atp-canonicalize
-      (atp-simplify
-        (atp-conjunct (q)
-          (atp-canonicalize
-            (weaken (atp-negate subgoal₁)
-              (assume {Γ = ∅} a))))
-        (atp-simplify
-          (atp-canonicalize
-            (atp-strip
-              (assume {Γ = Γ} (atp-negate subgoal₁))))
-          (atp-conjunct (p)
-            (atp-canonicalize
-              (weaken (atp-negate subgoal₁)
-                (assume {Γ = ∅} a))))))))
+    (atp-simplify ⊥
+      (atp-conjunct q
+        (atp-canonicalize (p ∧ q)
+          (weaken (¬ subgoal₁)
+            (assume {Γ = ∅} a))))
+      (atp-simplify ⊥
+        (atp-canonicalize ((¬ p) ∧ q)
+          (assume {Γ = Γ}
+            (¬ subgoal₁)))
+        (atp-conjunct p
+          (atp-canonicalize (p ∧ q)
+            (weaken (¬ subgoal₁)
+              (assume {Γ = ∅} a)))))))
 \end{minted}
 \vfill
 \end{frame}

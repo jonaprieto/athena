@@ -13,6 +13,31 @@ AGDACALL ="${TIMELIMIT} ${AGDA} {} --verbose=0 && \
   echo '-------------------------------------------------------------------' && echo"
 
 
+ifdef MSVC     # Avoid the MingW/Cygwin sections
+		uname_S := Windows
+else                          # If uname not available => 'not'
+		uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+endif
+
+# https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
+
+ifeq ($(uname_S),OSF1)
+		TIMELIMIT =timelimit -T240 -t240 -S9
+endif
+ifeq ($(uname_S),Darwin)
+		TIMELIMIT =timelimit -T240 -t240 -S9
+endif
+ifeq ($(uname_S),Linux)
+		TIMELIMIT =timeout 1m
+endif
+ifeq ($(uname_S),GNU/kFreeBSD)
+		TIMELIMIT =timelimit -T240 -t240 -S9
+endif
+ifeq ($(uname_S),UnixWare)
+		TIMELIMIT =timeout 1m
+endif
+
+
 # ============================================================================
 # Propositional problems in TPTP format from
 # http://github.com/jonaprieto/prop-pack
@@ -316,16 +341,16 @@ check : install-libraries \
 	@echo "==================================================================="
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
 	@find $(BASIC) \
-					-type f \
-					-name "*.agda" \
-					-print \
-					-exec sh -c $(AGDACALL) \;;
+				-type f \
+				-name "*.agda" \
+				-print \
+				-exec sh -c $(AGDACALL) \;;
 
 	@find $(CONJ) \
-	 				-type f \
-	 				-name "*.agda" \
-	 				-print \
-	 				-exec sh -c $(AGDACALL) \;;
+				-type f \
+				-name "*.agda" \
+				-print \
+				-exec sh -c $(AGDACALL) \;;
 
 	@find $(IMPL) \
 				-type f \
@@ -343,11 +368,10 @@ check : install-libraries \
 				-type f \
 				-name "*.agda" \
 				-print \
-				-exec sh -c $(AGDACALL) \;;	
+				-exec sh -c $(AGDACALL) \;;
 
 	@find $(BICOND) \
-			-type f \
-			-name "*.agda" \
-			-print \
-		  -exec sh -c $(AGDACALL) \;;
-
+				-type f \
+				-name "*.agda" \
+				-print \
+				-exec sh -c $(AGDACALL) \;;
