@@ -41,7 +41,7 @@ type ProofTree = ProofTreeGen String
 
 instance Functor ProofTreeGen where
     fmap f (Leaf r a)   = Leaf r (f a)
-    fmap f (Root r a t) = Root r (f a) (fmap (fmap f) t)
+    fmap f (Root r a t) = Root r (f a) (map (fmap f) t)
 
 instance Foldable ProofTreeGen where
     foldr f b (Leaf _ a)   = f a b

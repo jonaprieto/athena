@@ -3,9 +3,39 @@ SRC_DIR  =src
 TEST_DIR =src
 
 ATHENA   =athena
+AGDA     =agda
 ATP      ?=online-atps --atp=metis
 ATHENA_LIB      =$(addprefix $(PWD), /lib)
 ATHENA_AGDA_LIB =$(addprefix $(ATHENA_LIB),/.agda)
+
+ifdef MSVC     # Avoid the MingW/Cygwin sections
+		uname_S := Windows
+else                          # If uname not available => 'not'
+		uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+endif
+
+# https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
+
+ifeq ($(uname_S),OSF1)
+		TIMELIMIT =timelimit -T240 -t240 -S9
+endif
+ifeq ($(uname_S),Darwin)
+		TIMELIMIT =timelimit -T240 -t240 -S9
+endif
+ifeq ($(uname_S),Linux)
+		TIMELIMIT =timeout 1m
+endif
+ifeq ($(uname_S),GNU/kFreeBSD)
+		TIMELIMIT =timelimit -T240 -t240 -S9
+endif
+ifeq ($(uname_S),UnixWare)
+		TIMELIMIT =timeout 1m
+endif
+
+
+AGDACALL ="${TIMELIMIT} ${AGDA} {} --verbose=0 && \
+	echo '-------------------------------------------------------------------' && echo"
+
 
 # ============================================================================
 # Propositional problems in TPTP format from
@@ -296,7 +326,7 @@ reconstruct : install-bin problems
 		-exec sh -c "athena {}" \;;
 
 .PHONY : check
-check : export AGDA_DIR :=$(ATHENA_AGDA_LIB)
+check : export AGDA_DIR := $(ATHENA_AGDA_LIB)
 check : install-libraries \
 				$(AGDA_BASIC) \
 				$(AGDA_CONJ)	\
@@ -310,43 +340,37 @@ check : install-libraries \
 	@echo "==================================================================="
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
 	@find $(BASIC) \
-			-type f \
-			-name "*.agda" \
-			-print \
-			-exec sh -c "agda {} --verbose=0" \;;
+					-type f \
+					-name "*.agda" \
+					-print \
+					-exec sh -c $(AGDACALL) \;;
 
 	@find $(CONJ) \
+					-type f \
+					-name "*.agda" \
+					-print \
+					-exec sh -c $(AGDACALL) \;;
+
+	@find $(IMPL) \
+				-type f \
+				-name "*.agda" \
+				-print \
+				-exec sh -c $(AGDACALL) \;;
+
+	@find $(DISJ) \
+				-type f \
+				-name "*.agda" \
+				-print \
+				-exec sh -c $(AGDACALL) \;;
+
+	@find $(NEG) \
+				-type f \
+				-name "*.agda" \
+				-print \
+				-exec sh -c $(AGDACALL) \;;
+
+	@find $(BICOND) \
 			-type f \
 			-name "*.agda" \
 			-print \
-			-exec sh -c "agda {} --verbose=0" \;;
-
-	@echo "$(IMPL)/impl-1.agda"
-	@agda $(IMPL)/impl-1.agda --verbose=0
-
-	@echo "$(IMPL)/impl-11.agda"
-	@agda $(IMPL)/impl-11.agda --verbose=0
-
-	@echo "$(NEG)/neg-1.agda"
-	@agda $(NEG)/neg-1.agda --verbose=0
-
-	@echo "$(NEG)/neg-2.agda"
-	@agda $(NEG)/neg-2.agda --verbose=0
-
-	@echo "$(NEG)/neg-4.agda"
-	@agda $(NEG)/neg-4.agda --verbose=0
-
-	@echo "$(NEG)/neg-10.agda"
-	@agda $(NEG)/neg-10.agda --verbose=0
-
-	@echo "$(NEG)/neg-15.agda"
-	@agda $(NEG)/neg-15.agda --verbose=0
-
-	@echo "$(NEG)/neg-16.agda"
-	@agda $(NEG)/neg-16.agda --verbose=0
-
-	@echo "$(NEG)/neg-30.agda"
-	@agda $(NEG)/neg-30.agda --verbose=0
-
-	@echo "$(NEG)/neg-31.agda"
-	@agda $(NEG)/neg-31.agda --verbose=0
+			-exec sh -c $(AGDACALL) \;;

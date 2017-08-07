@@ -1046,7 +1046,7 @@ putDoc = hPutDoc stdout
 --   >                           ['T.pack' "vertical", 'T.pack' "text"]))
 --   >           'hClose' handle
 hPutDoc ∷ Handle → Doc → IO ()
-hPutDoc handle doc = displayIO handle (renderPretty 0.4 80 doc)
+hPutDoc handle doc = displayIO handle (renderPretty 0.4 100 doc)
 
 ------------------------------------------------------------------------------
 -- insert spaces

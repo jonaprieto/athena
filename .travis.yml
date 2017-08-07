@@ -88,8 +88,8 @@ script:
  # `cabal install --force-reinstalls dist/*-*.tar.gz`
  - SRC_TGZ=$(cabal info . | awk '{print $2;exit}').tar.gz &&
    (cd dist && cabal install --force-reinstalls "$SRC_TGZ")
- - make hlint
- - make checklines
+# - make hlint
+# - make checklines
 # testing the reconstruction
  - make reconstruct
  - make check

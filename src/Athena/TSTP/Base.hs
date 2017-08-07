@@ -48,6 +48,7 @@ import Data.TSTP
       )
   , Rule
     ( Canonicalize
+    , Clausify
     , Conjunct
     , Negate
     , NewRule
@@ -90,6 +91,7 @@ binOp op f1 = BinOp f1 op
 
 readRule ∷ String → Rule
 readRule "canonicalize" = Canonicalize
+readRule "clausify"     = Clausify
 readRule "conjunct"     = Conjunct
 readRule "negate"       = Negate
 readRule "resolve"      = Resolve

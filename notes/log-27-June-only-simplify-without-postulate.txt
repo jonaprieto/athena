@@ -1,0 +1,43 @@
+[!] agda-stdlib directory already exists
+===================================================================
+======== Downloading libraries: Agda-Prop and Agda-Metis ==========
+===================================================================
+git submodule update --init lib/agda-prop
+# git submodule update --init lib/agda-metis
+===================================================================
+====== Installing libraries: Agda-Prop and Agda-Metis (./lib) =====
+===================================================================
+Libraries in /Users/jonaprieto/athena/lib/.agda/libraries:
+/Users/jonaprieto/athena/lib/agda-stdlib/standard-library.agda-lib
+/Users/jonaprieto/athena/lib/agda-prop/agda-prop.agda-lib
+/Users/jonaprieto/athena/lib/agda-metis/agda-metis.agda-lib
+/Users/jonaprieto/athena/test/test.agda-lib
+[!] To complete the installation, please set the AGDA_DIR variable:
+    $ export AGDA_DIR=/Users/jonaprieto/athena/lib/.agda
+===================================================================
+================== Type-checking Agda files =======================
+===================================================================
+[!] AGDA_DIR=/Users/jonaprieto/athena/lib/.agda
+test/prop-pack/problems/basic/basic-1.agda
+-------------------------------------------------------------------
+test/prop-pack/problems/basic/basic-2.agda
+-------------------------------------------------------------------
+test/prop-pack/problems/basic/basic-3.agda
+-------------------------------------------------------------------
+test/prop-pack/problems/basic/basic-4.agda
+-------------------------------------------------------------------
+test/prop-pack/problems/conjunction/conj-1.agda
+-------------------------------------------------------------------
+test/prop-pack/problems/conjunction/conj-2.agda
+-------------------------------------------------------------------
+test/prop-pack/problems/conjunction/conj-3.agda
+-------------------------------------------------------------------
+test/prop-pack/problems/conjunction/conj-4.agda
+-------------------------------------------------------------------
+test/prop-pack/problems/conjunction/conj-5.agda
+-------------------------------------------------------------------
+test/prop-pack/problems/conjunction/conj-6.agda
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-1.agda
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-10.agda

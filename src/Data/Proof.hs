@@ -73,7 +73,7 @@ simplifyProofTree m (Root inf node [subtree@(Root _ snode _)])
   where
     getFm ∷ String → Formula
     getFm namef = (formula . fromJust) (M.lookup namef m)
-simplifyProofTree m (Root inf a ls) = Root inf a (map (simplifyProofTree m) ls)
+simplifyProofTree m (Root inf n ls) = Root inf n (map (simplifyProofTree m) ls)
 
 
 -- | 'buildProofMap' 'lf', given a list of functions 'lf' builds a 'ProofMap'
@@ -81,7 +81,6 @@ buildProofMap ∷ [F]      -- ^ List of functions
               → ProofMap -- ^ Map of the given functions indexed by its names
 buildProofMap = foldl buildMap empty
     where
-      -- buildMap ∷ Map String F → F → Map String F
       buildMap m f' = insert (name f') f' m
 
 -- | 'getParentsTree' 'm' 'p', from a 'Map' 'm' and a list of parents 'p'

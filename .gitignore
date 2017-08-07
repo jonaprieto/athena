@@ -133,7 +133,6 @@ cnf*
 *.synctex.gz
 *.toc
 
-TAGS
 cabal.config
 lib/agda-stdlib
 lib/.agda

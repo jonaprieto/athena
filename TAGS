@@ -1,0 +1,527 @@
+
+./lib/agda-stdlib/AllNonAsciiChars.hs,122
+module Main Main3,4
+readUTF8File readUTF8File13,14
+readUTF8File readUTF8File14,15
+main main19,20
+main main20,21
+
+./lib/agda-stdlib/GenerateEverything.hs,515
+headerFile headerFile10,11
+outputFile outputFile11,12
+srcDir srcDir12,13
+main main14,15
+usage usage32,33
+usage usage33,34
+isLibraryModule isLibraryModule48,49
+isLibraryModule isLibraryModule49,50
+extractHeader extractHeader56,57
+extractHeader extractHeader57,58
+format format70,71
+format format74,75
+fileToMod fileToMod82,83
+fileToMod fileToMod83,84
+readFileUTF8 readFileUTF890,91
+readFileUTF8 readFileUTF891,92
+writeFileUTF8 writeFileUTF898,99
+writeFileUTF8 writeFileUTF899,100
+
+./lib/agda-stdlib/Setup.hs,15
+main main2,3
+
+./Setup.hs,15
+main main1,2
+
+./src/fix-whitespace/FixWhitespace.hs,450
+module Main Main4,5
+import import15,16
+extensions extensions37,38
+excludedDirs excludedDirs60,61
+excludedDirs excludedDirs61,62
+filesFilter filesFilter66,67
+filesFilter filesFilter67,68
+nonRCS nonRCS73,74
+nonRCS nonRCS74,75
+data ModeMode78,79
+  = Fix Fix79,80
+  | Check Check80,81
+main main84,85
+usage usage99,100
+fix fix132,133
+transform transform150,151
+dropWhile1 dropWhile1164,165
+dropWhile1 dropWhile1165,166
+
+./src/Athena/Utils/PrettyPrint.hs,3143
+module Athena.Utils.PrettyPrintAthena.Utils.PrettyPrint9,10
+list list98,99
+tupled tupled106,107
+semiBraces semiBraces114,115
+encloseSep encloseSep140,141
+comment comment148,149
+punctuate punctuate178,179
+sep sep194,195
+fillSep fillSep203,204
+hsep hsep208,209
+vsep vsep241,242
+cat cat249,250
+fillCat fillCat258,259
+hcat hcat263,264
+vcat vcat269,270
+fold fold272,273
+Empty Empty278,279
+x x279,280
+(<(295,296
+splitWithBreak splitWithBreak305,306
+splitWithLine splitWithLine320,321
+softline softline329,330
+softbreak softbreak336,337
+spacebreak spacebreak341,342
+squotes squotes346,347
+dquotes dquotes351,352
+braces braces356,357
+parens parens361,362
+angles angles366,367
+brackets brackets371,372
+enclose enclose378,379
+lparen lparen382,383
+rparen rparen386,387
+langle langle390,391
+rangle rangle394,395
+lbrace lbrace398,399
+rbrace rbrace402,403
+lbracket lbracket406,407
+rbracket rbracket410,411
+squote squote414,415
+dquote dquote418,419
+semi semi422,423
+colon colon426,427
+comma comma430,431
+hypen hypen434,435
+dollar dollar438,439
+space space444,445
+dot dot448,449
+hashtag hashtag452,453
+backslash backslash456,457
+equals equals460,461
+string string473,474
+stringStrict stringStrict476,477
+bool bool481,482
+int int486,487
+integer integer491,492
+float float496,497
+double double501,502
+rational rational506,507
+text' text'509,510
+class Pretty Pretty518,519
+class Pretty Pretty518,519
+  prettyList prettyList522,523
+instance instance524,525
+fillBreak fillBreak596,597
+fill fill626,627
+hypenline hypenline632,633
+hypenline hypenline633,634
+width width637,638
+indent indent657,658
+hang hang680,681
+align align700,701
+data Doc Doc721,722
+data Doc = EmptyEmpty721,722
+         | Char Char722,723
+         | Text Text723,724
+         | Line Line724,725
+         | Cat Cat726,727
+         | Nest Nest727,728
+         | Union Union728,729
+         | Column Column730,731
+         | Nesting Nesting731,732
+         | Spaces Spaces732,733
+data SimpleDoc SimpleDoc757,758
+data SimpleDoc = SEmptySEmpty757,758
+                | SChar SChar758,759
+                | SText SText759,760
+                | SLine SLine760,761
+empty empty766,767
+isEmpty isEmpty770,771
+char char777,778
+text text785,786
+textStrict textStrict790,791
+line line799,800
+linebreak linebreak805,806
+beside beside808,809
+nest nest826,827
+column column831,832
+nesting nesting836,837
+group group844,845
+flatten flatten847,848
+data Docs Docs864,865
+data Docs = NilNil864,865
+          | Cons Cons865,866
+renderPretty renderPretty876,877
+fits fits915,916
+renderCompact renderCompact932,933
+renderOneLine renderOneLine952,953
+displayB displayB979,980
+c `consB`consB985,986
+displayT displayT993,994
+displayTStrict displayTStrict996,997
+displayIO displayIO1004,1005
+putDoc putDoc1037,1038
+hPutDoc hPutDoc1048,1049
+spaces spaces1056,1057
+spaced spaced1061,1062
+indentation indentation1067,1068
+prettyShow prettyShow1072,1073
+prettyShow prettyShow1073,1074
+
+./src/Athena/Utils/CommitVersion.hs,174
+module Athena.Utils.CommitVersion Athena.Utils.CommitVersion11,12
+getVersion getVersion25,26
+tryIO tryIO32,33
+commitInfo commitInfo35,36
+gitVersion gitVersion45,46
+
+./src/Athena/Utils/Show.hs,97
+module Athena.Utils.ShowAthena.Utils.Show6,7
+showLn showLn15,16
+showListLn showListLn20,21
+
+./src/Athena/Utils/Monad.hs,124
+module Athena.Utils.MonadAthena.Utils.Monad5,6
+failureMsg failureMsg31,32
+die die36,37
+stdout2file stdout2file41,42
+
+./src/Athena/Utils/Version.hs,126
+module Athena.Utils.Version Athena.Utils.Version6,7
+toUpperFirst toUpperFirst21,22
+progNameVersion progNameVersion26,27
+
+./src/Athena/Main.hs,39
+module Main Main5,6
+main main30,31
+
+./src/Athena/Options.hs,488
+module Athena.OptionsAthena.Options4,5
+data Options Options37,38
+data Options = OptionsOptions37,38
+defaultOptions defaultOptions46,47
+type OM OM55,56
+helpOpt helpOpt58,59
+inputFileOpt inputFileOpt61,62
+outputFileOpt outputFileOpt67,68
+proofNameOpt proofNameOpt73,74
+versionOpt versionOpt79,80
+options options83,84
+usageHeader usageHeader95,96
+printUsage printUsage99,100
+processOptionsHelper processOptionsHelper104,105
+processOptions processOptions111,112
+
+./src/Athena/Translation/Core.hs,85
+module Athena.Translation.Core Athena.Translation.Core5,6
+mainCore mainCore51,52
+
+./src/Athena/Translation/Rules/Clausify.hs,111
+module Athena.Translation.Rules.Clausify Athena.Translation.Rules.Clausify6,7
+atpClausify atpClausify15,16
+
+./src/Athena/Translation/Rules/Strip.hs,99
+module Athena.Translation.Rules.Strip Athena.Translation.Rules.Strip6,7
+atpStrip atpStrip15,16
+
+./src/Athena/Translation/Rules/Canonicalize.hs,127
+module Athena.Translation.Rules.Canonicalize Athena.Translation.Rules.Canonicalize6,7
+atpCanonicalize atpCanonicalize15,16
+
+./src/Athena/Translation/Rules/Conjunct.hs,111
+module Athena.Translation.Rules.Conjunct Athena.Translation.Rules.Conjunct6,7
+atpConjunct atpConjunct16,17
+
+./src/Athena/Translation/Rules/Skolemize.hs,115
+module Athena.Translation.Rules.Skolemize Athena.Translation.Rules.Skolemize6,7
+atpSkolemize atpSkolemize15,16
+
+./src/Athena/Translation/Rules/Negate.hs,103
+module Athena.Translation.Rules.Negate Athena.Translation.Rules.Negate5,6
+atpNegate atpNegate14,15
+
+./src/Athena/Translation/Rules/Simplify.hs,111
+module Athena.Translation.Rules.Simplify Athena.Translation.Rules.Simplify6,7
+atpSimplify atpSimplify15,16
+
+./src/Athena/Translation/Rules/Specialize.hs,119
+module Athena.Translation.Rules.Specialize Athena.Translation.Rules.Specialize6,7
+atpSpecialize atpSpecialize15,16
+
+./src/Athena/Translation/Rules/Resolve.hs,107
+module Athena.Translation.Rules.Resolve Athena.Translation.Rules.Resolve5,6
+atpResolve atpResolve16,17
+
+./src/Athena/Translation/Utils.hs,109
+module Athena.Translation.UtilsAthena.Translation.Utils4,5
+stdName stdName16,17
+subIndex subIndex19,20
+
+./src/Athena/Translation/Rules.hs,61
+module Athena.Translation.RulesAthena.Translation.Rules2,3
+
+./src/Athena/Translation/AgdaFile.hs,872
+module Athena.Translation.AgdaFileAthena.Translation.AgdaFile6,7
+data AgdaFile AgdaFile112,113
+data AgdaFile = AgdaFileAgdaFile112,113
+instance instance123,124
+getFormulaByTag getFormulaByTag138,139
+docHeader docHeader152,153
+docModule docModule166,167
+docImports docImports178,179
+prettyVar prettyVar189,190
+docVars docVars196,197
+definition definition216,217
+getAxioms getAxioms225,226
+docAxioms docAxioms229,230
+toCtxt toCtxt245,246
+docPremises docPremises250,251
+getConjeture getConjeture271,272
+docConjecture docConjecture278,279
+getSubgoals getSubgoals288,289
+docSubgoals docSubgoals291,292
+getRefutes getRefutes308,309
+subgoalName subgoalName336,337
+docProof docProof339,340
+docProofSubgoals docProofSubgoals349,350
+docProofSubgoal docProofSubgoal359,360
+docProofGoal docProofGoal369,370
+docSteps docSteps414,415
+
+./src/Athena/TSTP.hs,81
+module Athena.TSTPAthena.TSTP6,7
+parse parse47,48
+parseFile parseFile50,51
+
+./src/Athena/TSTP/Base.hs,199
+module Athena.TSTP.BaseAthena.TSTP.Base6,7
+readRole readRole73,74
+binOp binOp89,90
+readRule readRule92,93
+readType readType104,105
+readWord readWord111,112
+readStatus readStatus121,122
+
+./src/Data/Proof.hs,247
+module Data.ProofData.Proof5,6
+buildProofTree buildProofTree53,54
+simplifyProofTree simplifyProofTree68,69
+buildProofMap buildProofMap81,82
+getParentsTree getParentsTree90,91
+getParents getParents97,98
+unknownTree unknownTree110,111
+
+./src/Data/TSTP.hs,77
+module Data.TSTPData.TSTP6,7
+bottom bottom67,68
+isBottom isBottom71,72
+
+./src/Data/Proof/ProofTreeGen.hs,250
+module Data.Proof.ProofTreeGenData.Proof.ProofTreeGen5,6
+data ProofTreeGen ProofTreeGen24,25
+    Leaf Leaf27,28
+  | Root Root30,31
+type IdSet IdSet34,35
+type ProofTree ProofTree39,40
+instance instance41,42
+type ProofMap ProofMap55,56
+
+./src/Data/TSTP/V.hs,102
+module Data.TSTP.VData.TSTP.V3,4
+newtype V V21,22
+newtype V = V V21,22
+instance instance24,25
+
+./src/Data/TSTP/BinOp.hs,284
+module Data.TSTP.BinOpData.TSTP.BinOp5,6
+data BinOp BinOp25,26
+data BinOp = (:(25,26
+           | (:(26,27
+           | (:(27,28
+           | (:(28,29
+           | (:(29,30
+           | (:(30,31
+           | (:(31,32
+           | (:(32,33
+instance instance35,36
+
+./src/Data/TSTP/Role.hs,583
+module Data.TSTP.RoleData.TSTP.Role3,4
+data Role Role25,26
+data Role = AssumptionAssumption25,26
+          | AxiomAxiom26,27
+          | ConjectureConjecture27,28
+          | DefinitionDefinition28,29
+          | FiDomainFiDomain29,30
+          | FiFunctorsFiFunctors30,31
+          | FiPredicatesFiPredicates31,32
+          | HypothesisHypothesis32,33
+          | LemmaLemma33,34
+          | NegatedConjectureNegatedConjecture34,35
+          | PlainPlain35,36
+          | TheoremTheorem36,37
+          | TypeType37,38
+          | UnknownUnknown38,39
+
+./src/Data/TSTP/IntroType.hs,318
+module Data.TSTP.IntroTypeData.TSTP.IntroType3,4
+data IntroType IntroType16,17
+data IntroType = Assumption_Assumption_16,17
+               | AxiomOfChoiceAxiomOfChoice17,18
+               | Definition_Definition_18,19
+               | TautologyTautology19,20
+               | UnknownTypeUnknownType20,21
+
+./src/Data/TSTP/Formula.hs,359
+module Data.TSTP.FormulaData.TSTP.Formula5,6
+data Formula Formula40,41
+data Formula = BinOp BinOp40,41
+             | InfixPred InfixPred41,42
+             | PredApp PredApp42,43
+             | Quant Quant43,44
+             | (:(44,45
+instance instance47,48
+freeVarsF freeVarsF58,59
+freeVarsT freeVarsT74,75
+getFreeVars getFreeVars81,82
+
+./src/Data/TSTP/Status.hs,1051
+module Data.TSTP.StatusData.TSTP.Status3,4
+data Status Status10,11
+data Status = CaxCax10,11
+            | CeqCeq11,12
+            | CsaCsa12,13
+            | CspCsp13,14
+            | CthCth14,15
+            | CupCup15,16
+            | EcsEcs16,17
+            | EctEct17,18
+            | EqvEqv18,19
+            | EsaEsa19,20
+            | EthEth20,21
+            | FsaFsa21,22
+            | FunFun22,23
+            | NocNoc23,24
+            | SapSap24,25
+            | SatSat25,26
+            | ScaSca26,27
+            | SccScc27,28
+            | SucSuc28,29
+            | TacTac29,30
+            | TauTau30,31
+            | TcaTca31,32
+            | ThmThm32,33
+            | UcaUca33,34
+            | UncUnc34,35
+            | UnkUnk35,36
+            | UnpUnp36,37
+            | UnsUns37,38
+            | WcaWca38,39
+            | WccWcc39,40
+            | WctWct40,41
+            | WecWec41,42
+            | WtcWtc42,43
+            | WthWth43,44
+            | WucWuc44,45
+
+./src/Data/TSTP/Theory.hs,141
+module Data.TSTP.TheoryData.TSTP.Theory3,4
+data Theory Theory12,13
+data Theory = AC AC12,13
+data Theory = AC | EqualityEquality12,13
+
+./src/Data/TSTP/Parent.hs,106
+module Data.TSTP.ParentData.TSTP.Parent3,4
+data Parent Parent14,15
+data Parent = Parent Parent14,15
+
+./src/Data/TSTP/Term.hs,252
+module Data.TSTP.TermData.TSTP.Term3,4
+data Term Term26,27
+data Term = Var Var26,27
+          | NumberLitTerm NumberLitTerm27,28
+          | DistinctObjectTerm DistinctObjectTerm28,29
+          | FunApp FunApp29,30
+instance instance34,35
+
+./src/Data/TSTP/Source.hs,675
+module Data.TSTP.SourceData.TSTP.Source3,4
+data Source Source41,42
+data Source = Creator Creator41,42
+            | File File42,43
+            | Inference Inference43,44
+            | Introduced Introduced44,45
+            | Name Name45,46
+            | NoSourceNoSource46,47
+            | Source Source47,48
+            | Theory Theory48,49
+data Info Info51,52
+data Info   = AssumptionR AssumptionR51,52
+            | Description Description52,53
+            | Function Function53,54
+            | InferenceInfo InferenceInfo54,55
+            | IQuote IQuote55,56
+            | Refutation Refutation56,57
+            | Status Status57,58
+
+./src/Data/TSTP/F.hs,95
+module Data.TSTP.FData.TSTP.F5,6
+data F F30,31
+data F = FF30,31
+instance instance38,39
+
+./src/Data/TSTP/GData.hs,465
+module Data.TSTP.GDataData.TSTP.GData3,4
+data GData GData19,20
+data GData = GApp GApp19,20
+           | GDistinctObject GDistinctObject20,21
+           | GFormulaData GFormulaData21,22
+           | GFormulaTerm GFormulaTerm22,23
+           | GNumber GNumber23,24
+           | GVar GVar24,25
+           | GWord GWord25,26
+data GTerm GTerm30,31
+data GTerm = ColonSep ColonSep30,31
+           | GList GList31,32
+           | GTerm GTerm32,33
+
+./src/Data/TSTP/InfixPred.hs,164
+module Data.TSTP.InfixPredData.TSTP.InfixPred5,6
+data InfixPred InfixPred20,21
+data InfixPred = (:(20,21
+               | (:(21,22
+instance instance24,25
+
+./src/Data/TSTP/AtomicWord.hs,165
+module Data.TSTP.AtomicWordData.TSTP.AtomicWord5,6
+newtype AtomicWord AtomicWord16,17
+newtype AtomicWord = AtomicWord AtomicWord16,17
+instance instance19,20
+
+./src/Data/TSTP/Rule.hs,449
+module Data.TSTP.RuleData.TSTP.Rule3,4
+data Rule Rule25,26
+data Rule = CanonicalizeCanonicalize25,26
+          | ClausifyClausify26,27
+          | ConjunctConjunct27,28
+          | NegateNegate28,29
+          | NewRule NewRule29,30
+          | ResolveResolve30,31
+          | SimplifySimplify31,32
+          | SkolemizeSkolemize32,33
+          | SpecializeSpecialize33,34
+          | StripStrip34,35
+instance instance37,38
+
+./src/Data/TSTP/Quant.hs,154
+module Data.TSTP.QuantData.TSTP.Quant5,6
+data Quant Quant19,20
+data Quant = All All19,20
+           | Exists Exists20,21
+instance instance23,24
