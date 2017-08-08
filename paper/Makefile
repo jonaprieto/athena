@@ -1,11 +1,8 @@
-.PHONY : main.tex
-main.tex: main.lagda
+.PHONY : pdf
+pdf :
 	- make clean
 	- lhs2TeX --agda main.lagda > main.tex
 	- sh chars.sh
-
-.PHONY : main.pdf
-main.pdf : main.tex
 	- sh fix-references.sh
 	- latexmk -pdf -use-make main.tex
 
@@ -19,6 +16,7 @@ clean :
 	@rm -f *.fdb_latexmk
 	@rm -f *.log
 	@rm -f *.nav
+	@rm -f *.fls
 	@rm -f *.pdf
 	@rm -f *.run.xml
 	@rm -f *.snm
@@ -34,4 +32,4 @@ clean :
 	@rm -Rf _*
 	@rm -Rf auto
 
-default: main.pdf
+default: pdf

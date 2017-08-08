@@ -1,3 +1,3 @@
 #!/bin/sh
 
-sed -i.backup -r "/(url|doi)/ s/\{.?(.)\}/\1/g" ref.bib
+sed -i -r "/(url|doi)/ s/\{.?(.)\}/\1/g" ref.bib

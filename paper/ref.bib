@@ -1,3 +1,51 @@
+@phdthesis{Sicard2015,
+abstract = {We propose a new approach to computer-assisted verification of lazy functional programs where functions can be defined by general recursion. We work in first-order theories of functional programs which are obtained by translating Dybjer's programming logic (Dybjer, P. [1985]. Program Veri- fication in a Logical Theory of Constructions. In: Functional Programming Languages and Computer Architecture. Ed. by Jouannaud, J.-P. Vol. 201. Lecture Notes in Computer Science. Springer, pp. 334–349) into a first-order theory, and by extending this programming logic with new (co-)inductive predicates. Rather than building a special purpose system, we formalise our theories in Agda, a proof assistant for dependent type theory which can be used as a generic theorem prover. Agda provides support for interact- ive reasoning by representing first-order theories using the propositions-as- types principle. Further support is provided by off-the-shelf automatic the- orem provers for first-order-logic called by a Haskell program that translates our Agda representations of first-order formulae into the TPTP language understood by the provers. We show some examples where we combine interactive and automatic reasoning, covering both proofs by induction and co- induction. The examples include functions defined by structural recursion, simple general recursion, nested recursion, higher-order recursion, guarded and unguarded co-recursion. Keywords:},
+author = {Sicard-Ram{\'{i}}rez, Andr{\'{e}}s and Bove, Ana and Dybjer, Peter},
+file = {:Users/jonaprieto/Mendeley/Sicard-Ram{\'{i}}rez, Bove, Dybjer - 2015 - Reasoning about Functional Programs by Combining Interactive and Automatic Proofs.pdf:pdf},
+keywords = {automatic proofs,correctness,first-order theories,functional program,general recursion,interactive proofs,lazy evaluation,total lan- guages,type theory},
+school = {Universidad de la Rep{\{}{\'{u}}{\}}blica},
+title = {{Reasoning about Functional Programs by Combining Interactive and Automatic Proofs}},
+url = {https://www.colibri.udelar.edu.uy/handle/123456789/4715},
+year = {2015}
+}
+@inproceedings{Armand2010,
+abstract = {Coq has within its logic a programming language that can be used to replace many deduction steps into a single computation, this is the so-called reflection. In this paper, we present two extensions of the evaluation mechanism that preserve its correctness and make it possible to deal with cpu-intensive tasks such as proof checking of SAT traces.},
+author = {Armand, Michael and Gr{\'{e}}goire, Benjamin and Spiwack, Arnaud and Th{\'{e}}ry, Laurent},
+booktitle = {Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)},
+doi = {10.1007/978-3-642-14052-5_8},
+isbn = {3642140513},
+issn = {03029743},
+pages = {83--98},
+title = {{Extending Coq with imperative features and its application to SAT verification}},
+volume = {6172 LNCS},
+year = {2010}
+}
+@inproceedings{Bove2012,
+abstract = {We propose a new approach to the computer-assisted verification of functional programs. We work in first order theories of functional programs which are obtained by extending Aczel's first order theory of combinatory formal arithmetic with positive inductive and coinductive predicates. Rather than building a special purpose system we implement our theories in Agda, a proof assistant for dependent type theory which can be used as a generic theorem prover. Agda provides support for interactive reasoning by encoding first order theories using the formulae-as-types principle. Further support is provided by off-the-shelf automatic theorem provers for first order logic which can be called by a program which translates Agda representations of first order formulae into the TPTP language understood by the provers. We show some examples where we combine interactive and automatic reasoning, covering both proof by induction and coinduction.},
+author = {Bove, Ana and Dybjer, Peter and Sicard-Ram{\'{i}}rez, Andr{\'{e}}s},
+booktitle = {Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)},
+doi = {10.1007/978-3-642-28729-9_7},
+file = {:Users/jonaprieto/Mendeley/Bove, Dybjer, Sicard-Ram{\'{i}}rez - 2012 - Combining Interactive and Automatic Reasoning in First Order Theories of Functional Programs.pdf:pdf},
+isbn = {9783642287282},
+issn = {03029743},
+pages = {104--118},
+publisher = {Springer},
+title = {{Combining Interactive and Automatic Reasoning in First Order Theories of Functional Programs}},
+url = {http://link.springer.com/chapter/10.1007/978-3-642-28729-9_7},
+volume = {7213 LNCS},
+year = {2012}
+}
+@article{Ge2008,
+abstract = {Satisfiability Modulo Theories (SMT) solvers are large and complicated pieces of code. As a result, ensuring their correctness is challenging. In this paper, we discuss a technique for ensuring soundness by producing and checking proofs. We give details of our implementation using CVC3 and HOL Light and provide initial results from our effort to certify the SMT-LIB benchmarks.},
+author = {Ge, Yeting and Barrett, Clark},
+file = {:Users/jonaprieto/Mendeley/Ge, Barrett - 2008 - Proof Translation and SMT-LIB Benchmark Certification A Preliminary Report.pdf:pdf},
+journal = {Proceedings of the 6{\^{}}{\{}th{\}} International Workshop on Satisfiability Modulo Theories (SMT '08)},
+number = {0551645},
+pages = {1--11},
+title = {{Proof Translation and SMT-LIB Benchmark Certification: A Preliminary Report}},
+url = {https://cs.nyu.edu/~yeting/prooftrans.pdf},
+year = {2008}
+}
 @article{Kanso2012,
 author = {Kanso, Karim},
 file = {:Users/jonaprieto/Mendeley/Kanso - 2012 - Agda as a Platform for the Development of Verified Railway Interlocking Systems.pdf:pdf},
@@ -13,7 +61,7 @@ author = {Kanso, Karim},
 file = {:Users/jonaprieto/Mendeley/Kanso - 2010 - Formal Verification of Ladder Logic.pdf:pdf},
 institution = {Swansea University},
 title = {{Formal Verification of Ladder Logic}},
-url = {http://www.cs.swan.ac.uk/{~}csetzer/articlesFromOthers/kanso/karimKansoMResThesisFormalVerificationOfLadderLogic.pdf},
+url = {http://www.cs.swan.ac.uk/~csetzer/articlesFromOthers/kanso/karimKansoMResThesisFormalVerificationOfLadderLogic.pdf},
 year = {2010}
 }
 @inproceedings{Stump2008,
@@ -33,14 +81,14 @@ year = {2008}
 @article{Tammet1997,
 abstract = {We give a brief overview of the first-order classical logic component in the Gandalf family of resolution-based automated theorem provers for classical and intuitionistic logics. The main strength of the described version is a sophisticated algorithm for nonunit subsumption. {\textcopyright} 1997 Kluwer Academic Publishers.},
 author = {Tammet, Tanel},
-file = {:Users/jonaprieto/Mendeley/Tammet - 1996 - A resolution theorem prover for intuitionistic logic.pdf:pdf},
+file = {:Users/jonaprieto/Mendeley/Tammet - 1996 - A Resolution Theorem Prover for Intuitionistic Logic.pdf:pdf},
 issn = {01687433},
 journal = {Journal of Automated Reasoning},
 keywords = {Automated theorem proving,Competition,Gandalf,Resolution,Subsumption},
 number = {2},
 pages = {199--204},
 title = {{Gandalf}},
-url = {http://www.scopus.com/inward/record.url?eid=2-s2.0-0031108576{\&}partnerID=tZOtx3y1},
+url = {http://www.scopus.com/inward/record.url?eid=2-s2.0-0031108576&partnerID=tZOtx3y1},
 volume = {18},
 year = {1997}
 }
@@ -87,7 +135,7 @@ keywords = {QBF Solvers},
 mendeley-tags = {QBF Solvers},
 school = {Carnegie Mellon University},
 title = {{Formal Verification Using Quantified Boolean Formulas (QBF)}},
-url = {http://www.cs.cmu.edu/{~}wklieber/thesis.pdf},
+url = {http://www.cs.cmu.edu/~wklieber/thesis.pdf},
 year = {2014}
 }
 @incollection{Een2004,
@@ -97,7 +145,7 @@ file = {:Users/jonaprieto/Mendeley/E{\'{e}}n, S{\"{o}}rensson - 2004 - An Extens
 pages = {502--518},
 publisher = {Springer, Berlin, Heidelberg},
 title = {{An Extensible SAT-solver}},
-url = {http://link.springer.com/10.1007/978-3-540-24605-3{\_}37},
+url = {http://link.springer.com/10.1007/978-3-540-24605-3_37},
 year = {2004}
 }
 @inproceedings{Moskewicz2001,
@@ -113,14 +161,14 @@ pages = {530--535},
 title = {{Chaff: engineering an efficient SAT solver}},
 year = {2001}
 }
-@incollection{Schmitt2001,
+@misc{Schmitt2001,
 author = {Schmitt, Stephan and Lorigo, Lori and Kreitz, Christoph and Nogin, Aleksey},
 doi = {10.1007/3-540-45744-5_34},
 file = {:Users/jonaprieto/Mendeley/Schmitt et al. - 2001 - JProver Integrating Connection-Based Theorem Proving into Interactive Proof Assistants.pdf:pdf;:Users/jonaprieto/Mendeley/Schmitt et al. - 2001 - JProver Integrating Connection-Based Theorem Proving into Interactive Proof Assistants(2).pdf:pdf},
 pages = {421--426},
 publisher = {Springer, Berlin, Heidelberg},
 title = {{JProver: Integrating Connection-Based Theorem Proving into Interactive Proof Assistants}},
-url = {http://link.springer.com/10.1007/3-540-45744-5{\_}34},
+url = {http://link.springer.com/10.1007/3-540-45744-5_34},
 year = {2001}
 }
 @incollection{Otten2008,
@@ -132,17 +180,17 @@ file = {:Users/jonaprieto/Mendeley/Otten - 2008 - leanCoP 2.0 and ileanCoP 1.2 H
 pages = {283--291},
 publisher = {Springer Berlin Heidelberg},
 title = {{leanCoP 2.0 and ileanCoP 1.2: High Performance Lean Theorem Proving in Classical and Intuitionistic Logic (System Descriptions)}},
-url = {http://link.springer.com/10.1007/978-3-540-71070-7{\_}23},
+url = {http://link.springer.com/10.1007/978-3-540-71070-7_23},
 year = {2008}
 }
 @incollection{Tammet1996,
 author = {Tammet, Tanel},
 doi = {10.1007/3-540-61511-3_65},
-file = {:Users/jonaprieto/Mendeley/Tammet - 1996 - A resolution theorem prover for intuitionistic logic.pdf:pdf},
+file = {:Users/jonaprieto/Mendeley/Tammet - 1996 - A Resolution Theorem Prover for Intuitionistic Logic.pdf:pdf},
 pages = {2--16},
 publisher = {Springer, Berlin, Heidelberg},
-title = {{A resolution theorem prover for intuitionistic logic}},
-url = {http://link.springer.com/10.1007/3-540-61511-3{\_}65},
+title = {{A Resolution Theorem Prover for Intuitionistic Logic}},
+url = {http://link.springer.com/10.1007/3-540-61511-3_65},
 year = {1996}
 }
 @techreport{Gomez-Londono2015,
@@ -159,11 +207,11 @@ author = {Ekici, B and Mebsout, A and Tinelli, C and Keller, C and Katz, G},
 file = {:Users/jonaprieto/Mendeley/Ekici et al. - 2017 - SMTCoq A plug-in for integrating SMT solvers into Coq.pdf:pdf;:Users/jonaprieto/Mendeley/Ekici et al. - 2017 - SMTCoq A plug-in for integrating SMT solvers into Coq(2).pdf:pdf},
 journal = {stanford.edu},
 title = {{SMTCoq: A plug-in for integrating SMT solvers into Coq}},
-url = {http://web.stanford.edu/{~}guyk/pub/CAV2017{\_}C.pdf},
+url = {http://web.stanford.edu/~guyk/pub/CAV2017_C.pdf},
 year = {2017}
 }
-@article{Keller2013,
-author = {Keller, C},
+@phdthesis{Keller2013,
+author = {Keller, Chantal},
 file = {:Users/jonaprieto/Mendeley/Keller - 2013 - A Matter of Trust Skeptical Communication Between Coq and External Provers.pdf:pdf},
 title = {{A Matter of Trust: Skeptical Communication Between Coq and External Provers}},
 url = {https://hal.archives-ouvertes.fr/pastel-00838322/},
@@ -180,79 +228,6 @@ pages = {1--15},
 title = {{A Shallow Embedding of Resolution and Superposition Proofs into the $\lambda$ $\Pi$ -Calculus}},
 year = {2013}
 }
-@article{Mossakowski2005,
-author = {Mossakowski, T. and Goguen, J. and Diaconescu, R. and Tarlecki, A.},
-file = {:Users/jonaprieto/Mendeley/Mossakowski et al. - 2005 - What is a Logic.pdf:pdf},
-journal = {Logica universalis},
-keywords = {a version of abstract,abstract,abstract model,categorical logic,category theory,in computer science studies,institution theory,model theory that emerged,of software specifica-,the theory of institutions,theory,this paper builds on,universal logic},
-pages = {113--133},
-title = {{What is a Logic?}},
-url = {http://cseweb.ucsd.edu/{~}goguen/pps/nel05.pdf},
-year = {2005}
-}
-@book{Curry1963,
-author = {Curry, Haskell B},
-booktitle = {Journal of the Franklin Institute},
-doi = {10.1016/0016-0032(63)90672-0},
-file = {:Users/jonaprieto/Mendeley/Curry - 1963 - Foundations of mathematical logic.pdf:pdf},
-isbn = {0486634620},
-issn = {00160032},
-number = {5},
-pages = {438},
-pmid = {21192365},
-title = {{Foundations of mathematical logic}},
-volume = {275},
-year = {1963}
-}
-@misc{Pitts1991,
-author = {Pitts, Andrew},
-file = {:Users/jonaprieto/Mendeley/Pitts - 1991 - Notes on Categorical Logic.pdf:pdf},
-title = {{Notes on Categorical Logic}},
-year = {1991}
-}
-@article{Zalta1995,
-author = {Zalta, Edward N and Zalta, Edward N},
-file = {:Users/jonaprieto/Mendeley/Zalta, Zalta - 1995 - Basic Concepts in Modal Logic.pdf:pdf},
-journal = {Society},
-pages = {1--91},
-title = {{Basic Concepts in Modal Logic}},
-year = {1995}
-}
-@article{Blackburn2005,
-author = {Blackburn, Patrick and Benthem, Johan Van},
-file = {:Users/jonaprieto/Mendeley/Blackburn, Benthem - 2005 - Modal Logic A Semantic Perspective.pdf:pdf},
-pages = {1--50},
-title = {{Modal Logic: A Semantic Perspective}},
-url = {papers2://publication/uuid/CC567B68-4635-4E4C-A795-06E2E0B6C800},
-year = {2005}
-}
-@article{VanBenthem2010,
-abstract = {We show how belief revision can be treated systematically in the format of dynamic- epistemic logic, when operators of conditional belief are added. The core engine consists of de{\{}{\}}nable update rules for changing plausibility relations between worlds, which have been proposed independently in the dynamic-epistemic literature on preference change. Our analysis yields two new types of modal result. First, we obtain complete logics for concrete mechanisms of belief revision, based on compositional reduction axioms. Next, we show how various ab- stract postulates for belief revision can be analyzed by standard modal frame correspondences for model-changing operations.},
-author = {van Benthem, Johan},
-file = {:Users/jonaprieto/Mendeley/van Benthem - 2010 - Modal Logic for Open Minds.pdf:pdf},
-isbn = {0521527147},
-journal = {Chart},
-number = {199},
-pages = {1--390},
-pmid = {15957556},
-title = {{Modal Logic for Open Minds}},
-url = {http://fenrong.net/teaching/mljvb.pdf},
-year = {2010}
-}
-@book{VanBenthem1990a,
-abstract = {This volume presents a panorama of the applications of logical tools and methods in the formal analysis of natural language. since a number of few developments in philosophical logic were originally stimulated by concern arising in the semantic analysis of natural language discourse, the chapters in this volume provide some criteria of evaluation of the applications of work in philosophical logic. in revealing both the adequacies and inadequacies of logical investigations in the semantic structures of natural discourse, these chapters also point the way to future developments in philosophical logic in general and thus close again the circle of inquiry relating logic and language.},
-author = {van Benthem, Johan},
-booktitle = {Language},
-doi = {10.2307/414900},
-file = {:Users/jonaprieto/Mendeley/van Benthem - 1990 - Handbook of Philosophical Logic, Vol. IV Topics in the Philosophy of Language.pdf:pdf},
-isbn = {0198537816},
-issn = {00326585},
-number = {2},
-pages = {555},
-title = {{Handbook of Philosophical Logic, Vol. IV: Topics in the Philosophy of Language}},
-volume = {66},
-year = {1990}
-}
 @article{Stump2013,
 abstract = {Producing and checking proofs from {\{}SMT{\}} solvers is currently the most feasible method for achieving high confidence in the correctness of solver results. The diversity of solvers and relative complexity of {\{}SMT{\}} over, say, {\{}SAT{\}} means that flexibility, as well as performance, is a critical characteristic of a proof-checking solution for {\{}SMT{\}}. This paper describes such a solution, based on a Logical Framework with Side Conditions ({\{}LFSC{\}}). We describe the framework and show how it can be applied for flexible proof production and checking for two different {\{}SMT{\}} solvers, clsat and cvc3. We also report empirical results showing good performance relative to solver execution time.},
 author = {Stump, Aaron and Oe, Duckki and Reynolds, Andrew and Hadarean, Liana and Tinelli, Cesare},
@@ -267,30 +242,15 @@ title = {{SMT proof checking using a logical framework}},
 volume = {42},
 year = {2013}
 }
-@phdthesis{Fleury2015,
-abstract = {Various methods have been developed for solving SAT problems, notably resolution, the Davis-Putnam-Logemann-Loveland-Procedure procedure (DPLL) and an extension of it, the conflict-driven clause learning (CDCL). We have formalised these three algorithms in a proof assistant Isabelle/HOL, based on a chapter of ChristophWeidenbach's upcoming book Automed Reasoning – The Art of Generic Problem Solving. The three calculi are presented uniformly as transition systems. We have formally proved that each calculus is a decision procedure for satisfiability of propositional logic. One outcome of the formalization is a verified SAT solver based on DPLL and implemented in a functional programming language.},
-author = {Fleury, Mathias},
-file = {:Users/jonaprieto/Mendeley/Fleury - 2015 - Formalisation of Ground Inference Systems in a Proof Assistant.pdf:pdf},
-title = {{Formalisation of Ground Inference Systems in a Proof Assistant}},
-year = {2015}
-}
-@book{Chlipala2017,
-author = {Chlipala, Adam},
-booktitle = {MIT Press},
-file = {:Users/jonaprieto/Mendeley/Chlipala - 2017 - Certified Programming with Dependent Types.pdf:pdf},
-isbn = {9780262317863},
-title = {{Certified Programming with Dependent Types}},
-url = {http://adam.chlipala.net/cpdt/cpdt.pdf},
-year = {2017}
-}
-@article{Fleury2014,
+@techreport{Fleury2014,
 abstract = {Sledgehammer is a powerful interface from Isabelle to automated provers, to discharge subgoals that appear during the interactive proofs. It chooses facts related to this goal and asks some automatic provers to find a proof. The proof can be either reconstructed or just used to extract the relevant lemmas: in both cases the proof is not trusted. We extend the support by adding one first-order prover (Zipperposition), the reconstruction for two higher-order ATPs (Leo-II and Satallax) and an SMT solver veriT. The support of higher-order prover should especially improve Sledgehammer's performance for higher-order goals. Acknowledgement I would like to thank Jasmin Blanchette for the internship about a very interesting subject, and the members of the logic and verification chair for the welcome. Then Simon Cruanes and Pascal Fontaine (developer of Zipperposition and veriT) were very helpful and provided many explanations concerning their provers and bug fixes.},
 author = {Fleury, Mathias and Blanchette, Jasmin},
 file = {:Users/jonaprieto/Mendeley/Fleury, Blanchette - 2014 - Translation of Proofs Provided by External Provers More Automatic Prover Support for Isabelle Two Higher-Ord.pdf:pdf},
+institution = {Techniche Universit{\"{a}}t M{\"{u}}nchen},
 keywords = {Isabelle,Leo-II,Satallax,Sledgehammer,TSTP proof,Zipperposition,higher-order proofs,proof reconstruc-tion,veriT},
 pages = {2--0},
 title = {{Translation of Proofs Provided by External Provers More Automatic Prover Support for Isabelle: Two Higher-Order Provers and a SMT Solver}},
-url = {http://perso.eleves.ens-rennes.fr/{~}mfleur01/documents/Fleury{\_}internship2014.pdf},
+url = {http://perso.eleves.ens-rennes.fr/~mfleur01/documents/Fleury_internship2014.pdf},
 year = {2014}
 }
 @article{Blanchette2016,
@@ -308,45 +268,6 @@ url = {http://dx.doi.org/10.1007/s10817-015-9335-3},
 volume = {56},
 year = {2016}
 }
-@article{VanDerWalt2013,
-abstract = {This paper explores the recent addition to Agda enablin greflection,in the style of Lisp and Template Haskell. It gives a brief introduction to using reflection, and details the complexities encountered when automating certain proofs with proof by reflection. It presents a library that can be used for automatically quoting a class of concrete Agda terms to a non-dependent, user-defined inductive data type, alleviating some of the burden a programmer faces when using reflection in a practical setting.},
-author = {{Van Der Walt}, Paul and Swierstra, Wouter},
-doi = {10.1007/978-3-642-41582-1_10},
-file = {:Users/jonaprieto/Mendeley/Van Der Walt, Swierstra - 2013 - Engineering proof by reflection in Agda.pdf:pdf},
-isbn = {9783642415814},
-issn = {03029743},
-journal = {Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)},
-keywords = {Agda,Dependently-typed programming,Metaprogramming,Proof by reflection,Reflection},
-pages = {157--173},
-title = {{Engineering proof by reflection in Agda}},
-volume = {8241 LNCS},
-year = {2013}
-}
-@phdthesis{Isaza2014,
-author = {Isaza, Juan Pedro Villa},
-booktitle = {Eafit.Edu.Co},
-file = {:Users/jonaprieto/Mendeley/Isaza - 2014 - Category Theory Applied to Functional Programming.pdf:pdf},
-keywords = {Category Theory,Haskell},
-mendeley-tags = {Category Theory,Haskell},
-school = {Universidad EAFIT},
-title = {{Category Theory Applied to Functional Programming}},
-url = {http://www1.eafit.edu.co/asicard/pubs/cain-screen.pdf},
-year = {2014}
-}
-@article{Norell2009,
-abstract = {Dependently typed languages have for a long time been used to describe proofs about programs. Traditionally, dependent types are used mostly for stating and proving the properties of the programs and not in defining the programs themselves. An impressive example is the certified compiler by Leroy (2006) implemented and proved correct in Coq (Bertot and Cast{\'{e}}ran 2004). Recently there has been an increased interest in dependently typed programming, where the aim is to write programs that use the dependent type system to a much higher degree. In this way a lot of the properties that were previously proved separately can be integrated in the type of the program, in many cases adding little or no complexity to the definition of the program. New languages, such as Epigram (McBride and McKinna 2004), are being designed, and existing languages are being extended with new features to accomodate these ideas, for instance the work on dependently typed programming in Coq by Sozeau (2007). This talk gives an overview of the Agda programming language (Norell 2007), whose main focus is on dependently typed programming. Agda provides a rich set of inductive types with a powerful mechanism for pattern matching, allowing dependently typed programs to be written with minimal fuss. To read about programming in Agda, see the lecture notes from the Advanced Functional Programming summer school (Norell 2008) and the work by Oury and Swierstra (2008). In the talk a number of examples of interesting dependently typed programs chosen from the domain of programming language implementation are presented as they are implemented in Agda.},
-author = {Norell, Ulf},
-doi = {10.1007/978-3-642-04652-0_5},
-file = {:Users/jonaprieto/Mendeley/Norell - 2009 - Dependently typed programming in agda.pdf:pdf},
-isbn = {3642046517},
-issn = {03029743},
-journal = {Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)},
-number = {Agda 2},
-pages = {230--266},
-title = {{Dependently typed programming in agda}},
-volume = {5832 LNCS},
-year = {2009}
-}
 @inproceedings{Farber2015,
 abstract = {Metis is an automated theorem prover based on ordered paramodulation. It is widely employed in the interactive theorem provers Isabelle/HOL and HOL4 to automate proofs as well as reconstruct proofs found by automated provers. For both these purposes, the tableaux-based MESON tactic is frequently used in HOL Light. However, paramodulation-based provers such as Metis perform better on many problems involving equality. We created a Metis-based tactic in HOL Light which translates HOL problems to Metis, runs an OCaml version of Metis, and reconstructs proofs in Metis' paramodulation calculus as HOL proofs. We evaluate the performance of Metis as proof reconstruction method in HOL Light. 1},
 author = {F{\"{a}}rber, Michael and Kaliszyk, Cezary},
@@ -356,55 +277,6 @@ pages = {127--136},
 title = {{Metis-based Paramodulation Tactic for HOL Light}},
 volume = {36},
 year = {2015}
-}
-@book{TobiasNipkow2016,
-author = {Nipkow, Tobias},
-doi = {10.1007/978-3-319-10542-0},
-file = {:Users/jonaprieto/Mendeley/Nipkow - 2016 - Concrete Semantics.pdf:pdf},
-isbn = {9783319105413},
-pages = {1--2},
-title = {{Concrete Semantics}},
-year = {2016}
-}
-@article{Wadler1993,
-abstract = {This tutorial paper provides an introduction to intuitionistic logic and linear logic, and shows how they correspond to type systems for functional languages via the notion of `Propositions as Types'. The presentation of linear logic is simplified by basing it on the Logic of Unity.},
-author = {Wadler, Philip},
-doi = {10.1007/3-540-57182-5_12},
-file = {:Users/jonaprieto/Mendeley/Wadler - 1993 - A taste of linear logic.pdf:pdf},
-isbn = {3-540-57182-5},
-journal = {Lecture Notes in Computer Science},
-number = {September},
-pages = {185--210},
-title = {{A taste of linear logic}},
-url = {http://www.springerlink.com/index/p555h611321h7240.pdf{\%}5Cnhttp://link.springer.com/10.1007/3-540-57182-5{\_}12},
-volume = {711},
-year = {1993}
-}
-@book{Jackson2006,
-abstract = {{\{}In Software Abstractions Daniel Jackson introduces a new approach to software design that draws on traditional formal methods but exploits automated tools to find flaws as early as possible. This approach--which Jackson calls "lightweight formal methods" or "agile modeling"--takes from formal specification the idea of a precise and expressive notation based on a tiny core of simple and robust concepts but replaces conventional analysis based on theorem proving with a fully automated analysis that gives designers immediate feedback. Jackson has developed Alloy, a language that captures the essence of software abstractions simply and succinctly, using a minimal toolkit of mathematical notions. The designer can use automated analysis not only to correct errors but also to make models that are more precise and elegant. This approach, Jackson says, can rescue designers from "the tarpit of implementation technologies" and return them to thinking deeply about underlying concepts. Software Abstractions introduces the key elements of the approach: a logic, which provides the building blocks of the language; a language, which adds a small amount of syntax to the logic for structuring descriptions; and an analysis, a form of constraint solving that offers both simulation (generating sample states and executions) and checking (finding counterexamples to claimed properties). The book uses Alloy as a vehicle because of its simplicity and tool support, but the book's lessons are mostly language-independent, and could also be applied in the context of other modeling languages.{\}}},
-author = {Jackson, Daniel},
-booktitle = {MIT Press},
-file = {:Users/jonaprieto/Mendeley/Jackson - 2006 - Software Abstractions.pdf:pdf},
-number = {02},
-pages = {253},
-title = {{Software Abstractions}},
-volume = {19},
-year = {2006}
-}
-@book{Baier2008,
-abstract = {Our growing dependence on increasingly complex computer and software systems necessitates the development of formalisms, techniques, and tools for assessing functional properties of these systems. One such technique that has emerged in the last twenty years is model checking, which systematically (and automatically) checks whether a model of a given system satisfies a desired property such as deadlock freedom, invariants, or request-response properties. This automated technique for verification and debugging has developed into a mature and widely used approach with many applications. Principles of Model Checking offers a comprehensive introduction to model checking that is not only a text suitable for classroom use but also a valuable reference for researchers and practitioners in the field. The book begins with the basic principles for modeling concurrent and communicating systems, introduces different classes of properties (including safety and liveness), presents the notion of fairness, and provides automata- based algorithms for these properties. It introduces the temporal logics LTL and CTL, compares them, and covers algorithms for verifying these logics, discussing real-time systems as well as systems subject to random phenomena. Separate chapters treat such efficiency-improving techniques as abstraction and symbolic manipulation. The book includes an extensive set of examples (most of which run through several chapters) and a complete set of basic results accompanied by detailed proofs. Each chapter concludes with a summary, bibliographic notes, and an extensive list of exercises of both practical and theoretical nature.},
-author = {Baier, Christel and Katoen, Joost-Pieter},
-booktitle = {MIT Press},
-doi = {10.1093/comjnl/bxp025},
-file = {:Users/jonaprieto/Mendeley/Baier, Katoen - 2008 - Principles Of Model Checking.pdf:pdf;:Users/jonaprieto/Mendeley/Baier, Katoen - 2008 - Principles Of Model Checking(2).pdf:pdf},
-isbn = {9780262026499},
-issn = {00155713},
-pages = {I--XVII, 1--975},
-pmid = {11275744},
-title = {{Principles Of Model Checking}},
-url = {http://mitpress.mit.edu/books/principles-model-checking},
-volume = {950},
-year = {2008}
 }
 @inproceedings{Bohme2011,
 abstract = {Automatic provers that can produce proof certificates do not need to be trusted. The certificate can be checked by an independent tool, for example an LCF-style proof assistant such as IsabelleHOL or HOL. Currently, the design of proof formats is mostly dictated by internal constraints of automatic provers and less guided by applications such as checking of certificates. In the worst case, checking can be as involved as the actual proof search simply because important information is missing in the proof certificate. To address this and other issues, we describe design choices for proof formats that we consider both feasible for implementors of automatic provers as well as effective to simplify checking of certificates.},
@@ -416,9 +288,10 @@ url = {http://hal.inria.fr/hal-00677244},
 year = {2011}
 }
 @article{Altenkirch2015,
-author = {Altenkirch, Leran Cai and Thorsten},
-file = {:Users/jonaprieto/Mendeley/Altenkirch - 2015 - Formalising the completeness theorem of classical propositional logic in Agda.pdf:pdf},
-title = {{Formalising the completeness theorem of classical propositional logic in Agda}},
+abstract = {A computer formalisation of the completeness of the boolean model of classical propositional logic is presented. The work follows Huth and Ryan's proof [9]. The proof is constructed for a classical logic system in natural deduction style with all logical connectives. The formalisation is constructive and uses the interactive theorem prover Agda which is an implementation of intensional Martin-L{\"{o}}f type theory [11]. Functions have to be defined in a structurally recursive way to pass the termination checker of Agda. The basic definitions of the formal system must be carefully chosen in order to provide a convenient environment to build correct proofs and meanwhile prevent from getting warnings from the type checker. The formalisation is written in an accessible way so that it can be used for educational purposes. The full source code is available online1. Keywords:},
+author = {Cai, Leran and Kaposi, Ambrus and Altenkirch, Thorsten},
+file = {:Users/jonaprieto/Mendeley/Cai, Kaposi, Altenkirch - 2015 - Formalising the Completeness Theorem of Classical Propositional Logic in Agda.pdf:pdf},
+title = {{Formalising the Completeness Theorem of Classical Propositional Logic in Agda}},
 url = {https://akaposi.github.io/proplogic.pdf},
 year = {2015}
 }
@@ -444,7 +317,7 @@ number = {1},
 pages = {129--153},
 publisher = {Cambridge University Press},
 title = {{A Light-weight Integration Of Automated And Interactive Theorem Proving}},
-url = {http://cs.swansea.ac.uk/{~}cskarim/agda/},
+url = {http://cs.swansea.ac.uk/~cskarim/agda/},
 volume = {26},
 year = {2016}
 }
@@ -485,7 +358,7 @@ isbn = {978-3-540-48660-2},
 pages = {292--296},
 publisher = {Springer Berlin Heidelberg},
 title = {{Vampire}},
-url = {https://doi.org/10.1007/3-540-48660-7{\_}26},
+url = {https://doi.org/10.1007/3-540-48660-7_26},
 year = {1999}
 }
 @article{Farber2016,
@@ -554,7 +427,7 @@ year = {2007}
 @misc{denivelle2003,
 author = {{De Nivelle}, Hans},
 title = {{Bliksem 1.10 User Manual}},
-url = {http://www.ii.uni.wroc.pl/{~}nivelle/software/bliksem.}
+url = {http://www.ii.uni.wroc.pl/~nivelle/software/bliksem.}
 }
 @incollection{armand2011,
 abstract = {We present a way to enjoy the power of SAT and SMT provers in Coq without compromising soundness. This requires these provers to return not only a yes/no answer, but also a proof witness that can be independently rechecked. We present such a checker, written and fully certified in Coq. It is conceived in a modular way, in order to tame the proofs' complexity and to be extendable. It can currently check witnesses from the SAT solver ZChaff and from the SMT solver veriT. Experiments highlight the efficiency of this checker. On top of it, new reflexive Coq tactics have been built that can decide a subset of Coq's logic by calling external provers and carefully checking their answers.},
@@ -566,7 +439,7 @@ isbn = {978-3-642-25379-9},
 pages = {135--150},
 publisher = {Springer Berlin Heidelberg},
 title = {{A Modular Integration of SAT/SMT Solvers to Coq through Proof Witnesses}},
-url = {https://doi.org/10.1007/978-3-642-25379-9{\_}12},
+url = {https://doi.org/10.1007/978-3-642-25379-9_12},
 year = {2011}
 }
 @incollection{bouton2009,
@@ -649,7 +522,7 @@ isbn = {978-3-642-38574-2},
 pages = {267--274},
 publisher = {Springer Berlin Heidelberg},
 title = {{PRocH: Proof Reconstruction for HOL Light}},
-url = {https://doi.org/10.1007/978-3-642-38574-2{\_}18},
+url = {https://doi.org/10.1007/978-3-642-38574-2_18},
 year = {2013}
 }
 @incollection{sultana2015,
@@ -664,12 +537,12 @@ isbn = {978-3-319-24246-0},
 pages = {256--271},
 publisher = {Springer International Publishing},
 title = {{Proofs and Reconstructions}},
-url = {https://doi.org/10.1007/978-3-319-24246-0{\_}16},
+url = {https://doi.org/10.1007/978-3-319-24246-0_16},
 year = {2015}
 }
 @inproceedings{hurlin07practical,
 address = {Bremen, Germany},
-author = {Hurlin, Cl{\'{e}}ment and Chaieb, Amine and Fontaine, Pascal and Merz, Stephan and Weber, Tjark},
+author = {Hurlin, Cl{\'}ment and Chaieb, Amine and Fontaine, Pascal and Merz, Stephan and Weber, Tjark},
 booktitle = {Proceedings of the Isabelle Workshop 2007},
 editor = {Dixon, Lucas and Johansson, Moa},
 file = {:Users/jonaprieto/Mendeley/Hurlin et al. - 2007 - Practical Proof Reconstruction for First-Order Logic and Set-Theoretical Constructions.pdf:pdf},
@@ -731,14 +604,6 @@ title = {{Agda 2.4.2.3}},
 url = {http://wiki.portal.chalmers.se/agda/pmwiki.php},
 year = {2015}
 }
-@article{sutcliffe2004tstp,
-author = {Sutcliffe, Geoff and Zimmer, J{\"{u}}rgen and Schulz, Stephan},
-journal = {Distributed Constraint Problem Solving and Reasoning in Multi-Agent Systems},
-pages = {201--215},
-title = {{TSTP data-exchange formats for automated theorem proving tools}},
-volume = {112},
-year = {2004}
-}
 @article{Schulz:AICOM-2002,
 annote = {StS},
 author = {Schulz, Stephan},
@@ -748,6 +613,14 @@ pages = {111--126},
 title = {{E -- A Brainiac Theorem Prover}},
 volume = {15},
 year = {2002}
+}
+@article{sutcliffe2004tstp,
+author = {Sutcliffe, Geoff and Zimmer, J{\"{u}}rgen and Schulz, Stephan},
+journal = {Distributed Constraint Problem Solving and Reasoning in Multi-Agent Systems},
+pages = {201--215},
+title = {{TSTP data-exchange formats for automated theorem proving tools}},
+volume = {112},
+year = {2004}
 }
 @misc{coqteam,
 author = {Team, The Coq Developement},
@@ -794,14 +667,14 @@ title = {{Efficiently checking propositional refutations in HOL theorem provers}
 volume = {7},
 year = {2009}
 }
-@incollection{Hurd1999,
+@misc{Hurd1999,
 author = {Hurd, Joe},
 doi = {10.1007/3-540-48256-3_21},
 file = {:Users/jonaprieto/Mendeley/Hurd - 1999 - Integrating Gandalf and HOL.pdf:pdf},
 pages = {311--321},
 publisher = {Springer, Berlin, Heidelberg},
 title = {{Integrating Gandalf and HOL}},
-url = {http://link.springer.com/10.1007/3-540-48256-3{\_}21},
+url = {http://link.springer.com/10.1007/3-540-48256-3_21},
 year = {1999}
 }
 @inproceedings{Weidenbach2009,
