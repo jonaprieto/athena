@@ -7,6 +7,11 @@ AGDA     =agda
 ATP      ?=online-atps --atp=metis
 ATHENA_LIB      =$(addprefix $(PWD), /lib)
 ATHENA_AGDA_LIB =$(addprefix $(ATHENA_LIB),/.agda)
+TIMELIMIT =timeout 1m
+# timelimit -T240 -t240 -S9
+AGDACALL ="${TIMELIMIT} ${AGDA} {} --verbose=0 && \
+  echo '-------------------------------------------------------------------' && echo"
+
 
 ifdef MSVC     # Avoid the MingW/Cygwin sections
 		uname_S := Windows
@@ -31,10 +36,6 @@ endif
 ifeq ($(uname_S),UnixWare)
 		TIMELIMIT =timeout 1m
 endif
-
-
-AGDACALL ="${TIMELIMIT} ${AGDA} {} --verbose=0 && \
-	echo '-------------------------------------------------------------------' && echo"
 
 
 # ============================================================================
@@ -238,6 +239,14 @@ agda-stdlib:
 		 echo "[!] agda-stdlib directory already exists"; \
 	 fi;
 
+.PHONY : pull-libraries
+pull-libraries :
+	cd lib/agda-prop/ && git pull origin master
+	cd lib/agda-metis && git pull origin master
+	cd test/prop-pack && git pull origin master
+	git add .
+	git commit -am "[ libraries ] updated."
+
 .PHONY : agda-libraries
 agda-libraries:
 	@echo "==================================================================="
@@ -340,16 +349,16 @@ check : install-libraries \
 	@echo "==================================================================="
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
 	@find $(BASIC) \
-					-type f \
-					-name "*.agda" \
-					-print \
-					-exec sh -c $(AGDACALL) \;;
+				-type f \
+				-name "*.agda" \
+				-print \
+				-exec sh -c $(AGDACALL) \;;
 
 	@find $(CONJ) \
-					-type f \
-					-name "*.agda" \
-					-print \
-					-exec sh -c $(AGDACALL) \;;
+				-type f \
+				-name "*.agda" \
+				-print \
+				-exec sh -c $(AGDACALL) \;;
 
 	@find $(IMPL) \
 				-type f \
@@ -370,7 +379,7 @@ check : install-libraries \
 				-exec sh -c $(AGDACALL) \;;
 
 	@find $(BICOND) \
-			-type f \
-			-name "*.agda" \
-			-print \
-			-exec sh -c $(AGDACALL) \;;
+				-type f \
+				-name "*.agda" \
+				-print \
+				-exec sh -c $(AGDACALL) \;;
