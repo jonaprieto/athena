@@ -136,7 +136,6 @@ instance Pretty AgdaFile where
      , docProof problem
      ]
 
-
 getFormula ∷ AgdaFile → String → Formula
 getFormula agdaFile tag = φ
   where
@@ -378,7 +377,8 @@ docProofSubgoal n tree agdaFile =
 
 docProofGoal ∷ AgdaFile → Doc
 docProofGoal agdaFile =
-     pretty "proof" <+> colon <+> pretty "Γ ⊢ goal" <> line
+     pretty "proof" <+> colon
+       <+> pretty "Γ ⊢ " <> (pretty (fileConjecture agdaFile)) <> line
   <> pretty "proof" <+> equals <> line
   <> indent 2 (pretty "⇒-elim" <> line)
   <> indent 2 (pretty "atp-split" <> line <> nestedproofs) <> line
@@ -386,7 +386,7 @@ docProofGoal agdaFile =
       nestedproofs :: Doc
       nestedproofs =
         atpSplit
-          (getFormula agdaFile "goal")
+          (formula (fileConjecture agdaFile))
           (map formula (fileSubgoals agdaFile))
 
   -- where
@@ -458,7 +458,8 @@ docSteps subgoalN (Leaf _ axiom) agdaFile =
     prettyWeaken ∷ Doc
     prettyWeaken =
       case toWeak of
-        [] → pretty "weaken" <+> parens (pretty "¬" <+> subgoalName subgoalN)
+        [] → pretty "weaken"
+               <+> parens (pretty "¬" <+> subgoalName subgoalN)
         ps → pretty "weaken-Δ₁" <> line <>
           indent 2 (parens (toCtxt (
                 [pretty '∅']
@@ -607,6 +608,5 @@ docSteps subgoalN (Root Strip _ _) _ = subgoalName subgoalN
 
 docSteps _ (Root Skolemize _ _ ) _   = pretty "? -- skolemie"
 docSteps _ (Root Specialize _ _ ) _  = pretty "? -- specialize"
-docSteps _ (Root (NewRule r) _ _ ) _ = pretty "? -- newrule"
-
--- docSteps _ _ _ = pretty "?" -- pretty inf <+> pretty r <> line
+docSteps _ (Root (NewRule _) _ _ ) _ = pretty "? -- newrule"
+docSteps _ _ _                       = pretty "? -- not supported."
