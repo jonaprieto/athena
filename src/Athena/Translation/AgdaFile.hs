@@ -41,8 +41,10 @@ import Athena.Translation.Rules
 --   -- , atpNegate
   atpResolve
 --   -- , atpSimplify
---   -- , atpSplit
+  -- , atpSplit
   )
+import Athena.Translation.Rules.Strip        ( atpSplit, unshunt, split )
+
 import Athena.Options            ( Options ( optInputFile ) )
 import Athena.Translation.Utils  ( stdName )
 import Athena.Utils.PrettyPrint
@@ -134,6 +136,15 @@ instance Pretty AgdaFile where
      , docProof problem
      ]
 
+
+getFormula ∷ AgdaFile → String → Formula
+getFormula agdaFile tag = φ
+  where
+     φ ∷ Formula
+     φ = formula . fromJust $ Map.lookup tag dict
+
+     dict ∷ ProofMap
+     dict = fileDict agdaFile
 
 getFormulaByTag ∷ AgdaFile → String → Doc
 getFormulaByTag agdaFile tag = pretty φ
@@ -279,7 +290,6 @@ docConjecture ∷ F → Doc
 docConjecture fm =
      comment (pretty "Conjecture" <> dot) <> line
   <> definition fm
-
 ------------------------------------------------------------------------------
 -- Sub-goals.
 ------------------------------------------------------------------------------
@@ -373,6 +383,12 @@ docProofGoal agdaFile =
   <> indent 2 (pretty "⇒-elim" <> line)
   <> indent 2 (pretty "atp-split" <> line)
   <> indent 0 sgoals <> line
+  <> line
+  <> pretty "{-" <> line
+  <> (pretty . split . formula) fm) <> line
+  <> (pretty (atpSplit (getFormula "goal") (map formula (fileSubgoals agdaFile)))  <> line
+  <> pretty "-}"
+
   where
     sgoals ∷ Doc
     sgoals = case fileSubgoals agdaFile of
@@ -589,8 +605,8 @@ docSteps subgoalN (Root Simplify tag nodes) agdaFile =
 
 docSteps subgoalN (Root Strip _ _) _ = subgoalName subgoalN
 
-docSteps _ (Root Skolemize _ _ ) _ = pretty "? -- skolemie"
-docSteps _ (Root Specialize _ _ ) _ = pretty "? -- specialize"
+docSteps _ (Root Skolemize _ _ ) _   = pretty "? -- skolemie"
+docSteps _ (Root Specialize _ _ ) _  = pretty "? -- specialize"
 docSteps _ (Root (NewRule r) _ _ ) _ = pretty "? -- newrule"
 
 -- docSteps _ _ _ = pretty "?" -- pretty inf <+> pretty r <> line
