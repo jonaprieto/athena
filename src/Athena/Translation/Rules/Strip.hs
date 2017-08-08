@@ -78,5 +78,3 @@ split fm = fm
 atpSplit ∷ Formula → ProofMap → Formula
 atpSplit _ _ = undefined
 
-
-
