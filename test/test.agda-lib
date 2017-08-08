@@ -13,3 +13,4 @@ include:
   prop-pack/problems/disjunction
   prop-pack/problems/implication
   prop-pack/problems/negation
+  prop-pack/problems/prop-metis

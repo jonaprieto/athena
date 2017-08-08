@@ -51,6 +51,7 @@ CONJ      =$(addprefix $(PROBLEMS),/conjunction)
 DISJ      =$(addprefix $(PROBLEMS),/disjunction)
 IMPL      =$(addprefix $(PROBLEMS),/implication)
 NEG       =$(addprefix $(PROBLEMS),/negation)
+PMETIS    =$(addprefix $(PROBLEMS),/prop-metis)
 
 TPTP_BASIC := $(wildcard $(BASIC)/*.tptp)
 TSTP_BASIC := $(addprefix $(BASIC)/,$(notdir $(TPTP_BASIC:.tptp=.tstp)))
@@ -75,6 +76,11 @@ AGDA_BICOND := $(addprefix $(BICOND)/,$(notdir $(TSTP_BICOND:.tstp=.agda)))
 TPTP_NEG := $(wildcard $(NEG)/*.tptp)
 TSTP_NEG := $(addprefix $(NEG)/,$(notdir $(TPTP_NEG:.tptp=.tstp)))
 AGDA_NEG := $(addprefix $(NEG)/,$(notdir $(TSTP_NEG:.tstp=.agda)))
+
+TPTP_PMETIS := $(wildcard $(PMETIS)/*.tptp)
+TSTP_PMETIS := $(addprefix $(PMETIS)/,$(notdir $(TPTP_PMETIS:.tptp=.tstp)))
+AGDA_PMETIS := $(addprefix $(PMETIS)/,$(notdir $(TSTP_PMETIS:.tstp=.agda)))
+
 
 # ============================================================================
 
@@ -102,6 +108,10 @@ $(NEG)/%.tstp: $(NEG)/%.tptp
 	@echo $@
 	@${ATP} $< > $@
 
+$(PMETIS)/%.tstp: $(PMETIS)/%.tptp
+	@echo $@
+	@${ATP} $< > $@
+
 # ...
 
 $(BASIC)/%.agda: $(BASIC)/%.tstp
@@ -117,6 +127,10 @@ $(DISJ)/%.agda: $(DISJ)/%.tstp
 	@$(ATHENA) $<
 
 $(NEG)/%.agda: $(NEG)/%.tstp
+	@echo $@
+	@$(ATHENA) $<
+
+$(PMETIS)/%.agda: $(PMETIS)/%.tstp
 	@echo $@
 	@$(ATHENA) $<
 
@@ -321,7 +335,8 @@ problems : prop-pack \
 					 $(TSTP_DISJ) \
 					 $(TSTP_IMPL)	\
 					 $(TSTP_BICOND) \
-					 $(TSTP_NEG)
+					 $(TSTP_NEG) \
+					 $(TSTP_PMETIS)
 
 .PHONY : reconstruct
 reconstruct : install-bin problems
@@ -342,7 +357,8 @@ check : install-libraries \
 				$(AGDA_DISJ) \
 				$(AGDA_IMPL)	\
 				$(AGDA_BICOND) \
-				$(AGDA_NEG)
+				$(AGDA_NEG) \
+				$(AGDA_PMETIS)
 
 	@echo "==================================================================="
 	@echo "================== Type-checking Agda files ======================="
@@ -379,6 +395,12 @@ check : install-libraries \
 				-exec sh -c $(AGDACALL) \;;
 
 	@find $(BICOND) \
+				-type f \
+				-name "*.agda" \
+				-print \
+				-exec sh -c $(AGDACALL) \;;
+
+	@find $(PMETIS) \
 				-type f \
 				-name "*.agda" \
 				-print \

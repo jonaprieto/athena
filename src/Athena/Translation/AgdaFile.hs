@@ -353,7 +353,7 @@ docProof agdaFile =
   <> hypenline
   <@> vsep
        [ docProofSubgoals agdaFile
---       , docProofGoal agdaFile  -- TODO
+      , docProofGoal agdaFile  -- TODO
        ]
 
 docProofSubgoals ∷ AgdaFile → Doc
@@ -381,38 +381,38 @@ docProofGoal agdaFile =
      pretty "proof" <+> colon <+> pretty "Γ ⊢ goal" <> line
   <> pretty "proof" <+> equals <> line
   <> indent 2 (pretty "⇒-elim" <> line)
-  <> indent 2 (pretty "atp-split" <> line)
-  <> indent 0 sgoals <> line
-  <> line
-  <> pretty "{-" <> line
-  <> (pretty . split . formula) fm) <> line
-  <> (pretty (atpSplit (getFormula "goal") (map formula (fileSubgoals agdaFile)))  <> line
-  <> pretty "-}"
+  <> indent 2 (pretty "atp-split" <> line <> nestedproofs) <> line
+    where
+      nestedproofs :: Doc
+      nestedproofs =
+        atpSplit
+          (getFormula agdaFile "goal")
+          (map formula (fileSubgoals agdaFile))
 
-  where
-    sgoals ∷ Doc
-    sgoals = case fileSubgoals agdaFile of
-      []       → pretty '?' -- TODO
-      [_]      → pretty "proof₀"
-      [_, _]   → parens $ pretty "∧-intro"
-              <+> pretty "proof₀"
-              <+> pretty "proof₁"
-      subgoals →
-        foldl
-          (\x y →
-            parens $
-              vsep
-                [ pretty "∧-intro"
-                , indent 2
-                    (vsep
-                      [ x
-                      , pretty "proof" <> y
-                      ]
-                     )
-                 ]
-          )
-          (pretty "proof₀")
-          (map (pretty . stdName . show)  [1..(length subgoals - 1)])
+  -- where
+  --   sgoals ∷ Doc
+  --   sgoals = case fileSubgoals agdaFile of
+  --     []       → pretty '?' -- TODO
+  --     [_]      → pretty "proof₀"
+  --     [_, _]   → parens $ pretty "∧-intro"
+  --             <+> pretty "proof₀"
+  --             <+> pretty "proof₁"
+  --     subgoals →
+  --       foldl
+  --         (\x y →
+  --           parens $
+  --             vsep
+  --               [ pretty "∧-intro"
+  --               , indent 2
+  --                   (vsep
+  --                     [ x
+  --                     , pretty "proof" <> y
+  --                     ]
+  --                    )
+  --                ]
+  --         )
+  --         (pretty "proof₀")
+  --         (map (pretty . stdName . show)  [1..(length subgoals - 1)])
 
 ------------------------------------------------------------------------------
 

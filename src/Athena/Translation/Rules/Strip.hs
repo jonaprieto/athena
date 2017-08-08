@@ -1,4 +1,3 @@
-
 -- | Athena.Translation.Rule.Strip module.
 
 {-# LANGUAGE ScopedTypeVariables #-}
@@ -98,6 +97,25 @@ split ((:~:) (PredApp (AtomicWord "$true") []))  = PredApp (AtomicWord "$false")
 split fm = fm
 
 
+proofSplit :: Formula → [Formula] → Int → (Doc, [Formula], Int)
+proofSplit _ [] n  = (empty, [], n)
+proofSplit _ [_] n = (pretty . stdName $ "proof" ++ show n, [], n+1)
+proofSplit φ@(BinOp ψ (:&:) γ) gs@(goal : goals) n
+  | φ == goal = (pretty (stdName ("proof" ++ show n)), goals, n+1)
+  | otherwise = (docφ, lgoals, ln)
+  where
+    (docψ, cgoals, cn) = proofSplit ψ gs n
+    (docγ, lgoals, ln) = proofSplit γ cgoals cn
+
+    docφ ∷ Doc
+    docφ = parens (pretty "∧-intro" <> line
+             <> indent 2 (docψ <> line <> docγ))
+
+proofSplit φ gs@(goal : goals) n
+  | φ == goal = (pretty (stdName $ "proof" ++ show n), goals, n+1)
+  | otherwise = (empty,gs,n)
+
+
 atpSplit ∷ Formula → [Formula] → Doc
 atpSplit _ []     = pretty '?'
 atpSplit _ [_]    = pretty "proof₀"
@@ -105,7 +123,7 @@ atpSplit _ [_,_]  =
   parens $ pretty "∧-intro"
     <+> pretty "proof₀"
     <+> pretty "proof₁"
-atpSplit fm sgoals = undefined
+atpSplit φ sgoals = doc
   where
-    fmsubgoal = split fm
-
+    doc ∷ Doc
+    (doc, _, _) = proofSplit (split φ) sgoals 0
