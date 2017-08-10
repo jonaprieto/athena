@@ -92,6 +92,12 @@ split ((:~:) (BinOp φ₁ (:=>:) φ₂))  =
     (:&:)
     (unshunt $ BinOp φ₁ (:=>:) (split ((:~:) φ₂)))
 
+split ((:~:) (BinOp φ₁ (:<=>:) φ₂))  =
+  BinOp
+    (unshunt $ BinOp φ₁ (:=>:) (split ((:~:) φ₂)))
+    (:&:)
+    (unshunt $ BinOp ((:~:) φ₂) (:=>:) (split φ₁))
+
 split ((:~:) (PredApp (AtomicWord "$false") [])) = PredApp (AtomicWord "$true") []
 split ((:~:) (PredApp (AtomicWord "$true") []))  = PredApp (AtomicWord "$false") []
 split fm = fm
