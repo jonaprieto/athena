@@ -4,7 +4,7 @@ pdf :
 	- lhs2TeX --agda main.lagda > main.tex
 	- sh chars.sh
 	- sh fix-references.sh
-	- latexmk -pdf -use-make main.tex
+	- latexmk -pdf -f -synctex=1 -use-make main.tex
 
 .PHONY : clean
 clean :

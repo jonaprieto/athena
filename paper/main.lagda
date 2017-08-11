@@ -93,8 +93,8 @@ module paper where
 in Agda}
 
 % a short form should be given in case it is too long for the running head
-\titlerunning{Towards Proof-Reconstruction of Problems in Classical
-  Propositional Logic in Agda}
+\titlerunning{Proof-Reconstruction in Classical
+  Propositional Logic}
 
 \author{Jonathan Prieto-Cubides%
 \and Andr\'es Sicard-Ram\'irez}
@@ -156,9 +156,9 @@ with, that is, a full script describing step-by-step with exhaustive details and
 without ambiguities, the table of the derivation to get the actual proof.
 For problems in classical propositional logic (henceforth CPL), from a list of
 at least forty\footnote{ATPs available from the web service \texttt{SystemOnTPTP}
-of the TPTP World.} ATPs, just a few provers are able to deliver proofs (e.g.
+of the TPTP World.} ATPs, just a few provers were able to deliver proofs (e.g.
 \verb!CVC4!~\cite{Barrett2011}, \verb!SPASS!, and \verb!Waldmeister!
-~\cite{hillenbrand1997}) and a little bit less reply with a proof in a file
+~\cite{hillenbrand1997}) and a little bit less replied with a proof in a file
 format like TSTP~\cite{sutcliffe2004tstp} (e.g. \verb!E!, \verb!Metis!,
 \verb!Vampire!, and \verb!Z3!), LFSC~\cite{Stump2008}, or the SMT-LIB
 ~\cite{Bohme2011} format.
@@ -167,7 +167,7 @@ Many approaches have been proposed and some tools have been implemented for
 proof reconstruction in the last decades. These programs are relevant not only
 because it helps to spread their usage but they also increase the confidence of
 their users about their algorithms and their correctness (see, for example, bugs
-in ATPs~\cite{Keller2013}, \cite{Bohme2011}, and \cite{Fleury2014}).
+in ATPs~\cite{Keller2013}, \cite{Bohme2011}, \cite{Fleury2014} and \cite{Kanso2012}).
 We mention some tools in the following.
 
 \subsection*{Related Work.}\label{Related Work}
@@ -200,6 +200,13 @@ reconstruct proofs from different ATPs to \verb!HOL Light!, replaying the
 detailed inference steps from the ATPs with internal inference methods
 implemented in the ITP.
 
+% Taken from: 
+% Färber, M., & Kaliszyk, C. (2015). Metis-based Paramodulation Tactic for HOL 
+% Light. In GCAI 2015. Global Conference on Artificial Intelligence Metis-based 
+%(Vol. 36, pp. 127–136).
+% HOL(y)Hammer [KU15] is an automated deduction framework for HOL4 and HOL Light.
+% Given a conjecture, it attempts to find suitable premises, then calls external ATPs such as E[Sch13], Vampire [KV13], or Z3 [dMB08], and attempts to reconstruct the proof using the premises used by the ATP. To reconstruct proofs, it uses tactics such as MESON, simplification, and a few other decision procedures, however, these are sometimes not powerful enough to reconstruct proofs found by the external ATPs.
+
 \verb!Waldmeister! is an automatic theorem prover for unit equational logic
 \cite{hillenbrand1997}. Foster and Struth~\cite{foster2011integrating} integrate
 \verb!Waldmeister! into \verb!Agda!~\cite{agdateam}. This integration requires a
@@ -208,11 +215,12 @@ logic --also called identity theory~\cite{humberstone2011}-- that is,
 first-order logic with equality but no other predicate symbols and no functions
 symbols~\cite{appel1959}.
 
-Kanso and Setzer~\cite{kanso2016light} integrate as SAT solvers (\verb!iProver!,
-\verb!E!, and \verb!Z3!) in \verb!Agda! using an approach that they call
-\emph{oracle and reflection}.
-
-% replaying the Otter/Prover9 proofs in Mizar, and
+Kanso and Setzer~\cite{kanso2016light} integrate \verb!Z3! in \verb!Agda!,
+and the propositional fragment of the \verb!E! prover in \cite{Kanso2012} using
+two approaches, \emph{Oracle + Reflection} and \emph{Oracle + Justification}, respectively.
+Their integration with the \verb!E! prover is the most related work found with our
+proof reconstruction tool. Even though we checked that we shared some of the same
+obstacles and some achievements with the proof reconstruction, we found crucial differences beyond that we choose a different prover as we describe later on.
 
 In this paper, we describe the integration of \verb!Metis! prover with the proof
 assistant \verb!Agda!. We structure the paper as follows. In section \ref{sec2},
@@ -223,14 +231,22 @@ reconstructed with our tool for a CPL problem. In section \ref{secconclusion},
 we discuss some limitations and conclusions, for ending up with the future work.
 
 \section{Metis: Language and Proof Terms}\label{sec2}
-\verb!Metis! is an automatic theorem prover for first-order logic with
-equality~\cite{hurd2003first}.
+\verb!Metis! is an automatic theorem prover  written in Standard ML for first-order logic with
+equality developed by John Hurd~\cite{hurd2003first} .
+It has been integrated to \verb!Isabelle/HOL! as a macro-step reconstruction tool
+justifying proofs (usually CNF goals) replied from other ATPs like \verb!CVC4!, 
+\verb!Vampire!, \verb!Z3!. \verb!Metis! was also used to provide a tactic in
+\verb!HOL Light!~\cite{Farber2015} that challenge tactics like \verb!MESON! or
+from the last first author, a tactic to reconstruct proofs from \verb!leanCoP!~\cite{Farber2016}.
+
+%and is used in our proof reconstruction approach as an external program.
+We ported a subset of \verb!Metis!'s inference rules, the propositional fragmented,
+to \verb!Agda! to allow us justify step-by-step the proofs delivered in \verb!TSTP! format.
 
 \subsection{Input and Output Language}
-The \verb!TPTP! language --which includes the First-Order Form (FOF) and Clause
-Normal Form (CNF) formats \cite{sutcliffe2009} -- is de facto input standard
-language and the \verb!TSTP! language is de facto output standard
-language~\cite{sutcliffe2004tstp}.
+The \verb!TPTP! language --which includes the first-order form (FOF) and clause
+normal form (henceforth CNF) formats \cite{sutcliffe2009} -- is de facto input standard
+language. \verb!TSTP! language is de facto output standard language~\cite{sutcliffe2004tstp}.
 
 \subsection{Proof Terms}
 
