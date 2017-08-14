@@ -53,18 +53,46 @@ module paper where
 \usepackage{afterpage}
 \usepackage{comment}
 \usepackage{url}
-%\usepackage{times}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsmath}
-\usepackage{stmaryrd}
+\usepackage{stmaryrd} %new symbol font for tcs
 \usepackage{color}
-\usepackage{verbatim}
-\usepackage{fancyvrb}
 
+
+% \usepackage{fontspec}
+% \usepackage{mathtools}
+% \usepackage{unicode-math}
+% \setmonofont[ExternalLocation=fonts/
+% , BoldFont=DejaVuSansMono-Bold.ttf
+% , BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
+% , ItalicFont=DejaVuSansMono-Oblique.ttf
+% ]{DejaVuSansMono.ttf}
+% \setmathfont[ExternalLocation=fonts/
+%   ]{DejaVuMathTeXGyre.ttf}
+% \newfontfamily\mathfont{fonts/DejaVuMathTeXGyre.ttf}
+% \usepackage{minted}
+% \setminted[code]{
+% , fontsize  = \footnotesize
+% , frame     = none
+% % , framerule = 0.4pt
+% % , framesep  = 0pt
+% , style     = cagda
+% }
+
+\usepackage{verbatim}
+\usepackage{relsize}
+\usepackage{fancyvrb}
+% \DefineShortVerb{\+}
 \DefineVerbatimEnvironment
   {code}{Verbatim}
-  {fontfamily=freemodo} % {}
+  { fontsize=\relsize{-2}
+  , fontfamily=freemodo
+  , frame =single
+  , framesep=5mm
+  , showspaces=true
+  , obeytabs=true
+  } % {}
 
 \setcounter{secnumdepth}{5}
 
@@ -89,12 +117,12 @@ module paper where
 \mainmatter  % start of an individual contribution
 
 % first the title is needed
-\title{Towards Proof-Reconstruction of Problems in Classical Propositional Logic
-in Agda}
+\title{Towards Proof-Reconstruction of Problems
+in Classical Propositional Logic in Agda}
 
 % a short form should be given in case it is too long for the running head
 \titlerunning{Proof-Reconstruction in Classical
-  Propositional Logic}
+Propositional Logic}
 
 \author{Jonathan Prieto-Cubides%
 \and Andr\'es Sicard-Ram\'irez}
@@ -251,23 +279,23 @@ propositional fragmented, to allow us justify step-by-step the proofs delivered
 in \verb!TSTP! format.
 
 \subsection{Input and Output Language}
-The \verb!TPTP! language  --which includes the first-order
-form (FOF) and clause normal form formats~\cite{sutcliffe2009} -- is de facto input standard language to encode problems. The TPTP syntax describes
+\textit{Input.}~The \verb!TPTP! language  --which includes the first-order
+form (FOF) and clause normal form formats~\cite{sutcliffe2009} -- is de facto input standard language to encode problems for many ATPs. The \verb!TPTP! syntax describes
 a well-defined grammar to handle annotated formulas with the form
 \begin{code}
-  language(name, role, formula).
+language(name, role, formula).
 \end{code}
 We will only consider two languages, FOF or CNF. The \verb!name!
 serves to identify the formula within the problem. The formula assume one
 role, it could be an axiom, definition, hypothesis, or conjecture.
 The problem  $\vdash \neg (p \wedge \neg p) \vee (q \vee \neg q)$ can be
-written in TPTP like the following.
+written in \verb!TPTP! as follows.
 
 \begin{code}
 fof(goal, conjecture, ~((p & ~ p) | (q & ~ q))).
 \end{code}
 
-\verb!TSTP! language is de facto output standard language~\cite{sutcliffe2004tstp}. A TSTP derivation is a directed acyclic graph, a proof tree, where each leaf is a formula from the TPTP input. A node is a formula inferred from the parent formulas. The root is the final derived formula.
+\textit{Output.}~\verb!TSTP! language is de facto output standard language~\cite{sutcliffe2004tstp}. A TSTP derivation is a directed acyclic graph, a proof tree, where each leaf is a formula from the TPTP input. A node is a formula inferred from the parent formulas. The root is the final derived formula.
 Such a derivation is a list of annotated formulas with the form
 \begin{code}
 language(name, role, formula, source [,useful info]).
@@ -277,13 +305,32 @@ where \verb!source! typically is an inference record
 inference(rule, useful info, parents).
 \end{code}
 
+
+\begin{figure}
+\begin{code}
+fof(a, axiom, p) .
+fof(goal, conjecture, p) .
+fof(subgoal_0, plain, p, inference (strip, [], [goal])) .
+fof(negate_0_0, plain, ∼ p, inference (negate, [], [subgoal_0])) .
+fof(normalize_0_0, plain, ∼ p, inference (canonicalize, [], [negate_0_0])) .
+fof(normalize_0_1, plain, p, inference (canonicalize, [], [a])) .
+fof(normalize_0_2, plain, $false, inference (simplify, [],
+  [normalize_0_0, normalize_0_1]))
+cnf(refute_0_0, plain, $false, inference (canonicalize, [], [normalize_0_2])) .
+\end{code}
+\caption{\verb!Metis!'s TSTP derivation for the problem $p\vdash p$.}
+\label{metis-proof-tstp}
+\end{figure}
+
 \subsection{Proof Terms}
 
-\verb!Metis!' proof terms encode natural deduction proofs. Its deduction system
+The proof-objects delivered in the \verb!Metis!
+s proofs encode natural deduction proofs. Its deduction system
 uses six simple inference rules and it proves conjectures by refutation.
 
+\begin{figure}
 \[
-\scalebox{0.9}{
+% \scalebox{0.9}{
 \begin{bprooftree}
   \AxiomC{}
   \RightLabel{axiom}
@@ -308,10 +355,10 @@ uses six simple inference rules and it proves conjectures by refutation.
   \UnaryInfC{$\sigma\,C$}
 \end{bprooftree}
 \qquad
-}
+% }
 \]
 \[
-\scalebox{0.9}{
+% \scalebox{0.9}{
 \begin{bprooftree}
   \AxiomC{}
   \RightLabel{equality $L$ $p$ $t$}
@@ -324,15 +371,45 @@ uses six simple inference rules and it proves conjectures by refutation.
   \RightLabel{resolve $L$}
   \BinaryInfC{$C \vee D$}
 \end{bprooftree}
-}
+% }
 \]
+\caption{Inferences rules of the \verb!Metis! prover.}
+\label{metis-inferences}
+\end{figure}
 
-\verb!Metis!’ proofs are directed acyclic graphs (henceforth DAG), refutations
+These proofs are directed acyclic graphs (henceforth DAG), refutations
 trees. Each node stands for an application of an inference rule and the leaves
 in the tree represent formulas in the given problem. Each node is labeled with
 an axiom or an inference rule name (e.g. \verb!resolve!). Each edge links a
 premise with one conclusion. All proof graphs have in their root the conclusion
 ⊥ since \verb!Metis! uses refutation in each deduction step.
+
+To prove $p \vdash p$, \verb!Metis! generates the following proof-object.
+
+\begin{figure}
+\centering
+\scalebox{1.1}{
+\begin{bprooftree}
+\footnotesize\centering\tt
+\AxiomC{}
+\RightLabel{assume}
+\UnaryInfC{$\neg p$}
+\RightLabel{strip}
+\UnaryInfC{$\neg p$}
+\AxiomC{}
+\RightLabel{axiom}
+\UnaryInfC{$p$}
+\RightLabel{canonicalize}
+\UnaryInfC{$p$}
+\RightLabel{simplify}
+\BinaryInfC{$\bot$}
+\RightLabel{canonicalize}
+\UnaryInfC{$\bot$}
+\end{bprooftree}
+}
+\caption{The natural deduction proof for $p \vdash p$ from the derivation in Fib.~\ref{metis-proof-tstp}}
+\label{metis-example}
+\end{figure}
 
 \subsection{Proof Rules}
 Using \verb!Metis! to prove CPL problems, we found that their TSTP derivations
@@ -341,12 +418,12 @@ showed six inference rules, \verb!canonicalize!, \verb!conjunct!, \verb!negate!,
 
 \textit{Splitting}. A list of subgoals is generated by \verb!Metis! to split the proof of the goal into smaller proofs. These subgoals appear in the \verb!TSTP! derivation with the \verb!strip! inference rule.
 
-\begin{verbatim}
+\begin{code}
 fof(goal, conjecture, p & r & q).
 fof(subgoal_0, plain, p, inference(strip, [], [goal])).
 fof(subgoal_1, plain, p => r, inference(strip, [], [goal])).
 fof(subgoal_2, plain, (p & r) => q, inference(strip, [], [goal])).
-\end{verbatim}
+\end{code}
 
 To split the goal, we apply apply a theorem that by pattern matching
 over the input formula, the following theorems are applied.
@@ -457,10 +534,7 @@ fof(negate_0_0, plain, ~ p, inference(negate, [], [subgoal_0])).
 
 \textit{Simplification.} The \verb!simplify! rule could
 reduce a list of formulas into an empty clause by transversing the list while
-while applying different theorems. These theorems could been the same list of theorems
-used by \verb!canonicalize! when it simplifies disjunctions and conjunctions,
-but it also apply the resolution theorem like \verb!resolve!.
-The way of processing the list doesn't follow an
+while applying different theorems. These theorems could been the same list of theorems used by \verb!canonicalize! when it simplifies disjunctions and conjunctions, but it also could apply the resolution theorem of the \verb!resolve! rule.
 
 \section{Proof Reconstruction in Agda}
 \label{secproofrecon}
@@ -504,6 +578,7 @@ This list's implementation is from the \verb!Agda! standard library.
 
 Then, the theorem data type has the following constructors, the propositional logic deduction rules for our formal system.
 
+\begin{figure}
 \[\scalebox{0.9}{
 \begin{bprooftree}
 \AxiomC{}
@@ -543,7 +618,7 @@ Then, the theorem data type has the following constructors, the propositional lo
 \AxiomC{$\Gamma \vdash \varphi$}
 \AxiomC{$\Gamma \vdash \psi$}
 \RightLabel{\footnotesize\tt $\wedge$-intro}
-\BinaryInfC{$\Gamma \varphi \wedge \psi$}
+\BinaryInfC{$\Gamma \vdash \varphi \wedge \psi$}
 \end{bprooftree}
 }\]
 
@@ -552,19 +627,19 @@ Then, the theorem data type has the following constructors, the propositional lo
 \AxiomC{$\Gamma \vdash \varphi$}
 \AxiomC{$\Gamma \vdash \psi$}
 \RightLabel{\footnotesize\tt $\wedge$-proj$_1$}
-\BinaryInfC{$\Gamma \varphi$}
+\BinaryInfC{$\Gamma\vdash \varphi$}
 \end{bprooftree}
 \qquad
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \varphi$}
 \AxiomC{$\Gamma \vdash \psi$}
 \RightLabel{\footnotesize\tt $\wedge$-proj$_2$}
-\BinaryInfC{$\Gamma \psi$}
+\BinaryInfC{$\Gamma\vdash \psi$}
 \end{bprooftree}
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \varphi$}
 \RightLabel{\footnotesize\tt $\vee$-intro$_1$ $\psi$}
-\UnaryInfC{$\Gamma \varphi \vee \psi$}
+\UnaryInfC{$\Gamma \vdash \varphi \vee \psi$}
 \end{bprooftree}
 }\]
 
@@ -618,7 +693,9 @@ Then, the theorem data type has the following constructors, the propositional lo
 \BinaryInfC{$\Gamma \vdash \psi$}
 \end{bprooftree}
 }\]
-
+\caption{...}
+\label{theorem-constructors}
+\end{figure}
 
 \subsection{The Translation Method}
 
@@ -629,6 +706,8 @@ Explain in a diagram like we did in the slides for the AIM ...
 
 \textit{Splitting a goal}
 
+
+\begin{figure}
 \[\scalebox{0.9}{
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \varphi_1 \wedge \varphi_2$}
@@ -696,8 +775,12 @@ Explain in a diagram like we did in the slides for the AIM ...
 \UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\neg \varphi_2) \wedge \texttt{unshunt}~(\neg \varphi_2 \Rightarrow \texttt{split}~\varphi_1)$}
 \end{bprooftree}
 }\]
+\caption{...}
+\label{split}
+\end{figure}
 
 In the theorems above appear two recursive functions \texttt{unshunt} and \texttt{split}. They have the following definitions.
+
 \begin{code}
 unshunt : Prop → Prop
 unshunt (φ₁ ⇒ (φ₂ ⇒ φ₃)) = unshunt ((φ₁ ∧ φ₂) ⇒ φ₃)
