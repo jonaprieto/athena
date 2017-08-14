@@ -64,7 +64,7 @@ module paper where
 
 \DefineVerbatimEnvironment
   {code}{Verbatim}
-  {} % {fontfamily=\tt} %freemodo
+  {fontfamily=freemodo} % {}
 
 \setcounter{secnumdepth}{5}
 
@@ -133,7 +133,8 @@ first-order logic with equality (e.g. \verb!E!~\cite{Schulz:AICOM-2002},
 ~\cite{Weidenbach2009} and \verb!Vampire!~\cite{Riazanov1999}), high-order logic
 (e.g. \verb!Leo-II!~\cite{Benzmuller2008} and \verb!Satallax!~\cite{Brown2012})
 or intuitionistic logic (e.g. \verb!ileanCoP!~\cite{Otten2008},
-\verb!JProver!~\cite{Schmitt2001}, and \verb!Gandalf!~\cite{Tammet1997}), among others.
+\verb!JProver!~\cite{Schmitt2001}, and \verb!Gandalf!~\cite{Tammet1997}),
+among others.
 
 On the other hand, we have the proof checkers, interactive theorem provers
 (henceforth ITP) or proof assistants (e.g. \verb!Agda!~\cite{agdateam},
@@ -167,8 +168,8 @@ Many approaches have been proposed and some tools have been implemented for
 proof reconstruction in the last decades. These programs are relevant not only
 because it helps to spread their usage but they also increase the confidence of
 their users about their algorithms and their correctness (see, for example, bugs
-in ATPs~\cite{Keller2013}, \cite{Bohme2011}, \cite{Fleury2014} and \cite{Kanso2012}).
-We mention some tools in the following.
+in ATPs~\cite{Keller2013}, \cite{Bohme2011}, \cite{Fleury2014} and
+\cite{Kanso2012}). We mention some tools in the following.
 
 \subsection*{Related Work.}\label{Related Work}
 
@@ -200,9 +201,9 @@ reconstruct proofs from different ATPs to \verb!HOL Light!, replaying the
 detailed inference steps from the ATPs with internal inference methods
 implemented in the ITP.
 
-% Taken from: 
-% Färber, M., & Kaliszyk, C. (2015). Metis-based Paramodulation Tactic for HOL 
-% Light. In GCAI 2015. Global Conference on Artificial Intelligence Metis-based 
+% Taken from:
+% Färber, M., & Kaliszyk, C. (2015). Metis-based Paramodulation Tactic for HOL
+% Light. In GCAI 2015. Global Conference on Artificial Intelligence Metis-based
 %(Vol. 36, pp. 127–136).
 % HOL(y)Hammer [KU15] is an automated deduction framework for HOL4 and HOL Light.
 % Given a conjecture, it attempts to find suitable premises, then calls external ATPs such as E[Sch13], Vampire [KV13], or Z3 [dMB08], and attempts to reconstruct the proof using the premises used by the ATP. To reconstruct proofs, it uses tactics such as MESON, simplification, and a few other decision procedures, however, these are sometimes not powerful enough to reconstruct proofs found by the external ATPs.
@@ -216,11 +217,15 @@ first-order logic with equality but no other predicate symbols and no functions
 symbols~\cite{appel1959}.
 
 Kanso and Setzer~\cite{kanso2016light} integrate \verb!Z3! in \verb!Agda!,
-and the propositional fragment of the \verb!E! prover in \cite{Kanso2012} using
-two approaches, \emph{Oracle + Reflection} and \emph{Oracle + Justification}, respectively.
-Their integration with the \verb!E! prover is the most related work found with our
-proof reconstruction tool. Even though we checked that we shared some of the same
-obstacles and some achievements with the proof reconstruction, we found crucial differences beyond that we choose a different prover as we describe later on.
+and for producing propositional justification of a propositional theorems,
+they integrate the propositional fragment of the \verb!E! prover in
+\cite{Kanso2012}. They catalogue the two integration as
+\emph{Oracle + Reflection} and \emph{Oracle + Justification}, respectively.
+Their integration with the \verb!E! prover is the most related work
+found with our proof reconstruction tool. Beside we shared
+some of the same obstacles and some achievements in the proof reconstruction,
+we found crucial differences in the treatment of the proofs beyond that we
+choose a different prover, we describe all details later on.
 
 In this paper, we describe the integration of \verb!Metis! prover with the proof
 assistant \verb!Agda!. We structure the paper as follows. In section \ref{sec2},
@@ -231,22 +236,46 @@ reconstructed with our tool for a CPL problem. In section \ref{secconclusion},
 we discuss some limitations and conclusions, for ending up with the future work.
 
 \section{Metis: Language and Proof Terms}\label{sec2}
-\verb!Metis! is an automatic theorem prover  written in Standard ML for first-order logic with
-equality developed by John Hurd~\cite{hurd2003first} .
-It has been integrated to \verb!Isabelle/HOL! as a macro-step reconstruction tool
-justifying proofs (usually CNF goals) replied from other ATPs like \verb!CVC4!, 
-\verb!Vampire!, \verb!Z3!. \verb!Metis! was also used to provide a tactic in
-\verb!HOL Light!~\cite{Farber2015} that challenge tactics like \verb!MESON! or
-from the last first author, a tactic to reconstruct proofs from \verb!leanCoP!~\cite{Farber2016}.
+\verb!Metis! is an automatic theorem prover  written in Standard ML for
+first-order logic with equality developed by John Hurd~\cite{hurd2003first}.
+It has been integrated to \verb!Isabelle/HOL! as a macro-step reconstruction
+tool justifying proof steps (usually CNF goals) replied from other ATPs like
+\verb!CVC4!, \verb!Vampire!, or \verb!Z3!. In \cite{Farber2015}, \verb!Metis!
+was also used to provide a tactic for \verb!HOL Light! that could challenge
+others tactics like \verb!MESON! or the \verb!leanCoP! tactic to reconstruct
+proofs as well~\cite{Farber2016}.
 
 %and is used in our proof reconstruction approach as an external program.
-We ported a subset of \verb!Metis!'s inference rules, the propositional fragmented,
-to \verb!Agda! to allow us justify step-by-step the proofs delivered in \verb!TSTP! format.
+We ported a subset of \verb!Metis!'s inference rules to \verb!Agda!, the
+propositional fragmented, to allow us justify step-by-step the proofs delivered
+in \verb!TSTP! format.
 
 \subsection{Input and Output Language}
-The \verb!TPTP! language --which includes the first-order form (FOF) and clause
-normal form (henceforth CNF) formats \cite{sutcliffe2009} -- is de facto input standard
-language. \verb!TSTP! language is de facto output standard language~\cite{sutcliffe2004tstp}.
+The \verb!TPTP! language  --which includes the first-order
+form (FOF) and clause normal form formats~\cite{sutcliffe2009} -- is de facto input standard language to encode problems. The TPTP syntax describes
+a well-defined grammar to handle annotated formulas with the form
+\begin{code}
+  language(name, role, formula).
+\end{code}
+We will only consider two languages, FOF or CNF. The \verb!name!
+serves to identify the formula within the problem. The formula assume one
+role, it could be an axiom, definition, hypothesis, or conjecture.
+The problem  $\vdash \neg (p \wedge \neg p) \vee (q \vee \neg q)$ can be
+written in TPTP like the following.
+
+\begin{code}
+fof(goal, conjecture, ~((p & ~ p) | (q & ~ q))).
+\end{code}
+
+\verb!TSTP! language is de facto output standard language~\cite{sutcliffe2004tstp}. A TSTP derivation is a directed acyclic graph, a proof tree, where each leaf is a formula from the TPTP input. A node is a formula inferred from the parent formulas. The root is the final derived formula.
+Such a derivation is a list of annotated formulas with the form
+\begin{code}
+language(name, role, formula, source [,useful info]).
+\end{code}
+where \verb!source! typically is an inference record
+\begin{code}
+inference(rule, useful info, parents).
+\end{code}
 
 \subsection{Proof Terms}
 
@@ -310,41 +339,128 @@ Using \verb!Metis! to prove CPL problems, we found that their TSTP derivations
 showed six inference rules, \verb!canonicalize!, \verb!conjunct!, \verb!negate!,
 \verb!simplify!, \verb!strip! and \verb!resolve!.
 
-The \verb!canonicalize! rule transforms a formula to one of its normal form,
-CNF, NNF, and DNF. This rule also performs simple simplification in the process,
-applying for instance some of the following theorems assuming commutative
-properties.
+\textit{Splitting}. A list of subgoals is generated by \verb!Metis! to split the proof of the goal into smaller proofs. These subgoals appear in the \verb!TSTP! derivation with the \verb!strip! inference rule.
+
+\begin{verbatim}
+fof(goal, conjecture, p & r & q).
+fof(subgoal_0, plain, p, inference(strip, [], [goal])).
+fof(subgoal_1, plain, p => r, inference(strip, [], [goal])).
+fof(subgoal_2, plain, (p & r) => q, inference(strip, [], [goal])).
+\end{verbatim}
+
+To split the goal, we apply apply a theorem that by pattern matching
+over the input formula, the following theorems are applied.
+
+
+\textit{Normalization.} The process to normalize a propositional
+formula includes transformation of the formula in one of its normal form,
+and posteriori, the application of simplification for conjuctions and disjunctions. This normalization is introduced by the \verb!canonicalize!
+inference rule.
+
+The normal forms saw in the \verb!TSTP! derivations were conjunctive
+normal form (CNF), negative normal form (NNF) and disjunctive normal form.
+
+\[ \scalebox{0.9}{
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi$}
+  \UnaryInfC{$\Gamma \vdash \texttt{cnf}~\varphi$}
+\end{bprooftree}
+\qquad
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi$}
+  \UnaryInfC{$\Gamma \vdash \texttt{nnf}~\varphi$}
+\end{bprooftree}
+\qquad
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi$}
+  \UnaryInfC{$\Gamma \vdash \texttt{dnf}~\varphi$}
+\end{bprooftree}
+}\]
+
+Recursively over the structure of the formula, we perform the
+simplification that applies the following theorems assuming commutativity
+for disjunctions and conjunctions.
 
 \[
 \begin{bprooftree}
-  \AxiomC{$P \vee \bot$}
-  \UnaryInfC{$P$}
+  \AxiomC{$\Gamma \vdash P \wedge \bot$}
+  \UnaryInfC{$\Gamma \vdash \bot$}
 \end{bprooftree}
 \begin{bprooftree}
-  \AxiomC{$P \vee \top$}
-  \UnaryInfC{$P$}
+  \AxiomC{$\Gamma \vdash P \wedge \top$}
+  \UnaryInfC{$\Gamma \vdash P$}
 \end{bprooftree}
 \begin{bprooftree}
-  \AxiomC{$P \vee \neg P$}
-  \UnaryInfC{$\top$}
-\end{bprooftree}
-\begin{bprooftree}
-  \AxiomC{$P \wedge \bot$}
-  \UnaryInfC{$\bot$}
-\end{bprooftree}
-\begin{bprooftree}
-  \AxiomC{$P \wedge \top$}
-  \UnaryInfC{$P$}
-\end{bprooftree}
-\begin{bprooftree}
-  \AxiomC{$P \wedge \neg P$}
-  \UnaryInfC{$\bot$}
+  \AxiomC{$\Gamma \vdash P \wedge \neg P$}
+  \UnaryInfC{$\Gamma \vdash \bot$}
 \end{bprooftree}
 \]
 
-The \verb!strip! rule extracts a subgoal from a goal. The splitting process
-takes a goal and recursively recollects all hypothesis required in order to prove the goal.
-At the end, the final hypothesis represent the subgoals.
+\[\scalebox{0.9}{
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash P \vee \bot$}
+  \UnaryInfC{$\Gamma \vdash P$}
+\end{bprooftree}
+\qquad
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash P \vee \top$}
+  \UnaryInfC{$\Gamma \vdash P$}
+\end{bprooftree}
+\qquad
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash P \vee \neg P$}
+  \UnaryInfC{$\Gamma \vdash \top$}
+\end{bprooftree}
+}
+\]
+
+\textit{Resolution.} The \verb!resolve! inference rule.
+
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi_1 \vee\cdots\varphi_{i-1}\vee \neg \psi\vee\varphi_{i+1}\vee \cdots\vee \varphi_n $}
+\RightLabel{\texttt{resolve} $\psi$}
+\UnaryInfC{$\Gamma \vdash \varphi_1 \vee\cdots\vee \varphi_{i-1}\vee\varphi_{i+1}\vee\cdots\vee \varphi_n $}
+\end{bprooftree}
+}\]
+
+\textit{Clausification.} Application of the distributive laws for both
+disjunctions and conjunctions.
+
+\textit{Split a conjunct.} The \verb!conjunct! inference takes a conjunction
+and extracts one of its conjuncts. This rules is defined as follows.
+
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi_1 \wedge \cdots\wedge\varphi_i \wedge\cdots\wedge \varphi_n$}
+\AxiomC{$\varphi_i \equiv \psi$}
+\RightLabel{\footnotesize\tt conjunct $\psi$}
+\BinaryInfC{$\Gamma\vdash\varphi_i$}
+\end{bprooftree}
+}
+\]\par
+From the \verb!TSTP! derivation, we infer the formula $\psi$ in the above theorem since it is not given as a argument inside the field of the inference as the following example shows.
+\begin{code}
+fof(normalize_1, plain, p & q, inference(canonicalize, [], [axiom1])).
+fof(normalize_2, plain, p, inference(conjunct, [], [normalize_1])).
+\end{code}
+
+\textit{Negate.} Since \verb!Metis!'s proofs are refutations, for each subgoal
+given by splitting the goal, in their proof, the negation of such a subgoal is
+assumed. This inference rule named \verb!negate! always derived from a node
+deduced by the \verb!strip! rule.
+
+\begin{code}
+fof(subgoal_0, plain, p, inference(strip, [], [goal])).
+fof(negate_0_0, plain, ~ p, inference(negate, [], [subgoal_0])).
+\end{code}
+
+\textit{Simplification.} The \verb!simplify! rule could
+reduce a list of formulas into an empty clause by transversing the list while
+while applying different theorems. These theorems could been the same list of theorems
+used by \verb!canonicalize! when it simplifies disjunctions and conjunctions,
+but it also apply the resolution theorem like \verb!resolve!.
+The way of processing the list doesn't follow an
 
 \section{Proof Reconstruction in Agda}
 \label{secproofrecon}
@@ -355,82 +471,155 @@ starting point for the HOL proof reconstruction.
 
 \subsection{LCF-Style Theorem Proving}
 
-The propositional formulas are represented using the \verb!Prop! data type.
+A propositional formula is a string of indivisible propostional atoms,
+the logic constants $\{\top, \bot\}$ and logical connectives $\{\wedge, \vee, \Rightarrow, \Leftrightarrow, \neg\}$. In \verb!Agda!, we define the formula
+as an inductive type using the keyword \texttt{data} and we include every
+connective, the atom, and the logic constants as constructors.
+We could restrict formulas to use less connectives but we aim to get
+natural deduction proofs with enough expressiveness.
+
+Then, our propositional formulas are represented using the \verb!Prop! data type. %an extension of the syntax defintion used in \cite{Altenkirch2015}.
+
 \begin{code}
 data Prop : Set where
   Var              : Fin n → Prop
   ⊤                : Prop
   ⊥                : Prop
   _∧_ _∨_ _⇒_ _⇔_  : (φ ψ : Prop) → Prop
-  ¬_               : (φ : Prop)   → Prop  
+  ¬_               : (φ : Prop)   → Prop
 \end{code}
 
-The theorems in CPL are represented using an abstract data type to implement
-a natural deduction calculus. Theorems represent the \emph{sequents} $\Gamma \vdash \phi$,
-where $\Gamma$ is a set of hypothesis --using for the implementation the list data type
-from the \verb!Agda! standard library version-- and $\phi$ is the
-sequent's conclusion.
+On the other hand, we represent theorems in CPL using an abstract data type to implement a natural deduction calculus.
 
 \begin{code}
 data _⊢_ : (Γ : Ctxt)(φ : Prop) → Set where
-
-  assume   : ∀ {Γ} → (φ : Prop)           → Γ , φ ⊢ φ
-
-  axiom    : ∀ {Γ} → (φ : Prop)           → φ ∈ Γ
-                                          → Γ ⊢ φ
-
-  weaken   : ∀ {Γ} {φ} → (ψ : Prop)       → Γ ⊢ φ
-                                          → Γ , ψ ⊢ φ
-
-  weaken₂   : ∀ {Γ} {φ} → (ψ : Prop)      → Γ ⊢ φ
-                                          → ψ ∷ Γ ⊢ φ
-
-  ⊤-intro  : ∀ {Γ}                        → Γ ⊢ ⊤
-
-  ⊥-elim   : ∀ {Γ} → (φ : Prop)           → Γ ⊢ ⊥
-                                          → Γ ⊢ φ
-
-  ¬-intro  : ∀ {Γ} {φ}                    → Γ , φ ⊢ ⊥
-                                          → Γ ⊢ ¬ φ
-
-  ¬-elim   : ∀ {Γ} {φ}                    → Γ ⊢ ¬ φ → Γ ⊢ φ
-                                          → Γ ⊢ ⊥
-
-  ∧-intro  : ∀ {Γ} {φ ψ}                  → Γ ⊢ φ → Γ ⊢ ψ
-                                          → Γ ⊢ φ ∧ ψ
-
-  ∧-proj₁  : ∀ {Γ} {φ ψ}                  → Γ ⊢ φ ∧ ψ
-                                          → Γ ⊢ φ
-
-  ∧-proj₂  : ∀ {Γ} {φ ψ}                  → Γ ⊢ φ ∧ ψ
-                                          → Γ ⊢ ψ
-
-  ∨-intro₁ : ∀ {Γ} {φ} → (ψ : Prop)       → Γ ⊢ φ
-                                          → Γ ⊢ φ ∨ ψ
-
-  ∨-intro₂ : ∀ {Γ} {ψ} → (φ : Prop)       → Γ ⊢ ψ
-                                          → Γ ⊢ φ ∨ ψ
-
-  ∨-elim  : ∀ {Γ} {φ ψ χ}                 → Γ , φ ⊢ χ
-                                          → Γ , ψ ⊢ χ
-                                          → Γ , φ ∨ ψ ⊢ χ
-
-  ⇒-intro  : ∀ {Γ} {φ ψ}                  → Γ , φ ⊢ ψ
-                                          → Γ ⊢ φ ⇒ ψ
-
-  ⇒-elim   : ∀ {Γ} {φ ψ}                  → Γ ⊢ φ ⇒ ψ → Γ ⊢ φ
-                                          → Γ ⊢ ψ
-
-  ⇔-intro  : ∀ {Γ} {φ ψ}                  → Γ , φ ⊢ ψ
-                                          → Γ , ψ ⊢ φ
-                                          → Γ ⊢ φ ⇔ ψ
-
-  ⇔-elim₁ : ∀ {Γ} {φ ψ}                   → Γ ⊢ φ → Γ ⊢ φ ⇔ ψ
-                                          → Γ ⊢ ψ
-
-  ⇔-elim₂ : ∀ {Γ} {φ ψ}                   → Γ ⊢ ψ → Γ ⊢ φ ⇔ ψ
-                                          → Γ ⊢ φ
 \end{code}
+
+The \emph{sequents} $\Gamma \vdash \phi$ represent theorems,
+where $\Gamma$ is a set of premises and $\phi$ is the
+sequent's conclusion. Strictly speaking, the type for the set of premises
+$\Gamma$ is \verb!Ctxt!, a type synonymous for a list of formulas \verb!Prop!.
+This list's implementation is from the \verb!Agda! standard library.
+
+
+Then, the theorem data type has the following constructors, the propositional logic deduction rules for our formal system.
+
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{}
+\RightLabel{\footnotesize\tt assume $\varphi$}
+\UnaryInfC{$\Gamma , \varphi \vdash \varphi$}
+\end{bprooftree}
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi$}
+\RightLabel{\footnotesize\tt weaken $\psi$}
+\UnaryInfC{$\Gamma , \psi \vdash \varphi$}
+\end{bprooftree}
+\begin{bprooftree}
+\AxiomC{}
+\RightLabel{\footnotesize\tt $\top$-intro}
+\UnaryInfC{$\Gamma \vdash \top$}
+\end{bprooftree}
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \bot$}
+\RightLabel{\footnotesize\tt $\bot$-elim $\varphi$}
+\UnaryInfC{$\Gamma \vdash \varphi$}
+\end{bprooftree}
+}\]
+
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma , \varphi \vdash \bot$}
+\RightLabel{\footnotesize\tt $\neg$-intro}
+\UnaryInfC{$\Gamma \vdash \neg \varphi$}
+\end{bprooftree}
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \neg \varphi$}
+\AxiomC{$\Gamma \vdash \varphi$}
+\RightLabel{\footnotesize\tt $\neg$-elim}
+\BinaryInfC{$\Gamma \vdash \bot$}
+\end{bprooftree}
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi$}
+\AxiomC{$\Gamma \vdash \psi$}
+\RightLabel{\footnotesize\tt $\wedge$-intro}
+\BinaryInfC{$\Gamma \varphi \wedge \psi$}
+\end{bprooftree}
+}\]
+
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi$}
+\AxiomC{$\Gamma \vdash \psi$}
+\RightLabel{\footnotesize\tt $\wedge$-proj$_1$}
+\BinaryInfC{$\Gamma \varphi$}
+\end{bprooftree}
+\qquad
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi$}
+\AxiomC{$\Gamma \vdash \psi$}
+\RightLabel{\footnotesize\tt $\wedge$-proj$_2$}
+\BinaryInfC{$\Gamma \psi$}
+\end{bprooftree}
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi$}
+\RightLabel{\footnotesize\tt $\vee$-intro$_1$ $\psi$}
+\UnaryInfC{$\Gamma \varphi \vee \psi$}
+\end{bprooftree}
+}\]
+
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \psi$}
+\RightLabel{\footnotesize\tt $\vee$-intro$_2$ $\varphi$}
+\UnaryInfC{$\Gamma \varphi \vee \psi$}
+\end{bprooftree}
+\begin{bprooftree}
+\AxiomC{$\Gamma ,\varphi \vdash \gamma $}
+\AxiomC{$\Gamma , \psi  \vdash \gamma$}
+\RightLabel{\footnotesize\tt $\vee$-elim}
+\BinaryInfC{$\Gamma , \varphi \vee \psi \vdash \gamma$}
+\end{bprooftree}
+\begin{bprooftree}
+\AxiomC{$\Gamma , \varphi \vdash \psi$}
+\RightLabel{\footnotesize\tt $\Rightarrow$-intro}
+\UnaryInfC{$\Gamma \vdash \varphi \Rightarrow \psi$}
+\end{bprooftree}
+}\]
+
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi \Rightarrow \psi$}
+\AxiomC{$\Gamma \vdash \varphi$}
+\RightLabel{\footnotesize\tt $\Rightarrow$-elim}
+\BinaryInfC{$\Gamma \vdash \psi$}
+\end{bprooftree}
+\begin{bprooftree}
+\AxiomC{$\Gamma , \varphi \vdash \psi$}
+\AxiomC{$\Gamma , \psi \vdash \varphi$}
+\RightLabel{\footnotesize\tt $\Leftrightarrow$-intro}
+\BinaryInfC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
+\end{bprooftree}
+}\]
+
+
+\[\scalebox{0.9}{
+% \qquad
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi$}
+\AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
+\RightLabel{\footnotesize\tt $\Leftrightarrow$-elim$_1$}
+\BinaryInfC{$\Gamma \vdash \psi$}
+\end{bprooftree}
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi$}
+\AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
+\RightLabel{\footnotesize\tt $\Leftrightarrow$-elim$_2$}
+\BinaryInfC{$\Gamma \vdash \psi$}
+\end{bprooftree}
+}\]
+
+
 \subsection{The Translation Method}
 
 \subsection{Reconstruction Work-flow}
@@ -438,15 +627,100 @@ Explain in a diagram like we did in the slides for the AIM ...
 
 \subsection{Emulation of Inference Rules in Agda}
 
+\textit{Splitting a goal}
 
-% \subsection{Limitations}
-%
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi_1 \wedge \varphi_2$}
+\UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\texttt{split}~\varphi_1) \wedge \texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\varphi_2)$}
+\end{bprooftree}
+}\]
 
-% \section{Experimental Results}
-% We could be able to reconstruct 88 problems in CPL.
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi_1 \vee \varphi_2$}
+\UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\neg \varphi_1 \Rightarrow \texttt{split}~\varphi_2)$}
+\end{bprooftree}
+}\]
 
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi_1 \Rightarrow \varphi_2$}
+\UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\varphi_2)$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \neg \neg \varphi$}
+\UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\texttt{split}~\varphi)$}
+\end{bprooftree}
+}\]
 
-\subsection{Implementation}
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$ \Gamma \vdash \varphi_1 \Leftrightarrow \varphi_2$}
+\UnaryInfC{$\Gamma\vdash\texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\varphi_2) \wedge \texttt{unshunt}~(\varphi_2 \Rightarrow \texttt{split}~\varphi_1)$}
+\end{bprooftree}
+}\]
+
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \neg \top$}
+\UnaryInfC{$\Gamma \vdash \bot$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \neg \bot$}
+\UnaryInfC{$\Gamma \vdash \top$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \neg (\varphi_1 \wedge \varphi_2)$}
+\UnaryInfC{$\Gamma \vdash \texttt{unshunt} (\varphi_1 \Rightarrow \texttt{split}~ \neg \varphi_2)$}
+\end{bprooftree}
+}\]
+
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \neg (\varphi_1 \vee \varphi_2)$}
+\UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\texttt{split}~\neg \varphi_1) \wedge  \texttt{unshunt}~(\neg \varphi_1 \Rightarrow \texttt{split}~\neg \varphi_2)$}
+\end{bprooftree}
+}\]
+
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \neg (\varphi_1 \Rightarrow \varphi_2)$}
+\UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\texttt{split}~\varphi_1) \wedge \texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\neg \varphi_2)$}
+\end{bprooftree}\qquad
+}\]
+
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \neg (\varphi_1 \Leftrightarrow \varphi_2)$}
+\UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\neg \varphi_2) \wedge \texttt{unshunt}~(\neg \varphi_2 \Rightarrow \texttt{split}~\varphi_1)$}
+\end{bprooftree}
+}\]
+
+In the theorems above appear two recursive functions \texttt{unshunt} and \texttt{split}. They have the following definitions.
+\begin{code}
+unshunt : Prop → Prop
+unshunt (φ₁ ⇒ (φ₂ ⇒ φ₃)) = unshunt ((φ₁ ∧ φ₂) ⇒ φ₃)
+unshunt (φ₁ ⇒ (φ₂ ∧ φ₃)) = unshunt (φ₁ ⇒ φ₂)) ∧ (unshunt(φ₁ ⇒ φ₃)
+unshunt other            = φ
+\end{code}
+
+\begin{code}
+split : Prop → Prop
+split (φ₁ ∧ φ₂)     = unshunt (split φ₁) ∧ unshunt (φ₁ ⇒ split φ₂)
+split (φ₁ ∨ φ₂)     = unshunt (¬ φ₁ ⇒ (split φ₂))
+split (φ₁ ⇒ φ₂)     = unshunt (φ₁ ⇒ (split φ₂))
+split (φ₁ ⇔ φ₂)     = unshunt (φ₁ ⇒ (split φ₂)) ∧ unshunt (φ₂ ⇒ (split φ₁))
+split (¬ ⊤)         = unshunt (φ₁ ⇒ (split (¬ φ₂)))
+split (¬ ⊥)         = unshunt (split (¬ φ₁)) ∧ unshunt (¬ φ₁ ⇒ split (¬ φ₂))
+split (¬ (φ₁ ∧ φ₂)) = unshunt (split φ₁) ∧ unshunt (φ₁ ⇒ split (¬ φ₂))
+split (¬ (φ₁ ∨ φ₂)) = unshunt (φ₁ ⇒ split (¬ φ₂)) ∧ unshunt ((¬ φ₂) ⇒ split φ₁)
+split (¬ (φ₁ ⇒ φ₂)) = unshunt (split φ₁)
+split (¬ (φ₁ ⇔ φ₂)) = ⊤
+split (¬ (¬ φ₁))    = ⊥
+split φ₁            = φ
+\end{code}
+
 ...
 \subsection{Examples}
 ...
