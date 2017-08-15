@@ -1,3 +1,6 @@
+
+% TODO: align the turnstiles.
+
 %if style == newcode
 
 \begin{code}
@@ -307,8 +310,8 @@ delivered in \verb!TSTP! format.
 \textit{Input.}~The \verb!TPTP! language  --which includes the first-order 
 form (FOF) and clause normal form formats~\cite{sutcliffe2009} -- is de 
 facto input standard language to encode problems for many ATPs. The \verb!
-TPTP! syntax describes a well-defined grammar to handle annotated formulas 
-with the form
+TPTP! syntax describes a well-defined grammar to handle annotated 
+formulas with the form
 
 \begin{code}
 language(name, role, formula).
@@ -325,10 +328,11 @@ fof(goal, conjecture, ~((p & ~ p) | (q & ~ q))).
 \end{code}
 
 \textit{Output.}~\verb!TSTP! language is de facto output standard language
-~\cite{sutcliffe2004tstp}. A TSTP derivation is a directed acyclic graph, a 
-proof tree, where each leaf is a formula from the TPTP input. A node is a 
-formula inferred from the parent formulas. The root is the final derived 
-formula. Such a derivation is a list of annotated formulas with the form
+~\cite{sutcliffe2004tstp}. A TSTP derivation is a directed acyclic graph, 
+a proof tree, where each leaf is a formula from the TPTP input. A node is 
+a formula inferred from the parent formulas. The root is the final 
+derived formula. Such a derivation is a list of annotated formulas with 
+the form
 
 \begin{code}
 language(name, role, formula, source [,useful info]).
@@ -352,7 +356,8 @@ fof(normalize_0_2, plain, $false, inference (simplify, [],
   [normalize_0_0, normalize_0_1]))
 cnf(refute_0_0, plain, $false, inference (canonicalize, [], [normalize_0_2])) .
 \end{code}
-\caption{A simple \verb!Metis!'s TSTP derivation for the problem $p\vdash p$.}
+\caption{A simple \verb!Metis!'s TSTP derivation for the problem
+$p\vdash p$.}
 \label{fig:metis-proof-tstp}
 \end{figure}
 
@@ -360,8 +365,8 @@ cnf(refute_0_0, plain, $false, inference (canonicalize, [], [normalize_0_2])) .
 \label{ssec:proof-terms}
 
 The proof-objects delivered in the \verb!Metis!'s proofs encode natural 
-deduction proofs. Its deduction system uses six simple inference rules and 
-it proves conjectures by refutation.
+deduction proofs. Its deduction system uses six simple inference rules 
+and it proves conjectures by refutation.
 
 \begin{figure}
 \[
@@ -426,7 +431,7 @@ deduction step.
 \begin{bprooftree}
 \footnotesize\centering\tt
 \AxiomC{}
-\RightLabel{assume}
+\RightLabel{negate}
 \UnaryInfC{$\neg p$}
 \RightLabel{strip}
 \UnaryInfC{$\neg p$}
@@ -441,7 +446,8 @@ deduction step.
 \UnaryInfC{$\bot$}
 \end{bprooftree}
 }
-\caption{The \verb!Metis!'s refutation tree for $p \vdash p$ from the derivation in Fig.~\ref{fig:metis-proof-tstp}}
+\caption{The \verb!Metis!'s refutation tree for $p \vdash p$ from the 
+derivation in Fig.~\ref{fig:metis-proof-tstp}}
 \label{fig:metis-example}
 \end{figure}
 
@@ -454,7 +460,8 @@ but with a different names. They are \verb!canonicalize!, \verb!conjunct!,
 \verb!negate!, \verb!simplify!, \verb!strip! and \verb!resolve!.
 
 \textit{Splitting}. 
-To prove a goal, \verb!Metis! splits the goal into disjoint cases. This process produces a list of new subgoals, the conjunction of this list 
+To prove a goal, \verb!Metis! splits the goal into disjoint cases. This 
+process produces a list of new subgoals, the conjunction of this list 
 implies the goal. Then, the proof of a goal becomes in the
 proof of smaller proofs. These new subgoals appear in the \verb!TSTP! 
 derivation with the \verb!strip! inference rule. 
@@ -497,15 +504,15 @@ atom or logic constant.
 \begin{figure}
 \[%\scalebox{0.9}{
 \begin{bprooftree}
-  \AxiomC{$\Gamma \vdash P \wedge \bot$}
+  \AxiomC{$\Gamma \vdash \varphi \wedge \bot$}
   \UnaryInfC{$\Gamma \vdash \bot$}
 \end{bprooftree}
 \begin{bprooftree}
-  \AxiomC{$\Gamma \vdash P \wedge \top$}
-  \UnaryInfC{$\Gamma \vdash P$}
+  \AxiomC{$\Gamma \vdash \varphi \wedge \top$}
+  \UnaryInfC{$\Gamma \vdash \varphi$}
 \end{bprooftree}
 \begin{bprooftree}
-  \AxiomC{$\Gamma \vdash P \wedge \neg P$}
+  \AxiomC{$\Gamma \vdash \varphi \wedge \neg \varphi$}
   \UnaryInfC{$\Gamma \vdash \bot$}
 \end{bprooftree}
 %}
@@ -513,17 +520,17 @@ atom or logic constant.
 
 \[%\scalebox{0.9}{
 \begin{bprooftree}
-  \AxiomC{$\Gamma \vdash P \vee \bot$}
-  \UnaryInfC{$\Gamma \vdash P$}
+  \AxiomC{$\Gamma \vdash \varphi \vee \bot$}
+  \UnaryInfC{$\Gamma \vdash \varphi$}
 \end{bprooftree}
 \qquad
 \begin{bprooftree}
-  \AxiomC{$\Gamma \vdash P \vee \top$}
-  \UnaryInfC{$\Gamma \vdash P$}
+  \AxiomC{$\Gamma \vdash \varphi \vee \top$}
+  \UnaryInfC{$\Gamma \vdash \varphi$}
 \end{bprooftree}
 \qquad
 \begin{bprooftree}
-  \AxiomC{$\Gamma \vdash P \vee \neg P$}
+  \AxiomC{$\Gamma \vdash \varphi \vee \neg \varphi$}
   \UnaryInfC{$\Gamma \vdash \top$}
 \end{bprooftree}
 %}
@@ -572,7 +579,8 @@ derivation.}
 disjunctions and conjunctions.
 
 \textit{Splitting a conjunct.} 
-In the following theorem, we see the defintion for the \verb!conjunct! rule.It extracts the $\varphi_i$ conjunct from the conjunction given by $\varphi$.
+In the following theorem, we see the defintion for the \verb!conjunct! rule.
+It extracts the $\varphi_i$ conjunct from the conjunction given by $\varphi$.
 
 \[\scalebox{0.9}{
 \begin{bprooftree}
@@ -606,13 +614,42 @@ fof(negate_0_0, plain, ~ p, inference(negate, [], [subgoal_0])).
 \end{code}
 
 \textit{Simplification.}
-A \verb!simplify! rule application could reduce a list of formulas into an 
-empty clause, $\bot$, or some formula much smaller by transversing the list 
-while applying different theorems. 
-These theorems could been the same list of theorems used by
+The \verb!simplify! inference rule performs simplification based on a list
+of formulas. Its application could reduce such a list into the 
+empty clause $\bot$, or a new formula much smaller or simplier by transversing the list while applying different theorems (e.g.
+\emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive syllogism}).
+This rule also applies theorems could from the list used by
 \verb!canonicalize! in Fig.~\ref{fig:conjunctive-disjunctive-simplification} 
 or the resolution theorem described in Fig.~\ref{fig:resolution-rule}.
-Nevertheless, many thing happens inside the \verb!Metis!' procedures.
+Nevertheless, many thing happens inside the \verb!Metis!' procedures. 
+
+\begin{figure}
+\[%\scalebox{0.9}{
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
+  \AxiomC{$\Gamma \vdash \psi$}
+  \RightLabel{\footnotesize\tt $\Leftrightarrow$-elim}
+  \BinaryInfC{$\Gamma \vdash \varphi$}
+\end{bprooftree}
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi \Rightarrow \psi$}
+  \AxiomC{$\Gamma \vdash \varphi$}
+  \RightLabel{\footnotesize\tt $\Rightarrow$-elim}
+  \BinaryInfC{$\Gamma \vdash \psi$}
+\end{bprooftree}
+\]
+\[
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi \vee \neg \psi$}
+  \AxiomC{$\Gamma \vdash \neg \varphi$}
+  \BinaryInfC{$\Gamma \vdash \psi$}
+\end{bprooftree}
+%}
+\]
+
+\caption{Additional simplification theorems.}
+\label{fig:conjunctive-disjunctive-simplification}
+\end{figure}
 
 % 
 \section{Proof Reconstruction in Agda}
@@ -661,7 +698,8 @@ $\Gamma$ is \verb!Ctxt!, a type synonymous for a list of formulas
 This list's implementation is from the \verb!Agda! standard library.
 
 
-Then, the theorem data type has the following constructors, the propositional logic deduction rules for our formal system.
+Then, the theorem data type has the following constructors, the propositional
+logic deduction rules for our formal system.
 
 \begin{figure}
 \[\scalebox{0.9}{
