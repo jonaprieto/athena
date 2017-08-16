@@ -1,0 +1,997 @@
+Searching 451 files for "clausify"
+/home/turing/athena/test/prop-pack,-*.tstp,-*.tex
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-1.agda:
+   56          q
+   57          (atp-conjunct ((¬ q) ∨ p)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   59              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   60                (weaken (¬ subgoal₀)
+   ..
+   77          p
+   78          (atp-conjunct ((¬ p) ∨ q)
+   79:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   80              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   81                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-1.tstp:
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ q | p)),
+   19:     inference(clausify, [], [normalize_0_0])).
+   20  
+   21  fof(normalize_0_2, plain, (~ q | p),
+   ..
+   49  
+   50  fof(normalize_1_1, plain, ((~ p | q) & (~ q | p)),
+   51:     inference(clausify, [], [normalize_1_0])).
+   52  
+   53  fof(normalize_1_2, plain, (~ p | q),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-11.agda:
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ (((¬ q) ∨ p) ∧ (p ∨ q)))
+   59              (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ (p ∨ q)))
+   60                (weaken (¬ subgoal₀)
+   ..
+   77          q
+   78          (atp-conjunct ((¬ q) ∨ p)
+   79:           (atp-clausify (((¬ p) ∨ q) ∧ (((¬ q) ∨ p) ∧ (p ∨ q)))
+   80              (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ (p ∨ q)))
+   81                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-11.tstp:
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ q | p) & (p | q)),
+   19:     inference(clausify, [], [normalize_0_0])).
+   20  
+   21  fof(normalize_0_2, plain, (~ p | q),
+   ..
+   49  
+   50  fof(normalize_1_1, plain, ((~ p | q) & (~ q | p) & (p | q)),
+   51:     inference(clausify, [], [normalize_1_0])).
+   52  
+   53  fof(normalize_1_2, plain, (~ q | p),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-12.agda:
+   74            p
+   75            (atp-conjunct ((¬ p) ∨ ((¬ q) ∨ r))
+   76:             (atp-clausify (((¬ p) ∨ ((¬ q) ∨ r)) ∧ ((¬ p) ∨ ((¬ r) ∨ q)))
+   77                (atp-canonicalize ((¬ p) ∨ ((¬ q) ⇔ (¬ r)))
+   78                  (weaken (¬ subgoal₁)
+   ..
+  108            p
+  109            (atp-conjunct ((¬ p) ∨ ((¬ r) ∨ q))
+  110:             (atp-clausify (((¬ p) ∨ ((¬ q) ∨ r)) ∧ ((¬ p) ∨ ((¬ r) ∨ q)))
+  111                (atp-canonicalize ((¬ p) ∨ ((¬ q) ⇔ (¬ r)))
+  112                  (weaken (¬ subgoal₃)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-12.tstp:
+   31  
+   32  fof(normalize_1_1, plain, ((~ p | ~ q | r) & (~ p | ~ r | q)),
+   33:     inference(clausify, [], [normalize_1_0])).
+   34  
+   35  fof(normalize_1_2, plain, (~ p | ~ q | r),
+   ..
+   80  
+   81  fof(normalize_3_1, plain, ((~ p | ~ q | r) & (~ p | ~ r | q)),
+   82:     inference(clausify, [], [normalize_3_0])).
+   83  
+   84  fof(normalize_3_2, plain, (~ p | ~ r | q),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-2.agda:
+   62          q
+   63          (atp-conjunct ((¬ q) ∨ r)
+   64:           (atp-clausify (((¬ q) ∨ r) ∧ ((¬ r) ∨ q))
+   65              (atp-simplify ((¬ q) ⇔ (¬ r))
+   66                (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ r))
+   ..
+   88          r
+   89          (atp-conjunct ((¬ r) ∨ q)
+   90:           (atp-clausify (((¬ q) ∨ r) ∧ ((¬ r) ∨ q))
+   91              (atp-simplify ((¬ q) ⇔ (¬ r))
+   92                (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ r))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-2.tstp:
+   24  
+   25  fof(normalize_0_3, plain, ((~ q | r) & (~ r | q)),
+   26:     inference(clausify, [], [normalize_0_2])).
+   27  
+   28  fof(normalize_0_4, plain, (~ q | r),
+   ..
+   61  
+   62  fof(normalize_1_3, plain, ((~ q | r) & (~ r | q)),
+   63:     inference(clausify, [], [normalize_1_2])).
+   64  
+   65  fof(normalize_1_4, plain, (~ r | q),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-4.agda:
+   52        (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   53          p
+   54:         (atp-clausify ((¬ p) ∨ q)
+   55            (atp-canonicalize ((¬ q) ⇔ ((¬ p) ∧ (¬ q)))
+   56              (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-4.tstp:
+   15  
+   16  fof(normalize_0_1, plain, (~ p | q),
+   17:     inference(clausify, [], [normalize_0_0])).
+   18  
+   19  fof(normalize_0_2, plain, (~ q & p),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-5.agda:
+   52        (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   53          p
+   54:         (atp-clausify ((¬ p) ∨ q)
+   55            (atp-canonicalize ((¬ p) ⇔ ((¬ p) ∨ (¬ q)))
+   56              (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-5.tstp:
+   15  
+   16  fof(normalize_0_1, plain, (~ p | q),
+   17:     inference(clausify, [], [normalize_0_0])).
+   18  
+   19  fof(normalize_0_2, plain, (~ q & p),
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-11.agda:
+   57          (atp-resolve ((¬ q) ∨ r) -- p ((¬ p) ∨ ((¬ q) ∨ r)) atp-resolve₄ True
+   58            p
+   59:           (atp-clausify ((¬ p) ∨ ((¬ q) ∨ r))
+   60              (atp-canonicalize ((¬ p) ∨ (r ∨ ((¬ q) ∧ p)))
+   61                (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-11.tstp:
+   16  
+   17  fof(normalize_0_1, plain, (~ p | ~ q | r),
+   18:     inference(clausify, [], [normalize_0_0])).
+   19  
+   20  fof(normalize_0_2, plain, (~ r & q & (p | r)),
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-14.agda:
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   59              (atp-canonicalize (((¬ p) ∧ (¬ q)) ∨ (p ∧ q))
+   60                (weaken (¬ subgoal₀)
+   ..
+   77          q
+   78          (atp-conjunct ((¬ q) ∨ p)
+   79:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   80              (atp-canonicalize (((¬ p) ∧ (¬ q)) ∨ (p ∧ q))
+   81                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-14.tstp:
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ q | p)),
+   19:     inference(clausify, [], [normalize_0_0])).
+   20  
+   21  fof(normalize_0_2, plain, (~ p | q),
+   ..
+   50  
+   51  fof(normalize_1_1, plain, ((~ p | q) & (~ q | p)),
+   52:     inference(clausify, [], [normalize_1_0])).
+   53  
+   54  fof(normalize_1_2, plain, (~ q | p),
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-7.agda:
+   57        p
+   58        (atp-conjunct p
+   59:         (atp-clausify (p ∧ ((p ∨ q) ∧ ((p ∨ r) ∧ (q ∨ r))))
+   60            (atp-canonicalize ((p ∧ q) ∨ (p ∧ r))
+   61              (weaken (¬ subgoal₀)
+   ..
+   72          q
+   73          (atp-conjunct (q ∨ r)
+   74:           (atp-clausify (p ∧ ((p ∨ q) ∧ ((p ∨ r) ∧ (q ∨ r))))
+   75              (atp-canonicalize ((p ∧ q) ∨ (p ∧ r))
+   76                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-7.tstp:
+   20  
+   21  fof(normalize_0_2, plain, (p & (p | q) & (p | r) & (q | r)),
+   22:     inference(clausify, [], [normalize_0_1])).
+   23  
+   24  fof(normalize_0_3, plain, (p), inference(conjunct, [], [normalize_0_2])).
+   ..
+   39  
+   40  fof(normalize_1_1, plain, (p & (p | q) & (p | r) & (q | r)),
+   41:     inference(clausify, [], [normalize_1_0])).
+   42  
+   43  fof(normalize_1_2, plain, (q | r),
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-8.agda:
+   59          p
+   60          (atp-conjunct (p ∨ q)
+   61:           (atp-clausify ((p ∨ q) ∧ (p ∨ r))
+   62              (atp-canonicalize (p ∨ (q ∧ r))
+   63                (weaken (¬ subgoal₀)
+   ..
+   80          p
+   81          (atp-conjunct (p ∨ r)
+   82:           (atp-clausify ((p ∨ q) ∧ (p ∨ r))
+   83              (atp-canonicalize (p ∨ (q ∧ r))
+   84                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-8.tstp:
+   18  
+   19  fof(normalize_0_1, plain, ((p | q) & (p | r)),
+   20:     inference(clausify, [], [normalize_0_0])).
+   21  
+   22  fof(normalize_0_2, plain, (p | q),
+   ..
+   52  
+   53  fof(normalize_1_1, plain, ((p | q) & (p | r)),
+   54:     inference(clausify, [], [normalize_1_0])).
+   55  
+   56  fof(normalize_1_2, plain, (p | r),
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-13.agda:
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ p) ∨ r))
+   59              (atp-canonicalize ((¬ p) ∨ (q ∧ r))
+   60                (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-13.tstp:
+   15  
+   16  fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
+   17:     inference(clausify, [], [normalize_0_0])).
+   18  
+   19  fof(normalize_0_2, plain, (~ p | q),
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-17.agda:
+   59          p
+   60          (atp-conjunct ((¬ p) ∨ q)
+   61:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ p) ∨ r))
+   62              (atp-canonicalize ((¬ p) ∨ (q ∧ r))
+   63                (weaken (¬ subgoal₀)
+   ..
+   80          p
+   81          (atp-conjunct ((¬ p) ∨ r)
+   82:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ p) ∨ r))
+   83              (atp-canonicalize ((¬ p) ∨ (q ∧ r))
+   84                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-17.tstp:
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
+   19:     inference(clausify, [], [normalize_0_0])).
+   20  
+   21  fof(normalize_0_2, plain, (~ p | q),
+   ..
+   50  
+   51  fof(normalize_1_1, plain, ((~ p | q) & (~ p | r)),
+   52:     inference(clausify, [], [normalize_1_0])).
+   53  
+   54  fof(normalize_1_2, plain, (~ p | r),
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-5.agda:
+   57          (atp-resolve ((¬ q) ∨ r) -- p ((¬ p) ∨ ((¬ q) ∨ r)) atp-resolve₄ True
+   58            p
+   59:           (atp-clausify ((¬ p) ∨ ((¬ q) ∨ r))
+   60              (atp-canonicalize ((¬ p) ∨ (r ∨ ((¬ q) ∧ p)))
+   61                (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-5.tstp:
+   16  
+   17  fof(normalize_0_1, plain, (~ p | ~ q | r),
+   18:     inference(clausify, [], [normalize_0_0])).
+   19  
+   20  fof(normalize_0_2, plain, (~ r & p & q),
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-6.agda:
+   51        p
+   52        (atp-conjunct p
+   53:         (atp-clausify (p ∧ ((¬ q) ∨ p))
+   54            (atp-canonicalize (p ∨ ((¬ q) ∧ p))
+   55              (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-6.tstp:
+   20  
+   21  fof(normalize_0_3, plain, (p & (~ q | p)),
+   22:     inference(clausify, [], [normalize_0_2])).
+   23  
+   24  fof(normalize_0_4, plain, (p), inference(conjunct, [], [normalize_0_3])).
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-14.agda:
+   62          p
+   63          (atp-conjunct ((¬ p) ∨ q)
+   64:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   65              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   66                (weaken-Δ₁
+   ..
+   74                (assume {Γ = ∅} a₁)))
+   75            (atp-conjunct ((¬ q) ∨ p)
+   76:             (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   77                (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   78                  (weaken-Δ₁
+   ..
+   92                (assume {Γ = ∅} a₁)))
+   93            (atp-conjunct ((¬ q) ∨ p)
+   94:             (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   95                (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   96                  (weaken-Δ₁
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-14.tstp:
+   21  
+   22  fof(normalize_0_2, plain, ((~ p | q) & (~ q | p)),
+   23:     inference(clausify, [], [normalize_0_1])).
+   24  
+   25  fof(normalize_0_3, plain, (~ q | p),
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-21.agda:
+   51        p
+   52        (atp-conjunct p
+   53:         (atp-clausify (p ∧ ((¬ q) ∨ p))
+   54            (atp-canonicalize (p ∨ ((¬ q) ∧ p))
+   55              (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-21.tstp:
+   18  
+   19  fof(normalize_0_2, plain, (p & (~ q | p)),
+   20:     inference(clausify, [], [normalize_0_1])).
+   21  
+   22  fof(normalize_0_3, plain, (p), inference(conjunct, [], [normalize_0_2])).
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-22.agda:
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   59              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   60                (weaken (¬ subgoal₀)
+   ..
+   77          q
+   78          (atp-conjunct ((¬ q) ∨ p)
+   79:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   80              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   81                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-22.tstp:
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ q | p)),
+   19:     inference(clausify, [], [normalize_0_0])).
+   20  
+   21  fof(normalize_0_2, plain, (~ p | q),
+   ..
+   49  
+   50  fof(normalize_1_1, plain, ((~ p | q) & (~ q | p)),
+   51:     inference(clausify, [], [normalize_1_0])).
+   52  
+   53  fof(normalize_1_2, plain, (~ q | p),
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-23.agda:
+   52        (atp-resolve q -- (p ∨ q) (¬ p) atp-resolve₇ False
+   53          p
+   54:         (atp-clausify (p ∨ q)
+   55            (atp-canonicalize (q ∨ ((¬ q) ∧ p))
+   56              (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-23.tstp:
+   15  
+   16  fof(normalize_0_1, plain, (p | q),
+   17:     inference(clausify, [], [normalize_0_0])).
+   18  
+   19  fof(normalize_0_2, plain, (~ p & ~ q),
+
+/home/turing/athena/test/prop-pack/tptp.tex:
+   44    , keywords=[3]{fof, cnf}
+   45    , keywords=[4]{canonicalize, resolve, conjunct,
+   46:     strip, simplify, negate, clausify}
+   47    , keywordstyle=[2]\color{cadet}%\underbar,%\bfseries
+   48    , keywordstyle=[3]\color{bondiblue}\bfseries
+
+/home/turing/athena/test/prop-pack/tstp.tex:
+   44    , keywords=[3]{fof, cnf}
+   45    , keywords=[4]{canonicalize, resolve, conjunct,
+   46:     strip, simplify, negate, clausify}
+   47    , keywordstyle=[2]\color{cadet}%\underbar,%\bfseries
+   48    , keywordstyle=[3]\color{bondiblue}\bfseries
+
+58 matches across 38 files
+
+
+Searching 340 files for "clausify"
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-1.tstp:
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ q | p)),
+   19:     inference(clausify, [], [normalize_0_0])).
+   20  
+   21  fof(normalize_0_2, plain, (~ q | p),
+   ..
+   49  
+   50  fof(normalize_1_1, plain, ((~ p | q) & (~ q | p)),
+   51:     inference(clausify, [], [normalize_1_0])).
+   52  
+   53  fof(normalize_1_2, plain, (~ p | q),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-11.tstp:
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ q | p) & (p | q)),
+   19:     inference(clausify, [], [normalize_0_0])).
+   20  
+   21  fof(normalize_0_2, plain, (~ p | q),
+   ..
+   49  
+   50  fof(normalize_1_1, plain, ((~ p | q) & (~ q | p) & (p | q)),
+   51:     inference(clausify, [], [normalize_1_0])).
+   52  
+   53  fof(normalize_1_2, plain, (~ q | p),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-12.tstp:
+   31  
+   32  fof(normalize_1_1, plain, ((~ p | ~ q | r) & (~ p | ~ r | q)),
+   33:     inference(clausify, [], [normalize_1_0])).
+   34  
+   35  fof(normalize_1_2, plain, (~ p | ~ q | r),
+   ..
+   80  
+   81  fof(normalize_3_1, plain, ((~ p | ~ q | r) & (~ p | ~ r | q)),
+   82:     inference(clausify, [], [normalize_3_0])).
+   83  
+   84  fof(normalize_3_2, plain, (~ p | ~ r | q),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-2.tstp:
+   24  
+   25  fof(normalize_0_3, plain, ((~ q | r) & (~ r | q)),
+   26:     inference(clausify, [], [normalize_0_2])).
+   27  
+   28  fof(normalize_0_4, plain, (~ q | r),
+   ..
+   61  
+   62  fof(normalize_1_3, plain, ((~ q | r) & (~ r | q)),
+   63:     inference(clausify, [], [normalize_1_2])).
+   64  
+   65  fof(normalize_1_4, plain, (~ r | q),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-4.tstp:
+   15  
+   16  fof(normalize_0_1, plain, (~ p | q),
+   17:     inference(clausify, [], [normalize_0_0])).
+   18  
+   19  fof(normalize_0_2, plain, (~ q & p),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-5.tstp:
+   15  
+   16  fof(normalize_0_1, plain, (~ p | q),
+   17:     inference(clausify, [], [normalize_0_0])).
+   18  
+   19  fof(normalize_0_2, plain, (~ q & p),
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-11.tstp:
+   16  
+   17  fof(normalize_0_1, plain, (~ p | ~ q | r),
+   18:     inference(clausify, [], [normalize_0_0])).
+   19  
+   20  fof(normalize_0_2, plain, (~ r & q & (p | r)),
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-14.tstp:
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ q | p)),
+   19:     inference(clausify, [], [normalize_0_0])).
+   20  
+   21  fof(normalize_0_2, plain, (~ p | q),
+   ..
+   50  
+   51  fof(normalize_1_1, plain, ((~ p | q) & (~ q | p)),
+   52:     inference(clausify, [], [normalize_1_0])).
+   53  
+   54  fof(normalize_1_2, plain, (~ q | p),
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-7.tstp:
+   20  
+   21  fof(normalize_0_2, plain, (p & (p | q) & (p | r) & (q | r)),
+   22:     inference(clausify, [], [normalize_0_1])).
+   23  
+   24  fof(normalize_0_3, plain, (p), inference(conjunct, [], [normalize_0_2])).
+   ..
+   39  
+   40  fof(normalize_1_1, plain, (p & (p | q) & (p | r) & (q | r)),
+   41:     inference(clausify, [], [normalize_1_0])).
+   42  
+   43  fof(normalize_1_2, plain, (q | r),
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-8.tstp:
+   18  
+   19  fof(normalize_0_1, plain, ((p | q) & (p | r)),
+   20:     inference(clausify, [], [normalize_0_0])).
+   21  
+   22  fof(normalize_0_2, plain, (p | q),
+   ..
+   52  
+   53  fof(normalize_1_1, plain, ((p | q) & (p | r)),
+   54:     inference(clausify, [], [normalize_1_0])).
+   55  
+   56  fof(normalize_1_2, plain, (p | r),
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-13.tstp:
+   15  
+   16  fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
+   17:     inference(clausify, [], [normalize_0_0])).
+   18  
+   19  fof(normalize_0_2, plain, (~ p | q),
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-17.tstp:
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
+   19:     inference(clausify, [], [normalize_0_0])).
+   20  
+   21  fof(normalize_0_2, plain, (~ p | q),
+   ..
+   50  
+   51  fof(normalize_1_1, plain, ((~ p | q) & (~ p | r)),
+   52:     inference(clausify, [], [normalize_1_0])).
+   53  
+   54  fof(normalize_1_2, plain, (~ p | r),
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-5.tstp:
+   16  
+   17  fof(normalize_0_1, plain, (~ p | ~ q | r),
+   18:     inference(clausify, [], [normalize_0_0])).
+   19  
+   20  fof(normalize_0_2, plain, (~ r & p & q),
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-6.tstp:
+   20  
+   21  fof(normalize_0_3, plain, (p & (~ q | p)),
+   22:     inference(clausify, [], [normalize_0_2])).
+   23  
+   24  fof(normalize_0_4, plain, (p), inference(conjunct, [], [normalize_0_3])).
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-14.tstp:
+   21  
+   22  fof(normalize_0_2, plain, ((~ p | q) & (~ q | p)),
+   23:     inference(clausify, [], [normalize_0_1])).
+   24  
+   25  fof(normalize_0_3, plain, (~ q | p),
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-21.tstp:
+   18  
+   19  fof(normalize_0_2, plain, (p & (~ q | p)),
+   20:     inference(clausify, [], [normalize_0_1])).
+   21  
+   22  fof(normalize_0_3, plain, (p), inference(conjunct, [], [normalize_0_2])).
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-22.tstp:
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ q | p)),
+   19:     inference(clausify, [], [normalize_0_0])).
+   20  
+   21  fof(normalize_0_2, plain, (~ p | q),
+   ..
+   49  
+   50  fof(normalize_1_1, plain, ((~ p | q) & (~ q | p)),
+   51:     inference(clausify, [], [normalize_1_0])).
+   52  
+   53  fof(normalize_1_2, plain, (~ q | p),
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-23.tstp:
+   15  
+   16  fof(normalize_0_1, plain, (p | q),
+   17:     inference(clausify, [], [normalize_0_0])).
+   18  
+   19  fof(normalize_0_2, plain, (~ p & ~ q),
+
+/home/turing/athena/test/prop-pack/tptp.tex:
+   44    , keywords=[3]{fof, cnf}
+   45    , keywords=[4]{canonicalize, resolve, conjunct,
+   46:     strip, simplify, negate, clausify}
+   47    , keywordstyle=[2]\color{cadet}%\underbar,%\bfseries
+   48    , keywordstyle=[3]\color{bondiblue}\bfseries
+
+/home/turing/athena/test/prop-pack/tstp.tex:
+   44    , keywords=[3]{fof, cnf}
+   45    , keywords=[4]{canonicalize, resolve, conjunct,
+   46:     strip, simplify, negate, clausify}
+   47    , keywordstyle=[2]\color{cadet}%\underbar,%\bfseries
+   48    , keywordstyle=[3]\color{bondiblue}\bfseries
+
+29 matches across 20 files
+
+
+Searching 340 files for "clausify"
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-1.agda:
+   56          q
+   57          (atp-conjunct ((¬ q) ∨ p)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   59              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   60                (weaken (¬ subgoal₀)
+   ..
+   77          p
+   78          (atp-conjunct ((¬ p) ∨ q)
+   79:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   80              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   81                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-11.agda:
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ (((¬ q) ∨ p) ∧ (p ∨ q)))
+   59              (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ (p ∨ q)))
+   60                (weaken (¬ subgoal₀)
+   ..
+   77          q
+   78          (atp-conjunct ((¬ q) ∨ p)
+   79:           (atp-clausify (((¬ p) ∨ q) ∧ (((¬ q) ∨ p) ∧ (p ∨ q)))
+   80              (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ (p ∨ q)))
+   81                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-12.agda:
+   74            p
+   75            (atp-conjunct ((¬ p) ∨ ((¬ q) ∨ r))
+   76:             (atp-clausify (((¬ p) ∨ ((¬ q) ∨ r)) ∧ ((¬ p) ∨ ((¬ r) ∨ q)))
+   77                (atp-canonicalize ((¬ p) ∨ ((¬ q) ⇔ (¬ r)))
+   78                  (weaken (¬ subgoal₁)
+   ..
+  108            p
+  109            (atp-conjunct ((¬ p) ∨ ((¬ r) ∨ q))
+  110:             (atp-clausify (((¬ p) ∨ ((¬ q) ∨ r)) ∧ ((¬ p) ∨ ((¬ r) ∨ q)))
+  111                (atp-canonicalize ((¬ p) ∨ ((¬ q) ⇔ (¬ r)))
+  112                  (weaken (¬ subgoal₃)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-2.agda:
+   62          q
+   63          (atp-conjunct ((¬ q) ∨ r)
+   64:           (atp-clausify (((¬ q) ∨ r) ∧ ((¬ r) ∨ q))
+   65              (atp-simplify ((¬ q) ⇔ (¬ r))
+   66                (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ r))
+   ..
+   88          r
+   89          (atp-conjunct ((¬ r) ∨ q)
+   90:           (atp-clausify (((¬ q) ∨ r) ∧ ((¬ r) ∨ q))
+   91              (atp-simplify ((¬ q) ⇔ (¬ r))
+   92                (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ r))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-4.agda:
+   52        (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   53          p
+   54:         (atp-clausify ((¬ p) ∨ q)
+   55            (atp-canonicalize ((¬ q) ⇔ ((¬ p) ∧ (¬ q)))
+   56              (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-5.agda:
+   52        (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   53          p
+   54:         (atp-clausify ((¬ p) ∨ q)
+   55            (atp-canonicalize ((¬ p) ⇔ ((¬ p) ∨ (¬ q)))
+   56              (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-11.agda:
+   57          (atp-resolve ((¬ q) ∨ r) -- p ((¬ p) ∨ ((¬ q) ∨ r)) atp-resolve₄ True
+   58            p
+   59:           (atp-clausify ((¬ p) ∨ ((¬ q) ∨ r))
+   60              (atp-canonicalize ((¬ p) ∨ (r ∨ ((¬ q) ∧ p)))
+   61                (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-14.agda:
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   59              (atp-canonicalize (((¬ p) ∧ (¬ q)) ∨ (p ∧ q))
+   60                (weaken (¬ subgoal₀)
+   ..
+   77          q
+   78          (atp-conjunct ((¬ q) ∨ p)
+   79:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   80              (atp-canonicalize (((¬ p) ∧ (¬ q)) ∨ (p ∧ q))
+   81                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-7.agda:
+   57        p
+   58        (atp-conjunct p
+   59:         (atp-clausify (p ∧ ((p ∨ q) ∧ ((p ∨ r) ∧ (q ∨ r))))
+   60            (atp-canonicalize ((p ∧ q) ∨ (p ∧ r))
+   61              (weaken (¬ subgoal₀)
+   ..
+   72          q
+   73          (atp-conjunct (q ∨ r)
+   74:           (atp-clausify (p ∧ ((p ∨ q) ∧ ((p ∨ r) ∧ (q ∨ r))))
+   75              (atp-canonicalize ((p ∧ q) ∨ (p ∧ r))
+   76                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-8.agda:
+   59          p
+   60          (atp-conjunct (p ∨ q)
+   61:           (atp-clausify ((p ∨ q) ∧ (p ∨ r))
+   62              (atp-canonicalize (p ∨ (q ∧ r))
+   63                (weaken (¬ subgoal₀)
+   ..
+   80          p
+   81          (atp-conjunct (p ∨ r)
+   82:           (atp-clausify ((p ∨ q) ∧ (p ∨ r))
+   83              (atp-canonicalize (p ∨ (q ∧ r))
+   84                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-13.agda:
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ p) ∨ r))
+   59              (atp-canonicalize ((¬ p) ∨ (q ∧ r))
+   60                (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-17.agda:
+   59          p
+   60          (atp-conjunct ((¬ p) ∨ q)
+   61:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ p) ∨ r))
+   62              (atp-canonicalize ((¬ p) ∨ (q ∧ r))
+   63                (weaken (¬ subgoal₀)
+   ..
+   80          p
+   81          (atp-conjunct ((¬ p) ∨ r)
+   82:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ p) ∨ r))
+   83              (atp-canonicalize ((¬ p) ∨ (q ∧ r))
+   84                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-5.agda:
+   57          (atp-resolve ((¬ q) ∨ r) -- p ((¬ p) ∨ ((¬ q) ∨ r)) atp-resolve₄ True
+   58            p
+   59:           (atp-clausify ((¬ p) ∨ ((¬ q) ∨ r))
+   60              (atp-canonicalize ((¬ p) ∨ (r ∨ ((¬ q) ∧ p)))
+   61                (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-6.agda:
+   51        p
+   52        (atp-conjunct p
+   53:         (atp-clausify (p ∧ ((¬ q) ∨ p))
+   54            (atp-canonicalize (p ∨ ((¬ q) ∧ p))
+   55              (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-14.agda:
+   62          p
+   63          (atp-conjunct ((¬ p) ∨ q)
+   64:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   65              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   66                (weaken-Δ₁
+   ..
+   74                (assume {Γ = ∅} a₁)))
+   75            (atp-conjunct ((¬ q) ∨ p)
+   76:             (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   77                (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   78                  (weaken-Δ₁
+   ..
+   92                (assume {Γ = ∅} a₁)))
+   93            (atp-conjunct ((¬ q) ∨ p)
+   94:             (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   95                (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   96                  (weaken-Δ₁
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-21.agda:
+   51        p
+   52        (atp-conjunct p
+   53:         (atp-clausify (p ∧ ((¬ q) ∨ p))
+   54            (atp-canonicalize (p ∨ ((¬ q) ∧ p))
+   55              (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-22.agda:
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   59              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   60                (weaken (¬ subgoal₀)
+   ..
+   77          q
+   78          (atp-conjunct ((¬ q) ∨ p)
+   79:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   80              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   81                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-23.agda:
+   52        (atp-resolve q -- (p ∨ q) (¬ p) atp-resolve₇ False
+   53          p
+   54:         (atp-clausify (p ∨ q)
+   55            (atp-canonicalize (q ∨ ((¬ q) ∧ p))
+   56              (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/tptp.tex:
+   44    , keywords=[3]{fof, cnf}
+   45    , keywords=[4]{canonicalize, resolve, conjunct,
+   46:     strip, simplify, negate, clausify}
+   47    , keywordstyle=[2]\color{cadet}%\underbar,%\bfseries
+   48    , keywordstyle=[3]\color{bondiblue}\bfseries
+
+/home/turing/athena/test/prop-pack/tstp.tex:
+   44    , keywords=[3]{fof, cnf}
+   45    , keywords=[4]{canonicalize, resolve, conjunct,
+   46:     strip, simplify, negate, clausify}
+   47    , keywordstyle=[2]\color{cadet}%\underbar,%\bfseries
+   48    , keywordstyle=[3]\color{bondiblue}\bfseries
+
+31 matches across 20 files
+
+
+Searching 338 files for "clausify"
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-1.agda:
+   56          q
+   57          (atp-conjunct ((¬ q) ∨ p)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   59              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   60                (weaken (¬ subgoal₀)
+   ..
+   77          p
+   78          (atp-conjunct ((¬ p) ∨ q)
+   79:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   80              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   81                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-11.agda:
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ (((¬ q) ∨ p) ∧ (p ∨ q)))
+   59              (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ (p ∨ q)))
+   60                (weaken (¬ subgoal₀)
+   ..
+   77          q
+   78          (atp-conjunct ((¬ q) ∨ p)
+   79:           (atp-clausify (((¬ p) ∨ q) ∧ (((¬ q) ∨ p) ∧ (p ∨ q)))
+   80              (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ (p ∨ q)))
+   81                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-12.agda:
+   74            p
+   75            (atp-conjunct ((¬ p) ∨ ((¬ q) ∨ r))
+   76:             (atp-clausify (((¬ p) ∨ ((¬ q) ∨ r)) ∧ ((¬ p) ∨ ((¬ r) ∨ q)))
+   77                (atp-canonicalize ((¬ p) ∨ ((¬ q) ⇔ (¬ r)))
+   78                  (weaken (¬ subgoal₁)
+   ..
+  108            p
+  109            (atp-conjunct ((¬ p) ∨ ((¬ r) ∨ q))
+  110:             (atp-clausify (((¬ p) ∨ ((¬ q) ∨ r)) ∧ ((¬ p) ∨ ((¬ r) ∨ q)))
+  111                (atp-canonicalize ((¬ p) ∨ ((¬ q) ⇔ (¬ r)))
+  112                  (weaken (¬ subgoal₃)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-2.agda:
+   62          q
+   63          (atp-conjunct ((¬ q) ∨ r)
+   64:           (atp-clausify (((¬ q) ∨ r) ∧ ((¬ r) ∨ q))
+   65              (atp-simplify ((¬ q) ⇔ (¬ r))
+   66                (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ r))
+   ..
+   88          r
+   89          (atp-conjunct ((¬ r) ∨ q)
+   90:           (atp-clausify (((¬ q) ∨ r) ∧ ((¬ r) ∨ q))
+   91              (atp-simplify ((¬ q) ⇔ (¬ r))
+   92                (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ r))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-4.agda:
+   52        (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   53          p
+   54:         (atp-clausify ((¬ p) ∨ q)
+   55            (atp-canonicalize ((¬ q) ⇔ ((¬ p) ∧ (¬ q)))
+   56              (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-5.agda:
+   52        (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   53          p
+   54:         (atp-clausify ((¬ p) ∨ q)
+   55            (atp-canonicalize ((¬ p) ⇔ ((¬ p) ∨ (¬ q)))
+   56              (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-11.agda:
+   57          (atp-resolve ((¬ q) ∨ r) -- p ((¬ p) ∨ ((¬ q) ∨ r)) atp-resolve₄ True
+   58            p
+   59:           (atp-clausify ((¬ p) ∨ ((¬ q) ∨ r))
+   60              (atp-canonicalize ((¬ p) ∨ (r ∨ ((¬ q) ∧ p)))
+   61                (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-14.agda:
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   59              (atp-canonicalize (((¬ p) ∧ (¬ q)) ∨ (p ∧ q))
+   60                (weaken (¬ subgoal₀)
+   ..
+   77          q
+   78          (atp-conjunct ((¬ q) ∨ p)
+   79:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   80              (atp-canonicalize (((¬ p) ∧ (¬ q)) ∨ (p ∧ q))
+   81                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-7.agda:
+   57        p
+   58        (atp-conjunct p
+   59:         (atp-clausify (p ∧ ((p ∨ q) ∧ ((p ∨ r) ∧ (q ∨ r))))
+   60            (atp-canonicalize ((p ∧ q) ∨ (p ∧ r))
+   61              (weaken (¬ subgoal₀)
+   ..
+   72          q
+   73          (atp-conjunct (q ∨ r)
+   74:           (atp-clausify (p ∧ ((p ∨ q) ∧ ((p ∨ r) ∧ (q ∨ r))))
+   75              (atp-canonicalize ((p ∧ q) ∨ (p ∧ r))
+   76                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-8.agda:
+   59          p
+   60          (atp-conjunct (p ∨ q)
+   61:           (atp-clausify ((p ∨ q) ∧ (p ∨ r))
+   62              (atp-canonicalize (p ∨ (q ∧ r))
+   63                (weaken (¬ subgoal₀)
+   ..
+   80          p
+   81          (atp-conjunct (p ∨ r)
+   82:           (atp-clausify ((p ∨ q) ∧ (p ∨ r))
+   83              (atp-canonicalize (p ∨ (q ∧ r))
+   84                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-13.agda:
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ p) ∨ r))
+   59              (atp-canonicalize ((¬ p) ∨ (q ∧ r))
+   60                (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-17.agda:
+   59          p
+   60          (atp-conjunct ((¬ p) ∨ q)
+   61:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ p) ∨ r))
+   62              (atp-canonicalize ((¬ p) ∨ (q ∧ r))
+   63                (weaken (¬ subgoal₀)
+   ..
+   80          p
+   81          (atp-conjunct ((¬ p) ∨ r)
+   82:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ p) ∨ r))
+   83              (atp-canonicalize ((¬ p) ∨ (q ∧ r))
+   84                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-5.agda:
+   57          (atp-resolve ((¬ q) ∨ r) -- p ((¬ p) ∨ ((¬ q) ∨ r)) atp-resolve₄ True
+   58            p
+   59:           (atp-clausify ((¬ p) ∨ ((¬ q) ∨ r))
+   60              (atp-canonicalize ((¬ p) ∨ (r ∨ ((¬ q) ∧ p)))
+   61                (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-6.agda:
+   51        p
+   52        (atp-conjunct p
+   53:         (atp-clausify (p ∧ ((¬ q) ∨ p))
+   54            (atp-canonicalize (p ∨ ((¬ q) ∧ p))
+   55              (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-14.agda:
+   62          p
+   63          (atp-conjunct ((¬ p) ∨ q)
+   64:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   65              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   66                (weaken-Δ₁
+   ..
+   74                (assume {Γ = ∅} a₁)))
+   75            (atp-conjunct ((¬ q) ∨ p)
+   76:             (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   77                (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   78                  (weaken-Δ₁
+   ..
+   92                (assume {Γ = ∅} a₁)))
+   93            (atp-conjunct ((¬ q) ∨ p)
+   94:             (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   95                (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   96                  (weaken-Δ₁
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-21.agda:
+   51        p
+   52        (atp-conjunct p
+   53:         (atp-clausify (p ∧ ((¬ q) ∨ p))
+   54            (atp-canonicalize (p ∨ ((¬ q) ∧ p))
+   55              (weaken (¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-22.agda:
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   59              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   60                (weaken (¬ subgoal₀)
+   ..
+   77          q
+   78          (atp-conjunct ((¬ q) ∨ p)
+   79:           (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   80              (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   81                (weaken (¬ subgoal₁)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-23.agda:
+   52        (atp-resolve q -- (p ∨ q) (¬ p) atp-resolve₇ False
+   53          p
+   54:         (atp-clausify (p ∨ q)
+   55            (atp-canonicalize (q ∨ ((¬ q) ∧ p))
+   56              (weaken (¬ subgoal₀)
+
+29 matches across 18 files

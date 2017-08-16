@@ -1,0 +1,2884 @@
+Searching 338 files for "canonicalize"
+
+/home/turing/athena/test/prop-pack/problems/basic/basic-1.tstp:
+   10  
+   11  fof(normalize_0_0, plain, ($false),
+   12:     inference(canonicalize, [], [negate_0_0])).
+   13  
+   14  cnf(refute_0_0, plain, ($false),
+   15:     inference(canonicalize, [], [normalize_0_0])).
+   16  SZS output end CNFRefutation for test/prop-pack/problems/basic/basic-1.tptp
+   17  
+
+/home/turing/athena/test/prop-pack/problems/basic/basic-2.tstp:
+   10  
+   11  fof(normalize_0_0, plain, ($false),
+   12:     inference(canonicalize, [], [negate_0_0])).
+   13  
+   14  cnf(refute_0_0, plain, ($false),
+   15:     inference(canonicalize, [], [normalize_0_0])).
+   16  SZS output end CNFRefutation for test/prop-pack/problems/basic/basic-2.tptp
+   17  
+
+/home/turing/athena/test/prop-pack/problems/basic/basic-3.tstp:
+   11  
+   12  fof(normalize_0_0, plain, ($false),
+   13:     inference(canonicalize, [], [negate_0_0])).
+   14  
+   15  cnf(refute_0_0, plain, ($false),
+   16:     inference(canonicalize, [], [normalize_0_0])).
+   17  SZS output end CNFRefutation for test/prop-pack/problems/basic/basic-3.tptp
+   18  
+
+/home/turing/athena/test/prop-pack/problems/basic/basic-4.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (p), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, ($false),
+   ..
+   20  
+   21  cnf(refute_0_0, plain, ($false),
+   22:     inference(canonicalize, [], [normalize_0_2])).
+   23  SZS output end CNFRefutation for test/prop-pack/problems/basic/basic-4.tptp
+   24  
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-1.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ p <=> ~ q),
+   16:     inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ q | p)),
+   ..
+   23  
+   24  fof(normalize_0_3, plain, (~ p & q),
+   25:     inference(canonicalize, [], [negate_0_0])).
+   26  
+   27  fof(normalize_0_4, plain, (q), inference(conjunct, [], [normalize_0_3])).
+   ..
+   30  
+   31  cnf(refute_0_0, plain, (~ q | p),
+   32:     inference(canonicalize, [], [normalize_0_2])).
+   33  
+   34: cnf(refute_0_1, plain, (q), inference(canonicalize, [], [normalize_0_4])).
+   35  
+   36  cnf(refute_0_2, plain, (p),
+   ..
+   38  
+   39  cnf(refute_0_3, plain, (~ p),
+   40:     inference(canonicalize, [], [normalize_0_5])).
+   41  
+   42  cnf(refute_0_4, plain, ($false),
+   ..
+   46  
+   47  fof(normalize_1_0, plain, (~ p <=> ~ q),
+   48:     inference(canonicalize, [], [a1])).
+   49  
+   50  fof(normalize_1_1, plain, ((~ p | q) & (~ q | p)),
+   ..
+   55  
+   56  fof(normalize_1_3, plain, (~ q & p),
+   57:     inference(canonicalize, [], [negate_1_0])).
+   58  
+   59  fof(normalize_1_4, plain, (p), inference(conjunct, [], [normalize_1_3])).
+   ..
+   62  
+   63  cnf(refute_1_0, plain, (~ p | q),
+   64:     inference(canonicalize, [], [normalize_1_2])).
+   65  
+   66: cnf(refute_1_1, plain, (p), inference(canonicalize, [], [normalize_1_4])).
+   67  
+   68  cnf(refute_1_2, plain, (q),
+   ..
+   70  
+   71  cnf(refute_1_3, plain, (~ q),
+   72:     inference(canonicalize, [], [normalize_1_5])).
+   73  
+   74  cnf(refute_1_4, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-10.tstp:
+   15  
+   16  fof(normalize_0_0, plain, (~ q & p & (~ p <=> (~ q & p))),
+   17:     inference(canonicalize, [], [negate_0_0])).
+   18  
+   19  fof(normalize_0_1, plain, (~ p <=> (~ q & p)),
+   ..
+   30  
+   31  cnf(refute_0_0, plain, ($false),
+   32:     inference(canonicalize, [], [normalize_0_4])).
+   33  
+   34  fof(negate_1_0, plain, (~ ((((p => q) <=> p) & q) => p)),
+   ..
+   36  
+   37  fof(normalize_1_0, plain, (~ p & q & (~ p <=> (~ q & p))),
+   38:     inference(canonicalize, [], [negate_1_0])).
+   39  
+   40  fof(normalize_1_1, plain, (~ p <=> (~ q & p)),
+   ..
+   51  
+   52  cnf(refute_1_0, plain, ($false),
+   53:     inference(canonicalize, [], [normalize_1_4])).
+   54  SZS output end CNFRefutation for test/prop-pack/problems/biconditional/bicond-10.tptp
+   55  
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-11.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ p <=> (~ q <=> (p | q))),
+   16:     inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ q | p) & (p | q)),
+   ..
+   23  
+   24  fof(normalize_0_3, plain, (~ q & p),
+   25:     inference(canonicalize, [], [negate_0_0])).
+   26  
+   27  fof(normalize_0_4, plain, (p), inference(conjunct, [], [normalize_0_3])).
+   ..
+   30  
+   31  cnf(refute_0_0, plain, (~ p | q),
+   32:     inference(canonicalize, [], [normalize_0_2])).
+   33  
+   34: cnf(refute_0_1, plain, (p), inference(canonicalize, [], [normalize_0_4])).
+   35  
+   36  cnf(refute_0_2, plain, (q),
+   ..
+   38  
+   39  cnf(refute_0_3, plain, (~ q),
+   40:     inference(canonicalize, [], [normalize_0_5])).
+   41  
+   42  cnf(refute_0_4, plain, ($false),
+   ..
+   46  
+   47  fof(normalize_1_0, plain, (~ p <=> (~ q <=> (p | q))),
+   48:     inference(canonicalize, [], [a1])).
+   49  
+   50  fof(normalize_1_1, plain, ((~ p | q) & (~ q | p) & (p | q)),
+   ..
+   55  
+   56  fof(normalize_1_3, plain, (~ p & q),
+   57:     inference(canonicalize, [], [negate_1_0])).
+   58  
+   59  fof(normalize_1_4, plain, (q), inference(conjunct, [], [normalize_1_3])).
+   ..
+   62  
+   63  cnf(refute_1_0, plain, (~ q | p),
+   64:     inference(canonicalize, [], [normalize_1_2])).
+   65  
+   66: cnf(refute_1_1, plain, (q), inference(canonicalize, [], [normalize_1_4])).
+   67  
+   68  cnf(refute_1_2, plain, (p),
+   ..
+   70  
+   71  cnf(refute_1_3, plain, (~ p),
+   72:     inference(canonicalize, [], [normalize_1_5])).
+   73  
+   74  cnf(refute_1_4, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-12.tstp:
+   19  
+   20  fof(normalize_0_0, plain, ($false),
+   21:     inference(canonicalize, [], [negate_0_0])).
+   22  
+   23  cnf(refute_0_0, plain, ($false),
+   24:     inference(canonicalize, [], [normalize_0_0])).
+   25  
+   26  fof(negate_1_0, plain, (~ (((p & q) & p) => r)),
+   ..
+   28  
+   29  fof(normalize_1_0, plain, (~ p | (~ q <=> ~ r)),
+   30:     inference(canonicalize, [], [a1])).
+   31  
+   32  fof(normalize_1_1, plain, ((~ p | ~ q | r) & (~ p | ~ r | q)),
+   ..
+   37  
+   38  fof(normalize_1_3, plain, (~ r & p & q),
+   39:     inference(canonicalize, [], [negate_1_0])).
+   40  
+   41  fof(normalize_1_4, plain, (p), inference(conjunct, [], [normalize_1_3])).
+   ..
+   46  
+   47  cnf(refute_1_0, plain, (~ p | ~ q | r),
+   48:     inference(canonicalize, [], [normalize_1_2])).
+   49  
+   50: cnf(refute_1_1, plain, (p), inference(canonicalize, [], [normalize_1_4])).
+   51  
+   52  cnf(refute_1_2, plain, (~ q | r),
+   53      inference(resolve, [$cnf(p)], [refute_1_1, refute_1_0])).
+   54  
+   55: cnf(refute_1_3, plain, (q), inference(canonicalize, [], [normalize_1_5])).
+   56  
+   57  cnf(refute_1_4, plain, (r),
+   ..
+   59  
+   60  cnf(refute_1_5, plain, (~ r),
+   61:     inference(canonicalize, [], [normalize_1_6])).
+   62  
+   63  cnf(refute_1_6, plain, ($false),
+   ..
+   68  
+   69  fof(normalize_2_0, plain, ($false),
+   70:     inference(canonicalize, [], [negate_2_0])).
+   71  
+   72  cnf(refute_2_0, plain, ($false),
+   73:     inference(canonicalize, [], [normalize_2_0])).
+   74  
+   75  fof(negate_3_0, plain, (~ (((p & r) & p) => q)),
+   ..
+   77  
+   78  fof(normalize_3_0, plain, (~ p | (~ q <=> ~ r)),
+   79:     inference(canonicalize, [], [a1])).
+   80  
+   81  fof(normalize_3_1, plain, ((~ p | ~ q | r) & (~ p | ~ r | q)),
+   ..
+   86  
+   87  fof(normalize_3_3, plain, (~ q & p & r),
+   88:     inference(canonicalize, [], [negate_3_0])).
+   89  
+   90  fof(normalize_3_4, plain, (p), inference(conjunct, [], [normalize_3_3])).
+   ..
+   95  
+   96  cnf(refute_3_0, plain, (~ p | ~ r | q),
+   97:     inference(canonicalize, [], [normalize_3_2])).
+   98  
+   99: cnf(refute_3_1, plain, (p), inference(canonicalize, [], [normalize_3_4])).
+  100  
+  101  cnf(refute_3_2, plain, (~ r | q),
+  102      inference(resolve, [$cnf(p)], [refute_3_1, refute_3_0])).
+  103  
+  104: cnf(refute_3_3, plain, (r), inference(canonicalize, [], [normalize_3_5])).
+  105  
+  106  cnf(refute_3_4, plain, (q),
+  ...
+  108  
+  109  cnf(refute_3_5, plain, (~ q),
+  110:     inference(canonicalize, [], [normalize_3_6])).
+  111  
+  112  cnf(refute_3_6, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-13.tstp:
+   21  
+   22  fof(normalize_0_0, plain, (~ p & ~ q & (p | (q & r))),
+   23:     inference(canonicalize, [], [negate_0_0])).
+   24  
+   25  fof(normalize_0_1, plain, (p | (q & r)),
+   ..
+   35  
+   36  cnf(refute_0_0, plain, ($false),
+   37:     inference(canonicalize, [], [normalize_0_4])).
+   38  
+   39  fof(negate_1_0, plain, (~ (((p | (q & r)) & (p | q) & ~ p) => r)),
+   ..
+   41  
+   42  fof(normalize_1_0, plain, (~ p & ~ r & (p | q) & (p | (q & r))),
+   43:     inference(canonicalize, [], [negate_1_0])).
+   44  
+   45  fof(normalize_1_1, plain, (p | (q & r)),
+   ..
+   62  
+   63  cnf(refute_1_0, plain, ($false),
+   64:     inference(canonicalize, [], [normalize_1_6])).
+   65  
+   66  fof(negate_2_0, plain, (~ ((((p | q) & (p | r)) & ~ p) => q)),
+   ..
+   68  
+   69  fof(normalize_2_0, plain, (~ p & ~ q & (p | q) & (p | r)),
+   70:     inference(canonicalize, [], [negate_2_0])).
+   71  
+   72  fof(normalize_2_1, plain, (p | q),
+   ..
+   82  
+   83  cnf(refute_2_0, plain, ($false),
+   84:     inference(canonicalize, [], [normalize_2_4])).
+   85  
+   86  fof(negate_3_0, plain, (~ ((((p | q) & (p | r)) & ~ p & q) => r)),
+   ..
+   88  
+   89  fof(normalize_3_0, plain, (~ p & ~ r & q & (p | q) & (p | r)),
+   90:     inference(canonicalize, [], [negate_3_0])).
+   91  
+   92  fof(normalize_3_1, plain, (p | r),
+   ..
+  102  
+  103  cnf(refute_3_0, plain, ($false),
+  104:     inference(canonicalize, [], [normalize_3_4])).
+  105  SZS output end CNFRefutation for test/prop-pack/problems/biconditional/bicond-13.tptp
+  106  
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-2.tstp:
+   16  
+   17  fof(normalize_0_0, plain, (~ p <=> (~ q <=> r)),
+   18:     inference(canonicalize, [], [a2])).
+   19  
+   20: fof(normalize_0_1, plain, (p), inference(canonicalize, [], [a1])).
+   21  
+   22  fof(normalize_0_2, plain, (~ q <=> ~ r),
+   ..
+   30  
+   31  fof(normalize_0_5, plain, (~ r & q),
+   32:     inference(canonicalize, [], [negate_0_0])).
+   33  
+   34  fof(normalize_0_6, plain, (q), inference(conjunct, [], [normalize_0_5])).
+   ..
+   37  
+   38  cnf(refute_0_0, plain, (~ q | r),
+   39:     inference(canonicalize, [], [normalize_0_4])).
+   40  
+   41: cnf(refute_0_1, plain, (q), inference(canonicalize, [], [normalize_0_6])).
+   42  
+   43  cnf(refute_0_2, plain, (r),
+   ..
+   45  
+   46  cnf(refute_0_3, plain, (~ r),
+   47:     inference(canonicalize, [], [normalize_0_7])).
+   48  
+   49  cnf(refute_0_4, plain, ($false),
+   ..
+   53  
+   54  fof(normalize_1_0, plain, (~ p <=> (~ q <=> r)),
+   55:     inference(canonicalize, [], [a2])).
+   56  
+   57: fof(normalize_1_1, plain, (p), inference(canonicalize, [], [a1])).
+   58  
+   59  fof(normalize_1_2, plain, (~ q <=> ~ r),
+   ..
+   67  
+   68  fof(normalize_1_5, plain, (~ q & r),
+   69:     inference(canonicalize, [], [negate_1_0])).
+   70  
+   71  fof(normalize_1_6, plain, (r), inference(conjunct, [], [normalize_1_5])).
+   ..
+   74  
+   75  cnf(refute_1_0, plain, (~ r | q),
+   76:     inference(canonicalize, [], [normalize_1_4])).
+   77  
+   78: cnf(refute_1_1, plain, (r), inference(canonicalize, [], [normalize_1_6])).
+   79  
+   80  cnf(refute_1_2, plain, (q),
+   ..
+   82  
+   83  cnf(refute_1_3, plain, (~ q),
+   84:     inference(canonicalize, [], [normalize_1_7])).
+   85  
+   86  cnf(refute_1_4, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-3.tstp:
+   21  
+   22  fof(normalize_0_0, plain, (~ p & q & (~ p <=> ~ q)),
+   23:     inference(canonicalize, [], [negate_0_0])).
+   24  
+   25  fof(normalize_0_1, plain, (~ p <=> ~ q),
+   ..
+   35  
+   36  cnf(refute_0_0, plain, ($false),
+   37:     inference(canonicalize, [], [normalize_0_4])).
+   38  
+   39  fof(negate_1_0, plain, (~ (((p <=> q) & p) => q)),
+   ..
+   41  
+   42  fof(normalize_1_0, plain, (~ q & p & (~ p <=> ~ q)),
+   43:     inference(canonicalize, [], [negate_1_0])).
+   44  
+   45  fof(normalize_1_1, plain, (~ p <=> ~ q),
+   ..
+   55  
+   56  cnf(refute_1_0, plain, ($false),
+   57:     inference(canonicalize, [], [normalize_1_4])).
+   58  
+   59  fof(negate_2_0, plain, (~ (((q <=> p) & p) => q)),
+   ..
+   61  
+   62  fof(normalize_2_0, plain, (~ q & p & (~ p <=> ~ q)),
+   63:     inference(canonicalize, [], [negate_2_0])).
+   64  
+   65  fof(normalize_2_1, plain, (~ p <=> ~ q),
+   ..
+   75  
+   76  cnf(refute_2_0, plain, ($false),
+   77:     inference(canonicalize, [], [normalize_2_4])).
+   78  
+   79  fof(negate_3_0, plain, (~ (((q <=> p) & q) => p)),
+   ..
+   81  
+   82  fof(normalize_3_0, plain, (~ p & q & (~ p <=> ~ q)),
+   83:     inference(canonicalize, [], [negate_3_0])).
+   84  
+   85  fof(normalize_3_1, plain, (~ p <=> ~ q),
+   ..
+   95  
+   96  cnf(refute_3_0, plain, ($false),
+   97:     inference(canonicalize, [], [normalize_3_4])).
+   98  SZS output end CNFRefutation for test/prop-pack/problems/biconditional/bicond-3.tptp
+   99  
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-4.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ q <=> (~ p & ~ q)),
+   14:     inference(canonicalize, [], [a1])).
+   15  
+   16  fof(normalize_0_1, plain, (~ p | q),
+   ..
+   18  
+   19  fof(normalize_0_2, plain, (~ q & p),
+   20:     inference(canonicalize, [], [negate_0_0])).
+   21  
+   22  fof(normalize_0_3, plain, (p), inference(conjunct, [], [normalize_0_2])).
+   ..
+   25  
+   26  cnf(refute_0_0, plain, (~ p | q),
+   27:     inference(canonicalize, [], [normalize_0_1])).
+   28  
+   29: cnf(refute_0_1, plain, (p), inference(canonicalize, [], [normalize_0_3])).
+   30  
+   31  cnf(refute_0_2, plain, (q),
+   ..
+   33  
+   34  cnf(refute_0_3, plain, (~ q),
+   35:     inference(canonicalize, [], [normalize_0_4])).
+   36  
+   37  cnf(refute_0_4, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-5.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p <=> (~ p | ~ q)),
+   14:     inference(canonicalize, [], [a1])).
+   15  
+   16  fof(normalize_0_1, plain, (~ p | q),
+   ..
+   18  
+   19  fof(normalize_0_2, plain, (~ q & p),
+   20:     inference(canonicalize, [], [negate_0_0])).
+   21  
+   22  fof(normalize_0_3, plain, (p), inference(conjunct, [], [normalize_0_2])).
+   ..
+   25  
+   26  cnf(refute_0_0, plain, (~ p | q),
+   27:     inference(canonicalize, [], [normalize_0_1])).
+   28  
+   29: cnf(refute_0_1, plain, (p), inference(canonicalize, [], [normalize_0_3])).
+   30  
+   31  cnf(refute_0_2, plain, (q),
+   ..
+   33  
+   34  cnf(refute_0_3, plain, (~ q),
+   35:     inference(canonicalize, [], [normalize_0_4])).
+   36  
+   37  cnf(refute_0_4, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-6.tstp:
+   14      inference(negate, [], [subgoal_0])).
+   15  
+   16: fof(normalize_0_0, plain, (~ p | q), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_1, plain, (~ q & (p | q)),
+   19:     inference(canonicalize, [], [negate_0_0])).
+   20  
+   21  fof(normalize_0_2, plain, (p | q),
+   ..
+   28  
+   29  cnf(refute_0_0, plain, (~ p | q),
+   30:     inference(canonicalize, [], [normalize_0_0])).
+   31  
+   32: cnf(refute_0_1, plain, (p), inference(canonicalize, [], [normalize_0_4])).
+   33  
+   34  cnf(refute_0_2, plain, (q),
+   ..
+   36  
+   37  cnf(refute_0_3, plain, (~ q),
+   38:     inference(canonicalize, [], [normalize_0_3])).
+   39  
+   40  cnf(refute_0_4, plain, ($false),
+   ..
+   45  
+   46  fof(normalize_1_0, plain, ($false),
+   47:     inference(canonicalize, [], [negate_1_0])).
+   48  
+   49  cnf(refute_1_0, plain, ($false),
+   50:     inference(canonicalize, [], [normalize_1_0])).
+   51  SZS output end CNFRefutation for test/prop-pack/problems/biconditional/bicond-6.tptp
+   52  
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-7.tstp:
+   17  
+   18  fof(normalize_0_0, plain, ($false),
+   19:     inference(canonicalize, [], [negate_0_0])).
+   20  
+   21  cnf(refute_0_0, plain, ($false),
+   22:     inference(canonicalize, [], [normalize_0_0])).
+   23  
+   24  fof(negate_1_0, plain, (~ (p => p)), inference(negate, [], [subgoal_1])).
+   25  
+   26  fof(normalize_1_0, plain, ($false),
+   27:     inference(canonicalize, [], [negate_1_0])).
+   28  
+   29  cnf(refute_1_0, plain, ($false),
+   30:     inference(canonicalize, [], [normalize_1_0])).
+   31  
+   32  fof(negate_2_0, plain, (~ ((p & p) => q)),
+   ..
+   34  
+   35  fof(normalize_2_0, plain, (~ q & p),
+   36:     inference(canonicalize, [], [negate_2_0])).
+   37  
+   38: fof(normalize_2_1, plain, (~ p | q), inference(canonicalize, [], [a1])).
+   39  
+   40  fof(normalize_2_2, plain, ($false),
+   ..
+   42  
+   43  cnf(refute_2_0, plain, ($false),
+   44:     inference(canonicalize, [], [normalize_2_2])).
+   45  SZS output end CNFRefutation for test/prop-pack/problems/biconditional/bicond-7.tptp
+   46  
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-8.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ q & p),
+   16:     inference(canonicalize, [], [negate_0_0])).
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ q | p)),
+   19:     inference(canonicalize, [], [a1])).
+   20  
+   21  fof(normalize_0_2, plain, (~ p | q),
+   ..
+   26  
+   27  cnf(refute_0_0, plain, ($false),
+   28:     inference(canonicalize, [], [normalize_0_3])).
+   29  
+   30  fof(negate_1_0, plain, (~ (q => p)), inference(negate, [], [subgoal_1])).
+   31  
+   32  fof(normalize_1_0, plain, (~ p & q),
+   33:     inference(canonicalize, [], [negate_1_0])).
+   34  
+   35  fof(normalize_1_1, plain, ((~ p | q) & (~ q | p)),
+   36:     inference(canonicalize, [], [a1])).
+   37  
+   38  fof(normalize_1_2, plain, (~ q | p),
+   ..
+   43  
+   44  cnf(refute_1_0, plain, ($false),
+   45:     inference(canonicalize, [], [normalize_1_3])).
+   46  SZS output end CNFRefutation for test/prop-pack/problems/biconditional/bicond-8.tptp
+   47  
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-9.tstp:
+   12  
+   13  fof(normalize_0_0, plain, ($false),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16  cnf(refute_0_0, plain, ($false),
+   17:     inference(canonicalize, [], [normalize_0_0])).
+   18  SZS output end CNFRefutation for test/prop-pack/problems/biconditional/bicond-9.tptp
+   19  
+
+/home/turing/athena/test/prop-pack/problems/conjunction/conj-1.tstp:
+   16  
+   17  fof(normalize_0_0, plain, (~ p),
+   18:     inference(canonicalize, [], [negate_0_0])).
+   19  
+   20: fof(normalize_0_1, plain, (p), inference(canonicalize, [], [a1])).
+   21  
+   22  fof(normalize_0_2, plain, ($false),
+   ..
+   24  
+   25  cnf(refute_0_0, plain, ($false),
+   26:     inference(canonicalize, [], [normalize_0_2])).
+   27  
+   28  fof(negate_1_0, plain, (~ (p => q)), inference(negate, [], [subgoal_1])).
+   29  
+   30  fof(normalize_1_0, plain, (~ q & p),
+   31:     inference(canonicalize, [], [negate_1_0])).
+   32  
+   33: fof(normalize_1_1, plain, (q), inference(canonicalize, [], [a2])).
+   34  
+   35: fof(normalize_1_2, plain, (p), inference(canonicalize, [], [a1])).
+   36  
+   37  fof(normalize_1_3, plain, ($false),
+   ..
+   40  
+   41  cnf(refute_1_0, plain, ($false),
+   42:     inference(canonicalize, [], [normalize_1_3])).
+   43  SZS output end CNFRefutation for test/prop-pack/problems/conjunction/conj-1.tptp
+   44  
+
+/home/turing/athena/test/prop-pack/problems/conjunction/conj-2.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p2),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16  fof(normalize_0_1, plain, (p1 & p2 & p3),
+   17:     inference(canonicalize, [], [a])).
+   18  
+   19  fof(normalize_0_2, plain, (p2), inference(conjunct, [], [normalize_0_1])).
+   ..
+   23  
+   24  cnf(refute_0_0, plain, ($false),
+   25:     inference(canonicalize, [], [normalize_0_3])).
+   26  SZS output end CNFRefutation for test/prop-pack/problems/conjunction/conj-2.tptp
+   27  
+
+/home/turing/athena/test/prop-pack/problems/conjunction/conj-3.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ q),
+   16:     inference(canonicalize, [], [negate_0_0])).
+   17  
+   18: fof(normalize_0_1, plain, (p & q), inference(canonicalize, [], [a])).
+   19  
+   20  fof(normalize_0_2, plain, (q), inference(conjunct, [], [normalize_0_1])).
+   ..
+   24  
+   25  cnf(refute_0_0, plain, ($false),
+   26:     inference(canonicalize, [], [normalize_0_3])).
+   27  
+   28  fof(negate_1_0, plain, (~ (q => p)), inference(negate, [], [subgoal_1])).
+   29  
+   30  fof(normalize_1_0, plain, (~ p & q),
+   31:     inference(canonicalize, [], [negate_1_0])).
+   32  
+   33: fof(normalize_1_1, plain, (p & q), inference(canonicalize, [], [a])).
+   34  
+   35  fof(normalize_1_2, plain, (p), inference(conjunct, [], [normalize_1_1])).
+   ..
+   42  
+   43  cnf(refute_1_0, plain, ($false),
+   44:     inference(canonicalize, [], [normalize_1_4])).
+   45  SZS output end CNFRefutation for test/prop-pack/problems/conjunction/conj-3.tptp
+   46  
+
+/home/turing/athena/test/prop-pack/problems/conjunction/conj-4.tstp:
+   18  
+   19  fof(normalize_0_0, plain, (~ p),
+   20:     inference(canonicalize, [], [negate_0_0])).
+   21  
+   22: fof(normalize_0_1, plain, (p & q), inference(canonicalize, [], [a1])).
+   23  
+   24  fof(normalize_0_2, plain, (p), inference(conjunct, [], [normalize_0_1])).
+   ..
+   28  
+   29  cnf(refute_0_0, plain, ($false),
+   30:     inference(canonicalize, [], [normalize_0_3])).
+   31  
+   32  fof(negate_1_0, plain, (~ (p => r)), inference(negate, [], [subgoal_1])).
+   33  
+   34  fof(normalize_1_0, plain, (~ r & p),
+   35:     inference(canonicalize, [], [negate_1_0])).
+   36  
+   37: fof(normalize_1_1, plain, (r), inference(canonicalize, [], [a2])).
+   38  
+   39: fof(normalize_1_2, plain, (p & q), inference(canonicalize, [], [a1])).
+   40  
+   41  fof(normalize_1_3, plain, (p), inference(conjunct, [], [normalize_1_2])).
+   ..
+   46  
+   47  cnf(refute_1_0, plain, ($false),
+   48:     inference(canonicalize, [], [normalize_1_4])).
+   49  
+   50  fof(negate_2_0, plain, (~ ((p & r) => q)),
+   ..
+   52  
+   53  fof(normalize_2_0, plain, (~ q & p & r),
+   54:     inference(canonicalize, [], [negate_2_0])).
+   55  
+   56: fof(normalize_2_1, plain, (p & q), inference(canonicalize, [], [a1])).
+   57  
+   58  fof(normalize_2_2, plain, (q), inference(conjunct, [], [normalize_2_1])).
+   ..
+   60  fof(normalize_2_3, plain, (p), inference(conjunct, [], [normalize_2_1])).
+   61  
+   62: fof(normalize_2_4, plain, (r), inference(canonicalize, [], [a2])).
+   63  
+   64  fof(normalize_2_5, plain, ($false),
+   ..
+   68  
+   69  cnf(refute_2_0, plain, ($false),
+   70:     inference(canonicalize, [], [normalize_2_5])).
+   71  SZS output end CNFRefutation for test/prop-pack/problems/conjunction/conj-4.tptp
+   72  
+
+/home/turing/athena/test/prop-pack/problems/conjunction/conj-5.tstp:
+   18  
+   19  fof(normalize_0_0, plain, (~ p1),
+   20:     inference(canonicalize, [], [negate_0_0])).
+   21  
+   22: fof(normalize_0_1, plain, (p1 & p2), inference(canonicalize, [], [a1])).
+   23  
+   24  fof(normalize_0_2, plain, (p1), inference(conjunct, [], [normalize_0_1])).
+   ..
+   28  
+   29  cnf(refute_0_0, plain, ($false),
+   30:     inference(canonicalize, [], [normalize_0_3])).
+   31  
+   32  fof(negate_1_0, plain, (~ (p1 => q2)), inference(negate, [], [subgoal_1])).
+   33  
+   34  fof(normalize_1_0, plain, (~ q2 & p1),
+   35:     inference(canonicalize, [], [negate_1_0])).
+   36  
+   37  fof(normalize_1_1, plain, (q1 & q2 & r),
+   38:     inference(canonicalize, [], [a2])).
+   39  
+   40  fof(normalize_1_2, plain, (q2), inference(conjunct, [], [normalize_1_1])).
+   41  
+   42: fof(normalize_1_3, plain, (p1 & p2), inference(canonicalize, [], [a1])).
+   43  
+   44  fof(normalize_1_4, plain, (p1), inference(conjunct, [], [normalize_1_3])).
+   ..
+   49  
+   50  cnf(refute_1_0, plain, ($false),
+   51:     inference(canonicalize, [], [normalize_1_5])).
+   52  
+   53  fof(negate_2_0, plain, (~ ((p1 & q2) => r)),
+   ..
+   55  
+   56  fof(normalize_2_0, plain, (~ r & p1 & q2),
+   57:     inference(canonicalize, [], [negate_2_0])).
+   58  
+   59  fof(normalize_2_1, plain, (q1 & q2 & r),
+   60:     inference(canonicalize, [], [a2])).
+   61  
+   62  fof(normalize_2_2, plain, (r), inference(conjunct, [], [normalize_2_1])).
+   63  
+   64: fof(normalize_2_3, plain, (p1 & p2), inference(canonicalize, [], [a1])).
+   65  
+   66  fof(normalize_2_4, plain, (p1), inference(conjunct, [], [normalize_2_3])).
+   ..
+   74  
+   75  cnf(refute_2_0, plain, ($false),
+   76:     inference(canonicalize, [], [normalize_2_6])).
+   77  SZS output end CNFRefutation for test/prop-pack/problems/conjunction/conj-5.tptp
+   78  
+
+/home/turing/athena/test/prop-pack/problems/conjunction/conj-6.tstp:
+   16  
+   17  fof(normalize_0_0, plain, (~ r),
+   18:     inference(canonicalize, [], [negate_0_0])).
+   19  
+   20: fof(normalize_0_1, plain, (p & q & r), inference(canonicalize, [], [a])).
+   21  
+   22  fof(normalize_0_2, plain, (r), inference(conjunct, [], [normalize_0_1])).
+   ..
+   26  
+   27  cnf(refute_0_0, plain, ($false),
+   28:     inference(canonicalize, [], [normalize_0_3])).
+   29  
+   30  fof(negate_1_0, plain, (~ (r => p)), inference(negate, [], [subgoal_1])).
+   31  
+   32  fof(normalize_1_0, plain, (~ p & r),
+   33:     inference(canonicalize, [], [negate_1_0])).
+   34  
+   35: fof(normalize_1_1, plain, (p & q & r), inference(canonicalize, [], [a])).
+   36  
+   37  fof(normalize_1_2, plain, (p), inference(conjunct, [], [normalize_1_1])).
+   ..
+   44  
+   45  cnf(refute_1_0, plain, ($false),
+   46:     inference(canonicalize, [], [normalize_1_4])).
+   47  
+   48  fof(negate_2_0, plain, (~ ((r & p) => q)),
+   ..
+   50  
+   51  fof(normalize_2_0, plain, (~ q & p & r),
+   52:     inference(canonicalize, [], [negate_2_0])).
+   53  
+   54: fof(normalize_2_1, plain, (p & q & r), inference(canonicalize, [], [a])).
+   55  
+   56  fof(normalize_2_2, plain, (q), inference(conjunct, [], [normalize_2_1])).
+   ..
+   66  
+   67  cnf(refute_2_0, plain, ($false),
+   68:     inference(canonicalize, [], [normalize_2_5])).
+   69  SZS output end CNFRefutation for test/prop-pack/problems/conjunction/conj-6.tptp
+   70  
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-1.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p & ~ q),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (p | q), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, ($false),
+   ..
+   20  
+   21  cnf(refute_0_0, plain, ($false),
+   22:     inference(canonicalize, [], [normalize_0_2])).
+   23  SZS output end CNFRefutation for test/prop-pack/problems/disjunction/disj-1.tptp
+   24  
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-10.tstp:
+   12      inference(negate, [], [subgoal_0])).
+   13  
+   14: fof(normalize_0_0, plain, (p | q), inference(canonicalize, [], [a1])).
+   15  
+   16  fof(normalize_0_1, plain, (~ q & (~ p | q)),
+   17:     inference(canonicalize, [], [negate_0_0])).
+   18  
+   19  fof(normalize_0_2, plain, (~ p | q),
+   ..
+   26  
+   27  cnf(refute_0_0, plain, (p | q),
+   28:     inference(canonicalize, [], [normalize_0_0])).
+   29  
+   30  cnf(refute_0_1, plain, (~ p),
+   31:     inference(canonicalize, [], [normalize_0_4])).
+   32  
+   33  cnf(refute_0_2, plain, (q),
+   ..
+   35  
+   36  cnf(refute_0_3, plain, (~ q),
+   37:     inference(canonicalize, [], [normalize_0_3])).
+   38  
+   39  cnf(refute_0_4, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-11.tstp:
+   13  
+   14  fof(normalize_0_0, plain, (~ p | r | (~ q & p)),
+   15:     inference(canonicalize, [], [a1])).
+   16  
+   17  fof(normalize_0_1, plain, (~ p | ~ q | r),
+   ..
+   19  
+   20  fof(normalize_0_2, plain, (~ r & q & (p | r)),
+   21:     inference(canonicalize, [], [negate_0_0])).
+   22  
+   23  fof(normalize_0_3, plain, (p | r),
+   ..
+   32  
+   33  cnf(refute_0_0, plain, (~ p | ~ q | r),
+   34:     inference(canonicalize, [], [normalize_0_1])).
+   35  
+   36: cnf(refute_0_1, plain, (p), inference(canonicalize, [], [normalize_0_5])).
+   37  
+   38  cnf(refute_0_2, plain, (~ q | r),
+   39      inference(resolve, [$cnf(p)], [refute_0_1, refute_0_0])).
+   40  
+   41: cnf(refute_0_3, plain, (q), inference(canonicalize, [], [normalize_0_6])).
+   42  
+   43  cnf(refute_0_4, plain, (r),
+   ..
+   45  
+   46  cnf(refute_0_5, plain, (~ r),
+   47:     inference(canonicalize, [], [normalize_0_4])).
+   48  
+   49  cnf(refute_0_6, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-12.tstp:
+   13  
+   14  fof(normalize_0_0, plain, (~ q & ~ r & p),
+   15:     inference(canonicalize, [], [negate_0_0])).
+   16  
+   17  fof(normalize_0_1, plain, (~ p | q | r),
+   18:     inference(canonicalize, [], [a1])).
+   19  
+   20  fof(normalize_0_2, plain, ($false),
+   ..
+   22  
+   23  cnf(refute_0_0, plain, ($false),
+   24:     inference(canonicalize, [], [normalize_0_2])).
+   25  SZS output end CNFRefutation for test/prop-pack/problems/disjunction/disj-12.tptp
+   26  
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-13.tstp:
+   15  
+   16  fof(normalize_0_0, plain, ((~ p | q) & (~ q | p)),
+   17:     inference(canonicalize, [], [a1])).
+   18  
+   19  fof(normalize_0_1, plain, (~ q | p),
+   ..
+   21  
+   22  fof(normalize_0_2, plain, (~ p & (p | q)),
+   23:     inference(canonicalize, [], [negate_0_0])).
+   24  
+   25  fof(normalize_0_3, plain, (p | q),
+   ..
+   32  
+   33  cnf(refute_0_0, plain, (~ q | p),
+   34:     inference(canonicalize, [], [normalize_0_1])).
+   35  
+   36: cnf(refute_0_1, plain, (q), inference(canonicalize, [], [normalize_0_5])).
+   37  
+   38  cnf(refute_0_2, plain, (p),
+   ..
+   40  
+   41  cnf(refute_0_3, plain, (~ p),
+   42:     inference(canonicalize, [], [normalize_0_4])).
+   43  
+   44  cnf(refute_0_4, plain, ($false),
+   ..
+   49  
+   50  fof(normalize_1_0, plain, (~ q & p & (p | q)),
+   51:     inference(canonicalize, [], [negate_1_0])).
+   52  
+   53  fof(normalize_1_1, plain, ((~ p | q) & (~ q | p)),
+   54:     inference(canonicalize, [], [a1])).
+   55  
+   56  fof(normalize_1_2, plain, (~ p | q),
+   ..
+   61  
+   62  cnf(refute_1_0, plain, ($false),
+   63:     inference(canonicalize, [], [normalize_1_3])).
+   64  SZS output end CNFRefutation for test/prop-pack/problems/disjunction/disj-13.tptp
+   65  
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-14.tstp:
+   14  
+   15  fof(normalize_0_0, plain, ((~ p & ~ q) | (p & q)),
+   16:     inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ q | p)),
+   ..
+   23  
+   24  fof(normalize_0_3, plain, (~ q & p),
+   25:     inference(canonicalize, [], [negate_0_0])).
+   26  
+   27  fof(normalize_0_4, plain, (p), inference(conjunct, [], [normalize_0_3])).
+   ..
+   30  
+   31  cnf(refute_0_0, plain, (~ p | q),
+   32:     inference(canonicalize, [], [normalize_0_2])).
+   33  
+   34: cnf(refute_0_1, plain, (p), inference(canonicalize, [], [normalize_0_4])).
+   35  
+   36  cnf(refute_0_2, plain, (q),
+   ..
+   38  
+   39  cnf(refute_0_3, plain, (~ q),
+   40:     inference(canonicalize, [], [normalize_0_5])).
+   41  
+   42  cnf(refute_0_4, plain, ($false),
+   ..
+   47  
+   48  fof(normalize_1_0, plain, ((~ p & ~ q) | (p & q)),
+   49:     inference(canonicalize, [], [a1])).
+   50  
+   51  fof(normalize_1_1, plain, ((~ p | q) & (~ q | p)),
+   ..
+   56  
+   57  fof(normalize_1_3, plain, (~ p & q & (~ p | q)),
+   58:     inference(canonicalize, [], [negate_1_0])).
+   59  
+   60  fof(normalize_1_4, plain, (q), inference(conjunct, [], [normalize_1_3])).
+   ..
+   63  
+   64  cnf(refute_1_0, plain, (~ q | p),
+   65:     inference(canonicalize, [], [normalize_1_2])).
+   66  
+   67: cnf(refute_1_1, plain, (q), inference(canonicalize, [], [normalize_1_4])).
+   68  
+   69  cnf(refute_1_2, plain, (p),
+   ..
+   71  
+   72  cnf(refute_1_3, plain, (~ p),
+   73:     inference(canonicalize, [], [normalize_1_5])).
+   74  
+   75  cnf(refute_1_4, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-15.tstp:
+   15  
+   16  fof(normalize_0_0, plain, (~ r & (~ p | q)),
+   17:     inference(canonicalize, [], [negate_0_0])).
+   18  
+   19  fof(normalize_0_1, plain, (~ p | q),
+   ..
+   21  
+   22  fof(normalize_0_2, plain, ((~ q | r) & (p | q)),
+   23:     inference(canonicalize, [], [a1])).
+   24  
+   25  fof(normalize_0_3, plain, (p | q),
+   ..
+   32  
+   33  cnf(refute_0_0, plain, (~ p | q),
+   34:     inference(canonicalize, [], [normalize_0_1])).
+   35  
+   36  cnf(refute_0_1, plain, (p | q),
+   37:     inference(canonicalize, [], [normalize_0_3])).
+   38  
+   39  cnf(refute_0_2, plain, (~ q | r),
+   40:     inference(canonicalize, [], [normalize_0_4])).
+   41  
+   42  cnf(refute_0_3, plain, (~ r),
+   43:     inference(canonicalize, [], [normalize_0_5])).
+   44  
+   45  cnf(refute_0_4, plain, (~ q),
+   ..
+   59  
+   60  fof(normalize_1_0, plain, ($false),
+   61:     inference(canonicalize, [], [negate_1_0])).
+   62  
+   63  cnf(refute_1_0, plain, ($false),
+   64:     inference(canonicalize, [], [normalize_1_0])).
+   65  SZS output end CNFRefutation for test/prop-pack/problems/disjunction/disj-15.tptp
+   66  
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-2.tstp:
+   13  
+   14  fof(normalize_0_0, plain, (~ p & ~ q & ~ r),
+   15:     inference(canonicalize, [], [negate_0_0])).
+   16  
+   17: fof(normalize_0_1, plain, (p | q), inference(canonicalize, [], [a1])).
+   18  
+   19  fof(normalize_0_2, plain, ($false),
+   ..
+   21  
+   22  cnf(refute_0_0, plain, ($false),
+   23:     inference(canonicalize, [], [normalize_0_2])).
+   24  SZS output end CNFRefutation for test/prop-pack/problems/disjunction/disj-2.tptp
+   25  
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-3.tstp:
+   13  
+   14  fof(normalize_0_0, plain, (~ p & ~ q & ~ r),
+   15:     inference(canonicalize, [], [negate_0_0])).
+   16  
+   17: fof(normalize_0_1, plain, (p | q | r), inference(canonicalize, [], [a1])).
+   18  
+   19  fof(normalize_0_2, plain, ($false),
+   ..
+   21  
+   22  cnf(refute_0_0, plain, ($false),
+   23:     inference(canonicalize, [], [normalize_0_2])).
+   24  SZS output end CNFRefutation for test/prop-pack/problems/disjunction/disj-3.tptp
+   25  
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-4.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ p & ~ p1 & ~ q & ~ r),
+   16:     inference(canonicalize, [], [negate_0_0])).
+   17  
+   18  fof(normalize_0_1, plain, (p | p1 | q | r),
+   19:     inference(canonicalize, [], [a1])).
+   20  
+   21  fof(normalize_0_2, plain, ($false),
+   ..
+   23  
+   24  cnf(refute_0_0, plain, ($false),
+   25:     inference(canonicalize, [], [normalize_0_2])).
+   26  SZS output end CNFRefutation for test/prop-pack/problems/disjunction/disj-4.tptp
+   27  
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-5.tstp:
+   16  
+   17  fof(normalize_0_0, plain, (~ p & (~ p | ~ q)),
+   18:     inference(canonicalize, [], [negate_0_0])).
+   19  
+   20  fof(normalize_0_1, plain, (p & (q | r)),
+   21:     inference(canonicalize, [], [a1])).
+   22  
+   23  fof(normalize_0_2, plain, (p), inference(conjunct, [], [normalize_0_1])).
+   ..
+   28  
+   29  cnf(refute_0_0, plain, ($false),
+   30:     inference(canonicalize, [], [normalize_0_3])).
+   31  
+   32  fof(negate_1_0, plain, (~ ((~ (p & q) & p) => r)),
+   ..
+   34  
+   35  fof(normalize_1_0, plain, (~ r & p & (~ p | ~ q)),
+   36:     inference(canonicalize, [], [negate_1_0])).
+   37  
+   38  fof(normalize_1_1, plain, (p & (q | r)),
+   39:     inference(canonicalize, [], [a1])).
+   40  
+   41  fof(normalize_1_2, plain, (q | r),
+   ..
+   50  
+   51  cnf(refute_1_0, plain, ($false),
+   52:     inference(canonicalize, [], [normalize_1_4])).
+   53  SZS output end CNFRefutation for test/prop-pack/problems/disjunction/disj-5.tptp
+   54  
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-6.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ p & ~ q),
+   16:     inference(canonicalize, [], [negate_0_0])).
+   17  
+   18  fof(normalize_0_1, plain, ((p | q) & (p | r)),
+   19:     inference(canonicalize, [], [a1])).
+   20  
+   21  fof(normalize_0_2, plain, (p | q),
+   ..
+   26  
+   27  cnf(refute_0_0, plain, ($false),
+   28:     inference(canonicalize, [], [normalize_0_3])).
+   29  
+   30  fof(negate_1_0, plain, (~ ((~ p & q) => r)),
+   ..
+   32  
+   33  fof(normalize_1_0, plain, (~ p & ~ r & q),
+   34:     inference(canonicalize, [], [negate_1_0])).
+   35  
+   36  fof(normalize_1_1, plain, ((p | q) & (p | r)),
+   37:     inference(canonicalize, [], [a1])).
+   38  
+   39  fof(normalize_1_2, plain, (p | r),
+   ..
+   44  
+   45  cnf(refute_1_0, plain, ($false),
+   46:     inference(canonicalize, [], [normalize_1_3])).
+   47  SZS output end CNFRefutation for test/prop-pack/problems/disjunction/disj-6.tptp
+   48  
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-7.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ p),
+   16:     inference(canonicalize, [], [negate_0_0])).
+   17  
+   18  fof(normalize_0_1, plain, ((p & q) | (p & r)),
+   19:     inference(canonicalize, [], [a1])).
+   20  
+   21  fof(normalize_0_2, plain, (p & (p | q) & (p | r) & (q | r)),
+   ..
+   25  
+   26  cnf(refute_0_0, plain, (~ p),
+   27:     inference(canonicalize, [], [normalize_0_0])).
+   28  
+   29: cnf(refute_0_1, plain, (p), inference(canonicalize, [], [normalize_0_3])).
+   30  
+   31  cnf(refute_0_2, plain, ($false),
+   ..
+   36  
+   37  fof(normalize_1_0, plain, ((p & q) | (p & r)),
+   38:     inference(canonicalize, [], [a1])).
+   39  
+   40  fof(normalize_1_1, plain, (p & (p | q) & (p | r) & (q | r)),
+   ..
+   45  
+   46  fof(normalize_1_3, plain, (~ q & ~ r & p),
+   47:     inference(canonicalize, [], [negate_1_0])).
+   48  
+   49  fof(normalize_1_4, plain, (~ q), inference(conjunct, [], [normalize_1_3])).
+   ..
+   52  
+   53  cnf(refute_1_0, plain, (q | r),
+   54:     inference(canonicalize, [], [normalize_1_2])).
+   55  
+   56  cnf(refute_1_1, plain, (~ q),
+   57:     inference(canonicalize, [], [normalize_1_4])).
+   58  
+   59  cnf(refute_1_2, plain, (r),
+   ..
+   61  
+   62  cnf(refute_1_3, plain, (~ r),
+   63:     inference(canonicalize, [], [normalize_1_5])).
+   64  
+   65  cnf(refute_1_4, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-8.tstp:
+   15  
+   16  fof(normalize_0_0, plain, (p | (q & r)),
+   17:     inference(canonicalize, [], [a1])).
+   18  
+   19  fof(normalize_0_1, plain, ((p | q) & (p | r)),
+   ..
+   24  
+   25  fof(normalize_0_3, plain, (~ p & ~ q),
+   26:     inference(canonicalize, [], [negate_0_0])).
+   27  
+   28  fof(normalize_0_4, plain, (~ p), inference(conjunct, [], [normalize_0_3])).
+   ..
+   31  
+   32  cnf(refute_0_0, plain, (p | q),
+   33:     inference(canonicalize, [], [normalize_0_2])).
+   34  
+   35  cnf(refute_0_1, plain, (~ p),
+   36:     inference(canonicalize, [], [normalize_0_4])).
+   37  
+   38  cnf(refute_0_2, plain, (q),
+   ..
+   40  
+   41  cnf(refute_0_3, plain, (~ q),
+   42:     inference(canonicalize, [], [normalize_0_5])).
+   43  
+   44  cnf(refute_0_4, plain, ($false),
+   ..
+   49  
+   50  fof(normalize_1_0, plain, (p | (q & r)),
+   51:     inference(canonicalize, [], [a1])).
+   52  
+   53  fof(normalize_1_1, plain, ((p | q) & (p | r)),
+   ..
+   58  
+   59  fof(normalize_1_3, plain, (~ p & ~ r & (p | q)),
+   60:     inference(canonicalize, [], [negate_1_0])).
+   61  
+   62  fof(normalize_1_4, plain, (~ p), inference(conjunct, [], [normalize_1_3])).
+   ..
+   65  
+   66  cnf(refute_1_0, plain, (p | r),
+   67:     inference(canonicalize, [], [normalize_1_2])).
+   68  
+   69  cnf(refute_1_1, plain, (~ p),
+   70:     inference(canonicalize, [], [normalize_1_4])).
+   71  
+   72  cnf(refute_1_2, plain, (r),
+   ..
+   74  
+   75  cnf(refute_1_3, plain, (~ r),
+   76:     inference(canonicalize, [], [normalize_1_5])).
+   77  
+   78  cnf(refute_1_4, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-9.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ q & p),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (~ p | q), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, ($false),
+   ..
+   20  
+   21  cnf(refute_0_0, plain, ($false),
+   22:     inference(canonicalize, [], [normalize_0_2])).
+   23  SZS output end CNFRefutation for test/prop-pack/problems/disjunction/disj-9.tptp
+   24  
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-1.tstp:
+   10  
+   11  fof(normalize_0_0, plain, ($false),
+   12:     inference(canonicalize, [], [negate_0_0])).
+   13  
+   14  cnf(refute_0_0, plain, ($false),
+   15:     inference(canonicalize, [], [normalize_0_0])).
+   16  SZS output end CNFRefutation for test/prop-pack/problems/implication/impl-1.tptp
+   17  
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-10.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ r & p & (~ p | q) & (~ p | ~ q | r)),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16  fof(normalize_0_1, plain, (~ p | ~ q | r),
+   ..
+   33  
+   34  cnf(refute_0_0, plain, ($false),
+   35:     inference(canonicalize, [], [normalize_0_6])).
+   36  SZS output end CNFRefutation for test/prop-pack/problems/implication/impl-10.tptp
+   37  
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-11.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ q & p),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (p & q), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, (q), inference(conjunct, [], [normalize_0_1])).
+   ..
+   25  
+   26  cnf(refute_0_0, plain, ($false),
+   27:     inference(canonicalize, [], [normalize_0_4])).
+   28  SZS output end CNFRefutation for test/prop-pack/problems/implication/impl-11.tptp
+   29  
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-12.tstp:
+   11  
+   12  fof(normalize_0_0, plain, ($false),
+   13:     inference(canonicalize, [], [negate_0_0])).
+   14  
+   15  cnf(refute_0_0, plain, ($false),
+   16:     inference(canonicalize, [], [normalize_0_0])).
+   17  SZS output end CNFRefutation for test/prop-pack/problems/implication/impl-12.tptp
+   18  
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-13.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p | (q & r)),
+   14:     inference(canonicalize, [], [a1])).
+   15  
+   16  fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
+   ..
+   21  
+   22  fof(normalize_0_3, plain, (~ q & p),
+   23:     inference(canonicalize, [], [negate_0_0])).
+   24  
+   25  fof(normalize_0_4, plain, (p), inference(conjunct, [], [normalize_0_3])).
+   ..
+   28  
+   29  cnf(refute_0_0, plain, (~ p | q),
+   30:     inference(canonicalize, [], [normalize_0_2])).
+   31  
+   32: cnf(refute_0_1, plain, (p), inference(canonicalize, [], [normalize_0_4])).
+   33  
+   34  cnf(refute_0_2, plain, (q),
+   ..
+   36  
+   37  cnf(refute_0_3, plain, (~ q),
+   38:     inference(canonicalize, [], [normalize_0_5])).
+   39  
+   40  cnf(refute_0_4, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-14.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p & q),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (~ q | p), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, ($false),
+   ..
+   20  
+   21  cnf(refute_0_0, plain, ($false),
+   22:     inference(canonicalize, [], [normalize_0_2])).
+   23  SZS output end CNFRefutation for test/prop-pack/problems/implication/impl-14.tptp
+   24  
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-15.tstp:
+   13  
+   14  fof(normalize_0_0, plain, (~ r & p & q),
+   15:     inference(canonicalize, [], [negate_0_0])).
+   16  
+   17  fof(normalize_0_1, plain, (~ p | ~ q | r),
+   18:     inference(canonicalize, [], [a1])).
+   19  
+   20  fof(normalize_0_2, plain, ($false),
+   ..
+   22  
+   23  cnf(refute_0_0, plain, ($false),
+   24:     inference(canonicalize, [], [normalize_0_2])).
+   25  SZS output end CNFRefutation for test/prop-pack/problems/implication/impl-15.tptp
+   26  
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-16.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ q & p),
+   16:     inference(canonicalize, [], [negate_0_0])).
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
+   19:     inference(canonicalize, [], [a1])).
+   20  
+   21  fof(normalize_0_2, plain, (~ p | q),
+   ..
+   26  
+   27  cnf(refute_0_0, plain, ($false),
+   28:     inference(canonicalize, [], [normalize_0_3])).
+   29  
+   30  fof(negate_1_0, plain, (~ ((p & q) => r)),
+   ..
+   32  
+   33  fof(normalize_1_0, plain, (~ r & p & q),
+   34:     inference(canonicalize, [], [negate_1_0])).
+   35  
+   36  fof(normalize_1_1, plain, ((~ p | q) & (~ p | r)),
+   37:     inference(canonicalize, [], [a1])).
+   38  
+   39  fof(normalize_1_2, plain, (~ p | r),
+   ..
+   44  
+   45  cnf(refute_1_0, plain, ($false),
+   46:     inference(canonicalize, [], [normalize_1_3])).
+   47  SZS output end CNFRefutation for test/prop-pack/problems/implication/impl-16.tptp
+   48  
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-17.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ p | (q & r)),
+   16:     inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
+   ..
+   23  
+   24  fof(normalize_0_3, plain, (~ q & p),
+   25:     inference(canonicalize, [], [negate_0_0])).
+   26  
+   27  fof(normalize_0_4, plain, (p), inference(conjunct, [], [normalize_0_3])).
+   ..
+   30  
+   31  cnf(refute_0_0, plain, (~ p | q),
+   32:     inference(canonicalize, [], [normalize_0_2])).
+   33  
+   34: cnf(refute_0_1, plain, (p), inference(canonicalize, [], [normalize_0_4])).
+   35  
+   36  cnf(refute_0_2, plain, (q),
+   ..
+   38  
+   39  cnf(refute_0_3, plain, (~ q),
+   40:     inference(canonicalize, [], [normalize_0_5])).
+   41  
+   42  cnf(refute_0_4, plain, ($false),
+   ..
+   47  
+   48  fof(normalize_1_0, plain, (~ p | (q & r)),
+   49:     inference(canonicalize, [], [a1])).
+   50  
+   51  fof(normalize_1_1, plain, ((~ p | q) & (~ p | r)),
+   ..
+   56  
+   57  fof(normalize_1_3, plain, (~ r & p & (~ p | q)),
+   58:     inference(canonicalize, [], [negate_1_0])).
+   59  
+   60  fof(normalize_1_4, plain, (p), inference(conjunct, [], [normalize_1_3])).
+   ..
+   63  
+   64  cnf(refute_1_0, plain, (~ p | r),
+   65:     inference(canonicalize, [], [normalize_1_2])).
+   66  
+   67: cnf(refute_1_1, plain, (p), inference(canonicalize, [], [normalize_1_4])).
+   68  
+   69  cnf(refute_1_2, plain, (r),
+   ..
+   71  
+   72  cnf(refute_1_3, plain, (~ r),
+   73:     inference(canonicalize, [], [normalize_1_5])).
+   74  
+   75  cnf(refute_1_4, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-18.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ p1),
+   16:     inference(canonicalize, [], [negate_0_0])).
+   17  
+   18  fof(normalize_0_1, plain, (p1 & p2 & p3 & p4 & p5),
+   19:     inference(canonicalize, [], [a1])).
+   20  
+   21  fof(normalize_0_2, plain, (p1), inference(conjunct, [], [normalize_0_1])).
+   ..
+   25  
+   26  cnf(refute_0_0, plain, ($false),
+   27:     inference(canonicalize, [], [normalize_0_3])).
+   28  
+   29  fof(negate_1_0, plain, (~ (p1 => p1)), inference(negate, [], [subgoal_1])).
+   30  
+   31  fof(normalize_1_0, plain, ($false),
+   32:     inference(canonicalize, [], [negate_1_0])).
+   33  
+   34  cnf(refute_1_0, plain, ($false),
+   35:     inference(canonicalize, [], [normalize_1_0])).
+   36  SZS output end CNFRefutation for test/prop-pack/problems/implication/impl-18.tptp
+   37  
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-2.tstp:
+   11  
+   12  fof(normalize_0_0, plain, ($false),
+   13:     inference(canonicalize, [], [negate_0_0])).
+   14  
+   15  cnf(refute_0_0, plain, ($false),
+   16:     inference(canonicalize, [], [normalize_0_0])).
+   17  SZS output end CNFRefutation for test/prop-pack/problems/implication/impl-2.tptp
+   18  
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-3.tstp:
+   13  fof(negate_0_0, plain, (~ (p => r)), inference(negate, [], [subgoal_0])).
+   14  
+   15: fof(normalize_0_0, plain, (~ q | r), inference(canonicalize, [], [a2])).
+   16  
+   17: fof(normalize_0_1, plain, (~ p | q), inference(canonicalize, [], [a1])).
+   18  
+   19  fof(normalize_0_2, plain, (~ r & p),
+   20:     inference(canonicalize, [], [negate_0_0])).
+   21  
+   22  fof(normalize_0_3, plain, (p), inference(conjunct, [], [normalize_0_2])).
+   ..
+   25  
+   26  cnf(refute_0_0, plain, (~ q | r),
+   27:     inference(canonicalize, [], [normalize_0_0])).
+   28  
+   29  cnf(refute_0_1, plain, (~ p | q),
+   30:     inference(canonicalize, [], [normalize_0_1])).
+   31  
+   32: cnf(refute_0_2, plain, (p), inference(canonicalize, [], [normalize_0_3])).
+   33  
+   34  cnf(refute_0_3, plain, (q),
+   ..
+   39  
+   40  cnf(refute_0_5, plain, (~ r),
+   41:     inference(canonicalize, [], [normalize_0_4])).
+   42  
+   43  cnf(refute_0_6, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-4.tstp:
+   11  
+   12  fof(normalize_0_0, plain, (~ q & p & (~ p | q)),
+   13:     inference(canonicalize, [], [negate_0_0])).
+   14  
+   15  fof(normalize_0_1, plain, (~ p | q),
+   ..
+   25  
+   26  cnf(refute_0_0, plain, ($false),
+   27:     inference(canonicalize, [], [normalize_0_4])).
+   28  SZS output end CNFRefutation for test/prop-pack/problems/implication/impl-4.tptp
+   29  
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-5.tstp:
+   13  
+   14  fof(normalize_0_0, plain, (~ p | r | (~ q & p)),
+   15:     inference(canonicalize, [], [a1])).
+   16  
+   17  fof(normalize_0_1, plain, (~ p | ~ q | r),
+   ..
+   19  
+   20  fof(normalize_0_2, plain, (~ r & p & q),
+   21:     inference(canonicalize, [], [negate_0_0])).
+   22  
+   23  fof(normalize_0_3, plain, (p), inference(conjunct, [], [normalize_0_2])).
+   ..
+   28  
+   29  cnf(refute_0_0, plain, (~ p | ~ q | r),
+   30:     inference(canonicalize, [], [normalize_0_1])).
+   31  
+   32: cnf(refute_0_1, plain, (p), inference(canonicalize, [], [normalize_0_3])).
+   33  
+   34  cnf(refute_0_2, plain, (~ q | r),
+   35      inference(resolve, [$cnf(p)], [refute_0_1, refute_0_0])).
+   36  
+   37: cnf(refute_0_3, plain, (q), inference(canonicalize, [], [normalize_0_4])).
+   38  
+   39  cnf(refute_0_4, plain, (r),
+   ..
+   41  
+   42  cnf(refute_0_5, plain, (~ r),
+   43:     inference(canonicalize, [], [normalize_0_5])).
+   44  
+   45  cnf(refute_0_6, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-6.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p & q),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16  fof(normalize_0_1, plain, (~ p), inference(conjunct, [], [normalize_0_0])).
+   17  
+   18  fof(normalize_0_2, plain, (p | (~ q & p)),
+   19:     inference(canonicalize, [], [a1])).
+   20  
+   21  fof(normalize_0_3, plain, (p & (~ q | p)),
+   ..
+   25  
+   26  cnf(refute_0_0, plain, (~ p),
+   27:     inference(canonicalize, [], [normalize_0_1])).
+   28  
+   29: cnf(refute_0_1, plain, (p), inference(canonicalize, [], [normalize_0_4])).
+   30  
+   31  cnf(refute_0_2, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-7.tstp:
+   13  
+   14  fof(normalize_0_0, plain, (~ r & p & q),
+   15:     inference(canonicalize, [], [negate_0_0])).
+   16  
+   17  fof(normalize_0_1, plain, (~ p | ~ q | r),
+   18:     inference(canonicalize, [], [a1])).
+   19  
+   20  fof(normalize_0_2, plain, ($false),
+   ..
+   22  
+   23  cnf(refute_0_0, plain, ($false),
+   24:     inference(canonicalize, [], [normalize_0_2])).
+   25  SZS output end CNFRefutation for test/prop-pack/problems/implication/impl-7.tptp
+   26  
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-8.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ p | ~ q | r),
+   16:     inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_1, plain, (~ r & p),
+   19:     inference(canonicalize, [], [negate_0_0])).
+   20  
+   21  fof(normalize_0_2, plain, (p), inference(conjunct, [], [normalize_0_1])).
+   22  
+   23: fof(normalize_0_3, plain, (~ p | q), inference(canonicalize, [], [a2])).
+   24  
+   25  fof(normalize_0_4, plain, (~ r), inference(conjunct, [], [normalize_0_1])).
+   26  
+   27  cnf(refute_0_0, plain, (~ p | ~ q | r),
+   28:     inference(canonicalize, [], [normalize_0_0])).
+   29  
+   30: cnf(refute_0_1, plain, (p), inference(canonicalize, [], [normalize_0_2])).
+   31  
+   32  cnf(refute_0_2, plain, (~ q | r),
+   ..
+   34  
+   35  cnf(refute_0_3, plain, (~ p | q),
+   36:     inference(canonicalize, [], [normalize_0_3])).
+   37  
+   38  cnf(refute_0_4, plain, (q),
+   ..
+   43  
+   44  cnf(refute_0_6, plain, (~ r),
+   45:     inference(canonicalize, [], [normalize_0_4])).
+   46  
+   47  cnf(refute_0_7, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-9.tstp:
+   13  
+   14  fof(normalize_0_0, plain, (~ r & (~ q | r)),
+   15:     inference(canonicalize, [], [negate_0_0])).
+   16  
+   17: fof(normalize_0_1, plain, (q), inference(canonicalize, [], [a1])).
+   18  
+   19  fof(normalize_0_2, plain, ($false),
+   ..
+   21  
+   22  cnf(refute_0_0, plain, ($false),
+   23:     inference(canonicalize, [], [normalize_0_2])).
+   24  SZS output end CNFRefutation for test/prop-pack/problems/implication/impl-9.tptp
+   25  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-1.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (p), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, ($false),
+   ..
+   20  
+   21  cnf(refute_0_0, plain, ($false),
+   22:     inference(canonicalize, [], [normalize_0_2])).
+   23  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-1.tptp
+   24  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-10.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ q & p),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (~ p), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, ($false),
+   ..
+   20  
+   21  cnf(refute_0_0, plain, ($false),
+   22:     inference(canonicalize, [], [normalize_0_2])).
+   23  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-10.tptp
+   24  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-11.tstp:
+   11  fof(negate_0_0, plain, (~ q), inference(negate, [], [subgoal_0])).
+   12  
+   13: fof(normalize_0_0, plain, ($false), inference(canonicalize, [], [a1])).
+   14  
+   15  cnf(refute_0_0, plain, ($false),
+   16:     inference(canonicalize, [], [normalize_0_0])).
+   17  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-11.tptp
+   18  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-12.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p & ~ q),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (p | q), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, ($false),
+   ..
+   20  
+   21  cnf(refute_0_0, plain, ($false),
+   22:     inference(canonicalize, [], [normalize_0_2])).
+   23  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-12.tptp
+   24  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-13.tstp:
+   13  fof(negate_0_0, plain, (~ r), inference(negate, [], [subgoal_0])).
+   14  
+   15: fof(normalize_0_0, plain, (~ q & p), inference(canonicalize, [], [a])).
+   16  
+   17: fof(normalize_0_1, plain, (~ p | q), inference(canonicalize, [], [a1])).
+   18  
+   19  fof(normalize_0_2, plain, ($false),
+   ..
+   21  
+   22  cnf(refute_0_0, plain, ($false),
+   23:     inference(canonicalize, [], [normalize_0_2])).
+   24  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-13.tptp
+   25  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-14.tstp:
+   15  fof(negate_0_0, plain, (~ r), inference(negate, [], [subgoal_0])).
+   16  
+   17: fof(normalize_0_0, plain, (~ p | ~ q), inference(canonicalize, [], [a3])).
+   18  
+   19  fof(normalize_0_1, plain, (~ p <=> ~ q),
+   20:     inference(canonicalize, [], [a2])).
+   21  
+   22  fof(normalize_0_2, plain, ((~ p | q) & (~ q | p)),
+   ..
+   26      inference(conjunct, [], [normalize_0_2])).
+   27  
+   28: fof(normalize_0_4, plain, (p | q), inference(canonicalize, [], [a1])).
+   29  
+   30  fof(normalize_0_5, plain, (~ p | q),
+   ..
+   32  
+   33  cnf(refute_0_0, plain, (~ p | ~ q),
+   34:     inference(canonicalize, [], [normalize_0_0])).
+   35  
+   36  cnf(refute_0_1, plain, (~ q | p),
+   37:     inference(canonicalize, [], [normalize_0_3])).
+   38  
+   39  cnf(refute_0_2, plain, (p | q),
+   40:     inference(canonicalize, [], [normalize_0_4])).
+   41  
+   42  cnf(refute_0_3, plain, (p),
+   ..
+   47  
+   48  cnf(refute_0_5, plain, (~ p | q),
+   49:     inference(canonicalize, [], [normalize_0_5])).
+   50  
+   51  cnf(refute_0_6, plain, (q),
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-15.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (p), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, ($false),
+   ..
+   20  
+   21  cnf(refute_0_0, plain, ($false),
+   22:     inference(canonicalize, [], [normalize_0_2])).
+   23  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-15.tptp
+   24  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-16.tstp:
+   11  
+   12  fof(normalize_0_0, plain, ($false),
+   13:     inference(canonicalize, [], [negate_0_0])).
+   14  
+   15  cnf(refute_0_0, plain, ($false),
+   16:     inference(canonicalize, [], [normalize_0_0])).
+   17  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-16.tptp
+   18  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-17.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p & ~ q),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (p | q), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, ($false),
+   ..
+   20  
+   21  cnf(refute_0_0, plain, ($false),
+   22:     inference(canonicalize, [], [normalize_0_2])).
+   23  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-17.tptp
+   24  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-18.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ p),
+   16:     inference(canonicalize, [], [negate_0_0])).
+   17  
+   18: fof(normalize_0_1, plain, (p & q), inference(canonicalize, [], [a1])).
+   19  
+   20  fof(normalize_0_2, plain, (p), inference(conjunct, [], [normalize_0_1])).
+   ..
+   24  
+   25  cnf(refute_0_0, plain, ($false),
+   26:     inference(canonicalize, [], [normalize_0_3])).
+   27  
+   28  fof(negate_1_0, plain, (~ (p => q)), inference(negate, [], [subgoal_1])).
+   29  
+   30  fof(normalize_1_0, plain, (~ q & p),
+   31:     inference(canonicalize, [], [negate_1_0])).
+   32  
+   33: fof(normalize_1_1, plain, (p & q), inference(canonicalize, [], [a1])).
+   34  
+   35  fof(normalize_1_2, plain, (q), inference(conjunct, [], [normalize_1_1])).
+   ..
+   42  
+   43  cnf(refute_1_0, plain, ($false),
+   44:     inference(canonicalize, [], [normalize_1_4])).
+   45  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-18.tptp
+   46  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-19.tstp:
+   13  
+   14  fof(normalize_0_0, plain, (p & q),
+   15:     inference(canonicalize, [], [negate_0_0])).
+   16  
+   17: fof(normalize_0_1, plain, (~ p | ~ q), inference(canonicalize, [], [a1])).
+   18  
+   19  fof(normalize_0_2, plain, ($false),
+   ..
+   21  
+   22  cnf(refute_0_0, plain, ($false),
+   23:     inference(canonicalize, [], [normalize_0_2])).
+   24  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-19.tptp
+   25  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-2.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (p & q),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (~ p), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, ($false),
+   ..
+   20  
+   21  cnf(refute_0_0, plain, ($false),
+   22:     inference(canonicalize, [], [normalize_0_2])).
+   23  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-2.tptp
+   24  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-20.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (~ q & p), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, (p), inference(conjunct, [], [normalize_0_1])).
+   ..
+   22  
+   23  cnf(refute_0_0, plain, ($false),
+   24:     inference(canonicalize, [], [normalize_0_3])).
+   25  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-20.tptp
+   26  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-21.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16  fof(normalize_0_1, plain, (p | (~ q & p)),
+   17:     inference(canonicalize, [], [a1])).
+   18  
+   19  fof(normalize_0_2, plain, (p & (~ q | p)),
+   ..
+   23  
+   24  cnf(refute_0_0, plain, (~ p),
+   25:     inference(canonicalize, [], [normalize_0_0])).
+   26  
+   27: cnf(refute_0_1, plain, (p), inference(canonicalize, [], [normalize_0_3])).
+   28  
+   29  cnf(refute_0_2, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-22.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ p <=> ~ q),
+   16:     inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_1, plain, ((~ p | q) & (~ q | p)),
+   ..
+   23  
+   24  fof(normalize_0_3, plain, (~ q & p),
+   25:     inference(canonicalize, [], [negate_0_0])).
+   26  
+   27  fof(normalize_0_4, plain, (p), inference(conjunct, [], [normalize_0_3])).
+   ..
+   30  
+   31  cnf(refute_0_0, plain, (~ p | q),
+   32:     inference(canonicalize, [], [normalize_0_2])).
+   33  
+   34: cnf(refute_0_1, plain, (p), inference(canonicalize, [], [normalize_0_4])).
+   35  
+   36  cnf(refute_0_2, plain, (q),
+   ..
+   38  
+   39  cnf(refute_0_3, plain, (~ q),
+   40:     inference(canonicalize, [], [normalize_0_5])).
+   41  
+   42  cnf(refute_0_4, plain, ($false),
+   ..
+   46  
+   47  fof(normalize_1_0, plain, (~ p <=> ~ q),
+   48:     inference(canonicalize, [], [a1])).
+   49  
+   50  fof(normalize_1_1, plain, ((~ p | q) & (~ q | p)),
+   ..
+   55  
+   56  fof(normalize_1_3, plain, (~ p & q),
+   57:     inference(canonicalize, [], [negate_1_0])).
+   58  
+   59  fof(normalize_1_4, plain, (q), inference(conjunct, [], [normalize_1_3])).
+   ..
+   62  
+   63  cnf(refute_1_0, plain, (~ q | p),
+   64:     inference(canonicalize, [], [normalize_1_2])).
+   65  
+   66: cnf(refute_1_1, plain, (q), inference(canonicalize, [], [normalize_1_4])).
+   67  
+   68  cnf(refute_1_2, plain, (p),
+   ..
+   70  
+   71  cnf(refute_1_3, plain, (~ p),
+   72:     inference(canonicalize, [], [normalize_1_5])).
+   73  
+   74  cnf(refute_1_4, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-23.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (q | (~ q & p)),
+   14:     inference(canonicalize, [], [a1])).
+   15  
+   16  fof(normalize_0_1, plain, (p | q),
+   ..
+   18  
+   19  fof(normalize_0_2, plain, (~ p & ~ q),
+   20:     inference(canonicalize, [], [negate_0_0])).
+   21  
+   22  fof(normalize_0_3, plain, (~ p), inference(conjunct, [], [normalize_0_2])).
+   ..
+   25  
+   26  cnf(refute_0_0, plain, (p | q),
+   27:     inference(canonicalize, [], [normalize_0_1])).
+   28  
+   29  cnf(refute_0_1, plain, (~ p),
+   30:     inference(canonicalize, [], [normalize_0_3])).
+   31  
+   32  cnf(refute_0_2, plain, (q),
+   ..
+   34  
+   35  cnf(refute_0_3, plain, (~ q),
+   36:     inference(canonicalize, [], [normalize_0_4])).
+   37  
+   38  cnf(refute_0_4, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-24.tstp:
+   13  fof(negate_0_0, plain, (~ ~ p), inference(negate, [], [subgoal_0])).
+   14  
+   15: fof(normalize_0_0, plain, (p), inference(canonicalize, [], [negate_0_0])).
+   16  
+   17: fof(normalize_0_1, plain, (~ p & ~ q), inference(canonicalize, [], [a1])).
+   18  
+   19  fof(normalize_0_2, plain, (~ p), inference(conjunct, [], [normalize_0_1])).
+   ..
+   23  
+   24  cnf(refute_0_0, plain, ($false),
+   25:     inference(canonicalize, [], [normalize_0_3])).
+   26  
+   27  fof(negate_1_0, plain, (~ (~ p => ~ q)),
+   ..
+   29  
+   30  fof(normalize_1_0, plain, (~ p & q),
+   31:     inference(canonicalize, [], [negate_1_0])).
+   32  
+   33: fof(normalize_1_1, plain, (~ p & ~ q), inference(canonicalize, [], [a1])).
+   34  
+   35  fof(normalize_1_2, plain, (~ p), inference(conjunct, [], [normalize_1_1])).
+   ..
+   42  
+   43  cnf(refute_1_0, plain, ($false),
+   44:     inference(canonicalize, [], [normalize_1_4])).
+   45  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-24.tptp
+   46  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-25.tstp:
+   11  
+   12  fof(normalize_0_0, plain, ($false),
+   13:     inference(canonicalize, [], [negate_0_0])).
+   14  
+   15  cnf(refute_0_0, plain, ($false),
+   16:     inference(canonicalize, [], [normalize_0_0])).
+   17  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-25.tptp
+   18  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-26.tstp:
+   12  
+   13  fof(normalize_0_0, plain, ($false),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16  cnf(refute_0_0, plain, ($false),
+   17:     inference(canonicalize, [], [normalize_0_0])).
+   18  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-26.tptp
+   19  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-27.tstp:
+   18  
+   19  fof(normalize_0_0, plain, (~ p | q1 | q2),
+   20:     inference(canonicalize, [], [a3])).
+   21  
+   22: fof(normalize_0_1, plain, (~ q2 & ~ r), inference(canonicalize, [], [a4])).
+   23  
+   24  fof(normalize_0_2, plain, (~ q2),
+   25      inference(conjunct, [], [normalize_0_1])).
+   26  
+   27: fof(normalize_0_3, plain, (p | q), inference(canonicalize, [], [a1])).
+   28  
+   29: fof(normalize_0_4, plain, (~ q | r), inference(canonicalize, [], [a2])).
+   30  
+   31  fof(normalize_0_5, plain, (~ r), inference(conjunct, [], [normalize_0_1])).
+   32  
+   33  fof(normalize_0_6, plain, (~ q1),
+   34:     inference(canonicalize, [], [negate_0_0])).
+   35  
+   36  cnf(refute_0_0, plain, (~ p | q1 | q2),
+   37:     inference(canonicalize, [], [normalize_0_0])).
+   38  
+   39  cnf(refute_0_1, plain, (~ q2),
+   40:     inference(canonicalize, [], [normalize_0_2])).
+   41  
+   42  cnf(refute_0_2, plain, (~ p | q1),
+   ..
+   44  
+   45  cnf(refute_0_3, plain, (p | q),
+   46:     inference(canonicalize, [], [normalize_0_3])).
+   47  
+   48  cnf(refute_0_4, plain, (~ q | r),
+   49:     inference(canonicalize, [], [normalize_0_4])).
+   50  
+   51  cnf(refute_0_5, plain, (~ r),
+   52:     inference(canonicalize, [], [normalize_0_5])).
+   53  
+   54  cnf(refute_0_6, plain, (~ q),
+   ..
+   62  
+   63  cnf(refute_0_9, plain, (~ q1),
+   64:     inference(canonicalize, [], [normalize_0_6])).
+   65  
+   66  cnf(refute_0_10, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-28.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ q & ~ r & p),
+   16:     inference(canonicalize, [], [negate_0_0])).
+   17  
+   18  fof(normalize_0_1, plain, (~ p | q | r),
+   19:     inference(canonicalize, [], [a1])).
+   20  
+   21  fof(normalize_0_2, plain, ($false),
+   ..
+   23  
+   24  cnf(refute_0_0, plain, ($false),
+   25:     inference(canonicalize, [], [normalize_0_2])).
+   26  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-28.tptp
+   27  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-29.tstp:
+   15  
+   16  fof(normalize_0_0, plain, (p & q & (~ p | ~ q)),
+   17:     inference(canonicalize, [], [negate_0_0])).
+   18  
+   19  fof(normalize_0_1, plain, (~ p | ~ q),
+   ..
+   29  
+   30  cnf(refute_0_0, plain, ($false),
+   31:     inference(canonicalize, [], [normalize_0_4])).
+   32  
+   33  fof(negate_1_0, plain, (~ (((~ p | ~ q) & p) => ~ q)),
+   ..
+   35  
+   36  fof(normalize_1_0, plain, (p & q & (~ p | ~ q)),
+   37:     inference(canonicalize, [], [negate_1_0])).
+   38  
+   39  fof(normalize_1_1, plain, (~ p | ~ q),
+   ..
+   49  
+   50  cnf(refute_1_0, plain, ($false),
+   51:     inference(canonicalize, [], [normalize_1_4])).
+   52  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-29.tptp
+   53  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-3.tstp:
+   11  fof(negate_0_0, plain, (~ ~ p), inference(negate, [], [subgoal_0])).
+   12  
+   13: fof(normalize_0_0, plain, (p), inference(canonicalize, [], [negate_0_0])).
+   14  
+   15: fof(normalize_0_1, plain, (~ p), inference(canonicalize, [], [a1])).
+   16  
+   17  fof(normalize_0_2, plain, ($false),
+   ..
+   19  
+   20  cnf(refute_0_0, plain, ($false),
+   21:     inference(canonicalize, [], [normalize_0_2])).
+   22  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-3.tptp
+   23  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-30.tstp:
+   11  fof(negate_0_0, plain, (~ ~ p), inference(negate, [], [subgoal_0])).
+   12  
+   13: fof(normalize_0_0, plain, (p), inference(canonicalize, [], [negate_0_0])).
+   14  
+   15: fof(normalize_0_1, plain, (~ p), inference(canonicalize, [], [a1])).
+   16  
+   17  fof(normalize_0_2, plain, ($false),
+   ..
+   19  
+   20  cnf(refute_0_0, plain, ($false),
+   21:     inference(canonicalize, [], [normalize_0_2])).
+   22  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-30.tptp
+   23  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-31.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (p), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, ($false),
+   ..
+   20  
+   21  cnf(refute_0_0, plain, ($false),
+   22:     inference(canonicalize, [], [normalize_0_2])).
+   23  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-31.tptp
+   24  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-32.tstp:
+   14  
+   15  fof(normalize_0_0, plain, (~ p),
+   16:     inference(canonicalize, [], [negate_0_0])).
+   17  
+   18: fof(normalize_0_1, plain, (p & q), inference(canonicalize, [], [a1])).
+   19  
+   20  fof(normalize_0_2, plain, (p), inference(conjunct, [], [normalize_0_1])).
+   ..
+   24  
+   25  cnf(refute_0_0, plain, ($false),
+   26:     inference(canonicalize, [], [normalize_0_3])).
+   27  
+   28  fof(negate_1_0, plain, (~ (p => q)), inference(negate, [], [subgoal_1])).
+   29  
+   30  fof(normalize_1_0, plain, (~ q & p),
+   31:     inference(canonicalize, [], [negate_1_0])).
+   32  
+   33: fof(normalize_1_1, plain, (p & q), inference(canonicalize, [], [a1])).
+   34  
+   35  fof(normalize_1_2, plain, (q), inference(conjunct, [], [normalize_1_1])).
+   ..
+   42  
+   43  cnf(refute_1_0, plain, ($false),
+   44:     inference(canonicalize, [], [normalize_1_4])).
+   45  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-32.tptp
+   46  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-4.tstp:
+   11  fof(negate_0_0, plain, (~ ~ q), inference(negate, [], [subgoal_0])).
+   12  
+   13: fof(normalize_0_0, plain, (q), inference(canonicalize, [], [negate_0_0])).
+   14  
+   15: fof(normalize_0_1, plain, (~ q & p), inference(canonicalize, [], [a1])).
+   16  
+   17  fof(normalize_0_2, plain, (~ q), inference(conjunct, [], [normalize_0_1])).
+   ..
+   21  
+   22  cnf(refute_0_0, plain, ($false),
+   23:     inference(canonicalize, [], [normalize_0_3])).
+   24  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-4.tptp
+   25  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-5.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (p & q),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (~ p | ~ q), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, ($false),
+   ..
+   20  
+   21  cnf(refute_0_0, plain, ($false),
+   22:     inference(canonicalize, [], [normalize_0_2])).
+   23  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-5.tptp
+   24  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-6.tstp:
+   13  
+   14  fof(normalize_0_0, plain, (~ q & p),
+   15:     inference(canonicalize, [], [negate_0_0])).
+   16  
+   17: fof(normalize_0_1, plain, (~ p | q), inference(canonicalize, [], [a1])).
+   18  
+   19  fof(normalize_0_2, plain, ($false),
+   ..
+   21  
+   22  cnf(refute_0_0, plain, ($false),
+   23:     inference(canonicalize, [], [normalize_0_2])).
+   24  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-6.tptp
+   25  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-7.tstp:
+   13  
+   14  fof(normalize_0_0, plain, ($false),
+   15:     inference(canonicalize, [], [negate_0_0])).
+   16  
+   17  cnf(refute_0_0, plain, ($false),
+   18:     inference(canonicalize, [], [normalize_0_0])).
+   19  
+   20  fof(negate_1_0, plain, (~ ((~ (p & ~ p) & q) => q)),
+   ..
+   22  
+   23  fof(normalize_1_0, plain, ($false),
+   24:     inference(canonicalize, [], [negate_1_0])).
+   25  
+   26  cnf(refute_1_0, plain, ($false),
+   27:     inference(canonicalize, [], [normalize_1_0])).
+   28  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-7.tptp
+   29  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-8.tstp:
+   13  fof(negate_0_0, plain, (~ ~ p), inference(negate, [], [subgoal_0])).
+   14  
+   15: fof(normalize_0_0, plain, (p), inference(canonicalize, [], [negate_0_0])).
+   16  
+   17: fof(normalize_0_1, plain, (~ p & ~ q), inference(canonicalize, [], [a1])).
+   18  
+   19  fof(normalize_0_2, plain, (~ p), inference(conjunct, [], [normalize_0_1])).
+   ..
+   23  
+   24  cnf(refute_0_0, plain, ($false),
+   25:     inference(canonicalize, [], [normalize_0_3])).
+   26  
+   27  fof(negate_1_0, plain, (~ (~ p => ~ q)),
+   ..
+   29  
+   30  fof(normalize_1_0, plain, (~ p & q),
+   31:     inference(canonicalize, [], [negate_1_0])).
+   32  
+   33: fof(normalize_1_1, plain, (~ p & ~ q), inference(canonicalize, [], [a1])).
+   34  
+   35  fof(normalize_1_2, plain, (~ p), inference(conjunct, [], [normalize_1_1])).
+   ..
+   42  
+   43  cnf(refute_1_0, plain, ($false),
+   44:     inference(canonicalize, [], [normalize_1_4])).
+   45  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-8.tptp
+   46  
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-9.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (p & q),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16: fof(normalize_0_1, plain, (~ p | ~ q), inference(canonicalize, [], [a1])).
+   17  
+   18  fof(normalize_0_2, plain, ($false),
+   ..
+   20  
+   21  cnf(refute_0_0, plain, ($false),
+   22:     inference(canonicalize, [], [normalize_0_2])).
+   23  SZS output end CNFRefutation for test/prop-pack/problems/negation/neg-9.tptp
+   24  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-01.tstp:
+   15  
+   16  fof(normalize_0_0, plain, (~ q & p & (~ p | q)),
+   17:     inference(canonicalize, [], [negate_0_0])).
+   18  
+   19  fof(normalize_0_1, plain, (~ p | q),
+   ..
+   29  
+   30  cnf(refute_0_0, plain, ($false),
+   31:     inference(canonicalize, [], [normalize_0_4])).
+   32  
+   33  fof(negate_1_0, plain, (~ (((~ q => ~ p) & p) => q)),
+   ..
+   35  
+   36  fof(normalize_1_0, plain, (~ q & p & (~ p | q)),
+   37:     inference(canonicalize, [], [negate_1_0])).
+   38  
+   39  fof(normalize_1_1, plain, (~ p | q),
+   ..
+   49  
+   50  cnf(refute_1_0, plain, ($false),
+   51:     inference(canonicalize, [], [normalize_1_4])).
+   52  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-01.tptp
+   53  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-02.tstp:
+   13  
+   14  fof(normalize_0_0, plain, ($false),
+   15:     inference(canonicalize, [], [negate_0_0])).
+   16  
+   17  cnf(refute_0_0, plain, ($false),
+   18:     inference(canonicalize, [], [normalize_0_0])).
+   19  
+   20  fof(negate_1_0, plain, (~ (p => p)), inference(negate, [], [subgoal_1])).
+   21  
+   22  fof(normalize_1_0, plain, ($false),
+   23:     inference(canonicalize, [], [negate_1_0])).
+   24  
+   25  cnf(refute_1_0, plain, ($false),
+   26:     inference(canonicalize, [], [normalize_1_0])).
+   27  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-02.tptp
+   28  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-03.tstp:
+   12  
+   13  fof(normalize_0_0, plain, ($false),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16  cnf(refute_0_0, plain, ($false),
+   17:     inference(canonicalize, [], [normalize_0_0])).
+   18  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-03.tptp
+   19  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-04.tstp:
+   15  
+   16  fof(normalize_0_0, plain, (~ p & ~ q & (p | q)),
+   17:     inference(canonicalize, [], [negate_0_0])).
+   18  
+   19  fof(normalize_0_1, plain, (p | q),
+   ..
+   29  
+   30  cnf(refute_0_0, plain, ($false),
+   31:     inference(canonicalize, [], [normalize_0_4])).
+   32  
+   33  fof(negate_1_0, plain, (~ (((~ q => p) & ~ p) => q)),
+   ..
+   35  
+   36  fof(normalize_1_0, plain, (~ p & ~ q & (p | q)),
+   37:     inference(canonicalize, [], [negate_1_0])).
+   38  
+   39  fof(normalize_1_1, plain, (p | q),
+   ..
+   49  
+   50  cnf(refute_1_0, plain, ($false),
+   51:     inference(canonicalize, [], [normalize_1_4])).
+   52  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-04.tptp
+   53  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-05.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p & ~ r & q & (p | r | (~ p & ~ q))),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16  fof(normalize_0_1, plain, (p | r | (~ p & ~ q)),
+   ..
+   29  
+   30  cnf(refute_0_0, plain, ($false),
+   31:     inference(canonicalize, [], [normalize_0_5])).
+   32  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-05.tptp
+   33  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-06.tstp:
+   11  
+   12  fof(normalize_0_0, plain, ($false),
+   13:     inference(canonicalize, [], [negate_0_0])).
+   14  
+   15  cnf(refute_0_0, plain, ($false),
+   16:     inference(canonicalize, [], [normalize_0_0])).
+   17  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-06.tptp
+   18  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-07.tstp:
+   11  
+   12  fof(normalize_0_0, plain, ($false),
+   13:     inference(canonicalize, [], [negate_0_0])).
+   14  
+   15  cnf(refute_0_0, plain, ($false),
+   16:     inference(canonicalize, [], [normalize_0_0])).
+   17  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-07.tptp
+   18  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-08.tstp:
+   12  
+   13  fof(normalize_0_0, plain, (~ p & (p | (~ q & p))),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16  fof(normalize_0_1, plain, (p | (~ q & p)),
+   ..
+   24  
+   25  cnf(refute_0_0, plain, ($false),
+   26:     inference(canonicalize, [], [normalize_0_3])).
+   27  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-08.tptp
+   28  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-09.tstp:
+   16  
+   17  fof(normalize_0_0, plain, (~ q & (~ p | q) & (~ q | p) & (p | q)),
+   18:     inference(canonicalize, [], [negate_0_0])).
+   19  
+   20  fof(normalize_0_1, plain, (p | q),
+   ..
+   34  
+   35  cnf(refute_0_0, plain, ($false),
+   36:     inference(canonicalize, [], [normalize_0_5])).
+   37  
+   38  fof(negate_1_0, plain,
+   ..
+   41  
+   42  fof(normalize_1_0, plain, ($false),
+   43:     inference(canonicalize, [], [negate_1_0])).
+   44  
+   45  cnf(refute_1_0, plain, ($false),
+   46:     inference(canonicalize, [], [normalize_1_0])).
+   47  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-09.tptp
+   48  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-10.tstp:
+   20  fof(normalize_0_0, plain,
+   21      (~ q & p & (~ p | (q & r)) & (~ q | r) & (~ r | (p & q))),
+   22:     inference(canonicalize, [], [negate_0_0])).
+   23  
+   24  fof(normalize_0_1, plain, (~ p | (q & r)),
+   ..
+   34  
+   35  cnf(refute_0_0, plain, ($false),
+   36:     inference(canonicalize, [], [normalize_0_4])).
+   37  
+   38  fof(negate_1_0, plain,
+   ..
+   42  fof(normalize_1_0, plain,
+   43      (~ p & q & (~ p | (q & r)) & (~ q | r) & (~ r | (p & q))),
+   44:     inference(canonicalize, [], [negate_1_0])).
+   45  
+   46  fof(normalize_1_1, plain, (~ r | (p & q)),
+   ..
+   63  
+   64  cnf(refute_1_0, plain, ($false),
+   65:     inference(canonicalize, [], [normalize_1_6])).
+   66  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-10.tptp
+   67  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-11.tstp:
+   12  
+   13  fof(normalize_0_0, plain, ($false),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16  cnf(refute_0_0, plain, ($false),
+   17:     inference(canonicalize, [], [normalize_0_0])).
+   18  
+   19  fof(negate_1_0, plain, (~ (p => p)), inference(negate, [], [subgoal_1])).
+   20  
+   21  fof(normalize_1_0, plain, ($false),
+   22:     inference(canonicalize, [], [negate_1_0])).
+   23  
+   24  cnf(refute_1_0, plain, ($false),
+   25:     inference(canonicalize, [], [normalize_1_0])).
+   26  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-11.tptp
+   27  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-12.tstp:
+   27  
+   28  fof(normalize_0_0, plain, (~ r & p & q & (~ p <=> (~ q <=> r))),
+   29:     inference(canonicalize, [], [negate_0_0])).
+   30  
+   31  fof(normalize_0_1, plain, (~ p <=> (~ q <=> r)),
+   ..
+   44  
+   45  cnf(refute_0_0, plain, ($false),
+   46:     inference(canonicalize, [], [normalize_0_5])).
+   47  
+   48  fof(negate_1_0, plain, (~ ((((p <=> q) <=> r) & p & r) => q)),
+   ..
+   50  
+   51  fof(normalize_1_0, plain, (~ q & p & r & (~ p <=> (~ q <=> r))),
+   52:     inference(canonicalize, [], [negate_1_0])).
+   53  
+   54  fof(normalize_1_1, plain, (~ p <=> (~ q <=> r)),
+   ..
+   67  
+   68  cnf(refute_1_0, plain, ($false),
+   69:     inference(canonicalize, [], [normalize_1_5])).
+   70  
+   71  fof(negate_2_0, plain, (~ ((((p <=> q) <=> r) & (q <=> r)) => p)),
+   ..
+   73  
+   74  fof(normalize_2_0, plain, (~ p & (~ q <=> ~ r) & (~ p <=> (~ q <=> r))),
+   75:     inference(canonicalize, [], [negate_2_0])).
+   76  
+   77  fof(normalize_2_1, plain, (~ p <=> (~ q <=> r)),
+   ..
+   88  
+   89  cnf(refute_2_0, plain, ($false),
+   90:     inference(canonicalize, [], [normalize_2_4])).
+   91  
+   92  fof(negate_3_0, plain, (~ (((p <=> (q <=> r)) & (p <=> q)) => r)),
+   ..
+   94  
+   95  fof(normalize_3_0, plain, (~ r & (~ p <=> ~ q) & (~ p <=> (~ q <=> r))),
+   96:     inference(canonicalize, [], [negate_3_0])).
+   97  
+   98  fof(normalize_3_1, plain, (~ p <=> (~ q <=> r)),
+   ..
+  109  
+  110  cnf(refute_3_0, plain, ($false),
+  111:     inference(canonicalize, [], [normalize_3_4])).
+  112  
+  113  fof(negate_4_0, plain, (~ (((p <=> (q <=> r)) & r & p) => q)),
+  ...
+  115  
+  116  fof(normalize_4_0, plain, (~ q & p & r & (~ p <=> (~ q <=> r))),
+  117:     inference(canonicalize, [], [negate_4_0])).
+  118  
+  119  fof(normalize_4_1, plain, (~ p <=> (~ q <=> r)),
+  ...
+  132  
+  133  cnf(refute_4_0, plain, ($false),
+  134:     inference(canonicalize, [], [normalize_4_5])).
+  135  
+  136  fof(negate_5_0, plain, (~ (((p <=> (q <=> r)) & r & q) => p)),
+  ...
+  138  
+  139  fof(normalize_5_0, plain, (~ p & q & r & (~ p <=> (~ q <=> r))),
+  140:     inference(canonicalize, [], [negate_5_0])).
+  141  
+  142  fof(normalize_5_1, plain, (~ p <=> (~ q <=> r)),
+  ...
+  155  
+  156  cnf(refute_5_0, plain, ($false),
+  157:     inference(canonicalize, [], [normalize_5_5])).
+  158  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-12.tptp
+  159  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-13.tstp:
+   21  
+   22  fof(normalize_0_0, plain, (~ p & ~ q & (p | (q & r))),
+   23:     inference(canonicalize, [], [negate_0_0])).
+   24  
+   25  fof(normalize_0_1, plain, (p | (q & r)),
+   ..
+   35  
+   36  cnf(refute_0_0, plain, ($false),
+   37:     inference(canonicalize, [], [normalize_0_4])).
+   38  
+   39  fof(negate_1_0, plain, (~ (((p | (q & r)) & (p | q) & ~ p) => r)),
+   ..
+   41  
+   42  fof(normalize_1_0, plain, (~ p & ~ r & (p | q) & (p | (q & r))),
+   43:     inference(canonicalize, [], [negate_1_0])).
+   44  
+   45  fof(normalize_1_1, plain, (p | (q & r)),
+   ..
+   62  
+   63  cnf(refute_1_0, plain, ($false),
+   64:     inference(canonicalize, [], [normalize_1_6])).
+   65  
+   66  fof(negate_2_0, plain, (~ ((((p | q) & (p | r)) & ~ p) => q)),
+   ..
+   68  
+   69  fof(normalize_2_0, plain, (~ p & ~ q & (p | q) & (p | r)),
+   70:     inference(canonicalize, [], [negate_2_0])).
+   71  
+   72  fof(normalize_2_1, plain, (p | q),
+   ..
+   82  
+   83  cnf(refute_2_0, plain, ($false),
+   84:     inference(canonicalize, [], [normalize_2_4])).
+   85  
+   86  fof(negate_3_0, plain, (~ ((((p | q) & (p | r)) & ~ p & q) => r)),
+   ..
+   88  
+   89  fof(normalize_3_0, plain, (~ p & ~ r & q & (p | q) & (p | r)),
+   90:     inference(canonicalize, [], [negate_3_0])).
+   91  
+   92  fof(normalize_3_1, plain, (p | r),
+   ..
+  102  
+  103  cnf(refute_3_0, plain, ($false),
+  104:     inference(canonicalize, [], [normalize_3_4])).
+  105  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-13.tptp
+  106  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-14.tstp:
+   21  
+   22  fof(normalize_0_0, plain, (~ q & p & (~ p <=> ~ q)),
+   23:     inference(canonicalize, [], [negate_0_0])).
+   24  
+   25  fof(normalize_0_1, plain, (~ p <=> ~ q),
+   ..
+   35  
+   36  cnf(refute_0_0, plain, ($false),
+   37:     inference(canonicalize, [], [normalize_0_4])).
+   38  
+   39  fof(negate_1_0, plain, (~ (((p <=> q) & (q | ~ p) & ~ ~ q) => p)),
+   ..
+   41  
+   42  fof(normalize_1_0, plain, (~ p & q & (~ p | q) & (~ p <=> ~ q)),
+   43:     inference(canonicalize, [], [negate_1_0])).
+   44  
+   45  fof(normalize_1_1, plain, (~ p <=> ~ q),
+   ..
+   55  
+   56  cnf(refute_1_0, plain, ($false),
+   57:     inference(canonicalize, [], [normalize_1_4])).
+   58  
+   59  fof(negate_2_0, plain, (~ ((((q | ~ p) & (~ q | p)) & p) => q)),
+   ..
+   61  
+   62  fof(normalize_2_0, plain, (~ q & p & (~ p | q) & (~ q | p)),
+   63:     inference(canonicalize, [], [negate_2_0])).
+   64  
+   65  fof(normalize_2_1, plain, (~ p | q),
+   ..
+   75  
+   76  cnf(refute_2_0, plain, ($false),
+   77:     inference(canonicalize, [], [normalize_2_4])).
+   78  
+   79  fof(negate_3_0, plain, (~ ((((q | ~ p) & (~ q | p)) & q) => p)),
+   ..
+   81  
+   82  fof(normalize_3_0, plain, (~ p & q & (~ p | q) & (~ q | p)),
+   83:     inference(canonicalize, [], [negate_3_0])).
+   84  
+   85  fof(normalize_3_1, plain, (~ q | p),
+   ..
+   95  
+   96  cnf(refute_3_0, plain, ($false),
+   97:     inference(canonicalize, [], [normalize_3_4])).
+   98  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-14.tptp
+   99  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-15.tstp:
+   15  
+   16  fof(normalize_0_0, plain, (~ q & p & (~ p | q)),
+   17:     inference(canonicalize, [], [negate_0_0])).
+   18  
+   19  fof(normalize_0_1, plain, (~ p | q),
+   ..
+   29  
+   30  cnf(refute_0_0, plain, ($false),
+   31:     inference(canonicalize, [], [normalize_0_4])).
+   32  
+   33  fof(negate_1_0, plain, (~ (((~ p | q) & p) => q)),
+   ..
+   35  
+   36  fof(normalize_1_0, plain, (~ q & p & (~ p | q)),
+   37:     inference(canonicalize, [], [negate_1_0])).
+   38  
+   39  fof(normalize_1_1, plain, (~ p | q),
+   ..
+   49  
+   50  cnf(refute_1_0, plain, ($false),
+   51:     inference(canonicalize, [], [normalize_1_4])).
+   52  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-15.tptp
+   53  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-16.tstp:
+   12  
+   13  fof(normalize_0_0, plain, ($false),
+   14:     inference(canonicalize, [], [negate_0_0])).
+   15  
+   16  cnf(refute_0_0, plain, ($false),
+   17:     inference(canonicalize, [], [normalize_0_0])).
+   18  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-16.tptp
+   19  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-17.tstp:
+   21  
+   22  fof(normalize_0_0, plain, (~ q & ~ s & p & (~ p | s | (~ r & q))),
+   23:     inference(canonicalize, [], [negate_0_0])).
+   24  
+   25  fof(normalize_0_1, plain, (~ p | s | (~ r & q)),
+   ..
+   38  
+   39  cnf(refute_0_0, plain, ($false),
+   40:     inference(canonicalize, [], [normalize_0_5])).
+   41  
+   42  fof(negate_1_0, plain,
+   ..
+   46  fof(normalize_1_0, plain,
+   47      (~ s & p & r & (~ p | q | s) & (~ p | s | (~ r & q))),
+   48:     inference(canonicalize, [], [negate_1_0])).
+   49  
+   50  fof(normalize_1_1, plain, (~ p | s | (~ r & q)),
+   ..
+   70  
+   71  cnf(refute_1_0, plain, ($false),
+   72:     inference(canonicalize, [], [normalize_1_7])).
+   73  
+   74  fof(negate_2_0, plain,
+   ..
+   78  fof(normalize_2_0, plain,
+   79      (~ s & p & (~ q | r) & (~ p | ~ r | s) & (~ p | q | s)),
+   80:     inference(canonicalize, [], [negate_2_0])).
+   81  
+   82  fof(normalize_2_1, plain, (~ q | r),
+   ..
+  102  
+  103  cnf(refute_2_0, plain, (~ q | r),
+  104:     inference(canonicalize, [], [normalize_2_1])).
+  105  
+  106: cnf(refute_2_1, plain, (q), inference(canonicalize, [], [normalize_2_5])).
+  107  
+  108  cnf(refute_2_2, plain, (r),
+  ...
+  110  
+  111  cnf(refute_2_3, plain, (~ r),
+  112:     inference(canonicalize, [], [normalize_2_7])).
+  113  
+  114  cnf(refute_2_4, plain, ($false),
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-18.tstp:
+   13  
+   14  fof(normalize_0_0, plain, (~ k & ~ q & (~ g | q) & (g | (~ a & k))),
+   15:     inference(canonicalize, [], [negate_0_0])).
+   16  
+   17  fof(normalize_0_1, plain, (g | (~ a & k)),
+   ..
+   33  
+   34  cnf(refute_0_0, plain, ($false),
+   35:     inference(canonicalize, [], [normalize_0_6])).
+   36  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-18.tptp
+   37  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-19.tstp:
+   16  
+   17  fof(normalize_0_0, plain, (~ p & (~ p | r) & (~ q | p) & (p | q)),
+   18:     inference(canonicalize, [], [negate_0_0])).
+   19  
+   20  fof(normalize_0_1, plain, (p | q),
+   ..
+   34  
+   35  cnf(refute_0_0, plain, ($false),
+   36:     inference(canonicalize, [], [normalize_0_5])).
+   37  
+   38  fof(negate_1_0, plain,
+   ..
+   41  
+   42  fof(normalize_1_0, plain, (~ r & p & (~ p | r) & (~ q | p) & (p | q)),
+   43:     inference(canonicalize, [], [negate_1_0])).
+   44  
+   45  fof(normalize_1_1, plain, (~ p | r),
+   ..
+   55  
+   56  cnf(refute_1_0, plain, ($false),
+   57:     inference(canonicalize, [], [normalize_1_4])).
+   58  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-19.tptp
+   59  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-20.tstp:
+   28  
+   29  fof(normalize_0_0, plain, (~ r & p & q & (~ p <=> (~ q <=> r))),
+   30:     inference(canonicalize, [], [negate_0_0])).
+   31  
+   32  fof(normalize_0_1, plain, (~ p <=> (~ q <=> r)),
+   ..
+   45  
+   46  cnf(refute_0_0, plain, ($false),
+   47:     inference(canonicalize, [], [normalize_0_5])).
+   48  
+   49  fof(negate_1_0, plain, (~ ((~ (~ (p <=> q) <=> r) & p & r) => q)),
+   ..
+   51  
+   52  fof(normalize_1_0, plain, (~ q & p & r & (~ p <=> (~ q <=> r))),
+   53:     inference(canonicalize, [], [negate_1_0])).
+   54  
+   55  fof(normalize_1_1, plain, (~ p <=> (~ q <=> r)),
+   ..
+   68  
+   69  cnf(refute_1_0, plain, ($false),
+   70:     inference(canonicalize, [], [normalize_1_5])).
+   71  
+   72  fof(negate_2_0, plain, (~ ((~ (~ (p <=> q) <=> r) & ~ (q <=> r)) => ~ p)),
+   ..
+   74  
+   75  fof(normalize_2_0, plain, (p & (~ p <=> (~ q <=> r)) & (~ q <=> r)),
+   76:     inference(canonicalize, [], [negate_2_0])).
+   77  
+   78  fof(normalize_2_1, plain, (~ q <=> r),
+   ..
+   91  
+   92  cnf(refute_2_0, plain, ($false),
+   93:     inference(canonicalize, [], [normalize_2_5])).
+   94  
+   95  fof(negate_3_0, plain, (~ ((~ (p <=> ~ (q <=> r)) & ~ (p <=> q)) => ~ r)),
+   ..
+   97  
+   98  fof(normalize_3_0, plain, (r & (~ p <=> (~ q <=> r)) & (~ p <=> q)),
+   99:     inference(canonicalize, [], [negate_3_0])).
+  100  
+  101  fof(normalize_3_1, plain, (~ p <=> q),
+  ...
+  114  
+  115  cnf(refute_3_0, plain, ($false),
+  116:     inference(canonicalize, [], [normalize_3_5])).
+  117  
+  118  fof(negate_4_0, plain, (~ ((~ (p <=> ~ (q <=> r)) & r & p) => q)),
+  ...
+  120  
+  121  fof(normalize_4_0, plain, (~ q & p & r & (~ p <=> (~ q <=> r))),
+  122:     inference(canonicalize, [], [negate_4_0])).
+  123  
+  124  fof(normalize_4_1, plain, (~ p <=> (~ q <=> r)),
+  ...
+  137  
+  138  cnf(refute_4_0, plain, ($false),
+  139:     inference(canonicalize, [], [normalize_4_5])).
+  140  
+  141  fof(negate_5_0, plain, (~ ((~ (p <=> ~ (q <=> r)) & r & q) => p)),
+  ...
+  143  
+  144  fof(normalize_5_0, plain, (~ p & q & r & (~ p <=> (~ q <=> r))),
+  145:     inference(canonicalize, [], [negate_5_0])).
+  146  
+  147  fof(normalize_5_1, plain, (~ p <=> (~ q <=> r)),
+  ...
+  160  
+  161  cnf(refute_5_0, plain, ($false),
+  162:     inference(canonicalize, [], [normalize_5_5])).
+  163  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-20.tptp
+  164  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-21.tstp:
+   24      ((~ p | ~ q | ~ r) & (~ p | ~ q | r) & (~ p | ~ r | q) &
+   25       (~ p | q | r) & (~ q | ~ r | p) & (~ q | p | r) & (~ r | p | q) &
+   26:      (p | q | r)), inference(canonicalize, [], [negate_0_0])).
+   27  
+   28  fof(normalize_0_1, plain, (~ p | ~ q | ~ r),
+   ..
+   51  
+   52  cnf(refute_0_0, plain, (~ p | ~ q | ~ r),
+   53:     inference(canonicalize, [], [normalize_0_1])).
+   54  
+   55  cnf(refute_0_1, plain, (~ p | ~ q | r),
+   56:     inference(canonicalize, [], [normalize_0_2])).
+   57  
+   58  cnf(refute_0_2, plain, (~ p | ~ r | q),
+   59:     inference(canonicalize, [], [normalize_0_3])).
+   60  
+   61  cnf(refute_0_3, plain, (~ p | q | r),
+   62:     inference(canonicalize, [], [normalize_0_4])).
+   63  
+   64  cnf(refute_0_4, plain, (~ r | p | q),
+   65:     inference(canonicalize, [], [normalize_0_5])).
+   66  
+   67  cnf(refute_0_5, plain, (p | q | r),
+   68:     inference(canonicalize, [], [normalize_0_6])).
+   69  
+   70  cnf(refute_0_6, plain, (p | q),
+   ..
+   72  
+   73  cnf(refute_0_7, plain, (~ q | ~ r | p),
+   74:     inference(canonicalize, [], [normalize_0_7])).
+   75  
+   76  cnf(refute_0_8, plain, (~ q | p | r),
+   77:     inference(canonicalize, [], [normalize_0_8])).
+   78  
+   79  cnf(refute_0_9, plain, (p | r),
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-22.tstp:
+   16  
+   17  fof(normalize_0_0, plain, (~ clause & (~ lit | clause) & (clause | lit)),
+   18:     inference(canonicalize, [], [negate_0_0])).
+   19  
+   20  fof(normalize_0_1, plain, (clause | lit),
+   ..
+   35  
+   36  cnf(refute_0_0, plain, ($false),
+   37:     inference(canonicalize, [], [normalize_0_5])).
+   38  
+   39  fof(negate_1_0, plain, (~ (((lit => clause) & clause & ~ lit) => clause)),
+   ..
+   41  
+   42  fof(normalize_1_0, plain, ($false),
+   43:     inference(canonicalize, [], [negate_1_0])).
+   44  
+   45  cnf(refute_1_0, plain, ($false),
+   46:     inference(canonicalize, [], [normalize_1_0])).
+   47  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-22.tptp
+   48  
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-23.tstp:
+   16  
+   17  fof(normalize_0_0, plain, (p & q & (~ p <=> q)),
+   18:     inference(canonicalize, [], [negate_0_0])).
+   19  
+   20  fof(normalize_0_1, plain, (~ p <=> q),
+   ..
+   30  
+   31  cnf(refute_0_0, plain, ($false),
+   32:     inference(canonicalize, [], [normalize_0_4])).
+   33  
+   34  fof(negate_1_0, plain, (~ ((~ (p <=> q) & (p => ~ q) & q) => ~ p)),
+   ..
+   36  
+   37  fof(normalize_1_0, plain, (p & q & (~ p | ~ q) & (~ p <=> q)),
+   38:     inference(canonicalize, [], [negate_1_0])).
+   39  
+   40  fof(normalize_1_1, plain, (~ p | ~ q),
+   ..
+   50  
+   51  cnf(refute_1_0, plain, ($false),
+   52:     inference(canonicalize, [], [normalize_1_4])).
+   53  SZS output end CNFRefutation for test/prop-pack/problems/prop-metis/prop-23.tptp
+   54  
+
+556 matches across 111 files

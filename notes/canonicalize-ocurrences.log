@@ -1,0 +1,2656 @@
+Searching 338 files for "canonicalize"
+
+/home/turing/athena/test/prop-pack/problems/basic/basic-1.agda:
+   40  proof₀ =
+   41    (RAA
+   42:     (atp-canonicalize ⊥
+   43        (assume {Γ = Γ}
+   44          (¬ subgoal₀))))
+
+/home/turing/athena/test/prop-pack/problems/basic/basic-2.agda:
+   40  proof₀ =
+   41    (RAA
+   42:     (atp-canonicalize ⊥
+   43        (assume {Γ = Γ}
+   44          (¬ subgoal₀))))
+
+/home/turing/athena/test/prop-pack/problems/basic/basic-3.agda:
+   40  proof₀ =
+   41    (RAA
+   42:     (atp-canonicalize ⊥
+   43        (assume {Γ = Γ}
+   44          (¬ subgoal₀))))
+
+/home/turing/athena/test/prop-pack/problems/basic/basic-4.agda:
+   48        (assume {Γ = Γ}
+   49          (¬ subgoal₀))
+   50:       (atp-canonicalize p
+   51          (weaken (¬ subgoal₀)
+   52            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-1.agda:
+   57          (atp-conjunct ((¬ q) ∨ p)
+   58            (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   59:             (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   60                (weaken (¬ subgoal₀)
+   61                  (assume {Γ = ∅} a₁)))))
+   62          (atp-conjunct q
+   63:           (atp-canonicalize ((¬ p) ∧ q)
+   64              (assume {Γ = Γ}
+   65                (¬ subgoal₀)))))
+   66        (atp-conjunct (¬ p)
+   67:         (atp-canonicalize ((¬ p) ∧ q)
+   68            (assume {Γ = Γ}
+   69              (¬ subgoal₀))))))
+   ..
+   78          (atp-conjunct ((¬ p) ∨ q)
+   79            (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   80:             (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   81                (weaken (¬ subgoal₁)
+   82                  (assume {Γ = ∅} a₁)))))
+   83          (atp-conjunct p
+   84:           (atp-canonicalize ((¬ q) ∧ p)
+   85              (assume {Γ = Γ}
+   86                (¬ subgoal₁)))))
+   87        (atp-conjunct (¬ q)
+   88:         (atp-canonicalize ((¬ q) ∧ p)
+   89            (assume {Γ = Γ}
+   90              (¬ subgoal₁))))))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-10.agda:
+   48      (atp-simplify ⊥
+   49        (atp-conjunct p
+   50:         (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ⇔ ((¬ q) ∧ p))))
+   51            (assume {Γ = Γ}
+   52              (¬ subgoal₀))))
+   53        (atp-simplify ⊥
+   54          (atp-conjunct (¬ q)
+   55:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ⇔ ((¬ q) ∧ p))))
+   56              (assume {Γ = Γ}
+   57                (¬ subgoal₀))))
+   58          (atp-simplify ⊥
+   59            (atp-conjunct ((¬ p) ⇔ ((¬ q) ∧ p))
+   60:             (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ⇔ ((¬ q) ∧ p))))
+   61                (assume {Γ = Γ}
+   62                  (¬ subgoal₀))))
+   63            (atp-conjunct p
+   64:             (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ⇔ ((¬ q) ∧ p))))
+   65                (assume {Γ = Γ}
+   66                  (¬ subgoal₀))))))))
+   ..
+   71      (atp-simplify ⊥
+   72        (atp-conjunct (¬ p)
+   73:         (atp-canonicalize ((¬ p) ∧ (q ∧ ((¬ p) ⇔ ((¬ q) ∧ p))))
+   74            (assume {Γ = Γ}
+   75              (¬ subgoal₁))))
+   76        (atp-simplify ⊥
+   77          (atp-conjunct q
+   78:           (atp-canonicalize ((¬ p) ∧ (q ∧ ((¬ p) ⇔ ((¬ q) ∧ p))))
+   79              (assume {Γ = Γ}
+   80                (¬ subgoal₁))))
+   81          (atp-simplify ⊥
+   82            (atp-conjunct ((¬ p) ⇔ ((¬ q) ∧ p))
+   83:             (atp-canonicalize ((¬ p) ∧ (q ∧ ((¬ p) ⇔ ((¬ q) ∧ p))))
+   84                (assume {Γ = Γ}
+   85                  (¬ subgoal₁))))
+   86            (atp-conjunct (¬ p)
+   87:             (atp-canonicalize ((¬ p) ∧ (q ∧ ((¬ p) ⇔ ((¬ q) ∧ p))))
+   88                (assume {Γ = Γ}
+   89                  (¬ subgoal₁))))))))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-11.agda:
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58            (atp-clausify (((¬ p) ∨ q) ∧ (((¬ q) ∨ p) ∧ (p ∨ q)))
+   59:             (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ (p ∨ q)))
+   60                (weaken (¬ subgoal₀)
+   61                  (assume {Γ = ∅} a₁)))))
+   62          (atp-conjunct p
+   63:           (atp-canonicalize ((¬ q) ∧ p)
+   64              (assume {Γ = Γ}
+   65                (¬ subgoal₀)))))
+   66        (atp-conjunct (¬ q)
+   67:         (atp-canonicalize ((¬ q) ∧ p)
+   68            (assume {Γ = Γ}
+   69              (¬ subgoal₀))))))
+   ..
+   78          (atp-conjunct ((¬ q) ∨ p)
+   79            (atp-clausify (((¬ p) ∨ q) ∧ (((¬ q) ∨ p) ∧ (p ∨ q)))
+   80:             (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ (p ∨ q)))
+   81                (weaken (¬ subgoal₁)
+   82                  (assume {Γ = ∅} a₁)))))
+   83          (atp-conjunct q
+   84:           (atp-canonicalize ((¬ p) ∧ q)
+   85              (assume {Γ = Γ}
+   86                (¬ subgoal₁)))))
+   87        (atp-conjunct (¬ p)
+   88:         (atp-canonicalize ((¬ p) ∧ q)
+   89            (assume {Γ = Γ}
+   90              (¬ subgoal₁))))))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-12.agda:
+   60  proof₀ =
+   61    (RAA
+   62:     (atp-canonicalize ⊥
+   63        (assume {Γ = Γ}
+   64          (¬ subgoal₀))))
+   ..
+   75            (atp-conjunct ((¬ p) ∨ ((¬ q) ∨ r))
+   76              (atp-clausify (((¬ p) ∨ ((¬ q) ∨ r)) ∧ ((¬ p) ∨ ((¬ r) ∨ q)))
+   77:               (atp-canonicalize ((¬ p) ∨ ((¬ q) ⇔ (¬ r)))
+   78                  (weaken (¬ subgoal₁)
+   79                    (assume {Γ = ∅} a₁)))))
+   80            (atp-conjunct p
+   81:             (atp-canonicalize ((¬ r) ∧ (p ∧ q))
+   82                (assume {Γ = Γ}
+   83                  (¬ subgoal₁)))))
+   84          (atp-conjunct q
+   85:           (atp-canonicalize ((¬ r) ∧ (p ∧ q))
+   86              (assume {Γ = Γ}
+   87                (¬ subgoal₁)))))
+   88        (atp-conjunct (¬ r)
+   89:         (atp-canonicalize ((¬ r) ∧ (p ∧ q))
+   90            (assume {Γ = Γ}
+   91              (¬ subgoal₁))))))
+   ..
+   94  proof₂ =
+   95    (RAA
+   96:     (atp-canonicalize ⊥
+   97        (assume {Γ = Γ}
+   98          (¬ subgoal₂))))
+   ..
+  109            (atp-conjunct ((¬ p) ∨ ((¬ r) ∨ q))
+  110              (atp-clausify (((¬ p) ∨ ((¬ q) ∨ r)) ∧ ((¬ p) ∨ ((¬ r) ∨ q)))
+  111:               (atp-canonicalize ((¬ p) ∨ ((¬ q) ⇔ (¬ r)))
+  112                  (weaken (¬ subgoal₃)
+  113                    (assume {Γ = ∅} a₁)))))
+  114            (atp-conjunct p
+  115:             (atp-canonicalize ((¬ q) ∧ (p ∧ r))
+  116                (assume {Γ = Γ}
+  117                  (¬ subgoal₃)))))
+  118          (atp-conjunct r
+  119:           (atp-canonicalize ((¬ q) ∧ (p ∧ r))
+  120              (assume {Γ = Γ}
+  121                (¬ subgoal₃)))))
+  122        (atp-conjunct (¬ q)
+  123:         (atp-canonicalize ((¬ q) ∧ (p ∧ r))
+  124            (assume {Γ = Γ}
+  125              (¬ subgoal₃))))))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-13.agda:
+   57      (atp-simplify ⊥
+   58        (atp-conjunct (¬ q)
+   59:         (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ (p ∨ (q ∧ r))))
+   60            (assume {Γ = Γ}
+   61              (¬ subgoal₀))))
+   62        (atp-simplify ⊥
+   63          (atp-conjunct (p ∨ (q ∧ r))
+   64:           (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ (p ∨ (q ∧ r))))
+   65              (assume {Γ = Γ}
+   66                (¬ subgoal₀))))
+   67          (atp-conjunct (¬ p)
+   68:           (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ (p ∨ (q ∧ r))))
+   69              (assume {Γ = Γ}
+   70                (¬ subgoal₀)))))))
+   ..
+   75      (atp-simplify ⊥
+   76        (atp-conjunct (¬ r)
+   77:         (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ ((p ∨ q) ∧ (p ∨ (q ∧ r)))))
+   78            (assume {Γ = Γ}
+   79              (¬ subgoal₁))))
+   ..
+   81          (atp-simplify q
+   82            (atp-conjunct (p ∨ q)
+   83:             (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ ((p ∨ q) ∧ (p ∨ (q ∧ r)))))
+   84                (assume {Γ = Γ}
+   85                  (¬ subgoal₁))))
+   86            (atp-conjunct (¬ p)
+   87:             (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ ((p ∨ q) ∧ (p ∨ (q ∧ r)))))
+   88                (assume {Γ = Γ}
+   89                  (¬ subgoal₁)))))
+   90          (atp-simplify ⊥
+   91            (atp-conjunct (p ∨ (q ∧ r))
+   92:             (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ ((p ∨ q) ∧ (p ∨ (q ∧ r)))))
+   93                (assume {Γ = Γ}
+   94                  (¬ subgoal₁))))
+   95            (atp-conjunct (¬ p)
+   96:             (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ ((p ∨ q) ∧ (p ∨ (q ∧ r)))))
+   97                (assume {Γ = Γ}
+   98                  (¬ subgoal₁))))))))
+   ..
+  103      (atp-simplify ⊥
+  104        (atp-conjunct (¬ q)
+  105:         (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ ((p ∨ q) ∧ (p ∨ r))))
+  106            (assume {Γ = Γ}
+  107              (¬ subgoal₂))))
+  108        (atp-simplify ⊥
+  109          (atp-conjunct (p ∨ q)
+  110:           (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ ((p ∨ q) ∧ (p ∨ r))))
+  111              (assume {Γ = Γ}
+  112                (¬ subgoal₂))))
+  113          (atp-conjunct (¬ p)
+  114:           (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ ((p ∨ q) ∧ (p ∨ r))))
+  115              (assume {Γ = Γ}
+  116                (¬ subgoal₂)))))))
+  ...
+  121      (atp-simplify ⊥
+  122        (atp-conjunct (¬ r)
+  123:         (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ (q ∧ ((p ∨ q) ∧ (p ∨ r)))))
+  124            (assume {Γ = Γ}
+  125              (¬ subgoal₃))))
+  126        (atp-simplify ⊥
+  127          (atp-conjunct (p ∨ r)
+  128:           (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ (q ∧ ((p ∨ q) ∧ (p ∨ r)))))
+  129              (assume {Γ = Γ}
+  130                (¬ subgoal₃))))
+  131          (atp-conjunct (¬ p)
+  132:           (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ (q ∧ ((p ∨ q) ∧ (p ∨ r)))))
+  133              (assume {Γ = Γ}
+  134                (¬ subgoal₃)))))))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-2.agda:
+   64            (atp-clausify (((¬ q) ∨ r) ∧ ((¬ r) ∨ q))
+   65              (atp-simplify ((¬ q) ⇔ (¬ r))
+   66:               (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ r))
+   67                  (weaken (¬ subgoal₀)
+   68                    (assume {Γ = [ a₁ ]} a₂)))
+   69:               (atp-canonicalize p
+   70                  (weaken-Δ₁
+   71                    (∅ , a₂ , ¬ subgoal₀)
+   72                    (assume {Γ = ∅} a₁))))))
+   73          (atp-conjunct q
+   74:           (atp-canonicalize ((¬ r) ∧ q)
+   75              (assume {Γ = Γ}
+   76                (¬ subgoal₀)))))
+   77        (atp-conjunct (¬ r)
+   78:         (atp-canonicalize ((¬ r) ∧ q)
+   79            (assume {Γ = Γ}
+   80              (¬ subgoal₀))))))
+   ..
+   90            (atp-clausify (((¬ q) ∨ r) ∧ ((¬ r) ∨ q))
+   91              (atp-simplify ((¬ q) ⇔ (¬ r))
+   92:               (atp-canonicalize ((¬ p) ⇔ ((¬ q) ⇔ r))
+   93                  (weaken (¬ subgoal₁)
+   94                    (assume {Γ = [ a₁ ]} a₂)))
+   95:               (atp-canonicalize p
+   96                  (weaken-Δ₁
+   97                    (∅ , a₂ , ¬ subgoal₁)
+   98                    (assume {Γ = ∅} a₁))))))
+   99          (atp-conjunct r
+  100:           (atp-canonicalize ((¬ q) ∧ r)
+  101              (assume {Γ = Γ}
+  102                (¬ subgoal₁)))))
+  103        (atp-conjunct (¬ q)
+  104:         (atp-canonicalize ((¬ q) ∧ r)
+  105            (assume {Γ = Γ}
+  106              (¬ subgoal₁))))))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-3.agda:
+   54      (atp-simplify ⊥
+   55        (atp-conjunct q
+   56:         (atp-canonicalize ((¬ p) ∧ (q ∧ ((¬ p) ⇔ (¬ q))))
+   57            (assume {Γ = Γ}
+   58              (¬ subgoal₀))))
+   59        (atp-simplify ⊥
+   60          (atp-conjunct ((¬ p) ⇔ (¬ q))
+   61:           (atp-canonicalize ((¬ p) ∧ (q ∧ ((¬ p) ⇔ (¬ q))))
+   62              (assume {Γ = Γ}
+   63                (¬ subgoal₀))))
+   64          (atp-conjunct (¬ p)
+   65:           (atp-canonicalize ((¬ p) ∧ (q ∧ ((¬ p) ⇔ (¬ q))))
+   66              (assume {Γ = Γ}
+   67                (¬ subgoal₀)))))))
+   ..
+   72      (atp-simplify ⊥
+   73        (atp-conjunct (¬ q)
+   74:         (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ⇔ (¬ q))))
+   75            (assume {Γ = Γ}
+   76              (¬ subgoal₁))))
+   77        (atp-simplify ⊥
+   78          (atp-conjunct ((¬ p) ⇔ (¬ q))
+   79:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ⇔ (¬ q))))
+   80              (assume {Γ = Γ}
+   81                (¬ subgoal₁))))
+   82          (atp-conjunct p
+   83:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ⇔ (¬ q))))
+   84              (assume {Γ = Γ}
+   85                (¬ subgoal₁)))))))
+   ..
+   90      (atp-simplify ⊥
+   91        (atp-conjunct (¬ q)
+   92:         (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ⇔ (¬ q))))
+   93            (assume {Γ = Γ}
+   94              (¬ subgoal₂))))
+   95        (atp-simplify ⊥
+   96          (atp-conjunct ((¬ p) ⇔ (¬ q))
+   97:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ⇔ (¬ q))))
+   98              (assume {Γ = Γ}
+   99                (¬ subgoal₂))))
+  100          (atp-conjunct p
+  101:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ⇔ (¬ q))))
+  102              (assume {Γ = Γ}
+  103                (¬ subgoal₂)))))))
+  ...
+  108      (atp-simplify ⊥
+  109        (atp-conjunct q
+  110:         (atp-canonicalize ((¬ p) ∧ (q ∧ ((¬ p) ⇔ (¬ q))))
+  111            (assume {Γ = Γ}
+  112              (¬ subgoal₃))))
+  113        (atp-simplify ⊥
+  114          (atp-conjunct ((¬ p) ⇔ (¬ q))
+  115:           (atp-canonicalize ((¬ p) ∧ (q ∧ ((¬ p) ⇔ (¬ q))))
+  116              (assume {Γ = Γ}
+  117                (¬ subgoal₃))))
+  118          (atp-conjunct (¬ p)
+  119:           (atp-canonicalize ((¬ p) ∧ (q ∧ ((¬ p) ⇔ (¬ q))))
+  120              (assume {Γ = Γ}
+  121                (¬ subgoal₃)))))))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-4.agda:
+   53          p
+   54          (atp-clausify ((¬ p) ∨ q)
+   55:           (atp-canonicalize ((¬ q) ⇔ ((¬ p) ∧ (¬ q)))
+   56              (weaken (¬ subgoal₀)
+   57                (assume {Γ = ∅} a₁))))
+   58          (atp-conjunct p
+   59:           (atp-canonicalize ((¬ q) ∧ p)
+   60              (assume {Γ = Γ}
+   61                (¬ subgoal₀)))))
+   62        (atp-conjunct (¬ q)
+   63:         (atp-canonicalize ((¬ q) ∧ p)
+   64            (assume {Γ = Γ}
+   65              (¬ subgoal₀))))))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-5.agda:
+   53          p
+   54          (atp-clausify ((¬ p) ∨ q)
+   55:           (atp-canonicalize ((¬ p) ⇔ ((¬ p) ∨ (¬ q)))
+   56              (weaken (¬ subgoal₀)
+   57                (assume {Γ = ∅} a₁))))
+   58          (atp-conjunct p
+   59:           (atp-canonicalize ((¬ q) ∧ p)
+   60              (assume {Γ = Γ}
+   61                (¬ subgoal₀)))))
+   62        (atp-conjunct (¬ q)
+   63:         (atp-canonicalize ((¬ q) ∧ p)
+   64            (assume {Γ = Γ}
+   65              (¬ subgoal₀))))))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-6.agda:
+   55        (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   56          p
+   57:         (atp-canonicalize ((¬ p) ∨ q)
+   58            (weaken (¬ subgoal₀)
+   59              (assume {Γ = ∅} a₁)))
+   60          (atp-simplify p
+   61            (atp-conjunct (p ∨ q)
+   62:             (atp-canonicalize ((¬ q) ∧ (p ∨ q))
+   63                (assume {Γ = Γ}
+   64                  (¬ subgoal₀))))
+   65            (atp-conjunct (¬ q)
+   66:             (atp-canonicalize ((¬ q) ∧ (p ∨ q))
+   67                (assume {Γ = Γ}
+   68                  (¬ subgoal₀))))))
+   69        (atp-conjunct (¬ q)
+   70:         (atp-canonicalize ((¬ q) ∧ (p ∨ q))
+   71            (assume {Γ = Γ}
+   72              (¬ subgoal₀))))))
+   ..
+   75  proof₁ =
+   76    (RAA
+   77:     (atp-canonicalize ⊥
+   78        (assume {Γ = Γ}
+   79          (¬ subgoal₁))))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-7.agda:
+   54  proof₀ =
+   55    (RAA
+   56:     (atp-canonicalize ⊥
+   57        (assume {Γ = Γ}
+   58          (¬ subgoal₀))))
+   ..
+   61  proof₁ =
+   62    (RAA
+   63:     (atp-canonicalize ⊥
+   64        (assume {Γ = Γ}
+   65          (¬ subgoal₁))))
+   ..
+   69    (RAA
+   70      (atp-simplify ⊥
+   71:       (atp-canonicalize ((¬ q) ∧ p)
+   72          (assume {Γ = Γ}
+   73            (¬ subgoal₂)))
+   74:       (atp-canonicalize ((¬ p) ∨ q)
+   75          (weaken (¬ subgoal₂)
+   76            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-8.agda:
+   52    (RAA
+   53      (atp-simplify ⊥
+   54:       (atp-canonicalize ((¬ q) ∧ p)
+   55          (assume {Γ = Γ}
+   56            (¬ subgoal₀)))
+   57        (atp-conjunct ((¬ p) ∨ q)
+   58:         (atp-canonicalize (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   59            (weaken (¬ subgoal₀)
+   60              (assume {Γ = ∅} a₁))))))
+   ..
+   64    (RAA
+   65      (atp-simplify ⊥
+   66:       (atp-canonicalize ((¬ p) ∧ q)
+   67          (assume {Γ = Γ}
+   68            (¬ subgoal₁)))
+   69        (atp-conjunct ((¬ q) ∨ p)
+   70:         (atp-canonicalize (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   71            (weaken (¬ subgoal₁)
+   72              (assume {Γ = ∅} a₁))))))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-9.agda:
+   43  proof₀ =
+   44    (RAA
+   45:     (atp-canonicalize ⊥
+   46        (assume {Γ = Γ}
+   47          (¬ subgoal₀))))
+
+/home/turing/athena/test/prop-pack/problems/conjunction/conj-1.agda:
+   57        (assume {Γ = Γ}
+   58          (¬ subgoal₀))
+   59:       (atp-canonicalize p
+   60          (weaken-Δ₁
+   61            (∅ , a₂ , ¬ subgoal₀)
+   ..
+   66    (RAA
+   67      (atp-simplify ⊥
+   68:       (atp-canonicalize p
+   69          (weaken-Δ₁
+   70            (∅ , a₂ , ¬ subgoal₁)
+   71            (assume {Γ = ∅} a₁)))
+   72        (atp-simplify ⊥
+   73:         (atp-canonicalize ((¬ q) ∧ p)
+   74            (assume {Γ = Γ}
+   75              (¬ subgoal₁)))
+   76:         (atp-canonicalize q
+   77            (weaken (¬ subgoal₁)
+   78              (assume {Γ = [ a₁ ]} a₂))))))
+
+/home/turing/athena/test/prop-pack/problems/conjunction/conj-2.agda:
+   55          (¬ subgoal₀))
+   56        (atp-conjunct p₂
+   57:         (atp-canonicalize (p₁ ∧ (p₂ ∧ p₃))
+   58            (weaken (¬ subgoal₀)
+   59              (assume {Γ = ∅} a))))))
+
+/home/turing/athena/test/prop-pack/problems/conjunction/conj-3.agda:
+   55          (¬ subgoal₀))
+   56        (atp-conjunct q
+   57:         (atp-canonicalize (p ∧ q)
+   58            (weaken (¬ subgoal₀)
+   59              (assume {Γ = ∅} a))))))
+   ..
+   64      (atp-simplify ⊥
+   65        (atp-conjunct q
+   66:         (atp-canonicalize (p ∧ q)
+   67            (weaken (¬ subgoal₁)
+   68              (assume {Γ = ∅} a))))
+   69        (atp-simplify ⊥
+   70:         (atp-canonicalize ((¬ p) ∧ q)
+   71            (assume {Γ = Γ}
+   72              (¬ subgoal₁)))
+   73          (atp-conjunct p
+   74:           (atp-canonicalize (p ∧ q)
+   75              (weaken (¬ subgoal₁)
+   76                (assume {Γ = ∅} a)))))))
+
+/home/turing/athena/test/prop-pack/problems/conjunction/conj-4.agda:
+   64          (¬ subgoal₀))
+   65        (atp-conjunct p
+   66:         (atp-canonicalize (p ∧ q)
+   67            (weaken-Δ₁
+   68              (∅ , a₂ , ¬ subgoal₀)
+   ..
+   74      (atp-simplify ⊥
+   75        (atp-conjunct p
+   76:         (atp-canonicalize (p ∧ q)
+   77            (weaken-Δ₁
+   78              (∅ , a₂ , ¬ subgoal₁)
+   79              (assume {Γ = ∅} a₁))))
+   80        (atp-simplify ⊥
+   81:         (atp-canonicalize ((¬ r) ∧ p)
+   82            (assume {Γ = Γ}
+   83              (¬ subgoal₁)))
+   84:         (atp-canonicalize r
+   85            (weaken (¬ subgoal₁)
+   86              (assume {Γ = [ a₁ ]} a₂))))))
+   ..
+   90    (RAA
+   91      (atp-simplify ⊥
+   92:       (atp-canonicalize r
+   93          (weaken (¬ subgoal₂)
+   94            (assume {Γ = [ a₁ ]} a₂)))
+   95        (atp-simplify ⊥
+   96          (atp-conjunct p
+   97:           (atp-canonicalize (p ∧ q)
+   98              (weaken-Δ₁
+   99                (∅ , a₂ , ¬ subgoal₂)
+  100                (assume {Γ = ∅} a₁))))
+  101          (atp-simplify ⊥
+  102:           (atp-canonicalize ((¬ q) ∧ (p ∧ r))
+  103              (assume {Γ = Γ}
+  104                (¬ subgoal₂)))
+  105            (atp-conjunct q
+  106:             (atp-canonicalize (p ∧ q)
+  107                (weaken-Δ₁
+  108                  (∅ , a₂ , ¬ subgoal₂)
+
+/home/turing/athena/test/prop-pack/problems/conjunction/conj-5.agda:
+   70          (¬ subgoal₀))
+   71        (atp-conjunct p₁
+   72:         (atp-canonicalize (p₁ ∧ p₂)
+   73            (weaken-Δ₁
+   74              (∅ , a₂ , ¬ subgoal₀)
+   ..
+   80      (atp-simplify ⊥
+   81        (atp-conjunct p₁
+   82:         (atp-canonicalize (p₁ ∧ p₂)
+   83            (weaken-Δ₁
+   84              (∅ , a₂ , ¬ subgoal₁)
+   85              (assume {Γ = ∅} a₁))))
+   86        (atp-simplify ⊥
+   87:         (atp-canonicalize ((¬ q₂) ∧ p₁)
+   88            (assume {Γ = Γ}
+   89              (¬ subgoal₁)))
+   90          (atp-conjunct q₂
+   91:           (atp-canonicalize (q₁ ∧ (q₂ ∧ r))
+   92              (weaken (¬ subgoal₁)
+   93                (assume {Γ = [ a₁ ]} a₂)))))))
+   ..
+   98      (atp-simplify ⊥
+   99        (atp-conjunct q₂
+  100:         (atp-canonicalize (q₁ ∧ (q₂ ∧ r))
+  101            (weaken (¬ subgoal₂)
+  102              (assume {Γ = [ a₁ ]} a₂))))
+  103        (atp-simplify ⊥
+  104          (atp-conjunct p₁
+  105:           (atp-canonicalize (p₁ ∧ p₂)
+  106              (weaken-Δ₁
+  107                (∅ , a₂ , ¬ subgoal₂)
+  108                (assume {Γ = ∅} a₁))))
+  109          (atp-simplify ⊥
+  110:           (atp-canonicalize ((¬ r) ∧ (p₁ ∧ q₂))
+  111              (assume {Γ = Γ}
+  112                (¬ subgoal₂)))
+  113            (atp-conjunct r
+  114:             (atp-canonicalize (q₁ ∧ (q₂ ∧ r))
+  115                (weaken (¬ subgoal₂)
+  116                  (assume {Γ = [ a₁ ]} a₂))))))))
+
+/home/turing/athena/test/prop-pack/problems/conjunction/conj-6.agda:
+   61          (¬ subgoal₀))
+   62        (atp-conjunct r
+   63:         (atp-canonicalize (p ∧ (q ∧ r))
+   64            (weaken (¬ subgoal₀)
+   65              (assume {Γ = ∅} a))))))
+   ..
+   70      (atp-simplify ⊥
+   71        (atp-conjunct r
+   72:         (atp-canonicalize (p ∧ (q ∧ r))
+   73            (weaken (¬ subgoal₁)
+   74              (assume {Γ = ∅} a))))
+   75        (atp-simplify ⊥
+   76:         (atp-canonicalize ((¬ p) ∧ r)
+   77            (assume {Γ = Γ}
+   78              (¬ subgoal₁)))
+   79          (atp-conjunct p
+   80:           (atp-canonicalize (p ∧ (q ∧ r))
+   81              (weaken (¬ subgoal₁)
+   82                (assume {Γ = ∅} a)))))))
+   ..
+   87      (atp-simplify ⊥
+   88        (atp-conjunct r
+   89:         (atp-canonicalize (p ∧ (q ∧ r))
+   90            (weaken (¬ subgoal₂)
+   91              (assume {Γ = ∅} a))))
+   92        (atp-simplify ⊥
+   93          (atp-conjunct p
+   94:           (atp-canonicalize (p ∧ (q ∧ r))
+   95              (weaken (¬ subgoal₂)
+   96                (assume {Γ = ∅} a))))
+   97          (atp-simplify ⊥
+   98:           (atp-canonicalize ((¬ q) ∧ (p ∧ r))
+   99              (assume {Γ = Γ}
+  100                (¬ subgoal₂)))
+  101            (atp-conjunct q
+  102:             (atp-canonicalize (p ∧ (q ∧ r))
+  103                (weaken (¬ subgoal₂)
+  104                  (assume {Γ = ∅} a))))))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-1.agda:
+   49    (RAA
+   50      (atp-simplify ⊥
+   51:       (atp-canonicalize ((¬ p) ∧ (¬ q))
+   52          (assume {Γ = Γ}
+   53            (¬ subgoal₀)))
+   54:       (atp-canonicalize (p ∨ q)
+   55          (weaken (¬ subgoal₀)
+   56            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-10.agda:
+   52        (atp-resolve q -- (p ∨ q) (¬ p) atp-resolve₇ False
+   53          p
+   54:         (atp-canonicalize (p ∨ q)
+   55            (weaken (¬ subgoal₀)
+   56              (assume {Γ = ∅} a₁)))
+   57          (atp-simplify (¬ p)
+   58            (atp-conjunct ((¬ p) ∨ q)
+   59:             (atp-canonicalize ((¬ q) ∧ ((¬ p) ∨ q))
+   60                (assume {Γ = Γ}
+   61                  (¬ subgoal₀))))
+   62            (atp-conjunct (¬ q)
+   63:             (atp-canonicalize ((¬ q) ∧ ((¬ p) ∨ q))
+   64                (assume {Γ = Γ}
+   65                  (¬ subgoal₀))))))
+   66        (atp-conjunct (¬ q)
+   67:         (atp-canonicalize ((¬ q) ∧ ((¬ p) ∨ q))
+   68            (assume {Γ = Γ}
+   69              (¬ subgoal₀))))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-11.agda:
+   58            p
+   59            (atp-clausify ((¬ p) ∨ ((¬ q) ∨ r))
+   60:             (atp-canonicalize ((¬ p) ∨ (r ∨ ((¬ q) ∧ p)))
+   61                (weaken (¬ subgoal₀)
+   62                  (assume {Γ = ∅} a₁))))
+   63            (atp-simplify p
+   64              (atp-conjunct (p ∨ r)
+   65:               (atp-canonicalize ((¬ r) ∧ (q ∧ (p ∨ r)))
+   66                  (assume {Γ = Γ}
+   67                    (¬ subgoal₀))))
+   68              (atp-conjunct (¬ r)
+   69:               (atp-canonicalize ((¬ r) ∧ (q ∧ (p ∨ r)))
+   70                  (assume {Γ = Γ}
+   71                    (¬ subgoal₀))))))
+   72          (atp-conjunct q
+   73:           (atp-canonicalize ((¬ r) ∧ (q ∧ (p ∨ r)))
+   74              (assume {Γ = Γ}
+   75                (¬ subgoal₀)))))
+   76        (atp-conjunct (¬ r)
+   77:         (atp-canonicalize ((¬ r) ∧ (q ∧ (p ∨ r)))
+   78            (assume {Γ = Γ}
+   79              (¬ subgoal₀))))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-12.agda:
+   52    (RAA
+   53      (atp-simplify ⊥
+   54:       (atp-canonicalize ((¬ q) ∧ ((¬ r) ∧ p))
+   55          (assume {Γ = Γ}
+   56            (¬ subgoal₀)))
+   57:       (atp-canonicalize ((¬ p) ∨ (q ∨ r))
+   58          (weaken (¬ subgoal₀)
+   59            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-13.agda:
+   56          q
+   57          (atp-conjunct ((¬ q) ∨ p)
+   58:           (atp-canonicalize (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   59              (weaken (¬ subgoal₀)
+   60                (assume {Γ = ∅} a₁))))
+   61          (atp-simplify q
+   62            (atp-conjunct (p ∨ q)
+   63:             (atp-canonicalize ((¬ p) ∧ (p ∨ q))
+   64                (assume {Γ = Γ}
+   65                  (¬ subgoal₀))))
+   66            (atp-conjunct (¬ p)
+   67:             (atp-canonicalize ((¬ p) ∧ (p ∨ q))
+   68                (assume {Γ = Γ}
+   69                  (¬ subgoal₀))))))
+   70        (atp-conjunct (¬ p)
+   71:         (atp-canonicalize ((¬ p) ∧ (p ∨ q))
+   72            (assume {Γ = Γ}
+   73              (¬ subgoal₀))))))
+   ..
+   77    (RAA
+   78      (atp-simplify ⊥
+   79:       (atp-canonicalize ((¬ q) ∧ (p ∧ (p ∨ q)))
+   80          (assume {Γ = Γ}
+   81            (¬ subgoal₁)))
+   82        (atp-conjunct ((¬ p) ∨ q)
+   83:         (atp-canonicalize (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   84            (weaken (¬ subgoal₁)
+   85              (assume {Γ = ∅} a₁))))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-14.agda:
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58            (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   59:             (atp-canonicalize (((¬ p) ∧ (¬ q)) ∨ (p ∧ q))
+   60                (weaken (¬ subgoal₀)
+   61                  (assume {Γ = ∅} a₁)))))
+   62          (atp-conjunct p
+   63:           (atp-canonicalize ((¬ q) ∧ p)
+   64              (assume {Γ = Γ}
+   65                (¬ subgoal₀)))))
+   66        (atp-conjunct (¬ q)
+   67:         (atp-canonicalize ((¬ q) ∧ p)
+   68            (assume {Γ = Γ}
+   69              (¬ subgoal₀))))))
+   ..
+   78          (atp-conjunct ((¬ q) ∨ p)
+   79            (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   80:             (atp-canonicalize (((¬ p) ∧ (¬ q)) ∨ (p ∧ q))
+   81                (weaken (¬ subgoal₁)
+   82                  (assume {Γ = ∅} a₁)))))
+   83          (atp-conjunct q
+   84:           (atp-canonicalize ((¬ p) ∧ (q ∧ ((¬ p) ∨ q)))
+   85              (assume {Γ = Γ}
+   86                (¬ subgoal₁)))))
+   87        (atp-conjunct (¬ p)
+   88:         (atp-canonicalize ((¬ p) ∧ (q ∧ ((¬ p) ∨ q)))
+   89            (assume {Γ = Γ}
+   90              (¬ subgoal₁))))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-15.agda:
+   59          p
+   60          (atp-conjunct ((¬ p) ∨ q)
+   61:           (atp-canonicalize ((¬ r) ∧ ((¬ p) ∨ q))
+   62              (assume {Γ = Γ}
+   63                (¬ subgoal₀))))
+   ..
+   65            q
+   66            (atp-conjunct (p ∨ q)
+   67:             (atp-canonicalize (((¬ q) ∨ r) ∧ (p ∨ q))
+   68                (weaken (¬ subgoal₀)
+   69                  (assume {Γ = ∅} a₁))))
+   ..
+   71              r
+   72              (atp-conjunct ((¬ q) ∨ r)
+   73:               (atp-canonicalize (((¬ q) ∨ r) ∧ (p ∨ q))
+   74                  (weaken (¬ subgoal₀)
+   75                    (assume {Γ = ∅} a₁))))
+   76              (atp-conjunct (¬ r)
+   77:               (atp-canonicalize ((¬ r) ∧ ((¬ p) ∨ q))
+   78                  (assume {Γ = Γ}
+   79                    (¬ subgoal₀)))))))
+   ..
+   81          r
+   82          (atp-conjunct ((¬ q) ∨ r)
+   83:           (atp-canonicalize (((¬ q) ∨ r) ∧ (p ∨ q))
+   84              (weaken (¬ subgoal₀)
+   85                (assume {Γ = ∅} a₁))))
+   86          (atp-conjunct (¬ r)
+   87:           (atp-canonicalize ((¬ r) ∧ ((¬ p) ∨ q))
+   88              (assume {Γ = Γ}
+   89                (¬ subgoal₀)))))))
+   ..
+   92  proof₁ =
+   93    (RAA
+   94:     (atp-canonicalize ⊥
+   95        (assume {Γ = Γ}
+   96          (¬ subgoal₁))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-2.agda:
+   52    (RAA
+   53      (atp-simplify ⊥
+   54:       (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ (¬ r)))
+   55          (assume {Γ = Γ}
+   56            (¬ subgoal₀)))
+   57:       (atp-canonicalize (p ∨ q)
+   58          (weaken (¬ subgoal₀)
+   59            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-3.agda:
+   52    (RAA
+   53      (atp-simplify ⊥
+   54:       (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ (¬ r)))
+   55          (assume {Γ = Γ}
+   56            (¬ subgoal₀)))
+   57:       (atp-canonicalize (p ∨ (q ∨ r))
+   58          (weaken (¬ subgoal₀)
+   59            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-4.agda:
+   55    (RAA
+   56      (atp-simplify ⊥
+   57:       (atp-canonicalize ((¬ p) ∧ ((¬ p₁) ∧ ((¬ q) ∧ (¬ r))))
+   58          (assume {Γ = Γ}
+   59            (¬ subgoal₀)))
+   60:       (atp-canonicalize (p ∨ (p₁ ∨ (q ∨ r)))
+   61          (weaken (¬ subgoal₀)
+   62            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-5.agda:
+   56      (atp-simplify ⊥
+   57        (atp-conjunct p
+   58:         (atp-canonicalize (p ∧ (q ∨ r))
+   59            (weaken (¬ subgoal₀)
+   60              (assume {Γ = ∅} a₁))))
+   61        (atp-simplify ⊥
+   62:         (atp-canonicalize ((¬ p) ∧ ((¬ p) ∨ (¬ q)))
+   63            (assume {Γ = Γ}
+   64              (¬ subgoal₀)))
+   65          (atp-conjunct p
+   66:           (atp-canonicalize (p ∧ (q ∨ r))
+   67              (weaken (¬ subgoal₀)
+   68                (assume {Γ = ∅} a₁)))))))
+   ..
+   73      (atp-simplify ⊥
+   74        (atp-conjunct p
+   75:         (atp-canonicalize (p ∧ (q ∨ r))
+   76            (weaken (¬ subgoal₁)
+   77              (assume {Γ = ∅} a₁))))
+   78        (atp-simplify ⊥
+   79          (atp-conjunct p
+   80:           (atp-canonicalize (p ∧ (q ∨ r))
+   81              (weaken (¬ subgoal₁)
+   82                (assume {Γ = ∅} a₁))))
+   83          (atp-simplify ⊥
+   84:           (atp-canonicalize ((¬ r) ∧ (p ∧ ((¬ p) ∨ (¬ q))))
+   85              (assume {Γ = Γ}
+   86                (¬ subgoal₁)))
+   87            (atp-conjunct (q ∨ r)
+   88:             (atp-canonicalize (p ∧ (q ∨ r))
+   89                (weaken (¬ subgoal₁)
+   90                  (assume {Γ = ∅} a₁))))))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-6.agda:
+   55    (RAA
+   56      (atp-simplify ⊥
+   57:       (atp-canonicalize ((¬ p) ∧ (¬ q))
+   58          (assume {Γ = Γ}
+   59            (¬ subgoal₀)))
+   60        (atp-conjunct (p ∨ q)
+   61:         (atp-canonicalize ((p ∨ q) ∧ (p ∨ r))
+   62            (weaken (¬ subgoal₀)
+   63              (assume {Γ = ∅} a₁))))))
+   ..
+   67    (RAA
+   68      (atp-simplify ⊥
+   69:       (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ q))
+   70          (assume {Γ = Γ}
+   71            (¬ subgoal₁)))
+   72        (atp-conjunct (p ∨ r)
+   73:         (atp-canonicalize ((p ∨ q) ∧ (p ∨ r))
+   74            (weaken (¬ subgoal₁)
+   75              (assume {Γ = ∅} a₁))))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-7.agda:
+   58        (atp-conjunct p
+   59          (atp-clausify (p ∧ ((p ∨ q) ∧ ((p ∨ r) ∧ (q ∨ r))))
+   60:           (atp-canonicalize ((p ∧ q) ∨ (p ∧ r))
+   61              (weaken (¬ subgoal₀)
+   62                (assume {Γ = ∅} a₁)))))
+   ..
+   73          (atp-conjunct (q ∨ r)
+   74            (atp-clausify (p ∧ ((p ∨ q) ∧ ((p ∨ r) ∧ (q ∨ r))))
+   75:             (atp-canonicalize ((p ∧ q) ∨ (p ∧ r))
+   76                (weaken (¬ subgoal₁)
+   77                  (assume {Γ = ∅} a₁)))))
+   78          (atp-conjunct (¬ q)
+   79:           (atp-canonicalize ((¬ q) ∧ ((¬ r) ∧ p))
+   80              (assume {Γ = Γ}
+   81                (¬ subgoal₁)))))
+   82        (atp-conjunct (¬ r)
+   83:         (atp-canonicalize ((¬ q) ∧ ((¬ r) ∧ p))
+   84            (assume {Γ = Γ}
+   85              (¬ subgoal₁))))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-8.agda:
+   60          (atp-conjunct (p ∨ q)
+   61            (atp-clausify ((p ∨ q) ∧ (p ∨ r))
+   62:             (atp-canonicalize (p ∨ (q ∧ r))
+   63                (weaken (¬ subgoal₀)
+   64                  (assume {Γ = ∅} a₁)))))
+   65          (atp-conjunct (¬ p)
+   66:           (atp-canonicalize ((¬ p) ∧ (¬ q))
+   67              (assume {Γ = Γ}
+   68                (¬ subgoal₀)))))
+   69        (atp-conjunct (¬ q)
+   70:         (atp-canonicalize ((¬ p) ∧ (¬ q))
+   71            (assume {Γ = Γ}
+   72              (¬ subgoal₀))))))
+   ..
+   81          (atp-conjunct (p ∨ r)
+   82            (atp-clausify ((p ∨ q) ∧ (p ∨ r))
+   83:             (atp-canonicalize (p ∨ (q ∧ r))
+   84                (weaken (¬ subgoal₁)
+   85                  (assume {Γ = ∅} a₁)))))
+   86          (atp-conjunct (¬ p)
+   87:           (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ (p ∨ q)))
+   88              (assume {Γ = Γ}
+   89                (¬ subgoal₁)))))
+   90        (atp-conjunct (¬ r)
+   91:         (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ (p ∨ q)))
+   92            (assume {Γ = Γ}
+   93              (¬ subgoal₁))))))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-9.agda:
+   49    (RAA
+   50      (atp-simplify ⊥
+   51:       (atp-canonicalize ((¬ q) ∧ p)
+   52          (assume {Γ = Γ}
+   53            (¬ subgoal₀)))
+   54:       (atp-canonicalize ((¬ p) ∨ q)
+   55          (weaken (¬ subgoal₀)
+   56            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-1.agda:
+   40  proof₀ =
+   41    (RAA
+   42:     (atp-canonicalize ⊥
+   43        (assume {Γ = Γ}
+   44          (¬ subgoal₀))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-10.agda:
+   48      (atp-simplify ⊥
+   49        (atp-conjunct (¬ r)
+   50:         (atp-canonicalize ((¬ r) ∧ (p ∧ (((¬ p) ∨ q) ∧ ((¬ p) ∨ ((¬ q) ∨ r)))))
+   51            (assume {Γ = Γ}
+   52              (¬ subgoal₀))))
+   ..
+   54          (atp-simplify q
+   55            (atp-conjunct ((¬ p) ∨ q)
+   56:             (atp-canonicalize ((¬ r) ∧ (p ∧ (((¬ p) ∨ q) ∧ ((¬ p) ∨ ((¬ q) ∨ r)))))
+   57                (assume {Γ = Γ}
+   58                  (¬ subgoal₀))))
+   59            (atp-conjunct p
+   60:             (atp-canonicalize ((¬ r) ∧ (p ∧ (((¬ p) ∨ q) ∧ ((¬ p) ∨ ((¬ q) ∨ r)))))
+   61                (assume {Γ = Γ}
+   62                  (¬ subgoal₀)))))
+   63          (atp-simplify ⊥
+   64            (atp-conjunct ((¬ p) ∨ ((¬ q) ∨ r))
+   65:             (atp-canonicalize ((¬ r) ∧ (p ∧ (((¬ p) ∨ q) ∧ ((¬ p) ∨ ((¬ q) ∨ r)))))
+   66                (assume {Γ = Γ}
+   67                  (¬ subgoal₀))))
+   68            (atp-conjunct p
+   69:             (atp-canonicalize ((¬ r) ∧ (p ∧ (((¬ p) ∨ q) ∧ ((¬ p) ∨ ((¬ q) ∨ r)))))
+   70                (assume {Γ = Γ}
+   71                  (¬ subgoal₀))))))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-11.agda:
+   50      (atp-simplify ⊥
+   51        (atp-conjunct p
+   52:         (atp-canonicalize (p ∧ q)
+   53            (weaken (¬ subgoal₀)
+   54              (assume {Γ = ∅} a₁))))
+   55        (atp-simplify ⊥
+   56:         (atp-canonicalize ((¬ q) ∧ p)
+   57            (assume {Γ = Γ}
+   58              (¬ subgoal₀)))
+   59          (atp-conjunct q
+   60:           (atp-canonicalize (p ∧ q)
+   61              (weaken (¬ subgoal₀)
+   62                (assume {Γ = ∅} a₁)))))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-12.agda:
+   43  proof₀ =
+   44    (RAA
+   45:     (atp-canonicalize ⊥
+   46        (assume {Γ = Γ}
+   47          (¬ subgoal₀))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-13.agda:
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58            (atp-clausify (((¬ p) ∨ q) ∧ ((¬ p) ∨ r))
+   59:             (atp-canonicalize ((¬ p) ∨ (q ∧ r))
+   60                (weaken (¬ subgoal₀)
+   61                  (assume {Γ = ∅} a₁)))))
+   62          (atp-conjunct p
+   63:           (atp-canonicalize ((¬ q) ∧ p)
+   64              (assume {Γ = Γ}
+   65                (¬ subgoal₀)))))
+   66        (atp-conjunct (¬ q)
+   67:         (atp-canonicalize ((¬ q) ∧ p)
+   68            (assume {Γ = Γ}
+   69              (¬ subgoal₀))))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-14.agda:
+   49    (RAA
+   50      (atp-simplify ⊥
+   51:       (atp-canonicalize ((¬ p) ∧ q)
+   52          (assume {Γ = Γ}
+   53            (¬ subgoal₀)))
+   54:       (atp-canonicalize ((¬ q) ∨ p)
+   55          (weaken (¬ subgoal₀)
+   56            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-15.agda:
+   52    (RAA
+   53      (atp-simplify ⊥
+   54:       (atp-canonicalize ((¬ r) ∧ (p ∧ q))
+   55          (assume {Γ = Γ}
+   56            (¬ subgoal₀)))
+   57:       (atp-canonicalize ((¬ p) ∨ ((¬ q) ∨ r))
+   58          (weaken (¬ subgoal₀)
+   59            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-16.agda:
+   55    (RAA
+   56      (atp-simplify ⊥
+   57:       (atp-canonicalize ((¬ q) ∧ p)
+   58          (assume {Γ = Γ}
+   59            (¬ subgoal₀)))
+   60        (atp-conjunct ((¬ p) ∨ q)
+   61:         (atp-canonicalize (((¬ p) ∨ q) ∧ ((¬ p) ∨ r))
+   62            (weaken (¬ subgoal₀)
+   63              (assume {Γ = ∅} a₁))))))
+   ..
+   67    (RAA
+   68      (atp-simplify ⊥
+   69:       (atp-canonicalize ((¬ r) ∧ (p ∧ q))
+   70          (assume {Γ = Γ}
+   71            (¬ subgoal₁)))
+   72        (atp-conjunct ((¬ p) ∨ r)
+   73:         (atp-canonicalize (((¬ p) ∨ q) ∧ ((¬ p) ∨ r))
+   74            (weaken (¬ subgoal₁)
+   75              (assume {Γ = ∅} a₁))))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-17.agda:
+   60          (atp-conjunct ((¬ p) ∨ q)
+   61            (atp-clausify (((¬ p) ∨ q) ∧ ((¬ p) ∨ r))
+   62:             (atp-canonicalize ((¬ p) ∨ (q ∧ r))
+   63                (weaken (¬ subgoal₀)
+   64                  (assume {Γ = ∅} a₁)))))
+   65          (atp-conjunct p
+   66:           (atp-canonicalize ((¬ q) ∧ p)
+   67              (assume {Γ = Γ}
+   68                (¬ subgoal₀)))))
+   69        (atp-conjunct (¬ q)
+   70:         (atp-canonicalize ((¬ q) ∧ p)
+   71            (assume {Γ = Γ}
+   72              (¬ subgoal₀))))))
+   ..
+   81          (atp-conjunct ((¬ p) ∨ r)
+   82            (atp-clausify (((¬ p) ∨ q) ∧ ((¬ p) ∨ r))
+   83:             (atp-canonicalize ((¬ p) ∨ (q ∧ r))
+   84                (weaken (¬ subgoal₁)
+   85                  (assume {Γ = ∅} a₁)))))
+   86          (atp-conjunct p
+   87:           (atp-canonicalize ((¬ r) ∧ (p ∧ ((¬ p) ∨ q)))
+   88              (assume {Γ = Γ}
+   89                (¬ subgoal₁)))))
+   90        (atp-conjunct (¬ r)
+   91:         (atp-canonicalize ((¬ r) ∧ (p ∧ ((¬ p) ∨ q)))
+   92            (assume {Γ = Γ}
+   93              (¬ subgoal₁))))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-18.agda:
+   64          (¬ subgoal₀))
+   65        (atp-conjunct p₁
+   66:         (atp-canonicalize (p₁ ∧ (p₂ ∧ (p₃ ∧ (p₄ ∧ p₅))))
+   67            (weaken (¬ subgoal₀)
+   68              (assume {Γ = ∅} a₁))))))
+   ..
+   71  proof₁ =
+   72    (RAA
+   73:     (atp-canonicalize ⊥
+   74        (assume {Γ = Γ}
+   75          (¬ subgoal₁))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-2.agda:
+   43  proof₀ =
+   44    (RAA
+   45:     (atp-canonicalize ⊥
+   46        (assume {Γ = Γ}
+   47          (¬ subgoal₀))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-3.agda:
+   58        (atp-resolve r -- q ((¬ q) ∨ r) atp-resolve₄ True
+   59          q
+   60:         (atp-canonicalize ((¬ q) ∨ r)
+   61            (weaken (¬ subgoal₀)
+   62              (assume {Γ = [ a₁ ]} a₂)))
+   63          (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   64            p
+   65:           (atp-canonicalize ((¬ p) ∨ q)
+   66              (weaken-Δ₁
+   67                (∅ , a₂ , ¬ subgoal₀)
+   68                (assume {Γ = ∅} a₁)))
+   69            (atp-conjunct p
+   70:             (atp-canonicalize ((¬ r) ∧ p)
+   71                (assume {Γ = Γ}
+   72                  (¬ subgoal₀))))))
+   73        (atp-conjunct (¬ r)
+   74:         (atp-canonicalize ((¬ r) ∧ p)
+   75            (assume {Γ = Γ}
+   76              (¬ subgoal₀))))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-4.agda:
+   45      (atp-simplify ⊥
+   46        (atp-conjunct (¬ q)
+   47:         (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   48            (assume {Γ = Γ}
+   49              (¬ subgoal₀))))
+   50        (atp-simplify ⊥
+   51          (atp-conjunct ((¬ p) ∨ q)
+   52:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   53              (assume {Γ = Γ}
+   54                (¬ subgoal₀))))
+   55          (atp-conjunct p
+   56:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   57              (assume {Γ = Γ}
+   58                (¬ subgoal₀)))))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-5.agda:
+   58            p
+   59            (atp-clausify ((¬ p) ∨ ((¬ q) ∨ r))
+   60:             (atp-canonicalize ((¬ p) ∨ (r ∨ ((¬ q) ∧ p)))
+   61                (weaken (¬ subgoal₀)
+   62                  (assume {Γ = ∅} a₁))))
+   63            (atp-conjunct p
+   64:             (atp-canonicalize ((¬ r) ∧ (p ∧ q))
+   65                (assume {Γ = Γ}
+   66                  (¬ subgoal₀)))))
+   67          (atp-conjunct q
+   68:           (atp-canonicalize ((¬ r) ∧ (p ∧ q))
+   69              (assume {Γ = Γ}
+   70                (¬ subgoal₀)))))
+   71        (atp-conjunct (¬ r)
+   72:         (atp-canonicalize ((¬ r) ∧ (p ∧ q))
+   73            (assume {Γ = Γ}
+   74              (¬ subgoal₀))))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-6.agda:
+   52        (atp-conjunct p
+   53          (atp-clausify (p ∧ ((¬ q) ∨ p))
+   54:           (atp-canonicalize (p ∨ ((¬ q) ∧ p))
+   55              (weaken (¬ subgoal₀)
+   56                (assume {Γ = ∅} a₁)))))
+   57        (atp-conjunct (¬ p)
+   58:         (atp-canonicalize ((¬ p) ∧ q)
+   59            (assume {Γ = Γ}
+   60              (¬ subgoal₀))))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-7.agda:
+   52    (RAA
+   53      (atp-simplify ⊥
+   54:       (atp-canonicalize ((¬ r) ∧ (p ∧ q))
+   55          (assume {Γ = Γ}
+   56            (¬ subgoal₀)))
+   57:       (atp-canonicalize ((¬ p) ∨ ((¬ q) ∨ r))
+   58          (weaken (¬ subgoal₀)
+   59            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-8.agda:
+   60          (atp-resolve ((¬ q) ∨ r) -- p ((¬ p) ∨ ((¬ q) ∨ r)) atp-resolve₄ True
+   61            p
+   62:           (atp-canonicalize ((¬ p) ∨ ((¬ q) ∨ r))
+   63              (weaken-Δ₁
+   64                (∅ , a₂ , ¬ subgoal₀)
+   65                (assume {Γ = ∅} a₁)))
+   66            (atp-conjunct p
+   67:             (atp-canonicalize ((¬ r) ∧ p)
+   68                (assume {Γ = Γ}
+   69                  (¬ subgoal₀)))))
+   70          (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   71            p
+   72:           (atp-canonicalize ((¬ p) ∨ q)
+   73              (weaken (¬ subgoal₀)
+   74                (assume {Γ = [ a₁ ]} a₂)))
+   75            (atp-conjunct p
+   76:             (atp-canonicalize ((¬ r) ∧ p)
+   77                (assume {Γ = Γ}
+   78                  (¬ subgoal₀))))))
+   79        (atp-conjunct (¬ r)
+   80:         (atp-canonicalize ((¬ r) ∧ p)
+   81            (assume {Γ = Γ}
+   82              (¬ subgoal₀))))))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-9.agda:
+   52    (RAA
+   53      (atp-simplify ⊥
+   54:       (atp-canonicalize ((¬ r) ∧ ((¬ q) ∨ r))
+   55          (assume {Γ = Γ}
+   56            (¬ subgoal₀)))
+   57:       (atp-canonicalize q
+   58          (weaken (¬ subgoal₀)
+   59            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-1.agda:
+   48        (assume {Γ = Γ}
+   49          (¬ subgoal₀))
+   50:       (atp-canonicalize p
+   51          (weaken (¬ subgoal₀)
+   52            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-10.agda:
+   49    (RAA
+   50      (atp-simplify ⊥
+   51:       (atp-canonicalize ((¬ q) ∧ p)
+   52          (assume {Γ = Γ}
+   53            (¬ subgoal₀)))
+   54:       (atp-canonicalize (¬ p)
+   55          (weaken (¬ subgoal₀)
+   56            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-11.agda:
+   48  proof₀ =
+   49    (RAA
+   50:     (atp-canonicalize ⊥
+   51        (weaken (¬ subgoal₀)
+   52          (assume {Γ = ∅} a₁))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-12.agda:
+   49    (RAA
+   50      (atp-simplify ⊥
+   51:       (atp-canonicalize ((¬ p) ∧ (¬ q))
+   52          (assume {Γ = Γ}
+   53            (¬ subgoal₀)))
+   54:       (atp-canonicalize (p ∨ q)
+   55          (weaken (¬ subgoal₀)
+   56            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-13.agda:
+   55    (RAA
+   56      (atp-simplify ⊥
+   57:       (atp-canonicalize ((¬ q) ∧ p)
+   58          (weaken (¬ subgoal₀)
+   59            (assume {Γ = [ a₁ ]} a)))
+   60:       (atp-canonicalize ((¬ p) ∨ q)
+   61          (weaken-Δ₁
+   62            (∅ , a , ¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-14.agda:
+   63          (atp-conjunct ((¬ p) ∨ q)
+   64            (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   65:             (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   66                (weaken-Δ₁
+   67                  (∅ , a₃ , ¬ subgoal₀)
+   ..
+   69          (atp-resolve p -- (p ∨ q) ((¬ q) ∨ p) atp-resolve₃ False
+   70            q
+   71:           (atp-canonicalize (p ∨ q)
+   72              (weaken-Δ₁
+   73                (∅ , a₂ , a₃ , ¬ subgoal₀)
+   ..
+   75            (atp-conjunct ((¬ q) ∨ p)
+   76              (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   77:               (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   78                  (weaken-Δ₁
+   79                    (∅ , a₃ , ¬ subgoal₀)
+   ..
+   81        (atp-resolve (¬ q) -- p ((¬ p) ∨ (¬ q)) atp-resolve₄ True
+   82          p
+   83:         (atp-canonicalize ((¬ p) ∨ (¬ q))
+   84            (weaken (¬ subgoal₀)
+   85              (assume
+   ..
+   87          (atp-resolve p -- (p ∨ q) ((¬ q) ∨ p) atp-resolve₃ False
+   88            q
+   89:           (atp-canonicalize (p ∨ q)
+   90              (weaken-Δ₁
+   91                (∅ , a₂ , a₃ , ¬ subgoal₀)
+   ..
+   93            (atp-conjunct ((¬ q) ∨ p)
+   94              (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   95:               (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   96                  (weaken-Δ₁
+   97                    (∅ , a₃ , ¬ subgoal₀)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-15.agda:
+   48        (assume {Γ = Γ}
+   49          (¬ subgoal₀))
+   50:       (atp-canonicalize p
+   51          (weaken (¬ subgoal₀)
+   52            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-16.agda:
+   40  proof₀ =
+   41    (RAA
+   42:     (atp-canonicalize ⊥
+   43        (assume {Γ = Γ}
+   44          (¬ subgoal₀))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-17.agda:
+   49    (RAA
+   50      (atp-simplify ⊥
+   51:       (atp-canonicalize ((¬ p) ∧ (¬ q))
+   52          (assume {Γ = Γ}
+   53            (¬ subgoal₀)))
+   54:       (atp-canonicalize (p ∨ q)
+   55          (weaken (¬ subgoal₀)
+   56            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-18.agda:
+   55          (¬ subgoal₀))
+   56        (atp-conjunct p
+   57:         (atp-canonicalize (p ∧ q)
+   58            (weaken (¬ subgoal₀)
+   59              (assume {Γ = ∅} a₁))))))
+   ..
+   64      (atp-simplify ⊥
+   65        (atp-conjunct p
+   66:         (atp-canonicalize (p ∧ q)
+   67            (weaken (¬ subgoal₁)
+   68              (assume {Γ = ∅} a₁))))
+   69        (atp-simplify ⊥
+   70:         (atp-canonicalize ((¬ q) ∧ p)
+   71            (assume {Γ = Γ}
+   72              (¬ subgoal₁)))
+   73          (atp-conjunct q
+   74:           (atp-canonicalize (p ∧ q)
+   75              (weaken (¬ subgoal₁)
+   76                (assume {Γ = ∅} a₁)))))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-19.agda:
+   49    (RAA
+   50      (atp-simplify ⊥
+   51:       (atp-canonicalize (p ∧ q)
+   52          (assume {Γ = Γ}
+   53            (¬ subgoal₀)))
+   54:       (atp-canonicalize ((¬ p) ∨ (¬ q))
+   55          (weaken (¬ subgoal₀)
+   56            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-2.agda:
+   49    (RAA
+   50      (atp-simplify ⊥
+   51:       (atp-canonicalize (p ∧ q)
+   52          (assume {Γ = Γ}
+   53            (¬ subgoal₀)))
+   54:       (atp-canonicalize (¬ p)
+   55          (weaken (¬ subgoal₀)
+   56            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-20.agda:
+   52          (¬ subgoal₀))
+   53        (atp-conjunct p
+   54:         (atp-canonicalize ((¬ q) ∧ p)
+   55            (weaken (¬ subgoal₀)
+   56              (assume {Γ = ∅} a₁))))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-21.agda:
+   52        (atp-conjunct p
+   53          (atp-clausify (p ∧ ((¬ q) ∨ p))
+   54:           (atp-canonicalize (p ∨ ((¬ q) ∧ p))
+   55              (weaken (¬ subgoal₀)
+   56                (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-22.agda:
+   57          (atp-conjunct ((¬ p) ∨ q)
+   58            (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   59:             (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   60                (weaken (¬ subgoal₀)
+   61                  (assume {Γ = ∅} a₁)))))
+   62          (atp-conjunct p
+   63:           (atp-canonicalize ((¬ q) ∧ p)
+   64              (assume {Γ = Γ}
+   65                (¬ subgoal₀)))))
+   66        (atp-conjunct (¬ q)
+   67:         (atp-canonicalize ((¬ q) ∧ p)
+   68            (assume {Γ = Γ}
+   69              (¬ subgoal₀))))))
+   ..
+   78          (atp-conjunct ((¬ q) ∨ p)
+   79            (atp-clausify (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+   80:             (atp-canonicalize ((¬ p) ⇔ (¬ q))
+   81                (weaken (¬ subgoal₁)
+   82                  (assume {Γ = ∅} a₁)))))
+   83          (atp-conjunct q
+   84:           (atp-canonicalize ((¬ p) ∧ q)
+   85              (assume {Γ = Γ}
+   86                (¬ subgoal₁)))))
+   87        (atp-conjunct (¬ p)
+   88:         (atp-canonicalize ((¬ p) ∧ q)
+   89            (assume {Γ = Γ}
+   90              (¬ subgoal₁))))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-23.agda:
+   53          p
+   54          (atp-clausify (p ∨ q)
+   55:           (atp-canonicalize (q ∨ ((¬ q) ∧ p))
+   56              (weaken (¬ subgoal₀)
+   57                (assume {Γ = ∅} a₁))))
+   58          (atp-conjunct (¬ p)
+   59:           (atp-canonicalize ((¬ p) ∧ (¬ q))
+   60              (assume {Γ = Γ}
+   61                (¬ subgoal₀)))))
+   62        (atp-conjunct (¬ q)
+   63:         (atp-canonicalize ((¬ p) ∧ (¬ q))
+   64            (assume {Γ = Γ}
+   65              (¬ subgoal₀))))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-24.agda:
+   52    (RAA
+   53      (atp-simplify ⊥
+   54:       (atp-canonicalize p
+   55          (assume {Γ = Γ}
+   56            (¬ subgoal₀)))
+   57        (atp-conjunct (¬ p)
+   58:         (atp-canonicalize ((¬ p) ∧ (¬ q))
+   59            (weaken (¬ subgoal₀)
+   60              (assume {Γ = ∅} a₁))))))
+   ..
+   65      (atp-simplify ⊥
+   66        (atp-conjunct (¬ q)
+   67:         (atp-canonicalize ((¬ p) ∧ (¬ q))
+   68            (weaken (¬ subgoal₁)
+   69              (assume {Γ = ∅} a₁))))
+   70        (atp-simplify ⊥
+   71:         (atp-canonicalize ((¬ p) ∧ q)
+   72            (assume {Γ = Γ}
+   73              (¬ subgoal₁)))
+   74          (atp-conjunct (¬ p)
+   75:           (atp-canonicalize ((¬ p) ∧ (¬ q))
+   76              (weaken (¬ subgoal₁)
+   77                (assume {Γ = ∅} a₁)))))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-25.agda:
+   43  proof₀ =
+   44    (RAA
+   45:     (atp-canonicalize ⊥
+   46        (assume {Γ = Γ}
+   47          (¬ subgoal₀))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-26.agda:
+   46  proof₀ =
+   47    (RAA
+   48:     (atp-canonicalize ⊥
+   49        (assume {Γ = Γ}
+   50          (¬ subgoal₀))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-27.agda:
+   72          (atp-resolve ((¬ p) ∨ q₁) -- ((¬ p) ∨ (q₁ ∨ q₂)) (¬ q₂) id -- resolve 2. False
+   73            q₂
+   74:           (atp-canonicalize ((¬ p) ∨ (q₁ ∨ q₂))
+   75              (weaken-Δ₁
+   76                (∅ , a₄ , ¬ subgoal₀)
+   ..
+   78                  {Γ = ∅ , a₁ , a₂} a₃)))
+   79            (atp-conjunct (¬ q₂)
+   80:             (atp-canonicalize ((¬ q₂) ∧ (¬ r))
+   81                (weaken (¬ subgoal₀)
+   82                  (assume
+   ..
+   84          (atp-resolve p -- (p ∨ q) (¬ q) atp-resolve₆ False
+   85            q
+   86:           (atp-canonicalize (p ∨ q)
+   87              (weaken-Δ₁
+   88                (∅ , a₂ , a₃ , a₄ , ¬ subgoal₀)
+   ..
+   90            (atp-resolve (¬ q) -- ((¬ q) ∨ r) (¬ r) atp-resolve₆ False
+   91              r
+   92:             (atp-canonicalize ((¬ q) ∨ r)
+   93                (weaken-Δ₁
+   94                  (∅ , a₃ , a₄ , ¬ subgoal₀)
+   95                  (assume {Γ = [ a₁ ]} a₂)))
+   96              (atp-conjunct (¬ r)
+   97:               (atp-canonicalize ((¬ q₂) ∧ (¬ r))
+   98                  (weaken (¬ subgoal₀)
+   99                    (assume
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-28.agda:
+   52    (RAA
+   53      (atp-simplify ⊥
+   54:       (atp-canonicalize ((¬ q) ∧ ((¬ r) ∧ p))
+   55          (assume {Γ = Γ}
+   56            (¬ subgoal₀)))
+   57:       (atp-canonicalize ((¬ p) ∨ (q ∨ r))
+   58          (weaken (¬ subgoal₀)
+   59            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-29.agda:
+   48      (atp-simplify ⊥
+   49        (atp-conjunct q
+   50:         (atp-canonicalize (p ∧ (q ∧ ((¬ p) ∨ (¬ q))))
+   51            (assume {Γ = Γ}
+   52              (¬ subgoal₀))))
+   53        (atp-simplify ⊥
+   54          (atp-conjunct ((¬ p) ∨ (¬ q))
+   55:           (atp-canonicalize (p ∧ (q ∧ ((¬ p) ∨ (¬ q))))
+   56              (assume {Γ = Γ}
+   57                (¬ subgoal₀))))
+   58          (atp-conjunct p
+   59:           (atp-canonicalize (p ∧ (q ∧ ((¬ p) ∨ (¬ q))))
+   60              (assume {Γ = Γ}
+   61                (¬ subgoal₀)))))))
+   ..
+   66      (atp-simplify ⊥
+   67        (atp-conjunct q
+   68:         (atp-canonicalize (p ∧ (q ∧ ((¬ p) ∨ (¬ q))))
+   69            (assume {Γ = Γ}
+   70              (¬ subgoal₁))))
+   71        (atp-simplify ⊥
+   72          (atp-conjunct ((¬ p) ∨ (¬ q))
+   73:           (atp-canonicalize (p ∧ (q ∧ ((¬ p) ∨ (¬ q))))
+   74              (assume {Γ = Γ}
+   75                (¬ subgoal₁))))
+   76          (atp-conjunct p
+   77:           (atp-canonicalize (p ∧ (q ∧ ((¬ p) ∨ (¬ q))))
+   78              (assume {Γ = Γ}
+   79                (¬ subgoal₁)))))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-3.agda:
+   46    (RAA
+   47      (atp-simplify ⊥
+   48:       (atp-canonicalize p
+   49          (assume {Γ = Γ}
+   50            (¬ subgoal₀)))
+   51:       (atp-canonicalize (¬ p)
+   52          (weaken (¬ subgoal₀)
+   53            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-30.agda:
+   46    (RAA
+   47      (atp-simplify ⊥
+   48:       (atp-canonicalize p
+   49          (assume {Γ = Γ}
+   50            (¬ subgoal₀)))
+   51:       (atp-canonicalize (¬ p)
+   52          (weaken (¬ subgoal₀)
+   53            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-31.agda:
+   48        (assume {Γ = Γ}
+   49          (¬ subgoal₀))
+   50:       (atp-canonicalize p
+   51          (weaken (¬ subgoal₀)
+   52            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-32.agda:
+   55          (¬ subgoal₀))
+   56        (atp-conjunct p
+   57:         (atp-canonicalize (p ∧ q)
+   58            (weaken (¬ subgoal₀)
+   59              (assume {Γ = ∅} a₁))))))
+   ..
+   64      (atp-simplify ⊥
+   65        (atp-conjunct p
+   66:         (atp-canonicalize (p ∧ q)
+   67            (weaken (¬ subgoal₁)
+   68              (assume {Γ = ∅} a₁))))
+   69        (atp-simplify ⊥
+   70:         (atp-canonicalize ((¬ q) ∧ p)
+   71            (assume {Γ = Γ}
+   72              (¬ subgoal₁)))
+   73          (atp-conjunct q
+   74:           (atp-canonicalize (p ∧ q)
+   75              (weaken (¬ subgoal₁)
+   76                (assume {Γ = ∅} a₁)))))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-4.agda:
+   49    (RAA
+   50      (atp-simplify ⊥
+   51:       (atp-canonicalize q
+   52          (assume {Γ = Γ}
+   53            (¬ subgoal₀)))
+   54        (atp-conjunct (¬ q)
+   55:         (atp-canonicalize ((¬ q) ∧ p)
+   56            (weaken (¬ subgoal₀)
+   57              (assume {Γ = ∅} a₁))))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-5.agda:
+   49    (RAA
+   50      (atp-simplify ⊥
+   51:       (atp-canonicalize (p ∧ q)
+   52          (assume {Γ = Γ}
+   53            (¬ subgoal₀)))
+   54:       (atp-canonicalize ((¬ p) ∨ (¬ q))
+   55          (weaken (¬ subgoal₀)
+   56            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-6.agda:
+   49    (RAA
+   50      (atp-simplify ⊥
+   51:       (atp-canonicalize ((¬ q) ∧ p)
+   52          (assume {Γ = Γ}
+   53            (¬ subgoal₀)))
+   54:       (atp-canonicalize ((¬ p) ∨ q)
+   55          (weaken (¬ subgoal₀)
+   56            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-7.agda:
+   46  proof₀ =
+   47    (RAA
+   48:     (atp-canonicalize ⊥
+   49        (assume {Γ = Γ}
+   50          (¬ subgoal₀))))
+   ..
+   53  proof₁ =
+   54    (RAA
+   55:     (atp-canonicalize ⊥
+   56        (assume {Γ = Γ}
+   57          (¬ subgoal₁))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-8.agda:
+   52    (RAA
+   53      (atp-simplify ⊥
+   54:       (atp-canonicalize p
+   55          (assume {Γ = Γ}
+   56            (¬ subgoal₀)))
+   57        (atp-conjunct (¬ p)
+   58:         (atp-canonicalize ((¬ p) ∧ (¬ q))
+   59            (weaken (¬ subgoal₀)
+   60              (assume {Γ = ∅} a₁))))))
+   ..
+   65      (atp-simplify ⊥
+   66        (atp-conjunct (¬ q)
+   67:         (atp-canonicalize ((¬ p) ∧ (¬ q))
+   68            (weaken (¬ subgoal₁)
+   69              (assume {Γ = ∅} a₁))))
+   70        (atp-simplify ⊥
+   71:         (atp-canonicalize ((¬ p) ∧ q)
+   72            (assume {Γ = Γ}
+   73              (¬ subgoal₁)))
+   74          (atp-conjunct (¬ p)
+   75:           (atp-canonicalize ((¬ p) ∧ (¬ q))
+   76              (weaken (¬ subgoal₁)
+   77                (assume {Γ = ∅} a₁)))))))
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-9.agda:
+   49    (RAA
+   50      (atp-simplify ⊥
+   51:       (atp-canonicalize (p ∧ q)
+   52          (assume {Γ = Γ}
+   53            (¬ subgoal₀)))
+   54:       (atp-canonicalize ((¬ p) ∨ (¬ q))
+   55          (weaken (¬ subgoal₀)
+   56            (assume {Γ = ∅} a₁)))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-01.agda:
+   48      (atp-simplify ⊥
+   49        (atp-conjunct (¬ q)
+   50:         (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   51            (assume {Γ = Γ}
+   52              (¬ subgoal₀))))
+   53        (atp-simplify ⊥
+   54          (atp-conjunct ((¬ p) ∨ q)
+   55:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   56              (assume {Γ = Γ}
+   57                (¬ subgoal₀))))
+   58          (atp-conjunct p
+   59:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   60              (assume {Γ = Γ}
+   61                (¬ subgoal₀)))))))
+   ..
+   66      (atp-simplify ⊥
+   67        (atp-conjunct (¬ q)
+   68:         (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   69            (assume {Γ = Γ}
+   70              (¬ subgoal₁))))
+   71        (atp-simplify ⊥
+   72          (atp-conjunct ((¬ p) ∨ q)
+   73:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   74              (assume {Γ = Γ}
+   75                (¬ subgoal₁))))
+   76          (atp-conjunct p
+   77:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   78              (assume {Γ = Γ}
+   79                (¬ subgoal₁)))))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-02.agda:
+   43  proof₀ =
+   44    (RAA
+   45:     (atp-canonicalize ⊥
+   46        (assume {Γ = Γ}
+   47          (¬ subgoal₀))))
+   ..
+   50  proof₁ =
+   51    (RAA
+   52:     (atp-canonicalize ⊥
+   53        (assume {Γ = Γ}
+   54          (¬ subgoal₁))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-03.agda:
+   43  proof₀ =
+   44    (RAA
+   45:     (atp-canonicalize ⊥
+   46        (assume {Γ = Γ}
+   47          (¬ subgoal₀))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-04.agda:
+   48      (atp-simplify ⊥
+   49        (atp-conjunct (¬ q)
+   50:         (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ (p ∨ q)))
+   51            (assume {Γ = Γ}
+   52              (¬ subgoal₀))))
+   53        (atp-simplify ⊥
+   54          (atp-conjunct (p ∨ q)
+   55:           (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ (p ∨ q)))
+   56              (assume {Γ = Γ}
+   57                (¬ subgoal₀))))
+   58          (atp-conjunct (¬ p)
+   59:           (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ (p ∨ q)))
+   60              (assume {Γ = Γ}
+   61                (¬ subgoal₀)))))))
+   ..
+   66      (atp-simplify ⊥
+   67        (atp-conjunct (¬ q)
+   68:         (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ (p ∨ q)))
+   69            (assume {Γ = Γ}
+   70              (¬ subgoal₁))))
+   71        (atp-simplify ⊥
+   72          (atp-conjunct (p ∨ q)
+   73:           (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ (p ∨ q)))
+   74              (assume {Γ = Γ}
+   75                (¬ subgoal₁))))
+   76          (atp-conjunct (¬ p)
+   77:           (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ (p ∨ q)))
+   78              (assume {Γ = Γ}
+   79                (¬ subgoal₁)))))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-05.agda:
+   48      (atp-simplify ⊥
+   49        (atp-conjunct q
+   50:         (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ (q ∧ (p ∨ (r ∨ ((¬ p) ∧ (¬ q)))))))
+   51            (assume {Γ = Γ}
+   52              (¬ subgoal₀))))
+   53        (atp-simplify ⊥
+   54          (atp-conjunct (¬ p)
+   55:           (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ (q ∧ (p ∨ (r ∨ ((¬ p) ∧ (¬ q)))))))
+   56              (assume {Γ = Γ}
+   57                (¬ subgoal₀))))
+   58          (atp-simplify ⊥
+   59            (atp-conjunct (¬ r)
+   60:             (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ (q ∧ (p ∨ (r ∨ ((¬ p) ∧ (¬ q)))))))
+   61                (assume {Γ = Γ}
+   62                  (¬ subgoal₀))))
+   63            (atp-simplify ⊥
+   64              (atp-conjunct (p ∨ (r ∨ ((¬ p) ∧ (¬ q))))
+   65:               (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ (q ∧ (p ∨ (r ∨ ((¬ p) ∧ (¬ q)))))))
+   66                  (assume {Γ = Γ}
+   67                    (¬ subgoal₀))))
+   68              (atp-conjunct (¬ p)
+   69:               (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ (q ∧ (p ∨ (r ∨ ((¬ p) ∧ (¬ q)))))))
+   70                  (assume {Γ = Γ}
+   71                    (¬ subgoal₀)))))))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-06.agda:
+   40  proof₀ =
+   41    (RAA
+   42:     (atp-canonicalize ⊥
+   43        (assume {Γ = Γ}
+   44          (¬ subgoal₀))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-07.agda:
+   40  proof₀ =
+   41    (RAA
+   42:     (atp-canonicalize ⊥
+   43        (assume {Γ = Γ}
+   44          (¬ subgoal₀))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-08.agda:
+   45      (atp-simplify ⊥
+   46        (atp-conjunct (¬ p)
+   47:         (atp-canonicalize ((¬ p) ∧ (p ∨ ((¬ q) ∧ p)))
+   48            (assume {Γ = Γ}
+   49              (¬ subgoal₀))))
+   50        (atp-simplify ⊥
+   51          (atp-conjunct (p ∨ ((¬ q) ∧ p))
+   52:           (atp-canonicalize ((¬ p) ∧ (p ∨ ((¬ q) ∧ p)))
+   53              (assume {Γ = Γ}
+   54                (¬ subgoal₀))))
+   55          (atp-conjunct (¬ p)
+   56:           (atp-canonicalize ((¬ p) ∧ (p ∨ ((¬ q) ∧ p)))
+   57              (assume {Γ = Γ}
+   58                (¬ subgoal₀)))))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-09.agda:
+   48      (atp-simplify ⊥
+   49        (atp-conjunct (¬ q)
+   50:         (atp-canonicalize ((¬ q) ∧ (((¬ p) ∨ q) ∧ (((¬ q) ∨ p) ∧ (p ∨ q))))
+   51            (assume {Γ = Γ}
+   52              (¬ subgoal₀))))
+   53        (atp-simplify ⊥
+   54          (atp-conjunct (p ∨ q)
+   55:           (atp-canonicalize ((¬ q) ∧ (((¬ p) ∨ q) ∧ (((¬ q) ∨ p) ∧ (p ∨ q))))
+   56              (assume {Γ = Γ}
+   57                (¬ subgoal₀))))
+   58          (atp-simplify (¬ p)
+   59            (atp-conjunct ((¬ p) ∨ q)
+   60:             (atp-canonicalize ((¬ q) ∧ (((¬ p) ∨ q) ∧ (((¬ q) ∨ p) ∧ (p ∨ q))))
+   61                (assume {Γ = Γ}
+   62                  (¬ subgoal₀))))
+   63            (atp-conjunct (¬ q)
+   64:             (atp-canonicalize ((¬ q) ∧ (((¬ p) ∨ q) ∧ (((¬ q) ∨ p) ∧ (p ∨ q))))
+   65                (assume {Γ = Γ}
+   66                  (¬ subgoal₀))))))))
+   ..
+   69  proof₁ =
+   70    (RAA
+   71:     (atp-canonicalize ⊥
+   72        (assume {Γ = Γ}
+   73          (¬ subgoal₁))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-10.agda:
+   51      (atp-simplify ⊥
+   52        (atp-conjunct (¬ q)
+   53:         (atp-canonicalize ((¬ q) ∧ (p ∧ (((¬ p) ∨ (q ∧ r)) ∧ (((¬ q) ∨ r) ∧ ((¬ r) ∨ (p ∧ q))))))
+   54            (assume {Γ = Γ}
+   55              (¬ subgoal₀))))
+   56        (atp-simplify ⊥
+   57          (atp-conjunct ((¬ p) ∨ (q ∧ r))
+   58:           (atp-canonicalize ((¬ q) ∧ (p ∧ (((¬ p) ∨ (q ∧ r)) ∧ (((¬ q) ∨ r) ∧ ((¬ r) ∨ (p ∧ q))))))
+   59              (assume {Γ = Γ}
+   60                (¬ subgoal₀))))
+   61          (atp-conjunct p
+   62:           (atp-canonicalize ((¬ q) ∧ (p ∧ (((¬ p) ∨ (q ∧ r)) ∧ (((¬ q) ∨ r) ∧ ((¬ r) ∨ (p ∧ q))))))
+   63              (assume {Γ = Γ}
+   64                (¬ subgoal₀)))))))
+   ..
+   69      (atp-simplify ⊥
+   70        (atp-conjunct q
+   71:         (atp-canonicalize ((¬ p) ∧ (q ∧ (((¬ p) ∨ (q ∧ r)) ∧ (((¬ q) ∨ r) ∧ ((¬ r) ∨ (p ∧ q))))))
+   72            (assume {Γ = Γ}
+   73              (¬ subgoal₁))))
+   74        (atp-simplify ⊥
+   75          (atp-conjunct (¬ p)
+   76:           (atp-canonicalize ((¬ p) ∧ (q ∧ (((¬ p) ∨ (q ∧ r)) ∧ (((¬ q) ∨ r) ∧ ((¬ r) ∨ (p ∧ q))))))
+   77              (assume {Γ = Γ}
+   78                (¬ subgoal₁))))
+   79          (atp-simplify ⊥
+   80            (atp-conjunct ((¬ r) ∨ (p ∧ q))
+   81:             (atp-canonicalize ((¬ p) ∧ (q ∧ (((¬ p) ∨ (q ∧ r)) ∧ (((¬ q) ∨ r) ∧ ((¬ r) ∨ (p ∧ q))))))
+   82                (assume {Γ = Γ}
+   83                  (¬ subgoal₁))))
+   84            (atp-simplify r
+   85              (atp-conjunct ((¬ q) ∨ r)
+   86:               (atp-canonicalize ((¬ p) ∧ (q ∧ (((¬ p) ∨ (q ∧ r)) ∧ (((¬ q) ∨ r) ∧ ((¬ r) ∨ (p ∧ q))))))
+   87                  (assume {Γ = Γ}
+   88                    (¬ subgoal₁))))
+   89              (atp-conjunct q
+   90:               (atp-canonicalize ((¬ p) ∧ (q ∧ (((¬ p) ∨ (q ∧ r)) ∧ (((¬ q) ∨ r) ∧ ((¬ r) ∨ (p ∧ q))))))
+   91                  (assume {Γ = Γ}
+   92                    (¬ subgoal₁)))))))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-11.agda:
+   43  proof₀ =
+   44    (RAA
+   45:     (atp-canonicalize ⊥
+   46        (assume {Γ = Γ}
+   47          (¬ subgoal₀))))
+   ..
+   50  proof₁ =
+   51    (RAA
+   52:     (atp-canonicalize ⊥
+   53        (assume {Γ = Γ}
+   54          (¬ subgoal₁))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-12.agda:
+   63      (atp-simplify ⊥
+   64        (atp-conjunct (¬ r)
+   65:         (atp-canonicalize ((¬ r) ∧ (p ∧ (q ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+   66            (assume {Γ = Γ}
+   67              (¬ subgoal₀))))
+   68        (atp-simplify ⊥
+   69          (atp-conjunct q
+   70:           (atp-canonicalize ((¬ r) ∧ (p ∧ (q ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+   71              (assume {Γ = Γ}
+   72                (¬ subgoal₀))))
+   73          (atp-simplify ⊥
+   74            (atp-conjunct ((¬ p) ⇔ ((¬ q) ⇔ r))
+   75:             (atp-canonicalize ((¬ r) ∧ (p ∧ (q ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+   76                (assume {Γ = Γ}
+   77                  (¬ subgoal₀))))
+   78            (atp-conjunct p
+   79:             (atp-canonicalize ((¬ r) ∧ (p ∧ (q ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+   80                (assume {Γ = Γ}
+   81                  (¬ subgoal₀))))))))
+   ..
+   86      (atp-simplify ⊥
+   87        (atp-conjunct r
+   88:         (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+   89            (assume {Γ = Γ}
+   90              (¬ subgoal₁))))
+   91        (atp-simplify ⊥
+   92          (atp-conjunct (¬ q)
+   93:           (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+   94              (assume {Γ = Γ}
+   95                (¬ subgoal₁))))
+   96          (atp-simplify ⊥
+   97            (atp-conjunct ((¬ p) ⇔ ((¬ q) ⇔ r))
+   98:             (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+   99                (assume {Γ = Γ}
+  100                  (¬ subgoal₁))))
+  101            (atp-conjunct p
+  102:             (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  103                (assume {Γ = Γ}
+  104                  (¬ subgoal₁))))))))
+  ...
+  109      (atp-simplify ⊥
+  110        (atp-conjunct (¬ p)
+  111:         (atp-canonicalize ((¬ p) ∧ (((¬ q) ⇔ (¬ r)) ∧ ((¬ p) ⇔ ((¬ q) ⇔ r))))
+  112            (assume {Γ = Γ}
+  113              (¬ subgoal₂))))
+  114        (atp-simplify ⊥
+  115          (atp-conjunct ((¬ p) ⇔ ((¬ q) ⇔ r))
+  116:           (atp-canonicalize ((¬ p) ∧ (((¬ q) ⇔ (¬ r)) ∧ ((¬ p) ⇔ ((¬ q) ⇔ r))))
+  117              (assume {Γ = Γ}
+  118                (¬ subgoal₂))))
+  119          (atp-conjunct ((¬ q) ⇔ (¬ r))
+  120:           (atp-canonicalize ((¬ p) ∧ (((¬ q) ⇔ (¬ r)) ∧ ((¬ p) ⇔ ((¬ q) ⇔ r))))
+  121              (assume {Γ = Γ}
+  122                (¬ subgoal₂)))))))
+  ...
+  127      (atp-simplify ⊥
+  128        (atp-conjunct (¬ r)
+  129:         (atp-canonicalize ((¬ r) ∧ (((¬ p) ⇔ (¬ q)) ∧ ((¬ p) ⇔ ((¬ q) ⇔ r))))
+  130            (assume {Γ = Γ}
+  131              (¬ subgoal₃))))
+  132        (atp-simplify ⊥
+  133          (atp-conjunct ((¬ p) ⇔ ((¬ q) ⇔ r))
+  134:           (atp-canonicalize ((¬ r) ∧ (((¬ p) ⇔ (¬ q)) ∧ ((¬ p) ⇔ ((¬ q) ⇔ r))))
+  135              (assume {Γ = Γ}
+  136                (¬ subgoal₃))))
+  137          (atp-conjunct ((¬ p) ⇔ (¬ q))
+  138:           (atp-canonicalize ((¬ r) ∧ (((¬ p) ⇔ (¬ q)) ∧ ((¬ p) ⇔ ((¬ q) ⇔ r))))
+  139              (assume {Γ = Γ}
+  140                (¬ subgoal₃)))))))
+  ...
+  145      (atp-simplify ⊥
+  146        (atp-conjunct r
+  147:         (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  148            (assume {Γ = Γ}
+  149              (¬ subgoal₄))))
+  150        (atp-simplify ⊥
+  151          (atp-conjunct (¬ q)
+  152:           (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  153              (assume {Γ = Γ}
+  154                (¬ subgoal₄))))
+  155          (atp-simplify ⊥
+  156            (atp-conjunct ((¬ p) ⇔ ((¬ q) ⇔ r))
+  157:             (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  158                (assume {Γ = Γ}
+  159                  (¬ subgoal₄))))
+  160            (atp-conjunct p
+  161:             (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  162                (assume {Γ = Γ}
+  163                  (¬ subgoal₄))))))))
+  ...
+  168      (atp-simplify ⊥
+  169        (atp-conjunct r
+  170:         (atp-canonicalize ((¬ p) ∧ (q ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  171            (assume {Γ = Γ}
+  172              (¬ subgoal₅))))
+  173        (atp-simplify ⊥
+  174          (atp-conjunct q
+  175:           (atp-canonicalize ((¬ p) ∧ (q ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  176              (assume {Γ = Γ}
+  177                (¬ subgoal₅))))
+  178          (atp-simplify ⊥
+  179            (atp-conjunct ((¬ p) ⇔ ((¬ q) ⇔ r))
+  180:             (atp-canonicalize ((¬ p) ∧ (q ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  181                (assume {Γ = Γ}
+  182                  (¬ subgoal₅))))
+  183            (atp-conjunct (¬ p)
+  184:             (atp-canonicalize ((¬ p) ∧ (q ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  185                (assume {Γ = Γ}
+  186                  (¬ subgoal₅))))))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-13.agda:
+   57      (atp-simplify ⊥
+   58        (atp-conjunct (¬ q)
+   59:         (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ (p ∨ (q ∧ r))))
+   60            (assume {Γ = Γ}
+   61              (¬ subgoal₀))))
+   62        (atp-simplify ⊥
+   63          (atp-conjunct (p ∨ (q ∧ r))
+   64:           (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ (p ∨ (q ∧ r))))
+   65              (assume {Γ = Γ}
+   66                (¬ subgoal₀))))
+   67          (atp-conjunct (¬ p)
+   68:           (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ (p ∨ (q ∧ r))))
+   69              (assume {Γ = Γ}
+   70                (¬ subgoal₀)))))))
+   ..
+   75      (atp-simplify ⊥
+   76        (atp-conjunct (¬ r)
+   77:         (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ ((p ∨ q) ∧ (p ∨ (q ∧ r)))))
+   78            (assume {Γ = Γ}
+   79              (¬ subgoal₁))))
+   ..
+   81          (atp-simplify q
+   82            (atp-conjunct (p ∨ q)
+   83:             (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ ((p ∨ q) ∧ (p ∨ (q ∧ r)))))
+   84                (assume {Γ = Γ}
+   85                  (¬ subgoal₁))))
+   86            (atp-conjunct (¬ p)
+   87:             (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ ((p ∨ q) ∧ (p ∨ (q ∧ r)))))
+   88                (assume {Γ = Γ}
+   89                  (¬ subgoal₁)))))
+   90          (atp-simplify ⊥
+   91            (atp-conjunct (p ∨ (q ∧ r))
+   92:             (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ ((p ∨ q) ∧ (p ∨ (q ∧ r)))))
+   93                (assume {Γ = Γ}
+   94                  (¬ subgoal₁))))
+   95            (atp-conjunct (¬ p)
+   96:             (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ ((p ∨ q) ∧ (p ∨ (q ∧ r)))))
+   97                (assume {Γ = Γ}
+   98                  (¬ subgoal₁))))))))
+   ..
+  103      (atp-simplify ⊥
+  104        (atp-conjunct (¬ q)
+  105:         (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ ((p ∨ q) ∧ (p ∨ r))))
+  106            (assume {Γ = Γ}
+  107              (¬ subgoal₂))))
+  108        (atp-simplify ⊥
+  109          (atp-conjunct (p ∨ q)
+  110:           (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ ((p ∨ q) ∧ (p ∨ r))))
+  111              (assume {Γ = Γ}
+  112                (¬ subgoal₂))))
+  113          (atp-conjunct (¬ p)
+  114:           (atp-canonicalize ((¬ p) ∧ ((¬ q) ∧ ((p ∨ q) ∧ (p ∨ r))))
+  115              (assume {Γ = Γ}
+  116                (¬ subgoal₂)))))))
+  ...
+  121      (atp-simplify ⊥
+  122        (atp-conjunct (¬ r)
+  123:         (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ (q ∧ ((p ∨ q) ∧ (p ∨ r)))))
+  124            (assume {Γ = Γ}
+  125              (¬ subgoal₃))))
+  126        (atp-simplify ⊥
+  127          (atp-conjunct (p ∨ r)
+  128:           (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ (q ∧ ((p ∨ q) ∧ (p ∨ r)))))
+  129              (assume {Γ = Γ}
+  130                (¬ subgoal₃))))
+  131          (atp-conjunct (¬ p)
+  132:           (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ (q ∧ ((p ∨ q) ∧ (p ∨ r)))))
+  133              (assume {Γ = Γ}
+  134                (¬ subgoal₃)))))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-14.agda:
+   54      (atp-simplify ⊥
+   55        (atp-conjunct (¬ q)
+   56:         (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ⇔ (¬ q))))
+   57            (assume {Γ = Γ}
+   58              (¬ subgoal₀))))
+   59        (atp-simplify ⊥
+   60          (atp-conjunct ((¬ p) ⇔ (¬ q))
+   61:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ⇔ (¬ q))))
+   62              (assume {Γ = Γ}
+   63                (¬ subgoal₀))))
+   64          (atp-conjunct p
+   65:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ⇔ (¬ q))))
+   66              (assume {Γ = Γ}
+   67                (¬ subgoal₀)))))))
+   ..
+   72      (atp-simplify ⊥
+   73        (atp-conjunct q
+   74:         (atp-canonicalize ((¬ p) ∧ (q ∧ (((¬ p) ∨ q) ∧ ((¬ p) ⇔ (¬ q)))))
+   75            (assume {Γ = Γ}
+   76              (¬ subgoal₁))))
+   77        (atp-simplify ⊥
+   78          (atp-conjunct ((¬ p) ⇔ (¬ q))
+   79:           (atp-canonicalize ((¬ p) ∧ (q ∧ (((¬ p) ∨ q) ∧ ((¬ p) ⇔ (¬ q)))))
+   80              (assume {Γ = Γ}
+   81                (¬ subgoal₁))))
+   82          (atp-conjunct (¬ p)
+   83:           (atp-canonicalize ((¬ p) ∧ (q ∧ (((¬ p) ∨ q) ∧ ((¬ p) ⇔ (¬ q)))))
+   84              (assume {Γ = Γ}
+   85                (¬ subgoal₁)))))))
+   ..
+   90      (atp-simplify ⊥
+   91        (atp-conjunct (¬ q)
+   92:         (atp-canonicalize ((¬ q) ∧ (p ∧ (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))))
+   93            (assume {Γ = Γ}
+   94              (¬ subgoal₂))))
+   95        (atp-simplify ⊥
+   96          (atp-conjunct ((¬ p) ∨ q)
+   97:           (atp-canonicalize ((¬ q) ∧ (p ∧ (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))))
+   98              (assume {Γ = Γ}
+   99                (¬ subgoal₂))))
+  100          (atp-conjunct p
+  101:           (atp-canonicalize ((¬ q) ∧ (p ∧ (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))))
+  102              (assume {Γ = Γ}
+  103                (¬ subgoal₂)))))))
+  ...
+  108      (atp-simplify ⊥
+  109        (atp-conjunct (¬ p)
+  110:         (atp-canonicalize ((¬ p) ∧ (q ∧ (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))))
+  111            (assume {Γ = Γ}
+  112              (¬ subgoal₃))))
+  113        (atp-simplify ⊥
+  114          (atp-conjunct ((¬ q) ∨ p)
+  115:           (atp-canonicalize ((¬ p) ∧ (q ∧ (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))))
+  116              (assume {Γ = Γ}
+  117                (¬ subgoal₃))))
+  118          (atp-conjunct q
+  119:           (atp-canonicalize ((¬ p) ∧ (q ∧ (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))))
+  120              (assume {Γ = Γ}
+  121                (¬ subgoal₃)))))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-15.agda:
+   48      (atp-simplify ⊥
+   49        (atp-conjunct (¬ q)
+   50:         (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   51            (assume {Γ = Γ}
+   52              (¬ subgoal₀))))
+   53        (atp-simplify ⊥
+   54          (atp-conjunct ((¬ p) ∨ q)
+   55:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   56              (assume {Γ = Γ}
+   57                (¬ subgoal₀))))
+   58          (atp-conjunct p
+   59:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   60              (assume {Γ = Γ}
+   61                (¬ subgoal₀)))))))
+   ..
+   66      (atp-simplify ⊥
+   67        (atp-conjunct (¬ q)
+   68:         (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   69            (assume {Γ = Γ}
+   70              (¬ subgoal₁))))
+   71        (atp-simplify ⊥
+   72          (atp-conjunct ((¬ p) ∨ q)
+   73:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   74              (assume {Γ = Γ}
+   75                (¬ subgoal₁))))
+   76          (atp-conjunct p
+   77:           (atp-canonicalize ((¬ q) ∧ (p ∧ ((¬ p) ∨ q)))
+   78              (assume {Γ = Γ}
+   79                (¬ subgoal₁)))))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-16.agda:
+   43  proof₀ =
+   44    (RAA
+   45:     (atp-canonicalize ⊥
+   46        (assume {Γ = Γ}
+   47          (¬ subgoal₀))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-17.agda:
+   57      (atp-simplify ⊥
+   58        (atp-conjunct (¬ q)
+   59:         (atp-canonicalize ((¬ q) ∧ ((¬ s) ∧ (p ∧ ((¬ p) ∨ (s ∨ ((¬ r) ∧ q))))))
+   60            (assume {Γ = Γ}
+   61              (¬ subgoal₀))))
+   62        (atp-simplify ⊥
+   63          (atp-conjunct (¬ s)
+   64:           (atp-canonicalize ((¬ q) ∧ ((¬ s) ∧ (p ∧ ((¬ p) ∨ (s ∨ ((¬ r) ∧ q))))))
+   65              (assume {Γ = Γ}
+   66                (¬ subgoal₀))))
+   67          (atp-simplify ⊥
+   68            (atp-conjunct ((¬ p) ∨ (s ∨ ((¬ r) ∧ q)))
+   69:             (atp-canonicalize ((¬ q) ∧ ((¬ s) ∧ (p ∧ ((¬ p) ∨ (s ∨ ((¬ r) ∧ q))))))
+   70                (assume {Γ = Γ}
+   71                  (¬ subgoal₀))))
+   72            (atp-conjunct p
+   73:             (atp-canonicalize ((¬ q) ∧ ((¬ s) ∧ (p ∧ ((¬ p) ∨ (s ∨ ((¬ r) ∧ q))))))
+   74                (assume {Γ = Γ}
+   75                  (¬ subgoal₀))))))))
+   ..
+   81        (atp-simplify q
+   82          (atp-conjunct (¬ s)
+   83:           (atp-canonicalize ((¬ s) ∧ (p ∧ (r ∧ (((¬ p) ∨ (q ∨ s)) ∧ ((¬ p) ∨ (s ∨ ((¬ r) ∧ q)))))))
+   84              (assume {Γ = Γ}
+   85                (¬ subgoal₁))))
+   86          (atp-simplify q
+   87            (atp-conjunct ((¬ p) ∨ (q ∨ s))
+   88:             (atp-canonicalize ((¬ s) ∧ (p ∧ (r ∧ (((¬ p) ∨ (q ∨ s)) ∧ ((¬ p) ∨ (s ∨ ((¬ r) ∧ q)))))))
+   89                (assume {Γ = Γ}
+   90                  (¬ subgoal₁))))
+   91            (atp-conjunct p
+   92:             (atp-canonicalize ((¬ s) ∧ (p ∧ (r ∧ (((¬ p) ∨ (q ∨ s)) ∧ ((¬ p) ∨ (s ∨ ((¬ r) ∧ q)))))))
+   93                (assume {Γ = Γ}
+   94                  (¬ subgoal₁))))))
+   95        (atp-simplify ⊥
+   96          (atp-conjunct r
+   97:           (atp-canonicalize ((¬ s) ∧ (p ∧ (r ∧ (((¬ p) ∨ (q ∨ s)) ∧ ((¬ p) ∨ (s ∨ ((¬ r) ∧ q)))))))
+   98              (assume {Γ = Γ}
+   99                (¬ subgoal₁))))
+  100          (atp-simplify ⊥
+  101            (atp-conjunct (¬ s)
+  102:             (atp-canonicalize ((¬ s) ∧ (p ∧ (r ∧ (((¬ p) ∨ (q ∨ s)) ∧ ((¬ p) ∨ (s ∨ ((¬ r) ∧ q)))))))
+  103                (assume {Γ = Γ}
+  104                  (¬ subgoal₁))))
+  105            (atp-simplify ⊥
+  106              (atp-conjunct ((¬ p) ∨ (s ∨ ((¬ r) ∧ q)))
+  107:               (atp-canonicalize ((¬ s) ∧ (p ∧ (r ∧ (((¬ p) ∨ (q ∨ s)) ∧ ((¬ p) ∨ (s ∨ ((¬ r) ∧ q)))))))
+  108                  (assume {Γ = Γ}
+  109                    (¬ subgoal₁))))
+  110              (atp-conjunct p
+  111:               (atp-canonicalize ((¬ s) ∧ (p ∧ (r ∧ (((¬ p) ∨ (q ∨ s)) ∧ ((¬ p) ∨ (s ∨ ((¬ r) ∧ q)))))))
+  112                  (assume {Γ = Γ}
+  113                    (¬ subgoal₁)))))))))
+  ...
+  121          q
+  122          (atp-conjunct ((¬ q) ∨ r)
+  123:           (atp-canonicalize ((¬ s) ∧ (p ∧ (((¬ q) ∨ r) ∧ (((¬ p) ∨ ((¬ r) ∨ s)) ∧ ((¬ p) ∨ (q ∨ s))))))
+  124              (assume {Γ = Γ}
+  125                (¬ subgoal₂))))
+  126          (atp-simplify q
+  127            (atp-conjunct (¬ s)
+  128:             (atp-canonicalize ((¬ s) ∧ (p ∧ (((¬ q) ∨ r) ∧ (((¬ p) ∨ ((¬ r) ∨ s)) ∧ ((¬ p) ∨ (q ∨ s))))))
+  129                (assume {Γ = Γ}
+  130                  (¬ subgoal₂))))
+  131            (atp-simplify q
+  132              (atp-conjunct ((¬ p) ∨ (q ∨ s))
+  133:               (atp-canonicalize ((¬ s) ∧ (p ∧ (((¬ q) ∨ r) ∧ (((¬ p) ∨ ((¬ r) ∨ s)) ∧ ((¬ p) ∨ (q ∨ s))))))
+  134                  (assume {Γ = Γ}
+  135                    (¬ subgoal₂))))
+  136              (atp-conjunct p
+  137:               (atp-canonicalize ((¬ s) ∧ (p ∧ (((¬ q) ∨ r) ∧ (((¬ p) ∨ ((¬ r) ∨ s)) ∧ ((¬ p) ∨ (q ∨ s))))))
+  138                  (assume {Γ = Γ}
+  139                    (¬ subgoal₂)))))))
+  140        (atp-simplify (¬ r)
+  141          (atp-conjunct (¬ s)
+  142:           (atp-canonicalize ((¬ s) ∧ (p ∧ (((¬ q) ∨ r) ∧ (((¬ p) ∨ ((¬ r) ∨ s)) ∧ ((¬ p) ∨ (q ∨ s))))))
+  143              (assume {Γ = Γ}
+  144                (¬ subgoal₂))))
+  145          (atp-simplify (¬ r)
+  146            (atp-conjunct ((¬ p) ∨ ((¬ r) ∨ s))
+  147:             (atp-canonicalize ((¬ s) ∧ (p ∧ (((¬ q) ∨ r) ∧ (((¬ p) ∨ ((¬ r) ∨ s)) ∧ ((¬ p) ∨ (q ∨ s))))))
+  148                (assume {Γ = Γ}
+  149                  (¬ subgoal₂))))
+  150            (atp-conjunct p
+  151:             (atp-canonicalize ((¬ s) ∧ (p ∧ (((¬ q) ∨ r) ∧ (((¬ p) ∨ ((¬ r) ∨ s)) ∧ ((¬ p) ∨ (q ∨ s))))))
+  152                (assume {Γ = Γ}
+  153                  (¬ subgoal₂))))))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-18.agda:
+   51      (atp-simplify ⊥
+   52        (atp-conjunct (¬ k)
+   53:         (atp-canonicalize ((¬ k) ∧ ((¬ q) ∧ (((¬ g) ∨ q) ∧ (g ∨ ((¬ a) ∧ k)))))
+   54            (assume {Γ = Γ}
+   55              (¬ subgoal₀))))
+   56        (atp-simplify ⊥
+   57          (atp-conjunct (g ∨ ((¬ a) ∧ k))
+   58:           (atp-canonicalize ((¬ k) ∧ ((¬ q) ∧ (((¬ g) ∨ q) ∧ (g ∨ ((¬ a) ∧ k)))))
+   59              (assume {Γ = Γ}
+   60                (¬ subgoal₀))))
+   61          (atp-simplify (¬ g)
+   62            (atp-conjunct ((¬ g) ∨ q)
+   63:             (atp-canonicalize ((¬ k) ∧ ((¬ q) ∧ (((¬ g) ∨ q) ∧ (g ∨ ((¬ a) ∧ k)))))
+   64                (assume {Γ = Γ}
+   65                  (¬ subgoal₀))))
+   66            (atp-conjunct (¬ q)
+   67:             (atp-canonicalize ((¬ k) ∧ ((¬ q) ∧ (((¬ g) ∨ q) ∧ (g ∨ ((¬ a) ∧ k)))))
+   68                (assume {Γ = Γ}
+   69                  (¬ subgoal₀))))))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-19.agda:
+   52        (atp-simplify (¬ q)
+   53          (atp-conjunct ((¬ q) ∨ p)
+   54:           (atp-canonicalize ((¬ p) ∧ (((¬ p) ∨ r) ∧ (((¬ q) ∨ p) ∧ (p ∨ q))))
+   55              (assume {Γ = Γ}
+   56                (¬ subgoal₀))))
+   57          (atp-conjunct (¬ p)
+   58:           (atp-canonicalize ((¬ p) ∧ (((¬ p) ∨ r) ∧ (((¬ q) ∨ p) ∧ (p ∨ q))))
+   59              (assume {Γ = Γ}
+   60                (¬ subgoal₀)))))
+   61        (atp-simplify ⊥
+   62          (atp-conjunct (p ∨ q)
+   63:           (atp-canonicalize ((¬ p) ∧ (((¬ p) ∨ r) ∧ (((¬ q) ∨ p) ∧ (p ∨ q))))
+   64              (assume {Γ = Γ}
+   65                (¬ subgoal₀))))
+   66          (atp-conjunct (¬ p)
+   67:           (atp-canonicalize ((¬ p) ∧ (((¬ p) ∨ r) ∧ (((¬ q) ∨ p) ∧ (p ∨ q))))
+   68              (assume {Γ = Γ}
+   69                (¬ subgoal₀)))))))
+   ..
+   74      (atp-simplify ⊥
+   75        (atp-conjunct (¬ r)
+   76:         (atp-canonicalize ((¬ r) ∧ (p ∧ (((¬ p) ∨ r) ∧ (((¬ q) ∨ p) ∧ (p ∨ q)))))
+   77            (assume {Γ = Γ}
+   78              (¬ subgoal₁))))
+   79        (atp-simplify ⊥
+   80          (atp-conjunct ((¬ p) ∨ r)
+   81:           (atp-canonicalize ((¬ r) ∧ (p ∧ (((¬ p) ∨ r) ∧ (((¬ q) ∨ p) ∧ (p ∨ q)))))
+   82              (assume {Γ = Γ}
+   83                (¬ subgoal₁))))
+   84          (atp-conjunct p
+   85:           (atp-canonicalize ((¬ r) ∧ (p ∧ (((¬ p) ∨ r) ∧ (((¬ q) ∨ p) ∧ (p ∨ q)))))
+   86              (assume {Γ = Γ}
+   87                (¬ subgoal₁)))))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-20.agda:
+   63      (atp-simplify ⊥
+   64        (atp-conjunct (¬ r)
+   65:         (atp-canonicalize ((¬ r) ∧ (p ∧ (q ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+   66            (assume {Γ = Γ}
+   67              (¬ subgoal₀))))
+   68        (atp-simplify ⊥
+   69          (atp-conjunct q
+   70:           (atp-canonicalize ((¬ r) ∧ (p ∧ (q ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+   71              (assume {Γ = Γ}
+   72                (¬ subgoal₀))))
+   73          (atp-simplify ⊥
+   74            (atp-conjunct ((¬ p) ⇔ ((¬ q) ⇔ r))
+   75:             (atp-canonicalize ((¬ r) ∧ (p ∧ (q ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+   76                (assume {Γ = Γ}
+   77                  (¬ subgoal₀))))
+   78            (atp-conjunct p
+   79:             (atp-canonicalize ((¬ r) ∧ (p ∧ (q ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+   80                (assume {Γ = Γ}
+   81                  (¬ subgoal₀))))))))
+   ..
+   86      (atp-simplify ⊥
+   87        (atp-conjunct r
+   88:         (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+   89            (assume {Γ = Γ}
+   90              (¬ subgoal₁))))
+   91        (atp-simplify ⊥
+   92          (atp-conjunct (¬ q)
+   93:           (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+   94              (assume {Γ = Γ}
+   95                (¬ subgoal₁))))
+   96          (atp-simplify ⊥
+   97            (atp-conjunct ((¬ p) ⇔ ((¬ q) ⇔ r))
+   98:             (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+   99                (assume {Γ = Γ}
+  100                  (¬ subgoal₁))))
+  101            (atp-conjunct p
+  102:             (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  103                (assume {Γ = Γ}
+  104                  (¬ subgoal₁))))))))
+  ...
+  109      (atp-simplify ⊥
+  110        (atp-conjunct ((¬ q) ⇔ r)
+  111:         (atp-canonicalize (p ∧ (((¬ p) ⇔ ((¬ q) ⇔ r)) ∧ ((¬ q) ⇔ r)))
+  112            (assume {Γ = Γ}
+  113              (¬ subgoal₂))))
+  114        (atp-simplify ((¬ q) ⇔ (¬ r))
+  115          (atp-conjunct ((¬ p) ⇔ ((¬ q) ⇔ r))
+  116:           (atp-canonicalize (p ∧ (((¬ p) ⇔ ((¬ q) ⇔ r)) ∧ ((¬ q) ⇔ r)))
+  117              (assume {Γ = Γ}
+  118                (¬ subgoal₂))))
+  119          (atp-conjunct p
+  120:           (atp-canonicalize (p ∧ (((¬ p) ⇔ ((¬ q) ⇔ r)) ∧ ((¬ q) ⇔ r)))
+  121              (assume {Γ = Γ}
+  122                (¬ subgoal₂)))))))
+  ...
+  127      (atp-simplify ⊥
+  128        (atp-conjunct ((¬ p) ⇔ q)
+  129:         (atp-canonicalize (r ∧ (((¬ p) ⇔ ((¬ q) ⇔ r)) ∧ ((¬ p) ⇔ q)))
+  130            (assume {Γ = Γ}
+  131              (¬ subgoal₃))))
+  132        (atp-simplify ((¬ p) ⇔ (¬ q))
+  133          (atp-conjunct ((¬ p) ⇔ ((¬ q) ⇔ r))
+  134:           (atp-canonicalize (r ∧ (((¬ p) ⇔ ((¬ q) ⇔ r)) ∧ ((¬ p) ⇔ q)))
+  135              (assume {Γ = Γ}
+  136                (¬ subgoal₃))))
+  137          (atp-conjunct r
+  138:           (atp-canonicalize (r ∧ (((¬ p) ⇔ ((¬ q) ⇔ r)) ∧ ((¬ p) ⇔ q)))
+  139              (assume {Γ = Γ}
+  140                (¬ subgoal₃)))))))
+  ...
+  145      (atp-simplify ⊥
+  146        (atp-conjunct r
+  147:         (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  148            (assume {Γ = Γ}
+  149              (¬ subgoal₄))))
+  150        (atp-simplify ⊥
+  151          (atp-conjunct (¬ q)
+  152:           (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  153              (assume {Γ = Γ}
+  154                (¬ subgoal₄))))
+  155          (atp-simplify ⊥
+  156            (atp-conjunct ((¬ p) ⇔ ((¬ q) ⇔ r))
+  157:             (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  158                (assume {Γ = Γ}
+  159                  (¬ subgoal₄))))
+  160            (atp-conjunct p
+  161:             (atp-canonicalize ((¬ q) ∧ (p ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  162                (assume {Γ = Γ}
+  163                  (¬ subgoal₄))))))))
+  ...
+  168      (atp-simplify ⊥
+  169        (atp-conjunct r
+  170:         (atp-canonicalize ((¬ p) ∧ (q ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  171            (assume {Γ = Γ}
+  172              (¬ subgoal₅))))
+  173        (atp-simplify ⊥
+  174          (atp-conjunct q
+  175:           (atp-canonicalize ((¬ p) ∧ (q ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  176              (assume {Γ = Γ}
+  177                (¬ subgoal₅))))
+  178          (atp-simplify ⊥
+  179            (atp-conjunct ((¬ p) ⇔ ((¬ q) ⇔ r))
+  180:             (atp-canonicalize ((¬ p) ∧ (q ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  181                (assume {Γ = Γ}
+  182                  (¬ subgoal₅))))
+  183            (atp-conjunct (¬ p)
+  184:             (atp-canonicalize ((¬ p) ∧ (q ∧ (r ∧ ((¬ p) ⇔ ((¬ q) ⇔ r)))))
+  185                (assume {Γ = Γ}
+  186                  (¬ subgoal₅))))))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-21.agda:
+   55              p
+   56              (atp-conjunct ((¬ p) ∨ (q ∨ r))
+   57:               (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+   58                  (assume {Γ = Γ}
+   59                    (¬ subgoal₀))))
+   ..
+   63                  r
+   64                  (atp-conjunct (p ∨ (q ∨ r))
+   65:                   (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+   66                      (assume {Γ = Γ}
+   67                        (¬ subgoal₀))))
+   68                  (atp-conjunct ((¬ r) ∨ (p ∨ q))
+   69:                   (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+   70                      (assume {Γ = Γ}
+   71                        (¬ subgoal₀)))))
+   ..
+   77                      r
+   78                      (atp-conjunct (p ∨ (q ∨ r))
+   79:                       (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+   80                          (assume {Γ = Γ}
+   81                            (¬ subgoal₀))))
+   82                      (atp-conjunct ((¬ r) ∨ (p ∨ q))
+   83:                       (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+   84                          (assume {Γ = Γ}
+   85                            (¬ subgoal₀)))))
+   86                    (atp-conjunct ((¬ q) ∨ (p ∨ r))
+   87:                     (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+   88                        (assume {Γ = Γ}
+   89                          (¬ subgoal₀)))))
+   90                  (atp-conjunct ((¬ q) ∨ ((¬ r) ∨ p))
+   91:                   (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+   92                      (assume {Γ = Γ}
+   93                        (¬ subgoal₀)))))))
+   94            (atp-conjunct ((¬ p) ∨ ((¬ r) ∨ q))
+   95:             (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+   96                (assume {Γ = Γ}
+   97                  (¬ subgoal₀)))))
+   ..
+  101              r
+  102              (atp-conjunct (p ∨ (q ∨ r))
+  103:               (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  104                  (assume {Γ = Γ}
+  105                    (¬ subgoal₀))))
+  106              (atp-conjunct ((¬ r) ∨ (p ∨ q))
+  107:               (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  108                  (assume {Γ = Γ}
+  109                    (¬ subgoal₀)))))
+  ...
+  115                  r
+  116                  (atp-conjunct (p ∨ (q ∨ r))
+  117:                   (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  118                      (assume {Γ = Γ}
+  119                        (¬ subgoal₀))))
+  120                  (atp-conjunct ((¬ r) ∨ (p ∨ q))
+  121:                   (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  122                      (assume {Γ = Γ}
+  123                        (¬ subgoal₀)))))
+  124                (atp-conjunct ((¬ q) ∨ (p ∨ r))
+  125:                 (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  126                    (assume {Γ = Γ}
+  127                      (¬ subgoal₀)))))
+  128              (atp-conjunct ((¬ q) ∨ ((¬ r) ∨ p))
+  129:               (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  130                  (assume {Γ = Γ}
+  131                    (¬ subgoal₀)))))))
+  ...
+  145                      p
+  146                      (atp-conjunct ((¬ p) ∨ (q ∨ r))
+  147:                       (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  148                          (assume {Γ = Γ}
+  149                            (¬ subgoal₀))))
+  ...
+  153                          r
+  154                          (atp-conjunct (p ∨ (q ∨ r))
+  155:                           (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  156                              (assume {Γ = Γ}
+  157                                (¬ subgoal₀))))
+  158                          (atp-conjunct ((¬ r) ∨ (p ∨ q))
+  159:                           (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  160                              (assume {Γ = Γ}
+  161                                (¬ subgoal₀)))))
+  ...
+  167                              r
+  168                              (atp-conjunct (p ∨ (q ∨ r))
+  169:                               (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  170                                  (assume {Γ = Γ}
+  171                                    (¬ subgoal₀))))
+  172                              (atp-conjunct ((¬ r) ∨ (p ∨ q))
+  173:                               (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  174                                  (assume {Γ = Γ}
+  175                                    (¬ subgoal₀)))))
+  176                            (atp-conjunct ((¬ q) ∨ (p ∨ r))
+  177:                             (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  178                                (assume {Γ = Γ}
+  179                                  (¬ subgoal₀)))))
+  180                          (atp-conjunct ((¬ q) ∨ ((¬ r) ∨ p))
+  181:                           (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  182                              (assume {Γ = Γ}
+  183                                (¬ subgoal₀)))))))
+  184                    (atp-conjunct ((¬ p) ∨ ((¬ r) ∨ q))
+  185:                     (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  186                        (assume {Γ = Γ}
+  187                          (¬ subgoal₀)))))
+  ...
+  191                      r
+  192                      (atp-conjunct (p ∨ (q ∨ r))
+  193:                       (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  194                          (assume {Γ = Γ}
+  195                            (¬ subgoal₀))))
+  196                      (atp-conjunct ((¬ r) ∨ (p ∨ q))
+  197:                       (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  198                          (assume {Γ = Γ}
+  199                            (¬ subgoal₀)))))
+  ...
+  205                          r
+  206                          (atp-conjunct (p ∨ (q ∨ r))
+  207:                           (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  208                              (assume {Γ = Γ}
+  209                                (¬ subgoal₀))))
+  210                          (atp-conjunct ((¬ r) ∨ (p ∨ q))
+  211:                           (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  212                              (assume {Γ = Γ}
+  213                                (¬ subgoal₀)))))
+  214                        (atp-conjunct ((¬ q) ∨ (p ∨ r))
+  215:                         (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  216                            (assume {Γ = Γ}
+  217                              (¬ subgoal₀)))))
+  218                      (atp-conjunct ((¬ q) ∨ ((¬ r) ∨ p))
+  219:                       (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  220                          (assume {Γ = Γ}
+  221                            (¬ subgoal₀)))))))
+  222                (atp-conjunct ((¬ p) ∨ ((¬ q) ∨ r))
+  223:                 (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  224                    (assume {Γ = Γ}
+  225                      (¬ subgoal₀)))))
+  ...
+  229                  r
+  230                  (atp-conjunct (p ∨ (q ∨ r))
+  231:                   (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  232                      (assume {Γ = Γ}
+  233                        (¬ subgoal₀))))
+  234                  (atp-conjunct ((¬ r) ∨ (p ∨ q))
+  235:                   (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  236                      (assume {Γ = Γ}
+  237                        (¬ subgoal₀)))))
+  ...
+  243                      r
+  244                      (atp-conjunct (p ∨ (q ∨ r))
+  245:                       (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  246                          (assume {Γ = Γ}
+  247                            (¬ subgoal₀))))
+  248                      (atp-conjunct ((¬ r) ∨ (p ∨ q))
+  249:                       (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  250                          (assume {Γ = Γ}
+  251                            (¬ subgoal₀)))))
+  252                    (atp-conjunct ((¬ q) ∨ (p ∨ r))
+  253:                     (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  254                        (assume {Γ = Γ}
+  255                          (¬ subgoal₀)))))
+  256                  (atp-conjunct ((¬ q) ∨ ((¬ r) ∨ p))
+  257:                   (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  258                      (assume {Γ = Γ}
+  259                        (¬ subgoal₀)))))))
+  260            (atp-conjunct ((¬ p) ∨ ((¬ q) ∨ (¬ r)))
+  261:             (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  262                (assume {Γ = Γ}
+  263                  (¬ subgoal₀)))))
+  ...
+  267              r
+  268              (atp-conjunct (p ∨ (q ∨ r))
+  269:               (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  270                  (assume {Γ = Γ}
+  271                    (¬ subgoal₀))))
+  272              (atp-conjunct ((¬ r) ∨ (p ∨ q))
+  273:               (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  274                  (assume {Γ = Γ}
+  275                    (¬ subgoal₀)))))
+  ...
+  281                  r
+  282                  (atp-conjunct (p ∨ (q ∨ r))
+  283:                   (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  284                      (assume {Γ = Γ}
+  285                        (¬ subgoal₀))))
+  286                  (atp-conjunct ((¬ r) ∨ (p ∨ q))
+  287:                   (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  288                      (assume {Γ = Γ}
+  289                        (¬ subgoal₀)))))
+  290                (atp-conjunct ((¬ q) ∨ (p ∨ r))
+  291:                 (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  292                    (assume {Γ = Γ}
+  293                      (¬ subgoal₀)))))
+  294              (atp-conjunct ((¬ q) ∨ ((¬ r) ∨ p))
+  295:               (atp-canonicalize (((¬ p) ∨ ((¬ q) ∨ (¬ r))) ∧ (((¬ p) ∨ ((¬ q) ∨ r)) ∧ (((¬ p) ∨ ((¬ r) ∨ q)) ∧ (((¬ p) ∨ (q ∨ r)) ∧ (((¬ q) ∨ ((¬ r) ∨ p)) ∧ (((¬ q) ∨ (p ∨ r)) ∧ (((¬ r) ∨ (p ∨ q)) ∧ (p ∨ (q ∨ r)))))))))
+  296                  (assume {Γ = Γ}
+  297                    (¬ subgoal₀)))))))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-22.agda:
+   49        (atp-simplify (¬ lit)
+   50          (atp-conjunct ((¬ lit) ∨ clause)
+   51:           (atp-canonicalize ((¬ clause) ∧ (((¬ lit) ∨ clause) ∧ (clause ∨ lit)))
+   52              (assume {Γ = Γ}
+   53                (¬ subgoal₀))))
+   54          (atp-conjunct (¬ clause)
+   55:           (atp-canonicalize ((¬ clause) ∧ (((¬ lit) ∨ clause) ∧ (clause ∨ lit)))
+   56              (assume {Γ = Γ}
+   57                (¬ subgoal₀)))))
+   58        (atp-simplify ⊥
+   59          (atp-conjunct (clause ∨ lit)
+   60:           (atp-canonicalize ((¬ clause) ∧ (((¬ lit) ∨ clause) ∧ (clause ∨ lit)))
+   61              (assume {Γ = Γ}
+   62                (¬ subgoal₀))))
+   63          (atp-conjunct (¬ clause)
+   64:           (atp-canonicalize ((¬ clause) ∧ (((¬ lit) ∨ clause) ∧ (clause ∨ lit)))
+   65              (assume {Γ = Γ}
+   66                (¬ subgoal₀)))))))
+   ..
+   69  proof₁ =
+   70    (RAA
+   71:     (atp-canonicalize ⊥
+   72        (assume {Γ = Γ}
+   73          (¬ subgoal₁))))
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-23.agda:
+   48      (atp-simplify ⊥
+   49        (atp-conjunct q
+   50:         (atp-canonicalize (p ∧ (q ∧ ((¬ p) ⇔ q)))
+   51            (assume {Γ = Γ}
+   52              (¬ subgoal₀))))
+   53        (atp-simplify ⊥
+   54          (atp-conjunct ((¬ p) ⇔ q)
+   55:           (atp-canonicalize (p ∧ (q ∧ ((¬ p) ⇔ q)))
+   56              (assume {Γ = Γ}
+   57                (¬ subgoal₀))))
+   58          (atp-conjunct p
+   59:           (atp-canonicalize (p ∧ (q ∧ ((¬ p) ⇔ q)))
+   60              (assume {Γ = Γ}
+   61                (¬ subgoal₀)))))))
+   ..
+   66      (atp-simplify ⊥
+   67        (atp-conjunct q
+   68:         (atp-canonicalize (p ∧ (q ∧ (((¬ p) ∨ (¬ q)) ∧ ((¬ p) ⇔ q))))
+   69            (assume {Γ = Γ}
+   70              (¬ subgoal₁))))
+   71        (atp-simplify ⊥
+   72          (atp-conjunct ((¬ p) ∨ (¬ q))
+   73:           (atp-canonicalize (p ∧ (q ∧ (((¬ p) ∨ (¬ q)) ∧ ((¬ p) ⇔ q))))
+   74              (assume {Γ = Γ}
+   75                (¬ subgoal₁))))
+   76          (atp-conjunct p
+   77:           (atp-canonicalize (p ∧ (q ∧ (((¬ p) ∨ (¬ q)) ∧ ((¬ p) ⇔ q))))
+   78              (assume {Γ = Γ}
+   79                (¬ subgoal₁)))))))
+
+514 matches across 111 files

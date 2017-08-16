@@ -21,7 +21,7 @@ module paper where
   {\leavevmode\hbox\bgroup}
   {\DisplayProof\egroup}
 \def\extraVskip{3pt}
-\def\labelSpacing{2.5pt}
+\def\labelSpacing{3pt}
 \def\defaultHypSeparation{\hskip.2in}
 \def\EnableBpAbbreviations{true}
 

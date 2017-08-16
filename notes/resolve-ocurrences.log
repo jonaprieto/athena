@@ -1,0 +1,514 @@
+Searching 338 files for "resolve"
+/home/turing/athena/test/prop-pack,-*.tstp,-*.tex
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-1.agda:
+   51  proof₀ =
+   52    (RAA
+   53:     (atp-resolve ⊥ -- p (¬ p) atp-resolve₈ False
+   54        p
+   55:       (atp-resolve p -- q ((¬ q) ∨ p) atp-resolve₄ True
+   56          q
+   57          (atp-conjunct ((¬ q) ∨ p)
+   ..
+   72  proof₁ =
+   73    (RAA
+   74:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   75        q
+   76:       (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   77          p
+   78          (atp-conjunct ((¬ p) ∨ q)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-11.agda:
+   51  proof₀ =
+   52    (RAA
+   53:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   54        q
+   55:       (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   ..
+   72  proof₁ =
+   73    (RAA
+   74:     (atp-resolve ⊥ -- p (¬ p) atp-resolve₈ False
+   75        p
+   76:       (atp-resolve p -- q ((¬ q) ∨ p) atp-resolve₄ True
+   77          q
+   78          (atp-conjunct ((¬ q) ∨ p)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-12.agda:
+   67  proof₁ =
+   68    (RAA
+   69:     (atp-resolve ⊥ -- r (¬ r) atp-resolve₈ False
+   70        r
+   71:       (atp-resolve r -- q ((¬ q) ∨ r) atp-resolve₄ True
+   72          q
+   73:         (atp-resolve ((¬ q) ∨ r) -- p ((¬ p) ∨ ((¬ q) ∨ r)) atp-resolve₄ True
+   74            p
+   75            (atp-conjunct ((¬ p) ∨ ((¬ q) ∨ r))
+   ..
+  101  proof₃ =
+  102    (RAA
+  103:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+  104        q
+  105:       (atp-resolve q -- r ((¬ r) ∨ q) atp-resolve₄ True
+  106          r
+  107:         (atp-resolve ((¬ r) ∨ q) -- p ((¬ p) ∨ ((¬ r) ∨ q)) atp-resolve₄ True
+  108            p
+  109            (atp-conjunct ((¬ p) ∨ ((¬ r) ∨ q))
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-2.agda:
+   57  proof₀ =
+   58    (RAA
+   59:     (atp-resolve ⊥ -- r (¬ r) atp-resolve₈ False
+   60        r
+   61:       (atp-resolve r -- q ((¬ q) ∨ r) atp-resolve₄ True
+   62          q
+   63          (atp-conjunct ((¬ q) ∨ r)
+   ..
+   83  proof₁ =
+   84    (RAA
+   85:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   86        q
+   87:       (atp-resolve q -- r ((¬ r) ∨ q) atp-resolve₄ True
+   88          r
+   89          (atp-conjunct ((¬ r) ∨ q)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-4.agda:
+   48  proof₀ =
+   49    (RAA
+   50:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   51        q
+   52:       (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   53          p
+   54          (atp-clausify ((¬ p) ∨ q)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-5.agda:
+   48  proof₀ =
+   49    (RAA
+   50:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   51        q
+   52:       (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   53          p
+   54          (atp-clausify ((¬ p) ∨ q)
+
+/home/turing/athena/test/prop-pack/problems/biconditional/bicond-6.agda:
+   51  proof₀ =
+   52    (RAA
+   53:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   54        q
+   55:       (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   56          p
+   57          (atp-canonicalize ((¬ p) ∨ q)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-10.agda:
+   48  proof₀ =
+   49    (RAA
+   50:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   51        q
+   52:       (atp-resolve q -- (p ∨ q) (¬ p) atp-resolve₇ False
+   53          p
+   54          (atp-canonicalize (p ∨ q)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-11.agda:
+   51  proof₀ =
+   52    (RAA
+   53:     (atp-resolve ⊥ -- r (¬ r) atp-resolve₈ False
+   54        r
+   55:       (atp-resolve r -- q ((¬ q) ∨ r) atp-resolve₄ True
+   56          q
+   57:         (atp-resolve ((¬ q) ∨ r) -- p ((¬ p) ∨ ((¬ q) ∨ r)) atp-resolve₄ True
+   58            p
+   59            (atp-clausify ((¬ p) ∨ ((¬ q) ∨ r))
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-13.agda:
+   51  proof₀ =
+   52    (RAA
+   53:     (atp-resolve ⊥ -- p (¬ p) atp-resolve₈ False
+   54        p
+   55:       (atp-resolve p -- q ((¬ q) ∨ p) atp-resolve₄ True
+   56          q
+   57          (atp-conjunct ((¬ q) ∨ p)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-14.agda:
+   51  proof₀ =
+   52    (RAA
+   53:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   54        q
+   55:       (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   ..
+   72  proof₁ =
+   73    (RAA
+   74:     (atp-resolve ⊥ -- p (¬ p) atp-resolve₈ False
+   75        p
+   76:       (atp-resolve p -- q ((¬ q) ∨ p) atp-resolve₄ True
+   77          q
+   78          (atp-conjunct ((¬ q) ∨ p)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-15.agda:
+   54  proof₀ =
+   55    (RAA
+   56:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   57        q
+   58:       (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   59          p
+   60          (atp-conjunct ((¬ p) ∨ q)
+   ..
+   62              (assume {Γ = Γ}
+   63                (¬ subgoal₀))))
+   64:         (atp-resolve p -- (p ∨ q) (¬ q) atp-resolve₆ False
+   65            q
+   66            (atp-conjunct (p ∨ q)
+   ..
+   68                (weaken (¬ subgoal₀)
+   69                  (assume {Γ = ∅} a₁))))
+   70:           (atp-resolve (¬ q) -- ((¬ q) ∨ r) (¬ r) atp-resolve₆ False
+   71              r
+   72              (atp-conjunct ((¬ q) ∨ r)
+   ..
+   78                  (assume {Γ = Γ}
+   79                    (¬ subgoal₀)))))))
+   80:       (atp-resolve (¬ q) -- ((¬ q) ∨ r) (¬ r) atp-resolve₆ False
+   81          r
+   82          (atp-conjunct ((¬ q) ∨ r)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-7.agda:
+   54  proof₀ =
+   55    (RAA
+   56:     (atp-resolve ⊥ -- p (¬ p) atp-resolve₈ False
+   57        p
+   58        (atp-conjunct p
+   ..
+   67  proof₁ =
+   68    (RAA
+   69:     (atp-resolve ⊥ -- r (¬ r) atp-resolve₈ False
+   70        r
+   71:       (atp-resolve r -- (q ∨ r) (¬ q) atp-resolve₇ False
+   72          q
+   73          (atp-conjunct (q ∨ r)
+
+/home/turing/athena/test/prop-pack/problems/disjunction/disj-8.agda:
+   54  proof₀ =
+   55    (RAA
+   56:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   57        q
+   58:       (atp-resolve q -- (p ∨ q) (¬ p) atp-resolve₇ False
+   59          p
+   60          (atp-conjunct (p ∨ q)
+   ..
+   75  proof₁ =
+   76    (RAA
+   77:     (atp-resolve ⊥ -- r (¬ r) atp-resolve₈ False
+   78        r
+   79:       (atp-resolve r -- (p ∨ r) (¬ p) atp-resolve₇ False
+   80          p
+   81          (atp-conjunct (p ∨ r)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-13.agda:
+   51  proof₀ =
+   52    (RAA
+   53:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   54        q
+   55:       (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-17.agda:
+   54  proof₀ =
+   55    (RAA
+   56:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   57        q
+   58:       (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   59          p
+   60          (atp-conjunct ((¬ p) ∨ q)
+   ..
+   75  proof₁ =
+   76    (RAA
+   77:     (atp-resolve ⊥ -- r (¬ r) atp-resolve₈ False
+   78        r
+   79:       (atp-resolve r -- p ((¬ p) ∨ r) atp-resolve₄ True
+   80          p
+   81          (atp-conjunct ((¬ p) ∨ r)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-3.agda:
+   54  proof₀ =
+   55    (RAA
+   56:     (atp-resolve ⊥ -- r (¬ r) atp-resolve₈ False
+   57        r
+   58:       (atp-resolve r -- q ((¬ q) ∨ r) atp-resolve₄ True
+   59          q
+   60          (atp-canonicalize ((¬ q) ∨ r)
+   61            (weaken (¬ subgoal₀)
+   62              (assume {Γ = [ a₁ ]} a₂)))
+   63:         (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   64            p
+   65            (atp-canonicalize ((¬ p) ∨ q)
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-5.agda:
+   51  proof₀ =
+   52    (RAA
+   53:     (atp-resolve ⊥ -- r (¬ r) atp-resolve₈ False
+   54        r
+   55:       (atp-resolve r -- q ((¬ q) ∨ r) atp-resolve₄ True
+   56          q
+   57:         (atp-resolve ((¬ q) ∨ r) -- p ((¬ p) ∨ ((¬ q) ∨ r)) atp-resolve₄ True
+   58            p
+   59            (atp-clausify ((¬ p) ∨ ((¬ q) ∨ r))
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-6.agda:
+   48  proof₀ =
+   49    (RAA
+   50:     (atp-resolve ⊥ -- p (¬ p) atp-resolve₈ False
+   51        p
+   52        (atp-conjunct p
+
+/home/turing/athena/test/prop-pack/problems/implication/impl-8.agda:
+   54  proof₀ =
+   55    (RAA
+   56:     (atp-resolve ⊥ -- r (¬ r) atp-resolve₈ False
+   57        r
+   58:       (atp-resolve r -- q ((¬ q) ∨ r) atp-resolve₄ True
+   59          q
+   60:         (atp-resolve ((¬ q) ∨ r) -- p ((¬ p) ∨ ((¬ q) ∨ r)) atp-resolve₄ True
+   61            p
+   62            (atp-canonicalize ((¬ p) ∨ ((¬ q) ∨ r))
+   ..
+   68                (assume {Γ = Γ}
+   69                  (¬ subgoal₀)))))
+   70:         (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   71            p
+   72            (atp-canonicalize ((¬ p) ∨ q)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-14.agda:
+   57  proof₀ =
+   58    (RAA
+   59:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   60        q
+   61:       (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   62          p
+   63          (atp-conjunct ((¬ p) ∨ q)
+   ..
+   67                  (∅ , a₃ , ¬ subgoal₀)
+   68                  (assume {Γ = [ a₁ ]} a₂)))))
+   69:         (atp-resolve p -- (p ∨ q) ((¬ q) ∨ p) atp-resolve₃ False
+   70            q
+   71            (atp-canonicalize (p ∨ q)
+   ..
+   79                    (∅ , a₃ , ¬ subgoal₀)
+   80                    (assume {Γ = [ a₁ ]} a₂)))))))
+   81:       (atp-resolve (¬ q) -- p ((¬ p) ∨ (¬ q)) atp-resolve₄ True
+   82          p
+   83          (atp-canonicalize ((¬ p) ∨ (¬ q))
+   ..
+   85              (assume
+   86                {Γ = ∅ , a₁ , a₂} a₃)))
+   87:         (atp-resolve p -- (p ∨ q) ((¬ q) ∨ p) atp-resolve₃ False
+   88            q
+   89            (atp-canonicalize (p ∨ q)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-21.agda:
+   48  proof₀ =
+   49    (RAA
+   50:     (atp-resolve ⊥ -- p (¬ p) atp-resolve₈ False
+   51        p
+   52        (atp-conjunct p
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-22.agda:
+   51  proof₀ =
+   52    (RAA
+   53:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   54        q
+   55:       (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   56          p
+   57          (atp-conjunct ((¬ p) ∨ q)
+   ..
+   72  proof₁ =
+   73    (RAA
+   74:     (atp-resolve ⊥ -- p (¬ p) atp-resolve₈ False
+   75        p
+   76:       (atp-resolve p -- q ((¬ q) ∨ p) atp-resolve₄ True
+   77          q
+   78          (atp-conjunct ((¬ q) ∨ p)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-23.agda:
+   48  proof₀ =
+   49    (RAA
+   50:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   51        q
+   52:       (atp-resolve q -- (p ∨ q) (¬ p) atp-resolve₇ False
+   53          p
+   54          (atp-clausify (p ∨ q)
+
+/home/turing/athena/test/prop-pack/problems/negation/neg-27.agda:
+   66  proof₀ =
+   67    (RAA
+   68:     (atp-resolve ⊥ -- q₁ (¬ q₁) atp-resolve₈ False
+   69        q₁
+   70:       (atp-resolve q₁ -- p ((¬ p) ∨ q₁) atp-resolve₄ True
+   71          p
+   72:         (atp-resolve ((¬ p) ∨ q₁) -- ((¬ p) ∨ (q₁ ∨ q₂)) (¬ q₂) id -- resolve 2. False
+   73            q₂
+   74            (atp-canonicalize ((¬ p) ∨ (q₁ ∨ q₂))
+   ..
+   82                  (assume
+   83                    {Γ = ∅ , a₁ , a₂ , a₃} a₄)))))
+   84:         (atp-resolve p -- (p ∨ q) (¬ q) atp-resolve₆ False
+   85            q
+   86            (atp-canonicalize (p ∨ q)
+   ..
+   88                (∅ , a₂ , a₃ , a₄ , ¬ subgoal₀)
+   89                (assume {Γ = ∅} a₁)))
+   90:           (atp-resolve (¬ q) -- ((¬ q) ∨ r) (¬ r) atp-resolve₆ False
+   91              r
+   92              (atp-canonicalize ((¬ q) ∨ r)
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-17.agda:
+  116  proof₂ =
+  117    (RAA
+  118:     (atp-resolve ⊥ -- r (¬ r) atp-resolve₈ False
+  119        r
+  120:       (atp-resolve r -- q ((¬ q) ∨ r) atp-resolve₄ True
+  121          q
+  122          (atp-conjunct ((¬ q) ∨ r)
+
+/home/turing/athena/test/prop-pack/problems/prop-metis/prop-21.agda:
+   46  proof₀ =
+   47    (RAA
+   48:     (atp-resolve ⊥ -- q (¬ q) atp-resolve₈ False
+   49        q
+   50:       (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+   51          p
+   52:         (atp-resolve ((¬ p) ∨ q) -- (q ∨ r) ((¬ p) ∨ ((¬ r) ∨ q)) id -- resolve 1. False
+   53            r
+   54:           (atp-resolve (q ∨ r) -- p ((¬ p) ∨ (q ∨ r)) atp-resolve₄ True
+   55              p
+   56              (atp-conjunct ((¬ p) ∨ (q ∨ r))
+   ..
+   58                  (assume {Γ = Γ}
+   59                    (¬ subgoal₀))))
+   60:             (atp-resolve p -- (p ∨ q) ((¬ q) ∨ p) atp-resolve₃ False
+   61                q
+   62:               (atp-resolve (p ∨ q) -- (p ∨ (q ∨ r)) ((¬ r) ∨ (p ∨ q)) id -- resolve 1. False
+   63                  r
+   64                  (atp-conjunct (p ∨ (q ∨ r))
+   ..
+   70                      (assume {Γ = Γ}
+   71                        (¬ subgoal₀)))))
+   72:               (atp-resolve ((¬ q) ∨ p) -- (p ∨ r) ((¬ q) ∨ ((¬ r) ∨ p)) id -- resolve 1. False
+   73                  r
+   74:                 (atp-resolve (p ∨ r) -- (p ∨ q) ((¬ q) ∨ (p ∨ r)) atp-resolve₃ False
+   75                    q
+   76:                   (atp-resolve (p ∨ q) -- (p ∨ (q ∨ r)) ((¬ r) ∨ (p ∨ q)) id -- resolve 1. False
+   77                      r
+   78                      (atp-conjunct (p ∨ (q ∨ r))
+   ..
+   96                (assume {Γ = Γ}
+   97                  (¬ subgoal₀)))))
+   98:         (atp-resolve p -- (p ∨ q) ((¬ q) ∨ p) atp-resolve₃ False
+   99            q
+  100:           (atp-resolve (p ∨ q) -- (p ∨ (q ∨ r)) ((¬ r) ∨ (p ∨ q)) id -- resolve 1. False
+  101              r
+  102              (atp-conjunct (p ∨ (q ∨ r))
+  ...
+  108                  (assume {Γ = Γ}
+  109                    (¬ subgoal₀)))))
+  110:           (atp-resolve ((¬ q) ∨ p) -- (p ∨ r) ((¬ q) ∨ ((¬ r) ∨ p)) id -- resolve 1. False
+  111              r
+  112:             (atp-resolve (p ∨ r) -- (p ∨ q) ((¬ q) ∨ (p ∨ r)) atp-resolve₃ False
+  113                q
+  114:               (atp-resolve (p ∨ q) -- (p ∨ (q ∨ r)) ((¬ r) ∨ (p ∨ q)) id -- resolve 1. False
+  115                  r
+  116                  (atp-conjunct (p ∨ (q ∨ r))
+  ...
+  130                  (assume {Γ = Γ}
+  131                    (¬ subgoal₀)))))))
+  132:       (atp-resolve (¬ q) -- p ((¬ p) ∨ (¬ q)) atp-resolve₄ True
+  133          p
+  134:         (atp-resolve ((¬ p) ∨ (¬ q)) -- r ((¬ p) ∨ ((¬ q) ∨ (¬ r))) id -- resolve 3. False
+  135            r
+  136:           (atp-resolve r -- p ((¬ p) ∨ r) atp-resolve₄ True
+  137              p
+  138:             (atp-resolve ((¬ p) ∨ r) -- q ((¬ p) ∨ ((¬ q) ∨ r)) id -- resolve 3. False
+  139                q
+  140:               (atp-resolve q -- p ((¬ p) ∨ q) atp-resolve₄ True
+  141                  p
+  142:                 (atp-resolve ((¬ p) ∨ q) -- (q ∨ r) ((¬ p) ∨ ((¬ r) ∨ q)) id -- resolve 1. False
+  143                    r
+  144:                   (atp-resolve (q ∨ r) -- p ((¬ p) ∨ (q ∨ r)) atp-resolve₄ True
+  145                      p
+  146                      (atp-conjunct ((¬ p) ∨ (q ∨ r))
+  ...
+  148                          (assume {Γ = Γ}
+  149                            (¬ subgoal₀))))
+  150:                     (atp-resolve p -- (p ∨ q) ((¬ q) ∨ p) atp-resolve₃ False
+  151                        q
+  152:                       (atp-resolve (p ∨ q) -- (p ∨ (q ∨ r)) ((¬ r) ∨ (p ∨ q)) id -- resolve 1. False
+  153                          r
+  154                          (atp-conjunct (p ∨ (q ∨ r))
+  ...
+  160                              (assume {Γ = Γ}
+  161                                (¬ subgoal₀)))))
+  162:                       (atp-resolve ((¬ q) ∨ p) -- (p ∨ r) ((¬ q) ∨ ((¬ r) ∨ p)) id -- resolve 1. False
+  163                          r
+  164:                         (atp-resolve (p ∨ r) -- (p ∨ q) ((¬ q) ∨ (p ∨ r)) atp-resolve₃ False
+  165                            q
+  166:                           (atp-resolve (p ∨ q) -- (p ∨ (q ∨ r)) ((¬ r) ∨ (p ∨ q)) id -- resolve 1. False
+  167                              r
+  168                              (atp-conjunct (p ∨ (q ∨ r))
+  ...
+  186                        (assume {Γ = Γ}
+  187                          (¬ subgoal₀)))))
+  188:                 (atp-resolve p -- (p ∨ q) ((¬ q) ∨ p) atp-resolve₃ False
+  189                    q
+  190:                   (atp-resolve (p ∨ q) -- (p ∨ (q ∨ r)) ((¬ r) ∨ (p ∨ q)) id -- resolve 1. False
+  191                      r
+  192                      (atp-conjunct (p ∨ (q ∨ r))
+  ...
+  198                          (assume {Γ = Γ}
+  199                            (¬ subgoal₀)))))
+  200:                   (atp-resolve ((¬ q) ∨ p) -- (p ∨ r) ((¬ q) ∨ ((¬ r) ∨ p)) id -- resolve 1. False
+  201                      r
+  202:                     (atp-resolve (p ∨ r) -- (p ∨ q) ((¬ q) ∨ (p ∨ r)) atp-resolve₃ False
+  203                        q
+  204:                       (atp-resolve (p ∨ q) -- (p ∨ (q ∨ r)) ((¬ r) ∨ (p ∨ q)) id -- resolve 1. False
+  205                          r
+  206                          (atp-conjunct (p ∨ (q ∨ r))
+  ...
+  224                    (assume {Γ = Γ}
+  225                      (¬ subgoal₀)))))
+  226:             (atp-resolve p -- (p ∨ q) ((¬ q) ∨ p) atp-resolve₃ False
+  227                q
+  228:               (atp-resolve (p ∨ q) -- (p ∨ (q ∨ r)) ((¬ r) ∨ (p ∨ q)) id -- resolve 1. False
+  229                  r
+  230                  (atp-conjunct (p ∨ (q ∨ r))
+  ...
+  236                      (assume {Γ = Γ}
+  237                        (¬ subgoal₀)))))
+  238:               (atp-resolve ((¬ q) ∨ p) -- (p ∨ r) ((¬ q) ∨ ((¬ r) ∨ p)) id -- resolve 1. False
+  239                  r
+  240:                 (atp-resolve (p ∨ r) -- (p ∨ q) ((¬ q) ∨ (p ∨ r)) atp-resolve₃ False
+  241                    q
+  242:                   (atp-resolve (p ∨ q) -- (p ∨ (q ∨ r)) ((¬ r) ∨ (p ∨ q)) id -- resolve 1. False
+  243                      r
+  244                      (atp-conjunct (p ∨ (q ∨ r))
+  ...
+  262                (assume {Γ = Γ}
+  263                  (¬ subgoal₀)))))
+  264:         (atp-resolve p -- (p ∨ q) ((¬ q) ∨ p) atp-resolve₃ False
+  265            q
+  266:           (atp-resolve (p ∨ q) -- (p ∨ (q ∨ r)) ((¬ r) ∨ (p ∨ q)) id -- resolve 1. False
+  267              r
+  268              (atp-conjunct (p ∨ (q ∨ r))
+  ...
+  274                  (assume {Γ = Γ}
+  275                    (¬ subgoal₀)))))
+  276:           (atp-resolve ((¬ q) ∨ p) -- (p ∨ r) ((¬ q) ∨ ((¬ r) ∨ p)) id -- resolve 1. False
+  277              r
+  278:             (atp-resolve (p ∨ r) -- (p ∨ q) ((¬ q) ∨ (p ∨ r)) atp-resolve₃ False
+  279                q
+  280:               (atp-resolve (p ∨ q) -- (p ∨ (q ∨ r)) ((¬ r) ∨ (p ∨ q)) id -- resolve 1. False
+  281                  r
+  282                  (atp-conjunct (p ∨ (q ∨ r))
+
+248 matches across 27 files
