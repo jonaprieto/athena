@@ -97,7 +97,7 @@ split ((:~:) (BinOp φ₁ (:<=>:) φ₂))  =
     (unshunt $ BinOp φ₁ (:=>:) (split ((:~:) φ₂)))
     (:&:)
     (unshunt $ BinOp ((:~:) φ₂) (:=>:) (split φ₁))
-
+split ((:~:) ((:~:)  φ₁))  = split φ₁
 split ((:~:) (PredApp (AtomicWord "$false") [])) = PredApp (AtomicWord "$true") []
 split ((:~:) (PredApp (AtomicWord "$true") []))  = PredApp (AtomicWord "$false") []
 split fm = fm
@@ -129,10 +129,7 @@ atpSplit _ [_,_]  =
   parens $ pretty "∧-intro"
     <+> pretty "proof₀"
     <+> pretty "proof₁"
-atpSplit φ sgoals =
-  pretty "-- SPLITTED:" <> line <>
-  pretty "--" <+> pretty splitted <> line <>
-  doc
+atpSplit φ sgoals = doc
   where
     splitted ∷ Formula
     splitted  = split φ
