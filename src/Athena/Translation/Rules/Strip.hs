@@ -129,7 +129,13 @@ atpSplit _ [_,_]  =
   parens $ pretty "∧-intro"
     <+> pretty "proof₀"
     <+> pretty "proof₁"
-atpSplit φ sgoals = doc
+atpSplit φ sgoals =
+  pretty "-- SPLITTED:" <> line <>
+  pretty "--" <+> pretty splitted <> line <>
+  doc
   where
+    splitted ∷ Formula
+    splitted  = split φ
+
     doc ∷ Doc
     (doc, _, _) = proofSplit (split φ) sgoals 0
