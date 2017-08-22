@@ -9,7 +9,7 @@ ATHENA_LIB      =$(addprefix $(PWD), /lib)
 ATHENA_AGDA_LIB =$(addprefix $(ATHENA_LIB),/.agda)
 
 TIME_BIN        := $(shell which time)
-TIMELIMIT       =timeout 200m
+TIMELIMIT       =timeout 49m
 # timelimit -T240 -t240 -S9
 SEP='-------------------------------------------------------------------'
 
