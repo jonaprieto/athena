@@ -7,11 +7,15 @@ AGDA     =agda
 ATP      ?=online-atps --atp=metis
 ATHENA_LIB      =$(addprefix $(PWD), /lib)
 ATHENA_AGDA_LIB =$(addprefix $(ATHENA_LIB),/.agda)
-TIMELIMIT =timeout 200m
-# timelimit -T240 -t240 -S9
-AGDACALL ="${TIMELIMIT} ${AGDA} {} --verbose=0 && \
-  echo '-------------------------------------------------------------------' && echo"
 
+TIME_BIN        := $(shell which time)
+TIMELIMIT       =timeout 200m
+# timelimit -T240 -t240 -S9
+SEP='-------------------------------------------------------------------'
+
+AGDACALL ="${TIMELIMIT} \
+	${TIME_BIN} -f \"user = %U, system = %S, elapsed = %E, mem=%K, cpu=%P\" \
+	${AGDA} {} --verbose=0 && echo ${SEP}"
 
 ifdef MSVC     # Avoid the MingW/Cygwin sections
 		uname_S := Windows
@@ -200,10 +204,18 @@ TAGS :
 
 .PHONY : clean
 clean :
+	@echo "Cleaning Parser's files."
+	@echo ${SEP}
+	
 	rm -f ${SRC_DIR}/TSTP/Lexer.hs
 	rm -f ${SRC_DIR}/TSTP/Lexer.hi
 	rm -f ${SRC_DIR}/TSTP/Lexer.o
 	rm -f ${SRC_DIR}/TSTP/Parser.hs
+	
+	@echo
+	@echo "Cleaning Agda and Haskell auxiliar files."
+	@echo ${SEP}
+		
 	rm -Rf bin/
 	find ${SRC_DIR} -regex '.*\(\.hi\|\.o\|\.agdai\)$$' -delete
 	find ${SRC_DIR} -name 'cnf*' -delete
@@ -215,10 +227,12 @@ clean :
 		-name '*.agda' -delete
 	rm -rf dist
 	rm -rf lib/.agda
-	if [ -a test/prop/Makefile ] ; \
-	then \
-		make --directory test/prop-pack clean ; \
-	fi;
+	
+	@echo
+	@echo 'Cleaning prop-pack test problems.'
+	@echo ${SEP}
+	make --directory test/prop-pack clean
+	
 
 online-atps:
 	 @echo "==================================================================="
@@ -364,6 +378,7 @@ check : install-libraries \
 	@echo "================== Type-checking Agda files ======================="
 	@echo "==================================================================="
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
+	@echo '-------------------------------------------------------------------'
 	@find $(BASIC) \
 				-type f \
 				-name "*.agda" \
