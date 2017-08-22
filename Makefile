@@ -32,13 +32,13 @@ ifeq ($(uname_S),Darwin)
 		TIMELIMIT =timelimit -T240 -t240 -S9
 endif
 ifeq ($(uname_S),Linux)
-		TIMELIMIT =timeout 1m
+		TIMELIMIT =timeout 49m
 endif
 ifeq ($(uname_S),GNU/kFreeBSD)
 		TIMELIMIT =timelimit -T240 -t240 -S9
 endif
 ifeq ($(uname_S),UnixWare)
-		TIMELIMIT =timeout 1m
+		TIMELIMIT =timeout 49m
 endif
 
 

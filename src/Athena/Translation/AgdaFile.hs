@@ -221,7 +221,7 @@ definition fm =
     formulaF ∷ Formula
     formulaF = formula fm
 
--- | Extract axioms from a list of formulae.
+-- | Extract axioms from a list of formulas.
 getAxioms ∷ [F] → [F]
 getAxioms = filter ((==) Axiom . role)
 
@@ -245,7 +245,6 @@ docAxioms fms =
 toCtxt ∷ [Doc]  → Doc
 toCtxt = encloseSep empty empty (space <> comma <> space)
 
-
 -- | Pretty a list of premises.
 docPremises ∷ [F] → Doc
 docPremises premises =
@@ -266,8 +265,8 @@ docPremises premises =
 -- Conjecture.
 ------------------------------------------------------------------------------
 
--- | Try to extract a conjecture from a list of formulae and checks
--- for uniqueness.
+-- | Try to extract a conjecture from a list of formulas. Only one
+-- conjecture is allowed.
 getConjeture ∷ [F] → Maybe F
 getConjeture rules =
   case filter ((==) Conjecture . role) rules of
@@ -283,7 +282,7 @@ docConjecture fm =
 -- Sub-goals.
 ------------------------------------------------------------------------------
 
--- | Extract subgoals from a list of formulae.
+-- | Extract subgoals from a list of formulas.
 getSubgoals ∷ [F] → [F]
 getSubgoals = filter (isPrefixOf "subgoal" . name)
 
@@ -303,7 +302,7 @@ docSubgoals formulas =
 -- Refutes.
 ------------------------------------------------------------------------------
 
--- | Extract refuting steps from a list of formulae.
+-- | Extract refuting steps from a list of formulas.
 getRefutes ∷ ProofMap → [F] → [F]
 getRefutes dict tstp = map (\tag → fromJust (Map.lookup tag dict)) names
   where
@@ -320,7 +319,8 @@ getRefutes dict tstp = map (\tag → fromJust (Map.lookup tag dict)) names
     names = [ "refute-" ++ show n ++ "-" ++ show k | (n,k) <- rootRefutes ]
 
     rootRefutes ∷ [ (Int, Int) ]
-    rootRefutes = [ maximum (filter (\ l -> (fst l == r)) refutesID) | r ← numRefutes ]
+    rootRefutes = [ maximum (filter (\l -> (fst l == r)) refutesID) 
+                  | r ← numRefutes ]
 
     extractRefuteId ∷ String → (Int, Int)
     extractRefuteId ref =
@@ -378,31 +378,6 @@ docProofGoal agdaFile =
         atpSplit
           (formula (fileConjecture agdaFile))
           (map formula (fileSubgoals agdaFile))
-
-  -- where
-  --   sgoals ∷ Doc
-  --   sgoals = case fileSubgoals agdaFile of
-  --     []       → pretty '?' -- TODO
-  --     [_]      → pretty "proof₀"
-  --     [_, _]   → parens $ pretty "∧-intro"
-  --             <+> pretty "proof₀"
-  --             <+> pretty "proof₁"
-  --     subgoals →
-  --       foldl
-  --         (\x y →
-  --           parens $
-  --             vsep
-  --               [ pretty "∧-intro"
-  --               , indent 2
-  --                   (vsep
-  --                     [ x
-  --                     , pretty "proof" <> y
-  --                     ]
-  --                    )
-  --                ]
-  --         )
-  --         (pretty "proof₀")
-  --         (map (pretty . stdName . show)  [1..(length subgoals - 1)])
 
 ------------------------------------------------------------------------------
 
@@ -466,7 +441,8 @@ docSteps subgoalN (Leaf _ axiom) agdaFile =
         [a] → pretty "assume {Γ = [" <+> pretty a <+> pretty "]}" <+> pAxiom
         axs → pretty "assume" <> line
           <> indent 2
-          (pretty "{Γ = ∅ ," <+> toCtxt (map pretty axs) <> pretty "}" <+> pAxiom)
+          (pretty "{Γ = ∅ ," <+> toCtxt (map pretty axs) <> pretty "}"
+            <+> pAxiom)
 
 
 ------------------------------------------------------------------------------
@@ -520,7 +496,7 @@ docSteps subgoalN (Root Negate _ [subtree@(Root Strip _ _)]) agdaFile =
 docSteps subgoalN (Root Resolve tag [left, right]) agdaFile =
   parens $ pretty Resolve <+> getFormulaByTag agdaFile tag <+> pretty literal 
   <> line <> indent 2
-    ( docSteps subgoalN left agdaFile <> line <>
+    (docSteps subgoalN left agdaFile <> line <>
       docSteps subgoalN right agdaFile)
   where
     dict ∷ ProofMap
@@ -535,7 +511,7 @@ docSteps subgoalN (Root Resolve tag [left, right]) agdaFile =
     getResolveLiteral
       (Inference Resolve (Function _ (GTerm (GWord lit):_) :_) _) =
         PredApp lit []
-    getResolveLiteral _ = error "I expected a literal, nothing more."
+    getResolveLiteral _ = error "Athena expected a literal here."
 
 ------------------------------------------------------------------------------
 -- Simplify.
@@ -574,8 +550,4 @@ docSteps subgoalN (Root Simplify tag nodes) agdaFile =
 ------------------------------------------------------------------------------
 
 docSteps subgoalN (Root Strip _ _) _ = subgoalName subgoalN
-
-docSteps _ (Root Skolemize _ _ ) _   = pretty "? -- skolemie"
-docSteps _ (Root Specialize _ _ ) _  = pretty "? -- specialize"
-docSteps _ (Root (NewRule _) _ _ ) _ = pretty "? -- newrule"
 docSteps _ _ _                       = pretty "? -- not supported."
