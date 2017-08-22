@@ -33,16 +33,6 @@ module Athena.Translation.AgdaFile
 
 ------------------------------------------------------------------------------
 
-import Athena.Translation.Rules
-  (
---   -- atpCanonicalize
---   -- , atpClausify
---     atpConjunct
---   -- , atpNegate
-  atpResolve
---   -- , atpSimplify
-  -- , atpSplit
-  )
 import Athena.Translation.Rules.Strip        ( atpSplit, unshunt, split )
 
 import Athena.Options            ( Options ( optInputFile ) )
@@ -521,46 +511,25 @@ docSteps subgoalN (Root Negate _ [subtree@(Root Strip _ _)]) agdaFile =
 {-
      left         right
    ────────     ──────────
-   f: ϕ₁ ∨ ℓ    g: ϕ₂ ∨ ¬ ℓ
-   ────────────────────────  (resolve ℓ)
+    ϕ₁ ∨ ℓ        ϕ₂ ∨ ¬ ℓ
+   ────────────────────────  resolve ℓ
         φ: ϕ₁ ∨ ϕ₂
 
 -}
 
-docSteps subgoalN
-         (Root Resolve tag
-           [ left@(Root _ fTag _)
-           , right@(Root _ gTag _)
-           ])
-         agdaFile =
-  parens $ pretty Resolve <+> getFormulaByTag agdaFile tag
-  <+> pretty "-- " <> pretty f <+> pretty g <+> pretty thm <+> pretty swap
-      <> line <>
-      indent 2 ( pretty l <> line <>
-    if swap
-    then (docSteps subgoalN right agdaFile  <> line <>
-         docSteps subgoalN left agdaFile)
-    else (docSteps subgoalN left agdaFile <> line <>
-            docSteps subgoalN right agdaFile))
+docSteps subgoalN (Root Resolve tag [left, right]) agdaFile =
+  parens $ pretty Resolve <+> getFormulaByTag agdaFile tag <+> pretty literal 
+  <> line <> indent 2
+    ( docSteps subgoalN left agdaFile <> line <>
+      docSteps subgoalN right agdaFile)
   where
     dict ∷ ProofMap
     dict = fileDict agdaFile
 
-    -- ϕ  ∷ Formula
-    -- ϕ = formula . fromJust $ Map.lookup tag dict
-
-    f , g ∷ Formula
-    f = formula . fromJust $ Map.lookup fTag dict
-    g = formula . fromJust $ Map.lookup gTag dict
-
-    thm ∷ String
-    swap ∷ Bool
-    (thm, swap) = atpResolve f g l
-
-    l ∷ Formula
-    l = let sourceInfo ∷ Source
-            sourceInfo = source . fromJust $ Map.lookup tag dict
-        in  getResolveLiteral sourceInfo
+    literal ∷ Formula
+    literal = let sourceInfo ∷ Source
+                  sourceInfo = source . fromJust $ Map.lookup tag dict
+              in  getResolveLiteral sourceInfo
 
     getResolveLiteral ∷ Source → Formula
     getResolveLiteral
