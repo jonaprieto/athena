@@ -27,15 +27,18 @@ endif
 
 ifeq ($(uname_S),OSF1)
 		TIMELIMIT =timelimit -T240 -t240 -S9
+		TIME_BIN  := $(shell which gtime) # install gnu-time
 endif
 ifeq ($(uname_S),Darwin)
 		TIMELIMIT =timelimit -T240 -t240 -S9
+		TIME_BIN  := $(shell which gtime)
 endif
 ifeq ($(uname_S),Linux)
 		TIMELIMIT =timeout 49m
 endif
 ifeq ($(uname_S),GNU/kFreeBSD)
 		TIMELIMIT =timelimit -T240 -t240 -S9
+		TIME_BIN  := $(shell which gtime)
 endif
 ifeq ($(uname_S),UnixWare)
 		TIMELIMIT =timeout 49m
@@ -206,16 +209,16 @@ TAGS :
 clean :
 	@echo "Cleaning Parser's files."
 	@echo ${SEP}
-	
+
 	rm -f ${SRC_DIR}/TSTP/Lexer.hs
 	rm -f ${SRC_DIR}/TSTP/Lexer.hi
 	rm -f ${SRC_DIR}/TSTP/Lexer.o
 	rm -f ${SRC_DIR}/TSTP/Parser.hs
-	
+
 	@echo
 	@echo "Cleaning Agda and Haskell auxiliar files."
 	@echo ${SEP}
-		
+
 	rm -Rf bin/
 	find ${SRC_DIR} -regex '.*\(\.hi\|\.o\|\.agdai\)$$' -delete
 	find ${SRC_DIR} -name 'cnf*' -delete
@@ -227,12 +230,12 @@ clean :
 		-name '*.agda' -delete
 	rm -rf dist
 	rm -rf lib/.agda
-	
+
 	@echo
 	@echo 'Cleaning prop-pack test problems.'
 	@echo ${SEP}
 	make --directory test/prop-pack clean
-	
+
 
 online-atps:
 	 @echo "==================================================================="
