@@ -132,7 +132,7 @@ Propositional Logic}
 %
 \authorrunning{Proof-Reconstruction in Classical Propositional Logic}
 
-\institute{EAFIT University, \emph{School of Sciences and Engineering},\\
+\institute{Universidad EAFIT, \emph{School of Sciences and Engineering},\\
 Medell\'in, Colombia\\
 \verb${jprieto9, asr}@eafit.edu.co$}
 
@@ -213,8 +213,8 @@ some tools in the following.
 \verb!Sledgehammer! is a tool for \verb!Isabelle! proof assistant
 ~\cite{paulson1994isabelle} that provides a full integration of automatic
 theorem provers including ATPs (see, for example, \cite{meng2006automation}
-, \cite{blanchette2013extending} and \cite{Fleury2014}) and SMT solvers (
-see, for example, \cite{hurlin07practical}, \cite{bohme2010},
+, \cite{blanchette2013extending} and \cite{Fleury2014}) and SMT solvers
+(see, for example, \cite{hurlin07practical}, \cite{bohme2010},
 \cite{blanchette2013extending}, and \cite{Fleury2014}) with
 \verb!Isabelle/HOL! \cite{nipkow2002isabelle}, the specialization of
 \verb!Isabelle! for higher-order logic. Sultana, Benzm{\"{u}}ller, and
@@ -944,13 +944,13 @@ Amazing conclusions.
 First-Order Logic support.
 
 \subsubsection*{Acknowledgments.}
-We thank EAFIT University of Medell\'in, Colombia for funding support. This is
+We thank Universidad EAFIT of Medell\'in, Colombia for funding support. This is
 part of first author's Master thesis in Applied Mathematics, written under the
 supervision of Andr\'es Sicard-Ram\'irez for the Logic and Computation Research
-Group at the EAFIT University.
+Group at the Universidad EAFIT.
 
-We thank Joe Leslie-Hurd for his support about his \verb!Metis! prover and
-fixes quickly some bugs.
+We thank Joe Leslie-Hurd for his support with the \verb!Metis! prover and
+for fixing quickly the bugs.
 We also acknowledge the work carry out by Alejandro G\'omez-Londo\~no~
 \cite{Gomez-Londono2015} that was used as the basis code for our TSTP parsing
 module.
