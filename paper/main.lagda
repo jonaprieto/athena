@@ -530,7 +530,7 @@ atom or logic constant.
 \qquad
 \begin{bprooftree}
   \AxiomC{$\Gamma \vdash \varphi \vee \top$}
-  \UnaryInfC{$\Gamma \vdash \varphi$}
+  \UnaryInfC{$\Gamma \vdash \top$}
 \end{bprooftree}
 \qquad
 \begin{bprooftree}
@@ -752,17 +752,15 @@ logic deduction rules for our formal system.
 
 \[\scalebox{0.9}{
 \begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi$}
-\AxiomC{$\Gamma \vdash \psi$}
+\AxiomC{$\Gamma \vdash \varphi \wedge \psi$}
 \RightLabel{\footnotesize\tt $\wedge$-proj$_1$}
-\BinaryInfC{$\Gamma\vdash \varphi$}
+\UnaryInfC{$\Gamma\vdash \varphi$}
 \end{bprooftree}
 \qquad
 \begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi$}
-\AxiomC{$\Gamma \vdash \psi$}
+\AxiomC{$\Gamma \vdash \varphi \wedge \psi$}
 \RightLabel{\footnotesize\tt $\wedge$-proj$_2$}
-\BinaryInfC{$\Gamma\vdash \psi$}
+\UnaryInfC{$\Gamma\vdash \psi$}
 \end{bprooftree}
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \varphi$}
@@ -821,7 +819,7 @@ logic deduction rules for our formal system.
 \BinaryInfC{$\Gamma \vdash \psi$}
 \end{bprooftree}
 }\]
-\caption{...}
+\caption{Inference rules for CPL system.}
 \label{theorem-constructors}
 \end{figure}
 
@@ -903,7 +901,7 @@ Explain in a diagram like we did in the slides for the AIM ...
 \UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\neg \varphi_2) \wedge \texttt{unshunt}~(\neg \varphi_2 \Rightarrow \texttt{split}~\varphi_1)$}
 \end{bprooftree}
 }\]
-\caption{...}
+\caption{Split a goal in an equivalent conjunction of subgoals.}
 \label{split}
 \end{figure}
 
@@ -913,23 +911,23 @@ In the theorems above appear two recursive functions \texttt{unshunt} and \textt
 unshunt : Prop → Prop
 unshunt (φ₁ ⇒ (φ₂ ⇒ φ₃)) = unshunt ((φ₁ ∧ φ₂) ⇒ φ₃)
 unshunt (φ₁ ⇒ (φ₂ ∧ φ₃)) = unshunt (φ₁ ⇒ φ₂)) ∧ (unshunt(φ₁ ⇒ φ₃)
-unshunt other            = φ
+unshunt φ                = φ
 \end{code}
 
 \begin{code}
 split : Prop → Prop
-split (φ₁ ∧ φ₂)     = unshunt (split φ₁) ∧ unshunt (φ₁ ⇒ split φ₂)
-split (φ₁ ∨ φ₂)     = unshunt (¬ φ₁ ⇒ (split φ₂))
-split (φ₁ ⇒ φ₂)     = unshunt (φ₁ ⇒ (split φ₂))
-split (φ₁ ⇔ φ₂)     = unshunt (φ₁ ⇒ (split φ₂)) ∧ unshunt (φ₂ ⇒ (split φ₁))
-split (¬ ⊤)         = unshunt (φ₁ ⇒ (split (¬ φ₂)))
-split (¬ ⊥)         = unshunt (split (¬ φ₁)) ∧ unshunt (¬ φ₁ ⇒ split (¬ φ₂))
-split (¬ (φ₁ ∧ φ₂)) = unshunt (split φ₁) ∧ unshunt (φ₁ ⇒ split (¬ φ₂))
-split (¬ (φ₁ ∨ φ₂)) = unshunt (φ₁ ⇒ split (¬ φ₂)) ∧ unshunt ((¬ φ₂) ⇒ split φ₁)
-split (¬ (φ₁ ⇒ φ₂)) = unshunt (split φ₁)
-split (¬ (φ₁ ⇔ φ₂)) = ⊤
-split (¬ (¬ φ₁))    = ⊥
-split φ₁            = φ
+split (φ₁ ∧ φ₂)     = {!!}
+split (φ₁ ∨ φ₂)     = {!!}
+split (φ₁ ⇒ φ₂)     = {!!}
+split (φ₁ ⇔ φ₂)     = {!!}
+split (¬ ⊤)         = {!!}
+split (¬ ⊥)         = {!!}
+split (¬ (φ₁ ∧ φ₂)) = {!!}
+split (¬ (φ₁ ∨ φ₂)) = {!!}
+split (¬ (φ₁ ⇒ φ₂)) = {!!}
+split (¬ (φ₁ ⇔ φ₂)) = {!!}
+split (¬ (¬ φ))     = {!!}
+split φ₁            = {!!}
 \end{code}
 
 ...
@@ -939,8 +937,7 @@ split φ₁            = φ
 
 \section{Conclusions}
 \label{secconclusion}
-\verb!simplify! and \verb!canonicalize! coverage.
-Proof-reconstruction can be done in Agda from the Metis' proofs.
+Amazing conclusions.
 ...
 
 \subsubsection*{Future Work.}
@@ -952,10 +949,11 @@ part of first author's Master thesis in Applied Mathematics, written under the
 supervision of Andr\'es Sicard-Ram\'irez for the Logic and Computation Research
 Group at the EAFIT University.
 
-We thank Joe Leslie-Hurd for supporting comments about \verb!Metis!.
-We also acknowledge the work done by Alejandro G\'omez-Londo\~no~
-\cite{Gomez-Londono2015} that deserves as the basis code for our parsing module
-for TSTP files.
+We thank Joe Leslie-Hurd for his support about his \verb!Metis! prover and
+fixes quickly some bugs.
+We also acknowledge the work carry out by Alejandro G\'omez-Londo\~no~
+\cite{Gomez-Londono2015} that was used as the basis code for our TSTP parsing
+module.
 And last but not least, we gratefully acknowledge Andreas Abel and Chalmers
 University of Gothenburg, Sweden for inviting us to be part of the Agda
 Implementors’ Meeting XXV where we presented part of this paper.
