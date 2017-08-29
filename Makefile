@@ -151,6 +151,10 @@ $(IMPL)/%.agda: $(IMPL)/%.tstp
 
 # ============================================================================
 
+
+.PHONY : default
+default: install
+
 .PHONY : checklines
 checklines :
 	@grep '.\{80,\}' \
@@ -205,6 +209,16 @@ TODO :
 TAGS :
 	fast-tags -e -R src/
 
+.PHONY : paper
+paper :
+	make --directory paper pdf
+	@echo "File: paper/main.pdf"
+
+.PHONY : slides
+slides :
+	make --directory slides pdf
+	@echo "File: slides/Jonathan-Proof-Reconstruction.pdf"
+
 .PHONY : clean
 clean :
 	@echo "Cleaning Parser's files."
@@ -235,6 +249,7 @@ clean :
 	@echo 'Cleaning prop-pack test problems.'
 	@echo ${SEP}
 	make --directory test/prop-pack clean
+
 
 
 online-atps:
