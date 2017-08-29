@@ -10,3 +10,6 @@
 [submodule "slides/pygments-cagda"]
 	path = slides/pygments-cagda
 	url = https://github.com/jonaprieto/pygments-cagda.git
+[submodule "paper/fonts"]
+	path = paper/fonts
+	url = http://github.com/jonaprieto/fonts.git

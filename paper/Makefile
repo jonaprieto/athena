@@ -1,5 +1,6 @@
 .PHONY : pdf
 pdf :
+	- git submodule update --init --recursive fonts
 	- make clean
 	- lhs2TeX --agda main.lagda > main.tex
 	- sh chars.sh
