@@ -368,7 +368,7 @@ The \verb!rule! stands for the inference name, the other fields are
 auxiliar arguments or useful information to apply the inference, and
 the list of parents nodes. For instance in Fig.~\ref{fig:metis-proof-tstp},
 we can see that \verb!strip! is the name of one inference with no
-arguments but with only one parent node, in this case \verb!goal!.
+arguments but with only one parent node, \verb!goal!.
 
 \begin{figure}
 \begin{code}
@@ -448,7 +448,8 @@ by refutation as we show in Fig.~\ref{fig:metis-example}.
 
 These proofs are directed acyclic graphs, trees of refutations. Each node stands for an application of an inference rule and the
 leaves in the tree represent formulas in the given problem. Each node is
-labeled with a name of the inference rule (e.g. \verb!resolve!). Each
+labeled with a name of the inference rule
+(e.g. \verb!canonicalize! in Fig.~\ref{fig:metis-example}). Each
 edge links a premise with one conclusion. The proof graphs have in their
 root the conclusion $\bot$ since \verb!Metis! delivers proof by refutation.
 
@@ -484,12 +485,11 @@ derivation in Fig.~\ref{fig:metis-proof-tstp}}
 \label{ssec:proof-rules}
 
 Despite the six simple rules in the \verb!Metis!' logic
-kernel (see~Fig. \ref{fig:metis-inferences}), in \verb!TSTP! derivations for CPL
-problems, we found six inference rules with distinct names.
-They are \verb!canonicalize!, \verb!conjunct!,
-\verb!negate!, \verb!simplify!, \verb!strip! and \verb!resolve!.
-We briefly review each of these inference rules follow no order except
-maybe, their frequency in the TSTP derivations.
+kernel (see~Fig. \ref{fig:metis-inferences}), we found in \verb!TSTP!
+derivations for CPL problems other inference rules.
+They are \verb!canonicalize!, \verb!conjunct!, \verb!negate!, \verb!simplify!,
+\verb!strip! and \verb!resolve!. We briefly review each of these rules 
+following no order except maybe by their frequency in the TSTP derivations.
 
 % ...........................................................................
 
@@ -510,59 +510,71 @@ fof(subgoal_2, plain, (p & r) => q, inference(strip, [], [goal])).
 
 % ...........................................................................
 
+\textit{Clausification.} The \verb!clausify! inference rule transforms a
+propositional formula in clausal normal form or CNF,
+a conjunction of clauses. Where a clause is the disjunction of zero or
+more literals and a literal is an atom (positive literal) or a negation of an
+atom (negative literal). This conversion is not unique and \verb!Metis! performs
+that on its own way.
+
+% ...........................................................................
+
 \textit{Normalization.}
 \verb!Metis! uses the \verb!canonicalize! inference rule to normalize a
-propositional formula. It often converts the formula in one of its normal form,
-the conjunctive normal form (henceforth CNF), negative normal form (henceforth NNF)
-or the disjunctive normal form (henceforth DNF).
-Posteriori, it performs recursively over the structure's formula some
-conjunctions and disjunctions simplifications to remove tautologies
-assuming the commutative property for these connectives
-(see~Fig.\ref{fig:conjunctive-disjunctive-simplification}).
+propositional formula that comes from an axiom or a definition.
+It often converts the formula in one of its normal form,
+the conjunctive normal form as \verb!clausify! does, the
+negative normal form (henceforth NNF) or the disjunctive normal form (henceforth DNF).
+Posteriori, this rule simplifies the formula with some definitions, applying
+recursively on the structure's formula conjunctions and disjunctions simplifications
+to remove tautologies
+(see for example Fig.~\ref{fig:conjunctive-disjunctive-simplification} of a list
+of these theorems where we assume the commutative property for conjunction and
+disjunction connectives).
 
 \begin{figure}
 \[%\scalebox{0.9}{
-\begin{bprooftree}
-  \AxiomC{$\varphi \wedge \bot$}
-  \UnaryInfC{$\bot$}
-\end{bprooftree}
-\begin{bprooftree}
-  \AxiomC{$\varphi \wedge \top$}
-  \UnaryInfC{$\varphi$}
-\end{bprooftree}
-\begin{bprooftree}
-  \AxiomC{$\varphi \wedge \neg \varphi$}
-  \UnaryInfC{$\bot$}
-\end{bprooftree}
-\begin{bprooftree}
-  \AxiomC{$\varphi \wedge \varphi$}
-  \UnaryInfC{$\varphi$}
-\end{bprooftree}
+  \begin{bprooftree}
+    \AxiomC{$\varphi \wedge \bot$}
+    \UnaryInfC{$\bot$}
+  \end{bprooftree}
+  \begin{bprooftree}
+    \AxiomC{$\varphi \wedge \top$}
+    \UnaryInfC{$\varphi$}
+  \end{bprooftree}
+  \begin{bprooftree}
+    \AxiomC{$\varphi \wedge \neg \varphi$}
+    \UnaryInfC{$\bot$}
+  \end{bprooftree}
+  \begin{bprooftree}
+    \AxiomC{$\varphi \wedge \varphi$}
+    \UnaryInfC{$\varphi$}
+  \end{bprooftree}
 %}
 \]
 
 \[%\scalebox{0.9}{
-\begin{bprooftree}
-  \AxiomC{$\varphi \vee \bot$}
-  \UnaryInfC{$\varphi$}
-\end{bprooftree}
-\qquad
-\begin{bprooftree}
-  \AxiomC{$\varphi \vee \top$}
-  \UnaryInfC{$\top$}
-\end{bprooftree}
-\qquad
-\begin{bprooftree}
-  \AxiomC{$\varphi \vee \neg \varphi$}
-  \UnaryInfC{$\top$}
-\end{bprooftree}
-\begin{bprooftree}
-  \AxiomC{$\varphi \vee \varphi$}
-  \UnaryInfC{$\varphi$}
-\end{bprooftree}
+  \begin{bprooftree}
+    \AxiomC{$\varphi \vee \bot$}
+    \UnaryInfC{$\varphi$}
+  \end{bprooftree}
+  \qquad
+  \begin{bprooftree}
+    \AxiomC{$\varphi \vee \top$}
+    \UnaryInfC{$\top$}
+  \end{bprooftree}
+  \qquad
+  \begin{bprooftree}
+    \AxiomC{$\varphi \vee \neg \varphi$}
+    \UnaryInfC{$\top$}
+  \end{bprooftree}
+  \begin{bprooftree}
+    \AxiomC{$\varphi \vee \varphi$}
+    \UnaryInfC{$\varphi$}
+  \end{bprooftree}
 %}
 \]
-\caption{Conjunction and disjunction simplification.}
+\caption{Some rules of \verb!canonicalize! inference.}
 \label{fig:conjunctive-disjunctive-simplification}
 \end{figure}
 
@@ -571,24 +583,9 @@ assuming the commutative property for these connectives
 \textit{Resolution.} The \verb!resolve! inference rule (see, for example,
 Fig.~\ref{fig:resolve-inference}) is the resolution
 theorem with two argument, the positive literal for resolution and two
-derivations. The literal $p$ must occur in the first theorem $\Gamma \vdash \varphi$, and its negation $\neg p$
-must occur in the second theorem $\Gamma \vdash \psi$ (see the \verb!Metis!' logic core in
-Fig.~\ref{fig:metis-inferences}).
-%A reader more interested in resolution can read~CITAR!.
-
-\begin{figure}
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\delta_{\phi} := \Gamma \vdash \varphi$}
-\AxiomC{$\delta_{\psi} := \Gamma \vdash \psi$}
-\RightLabel{\texttt{resolve} $p$}
-\BinaryInfC{$\Gamma \vdash$ \texttt{resolve} $\phi\ \psi\ p$}
-\end{bprooftree}
-%}
-\]
-\caption{Resolution in \verb!Metis!.}
-\label{fig:resolution-rule}
-\end{figure}
+derivations. The positive literal $p$ must occur in the first formula of the 
+input and the negative literal must occur in the second formula of the input
+(see the resolve rule in \verb!Metis!' logic core in Fig.~\ref{fig:metis-inferences}).
 
 \begin{figure}
 \begin{code}
@@ -602,85 +599,40 @@ derivation.}
 \label{fig:resolve-inference}
 \end{figure}
 
-
-
-\textit{Clausification.} Application of the distributive laws for both
-disjunctions and conjunctions.
+% ...........................................................................
 
 \textit{Splitting a conjunct.}
-In the following theorem, we see the defintion for the \verb!conjunct! rule.
-It extracts the $\varphi_i$ conjunct from the conjunction given by $\varphi$.
-
-\[\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi := \varphi_1 \wedge \cdots\wedge\varphi_i
-\wedge\cdots\wedge \varphi_n$}
-\AxiomC{$\varphi_i \equiv \psi$}
-\RightLabel{\footnotesize\tt conjunct $\psi$}
-\BinaryInfC{$\Gamma\vdash\varphi_i$}
-\end{bprooftree}
-}
-\]
-
-As we see in the following \verb!TSTP! derivation, we must infer the value
-for the $\psi$ formula respecting to the above theorem by parsing the
-appropriate field in the script, the main formula from the \verb!conjunct!
-application.
+The \verb!conjunct! rule extracts from a conjunction one of its conjuncts, it is
+a generalization of the projection rules for the conjunction connective as
+we can see in the following TSTP derivation.
 
 \begin{code}
-fof(normalize_1, plain, p & q, inference(canonicalize, [], [axiom1])).
-fof(normalize_2, plain, p, inference(conjunct, [], [normalize_1])).
+fof(normalize_1, plain, p & q & r & s, inference(canonicalize, [], [axiom])).
+fof(normalize_2, plain, r, inference(conjunct, [], [normalize_1])).
 \end{code}
 
-\textit{Negate.} Since \verb!Metis!' proofs are refutations, for each
-subgoal given by splitting the goal, in their proof, the negation of such a
-subgoal is assumed. This inference rule named \verb!negate! always derived
-from a node deduced by the \verb!strip! rule.
+\textit{Negate.} 
+Each subgoal proof is a refutation, thereby each proof assumes
+the negation of its subgoal. The \verb!negate! rule
+introduces the negation of such a subgoals, result from the \verb!strip!
+inference.
 
 \begin{code}
 fof(subgoal_0, plain, p, inference(strip, [], [goal])).
 fof(negate_0_0, plain, ~ p, inference(negate, [], [subgoal_0])).
 \end{code}
 
+% ...........................................................................
+
 \textit{Simplification.}
-The \verb!simplify! inference rule performs simplification based on a list
-of formulas. Its application could reduce such a list into the
-empty clause $\bot$, or a new formula much smaller or simplier by transversing
-the list while applying different theorems (e.g.
-\emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive syllogism}).
-This rule also use theorems from the list used by
+The \verb!simplify! is an $n$-ary inference rule that performs simplification based on a list
+of definitions. This rule transverses a list of formulas by
+applying different theorems (e.g.\emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive syllogism}).
+The simplifications incorporate the list used by
 \verb!canonicalize! in Fig.~\ref{fig:conjunctive-disjunctive-simplification}
-or the resolution theorem described in Fig.~\ref{fig:resolution-rule}.
-Nevertheless, many thing happens inside this \verb!Metis!' procedure and
+and the resolution theorem of \verb!resolve! inference.
+Nevertheless, many things happen inside this \verb!Metis!' procedure and
 it is fairly complex to grasp completely.
-
-\begin{figure}
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
-  \AxiomC{$\Gamma \vdash \psi$}
-  \RightLabel{\footnotesize\tt $\Leftrightarrow$-elim}
-  \BinaryInfC{$\Gamma \vdash \varphi$}
-\end{bprooftree}
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \Rightarrow \psi$}
-  \AxiomC{$\Gamma \vdash \varphi$}
-  \RightLabel{\footnotesize\tt $\Rightarrow$-elim}
-  \BinaryInfC{$\Gamma \vdash \psi$}
-\end{bprooftree}
-\]
-\[
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \vee \neg \psi$}
-  \AxiomC{$\Gamma \vdash \neg \varphi$}
-  \BinaryInfC{$\Gamma \vdash \psi$}
-\end{bprooftree}
-%}
-\]
-
-\caption{Additional simplification theorems.}
-\label{fig:simplify-rule}
-\end{figure}
 
 % ============================================================================
 
@@ -925,6 +877,38 @@ Explain in a diagram like we did in the slides for the AIM ...
 \]
 \end{figure}
 
+\textit{Resolution.}
+
+\begin{figure}
+\[%\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\delta_{\phi} := \Gamma \vdash \varphi$}
+\AxiomC{$\delta_{\psi} := \Gamma \vdash \psi$}
+\RightLabel{\texttt{resolve} $p$}
+\BinaryInfC{$\Gamma \vdash$ \texttt{resolve} $\phi\ \psi\ p$}
+\end{bprooftree}
+%}
+\]
+\caption{Resolution in \verb!Metis!.}
+\label{fig:resolution-rule}
+\end{figure}
+
+\textit{Splitting a conjunct.}
+In the following theorem, we see the definition for the \verb!conjunct! rule.
+It extracts the $\varphi_i$ conjunct from the conjunction given by $\varphi$.
+
+\[\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi := \varphi_1 \wedge \cdots\wedge\varphi_i
+\wedge\cdots\wedge \varphi_n$}
+\AxiomC{$\varphi_i \equiv \psi$}
+\RightLabel{\footnotesize\tt conjunct $\psi$}
+\BinaryInfC{$\Gamma\vdash\varphi_i$}
+\end{bprooftree}
+}
+\]
+
+
 \textit{Splitting a goal}
 
 
@@ -1026,6 +1010,38 @@ split φ₁            = {!!}
 \end{code}
 
 ...
+
+\textit{Simplification.}
+
+\begin{figure}
+\[%\scalebox{0.9}{
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
+  \AxiomC{$\Gamma \vdash \psi$}
+  \RightLabel{\footnotesize\tt $\Leftrightarrow$-elim}
+  \BinaryInfC{$\Gamma \vdash \varphi$}
+\end{bprooftree}
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi \Rightarrow \psi$}
+  \AxiomC{$\Gamma \vdash \varphi$}
+  \RightLabel{\footnotesize\tt $\Rightarrow$-elim}
+  \BinaryInfC{$\Gamma \vdash \psi$}
+\end{bprooftree}
+\]
+\[
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi \vee \neg \psi$}
+  \AxiomC{$\Gamma \vdash \neg \varphi$}
+  \BinaryInfC{$\Gamma \vdash \psi$}
+\end{bprooftree}
+%}
+\]
+
+\caption{Additional simplification theorems.}
+\label{fig:simplify-rule}
+\end{figure}
+
+
 
 % ============================================================================
 
