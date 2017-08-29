@@ -270,11 +270,9 @@ agda-stdlib:
 		 echo "[!] agda-stdlib directory already exists"; \
 	 fi;
 
-.PHONY : pull-libraries
-pull-libraries :
-	cd lib/agda-prop/ && git pull origin master
-	cd lib/agda-metis && git pull origin master
-	cd test/prop-pack && git pull origin master
+.PHONY : submodules
+submodules :
+	git submodule foreach git pull origin master
 
 .PHONY : agda-libraries
 agda-libraries:
