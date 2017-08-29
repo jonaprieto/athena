@@ -614,8 +614,8 @@ fof(normalize_2, plain, r, inference(conjunct, [], [normalize_1])).
 \textit{Negate.} 
 Each subgoal proof is a refutation, thereby each proof assumes
 the negation of its subgoal. The \verb!negate! rule
-introduces the negation of such a subgoals, result from the \verb!strip!
-inference.
+introduces the negation of a subgoal that results
+after applies the \verb!strip! inference to the goal.
 
 \begin{code}
 fof(subgoal_0, plain, p, inference(strip, [], [goal])).
@@ -625,12 +625,13 @@ fof(negate_0_0, plain, ~ p, inference(negate, [], [subgoal_0])).
 % ...........................................................................
 
 \textit{Simplification.}
-The \verb!simplify! is an $n$-ary inference rule that performs simplification based on a list
+The \verb!simplify! inference is a n $n$-ary rule that performs simplification
 of definitions. This rule transverses a list of formulas by
 applying different theorems (e.g.\emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive syllogism}).
-The simplifications incorporate the list used by
+This rules also incorporates the list of theorems used by
 \verb!canonicalize! in Fig.~\ref{fig:conjunctive-disjunctive-simplification}
-and the resolution theorem of \verb!resolve! inference.
+to simplify and the resolution theorem of \verb!resolve! inference to get
+the resolvent.
 Nevertheless, many things happen inside this \verb!Metis!' procedure and
 it is fairly complex to grasp completely.
 
