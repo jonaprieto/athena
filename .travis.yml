@@ -92,4 +92,4 @@ script:
 # - make checklines
 # testing the reconstruction
  - make reconstruct
- - make check
+ # - make check
