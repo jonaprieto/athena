@@ -28,6 +28,7 @@ module paper where
 % --------------------------------------------------------------------------
 % Tikz Configuration
 % --------------------------------------------------------------------------
+
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -51,7 +52,13 @@ module paper where
     }
 }
 
-\tikzstyle{vertex}=[auto=left,circle,fill=black!25,minimum size=5pt,inner sep=0pt]
+\tikzstyle{vertex}=[
+    auto=left
+  , circle
+  , fill=black!25
+  , minimum size=5pt
+  , inner sep=0pt
+  ]
 
 %\usepackage[utf8]{inputenc}
 \usepackage{ucs}
@@ -82,7 +89,6 @@ module paper where
 % , frame     = none
 % % , framerule = 0.4pt
 % % , framerule = 0.4pt
-
 
 \usepackage{verbatim}
 \usepackage{relsize}
@@ -146,6 +152,8 @@ Medell\'in, Colombia\\
 \keywords{Proof reconstruction, Agda, Automatic theorem prover,
   Classical Propositional Logic, Metis }
 \end{abstract}
+
+% ============================================================================
 
 \section{Introduction}
 \label{sec:introduction}
@@ -291,6 +299,8 @@ complete example of a proof reconstructed with our tool for a CPL problem.
 In section~\ref{secconclusion},we discuss some limitations and conclusions,
 for ending up with the future work.
 
+% ===========================================================================
+
 \section{Metis: Language and Proof Terms}
 \label{sec:metis-language-and-proof-terms}
 
@@ -307,6 +317,8 @@ proofs as well~\cite{Farber2016}.
 We ported a subset of \verb!Metis!' inference rules to \verb!Agda!, the
 propositional fragmented, to allow us justify step-by-step the proofs
 delivered in \verb!TSTP! format.
+
+% ---------------------------------------------------------------------------
 
 \subsection{Input and Output Language}
 \label{ssec:input-and-output-language}
@@ -364,6 +376,8 @@ cnf(refute_0_0, plain, $false, inference (canonicalize, [], [normalize_0_2])) .
 $p\vdash p$.}
 \label{fig:metis-proof-tstp}
 \end{figure}
+
+% ---------------------------------------------------------------------------
 
 \subsection{Proof Terms}
 \label{ssec:proof-terms}
@@ -454,6 +468,8 @@ deduction step.
 derivation in Fig.~\ref{fig:metis-proof-tstp}}
 \label{fig:metis-example}
 \end{figure}
+
+% ---------------------------------------------------------------------------
 
 \subsection{Proof Rules}
 \label{ssec:proof-rules}
@@ -620,7 +636,8 @@ fof(negate_0_0, plain, ~ p, inference(negate, [], [subgoal_0])).
 \textit{Simplification.}
 The \verb!simplify! inference rule performs simplification based on a list
 of formulas. Its application could reduce such a list into the
-empty clause $\bot$, or a new formula much smaller or simplier by transversing the list while applying different theorems (e.g.
+empty clause $\bot$, or a new formula much smaller or simplier by transversing
+the list while applying different theorems (e.g.
 \emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive syllogism}).
 This rule also use theorems from the list used by
 \verb!canonicalize! in Fig.~\ref{fig:conjunctive-disjunctive-simplification}
@@ -656,7 +673,8 @@ it is fairly complex to grasp completely.
 \label{fig:simplify-rule}
 \end{figure}
 
-%
+% ============================================================================
+
 \section{Proof Reconstruction in Agda}
 \label{sec:proof-reconstruction}
 
@@ -664,6 +682,8 @@ As a proof checker, we choose the proof-assistant \verb!Agda!.
 
 Such TPTP proofs produced by ATPs on the type-annotated input are the
 starting point for the HOL proof reconstruction.
+
+% ---------------------------------------------------------------------------
 
 \subsection{LCF-Style Theorem Proving}
 
@@ -823,10 +843,16 @@ logic deduction rules for our formal system.
 \label{theorem-constructors}
 \end{figure}
 
+% ---------------------------------------------------------------------------
+
 \subsection{The Translation Method}
+
+% ---------------------------------------------------------------------------
 
 \subsection{Reconstruction Work-flow}
 Explain in a diagram like we did in the slides for the AIM ...
+
+% ---------------------------------------------------------------------------
 
 \subsection{Emulation of Inference Rules in Agda}
 
@@ -934,9 +960,11 @@ split φ₁            = {!!}
 \subsection{Examples}
 ...
 
+% ============================================================================
 
 \section{Conclusions}
 \label{secconclusion}
+
 Amazing conclusions.
 ...
 
