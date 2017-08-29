@@ -71,6 +71,7 @@ module paper where
 \usepackage{amsmath}
 \usepackage{stmaryrd} %new symbol font for tcs
 \usepackage{color}
+\usepackage{fancybox}
 
 % \usepackage{fontspec}
 % \usepackage{mathtools}
@@ -220,9 +221,10 @@ some tools in the following.
 
 \verb!Sledgehammer! is a tool for \verb!Isabelle! proof assistant
 ~\cite{paulson1994isabelle} that provides a full integration of automatic
-theorem provers including ATPs (see, for example, \cite{meng2006automation}
-, \cite{blanchette2013extending} and \cite{Fleury2014}) and SMT solvers
-(see, for example, \cite{hurlin07practical}, \cite{bohme2010},
+theorem provers including ATPs
+(see, for example, \cite{meng2006automation}, \cite{blanchette2013extending}
+and \cite{Fleury2014}) and SMT solvers (see, for example,
+\cite{hurlin07practical}, \cite{bohme2010},
 \cite{blanchette2013extending}, and \cite{Fleury2014}) with
 \verb!Isabelle/HOL! \cite{nipkow2002isabelle}, the specialization of
 \verb!Isabelle! for higher-order logic. Sultana, Benzm{\"{u}}ller, and
@@ -282,7 +284,7 @@ Kanso and Setzer~\cite{kanso2016light} integrate \verb!Z3! in \verb!Agda!,
 and for producing propositional justification of a propositional theorems,
 they integrate the propositional fragment of the \verb!E! prover in
 \cite{Kanso2012}. They catalogue the two integration as
-\emph{Oracle + Reflection} and \emph{Oracle + Justification}, respectively.
+\emph{Oracle and Reflection} and \emph{Oracle and Justification}, respectively.
 Their integration with the \verb!E! prover is the most related work
 found with our proof reconstruction tool. Beside we shared
 some of the same obstacles and some achievements in the proof reconstruction,
@@ -294,29 +296,28 @@ proof assistant \verb!Agda!. We structure the paper as follows. In section
 \ref{sec:metis-language-and-proof-terms} we briefly introduce the
 \verb!Metis! prover. In section
 \ref{sec:proof-reconstruction}, we present our approach to reconstruct
-proofs deliver by \verb!Metis! in \verb!Agda!. In section 4, we present a
-complete example of a proof reconstructed with our tool for a CPL problem.
-In section~\ref{secconclusion},we discuss some limitations and conclusions,
-for ending up with the future work.
+proofs deliver by \verb!Metis! in \verb!Agda!. In section \ref{sec:example},
+we present a complete example of a proof reconstructed with our tool for a CPL
+problem. In section~\ref{sec:conclusions}, we discuss some limitations, conclusions
+to ending up with the future work.
 
 % ===========================================================================
 
 \section{Metis: Language and Proof Terms}
 \label{sec:metis-language-and-proof-terms}
 
-\verb!Metis! is an automatic theorem prover  written in Standard ML for
+\verb!Metis! is an automatic theorem prover written in Standard ML for
 first-order logic with equality developed by John Hurd~\cite{hurd2003first}.
-It has been integrated to \verb!Isabelle/HOL! as a macro-step reconstruction
-tool justifying proof steps (usually CNF goals) replied from other ATPs like
+This prover has been integrated to \verb!Isabelle/HOL! as a macro-step reconstruction
+tool for justifying proof steps (usually CNF goals) replied from other ATPs like
 \verb!CVC4!, \verb!Vampire!, or \verb!Z3!. In \cite{Farber2015}, \verb!Metis!
-was also used to provide a tactic for \verb!HOL Light! that could challenge
-others tactics like \verb!MESON! or the \verb!leanCoP! tactic to reconstruct
-proofs as well~\cite{Farber2016}.
+was also used to provide a tactic for \verb!HOL Light!, this tactic challenges
+others like \verb!MESON! tactic or the \verb!leanCoP! tactic that reconstructs
+proofs delivered by \verb!leanCoP!~\cite{Farber2016}.
 
-%and is used in our proof reconstruction approach as an external program.
-We ported a subset of \verb!Metis!' inference rules to \verb!Agda!, the
+In this paper, we ported a subset of \verb!Metis!' inference rules to \verb!Agda!, the
 propositional fragmented, to allow us justify step-by-step the proofs
-delivered in \verb!TSTP! format.
+delivered in \verb!TSTP! format genereted by \verb!Metis!.
 
 % ---------------------------------------------------------------------------
 
@@ -324,27 +325,31 @@ delivered in \verb!TSTP! format.
 \label{ssec:input-and-output-language}
 
 \textit{Input.}~The \verb!TPTP! language  --which includes the first-order
-form (FOF) and clause normal form formats~\cite{sutcliffe2009} -- is de
-facto input standard language to encode problems for many ATPs. The \verb!
-TPTP! syntax describes a well-defined grammar to handle annotated
-formulas with the form
+form (denoted by \verb!fof!) and clause normal form (denoted by \verb!cnf!) formats~\cite{sutcliffe2009} -- is de
+facto input standard language to encode problems for many ATPs.
+The \verb!TPTP! syntax describes a well-defined grammar to handle annotated
+formulas with the following form
 
 \begin{code}
 language(name, role, formula).
 \end{code}
 
-We will only consider two languages, FOF or CNF. The \verb!name!
-serves to identify the formula within the problem. The formula assume one
-role, it could be an axiom, definition, hypothesis, or conjecture.
-The problem  $\vdash \neg (p \wedge \neg p) \vee (q \vee \neg q)$ can be
-written in \verb!TPTP! as follows.
+The \verb!language! can be \verb!fof! or \verb!cnf!. The \verb!name!
+serves to identify the formula within the problem. Each formula assumes one
+role, this could be an axiom, definition, hypothesis, or a conjecture.
+The formulas include boolean connectives
+(\verb!&!, \verb!|!, \verb!=>!, \verb!<=>!, $\tt\sim$) and the logic
+constants \verb!$true! and \verb!$false!.
+For instance, we express the problem $p\, \vdash \neg (p \wedge \neg p) \vee (q \vee \neg q)$
+in \verb!TPTP! as follows.
 
 \begin{code}
+fof(h, axiom, p).
 fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
 \end{code}
 
 \textit{Output.}~\verb!TSTP! language is de facto output standard language
-~\cite{sutcliffe2004tstp}. A TSTP derivation is a directed acyclic graph,
+\cite{sutcliffe2004tstp}. A TSTP derivation is a directed acyclic graph,
 a proof tree, where each leaf is a formula from the TPTP input. A node is
 a formula inferred from the parent formulas. The root is the final
 derived formula. Such a derivation is a list of annotated formulas with
@@ -354,18 +359,23 @@ the form
 language(name, role, formula, source [,useful info]).
 \end{code}
 
-Where \verb!source! typically is an inference record.
-
+The \verb!source! field is an inference record with the following pattern
 \begin{code}
 inference(rule, useful info, parents).
 \end{code}
+
+The \verb!rule! stands for the inference name, the other fields are
+auxiliar arguments or useful information to apply the inference, and
+the list of parents nodes. For instance in Fig.~\ref{fig:metis-proof-tstp},
+we can see that \verb!strip! is the name of one inference with no
+arguments but with only one parent node, in this case \verb!goal!.
 
 \begin{figure}
 \begin{code}
 fof(a, axiom, p) .
 fof(goal, conjecture, p) .
 fof(subgoal_0, plain, p, inference (strip, [], [goal])) .
-fof(negate_0_0, plain, ∼ p, inference (negate, [], [subgoal_0])) .
+fof(negate_0_0, plain, ~ p, inference (negate, [], [subgoal_0])) .
 fof(normalize_0_0, plain, ∼ p, inference (canonicalize, [], [negate_0_0])) .
 fof(normalize_0_1, plain, p, inference (canonicalize, [], [a])) .
 fof(normalize_0_2, plain, $false, inference (simplify, [],
@@ -382,9 +392,10 @@ $p\vdash p$.}
 \subsection{Proof Terms}
 \label{ssec:proof-terms}
 
-The proof-objects delivered in the \verb!Metis!' proofs encode natural
-deduction proofs. Its deduction system uses six simple inference rules
-and it proves conjectures by refutation.
+A proof-object delivered in a \verb!Metis!' proof encodes a natural
+deduction proof. Its deduction system uses six simple inference rules
+(see Fig.~\ref{fig:metis-inferences}) and it proves conjectures
+by refutation as we show in Fig.~\ref{fig:metis-example}.
 
 \begin{figure}
 \[
@@ -431,17 +442,15 @@ and it proves conjectures by refutation.
 \end{bprooftree}
 % }
 \]
-\caption{Inferences rules of the \verb!Metis! prover.}
+\caption{Inference rules of the \verb!Metis! prover.}
 \label{fig:metis-inferences}
 \end{figure}
 
-These proofs are directed acyclic graphs (henceforth DAG), refutations
-trees. Each node stands for an application of an inference rule and the
+These proofs are directed acyclic graphs, trees of refutations. Each node stands for an application of an inference rule and the
 leaves in the tree represent formulas in the given problem. Each node is
-labeled with an axiom or an inference rule name (e.g. \verb!resolve!). Each
-edge links a premise with one conclusion. All proof graphs have in their
-root the conclusion $\bot$ since \verb!Metis! uses refutation in each
-deduction step.
+labeled with a name of the inference rule (e.g. \verb!resolve!). Each
+edge links a premise with one conclusion. The proof graphs have in their
+root the conclusion $\bot$ since \verb!Metis! delivers proof by refutation.
 
 \begin{figure}
 \centering
@@ -474,16 +483,22 @@ derivation in Fig.~\ref{fig:metis-proof-tstp}}
 \subsection{Proof Rules}
 \label{ssec:proof-rules}
 
-Despite the six simple rules in the \verb!Metis!' logic kernel, in the
-\verb!TSTP! derivations for CPL problems, we found other six inference rules
-but with a different names. They are \verb!canonicalize!, \verb!conjunct!,
+Despite the six simple rules in the \verb!Metis!' logic
+kernel (see~Fig. \ref{fig:metis-inferences}), in \verb!TSTP! derivations for CPL
+problems, we found six inference rules with distinct names.
+They are \verb!canonicalize!, \verb!conjunct!,
 \verb!negate!, \verb!simplify!, \verb!strip! and \verb!resolve!.
+We briefly review each of these inference rules follow no order except
+maybe, their frequency in the TSTP derivations.
+
+% ...........................................................................
 
 \textit{Splitting}.
 To prove a goal, \verb!Metis! splits the goal into disjoint cases. This
-process produces a list of new subgoals, the conjunction of this list
-implies the goal. Then, the proof of a goal becomes in the
-proof of smaller proofs. These new subgoals appear in the \verb!TSTP!
+process produces a list of new subgoals, the conjunction of these subgoals
+implies the goal as we show later in subsection~\ref{ssec:emulating-inferences}.
+Then, a proof of the goal becomes in smaller proofs, one
+refutation for each subgoal. These subgoals are introduced in the \verb!TSTP!
 derivation with the \verb!strip! inference rule.
 
 \begin{code}
@@ -493,71 +508,65 @@ fof(subgoal_1, plain, p => r, inference(strip, [], [goal])).
 fof(subgoal_2, plain, (p & r) => q, inference(strip, [], [goal])).
 \end{code}
 
+% ...........................................................................
+
 \textit{Normalization.}
-To normalize a propositional formula \verb!Metis! converts the formula in
-one of its normal forms, and posteriori, it performs conjunctions and
-disjunctions simplifications. The conversion uses the conjunctive normal
-form (CNF), negative normal form (NNF) or the disjunctive normal form (DNF).
-
-\[ \scalebox{0.9}{
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi$}
-
-  \UnaryInfC{$\Gamma \vdash \texttt{cnf}~\varphi$}
-\end{bprooftree}
-\qquad
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi$}
-  \UnaryInfC{$\Gamma \vdash \texttt{nnf}~\varphi$}
-\end{bprooftree}
-\qquad
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi$}
-  \UnaryInfC{$\Gamma \vdash \texttt{dnf}~\varphi$}
-\end{bprooftree}
-}\]
-
-The conjunction and disjunction simplifications are applied recursively
-over the structure's formula. This process ends when the recursion finds some
-atom or logic constant.
+\verb!Metis! uses the \verb!canonicalize! inference rule to normalize a
+propositional formula. It often converts the formula in one of its normal form,
+the conjunctive normal form (henceforth CNF), negative normal form (henceforth NNF)
+or the disjunctive normal form (henceforth DNF).
+Posteriori, it performs recursively over the structure's formula some
+conjunctions and disjunctions simplifications to remove tautologies
+assuming the commutative property for these connectives
+(see~Fig.\ref{fig:conjunctive-disjunctive-simplification}).
 
 \begin{figure}
 \[%\scalebox{0.9}{
 \begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \wedge \bot$}
-  \UnaryInfC{$\Gamma \vdash \bot$}
+  \AxiomC{$\varphi \wedge \bot$}
+  \UnaryInfC{$\bot$}
 \end{bprooftree}
 \begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \wedge \top$}
-  \UnaryInfC{$\Gamma \vdash \varphi$}
+  \AxiomC{$\varphi \wedge \top$}
+  \UnaryInfC{$\varphi$}
 \end{bprooftree}
 \begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \wedge \neg \varphi$}
-  \UnaryInfC{$\Gamma \vdash \bot$}
+  \AxiomC{$\varphi \wedge \neg \varphi$}
+  \UnaryInfC{$\bot$}
+\end{bprooftree}
+\begin{bprooftree}
+  \AxiomC{$\varphi \wedge \varphi$}
+  \UnaryInfC{$\varphi$}
 \end{bprooftree}
 %}
 \]
 
 \[%\scalebox{0.9}{
 \begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \vee \bot$}
-  \UnaryInfC{$\Gamma \vdash \varphi$}
+  \AxiomC{$\varphi \vee \bot$}
+  \UnaryInfC{$\varphi$}
 \end{bprooftree}
 \qquad
 \begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \vee \top$}
-  \UnaryInfC{$\Gamma \vdash \top$}
+  \AxiomC{$\varphi \vee \top$}
+  \UnaryInfC{$\top$}
 \end{bprooftree}
 \qquad
 \begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \vee \neg \varphi$}
-  \UnaryInfC{$\Gamma \vdash \top$}
+  \AxiomC{$\varphi \vee \neg \varphi$}
+  \UnaryInfC{$\top$}
+\end{bprooftree}
+\begin{bprooftree}
+  \AxiomC{$\varphi \vee \varphi$}
+  \UnaryInfC{$\varphi$}
 \end{bprooftree}
 %}
 \]
 \caption{Conjunction and disjunction simplification.}
 \label{fig:conjunctive-disjunctive-simplification}
 \end{figure}
+
+% ...........................................................................
 
 \textit{Resolution.} The \verb!resolve! inference rule (see, for example,
 Fig.~\ref{fig:resolve-inference}) is the resolution
@@ -855,6 +864,66 @@ Explain in a diagram like we did in the slides for the AIM ...
 % ---------------------------------------------------------------------------
 
 \subsection{Emulation of Inference Rules in Agda}
+\label{ssec:emulating-inferences}
+
+
+\textit{Normalization.}
+
+\begin{figure}
+\[ \scalebox{0.9}{
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi$}
+
+  \UnaryInfC{$\Gamma \vdash \texttt{cnf}~\varphi$}
+\end{bprooftree}
+\qquad
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi$}
+  \UnaryInfC{$\Gamma \vdash \texttt{nnf}~\varphi$}
+\end{bprooftree}
+\qquad
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi$}
+  \UnaryInfC{$\Gamma \vdash \texttt{dnf}~\varphi$}
+\end{bprooftree}
+}\]
+\end{figure}
+
+\begin{figure}
+\[%\scalebox{0.9}{
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi \wedge \bot$}
+  \UnaryInfC{$\Gamma \vdash \bot$}
+\end{bprooftree}
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi \wedge \top$}
+  \UnaryInfC{$\Gamma \vdash \varphi$}
+\end{bprooftree}
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi \wedge \neg \varphi$}
+  \UnaryInfC{$\Gamma \vdash \bot$}
+\end{bprooftree}
+%}
+\]
+
+\[%\scalebox{0.9}{
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi \vee \bot$}
+  \UnaryInfC{$\Gamma \vdash \varphi$}
+\end{bprooftree}
+\qquad
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi \vee \top$}
+  \UnaryInfC{$\Gamma \vdash \top$}
+\end{bprooftree}
+\qquad
+\begin{bprooftree}
+  \AxiomC{$\Gamma \vdash \varphi \vee \neg \varphi$}
+  \UnaryInfC{$\Gamma \vdash \top$}
+\end{bprooftree}
+%}
+\]
+\end{figure}
 
 \textit{Splitting a goal}
 
@@ -957,18 +1026,24 @@ split φ₁            = {!!}
 \end{code}
 
 ...
-\subsection{Examples}
+
+% ============================================================================
+
+\section{A Small Example}
+\label{sec:example}
 ...
 
 % ============================================================================
 
 \section{Conclusions}
-\label{secconclusion}
+\label{sec:conclusions}
 
 Amazing conclusions.
 ...
 
 \subsubsection*{Future Work.}
+\label{ssec:future-work}
+
 First-Order Logic support.
 
 \subsubsection*{Acknowledgments.}
