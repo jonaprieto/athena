@@ -695,17 +695,21 @@ to implement a natural deduction calculus.
 data _⊢_ : (Γ : Ctxt)(φ : Prop) → Set where
 \end{code}
 
-The \emph{sequents} $\Gamma \vdash \phi$ represent theorems,
+The sequents  $\Gamma \vdash \phi$ represent theorems,
 where $\Gamma$ is a set of premises and $\phi$ is the
-sequent's conclusion. Strictly speaking, the type for the set of premises
-$\Gamma$ is \verb!Ctxt!, a type synonymous for a list of formulas
-\verb!Prop!.
-This list's implementation is from the \verb!Agda! standard library.
+sequent's conclusion. Strictly speaking, we define the set of premises
+$\Gamma$ with \verb!List! data type. The implementation for this \verb!List!
+type is from the \verb!Agda! standard library.
 
+We define all inference rules of the intuitonistic propositional logic
+(see Fig.~\ref{fig:theorem-constructors}) as constructors of the theorem
+data type, and for classical propositional logic, we postulate the principle
+of the excluded middle (PEM) as follows.
 
-Then, the theorem data type has the following constructors, the propositional
-logic deduction rules for our formal system.
-
+\begin{code}
+postulate  PEM : ∀ {Γ} {φ} → Γ ⊢ φ ∨ ¬ φ
+\end{code}
+  
 \begin{figure}
 \[\scalebox{0.9}{
 \begin{bprooftree}
@@ -820,7 +824,7 @@ logic deduction rules for our formal system.
 \end{bprooftree}
 }\]
 \caption{Inference rules for CPL system.}
-\label{theorem-constructors}
+\label{fig:theorem-constructors}
 \end{figure}
 
 % ---------------------------------------------------------------------------
