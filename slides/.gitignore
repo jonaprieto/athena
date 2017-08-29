@@ -1,0 +1,15 @@
+*.vrb
+*.nav
+*.aux
+*.bbl
+*.run.xml
+*.log
+*.snm
+*synctex*
+*toc
+*out
+*bcf
+*blg
+*.xdv
+ _*
+ auto

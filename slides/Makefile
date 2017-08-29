@@ -1,7 +1,14 @@
-.PHONY : tex
-tex :
-	make clean
-	latexmk -pvc -xelatex -shell-escape Jonathan-Proof-Reconstruction.tex
+
+.PHONY : dependencies
+dependencies :
+	- cd fonts && git submodule update --init --recursive
+	- git submodule update --init --recursive pygments-cagda/
+	- cd pygments-cagda && pip install .
+
+.PHONY : pdf
+pdf :
+	- make clean
+	- latexmk -pdf -xelatex -shell-escape Jonathan-Proof-Reconstruction.tex
 
 
 .PHONY: clean
@@ -23,4 +30,4 @@ clean :
 	@rm -Rf _*
 	@rm -Rf auto
 
-default: tex
+default: dependencies pdf
