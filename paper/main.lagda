@@ -633,7 +633,7 @@ fof(negate_0_0, plain, ~ p, inference(negate, [], [subgoal_0])).
 
 % ...........................................................................
 
-\textit{Simplification.}
+\textit{Simplification.} %abbreviate formulas
 The \verb!simplify! rule is an $n$-ary rule that performs simplification
 of definitions. This rule transverses a list of formulas by
 applying different theorems (e.g.\emph{modus pones}, \emph{modus tollens},
