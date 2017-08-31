@@ -648,27 +648,87 @@ it is fairly complex to grasp it completely.
 \section{Proof Reconstruction}
 \label{sec:proof-reconstruction}
 
-In our approach to the proof reconstruction and proof checking of classical
-propositional logic, we use a \verb!Haskell! program to generate the proof
-in \verb!Agda! code after parsing and analyzing the TSTP derivation delivered
-by \verb!Metis!. Then, we use \verb!Agda! to check the proof previously
-generated, based on the formalization of the classical propositional logic
-and the \verb!Metis!' inference rules described before in section
-\ref{sec:metis-language-and-proof-terms}.
+% In our proof reconstruction approach (see the overview diagram
+% Fig.~\ref{fig:proof-reconstruction-overview}), we have three main tools present.
+
+
+%   \verb!Haskell! program to generate the proof
+% in \verb!Agda! code after parsing and analyzing the TSTP derivation delivered
+% by \verb!Metis!. Then, we use \verb!Agda! to check the proof previously
+% generated, based on the formalization of the classical propositional logic
+% and the \verb!Metis!' inference rules described before in section
+% \ref{sec:metis-language-and-proof-terms}.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\node[text width=2cm, align=center](problem) at (0,0)
+  {CPL \\ Problem};
+
+\node[right = 1.2cm of problem, text width=2cm, align=center]
+  (tptp){\verb!TPTP! \\ Problem};
+
+\node[right= 1.2cm of tptp, text width=2cm, align=center]
+   (metis) {\verb!Metis! \\ Prover};
+
+\node[right= 1.2cm of metis, text width=2cm, align=center, inner sep=10pt]
+   (tstp) {\verb!TSTP! \\ Derivation};
+
+\node[below= 0.5cm of tstp, text width=2cm, align=center, inner sep=10pt]
+  (athena) {\verb!Haskell! \\ Traslator};
+
+\node[left = 1.2cm of athena, text width=2cm, align=center]
+   (agdafile) {\verb!Agda! \\ Proof};
+
+\node[left = 1.2cm of agdafile, text width=2cm, align=center]
+   (agda) {Proof Checker};
+
+\node[below = 0.5cm of problem, text width=2cm, align=center]
+   (verified) {Checked};
+
+\node[below = 0.5cm of verified, text width=2cm, align=center]
+   (failure) {Error};
+
+% node[below] {send to}
+\draw[->, thick] (problem) to
+  % node[below] {\tiny encoding}
+  (tptp);
+\draw[->, thick] (tptp) to
+  % node[below] {\tiny }
+  (metis);
+\draw[->, thick] (metis) to
+  % node[below] {\tiny replies on}
+  (tstp);
+\draw[->, thick] (tstp) to
+  % node[right] {\tiny parsing}
+  (athena);
+\draw[->, thick] (athena) to
+  % node[below] {\tiny traslation}
+  (agdafile);
+\draw[->, thick] (agdafile) to
+  % node[below] {\tiny type-checking}
+  (agda);
+\draw[->, thick] (agda) to (verified);
+\draw[->, thick, gray] (agda) to (failure);
+\end{tikzpicture}
+\caption{Proof reconstruction overview.}
+\label{fig:proof-reconstruction-overview}
+\end{figure}
 
 % ---------------------------------------------------------------------------
 
-\subsection{\verb!Agda! Proof Cheker}
+\subsection{Proof Cheker}
 \label{ssec:agda}\
 
-\verb!Agda! is an interactive system for constructing proofs and programs, based
-on Martin-L\"{o}f's type theory and extended with records, parametrised modules,
-among other features.
-One of the main strengths of \verb!Agda! is its support for writing proofs, which
-we shall call \verb!Agda!'s proof engine and it consists of: support for inductively
-defined types, including inductive families, and function definitions using
-pattern matching on such types, normalisation during type-checking,
-commands for refining proof terms, coverage checker and termination checker.
+\verb!Agda! is an interactive system for constructing proofs and programs,
+based on Martin-L\"{o}f's type theory and extended with records, parametrised
+modules, among other features.
+One of the main strengths of \verb!Agda! is its support for writing proofs,
+which we shall call \verb!Agda!'s proof engine and it consists of: support for
+inductively defined types, including inductive families, and function
+definitions using pattern matching on such types, normalisation during type-
+checking, commands for refining proof terms, coverage checker and termination
+checker.
 The inductive approach for representing classical propositional logic
 is better because we benefit from \verb!Agda!'s proof engine and its Unicode
 support that allows us writing proofs similar as we find in math text books.
@@ -683,10 +743,8 @@ logical connectives $\{\wedge, \vee, \Rightarrow, \Leftrightarrow, \neg\}$
 and logic constants $\{\top, \bot\}$.
 In \verb!Agda!, we define the formula
 as an inductive type using the keyword \texttt{data} and including every
-connective as constructors improving the expressiveness of this data type.
-
-We represent propositional formulas with \verb!Prop! data
-type as we show in the following.
+connective as a constructor. We represent propositional formulas with
+\verb!Prop! data type using the following definition.
 
 %an extension of the syntax definition used in \cite{Altenkirch2015}.
 
@@ -709,13 +767,13 @@ data _⊢_ : (Γ : Ctxt)(φ : Prop) → Set where
 The sequents  $\Gamma \vdash \phi$ represent theorems,
 where $\Gamma$ is a set of premises and $\phi$ is the
 sequent's conclusion. Strictly speaking, we define the set of premises
-$\Gamma$ with \verb!List! data type. The implementation for this \verb!List!
-type comes from the \verb!Agda! standard library.
+$\Gamma$ with \verb!List! data type
+\footnote{We use the \verb!Agda! standard library's implementation
+of the \verb!List! data type.}.
 
-We define all inference rules of the intuitonistic propositional logic
+Our CPL system define all inference rules for intuitonistic propositional logic
 (see Fig.~\ref{fig:theorem-constructors}) as constructors of the theorem
-data type, and for classical propositional logic, we postulate the principle
-of the excluded middle (PEM) as follows.
+data type, and we postulate the principle of the excluded middle (PEM).
 
 \begin{code}
 postulate  PEM : ∀ {Γ} {φ} → Γ ⊢ φ ∨ ¬ φ
