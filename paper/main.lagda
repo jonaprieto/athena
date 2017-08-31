@@ -461,20 +461,20 @@ root the conclusion $\bot$ since \verb!Metis! delivers proof by refutation.
 \begin{figure}
 \centering
 \begin{bprooftree}
-  \footnotesize\centering\tt
+  \centering\tt
   \AxiomC{}
-  \RightLabel{\footnotesize negate}
+  \RightLabel{\scriptsize negate}
   \UnaryInfC{$\neg p$}
-  \RightLabel{\footnotesize strip}
+  \RightLabel{\scriptsize strip}
   \UnaryInfC{$\neg p$}
   \AxiomC{}
-  \RightLabel{\footnotesize axiom}
+  \RightLabel{\scriptsize axiom}
   \UnaryInfC{$p$}
-  \RightLabel{\footnotesize canonicalize}
+  \RightLabel{\scriptsize canonicalize}
   \UnaryInfC{$p$}
-  \RightLabel{\footnotesize simplify}
+  \RightLabel{\scriptsize simplify}
   \BinaryInfC{$\bot$}
-  \RightLabel{\footnotesize canonicalize}
+  \RightLabel{\scriptsize canonicalize}
   \UnaryInfC{$\bot$}
 \end{bprooftree}
 \caption{The \verb!Metis!' refutation tree for $p \vdash p$ from the
@@ -648,16 +648,23 @@ it is fairly complex to grasp it completely.
 \section{Proof Reconstruction}
 \label{sec:proof-reconstruction}
 
-% In our proof reconstruction approach (see the overview diagram
-% Fig.~\ref{fig:proof-reconstruction-overview}), we have three main tools present.
+\subsection{The Translation Method}
 
+Our system (see Fig~\ref{fig:proof-reconstruction-overview}) translates a TSTP
+file into an \verb!Agda! proof by parsing it with a \verb!Haskell! tool.
+This tool reconstructs the proof tree, removing redundancies and
+cutting unnecessary steps (see for example repetitions in the derivation shown in
+Fig~\ref{fig:metis-example}). The output is \verb!Agda! code.
+Then, we use \verb!Agda! as a proof checker to type-check the proof.
+If type-checking succeed, then our proof is verified. Else, we have a failure
+proof due by three possible actors. First, a soundness bug in the ATP or a bug
+in the output printing. Second, a bug in the translation process in our TSTP parsing
+module, the inner algorithms in the analysis of the proof tree, the pretty printer
+module, or a bug in \verb!Haskell!. Lastly, a bug in our proof checker \verb!Agda!.
 
-%   \verb!Haskell! program to generate the proof
-% in \verb!Agda! code after parsing and analyzing the TSTP derivation delivered
-% by \verb!Metis!. Then, we use \verb!Agda! to check the proof previously
-% generated, based on the formalization of the classical propositional logic
-% and the \verb!Metis!' inference rules described before in section
-% \ref{sec:metis-language-and-proof-terms}.
+% ---------------------------------------------------------------------------
+
+\subsection{Reconstruction Work-flow}
 
 \begin{figure}
 \centering
@@ -780,99 +787,102 @@ postulate  PEM : ∀ {Γ} {φ} → Γ ⊢ φ ∨ ¬ φ
 \end{code}
 
 \begin{figure}
-\[\scalebox{0.9}{
+\[%\scalebox{0.9}{
 \begin{bprooftree}
 \AxiomC{}
-\RightLabel{\footnotesize\tt assume $\varphi$}
+\RightLabel{\scriptsize\tt assume $\varphi$}
 \UnaryInfC{$\Gamma , \varphi \vdash \varphi$}
-\end{bprooftree}
+\end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \varphi$}
-\RightLabel{\footnotesize\tt weaken $\psi$}
+\RightLabel{\scriptsize\tt weaken $\psi$}
 \UnaryInfC{$\Gamma , \psi \vdash \varphi$}
-\end{bprooftree}
+\end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{}
-\RightLabel{\footnotesize\tt $\top$-intro}
+\RightLabel{\scriptsize\tt $\top$-intro}
 \UnaryInfC{$\Gamma \vdash \top$}
-\end{bprooftree}
+\end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \bot$}
-\RightLabel{\footnotesize\tt $\bot$-elim $\varphi$}
+\RightLabel{\scriptsize\tt $\bot$-elim $\varphi$}
 \UnaryInfC{$\Gamma \vdash \varphi$}
 \end{bprooftree}
-}\]
+%}
+\]
 
-\[\scalebox{0.9}{
+\[%\scalebox{0.9}{
 \begin{bprooftree}
 \AxiomC{$\Gamma , \varphi \vdash \bot$}
-\RightLabel{\footnotesize\tt $\neg$-intro}
+\RightLabel{\scriptsize\tt $\neg$-intro}
 \UnaryInfC{$\Gamma \vdash \neg \varphi$}
-\end{bprooftree}
+\end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \neg \varphi$}
 \AxiomC{$\Gamma \vdash \varphi$}
-\RightLabel{\footnotesize\tt $\neg$-elim}
+\RightLabel{\scriptsize\tt $\neg$-elim}
 \BinaryInfC{$\Gamma \vdash \bot$}
-\end{bprooftree}
+\end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \varphi$}
 \AxiomC{$\Gamma \vdash \psi$}
-\RightLabel{\footnotesize\tt $\wedge$-intro}
+\RightLabel{\scriptsize\tt $\wedge$-intro}
 \BinaryInfC{$\Gamma \vdash \varphi \wedge \psi$}
 \end{bprooftree}
-}\]
+%}
+\]
 
-\[\scalebox{0.9}{
+\[%\scalebox{0.9}{
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \varphi \wedge \psi$}
-\RightLabel{\footnotesize\tt $\wedge$-proj$_1$}
+\RightLabel{\scriptsize\tt $\wedge$-proj$_1$}
 \UnaryInfC{$\Gamma\vdash \varphi$}
-\end{bprooftree}
-\qquad
+\end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \varphi \wedge \psi$}
-\RightLabel{\footnotesize\tt $\wedge$-proj$_2$}
+\RightLabel{\scriptsize\tt $\wedge$-proj$_2$}
 \UnaryInfC{$\Gamma\vdash \psi$}
-\end{bprooftree}
+\end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \varphi$}
-\RightLabel{\footnotesize\tt $\vee$-intro$_1$ $\psi$}
+\RightLabel{\scriptsize\tt $\vee$-intro$_1$ $\psi$}
 \UnaryInfC{$\Gamma \vdash \varphi \vee \psi$}
 \end{bprooftree}
-}\]
+%}
+\]
 
-\[\scalebox{0.9}{
+\[%\scalebox{0.9}{
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \psi$}
-\RightLabel{\footnotesize\tt $\vee$-intro$_2$ $\varphi$}
+\RightLabel{\scriptsize\tt $\vee$-intro$_2$ $\varphi$}
 \UnaryInfC{$\Gamma \vdash \varphi \vee \psi$}
-\end{bprooftree}
+\end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$\Gamma ,\varphi \vdash \gamma $}
 \AxiomC{$\Gamma , \psi  \vdash \gamma$}
-\RightLabel{\footnotesize\tt $\vee$-elim}
+\RightLabel{\scriptsize\tt $\vee$-elim}
 \BinaryInfC{$\Gamma , \varphi \vee \psi \vdash \gamma$}
-\end{bprooftree}
+\end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$\Gamma , \varphi \vdash \psi$}
-\RightLabel{\footnotesize\tt $\Rightarrow$-intro}
+\RightLabel{\scriptsize\tt $\Rightarrow$-intro}
 \UnaryInfC{$\Gamma \vdash \varphi \Rightarrow \psi$}
 \end{bprooftree}
-}\]
+%}
+\]
 
 \[
 %\scalebox{0.9}{
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \varphi \Rightarrow \psi$}
 \AxiomC{$\Gamma \vdash \varphi$}
-\RightLabel{\footnotesize\tt $\Rightarrow$-elim}
+\RightLabel{\scriptsize\tt $\Rightarrow$-elim}
 \BinaryInfC{$\Gamma \vdash \psi$}
-\end{bprooftree}
+\end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$\Gamma , \varphi \vdash \psi$}
 \AxiomC{$\Gamma , \psi \vdash \varphi$}
-\RightLabel{\footnotesize\tt $\Leftrightarrow$-intro}
+\RightLabel{\scriptsize\tt $\Leftrightarrow$-intro}
 \BinaryInfC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
 \end{bprooftree}
 %}
@@ -881,39 +891,32 @@ postulate  PEM : ∀ {Γ} {φ} → Γ ⊢ φ ∨ ¬ φ
 
 \[
 %\scalebox{0.9}{
-% \qquad
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \varphi$}
 \AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
-\RightLabel{\footnotesize\tt $\Leftrightarrow$-elim$_1$}
+\RightLabel{\scriptsize\tt $\Leftrightarrow$-elim$_1$}
 \BinaryInfC{$\Gamma \vdash \psi$}
-\end{bprooftree}
+\end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \varphi$}
 \AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
-\RightLabel{\footnotesize\tt $\Leftrightarrow$-elim$_2$}
+\RightLabel{\scriptsize\tt $\Leftrightarrow$-elim$_2$}
 \BinaryInfC{$\Gamma \vdash \psi$}
 \end{bprooftree}
 %}
 \]
+
 \caption{Inference rules for CPL system.}
 \label{fig:theorem-constructors}
 \end{figure}
 
 % ---------------------------------------------------------------------------
 
-\subsection{The Translation Method}
-
-% ---------------------------------------------------------------------------
-
-\subsection{Reconstruction Work-flow}
-Explain in a diagram like we did in the slides for the AIM ...
 
 % ---------------------------------------------------------------------------
 
 \subsection{Emulation of Inference Rules in Agda}
 \label{ssec:emulating-inferences}
-
 
 \textit{Normalization.}
 
