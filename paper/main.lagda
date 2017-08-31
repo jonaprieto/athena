@@ -162,20 +162,20 @@ Proof reconstruction is a hard labor since it depends on the integration
 of two complex system. On one hand, we have the automatic theorem provers
 (henceforth ATP) and their specification logic. These tools are usually
 classified in at least one of the following categories. A SAT solver
-(e.g. \verb!zChaff!~\cite{Moskewicz2001} and \verb!MiniSat! ~\cite{Een2004})
+(e.g. \verb!zChaff!~\cite{Moskewicz2001} and \verb!MiniSat!~\cite{Een2004})
 to prove unsatisfiability of CNF formulas, a QBF solver (e.g. \verb!
 GhostQ!~\cite{Klieber2014} and \verb!DepQBF!~\cite{Lonsing2017}) to prove
 satisfiability and invalidity of quantified Boolean formulas, a SMT
-solver (e.g \verb!CVC4!~\cite{Barrett2011}, \verb!veriT!~\cite{bouton2009}
-, and \verb!Z3!~\cite{DeMoura2008}) to prove unsatisfiability of formulas
+solver (e.g \verb!CVC4!~\cite{Barrett2011}, \verb!veriT!~\cite{bouton2009},
+and \verb!Z3!~\cite{DeMoura2008}) to prove unsatisfiability of formulas
 from first-order logic with theories, and a prover for validity of
 formulas from first-order logic with equality
 (e.g. \verb!E!~\cite{Schulz:AICOM-2002}, \verb!leanCoP!~\cite{Otten2008},
 \verb!Metis!~\cite{hurd2003first}, \verb!SPASS! ~\cite{Weidenbach2009} and
 \verb!Vampire!~\cite{Riazanov1999}), high-order logic (e.g. \verb!Leo-II!
-~\cite{Benzmuller2008} and \verb!Satallax!~\cite{Brown2012}) or intuitonistic
+\cite{Benzmuller2008} and \verb!Satallax!~\cite{Brown2012}) or intuitonistic
 logic (e.g. \verb!ileanCoP!~\cite{Otten2008}, \verb!JProver!
-~\cite{Schmitt2001}, and \verb!Gandalf!~\cite{Tammet1997}), among others.
+\cite{Schmitt2001}, and \verb!Gandalf!~\cite{Tammet1997}), among others.
 On the other hand, we have the proof checkers, interactive theorem provers
 (henceforth ITP) or proof assistants (e.g. \verb!Agda!~\cite{agdateam},
 \verb!Coq!~\cite{coqteam}, \verb!Isabelle!~\cite{paulson1994isabelle}, and
@@ -200,12 +200,11 @@ to get the actual proof. For problems in classical propositional logic (
 henceforth CPL), from a list of at least forty\footnote{ATPs available
 from the web service \texttt{SystemOnTPTP} of the TPTP World.} ATPs, just
 a few provers were able to deliver proofs (e.g. \verb!CVC4!~
-\cite{Barrett2011}, \verb!SPASS!, and \verb!Waldmeister!
-~\cite{hillenbrand1997}) and a little bit less replied with a proof in a
-file format like TSTP~
-\cite{sutcliffe2004tstp} (e.g. \verb!E!, \verb!Metis!, \verb!Vampire!,
-and \verb!Z3!), LFSC~\cite{Stump2008}, or the SMT-LIB ~\cite{Bohme2011}
-format.
+\cite{Barrett2011}, \verb!SPASS!, and \verb!Waldmeister!~\cite{hillenbrand1997})
+and a little bit less replied with a proof in a
+file format like TSTP~\cite{sutcliffe2004tstp} (e.g. \verb!E!, \verb!Metis!,
+\verb!Vampire!, and \verb!Z3!), LFSC~\cite{Stump2008}, or the
+SMT-LIB~\cite{Bohme2011} format.
 
 Many approaches have been proposed and some tools have been implemented
 for proof reconstruction in the last decades. These programs are relevant
@@ -234,21 +233,20 @@ modular proof reconstruction work flow.
 \verb!SMTCoq!~\cite{armand2011,Ekici2017} is a tool for the \verb!Coq!
 proof assistant \cite{coqteam} which provides a certified checker for
 proof witness coming from the SMT solver \verb!veriT! \cite{bouton2009}
-and adds a new tactic named verit, that calls \verb!veriT! on any \verb!
-Coq! goal. In \cite{bezem2002automated}, given a fixed but arbitrary
+and adds a new tactic named verit, that calls \verb!veriT! on any
+\verb!Coq! goal. In \cite{bezem2002automated}, given a fixed but arbitrary
 first-order signature, the authors transform a proof produced by the
 first-order automatic theorem prover \verb!Bliksem! \cite{deNivelle2003}
 in a \verb!Coq! proof term.
 
-Hurd~\cite{Hurd1999} integrates the first-order resolution prover \verb!
-Gandalf! with \verb!HOL!~\cite{norrish2007hol}, a high-order theorem
+Hurd~\cite{Hurd1999} integrates the first-order resolution prover
+\verb!Gandalf! with \verb!HOL!~\cite{norrish2007hol}, a high-order theorem
 prover, following a LCF model implementing the tactic \verb!GANDALF_TAC!.
-The SMT solver \verb!CVC4! was integrated with \verb!HOL Light!, a
-version of \verb!HOL! but with a simpler logic core. \verb!PRocH!~ tool
-by Kaliszyk and Urban~\cite{kaliszyk2013} reconstruct proofs from
-different ATPs to \verb!HOL Light!, replaying the detailed inference
-steps from the ATPs with internal inference methods implemented in the
-ITP.
+For \verb!HOL Light!, a version of \verb!HOL! but with a simpler logic core,
+the SMT solver \verb!CVC4! was integrated and Kaliszyk and
+Urban~\cite{kaliszyk2013} reconstruct proofs from different ATPs with their
+\verb!PRocH! tool, replaying the detailed inference steps from the ATPs with
+internal inference methods implemented in \verb!HOL Light!.
 
 % Taken from: % Färber, M., & Kaliszyk, C. (2015). Metis-based
 % Paramodulation Tactic for HOL
@@ -271,25 +269,23 @@ ITP.
 % enough to reconstruct proofs found by the external ATPs.
 
 \verb!Waldmeister! is an automatic theorem prover for unit equational
-logic \cite{hillenbrand1997}. Foster and Struth
-~\cite{foster2011integrating} integrate \verb!Waldmeister! into
+logic \cite{hillenbrand1997}.
+Foster and Struth~\cite{foster2011integrating} integrate \verb!Waldmeister! into
 \verb!Agda!~\cite{agdateam}. This integration requires a proof
 reconstruction step but authors' approach is restricted to pure
 equational logic --also called identity theory~\cite{humberstone2011}--
 that is, first-order logic with equality but no other predicate symbols
 and no functions symbols~\cite{appel1959}.
 
-Kanso and Setzer~\cite{kanso2016light} integrate \verb!Z3! in \verb!Agda!,
-and for producing propositional justification of a propositional theorems,
-they integrate the propositional fragment of the \verb!E! prover in
+Kanso and Setzer~\cite{kanso2016light} integrate \verb!Z3! in \verb!Agda!
+but they also integrate the propositional fragment of the \verb!E! prover in
 \cite{Kanso2012}. They cataloged these two integration as
 \emph{Oracle and Reflection} and \emph{Oracle and Justification}, respectively.
-Their integration with the \verb!E! prover is the most related work
-found with our proof reconstruction approach. Beside we shared
-some of the same obstacles and some achievements in the proof reconstruction,
-we found crucial differences in the treatment of the proofs beyond that we
-choose a different prover and we do not use the semantics of propositional
-logic for decidability of formulas as we describe later on.
+Their integration with the \verb!E! prover is the most related work with our
+apporach found at the moment while we write this document. Besides the use
+of the same ITP, crucial differences easily arise like decidability of
+propositional logic using semantics that we do not take into account for the
+reason we describe later on in section~\ref{sec:conclusions}.
 
 In this paper, we describe the integration of \verb!Metis! prover with the
 proof assistant \verb!Agda!. We structure the paper as follows. In section
@@ -298,8 +294,9 @@ proof assistant \verb!Agda!. We structure the paper as follows. In section
 \ref{sec:proof-reconstruction}, we present our approach to reconstruct
 proofs deliver by \verb!Metis! in \verb!Agda!. In section \ref{sec:example},
 we present a complete example of a proof reconstructed with our tool for a CPL
-problem. In section~\ref{sec:conclusions}, we discuss some limitations, conclusions
-to ending up with the future work.
+problem. In section~\ref{sec:conclusions}, we discuss some limitations,
+advantages and disadvantages with other similar proof reconstruction tools and
+conclusions for ending up with the future work.
 
 % ===========================================================================
 
@@ -308,15 +305,20 @@ to ending up with the future work.
 
 \verb!Metis! is an automatic theorem prover written in Standard ML for
 first-order logic with equality developed by John Hurd~\cite{hurd2003first}.
-This prover has been integrated to \verb!Isabelle/HOL! as a macro-step reconstruction
-tool for justifying proof steps (usually CNF goals) replied from other ATPs like
-\verb!CVC4!, \verb!Vampire!, or \verb!Z3!. In \cite{Farber2015}, \verb!Metis!
-was also used to provide a tactic for \verb!HOL Light!, this tactic challenges
-others like \verb!MESON! tactic or the \verb!leanCoP! tactic that reconstructs
-proofs delivered by \verb!leanCoP!~\cite{Farber2016}.
+As we show later this prover is suitable for proof reconstruction task since
+it provides well-documented proof-objects with enough information to justify
+the deduction steps.
 
-In this paper, we ported a subset of \verb!Metis!' inference rules to \verb!Agda!, the
-propositional fragmented, to allow us justify step-by-step the proofs
+\verb!Metis! has been integrated to \verb!Isabelle/HOL! as a macro-step reconstruction
+tool for justifying proof steps (usually CNF goals) replied from other ATPs like
+\verb!CVC4!, \verb!Vampire!, or \verb!Z3!.
+In \cite{Farber2015}, \verb!Metis! was used to provide a tactic for
+\verb!HOL Light!, this tactic challenges others like \verb!MESON! tactic or the
+\verb!leanCoP! tactic that reconstructs proofs delivered by
+\verb!leanCoP!~\cite{Farber2016}.
+
+In this paper, we ported a subset of \verb!Metis!' inference rules to \verb!Agda!,
+the propositional fragmented, to allow us justify step-by-step the proofs
 delivered in \verb!TSTP! format generated by \verb!Metis!.
 
 % ---------------------------------------------------------------------------
@@ -325,7 +327,8 @@ delivered in \verb!TSTP! format generated by \verb!Metis!.
 \label{ssec:input-and-output-language}
 
 \textit{Input.}~The \verb!TPTP! language  --which includes the first-order
-form (denoted by \verb!fof!) and clause normal form (denoted by \verb!cnf!) formats~\cite{sutcliffe2009} -- is de
+form (denoted by \verb!fof!) and clause normal form (denoted by \verb!cnf!)
+formats~\cite{sutcliffe2009} -- is de
 facto input standard language to encode problems for many ATPs.
 The \verb!TPTP! syntax describes a well-defined grammar to handle annotated
 formulas with the following form
@@ -336,12 +339,14 @@ language(name, role, formula).
 
 The \verb!language! can be \verb!fof! or \verb!cnf!. The \verb!name!
 serves to identify the formula within the problem. Each formula assumes one
-role, this could be an axiom, definition, hypothesis, or a conjecture.
-The formulas include Boolean connectives
-(\verb!&!, \verb!|!, \verb!=>!, \verb!<=>!, $\tt\sim$) and the logic
+\verb!role!, this could be an \verb!axiom!, \verb!conjecture!,
+\verb!definition!, or a \verb!hypothesis!. The formulas include Boolean
+connectives (\verb!&!, \verb!|!, \verb!=>!, \verb!<=>!, $\tt\sim$) and logic
 constants \verb!$true! and \verb!$false!.
-For instance, we express the problem $p\, \vdash \neg (p \wedge \neg p) \vee (q \vee \neg q)$
-in \verb!TPTP! as follows.
+
+For instance, we express the problem
+$p\, \vdash \neg (p \wedge \neg p) \vee (q \vee \neg q)$
+in \verb!TPTP! syntax as follows.
 
 \begin{code}
 fof(h, axiom, p).
@@ -349,11 +354,11 @@ fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
 \end{code}
 
 \textit{Output.}~\verb!TSTP! language is de facto output standard language
-\cite{sutcliffe2004tstp}. A TSTP derivation is a directed acyclic graph,
-a proof tree, where each leaf is a formula from the TPTP input. A node is
-a formula inferred from the parent formulas. The root is the final
-derived formula. Such a derivation is a list of annotated formulas with
-the form
+for derivations of ATPs~\cite{sutcliffe2004tstp}.
+A TSTP derivation is a directed acyclic graph, a proof tree, where each leaf
+is a formula from the TPTP input. A node is a formula inferred from the parent
+formulas. The root is the final derived formula. Such a derivation is a list of
+annotated formulas with the form
 
 \begin{code}
 language(name, role, formula, source [,useful info]).
@@ -366,9 +371,9 @@ inference(rule, useful info, parents).
 
 The \verb!rule! stands for the inference name, the other fields are
 auxiliary arguments or useful information to apply the inference, and
-the list of parents nodes. For instance in Fig.~\ref{fig:metis-proof-tstp},
-we can see that \verb!strip! is the name of one inference with no
-arguments but with only one parent node, \verb!goal!.
+the list of parents nodes.
+For instance, in Fig.~\ref{fig:metis-proof-tstp}, \verb!strip! is the name of one
+of the inference and it has no arguments and only one parent node, \verb!goal!.
 
 \begin{figure}
 \begin{code}
@@ -393,8 +398,8 @@ cnf(refute_0_0, plain, $false, inference (canonicalize, [], [normalize_0_2])) .
 
 A proof-object delivered in a \verb!Metis!' proof encodes a natural
 deduction proof. Its deduction system uses six simple inference rules
-(see Fig.~\ref{fig:metis-inferences}) and it proves conjectures
-by refutation as we show in Fig.~\ref{fig:metis-example}.
+(see Fig.~\ref{fig:metis-inferences}) to attempt to prove conjectures
+by refutation (see. e.g. Fig.~\ref{fig:metis-example}).
 
 \begin{figure}
 \[
@@ -445,7 +450,8 @@ by refutation as we show in Fig.~\ref{fig:metis-example}.
 \label{fig:metis-inferences}
 \end{figure}
 
-These proofs are directed acyclic graphs, trees of refutations. Each node stands for an application of an inference rule and the
+These proofs are directed acyclic graphs, trees of refutations. Each node stands
+for an application of an inference rule and the
 leaves in the tree represent formulas in the given problem. Each node is
 labeled with a name of the inference rule
 (e.g. \verb!canonicalize! in Fig.~\ref{fig:metis-example}). Each
@@ -454,25 +460,23 @@ root the conclusion $\bot$ since \verb!Metis! delivers proof by refutation.
 
 \begin{figure}
 \centering
-\scalebox{1.1}{
 \begin{bprooftree}
-\footnotesize\centering\tt
-\AxiomC{}
-\RightLabel{negate}
-\UnaryInfC{$\neg p$}
-\RightLabel{strip}
-\UnaryInfC{$\neg p$}
-\AxiomC{}
-\RightLabel{axiom}
-\UnaryInfC{$p$}
-\RightLabel{canonicalize}
-\UnaryInfC{$p$}
-\RightLabel{simplify}
-\BinaryInfC{$\bot$}
-\RightLabel{canonicalize}
-\UnaryInfC{$\bot$}
+  \footnotesize\centering\tt
+  \AxiomC{}
+  \RightLabel{\footnotesize negate}
+  \UnaryInfC{$\neg p$}
+  \RightLabel{\footnotesize strip}
+  \UnaryInfC{$\neg p$}
+  \AxiomC{}
+  \RightLabel{\footnotesize axiom}
+  \UnaryInfC{$p$}
+  \RightLabel{\footnotesize canonicalize}
+  \UnaryInfC{$p$}
+  \RightLabel{\footnotesize simplify}
+  \BinaryInfC{$\bot$}
+  \RightLabel{\footnotesize canonicalize}
+  \UnaryInfC{$\bot$}
 \end{bprooftree}
-}
 \caption{The \verb!Metis!' refutation tree for $p \vdash p$ from the
 derivation in Fig.~\ref{fig:metis-proof-tstp}}
 \label{fig:metis-example}
@@ -509,26 +513,26 @@ fof(subgoal_2, plain, (p & r) => q, inference(strip, [], [goal])).
 
 % ...........................................................................
 
-\textit{Clausification.} The \verb!clausify! inference rule transforms a
+\textit{Clausification.} The \verb!clausify! rule transforms a
 propositional formula in clausal normal form or CNF,
 a conjunction of clauses. Where a clause is the disjunction of zero or
 more literals and a literal is an atom (positive literal) or a negation of an
 atom (negative literal). This conversion is not unique and \verb!Metis! performs
-that on its own way.
+this transformation using its own criteria.
 
 % ...........................................................................
 
 \textit{Normalization.}
-\verb!Metis! uses the \verb!canonicalize! inference rule to normalize a
+\verb!Metis! uses the \verb!canonicalize! rule to normalize a
 propositional formula that comes from an axiom or a definition.
 It often converts the formula in one of its normal form,
-the conjunctive normal form as \verb!clausify! does, the
-negative normal form or the disjunctive normal form.
+the conjunctive normal form,%as \verb!clausify! does
+the negative normal form or the disjunctive normal form.
 Posterior, this rule simplifies the formula with some definitions, applying
 recursively on the structure's formula conjunctions and disjunctions simplifications
 to remove tautologies
-(see for example Fig.~\ref{fig:conjunctive-disjunctive-simplification} of a list
-of these theorems where we assume the commutative property for conjunction and
+(see Fig.~\ref{fig:conjunctive-disjunctive-simplification} with a list
+of these theorems. We had assumed the commutative property for conjunction and
 disjunction connectives).
 
 \begin{figure}
@@ -537,14 +541,17 @@ disjunction connectives).
     \AxiomC{$\varphi \wedge \bot$}
     \UnaryInfC{$\bot$}
   \end{bprooftree}
+  \qquad
   \begin{bprooftree}
     \AxiomC{$\varphi \wedge \top$}
     \UnaryInfC{$\varphi$}
   \end{bprooftree}
+  \qquad
   \begin{bprooftree}
     \AxiomC{$\varphi \wedge \neg \varphi$}
     \UnaryInfC{$\bot$}
   \end{bprooftree}
+  \qquad
   \begin{bprooftree}
     \AxiomC{$\varphi \wedge \varphi$}
     \UnaryInfC{$\varphi$}
@@ -567,6 +574,7 @@ disjunction connectives).
     \AxiomC{$\varphi \vee \neg \varphi$}
     \UnaryInfC{$\top$}
   \end{bprooftree}
+  \qquad
   \begin{bprooftree}
     \AxiomC{$\varphi \vee \varphi$}
     \UnaryInfC{$\varphi$}
@@ -579,12 +587,13 @@ disjunction connectives).
 
 % ...........................................................................
 
-\textit{Resolution.} The \verb!resolve! inference rule (see, for example,
+\textit{Resolution.} The \verb!resolve! rule (see, for example,
 Fig.~\ref{fig:resolve-inference}) is the resolution
 theorem with two argument, the positive literal for resolution and two
-derivations. The positive literal $p$ must occur in the first formula of the
+formulas from their own derivations. The positive literal $p$ must occur in the first formula of the
 input and the negative literal must occur in the second formula of the input
-(see the resolve rule in \verb!Metis!' logic core in Fig.~\ref{fig:metis-inferences}).
+(see the resolve rule in \verb!Metis!' logic core in
+Fig.~\ref{fig:metis-inferences}).
 
 \begin{figure}
 \begin{code}
@@ -625,12 +634,12 @@ fof(negate_0_0, plain, ~ p, inference(negate, [], [subgoal_0])).
 % ...........................................................................
 
 \textit{Simplification.}
-The \verb!simplify! inference is an $n$-ary rule that performs simplification
+The \verb!simplify! rule is an $n$-ary rule that performs simplification
 of definitions. This rule transverses a list of formulas by
-applying different theorems (e.g.\emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive syllogism}).
-This rule incorporates the list of theorems used by
+applying different theorems (e.g.\emph{modus pones}, \emph{modus tollens},
+or \emph{disjunctive syllogism}) including the list of theorems used by
 \verb!canonicalize! in Fig.~\ref{fig:conjunctive-disjunctive-simplification}
-and the resolution theorem of \verb!resolve! inference as well.
+and the resolution theorem of \verb!resolve! rule.
 Moreover, many things happen inside this \verb!Metis!' procedure and
 it is fairly complex to grasp it completely.
 
@@ -677,7 +686,9 @@ as an inductive type using the keyword \texttt{data} and including every
 connective as constructors improving the expressiveness of this data type.
 
 We represent propositional formulas with \verb!Prop! data
-type as we show in the following. %an extension of the syntax definition used in \cite{Altenkirch2015}.
+type as we show in the following.
+
+%an extension of the syntax definition used in \cite{Altenkirch2015}.
 
 \begin{code}
 data Prop : Set where
@@ -699,7 +710,7 @@ The sequents  $\Gamma \vdash \phi$ represent theorems,
 where $\Gamma$ is a set of premises and $\phi$ is the
 sequent's conclusion. Strictly speaking, we define the set of premises
 $\Gamma$ with \verb!List! data type. The implementation for this \verb!List!
-type is from the \verb!Agda! standard library.
+type comes from the \verb!Agda! standard library.
 
 We define all inference rules of the intuitonistic propositional logic
 (see Fig.~\ref{fig:theorem-constructors}) as constructors of the theorem
@@ -709,7 +720,7 @@ of the excluded middle (PEM) as follows.
 \begin{code}
 postulate  PEM : ∀ {Γ} {φ} → Γ ⊢ φ ∨ ¬ φ
 \end{code}
-  
+
 \begin{figure}
 \[\scalebox{0.9}{
 \begin{bprooftree}
@@ -792,7 +803,8 @@ postulate  PEM : ∀ {Γ} {φ} → Γ ⊢ φ ∨ ¬ φ
 \end{bprooftree}
 }\]
 
-\[\scalebox{0.9}{
+\[
+%\scalebox{0.9}{
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \varphi \Rightarrow \psi$}
 \AxiomC{$\Gamma \vdash \varphi$}
@@ -805,10 +817,12 @@ postulate  PEM : ∀ {Γ} {φ} → Γ ⊢ φ ∨ ¬ φ
 \RightLabel{\footnotesize\tt $\Leftrightarrow$-intro}
 \BinaryInfC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
 \end{bprooftree}
-}\]
+%}
+\]
 
 
-\[\scalebox{0.9}{
+\[
+%\scalebox{0.9}{
 % \qquad
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash \varphi$}
@@ -822,7 +836,8 @@ postulate  PEM : ∀ {Γ} {φ} → Γ ⊢ φ ∨ ¬ φ
 \RightLabel{\footnotesize\tt $\Leftrightarrow$-elim$_2$}
 \BinaryInfC{$\Gamma \vdash \psi$}
 \end{bprooftree}
-}\]
+%}
+\]
 \caption{Inference rules for CPL system.}
 \label{fig:theorem-constructors}
 \end{figure}
