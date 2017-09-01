@@ -166,16 +166,25 @@
   , ItalicFont=SourceSansPro-It.otf
   ]{SourceSansPro-Regular.otf}
 
-
 \newfontfamily\sourcecode[ExternalLocation=fonts/
   , BoldFont=SourceCodePro-Semibold.ttf
   , BoldItalicFont=SourceCodePro-SemiboldIt.ttf
   , ItalicFont=SourceCodePro-It.ttf
   ]{SourceCodePro-Regular.ttf}
 
+% --------------------------------------------------------------------------
+% Listings
+% --------------------------------------------------------------------------
 
-,
-
+\usepackage{minted}
+\setminted[cagda]{
+  bgcolor   = aliceblue
+, fontsize  = \footnotesize
+, frame     = none
+% , framerule = 0.4pt
+% , framesep  = 0pt
+, style     = cagda
+}
 
 % --------------------------------------------------------------------------
 % References
