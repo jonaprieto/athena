@@ -1,0 +1,160 @@
+
+\documentclass[runningheads,a4paper]{llncs}
+
+\usepackage{subfiles}
+
+\setcounter{tocdepth}{5}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{bussproofs}
+\newenvironment{bprooftree}
+  {\leavevmode\hbox\bgroup}
+  {\DisplayProof\egroup}
+\def\extraVskip{3pt}
+\def\labelSpacing{3pt}
+\def\defaultHypSeparation{\hskip.2in}
+\def\EnableBpAbbreviations{true}
+
+% --------------------------------------------------------------------------
+% Tikz Configuration
+% --------------------------------------------------------------------------
+
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usepackage{rotating}
+
+\tikzset{
+    hyperlink node/.style={
+        alias=sourcenode,
+        append after command={
+            let     \p1 = (sourcenode.north west),
+                \p2=(sourcenode.south east),
+                \n1={\x2-\x1},
+                \n2={\y1-\y2} in
+            node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\p1)]
+            {\hyperlink{#1}{\XeTeXLinkBox{\phantom{\rule{\n1}{\n2}}}}}
+                    %xelatex needs \XeTeXLinkBox, won't create a link unless it
+                    %finds text --- rules don't work without \XeTeXLinkBox.
+                    %Still builds correctly with pdflatex and lualatex
+        }
+    }
+}
+
+\tikzstyle{vertex}=[
+    auto=left
+  , circle
+  , fill=black!25
+  , minimum size=5pt
+  , inner sep=0pt
+  ]
+
+% --------------------------------------------------------------------------
+% Listings
+% --------------------------------------------------------------------------
+
+\usepackage{listings}
+\usepackage{lstautogobble}
+
+\lstdefinestyle{TPTP}{
+    aboveskip=10pt
+  , basicstyle=\tt
+  , belowskip=10pt
+  , keywords=[2]{axiom, conjecture,inference, negated_conjecture, plain, source}
+  , keywords=[3]{fof, cnf}
+  , keywords=[4]{canonicalize, resolve, conjunct,
+    strip, simplify, negate, clausify}
+  , keywordstyle=[2]\bfseries
+  , keywordstyle=[3]\bfseries
+  , keywordstyle=[4]\bfseries
+  , showstringspaces=false
+  , keepspaces=true
+}
+
+\lstnewenvironment{tptp}
+  {\lstset{style=TPTP,columns=fullflexible}\csname lst@SetFirstLabel\endcsname}
+  {\csname lst@SaveFirstLabel\endcsname}
+
+%\usepackage[utf8]{inputenc}
+\usepackage{ucs}
+\usepackage{autofe}
+\usepackage{afterpage}
+\usepackage{comment}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{stmaryrd} %new symbol font for tcs
+\usepackage{color}
+\usepackage{fancybox}
+
+\usepackage{verbatim}
+\usepackage{relsize}
+\usepackage{fancyvrb}
+% \DefineVerbatimEnvironment
+%   {code}{Verbatim}
+%   { fontsize=\relsize{-2}
+%   , fontfamily=freemodo
+%   , frame =single
+%   , framesep=5mm
+%   , showspaces=true
+%   , obeytabs=true
+%   } % {}
+
+\setcounter{secnumdepth}{5}
+
+\renewcommand*\rmdefault{cmr}
+
+% --------------------------------------------------------------------------
+% New commands
+% --------------------------------------------------------------------------
+
+\newcommand{\name}{\textsc}
+\newcommand{\Agda}{\name{Agda}}
+
+% --------------------------------------------------------------------------
+% Rest.
+% --------------------------------------------------------------------------
+
+\usepackage{url}
+% \urldef{\mailsc}\path|{jprieto9, asr}@eafit.edu.co|
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+\noindent\keywordname\enspace\ignorespaces#1}
+
+\begin{document}
+
+\mainmatter
+
+\title{Towards Proof-Reconstruction of Problems
+in Classical Propositional Logic in Agda}
+
+\titlerunning{Proof-Reconstruction in Classical
+Propositional Logic}
+
+\author{Jonathan Prieto-Cubides%
+\and Andr\'es Sicard-Ram\'irez}
+%
+\authorrunning{Proof-Reconstruction in Classical Propositional Logic}
+
+\institute{Universidad EAFIT, \emph{School of Sciences and Engineering},\\
+Medell\'in, Colombia\\
+\email{jprieto9,asr@eafit.edu.co}}
+
+% \toctitle{Lecture Notes in Computer Science}
+% \tocauthor{Authors' Instructions}
+\maketitle
+
+\subfile{sections/abstract.tex}
+\subfile{sections/introduction.tex}
+\subfile{sections/metis-language-and-proofs.tex}
+\subfile{sections/proof-reconstruction.tex}
+\subfile{sections/related-work.tex}
+\subfile{sections/conclusions.tex}
+\subfile{sections/acknowledgements.tex}
+
+\bibliographystyle{splncs03}
+\bibliography{ref}
+\addcontentsline{toc}{section}{References}
+
+\end{document}

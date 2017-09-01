@@ -2,7 +2,6 @@ main.bbl
 main.blg
 main.pdf
 main.ptb
-main.tex
 .aux
 .bbl
 .dvi
@@ -21,6 +20,5 @@ out
 ptb
 synctex*
 toc
-~
 _*
 auto
