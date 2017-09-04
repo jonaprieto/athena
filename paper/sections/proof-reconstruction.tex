@@ -15,8 +15,8 @@ This tool reconstructs the proof tree, removing redundancies and
 cutting unnecessary steps (see for example repetitions in the derivation shown in
 Fig~\ref{fig:metis-example}). The output is \verb!Agda! code.
 Then, we use \verb!Agda! as a proof checker to type-check the proof.
-If type-checking succeed, then our proof is verified. Else, we have a failure
-proof due by three possible actors. First, a soundness bug in the ATP or a bug
+If type-checking succeed, then our proof is checked. Else, we have a failure
+proof due to three possible factors. First, a soundness bug in the ATP or a bug
 in the output printing. Second, a bug in the translation process in our \verb!TSTP! parsing
 module, the inner algorithms in the analysis of the proof tree, the pretty printer
 module, or a bug in \verb!Haskell!. Lastly, a bug in our proof checker \verb!Agda!.
@@ -89,7 +89,7 @@ module, or a bug in \verb!Haskell!. Lastly, a bug in our proof checker \verb!Agd
 based on Martin-L\"{o}f's type theory and extended with records, parametrised
 modules, among other features.
 One of the main strengths of \verb!Agda! is its support for writing proofs,
-which we shall call \verb!Agda!'s proof engine and it consists of: support for
+which we shall call \verb!Agda!'s proof engine. It consists of: support for
 inductively defined types, including inductive families, and function
 definitions using pattern matching on such types, normalisation during type-
 checking, commands for refining proof terms, coverage checker and termination
@@ -103,7 +103,7 @@ support that allows us writing proofs similar as we find in math text books.
 \subsection{LCF-Style Theorem Proving}
 \label{ssec:lcf-style-theormem-proving}
 
-A propositional formula is a string of indivisible propositional atoms,
+A propositional formula is a experssion of indivisible propositional atoms,
 logical connectives $\{\wedge, \vee, \Rightarrow, \Leftrightarrow, \neg\}$
 and logic constants $\{\top, \bot\}$.
 In \verb!Agda!, we define the formula

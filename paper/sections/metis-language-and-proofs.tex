@@ -13,7 +13,7 @@ This prover is suitable for proof reconstruction task since it provides
 well-documented proof-objects with enough information to justify his deduction
 steps and it also has been used by other proof-reconstruction tools.
 
-\verb!Isabelle/HOL! integrated !Metis! as a macro-step reconstruction
+\verb!Isabelle/HOL! integrated \verb!Metis! as a macro-step reconstruction
 tool for explaining proof steps (usually CNF goals) replied from other ATPs like
 \verb!CVC4!, \verb!Vampire!, or \verb!Z3!.
 In \cite{Farber2015}, \verb!Metis! was used to provide a tactic for
@@ -73,11 +73,11 @@ The \verb!source! field is an inference record with the following pattern
 inference(rule, useful info, parents).
 \end{verbatim}
 
-The \verb!rule! stands for the inference name, the other fields are
-auxiliary arguments or useful information to apply the inference, and
+The \verb!rule! stands for the inference name; the other fields are
+supporting arguments or useful information to apply the reasoning step, and
 the list of parents nodes.
 For instance, in Fig.~\ref{fig:metis-proof-tstp}, \verb!strip! is the name of one
-of the inference and it has no arguments and only one parent node, \verb!goal!.
+of the inference with no arguments and only one parent node, the \verb!goal!.
 
 \begin{figure}
 \begin{verbatim}
@@ -85,11 +85,14 @@ fof(a, axiom, p) .
 fof(goal, conjecture, p) .
 fof(subgoal_0, plain, p, inference (strip, [], [goal])) .
 fof(negate_0_0, plain, ~ p, inference (negate, [], [subgoal_0])) .
-fof(normalize_0_0, plain, ∼ p, inference (canonicalize, [], [negate_0_0])) .
-fof(normalize_0_1, plain, p, inference (canonicalize, [], [a])) .
-fof(normalize_0_2, plain, $false, inference (simplify, [],
-  [normalize_0_0, normalize_0_1]))
-cnf(refute_0_0, plain, $false, inference (canonicalize, [], [normalize_0_2])) .
+fof(normalize_0_0, plain, ∼ p,
+  inference (canonicalize, [], [negate_0_0])) .
+fof(normalize_0_1, plain, p,
+  inference (canonicalize, [], [a])) .
+fof(normalize_0_2, plain, $false,
+  inference (simplify, [], [normalize_0_0, normalize_0_1]))
+cnf(refute_0_0, plain, $false,
+  inference (canonicalize, [], [normalize_0_2])) .
 \end{verbatim}
 \caption{A simple \texttt{Metis}' \texttt{TSTP} derivation for the problem $p\vdash p$.}
 \label{fig:metis-proof-tstp}
@@ -97,13 +100,14 @@ cnf(refute_0_0, plain, $false, inference (canonicalize, [], [normalize_0_2])) .
 
 % ---------------------------------------------------------------------------
 
-\subsection{Proof Terms}
-\label{ssec:proof-terms}
+\subsection{Proofs}
+\label{ssec:metis-proofs}
 
 A proof-object delivered in a \verb!Metis!' proof encodes a natural
-deduction proof. Its deduction system uses six simple inference rules
-(see Fig.~\ref{fig:metis-inferences}) to attempt to prove conjectures
-by refutation (see. e.g. Fig.~\ref{fig:metis-example}).
+deduction proof. The deduction system uses six inference rules
+\cite{hurd2003first} (see Fig.~\ref{fig:metis-inferences}) to attempt to
+prove conjectures by refutation (see. e.g., the last conclusion
+in the TSTP derivation Fig.~\ref{fig:metis-example} is \emph{falsium}).
 
 \begin{figure}
 \[
@@ -158,41 +162,40 @@ These proofs are directed acyclic graphs, trees of refutations. Each node stands
 for an application of an inference rule and the
 leaves in the tree represent formulas in the given problem. Each node is
 labeled with a name of the inference rule
-(e.g. \verb!canonicalize! in Fig.~\ref{fig:metis-example}). Each
-edge links a premise with one conclusion. The proof graphs have in their
+(e.g., \verb!canonicalize! in Fig.~\ref{fig:metis-example}). Each
+edge links a premise with one conclusion. The proof graphs have at their
 root the conclusion $\bot$ since \verb!Metis! delivers proof by refutation.
 
-% \begin{figure}
-% \centering
-% \begin{bprooftree}
-%   \centering\tt
-%   \AxiomC{}
-%   \RightLabel{\scriptsize negate}
-%   \UnaryInfC{$\neg p$}
-%   \RightLabel{\scriptsize strip}
-%   \UnaryInfC{$\neg p$}
-%   \AxiomC{}
-%   \RightLabel{\scriptsize axiom}
-%   \UnaryInfC{$p$}
-%   \RightLabel{\scriptsize canonicalize}
-%   \UnaryInfC{$p$}
-%   \RightLabel{\scriptsize simplify}
-%   \BinaryInfC{$\bot$}
-%   \RightLabel{\scriptsize canonicalize}
-%   \UnaryInfC{$\bot$}
-% \end{bprooftree}
-% % \caption{The \verb!Metis!' refutation tree for $p \vdash p$ from the
-% % derivation in Fig.~\ref{fig:metis-proof-tstp}}
-% \label{fig:metis-example}
-% \end{figure}
+\begin{figure}
+\centering
+\begin{bprooftree}\tt
+  \AxiomC{}
+  \RightLabel{\scriptsize negate}
+  \UnaryInfC{$\neg p$}
+  \RightLabel{\scriptsize strip}
+  \UnaryInfC{$\neg p$}
+  \AxiomC{}
+  \RightLabel{\scriptsize axiom}
+  \UnaryInfC{$p$}
+  \RightLabel{\scriptsize canonicalize}
+  \UnaryInfC{$p$}
+  \RightLabel{\scriptsize simplify}
+  \BinaryInfC{$\bot$}
+  \RightLabel{\scriptsize canonicalize}
+  \UnaryInfC{$\bot$}
+\end{bprooftree}
+% \caption{The \verb!Metis!' refutation tree for $p \vdash p$ from the
+% derivation in Fig.~\ref{fig:metis-proof-tstp}}
+\label{fig:metis-example}
+\end{figure}
 
 % ---------------------------------------------------------------------------
 
 \subsection{Proof Rules}
 \label{ssec:proof-rules}
 
-Despite the six simple rules in the \verb!Metis!' logic
-kernel (see~Fig. \ref{fig:metis-inferences}), we found in \verb!TSTP!
+Despite the six rules in the \verb!Metis!' logic
+kernel (see~Fig. \ref{fig:metis-inferences}), we observed in \verb!TSTP!
 derivations for CPL problems other inference rules.
 They are \verb!canonicalize!, \verb!conjunct!, \verb!negate!, \verb!simplify!,
 \verb!strip! and \verb!resolve!. We briefly review each of these rules
@@ -221,17 +224,16 @@ fof(subgoal_2, plain, (p & r) => q, inference(strip, [], [goal])).
 propositional formula in clausal normal form or CNF,
 a conjunction of clauses. Where a clause is the disjunction of zero or
 more literals and a literal is an atom (positive literal) or a negation of an
-atom (negative literal). This conversion is not unique and \verb!Metis! performs
-this transformation using its own criteria.
+atom (negative literal). This conversion is not unique, and \verb!Metis! performs
+this transformation using its criteria.
 
 % ...........................................................................
 
 \textit{Normalization.}
 \verb!Metis! uses the \verb!canonicalize! rule to normalize a
 propositional formula that comes from an axiom or a definition.
-It often converts the formula in one of its normal form,
-the conjunctive normal form,%as \verb!clausify! does
-the negative normal form or the disjunctive normal form.
+It often converts each expression in one of its normal form,
+the conjunctive normal form, the negative normal form or the disjunctive normal form.
 Posterior, this rule simplifies the formula with some definitions, applying
 recursively on the structure's formula conjunctions and disjunctions simplifications
 to remove tautologies
@@ -291,18 +293,20 @@ disjunction connectives).
 
 % ...........................................................................
 
-\textit{Resolution.} The \verb!resolve! rule (see, for example,
-Fig.~\ref{fig:resolve-inference}) is the resolution
-theorem with two argument, the positive literal for resolution and two
-formulas from their own derivations. The positive literal $p$ must occur in
-the first formula of the input and the negative literal must occur in the second
-formula of the input
-(see the resolve rule in \verb!Metis!' logic core in
-Fig.~\ref{fig:metis-inferences}).
+\textit{Resolution.} The \verb!resolve! rule is the resolution
+theorem showed in Fig.~\ref{fig:metis-inferences}. Its applications
+needs the positive literal for resolution and two
+derivations to deduce the \emph{resolvent}.
+The positive literal $p$ must occur in the formula from the first derivation,
+and the negative literal must occur in the formula from the second derivation
+(this follows the same pattern in \verb!Metis!' logic core in
+Fig.~\ref{fig:metis-inferences} for the resolve inference).
 
 \begin{verbatim}
-cnf(refute_0_0, plain, p | q, inference(canonicalize, [], [normalize_0_0])).
-cnf(refute_0_1, plain, ~ p, inference(canonicalize, [], [normalize_0_4])).
+cnf(refute_0_0, plain, p | q,
+  inference(canonicalize, [], [normalize_0_0])).
+cnf(refute_0_1, plain, ~ p,
+  inference(canonicalize, [], [normalize_0_4])).
 cnf(refute_0_2, plain, q,
   inference(resolve, [$cnf(p)], [refute_0_0, refute_0_1])).
 \end{verbatim}
@@ -310,13 +314,15 @@ cnf(refute_0_2, plain, q,
 % ...........................................................................
 
 \textit{Splitting a conjunct.}
-The \verb!conjunct! rule extracts from a conjunction one of its conjuncts, it is
+The \verb!conjunct! rule extracts from a conjunction one of its conjuncts; it is
 a generalization of the projection rules for the conjunction connective as
 we can see in the following \verb!TSTP! derivation.
 
 \begin{verbatim}
-fof(normalize_1, plain, p & q & r, inference(canonicalize, [], [x])).
-fof(normalize_2, plain, q, inference(conjunct, [], [normalize_1])).
+fof(normalize_1, plain, p & q & r,
+  inference(canonicalize, [], [x])).
+fof(normalize_2, plain, q,
+  inference(conjunct, [], [normalize_1])).
 \end{verbatim}
 
 \textit{Negate.}
@@ -326,20 +332,22 @@ introduces the negation of a subgoal that results
 after applies the \verb!strip! inference to the goal.
 
 \begin{verbatim}
-fof(subgoal_0, plain, p, inference(strip, [], [goal])).
-fof(negate_0_0, plain, ~ p, inference(negate, [], [subgoal_0])).
+fof(subgoal_0, plain, p,
+  inference(strip, [], [goal])).
+fof(negate_0_0, plain, ~ p,
+  inference(negate, [], [subgoal_0])).
 \end{verbatim}
 
 % ...........................................................................
 
 \textit{Simplification.} %abbreviate formulas
-The \verb!simplify! rule is an $n$-ary rule that performs simplification
+The \verb!simplify! rule is a $n$-ary inference that performs simplification
 of definitions. This rule transverses a list of formulas by
-applying different theorems (e.g.\emph{modus pones}, \emph{modus tollens},
+applying different theorems (e.g., \emph{modus pones}, \emph{modus tollens},
 or \emph{disjunctive syllogism}) including the list of theorems used by
 \verb!canonicalize! in Fig.~\ref{fig:conjunctive-disjunctive-simplification}
 and the resolution theorem of \verb!resolve! rule.
-Moreover, many things happen inside this \verb!Metis!' procedure and
-it is fairly complex to grasp it completely.
+Moreover, many things happen inside this \verb!Metis!' procedure, and
+it is somewhat complicated to grasp it completely.
 
 \end{document}
