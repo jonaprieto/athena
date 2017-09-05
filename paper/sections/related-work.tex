@@ -9,9 +9,9 @@
 
 \name{Sledgehammer} is a tool for \name{Isabelle} proof assistant
 ~\cite{paulson1994isabelle} that provides a full integration of automatic
-theorem provers including ATPs
+theorem provers including \ATPs
 (see, for example, \cite{meng2006automation}, \cite{blanchette2013extending}
-and \cite{Fleury2014}) and\SMTsolvers (see, for instance,
+and \cite{Fleury2014}) and \SMT solvers (see, for instance,
 \cite{hurlin07practical}, \cite{bohme2010},
 \cite{blanchette2013extending}, and \cite{Fleury2014}) with
 \name{Isabelle/HOL} \cite{nipkow2002isabelle}, the specialization of
@@ -22,7 +22,7 @@ modular proof reconstruction work flow.
 
 \name{SMTCoq}~\cite{armand2011,Ekici2017} is a tool for the \name{Coq}
 proof assistant \cite{coqteam} which provides a certified checker for
-proof witness coming from the\SMTsolver \name{veriT} \cite{bouton2009}
+proof witness coming from the \SMT solver \name{veriT} \cite{bouton2009}
 and adds a new tactic named verit, that calls \name{veriT} on any
 \name{Coq} goal. In \cite{bezem2002automated}, given a fixed but arbitrary
 first-order signature, the authors transform a proof produced by the
@@ -31,9 +31,9 @@ in a \name{Coq} proof term.
 
 Hurd~\cite{Hurd1999} integrates the first-order resolution prover
 \name{Gandalf} with \name{HOL}~\cite{norrish2007hol}, a high-order theorem
-prover, following an LCF model implementing the tactic \verb!GANDALF_TAC!.
+prover, following an \abbre{LCF} model implementing the tactic \verb!GANDALF_TAC!.
 For \name{HOL Light}, a version of \name{HOL} but with a simpler logic core,
-the\SMTsolver \name{CVC4} was integrated, and Kaliszyk and
+the \SMT solver \name{CVC4} was integrated, and Kaliszyk and
 Urban~\cite{kaliszyk2013} reconstruct proofs from different ATPs with their
 \name{PRocH} tool, replaying the detailed inference steps from the ATPs with
 internal inference methods implemented in \name{HOL Light}.
@@ -72,8 +72,8 @@ but they also integrate the propositional fragment of the \name{E} prover in
 \cite{Kanso2012}. They cataloged these two integration as
 \emph{Oracle and Reflection} and \emph{Oracle and Justification}, respectively.
 Their integration with the \name{E} prover is the most related work with our
-apporach found at the moment while we write this document. Besides the use
-of the same ITP, crucial differences easily arise like decidability of
+approach found at the moment while we write this document. Besides the use
+of the same \ITP, crucial differences easily arise like decidability of
 propositional logic using semantics that we do not take into account for the
 reason we describe later on in section~\ref{sec:conclusions}.
 
