@@ -18,7 +18,7 @@ TESTED_AGDA_VERSION1 =Agda version 2.5.2
 TESTED_AGDA_VERSION2 =Agda version 2.5.3-3156aef
 
 agdaversion:
-	
+
 ifneq ($(AGDA_VERSION),$(TESTED_AGDA_VERSION1))
 ifneq ($(AGDA_VERSION),$(TESTED_AGDA_VERSION2))
 	@echo "==================================================================="
@@ -37,7 +37,7 @@ TESTED_GHC_VERSION1 :=The Glorious Glasgow Haskell Compilation System, version 8
 TESTED_GHC_VERSION2 :=The Glorious Glasgow Haskell Compilation System, version 8.2.1
 
 ghcversion:
-	
+
 ifneq ($(GHC_VERSION),$(TESTED_GHC_VERSION1))
 ifneq ($(GHC_VERSION),$(TESTED_GHC_VERSION2))
 	@echo "==================================================================="
@@ -296,6 +296,8 @@ clean :
 	@echo
 	@echo 'Cleaning prop-pack test problems.'
 	@echo ${SEP}
+	make --directory paper/ clean
+	make --directory slides/ clean
 	make --directory test/prop-pack clean
 
 
@@ -390,7 +392,7 @@ prop-pack :
 	git submodule update --init test/prop-pack
 
 .PHONY: msg-tstp
-msg-tstp:
+msg-tstp :
 	@echo "==================================================================="
 	@echo "=============== Generating TSTP files of proofs ==================="
 	@echo "==================================================================="
@@ -438,7 +440,6 @@ check : agdaversion \
 	@echo "==================================================================="
 	@echo "================== Type-checking Agda files ======================="
 	@echo "==================================================================="
-	@make agdaversion
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
 	@echo '-------------------------------------------------------------------'
 	@find $(BASIC) \
