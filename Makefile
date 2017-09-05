@@ -49,6 +49,7 @@ ifneq ($(GHC_VERSION),$(TESTED_GHC_VERSION2))
 	@echo "    Your system has a different version:"
 	@echo "    * ${GHC_VERSION}"
 endif
+endif
 
 # -----------------------------------------------------------------------------
 # Targets and variables to generate test problems and type-checking.
