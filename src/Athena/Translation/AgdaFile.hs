@@ -179,7 +179,7 @@ docImports ∷ Int → Doc
 docImports n =
        hypenline
    <@> pretty "open import ATP.Metis" <+> int n <+> pretty "public" <> line
-   <>  pretty "open import Data.Prop" <+> int n <+> pretty "public" <> line
+   <>  pretty "open import Data.PropFormula" <+> int n <+> pretty "public" <> line
    <@> hypenline
 
 ------------------------------------------------------------------------------
@@ -205,7 +205,7 @@ docVars vars =
     docVars' ∷ [V] → Int → Doc
     docVars' [] _         = empty
     docVars' (var : vs) n =
-          pretty var <+> colon  <+> pretty "Prop" <> line
+          pretty var <+> colon  <+> pretty "PropFormula" <> line
       <>  pretty var <+> equals <+> prettyVar var n <> line
       <@> docVars' vs (n+1)
 
@@ -215,7 +215,7 @@ docVars vars =
 
 definition ∷ F → Doc
 definition fm =
-     pretty fm <+> colon  <+> pretty "Prop"   <> line
+     pretty fm <+> colon  <+> pretty "PropFormula"   <> line
   <> pretty fm <+> equals <+> pretty formulaF <> line
   where
     formulaF ∷ Formula
