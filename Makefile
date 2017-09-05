@@ -1,9 +1,59 @@
+SHELL :=/bin/bash
 PWD      =$(realpath .)
 SRC_DIR  =src
-TEST_DIR =src
+TEST_DIR =test
 
 ATHENA   =athena
 AGDA     =agda
+
+.PHONY : default
+default: install
+
+# -----------------------------------------------------------------------------
+# Naive way to alert the user about the Agda version or GHC version.
+# -----------------------------------------------------------------------------
+
+AGDA_VERSION := $(shell agda --version 2>/dev/null)
+TESTED_AGDA_VERSION1 =Agda version 2.5.2
+TESTED_AGDA_VERSION2 =Agda version 2.5.3-3156aef
+
+agdaversion:
+	
+ifneq ($(AGDA_VERSION),$(TESTED_AGDA_VERSION1))
+ifneq ($(AGDA_VERSION),$(TESTED_AGDA_VERSION2))
+	@echo "==================================================================="
+	@echo "===================  WARNING: AGDA VERSION! ======================="
+	@echo "==================================================================="
+	@echo "[!] ATHENA was tested with:"
+	@echo "    * ${TESTED_AGDA_VERSION1}"
+	@echo "    * ${TESTED_AGDA_VERSION2}"
+	@echo "    Your system has a different version:"
+	@echo "    * ${AGDA_VERSION}"
+endif
+endif
+
+GHC_VERSION := $(shell ghc --version 2>/dev/null)
+TESTED_GHC_VERSION1 :=The Glorious Glasgow Haskell Compilation System, version 8.0.2
+TESTED_GHC_VERSION2 :=The Glorious Glasgow Haskell Compilation System, version 8.2.1
+
+ghcversion:
+	
+ifneq ($(GHC_VERSION),$(TESTED_GHC_VERSION1))
+ifneq ($(GHC_VERSION),$(TESTED_GHC_VERSION2))
+	@echo "==================================================================="
+	@echo "====================  WARNING: GHC VERSION! ======================="
+	@echo "==================================================================="
+	@echo "[!] ATHENA was tested with:"
+	@echo "    * ${TESTED_GHC_VERSION1}"
+	@echo "    * ${TESTED_GHC_VERSION2}"
+	@echo "    Your system has a different version:"
+	@echo "    * ${GHC_VERSION}"
+endif
+
+# -----------------------------------------------------------------------------
+# Targets and variables to generate test problems and type-checking.
+# -----------------------------------------------------------------------------
+
 ATP      ?=online-atps --atp=metis
 ATHENA_LIB      =$(addprefix $(PWD), /lib)
 ATHENA_AGDA_LIB =$(addprefix $(ATHENA_LIB),/.agda)
@@ -151,10 +201,6 @@ $(IMPL)/%.agda: $(IMPL)/%.tstp
 
 # ============================================================================
 
-
-.PHONY : default
-default: install
-
 .PHONY : checklines
 checklines :
 	@grep '.\{80,\}' \
@@ -239,6 +285,7 @@ clean :
 	find . -name 'cnf*' -delete
 	find . -name 'saturation*' -delete
 	find . -name '*.tstp' -delete
+	find ${TEST_DIR} -name '*.agdai' -delete
 	find . \
 		\( -path './lib' \) \
 		-name '*.agda' -delete
@@ -272,15 +319,15 @@ agda-stdlib:
 	@if [ ! -d lib/agda-stdlib ] ; \
 	 then \
 	 echo "===================================================================";\
-	 echo "===== Downloading Agda standard library v0.13 (Agda 2.5.2) ========";\
+	 echo "===== Downloading Agda Standard Library v2.5.2.20170816    ========";\
 	 echo "===================================================================";\
 	 git config --global advice.detachedHead false && \
 	 git clone -q --progress \
-			-b 'v0.13' \
+			-b 'v2.5.2.20170816 ' \
 			--single-branch \
 			https://github.com/agda/agda-stdlib.git \
 			lib/agda-stdlib; \
-	 echo "Installed agda-stdlib v0.13 in ${ATHENA_LIB}/agda-stdlib"; \
+	 echo "Installed agda-stdlib v2.5.2.20170816  in ${ATHENA_LIB}/agda-stdlib"; \
 	 else \
 		 echo "[!] agda-stdlib directory already exists"; \
 	 fi;
@@ -325,16 +372,14 @@ install-libraries: agda-stdlib agda-libraries
 	@echo "    $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
 
 .PHONY : install-bin
-install-bin :
+install-bin : ghcversion
 	@echo "==================================================================="
 	@echo "================ Installing Athena v0.1 ==========================="
 	@echo "==================================================================="
 	cabal install --disable-documentation -v0 --jobs=1 -g --ghc
 
 .PHONY: install
-install :
-	@make reconstruct
-	@make check
+install : install-bin reconstruct check
 
 .PHONY : prop-pack
 prop-pack :
@@ -379,7 +424,8 @@ reconstruct : install-bin problems
 
 .PHONY : check
 check : export AGDA_DIR := $(ATHENA_AGDA_LIB)
-check : install-libraries \
+check : agdaversion \
+				install-libraries \
 				$(AGDA_BASIC) \
 				$(AGDA_CONJ)	\
 				$(AGDA_DISJ) \
@@ -391,6 +437,7 @@ check : install-libraries \
 	@echo "==================================================================="
 	@echo "================== Type-checking Agda files ======================="
 	@echo "==================================================================="
+	@make agdaversion
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
 	@echo '-------------------------------------------------------------------'
 	@find $(BASIC) \
