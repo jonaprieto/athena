@@ -9,17 +9,17 @@
 
 \subsection{The Translation Method}
 
-Our system (see Fig~\ref{fig:proof-reconstruction-overview}) translates a \verb!TSTP!
-file into an \verb!Agda! proof by parsing it with a \verb!Haskell! tool.
+Our system (see Fig~\ref{fig:proof-reconstruction-overview}) translates a \TSTP
+file into an \Agda proof by parsing it with a \Haskell tool.
 This tool reconstructs the proof tree, removing redundancies and
 cutting unnecessary steps (see for example repetitions in the derivation shown in
-Fig~\ref{fig:metis-example}). The output is \verb!Agda! code.
-Then, we use \verb!Agda! as a proof checker to type-check the proof.
+Fig~\ref{fig:metis-example}). The output is \Agda code.
+Then, we use \Agda as a proof checker to type-check the proof.
 If type-checking succeed, then our proof is checked. Else, we have a failure
 proof due to three possible factors. First, a soundness bug in the ATP or a bug
-in the output printing. Second, a bug in the translation process in our \verb!TSTP! parsing
+in the output printing. Second, a bug in the translation process in our \TSTP parsing
 module, the inner algorithms in the analysis of the proof tree, the pretty printer
-module, or a bug in \verb!Haskell!. Lastly, a bug in our proof checker \verb!Agda!.
+module, or a bug in \Haskell. Lastly, a bug in our proof checker \Agda.
 
 % ---------------------------------------------------------------------------
 
@@ -31,19 +31,19 @@ module, or a bug in \verb!Haskell!. Lastly, a bug in our proof checker \verb!Agd
   {CPL \\ Problem};
 
 \node[right = 1.2cm of problem, text width=2cm, align=center]
-  (tptp){\verb!TPTP! \\ Problem};
+  (tptp){\TPTP \\ Problem};
 
 \node[right= 1.2cm of tptp, text width=2cm, align=center]
-   (metis) {\verb!Metis! \\ Prover};
+   (metis) {\Metis \\ Prover};
 
 \node[right= 1.2cm of metis, text width=2cm, align=center, inner sep=10pt]
-   (tstp) {\verb!TSTP! \\ Derivation};
+   (tstp) {\TSTP \\ Derivation};
 
 \node[below= 0.5cm of tstp, text width=2cm, align=center, inner sep=10pt]
-  (athena) {\verb!Haskell! \\ Traslator};
+  (athena) {\Haskell \\ Traslator};
 
 \node[left = 1.2cm of athena, text width=2cm, align=center]
-   (agdafile) {\verb!Agda! \\ Proof};
+   (agdafile) {\Agda \\ Proof};
 
 \node[left = 1.2cm of agdafile, text width=2cm, align=center]
    (agda) {Proof Checker};
@@ -85,416 +85,416 @@ module, or a bug in \verb!Haskell!. Lastly, a bug in our proof checker \verb!Agd
 \subsection{Proof Cheker}
 \label{ssec:agda}\
 
-\verb!Agda! is an interactive system for constructing proofs and programs,
+\Agda is an interactive system for constructing proofs and programs,
 based on Martin-L\"{o}f's type theory and extended with records, parametrised
 modules, among other features.
-One of the main strengths of \verb!Agda! is its support for writing proofs,
-which we shall call \verb!Agda!'s proof engine. It consists of: support for
+One of the main strengths of \Agda is its support for writing proofs,
+which we shall call \Agda's proof engine. It consists of: support for
 inductively defined types, including inductive families, and function
 definitions using pattern matching on such types, normalisation during type-
 checking, commands for refining proof terms, coverage checker and termination
 checker.
 The inductive approach for representing classical propositional logic
-is better because we benefit from \verb!Agda!'s proof engine and its Unicode
+is better because we benefit from \Agda's proof engine and its Unicode
 support that allows us writing proofs similar as we find in math text books.
 
 % ---------------------------------------------------------------------------
 
-\subsection{LCF-Style Theorem Proving}
-\label{ssec:lcf-style-theormem-proving}
+% \subsection{LCF-Style Theorem Proving}
+% \label{ssec:lcf-style-theormem-proving}
 
-A propositional formula is a experssion of indivisible propositional atoms,
-logical connectives $\{\wedge, \vee, \Rightarrow, \Leftrightarrow, \neg\}$
-and logic constants $\{\top, \bot\}$.
-In \verb!Agda!, we define the formula
-as an inductive type using the keyword \texttt{data} and including every
-connective as a constructor. We represent propositional formulas with
-\verb!Prop! data type using the following definition.
+% A propositional formula is a experssion of indivisible propositional atoms,
+% logical connectives $\{\wedge, \vee, \Rightarrow, \Leftrightarrow, \neg\}$
+% and logic constants $\{\top, \bot\}$.
+% In \Agda, we define the formula
+% as an inductive type using the keyword \texttt{data} and including every
+% connective as a constructor. We represent propositional formulas with
+% \name{Prop} data type using the following definition.
 
-%an extension of the syntax definition used in \cite{Altenkirch2015}.
+% %an extension of the syntax definition used in \cite{Altenkirch2015}.
 
-\begin{verbatim}
-data Prop : Set where
-  Var              : Fin n → Prop
-  ⊤                : Prop
-  ⊥                : Prop
-  _∧_ _∨_ _⇒_ _⇔_  : (φ ψ : Prop) → Prop
-  ¬_               : (φ : Prop)   → Prop
-\end{verbatim}
+% \begin{verbatim}
+% data Prop : Set where
+%   Var              : Fin n → Prop
+%   ⊤                : Prop
+%   ⊥                : Prop
+%   _∧_ _∨_ _⇒_ _⇔_  : (φ ψ : Prop) → Prop
+%   ¬_               : (φ : Prop)   → Prop
+% \end{verbatim}
 
-On the other hand, we represent theorems in CPL using an abstract data type
-to implement a natural deduction calculus.
+% On the other hand, we represent theorems in\CPLusing an abstract data type
+% to implement a natural deduction calculus.
 
-\begin{verbatim}
-data _⊢_ : (Γ : Ctxt)(φ : Prop) → Set where
-\end{verbatim}
+% \begin{verbatim}
+% data _⊢_ : (Γ : Ctxt)(φ : Prop) → Set where
+% \end{verbatim}
 
-The sequents  $\Gamma \vdash \phi$ represent theorems,
-where $\Gamma$ is a set of premises and $\phi$ is the
-sequent's conclusion. Strictly speaking, we define the set of premises
-$\Gamma$ with \verb!List! data type
-% \footnote{We use the \verb!Agda! standard library's implementation of the List data type.}.
+% The sequents  $\Gamma \vdash \phi$ represent theorems,
+% where $\Gamma$ is a set of premises and $\phi$ is the
+% sequent's conclusion. Strictly speaking, we define the set of premises
+% $\Gamma$ with \name{List} data type
+% % \footnote{We use the \Agda standard library's implementation of the List data type.}.
 
-Our CPL system define all inference rules for intuitonistic propositional logic
-(see Fig.~\ref{fig:theorem-constructors}) as constructors of the theorem
-data type, and we postulate the principle of the excluded middle (PEM).
+% Our\CPLsystem define all inference rules for intuitonistic propositional logic
+% (see Fig.~\ref{fig:theorem-constructors}) as constructors of the theorem
+% data type, and we postulate the principle of the excluded middle (PEM).
 
-\begin{verbatim}
-postulate  PEM : ∀ {Γ} {φ} → Γ ⊢ φ ∨ ¬ φ
-\end{verbatim}
+% \begin{verbatim}
+% postulate  PEM : ∀ {Γ} {φ} → Γ ⊢ φ ∨ ¬ φ
+% \end{verbatim}
 
-\begin{figure}
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{}
-\RightLabel{\scriptsize\tt assume $\varphi$}
-\UnaryInfC{$\Gamma , \varphi \vdash \varphi$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi$}
-\RightLabel{\scriptsize\tt weaken $\psi$}
-\UnaryInfC{$\Gamma , \psi \vdash \varphi$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{}
-\RightLabel{\scriptsize\tt $\top$-intro}
-\UnaryInfC{$\Gamma \vdash \top$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \bot$}
-\RightLabel{\scriptsize\tt $\bot$-elim $\varphi$}
-\UnaryInfC{$\Gamma \vdash \varphi$}
-\end{bprooftree}
-%}
-\]
+% \begin{figure}
+% \[%\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{}
+% \RightLabel{\scriptsize\tt assume $\varphi$}
+% \UnaryInfC{$\Gamma , \varphi \vdash \varphi$}
+% \end{bprooftree}\quad
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \varphi$}
+% \RightLabel{\scriptsize\tt weaken $\psi$}
+% \UnaryInfC{$\Gamma , \psi \vdash \varphi$}
+% \end{bprooftree}\quad
+% \begin{bprooftree}
+% \AxiomC{}
+% \RightLabel{\scriptsize\tt $\top$-intro}
+% \UnaryInfC{$\Gamma \vdash \top$}
+% \end{bprooftree}\quad
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \bot$}
+% \RightLabel{\scriptsize\tt $\bot$-elim $\varphi$}
+% \UnaryInfC{$\Gamma \vdash \varphi$}
+% \end{bprooftree}
+% %}
+% \]
 
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\Gamma , \varphi \vdash \bot$}
-\RightLabel{\scriptsize\tt $\neg$-intro}
-\UnaryInfC{$\Gamma \vdash \neg \varphi$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \neg \varphi$}
-\AxiomC{$\Gamma \vdash \varphi$}
-\RightLabel{\scriptsize\tt $\neg$-elim}
-\BinaryInfC{$\Gamma \vdash \bot$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi$}
-\AxiomC{$\Gamma \vdash \psi$}
-\RightLabel{\scriptsize\tt $\wedge$-intro}
-\BinaryInfC{$\Gamma \vdash \varphi \wedge \psi$}
-\end{bprooftree}
-%}
-\]
+% \[%\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$\Gamma , \varphi \vdash \bot$}
+% \RightLabel{\scriptsize\tt $\neg$-intro}
+% \UnaryInfC{$\Gamma \vdash \neg \varphi$}
+% \end{bprooftree}\quad
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \neg \varphi$}
+% \AxiomC{$\Gamma \vdash \varphi$}
+% \RightLabel{\scriptsize\tt $\neg$-elim}
+% \BinaryInfC{$\Gamma \vdash \bot$}
+% \end{bprooftree}\quad
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \varphi$}
+% \AxiomC{$\Gamma \vdash \psi$}
+% \RightLabel{\scriptsize\tt $\wedge$-intro}
+% \BinaryInfC{$\Gamma \vdash \varphi \wedge \psi$}
+% \end{bprooftree}
+% %}
+% \]
 
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi \wedge \psi$}
-\RightLabel{\scriptsize\tt $\wedge$-proj$_1$}
-\UnaryInfC{$\Gamma\vdash \varphi$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi \wedge \psi$}
-\RightLabel{\scriptsize\tt $\wedge$-proj$_2$}
-\UnaryInfC{$\Gamma\vdash \psi$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi$}
-\RightLabel{\scriptsize\tt $\vee$-intro$_1$ $\psi$}
-\UnaryInfC{$\Gamma \vdash \varphi \vee \psi$}
-\end{bprooftree}
-%}
-\]
+% \[%\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \varphi \wedge \psi$}
+% \RightLabel{\scriptsize\tt $\wedge$-proj$_1$}
+% \UnaryInfC{$\Gamma\vdash \varphi$}
+% \end{bprooftree}\quad
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \varphi \wedge \psi$}
+% \RightLabel{\scriptsize\tt $\wedge$-proj$_2$}
+% \UnaryInfC{$\Gamma\vdash \psi$}
+% \end{bprooftree}\quad
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \varphi$}
+% \RightLabel{\scriptsize\tt $\vee$-intro$_1$ $\psi$}
+% \UnaryInfC{$\Gamma \vdash \varphi \vee \psi$}
+% \end{bprooftree}
+% %}
+% \]
 
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \psi$}
-\RightLabel{\scriptsize\tt $\vee$-intro$_2$ $\varphi$}
-\UnaryInfC{$\Gamma \vdash \varphi \vee \psi$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$\Gamma ,\varphi \vdash \gamma $}
-\AxiomC{$\Gamma , \psi  \vdash \gamma$}
-\RightLabel{\scriptsize\tt $\vee$-elim}
-\BinaryInfC{$\Gamma , \varphi \vee \psi \vdash \gamma$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$\Gamma , \varphi \vdash \psi$}
-\RightLabel{\scriptsize\tt $\Rightarrow$-intro}
-\UnaryInfC{$\Gamma \vdash \varphi \Rightarrow \psi$}
-\end{bprooftree}
-%}
-\]
+% \[%\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \psi$}
+% \RightLabel{\scriptsize\tt $\vee$-intro$_2$ $\varphi$}
+% \UnaryInfC{$\Gamma \vdash \varphi \vee \psi$}
+% \end{bprooftree}\quad
+% \begin{bprooftree}
+% \AxiomC{$\Gamma ,\varphi \vdash \gamma $}
+% \AxiomC{$\Gamma , \psi  \vdash \gamma$}
+% \RightLabel{\scriptsize\tt $\vee$-elim}
+% \BinaryInfC{$\Gamma , \varphi \vee \psi \vdash \gamma$}
+% \end{bprooftree}\quad
+% \begin{bprooftree}
+% \AxiomC{$\Gamma , \varphi \vdash \psi$}
+% \RightLabel{\scriptsize\tt $\Rightarrow$-intro}
+% \UnaryInfC{$\Gamma \vdash \varphi \Rightarrow \psi$}
+% \end{bprooftree}
+% %}
+% \]
 
-\[
-%\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi \Rightarrow \psi$}
-\AxiomC{$\Gamma \vdash \varphi$}
-\RightLabel{\scriptsize\tt $\Rightarrow$-elim}
-\BinaryInfC{$\Gamma \vdash \psi$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$\Gamma , \varphi \vdash \psi$}
-\AxiomC{$\Gamma , \psi \vdash \varphi$}
-\RightLabel{\scriptsize\tt $\Leftrightarrow$-intro}
-\BinaryInfC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
-\end{bprooftree}
-%}
-\]
-
-
-\[
-%\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi$}
-\AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
-\RightLabel{\scriptsize\tt $\Leftrightarrow$-elim$_1$}
-\BinaryInfC{$\Gamma \vdash \psi$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi$}
-\AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
-\RightLabel{\scriptsize\tt $\Leftrightarrow$-elim$_2$}
-\BinaryInfC{$\Gamma \vdash \psi$}
-\end{bprooftree}
-%}
-\]
-
-\caption{Inference rules for CPL system.}
-\label{fig:theorem-constructors}
-\end{figure}
-
-% ---------------------------------------------------------------------------
+% \[
+% %\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \varphi \Rightarrow \psi$}
+% \AxiomC{$\Gamma \vdash \varphi$}
+% \RightLabel{\scriptsize\tt $\Rightarrow$-elim}
+% \BinaryInfC{$\Gamma \vdash \psi$}
+% \end{bprooftree}\quad
+% \begin{bprooftree}
+% \AxiomC{$\Gamma , \varphi \vdash \psi$}
+% \AxiomC{$\Gamma , \psi \vdash \varphi$}
+% \RightLabel{\scriptsize\tt $\Leftrightarrow$-intro}
+% \BinaryInfC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
+% \end{bprooftree}
+% %}
+% \]
 
 
-% ---------------------------------------------------------------------------
+% \[
+% %\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \varphi$}
+% \AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
+% \RightLabel{\scriptsize\tt $\Leftrightarrow$-elim$_1$}
+% \BinaryInfC{$\Gamma \vdash \psi$}
+% \end{bprooftree}\quad
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \varphi$}
+% \AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
+% \RightLabel{\scriptsize\tt $\Leftrightarrow$-elim$_2$}
+% \BinaryInfC{$\Gamma \vdash \psi$}
+% \end{bprooftree}
+% %}
+% \]
 
-\subsection{Emulation of Inference Rules in Agda}
-\label{ssec:emulating-inferences}
+% \caption{Inference rules for\CPLsystem.}
+% \label{fig:theorem-constructors}
+% \end{figure}
 
-\textit{Normalization.}
-
-\begin{figure}
-\[ \scalebox{0.9}{
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi$}
-
-  \UnaryInfC{$\Gamma \vdash \texttt{cnf}~\varphi$}
-\end{bprooftree}
-\qquad
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi$}
-  \UnaryInfC{$\Gamma \vdash \texttt{nnf}~\varphi$}
-\end{bprooftree}
-\qquad
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi$}
-  \UnaryInfC{$\Gamma \vdash \texttt{dnf}~\varphi$}
-\end{bprooftree}
-}\]
-\end{figure}
-
-\begin{figure}
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \wedge \bot$}
-  \UnaryInfC{$\Gamma \vdash \bot$}
-\end{bprooftree}
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \wedge \top$}
-  \UnaryInfC{$\Gamma \vdash \varphi$}
-\end{bprooftree}
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \wedge \neg \varphi$}
-  \UnaryInfC{$\Gamma \vdash \bot$}
-\end{bprooftree}
-%}
-\]
-
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \vee \bot$}
-  \UnaryInfC{$\Gamma \vdash \varphi$}
-\end{bprooftree}
-\qquad
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \vee \top$}
-  \UnaryInfC{$\Gamma \vdash \top$}
-\end{bprooftree}
-\qquad
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \vee \neg \varphi$}
-  \UnaryInfC{$\Gamma \vdash \top$}
-\end{bprooftree}
-%}
-\]
-\end{figure}
-
-\textit{Resolution.}
-
-\begin{figure}
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\delta_{\phi} := \Gamma \vdash \varphi$}
-\AxiomC{$\delta_{\psi} := \Gamma \vdash \psi$}
-\RightLabel{\texttt{resolve} $p$}
-\BinaryInfC{$\Gamma \vdash$ \texttt{resolve} $\phi\ \psi\ p$}
-\end{bprooftree}
-%}
-\]
-% \caption{Resolution in \verb!Metis!.}
-\label{fig:resolution-rule}
-\end{figure}
-
-\textit{Splitting a conjunct.}
-In the following theorem, we see the definition for the \verb!conjunct! rule.
-It extracts the $\varphi_i$ conjunct from the conjunction given by $\varphi$.
-
-\[\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi := \varphi_1 \wedge \cdots\wedge\varphi_i
-\wedge\cdots\wedge \varphi_n$}
-\AxiomC{$\varphi_i \equiv \psi$}
-\RightLabel{\footnotesize\tt conjunct $\psi$}
-\BinaryInfC{$\Gamma\vdash\varphi_i$}
-\end{bprooftree}
-}
-\]
+% % ---------------------------------------------------------------------------
 
 
-\textit{Splitting a goal}
+% % ---------------------------------------------------------------------------
+
+% \subsection{Emulation of Inference Rules in Agda}
+% \label{ssec:emulating-inferences}
+
+% \textit{Normalization.}
+
+% \begin{figure}
+% \[ \scalebox{0.9}{
+% \begin{bprooftree}
+%   \AxiomC{$\Gamma \vdash \varphi$}
+
+%   \UnaryInfC{$\Gamma \vdash \texttt{cnf}~\varphi$}
+% \end{bprooftree}
+% \qquad
+% \begin{bprooftree}
+%   \AxiomC{$\Gamma \vdash \varphi$}
+%   \UnaryInfC{$\Gamma \vdash \texttt{nnf}~\varphi$}
+% \end{bprooftree}
+% \qquad
+% \begin{bprooftree}
+%   \AxiomC{$\Gamma \vdash \varphi$}
+%   \UnaryInfC{$\Gamma \vdash \texttt{dnf}~\varphi$}
+% \end{bprooftree}
+% }\]
+% \end{figure}
+
+% \begin{figure}
+% \[%\scalebox{0.9}{
+% \begin{bprooftree}
+%   \AxiomC{$\Gamma \vdash \varphi \wedge \bot$}
+%   \UnaryInfC{$\Gamma \vdash \bot$}
+% \end{bprooftree}
+% \begin{bprooftree}
+%   \AxiomC{$\Gamma \vdash \varphi \wedge \top$}
+%   \UnaryInfC{$\Gamma \vdash \varphi$}
+% \end{bprooftree}
+% \begin{bprooftree}
+%   \AxiomC{$\Gamma \vdash \varphi \wedge \neg \varphi$}
+%   \UnaryInfC{$\Gamma \vdash \bot$}
+% \end{bprooftree}
+% %}
+% \]
+
+% \[%\scalebox{0.9}{
+% \begin{bprooftree}
+%   \AxiomC{$\Gamma \vdash \varphi \vee \bot$}
+%   \UnaryInfC{$\Gamma \vdash \varphi$}
+% \end{bprooftree}
+% \qquad
+% \begin{bprooftree}
+%   \AxiomC{$\Gamma \vdash \varphi \vee \top$}
+%   \UnaryInfC{$\Gamma \vdash \top$}
+% \end{bprooftree}
+% \qquad
+% \begin{bprooftree}
+%   \AxiomC{$\Gamma \vdash \varphi \vee \neg \varphi$}
+%   \UnaryInfC{$\Gamma \vdash \top$}
+% \end{bprooftree}
+% %}
+% \]
+% \end{figure}
+
+% \textit{Resolution.}
+
+% \begin{figure}
+% \[%\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$\delta_{\phi} := \Gamma \vdash \varphi$}
+% \AxiomC{$\delta_{\psi} := \Gamma \vdash \psi$}
+% \RightLabel{\texttt{resolve} $p$}
+% \BinaryInfC{$\Gamma \vdash$ \texttt{resolve} $\phi\ \psi\ p$}
+% \end{bprooftree}
+% %}
+% \]
+% % \caption{Resolution in \Metis.}
+% \label{fig:resolution-rule}
+% \end{figure}
+
+% \textit{Splitting a conjunct.}
+% In the following theorem, we see the definition for the \name{conjunct} rule.
+% It extracts the $\varphi_i$ conjunct from the conjunction given by $\varphi$.
+
+% \[\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \varphi := \varphi_1 \wedge \cdots\wedge\varphi_i
+% \wedge\cdots\wedge \varphi_n$}
+% \AxiomC{$\varphi_i \equiv \psi$}
+% \RightLabel{\footnotesize\tt conjunct $\psi$}
+% \BinaryInfC{$\Gamma\vdash\varphi_i$}
+% \end{bprooftree}
+% }
+% \]
 
 
-\begin{figure}
-\[\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi_1 \wedge \varphi_2$}
-\UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\texttt{split}~\varphi_1) \wedge \texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\varphi_2)$}
-\end{bprooftree}
-}\]
+% \textit{Splitting a goal}
 
-\[\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi_1 \vee \varphi_2$}
-\UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\neg \varphi_1 \Rightarrow \texttt{split}~\varphi_2)$}
-\end{bprooftree}
-}\]
 
-\[\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \varphi_1 \Rightarrow \varphi_2$}
-\UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\varphi_2)$}
-\end{bprooftree}\qquad
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \neg \neg \varphi$}
-\UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\texttt{split}~\varphi)$}
-\end{bprooftree}
-}\]
+% \begin{figure}
+% \[\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \varphi_1 \wedge \varphi_2$}
+% \UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\texttt{split}~\varphi_1) \wedge \texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\varphi_2)$}
+% \end{bprooftree}
+% }\]
 
-\[\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$ \Gamma \vdash \varphi_1 \Leftrightarrow \varphi_2$}
-\UnaryInfC{$\Gamma\vdash\texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\varphi_2) \wedge \texttt{unshunt}~(\varphi_2 \Rightarrow \texttt{split}~\varphi_1)$}
-\end{bprooftree}
-}\]
+% \[\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \varphi_1 \vee \varphi_2$}
+% \UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\neg \varphi_1 \Rightarrow \texttt{split}~\varphi_2)$}
+% \end{bprooftree}
+% }\]
 
-\[\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \neg \top$}
-\UnaryInfC{$\Gamma \vdash \bot$}
-\end{bprooftree}\qquad
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \neg \bot$}
-\UnaryInfC{$\Gamma \vdash \top$}
-\end{bprooftree}\qquad
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \neg (\varphi_1 \wedge \varphi_2)$}
-\UnaryInfC{$\Gamma \vdash \texttt{unshunt} (\varphi_1 \Rightarrow \texttt{split}~ \neg \varphi_2)$}
-\end{bprooftree}
-}\]
+% \[\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \varphi_1 \Rightarrow \varphi_2$}
+% \UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\varphi_2)$}
+% \end{bprooftree}\qquad
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \neg \neg \varphi$}
+% \UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\texttt{split}~\varphi)$}
+% \end{bprooftree}
+% }\]
 
-\[\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \neg (\varphi_1 \vee \varphi_2)$}
-\UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\texttt{split}~\neg \varphi_1) \wedge  \texttt{unshunt}~(\neg \varphi_1 \Rightarrow \texttt{split}~\neg \varphi_2)$}
-\end{bprooftree}
-}\]
+% \[\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$ \Gamma \vdash \varphi_1 \Leftrightarrow \varphi_2$}
+% \UnaryInfC{$\Gamma\vdash\texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\varphi_2) \wedge \texttt{unshunt}~(\varphi_2 \Rightarrow \texttt{split}~\varphi_1)$}
+% \end{bprooftree}
+% }\]
 
-\[\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \neg (\varphi_1 \Rightarrow \varphi_2)$}
-\UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\texttt{split}~\varphi_1) \wedge \texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\neg \varphi_2)$}
-\end{bprooftree}\qquad
-}\]
+% \[\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \neg \top$}
+% \UnaryInfC{$\Gamma \vdash \bot$}
+% \end{bprooftree}\qquad
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \neg \bot$}
+% \UnaryInfC{$\Gamma \vdash \top$}
+% \end{bprooftree}\qquad
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \neg (\varphi_1 \wedge \varphi_2)$}
+% \UnaryInfC{$\Gamma \vdash \texttt{unshunt} (\varphi_1 \Rightarrow \texttt{split}~ \neg \varphi_2)$}
+% \end{bprooftree}
+% }\]
 
-\[\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$\Gamma \vdash \neg (\varphi_1 \Leftrightarrow \varphi_2)$}
-\UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\neg \varphi_2) \wedge \texttt{unshunt}~(\neg \varphi_2 \Rightarrow \texttt{split}~\varphi_1)$}
-\end{bprooftree}
-}\]
-\caption{Split a goal in an equivalent conjunction of subgoals.}
-\label{split}
-\end{figure}
+% \[\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \neg (\varphi_1 \vee \varphi_2)$}
+% \UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\texttt{split}~\neg \varphi_1) \wedge  \texttt{unshunt}~(\neg \varphi_1 \Rightarrow \texttt{split}~\neg \varphi_2)$}
+% \end{bprooftree}
+% }\]
 
-In the theorems above appear two recursive functions \texttt{unshunt} and \texttt{split}. They have the following definitions.
+% \[\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \neg (\varphi_1 \Rightarrow \varphi_2)$}
+% \UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\texttt{split}~\varphi_1) \wedge \texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\neg \varphi_2)$}
+% \end{bprooftree}\qquad
+% }\]
 
-\begin{verbatim}
-unshunt : Prop → Prop
-unshunt (φ₁ ⇒ (φ₂ ⇒ φ₃)) = unshunt ((φ₁ ∧ φ₂) ⇒ φ₃)
-unshunt (φ₁ ⇒ (φ₂ ∧ φ₃)) = unshunt (φ₁ ⇒ φ₂)) ∧ (unshunt(φ₁ ⇒ φ₃)
-unshunt φ                = φ
-\end{verbatim}
+% \[\scalebox{0.9}{
+% \begin{bprooftree}
+% \AxiomC{$\Gamma \vdash \neg (\varphi_1 \Leftrightarrow \varphi_2)$}
+% \UnaryInfC{$\Gamma \vdash \texttt{unshunt}~(\varphi_1 \Rightarrow \texttt{split}~\neg \varphi_2) \wedge \texttt{unshunt}~(\neg \varphi_2 \Rightarrow \texttt{split}~\varphi_1)$}
+% \end{bprooftree}
+% }\]
+% \caption{Split a goal in an equivalent conjunction of subgoals.}
+% \label{split}
+% \end{figure}
 
-\begin{verbatim}
-split : Prop → Prop
-split (φ₁ ∧ φ₂)     = {!!}
-split (φ₁ ∨ φ₂)     = {!!}
-split (φ₁ ⇒ φ₂)     = {!!}
-split (φ₁ ⇔ φ₂)     = {!!}
-split (¬ ⊤)         = {!!}
-split (¬ ⊥)         = {!!}
-split (¬ (φ₁ ∧ φ₂)) = {!!}
-split (¬ (φ₁ ∨ φ₂)) = {!!}
-split (¬ (φ₁ ⇒ φ₂)) = {!!}
-split (¬ (φ₁ ⇔ φ₂)) = {!!}
-split (¬ (¬ φ))     = {!!}
-split φ₁            = {!!}
-\end{verbatim}
+% In the theorems above appear two recursive functions \texttt{unshunt} and \texttt{split}. They have the following definitions.
 
-...
+% \begin{verbatim}
+% unshunt : Prop → Prop
+% unshunt (φ₁ ⇒ (φ₂ ⇒ φ₃)) = unshunt ((φ₁ ∧ φ₂) ⇒ φ₃)
+% unshunt (φ₁ ⇒ (φ₂ ∧ φ₃)) = unshunt (φ₁ ⇒ φ₂)) ∧ (unshunt(φ₁ ⇒ φ₃)
+% unshunt φ                = φ
+% \end{verbatim}
 
-\textit{Simplification.}
+% \begin{verbatim}
+% split : Prop → Prop
+% split (φ₁ ∧ φ₂)     = {!!}
+% split (φ₁ ∨ φ₂)     = {!!}
+% split (φ₁ ⇒ φ₂)     = {!!}
+% split (φ₁ ⇔ φ₂)     = {!!}
+% split (¬ ⊤)         = {!!}
+% split (¬ ⊥)         = {!!}
+% split (¬ (φ₁ ∧ φ₂)) = {!!}
+% split (¬ (φ₁ ∨ φ₂)) = {!!}
+% split (¬ (φ₁ ⇒ φ₂)) = {!!}
+% split (¬ (φ₁ ⇔ φ₂)) = {!!}
+% split (¬ (¬ φ))     = {!!}
+% split φ₁            = {!!}
+% \end{verbatim}
 
-\begin{figure}
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
-  \AxiomC{$\Gamma \vdash \psi$}
-  \RightLabel{\footnotesize\tt $\Leftrightarrow$-elim}
-  \BinaryInfC{$\Gamma \vdash \varphi$}
-\end{bprooftree}
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \Rightarrow \psi$}
-  \AxiomC{$\Gamma \vdash \varphi$}
-  \RightLabel{\footnotesize\tt $\Rightarrow$-elim}
-  \BinaryInfC{$\Gamma \vdash \psi$}
-\end{bprooftree}
-\]
-\[
-\begin{bprooftree}
-  \AxiomC{$\Gamma \vdash \varphi \vee \neg \psi$}
-  \AxiomC{$\Gamma \vdash \neg \varphi$}
-  \BinaryInfC{$\Gamma \vdash \psi$}
-\end{bprooftree}
-%}
-\]
+% ...
 
-\caption{Additional simplification theorems.}
-\label{fig:simplify-rule}
-\end{figure}
+% \textit{Simplification.}
+
+% \begin{figure}
+% \[%\scalebox{0.9}{
+% \begin{bprooftree}
+%   \AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
+%   \AxiomC{$\Gamma \vdash \psi$}
+%   \RightLabel{\footnotesize\tt $\Leftrightarrow$-elim}
+%   \BinaryInfC{$\Gamma \vdash \varphi$}
+% \end{bprooftree}
+% \begin{bprooftree}
+%   \AxiomC{$\Gamma \vdash \varphi \Rightarrow \psi$}
+%   \AxiomC{$\Gamma \vdash \varphi$}
+%   \RightLabel{\footnotesize\tt $\Rightarrow$-elim}
+%   \BinaryInfC{$\Gamma \vdash \psi$}
+% \end{bprooftree}
+% \]
+% \[
+% \begin{bprooftree}
+%   \AxiomC{$\Gamma \vdash \varphi \vee \neg \psi$}
+%   \AxiomC{$\Gamma \vdash \neg \varphi$}
+%   \BinaryInfC{$\Gamma \vdash \psi$}
+% \end{bprooftree}
+% %}
+% \]
+
+% \caption{Additional simplification theorems.}
+% \label{fig:simplify-rule}
+% \end{figure}
 
 \end{document}

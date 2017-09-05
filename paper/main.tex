@@ -20,7 +20,8 @@
 % --------------------------------------------------------------------------
 
 \usepackage{xargs}
-\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[dvipsnames]{xcolor}
+% \usepackage[pdftex,dvipsnames]{xcolor}
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 \newcommandx{\unsure}[2][1=]
   {\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
@@ -128,9 +129,35 @@
 % --------------------------------------------------------------------------
 % New commands
 % --------------------------------------------------------------------------
+\usepackage{xspace}
 
-\newcommand{\name}{\textsc}
-\newcommand{\Agda}{\name{Agda}}
+\newcommand{\abbre}[1]{\textsc{#1}\xspace}
+\newcommand{\ATP}{\abbre{ATP}}
+\newcommand{\ATPs}{\abbre{ATPs}}
+\newcommand{\SAT}{\abbre{SAT}}
+\newcommand{\SMT}{\abbre{SMT}}
+\newcommand{\ITP}{\abbre{ITP}}
+\newcommand{\CPL}{\abbre{CPL}}
+\newcommand{\CNF}{\abbre{CNF}}
+
+\newcommand{\name}[1]{\texttt{#1}\xspace}
+\newcommand{\canonicalize}{\name{canonicalize}}
+\newcommand{\clausify}{\name{clausify}}
+\newcommand{\conjunct}{\name{conjunct}}
+\newcommand{\negate}{\name{negate}}
+\newcommand{\resolve}{\name{resolve}}
+\newcommand{\simplify}{\name{simplify}}
+\newcommand{\strip}{\name{strip}}
+
+\newcommand{\prg}[1]{\texttt{#1}\xspace}
+\newcommand{\Agda}{\prg{Agda}}
+\newcommand{\Metis}{\prg{Metis}}
+\newcommand{\IsabelleHOL}{\prg{IsabelleHOL}}
+
+\newcommand{\len}[1]{\texttt{#1}\xspace}
+\newcommand{\Haskell}{\len{Haskell}}
+\newcommand{\TPTP}{\len{TPTP}}
+\newcommand{\TSTP}{\len{TSTP}}
 
 % --------------------------------------------------------------------------
 % Rest.
@@ -172,17 +199,15 @@ Medell\'in, Colombia\\
 % \improvement
 % \thiswillnotshow
 
-\subfile{TODO.tex}
-
 \maketitle
 
-\subfile{sections/abstract.tex}
+% \subfile{sections/abstract.tex}
 \subfile{sections/introduction.tex}
 \subfile{sections/metis-language-and-proofs.tex}
-\subfile{sections/proof-reconstruction.tex}
-\subfile{sections/related-work.tex}
-\subfile{sections/conclusions.tex}
-\subfile{sections/acknowledgements.tex}
+% \subfile{sections/proof-reconstruction.tex}
+% \subfile{sections/related-work.tex}
+% \subfile{sections/conclusions.tex}
+% \subfile{sections/acknowledgements.tex}
 
 \bibliographystyle{splncs03}
 \bibliography{ref}
