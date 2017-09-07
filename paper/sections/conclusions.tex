@@ -2,16 +2,58 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-% ============================================================================
+% ===================================================================
 
 \section{Conclusions}
 \label{sec:conclusions}
 
-Amazing conclusions.
-...
-\cite{}
+Besides our scope in this document, propositional logic without
+equality, is straightforward compared with other logics like
+first-order or high-order logic; the proof reconstruction task is
+far from trivial. Depending on the systems involved in the
+translation, some difficulties can arise. We listed some of them in
+section \ref{sec:metis-language-and-proofs} and section
+\ref{sec:proof-reconstruction}.
 
-\subsubsection*{Future Work.}
-\label{ssec:future-work}
+For instance, just showing equality between Normal Forms for the
+same formula in the output of the \canonicalize inference and a
+common implementation for this kind of conversion; we observed that
+\Metis performs reordering for each expression mainly in the
+presence of negative literals. Another example was the \Metis'
+convention for conjunctions and disjunction as right associative and
+binary operators in the \TSTP format. We had to update the \TSTP
+parser module introduced in \cite{Gomez-Londono2015} to include some
+feature like this.
+
+However, we believe one of our biggest obstacles was dealing with
+the Equality between formulas since, in our approach, we only work
+with the syntactic treatment of the logic without considering the
+semantics. One of the main reasons for such a restriction resides in
+our plans to support further first-order logic where a semantic
+treatment is not viable.\unsure{Please confirm this assumption.}
+
+Nevertheless, the proof reconstruction is certainly possible, and
+the verification of solutions of \CPL problems can be carried out
+successful in \Agda. Our tool is capable of translating \Metis
+derivations in \TSTP format to deliver \Agda code of the proof, and
+this proof can be type-checked by \Agda.
+
+We believe the source code of our tool can be extended to support
+other \ATPs for \CPL like \name{E}. For example, we incorporate the
+inferences rules of \name{E} or \name{Z3} from the description in
+Kanso's Thesis~\cite{Kanso2012}.
+
+Trying to justify output from a theorem prover has a real impact,
+increasing the trustworthy of the prover. For instance, we found a
+soundness bug, a bug in the printing out of the \TSTP derivations,
+and a bug in the parsing for \TPTP problem in \Metis.
+Fortunately, all these bugs were fixed quickly by Hurd\footnote{
+Issues No. 4, No. 2, and the commit \name{8a3f11e} from the
+\Metis' official repository \url{https://github.com/gilith/metis}},
+and a new version of \Metis was released
+(version 2.3, release 20170810).
+
+% \subsubsection*{Future Work.}
+% \label{ssec:future-work}
 
 \end{document}
