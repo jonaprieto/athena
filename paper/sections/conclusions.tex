@@ -7,14 +7,14 @@
 \section{Conclusions}
 \label{sec:conclusions}
 
-Besides the logic and its complexity, the proof reconstruction task is
-far from trivial. In this document, we attempt to reconstruct proofs
-of propositional logic without equality deliverd by \Metis successfully.
+In this document, we attempted to reconstruct proofs
+of propositional logic without equality deliver by \Metis successfully.
 
-From our experience building a proof reconstruction tool, depending on
-the systems involved in thetranslation, some difficulties can arise.
-We listed some of them in section \ref{sec:metis-language-and-proofs}
-and in the section \ref{sec:proof-reconstruction}.
+From our experience building a proof reconstruction tool, depending 
+on the systems involved in the translation, some difficulties can 
+arise. We listed some of them in section
+\ref{sec:metis-language-and-proofs} and in the section
+\ref{sec:proof-reconstruction}.
 
 For instance, just showing equality between Normal Forms for the
 same formula in the output of the \canonicalize inference and a
@@ -23,12 +23,12 @@ common implementation for this kind of conversion; we observed that
 presence of negative literals. Another aspect to take into account
 is the \Metis' treatment for conjunctions and disjunction;
 these connectives were treated as right associative and binary
-operators in the \TSTP format but that assumptons is not a standard.
+operators in the \TSTP format but that assumptions is not a standard.
 We had to update the \TSTP parser module introduced in
 \cite{Gomez-Londono2015} to include features like these.
 
 However, one of our biggest obstacles
-\improvement{Remove the use of the \emph{biggest obstacules}.}
+\improvement{Remove the use of the \emph{biggest obstacles}.}
 was dealing with
 the Equality between formulas since, in our approach, we only work
 with the syntactic treatment of the logic without considering the

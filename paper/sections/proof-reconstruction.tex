@@ -7,35 +7,36 @@
 \section{Proof Reconstruction}
 \label{sec:proof-reconstruction}
 
-
 \begin{figure}
-\begin{tikzpicture}
+\centering
+
+\begin{tikzpicture}[scale=0.9]
 \node[text width=2cm, align=center](problem) at (0,0)
   {1. CPL \\ Problem.};
 
-\node[right = 1.2cm of problem, text width=2cm, align=center]
+\node[right = 1.1cm of problem, text width=2cm, align=center]
   (tptp){2. \TPTP \\ Problem.};
 
-\node[right= 1.2cm of tptp, text width=2cm, align=center]
+\node[right= 1.1cm of tptp, text width=2cm, align=center]
    (metis) {3. \Metis \\ Prover.};
 
-\node[right= 1.2cm of metis, text width=2cm, align=center, inner sep=10pt]
+\node[right= 1.1cm of metis, text width=2cm, align=center, inner sep=10pt]
    (tstp) {4. \TSTP \\ Derivation.};
 
 \node[below= 0.5cm of tstp, text width=2cm, align=center, inner sep=10pt]
   (athena) {5. \Haskell \\ Traslator.};
 
-\node[left = 1.2cm of athena, text width=2cm, align=center]
+\node[left = 1.1cm of athena, text width=2cm, align=center]
    (agdafile) {6. \Agda \\ Proof.};
 
-\node[left = 1.2cm of agdafile, text width=2cm, align=center]
-   (agda) {7. Proof Checker.};
+\node[left = 1.1cm of agdafile, text width=2cm, align=center]
+   (agda) {7. Proof Checking.};
 
 \node[below = 0.5cm of problem, text width=2cm, align=center]
    (verified) {8.1 Proof \\ Checked.};
 
 \node[below = 0.5cm of verified, text width=2cm, align=center]
-   (failure) {8.2 Error.};
+   (failure) {8.2 Failure.};
 
 % node[below] {send to}
 \draw[->, thick] (problem) to
@@ -60,7 +61,49 @@
 \draw[->, thick, gray] (agda) to (failure);
 \end{tikzpicture}
 \caption{Proof reconstruction overview.}
-\label{fig:proof-reconstruction-overview}
+\label{fig:proof-reconstruction-workflow}
 \end{figure}
+
+The proof reconstruction approach proposed here consists of a series 
+of steps similar to the workflow presented by Sultana in
+\cite{sultana2015}. This process is a translation from a source 
+system to a target system. In our case, the system of origin, the 
+automatic theorem prover, is \Metis; the target system is the proof 
+assistant, \Agda. We choose \Agda, but another proof assistant with 
+support of type theory and features similar like \Agda is valid; our 
+results do not depend on the proof assistant but the support of inductive data types, and termination checking, and type-checking.
+\improvement{Make this statement stronger and clear.}
+
+Following the diagram in Fig.
+\ref{fig:proof-reconstruction-workflow}, the process can begin with 
+a problem in \CPL that we encode in \TPTP format to be sent as the 
+input of the \Metis prover.
+The proof-search algorithms of \Metis in step No. 3 perform a 
+search for a solution; if they success, \Metis 
+replies a derivation in \TSTP format of the proof, else \Metis may 
+no stop running forever or replies the problem is counter feasible.
+
+With such a derivation, we process it with our \Haskell translator 
+tool, \Athena. \Athena parses the \TSTP format, analyze the 
+derivation and generates a representation of the natural deduction 
+proof using a version of a tree data structure (see the properties 
+of this tree in subsection \ref{ssec:metis-proofs}). As a result,
+\Athena generates an \Agda file with such a proof. We have included 
+in this file, imports for \Agda libraries that give the support for 
+the logic~\cite{AgdaProp}, and versions of the \Metis' inference 
+rules~\cite{AgdaMetis}. 
+
+Finally, we use the proof assistant in step No. 7 to type-check the 
+proof and verify its correctness. We have only one answer from two 
+possible answers: the type-checking success (i.e., the proof is 
+valid) or not. If the type-check fails, one of the three actors are 
+responsible: \Metis, \Athena, or \Agda. We are responsible for 
+errors committed in the translation from \TSTP to \Agda; lack of the 
+coverage of the \Metis' inference rules, or bad assumptions about 
+them.
+
+In the rest of this section, we provide a formal description using 
+type theory to build definitions and theorems for the functions 
+necessary to emulate the \Metis' inference rules. 
 
 \end{document}
