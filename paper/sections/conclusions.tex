@@ -1,5 +1,5 @@
 % -*- root: main.tex -*-
-\documentclass[main.tex]{subfiles}
+\documentclass[../main.tex]{subfiles}
 \begin{document}
 
 % ===================================================================
@@ -7,12 +7,17 @@
 \section{Conclusions}
 \label{sec:conclusions}
 
-In this document, we attempted to reconstruct proofs
-of propositional logic without equality deliver by \Metis successfully.
+In this document, we reconstruct proofs
+of propositional logic without equality deliver by \Metis 
+successfully.
 
-From our experience building a proof reconstruction tool, depending 
-on the systems involved in the translation, some difficulties can 
-arise. We listed some of them in section
+Despite the fact, our logic domain is more straightforward than 
+first-order or high-order logic where there are many 
+proof-reconstruction tools (see a list of some of them in the 
+related work, section \ref{sec:related-work}), we found some issues 
+around the reconstruction that show this task is far from trivial.
+Depending  on the systems involved in the translation, some 
+difficulties can arise. We listed some of them in section
 \ref{sec:metis-language-and-proofs} and in the section
 \ref{sec:proof-reconstruction}.
 
@@ -27,15 +32,13 @@ operators in the \TSTP format but that assumptions is not a standard.
 We had to update the \TSTP parser module introduced in
 \cite{Gomez-Londono2015} to include features like these.
 
-However, one of our biggest obstacles
-\improvement{Remove the use of the \emph{biggest obstacles}.}
-was dealing with
-the Equality between formulas since, in our approach, we only work
+An important matter was how dealing with
+the equality between formulas since, in our approach, we only work
 with the syntactic treatment of the logic without considering the
 semantics.
-One of the main reasons for such a restriction relay on our plans to
-support further first-order logic, where a semantic treatment is not
-viable.\unsure{Please confirm this.}
+One of the main reasons for such a restriction relay on our plans 
+further to support first-order logic, where a semantic treatment is 
+not viable since it computational complexity.\unsure{Please confirm this.}
 
 Nevertheless, the proof reconstruction is certainly possible, and
 the verification of solutions of \CPL problems can be carried out

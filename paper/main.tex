@@ -14,6 +14,8 @@
 \def\defaultHypSeparation{\hskip.2in}
 \def\EnableBpAbbreviations{true}
 
+\usepackage[title]{appendix}
+
 % -------------------------------------------------------------------
 % TODO notes
 % -------------------------------------------------------------------
@@ -80,7 +82,12 @@
     aboveskip=10pt
   , basicstyle=\tt
   , belowskip=10pt
-  , keywords=[2]{axiom, conjecture,inference, negated_conjecture, plain, source}
+  , keywords=[2]{axiom
+    , conjecture
+    , inference
+    , negated_conjecture
+    , plain
+    , source}
   , keywords=[3]{fof, cnf}
   , keywords=[4]{canonicalize, resolve, conjunct,
     strip, simplify, negate, clausify}
@@ -95,7 +102,8 @@
   {\lstset{style=TPTP,columns=fullflexible}\csname lst@SetFirstLabel\endcsname}
   {\csname lst@SaveFirstLabel\endcsname}
 
-%\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 \usepackage{ucs}
 \usepackage{autofe}
 \usepackage{afterpage}
@@ -104,9 +112,33 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsmath}
-\usepackage{stmaryrd} %new symbol font for tcs
+%\usepackage{stmaryrd} %new symbol font for tcs
 \usepackage{color}
 \usepackage{fancybox}
+
+\usepackage{textcomp}
+\usepackage[verbose]{newunicodechar}
+\newunicodechar{∧}{\ensuremath{\wedge}}
+\newunicodechar{∨}{\ensuremath{\vee}}
+\newunicodechar{¬}{\ensuremath{\neg}}
+\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
+\newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
+\newunicodechar{∼}{\ensuremath{\sim}}
+\newunicodechar{₀}{\ensuremath{{}_{0}}}
+\newunicodechar{₁}{\ensuremath{{}_{1}}}
+\newunicodechar{₃}{\ensuremath{{}_{2}}}
+\newunicodechar{₄}{\ensuremath{{}_{3}}}
+\newunicodechar{₅}{\ensuremath{{}_{4}}}
+\newunicodechar{₆}{\ensuremath{{}_{5}}}
+\newunicodechar{₇}{\ensuremath{{}_{6}}}
+\newunicodechar{₈}{\ensuremath{{}_{7}}}
+\newunicodechar{₉}{\ensuremath{{}_{8}}}
+\newunicodechar{∅}{\ensuremath{\emptyset}}
+\newunicodechar{⊢}{\ensuremath{\vdash}}
+\newunicodechar{⊥}{\ensuremath{\bot}}
+\newunicodechar{Γ}{\ensuremath{\Gamma}}
+
+%\DeclareUnicodeCharacter{00A0}{~}
 
 \usepackage{verbatim}
 \usepackage{relsize}
@@ -214,5 +246,8 @@ Universidad EAFIT, Medell\'in, Colombia\\
 \bibliographystyle{splncs03}
 \bibliography{ref}
 \addcontentsline{toc}{section}{References}
+
+\newpage
+\subfile{sections/appendices.tex}
 
 \end{document}

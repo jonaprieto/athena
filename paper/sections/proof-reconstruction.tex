@@ -84,7 +84,8 @@ replies a derivation in \TSTP format of the proof, else \Metis may
 no stop running forever or replies the problem is counter feasible.
 
 With such a derivation, we process it with our \Haskell translator 
-tool, \Athena. \Athena parses the \TSTP format, analyze the 
+tool, \Athena~\cite{Athena}.
+\Athena parses the \TSTP format, analyze the 
 derivation and generates a representation of the natural deduction 
 proof using a version of a tree data structure (see the properties 
 of this tree in subsection \ref{ssec:metis-proofs}). As a result,
@@ -95,8 +96,9 @@ rules~\cite{AgdaMetis}.
 
 Finally, we use the proof assistant in step No. 7 to type-check the 
 proof and verify its correctness. We have only one answer from two 
-possible answers: the type-checking success (i.e., the proof is 
-valid) or not. If the type-check fails, one of the three actors are 
+possible answers: type-checking succeed (i.e., the proof is 
+valid) or type-checking failed.
+If the type-check fails, one of the three actors are 
 responsible: \Metis, \Athena, or \Agda. We are responsible for 
 errors committed in the translation from \TSTP to \Agda; lack of the 
 coverage of the \Metis' inference rules, or bad assumptions about 
