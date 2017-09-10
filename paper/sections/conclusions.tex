@@ -8,15 +8,15 @@
 \label{sec:conclusions}
 
 In this document, we reconstruct proofs
-of propositional logic without equality deliver by \Metis 
+of propositional logic without equality deliver by \Metis
 successfully.
 
-Despite the fact, our logic domain is more straightforward than 
-first-order or high-order logic where there are many 
-proof-reconstruction tools (see a list of some of them in the 
-related work, section \ref{sec:related-work}), we found some issues 
+Despite the fact, our logic domain is more straightforward than
+first-order or high-order logic where there are many
+proof-reconstruction tools (see a list of some of them in the
+related work, section \ref{sec:related-work}), we found some issues
 around the reconstruction that show this task is far from trivial.
-Depending  on the systems involved in the translation, some 
+Depending  on the systems involved in the translation, some
 difficulties can arise. We listed some of them in section
 \ref{sec:metis-language-and-proofs} and in the section
 \ref{sec:proof-reconstruction}.
@@ -36,11 +36,11 @@ An important matter was how dealing with
 the equality between formulas since, in our approach, we only work
 with the syntactic treatment of the logic without considering the
 semantics.
-One of the main reasons for such a restriction relay on our plans 
-further to support first-order logic, where a semantic treatment is 
+One of the main reasons for such a restriction relay on our plans
+further to support first-order logic, where a semantic treatment is
 not viable since it computational complexity.\unsure{Please confirm this.}
 
-Nevertheless, the proof reconstruction is certainly possible, and
+Nevertheless, the proof-reconstruction is certainly possible, and
 the verification of solutions of \CPL problems can be carried out
 successful in \Agda. Our tool is able to translate \Metis
 derivations in \TSTP format to deliver \Agda code of the proof,

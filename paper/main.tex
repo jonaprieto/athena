@@ -47,20 +47,20 @@
 \usepackage{rotating}
 
 \tikzset{
-    hyperlink node/.style={
-        alias=sourcenode,
-        append after command={
-            let     \p1 = (sourcenode.north west),
-                \p2=(sourcenode.south east),
-                \n1={\x2-\x1},
-                \n2={\y1-\y2} in
-            node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\p1)]
-            {\hyperlink{#1}{\XeTeXLinkBox{\phantom{\rule{\n1}{\n2}}}}}
-                    %xelatex needs \XeTeXLinkBox, won't create a link unless it
-                    %finds text --- rules don't work without \XeTeXLinkBox.
-                    %Still builds correctly with pdflatex and lualatex
-        }
+  hyperlink node/.style={
+    alias=sourcenode,
+    append after command={
+        let     \p1 = (sourcenode.north west),
+            \p2=(sourcenode.south east),
+            \n1={\x2-\x1},
+            \n2={\y1-\y2} in
+        node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\p1)]
+        {\hyperlink{#1}{\XeTeXLinkBox{\phantom{\rule{\n1}{\n2}}}}}
+                %xelatex needs \XeTeXLinkBox, won't create a link unless it
+                %finds text --- rules don't work without \XeTeXLinkBox.
+                %Still builds correctly with pdflatex and lualatex
     }
+  }
 }
 
 \tikzstyle{vertex}=[
@@ -160,6 +160,7 @@
 % -------------------------------------------------------------------
 % New commands
 % -------------------------------------------------------------------
+
 \usepackage{xspace}
 
 \newcommand{\abbre}[1]{\textsc{#1}\xspace}
