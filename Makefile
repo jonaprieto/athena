@@ -15,7 +15,7 @@ default: install
 
 AGDA_VERSION := $(shell agda --version 2>/dev/null)
 TESTED_AGDA_VERSION1 =Agda version 2.5.2
-TESTED_AGDA_VERSION2 =Agda version 2.5.3-3156aef
+TESTED_AGDA_VERSION2 =Agda version 2.5.3
 
 agdaversion:
 
