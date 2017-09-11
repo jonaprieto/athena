@@ -1,0 +1,236 @@
+% -*- root: main.tex -*-
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+% ===================================================================
+
+\section{Preliminaries}
+\label{sec:preliminaries}
+
+Before describe the proof reconstruction, we need some definitions
+and some convention notations.
+
+\subsection{Classical Propositional Logic}
+\label{ssec:CPL}
+
+\textit{Propositions.}
+We define the classical propositional logic as usual.
+A proposition is an expression of indivisible propositional atoms
+(e.g., symbols $φ₀, φ₁, \cdots$),
+binary logic connectives ($∧, ∨, ⇒, ⇔)$,
+propositional negation $(\neg)$, and logic constants $\bot$
+and $\top$. We use the inductive definition of the set \PROP
+defined in \cite{VanDalen1994} as the mechanism to produce any
+propositional formula.
+Then, $ϕ_i \in \PROP$ for all $i \in \mathbb{N}$.
+If $(\phi\ \square\ \psi)$ stands for a proposition that use a
+binary connective where is the symbol $\square$; when $\phi, \psi\in
+\PROP$, then $(\phi\ \square\ \psi) \in \PROP$.
+If $\phi \in \PROP$, then $(\neg \phi) \in \PROP$.
+Finally, $\bot, \top \in \PROP$.
+
+\emph{Derivations.}
+A derivation of $φ$ is a mechanism to obtain the conclusion φ from
+the application of some deduction steps. Such a deduction step has
+the form of a set of propositional \emph{premises} that conclude the
+result: one or more propositions. As we show in the following
+figure, the premises are always above the line, and the conclusions
+are below it. As a notation convention, if the name of a rule used
+in the derivation step is typed using verbatim, that means, it is
+available in our implementation for the CPL (see the syntax module in
+\cite{AgdaProp}) used in the proof reconstruction latter.
+
+\[
+\label{eq:derivation}
+\begin{bprooftree}
+\AxiomC{φ}
+\AxiomC{ψ}
+\BinaryInfC{φ ∧ ψ}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+\AxiomC{[¬ φ]}
+\noLine
+\UnaryInfC{$\vdots$}
+\noLine
+\UnaryInfC{⊥}
+\RightLabel{\abbre{RAA}}
+\UnaryInfC{φ}
+\end{bprooftree}
+\]
+
+\vskip 2mm
+
+\emph{Theorems.}
+A sequent $Γ ⊢ φ$ represents a theorem, but we
+define it as a relation between a set of propositions premises $Γ$,
+and $φ$ as the sequent's conclusion.
+The symbol $⊢$ is called turnstile.
+If $Γ = ∅$, we write $⊢ φ$, and we say that $φ$ is a theorem
+Then, a theorem, $Γ ⊢ φ$ , means that there is a derivation with
+conclusion $φ$ and with all (uncancelled) hypotheses in $Γ$.
+
+\emph{Postulates.}
+We only postulate the principle of excluded third
+(\abbre{PEM}), $φ ∨ ¬ φ$. From there, we derive the
+\emph{reductio ad absurdum} rule (\abbre{RAA}) as the
+formulation of the principle of proof by contradiction: a derivation
+of a contradiction, $⊥$, from the hypothesis $(¬ φ)$, is a
+derivation of $φ$.
+
+\[
+\label{eq:PEM-RAA}
+\begin{bprooftree}
+\AxiomC{}
+\RightLabel{\scriptsize\tt PEM}
+\UnaryInfC{Γ ⊢ φ ∨ ¬ φ}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+\AxiomC{Γ, ¬ φ ⊢ ⊥}
+\RightLabel{\scriptsize\tt RAA}
+\UnaryInfC{Γ ⊢ φ}
+\end{bprooftree}
+\]
+
+\emph{Natural Deductions.}
+The natural deduction designed by Gentzen \improvement{Cite the work
+by Gentzen.} defines a formal system for derivations that uses a set
+of inference rules as the only way to obtain a conclusion.
+We use this system to refer to formal proofs as natural deduction
+proofs and conversely, in the latter.
+We define our inference rules for \CPL in the Fig.
+\ref{fig:CPL-inference-rules}. These rules give us the complete
+meaning of the connectives; how to introduce them and
+how they can be remove them in the conclusion side of the theorems.
+
+\begin{figure}
+\[%\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{}
+\RightLabel{\scriptsize\tt assume $\varphi$}
+\UnaryInfC{$\Gamma , \varphi \vdash \varphi$}
+\end{bprooftree}\quad
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi$}
+\RightLabel{\scriptsize\tt weaken $\psi$}
+\UnaryInfC{$\Gamma , \psi \vdash \varphi$}
+\end{bprooftree}\quad
+\begin{bprooftree}
+\AxiomC{}
+\RightLabel{\scriptsize\tt $\top$-intro}
+\UnaryInfC{$\Gamma \vdash \top$}
+\end{bprooftree}\quad
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \bot$}
+\RightLabel{\scriptsize\tt $\bot$-elim $\varphi$}
+\UnaryInfC{$\Gamma \vdash \varphi$}
+\end{bprooftree}
+%}
+\]
+
+\[%\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma , \varphi \vdash \bot$}
+\RightLabel{\scriptsize\tt $\neg$-intro}
+\UnaryInfC{$\Gamma \vdash \neg \varphi$}
+\end{bprooftree}\quad
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \neg \varphi$}
+\AxiomC{$\Gamma \vdash \varphi$}
+\RightLabel{\scriptsize\tt $\neg$-elim}
+\BinaryInfC{$\Gamma \vdash \bot$}
+\end{bprooftree}\quad
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi$}
+\AxiomC{$\Gamma \vdash \psi$}
+\RightLabel{\scriptsize\tt $\wedge$-intro}
+\BinaryInfC{$\Gamma \vdash \varphi \wedge \psi$}
+\end{bprooftree}
+%}
+\]
+
+\[%\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi \wedge \psi$}
+\RightLabel{\scriptsize\tt $\wedge$-proj$_1$}
+\UnaryInfC{$\Gamma\vdash \varphi$}
+\end{bprooftree}\quad
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi \wedge \psi$}
+\RightLabel{\scriptsize\tt $\wedge$-proj$_2$}
+\UnaryInfC{$\Gamma\vdash \psi$}
+\end{bprooftree}\quad
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi$}
+\RightLabel{\scriptsize\tt $\vee$-intro$_1$ $\psi$}
+\UnaryInfC{$\Gamma \vdash \varphi \vee \psi$}
+\end{bprooftree}
+%}
+\]
+
+\[%\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \psi$}
+\RightLabel{\scriptsize\tt $\vee$-intro$_2$ $\varphi$}
+\UnaryInfC{$\Gamma \vdash \varphi \vee \psi$}
+\end{bprooftree}\quad
+\begin{bprooftree}
+\AxiomC{$\Gamma ,\varphi \vdash \gamma $}
+\AxiomC{$\Gamma , \psi  \vdash \gamma$}
+\RightLabel{\scriptsize\tt $\vee$-elim}
+\BinaryInfC{$\Gamma , \varphi \vee \psi \vdash \gamma$}
+\end{bprooftree}\quad
+\begin{bprooftree}
+\AxiomC{$\Gamma , \varphi \vdash \psi$}
+\RightLabel{\scriptsize\tt $\Rightarrow$-intro}
+\UnaryInfC{$\Gamma \vdash \varphi \Rightarrow \psi$}
+\end{bprooftree}
+%}
+\]
+
+\[
+%\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi \Rightarrow \psi$}
+\AxiomC{$\Gamma \vdash \varphi$}
+\RightLabel{\scriptsize\tt $\Rightarrow$-elim}
+\BinaryInfC{$\Gamma \vdash \psi$}
+\end{bprooftree}\quad
+\begin{bprooftree}
+\AxiomC{$\Gamma , \varphi \vdash \psi$}
+\AxiomC{$\Gamma , \psi \vdash \varphi$}
+\RightLabel{\scriptsize\tt $\Leftrightarrow$-intro}
+\BinaryInfC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
+\end{bprooftree}
+%}
+\]
+
+\[
+%\scalebox{0.9}{
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi$}
+\AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
+\RightLabel{\scriptsize\tt $\Leftrightarrow$-elim$_1$}
+\BinaryInfC{$\Gamma \vdash \psi$}
+\end{bprooftree}\quad
+\begin{bprooftree}
+\AxiomC{$\Gamma \vdash \varphi$}
+\AxiomC{$\Gamma \vdash \varphi \Leftrightarrow \psi$}
+\RightLabel{\scriptsize\tt $\Leftrightarrow$-elim$_2$}
+\BinaryInfC{$\Gamma \vdash \psi$}
+\end{bprooftree}
+%}
+\]
+
+\caption{Inference rules in classical propositional logic.}
+\label{fig:CPL-inference-rules}
+\end{figure}
+
+\emph{Proof Trees.} We use trees to represent derivations and
+natural deduction proofs. In a proof tree, the root is the
+conclusion of the entire derivation. The nodes labeled with
+the name of the inference rules contains the result of applying the
+rule to their parents. The leaves in the tree become the premises,
+not all necessary canceled (see a better discussion on cancellation
+of hypotheses in \cite{VanDalen1994}).
+\improvement{Include a tree of a proof tree.}
+\end{document}

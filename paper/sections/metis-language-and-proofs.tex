@@ -20,8 +20,8 @@ reconstruction tool for explaining proof steps (usually \CNF goals)
 replied from other \ATPs like \name{CVC4}, \name{Vampire}, or
 \name{Z3} (more details in Ref.~\cite{paulson2007source}).
 In \cite{Farber2015}, \Metis was used to provide a tactic for
-\name{HOL Light}; this challenges others like \name{MESON}
-or the \name{leanCoP} tactic that reconstructs proofs
+\name{HOL Light}; this challenges others like \emph{MESON}
+or the \emph{leanCoP} tactic that reconstructs proofs
 delivered by \name{leanCoP}~\cite{Farber2016}.
 
 In this paper, we ported a subset of the \Metis' inference rules to
@@ -50,8 +50,8 @@ serves to identify the formula within the problem. Each formula
 assumes one \name{role}, this could be an \name{axiom},
 \name{conjecture}, \name{definition}, or a \name{hypothesis}.
 The formulas include Boolean connectives (\verb!&!, \verb!|!,
-\verb!=>!, \verb!{<=>!, \verb!~!) and logic constants \verb!$true!
-and \verb!$false!.
+\verb!=>!, \verb!<=>!, \verb!~!) and logic constants \verb!$true!
+and \verb!$false!, for the symbols (∧, ∨, ⇒, ⇔, ¬, ⊤, ⊥), respectively.
 
 For instance, let us express the problem
 $p\, \vdash \neg (p \wedge \neg p) \vee (q \vee \neg q)$
@@ -120,7 +120,7 @@ deduction proof. The deduction system uses six inference rules
 With these inference rules as the only valid deduction steps, \Metis
 attempts to prove conjectures by refutation (see. e.g.,
 \emph{falsium} in the last conclusion of the \TSTP derivation in
-Fig.\ref{fig:metis-example}).
+Fig.~\ref{fig:metis-example}).
 
 \begin{figure}
 \[
@@ -179,29 +179,6 @@ Fig.~\ref{fig:metis-example}). Each edge links a premise with one
 conclusion. The proof graphs have at their root the conclusion
 $\bot$, since \Metis delivers proofs by refutation.
 
-\begin{figure}
-\centering
-\begin{bprooftree}\tt
-  \AxiomC{}
-  \RightLabel{\footnotesize negate}
-  \UnaryInfC{$\neg p$}
-  \RightLabel{\footnotesize strip}
-  \UnaryInfC{$\neg p$}
-  \AxiomC{}
-  \RightLabel{\footnotesize axiom}
-  \UnaryInfC{$p$}
-  \RightLabel{\footnotesize canonicalize}
-  \UnaryInfC{$p$}
-  \RightLabel{\footnotesize simplify}
-  \BinaryInfC{$\bot$}
-  \RightLabel{\footnotesize canonicalize}
-  \UnaryInfC{$\bot$}
-\end{bprooftree}
-\caption{The \Metis' refutation tree for $p \vdash p$ from the
-derivation in Fig.~\ref{fig:metis-proof-tstp}}
-\label{fig:metis-example}
-\end{figure}
-
 % -------------------------------------------------------------------
 
 \subsection{Proof Rules}
@@ -225,6 +202,29 @@ case of \resolve, it differs from its original version since, in
 undocumented rules found in \TSTP derivations are: \canonicalize,
 \clausify, \conjunct, \negate, \simplify, and \strip.
 
+\begin{figure}
+\centering
+\begin{bprooftree}\tt
+  \AxiomC{}
+  \RightLabel{\footnotesize negate}
+  \UnaryInfC{$\neg p$}
+  \RightLabel{\footnotesize strip}
+  \UnaryInfC{$\neg p$}
+  \AxiomC{}
+  \RightLabel{\footnotesize axiom}
+  \UnaryInfC{$p$}
+  \RightLabel{\footnotesize canonicalize}
+  \UnaryInfC{$p$}
+  \RightLabel{\footnotesize simplify}
+  \BinaryInfC{$\bot$}
+  \RightLabel{\footnotesize canonicalize}
+  \UnaryInfC{$\bot$}
+\end{bprooftree}
+\caption{The \Metis' refutation tree for $p \vdash p$ from the
+derivation in Fig.~\ref{fig:metis-proof-tstp}}
+\label{fig:metis-example}
+\end{figure}
+
 This lack of the \Metis' documentation is an important matter for
 us in the proof-reconstruction and certainty for other implementors
 (see a comment related on the presenting of \name{Sledgehammer}
@@ -237,7 +237,7 @@ formula from a list a list of formulas as we see in the following
 example.
 \improvement{Add an example here to show a deduction where \Metis do
 a lot between two steps.}
-That inference' behavior has become a drawback since, our approach
+That inference' behavior is a drawback since, our approach
 to reconstruct proofs needs take into account any assumption or
 consideration as ordering for literals, application of
 simplification theorems, reductions, among other valid

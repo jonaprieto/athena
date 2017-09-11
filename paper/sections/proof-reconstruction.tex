@@ -7,6 +7,10 @@
 \section{Proof-Reconstruction}
 \label{sec:proof-reconstruction}
 
+\subsection{Workflow}
+\label{ssec:workflow}
+
+
 \begin{figure}
 \centering
 
@@ -72,8 +76,7 @@ automatic theorem prover, is \Metis; the target system is the proof
 assistant, \Agda. We choose \Agda, but another proof assistant with
 support of type theory and features similar like \Agda is valid; our
 results do not depend on the proof assistant but the support of
-inductive data types, and termination checking, and type-checking.
-\improvement{Make this statement stronger and clear.}
+inductive data types, termination checking, and type-checking.
 
 Following the diagram in Fig.
 \ref{fig:proof-reconstruction-workflow}, the process can begin with
@@ -96,17 +99,258 @@ the logic~\cite{AgdaProp}, and versions of the \Metis' inference
 rules~\cite{AgdaMetis}.
 
 Finally, we use the proof assistant in step No. 7 to type-check the
-proof and verify its correctness. We have only one answer from two
-possible answers: type-checking succeed (i.e., the proof is
-valid) or type-checking failed.
-If the type-check fails, one of the three actors are
+proof and verify its correctness. Next, we only have one answer:
+type-checking succeed (i.e., the proof is valid) or type-checking failed.
+If the type-check fails, one of the three actors in the process are
 responsible: \Metis, \Athena, or \Agda. We are responsible for
 errors committed in the translation from \TSTP to \Agda; lack of the
 coverage of the \Metis' inference rules, or bad assumptions about
-them.
+them. \improvement{Make this statement stronger and clear.}
 
 In the rest of this section, we provide a formal description using
 type theory to build definitions and theorems for the functions
 necessary to emulate the \Metis' inference rules.
+
+% ...................................................................
+
+% \footnote{We use the \Agda standard library's implementation of the List data type.}.
+
+
+\subsection{A Brief Review of Agda}
+\label{ssec:agda-definition}
+
+\Agda is an interactive system for constructing proofs and programs,
+based on Martin-L\"{o}f's type theory and extended with records, parametrised
+modules, among other features.
+One of the main strengths of \Agda is its support for writing proofs,
+which we shall call \Agda's proof engine. It consists of: support for
+inductively defined types, including inductive families, and function
+definitions using pattern matching on such types, normalisation during type-
+checking, commands for refining proof terms, coverage checker and termination
+checker.
+
+The inductive approach for representing classical propositional logic
+is better because we benefit from \Agda's proof engine and its Unicode
+support that allows us writing proofs similar as we find in math text books.
+
+In \Agda, we define a proposition formula
+as an inductive type using the keyword \texttt{data}.
+The \name{PropFormula} data type stands for propositions,\cite{Altenkirch2015}.
+We include every connective, logic constant as a constructor.
+We also define the constructor for atomic propositions \verb!Var!
+to represent based on a natural number $i$, the atomic proposition
+$p_i$ for a finite universe of them ($i \leq n$), this is $Fin n$ in the
+definition.
+
+\begin{verbatim}
+data PropFormula : Set where
+  Var : Fin n → PropFormula
+  ⊤ : PropFormula
+  ⊥ : PropFormula
+  _∧_ _∨_ _⇒_ _⇔_ : (φ ψ : PropFormula) → PropFormula
+  ¬_ : (φ : PropFormula) → PropFormula
+\end{verbatim}
+
+\begin{remark}
+In the above definition, we defined all connectives, execept negation, as
+a binary connective. In \Agda, we named constructors for those functions
+that inhabit the data type, for example, the boolean connecetives and
+the function for atomic propositions, \verb!Var!, are constructors.
+The underscores in a definition like
+\begin{verbatim}
+_⇔_ : (φ ψ : PropFormula) → PropFormula
+\end{verbatim}
+stands for an argument, and \verb!(φ ψ : PropFormula)! intend for the
+uncurryfied version of the type:
+$$PropFormula → PropFormula → PropFormula$$
+\end{remark}
+
+\begin{definition}(Negative Normal Form (NNF))
+Una forma normal negativa para la formula $\varphi$ es aquella
+en la cual negaciones aparecen solamente en los literales y
+la expresión se encuentra en términos unicamente
+de los operadores booleanos ($\neg$, $\wedge$, $\vee$).
+\end{definition}
+
+Para transformar una formula $\varphi$ a su forma equivalente NNF,
+aplicamos recursivamente las siguientes ecuaciones que definen
+la función \name{nnf}.
+
+\begin{equation}
+\label{eq:nnf-definition}
+\nnf(φ) =
+\begin{cases}
+\nnf(φ₁) ∧ \nnf(φ₂)
+   & φ := φ₁ ∧ φ₂  \\
+
+\nnf(φ₁) ∨ \nnf(φ₂)
+   & φ := φ₁ ∨ φ₂  \\
+
+\nnf(¬ φ₁ ∨ φ₂)
+   & φ := φ₁ ⇒ φ₂  \\
+
+\nnf(φ₁ ⇒ φ₂ ∧ φ₂ ⇒ φ₁)
+   & φ := φ₁ ⇔ φ₂\\
+
+\nnf(¬ φ₁ ∨ ¬ φ₂)
+   & φ := ¬ (φ₁ ∧ φ₂) \\
+
+\nnf(¬ φ₁ ∧ ¬ φ₂)
+   & φ := ¬ (φ₁ ∨ φ₂) \\
+
+\nnf(φ₁)
+   & φ := ¬ ¬ φ₁     \\
+
+
+\nnf(¬ (φ₂ ∨ ¬ φ₁))
+   & φ := ¬ (φ₁ ⇒ φ₂)  \\
+
+\nnf(¬ (φ₁ ⇒ φ₂ ∧ φ₂ ⇒ φ₁))
+   & φ := ¬ (φ₁ ⇔ φ₂) \\
+
+⊥  & φ := ¬ ⊤        \\
+
+⊤  & φ := ¬ ⊥        \\
+
+φ  & \text{otherwise}
+\end{cases}
+\end{equation}
+
+\begin{definition}
+Una funcion recursiva se dice bien estructura, si el tamaño de los argumentos
+con que con esta se define se reducen en tamaño por cada llamada a la
+funcion.
+\end{definition}
+
+De la anterior definincion, sintacticamente la funcion nnf no es recursivamente
+bien estructurado. El problem que no lo sea esta en nuestra traducion
+de este tipo de funciones a la teoria de tipos.
+
+Veamos otros ejemplos de funciones con el mismo problema que utilizaremos mas
+adelante para formalizar la inferencia strip.
+
+\begin{equation}
+\label{eq:unshunt-definition}
+\unshunt(φ) =
+\begin{cases}
+\unshunt((φ₁ ∧ φ₂) ⇒ φ₃)
+  & φ := φ₁ ⇒ (φ₂ ⇒ φ₃)\\
+
+\unshunt(φ₁ ⇒ φ₂) ∧ \unshunt(φ₁ ⇒ φ₃)
+  & φ := φ₁ ⇒ (φ₂ ∧ φ₃)\\
+
+φ &\text{otherwise}
+\end{cases}
+\end{equation}
+
+
+Para traducir las funciones en un manera que esten bien definidas,
+utilizamos el metodo propuesto por Ana Bove, el cual basicamente consiste
+
+
+una funcion general recursiva $f:\sigma \to \tau$, su formalizacion en
+teoria de tipos consiste en definir un predicado inductivo $Ind$,
+$P:\sigma \to Ind$
+
+En nuestro caso, el conjunto de los numeros servira como nuestro
+conjunto inductivo y como segundo argumento para nueva funcion.
+De manera, que la funcion g estara definida por recursion estructural en
+su segundo termino.
+
+Para aplicar la tecnica antes mencionada para nuestras funciones,
+veamos su aplicación con la funcion \unshunt porque para las demas,
+seguiremos un camino similar, f con tipo:
+
+\[
+\unshunt^{*} : PROP \to \mathcal{N} \to PROP
+\]
+
+\begin{equation}
+\label{eq:unshunt-structured}
+\unshunt^{*}(φ, n) =
+\begin{cases}
+\unshunt^{*}((φ₁ ∧ φ₂) ⇒ φ₃, n-1)
+  & φ := φ₁ ⇒ (φ₂ ⇒ φ₃)\\
+
+\unshunt^{*}(φ₁ ⇒ φ₂, n-1) ∧ \unshunt^{*}(φ₁ ⇒ φ₃,n-1)
+  & φ := φ₁ ⇒ (φ₂ ∧ φ₃)\\
+
+φ & n := 0
+\end{cases}
+\end{equation}
+
+
+\begin{definition}
+El rango $rank(\phi)$ de una proposition $\phi$ es definido como
+
+\begin{equation}
+\label{eq:rank-definition}
+rank(\phi)=
+\begin{cases}
+0 &\text{for atomic }\phi\\
+
+\max(rank(\phi_1),rank(\phi_2)) + 1
+  & \phi := \phi_1\,\square\, \phi_2 \\
+rank(\phi_1) + 1  & \phi := \neg \phi_1
+\end{cases}
+\end{equation}
+
+\end{definition}
+
+Then, we our final revision for the function $\unshunt$ is the
+function$\unshunt^{+}$ with type $PROP \to PROP$
+with a structured recursion,
+
+\begin{equation}
+\unshunt^{+}(\varphi) = \unshunt^{*}(\varphi, rank(\varphi))
+\end{equation}
+
+In the following section, our task will consist of a searching
+appropriate functions like $rank$ to assure the termination of
+our transformation functions like $nnf$.
+
+
+% ................................................
+
+\subsection{Splitting the goal}
+
+\begin{equation}
+\label{eq:split-definition}
+\mysplit(φ) =
+\begin{cases}
+\unshunt(\mysplit(φ₁)) ∧ \unshunt(φ₁ ⇒ \mysplit(φ₂)
+  & φ := φ₁ ∧ φ₂\\
+
+\unshunt(¬ φ₁ ⇒ \mysplit(φ₂))
+  & φ := φ₁ ∨ φ₂\\
+
+\unshunt(φ₁ ⇒ \mysplit(φ₂))
+  & φ := φ₁ ⇒ φ₂\\
+
+\unshunt(φ₁ ⇒ \mysplit(φ₂)) ∧ \unshunt(φ₂ ⇒ \mysplit(φ₁))
+  & φ := φ₁ ⇔ φ₂\\
+
+\unshunt(φ₁ ⇒ \mysplit(¬ φ₂))
+  & φ := ¬ (φ₁ ∧ φ₂)\\
+
+\unshunt(\mysplit(¬ φ₁)) ∧ \unshunt(¬ φ₁ ⇒ \mysplit(¬ φ₂))
+  & φ := ¬ (φ₁ ∨ φ₂)\\
+
+\unshunt(\mysplit(φ₁)) ∧ \unshunt(φ₁ ⇒ \mysplit(¬ φ₂))
+  & φ := ¬ (φ₁ ⇒ φ₂)\\
+
+\unshunt(φ₁ ⇒ \mysplit(¬ φ₂)) ∧ \unshunt(¬ φ₂ ⇒ \mysplit(φ₁))
+  & φ := ¬ (φ₁ ⇔ φ₂)\\
+
+\unshunt(\mysplit(φ₁)
+  & φ := ¬ ¬ φ₁\\
+
+⊤ & φ := ¬ ⊥\\
+
+⊥ & φ := ¬ ⊤\\
+
+φ &\text{otherwise}
+\end{cases}
+\end{equation}
 
 \end{document}

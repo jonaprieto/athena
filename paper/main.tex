@@ -1,5 +1,16 @@
 
-\documentclass[runningheads, a4paper]{llncs}
+\documentclass[runningheads]{llncs}
+
+% \usepackage{geometry}
+% \geometry{
+%   a4paper,         % or letterpaper
+%   textwidth=15cm,  % llncs has 12.2cm
+%   textheight=24cm, % llncs has 19.3cm
+%   heightrounded,   % integer number of lines
+%   hratio=1:1,      % horizontally centered
+%   vratio=2:3,      % not vertically centered
+% }
+
 \usepackage{subfiles}
 
 \setcounter{tocdepth}{5}
@@ -15,6 +26,10 @@
 \def\EnableBpAbbreviations{true}
 
 \usepackage[title]{appendix}
+
+
+\usepackage{hyphenat}
+\hyphenation{proof-re-cons-truc-tion proof-ob-ject}
 
 % -------------------------------------------------------------------
 % TODO notes
@@ -126,17 +141,23 @@
 \newunicodechar{∼}{\ensuremath{\sim}}
 \newunicodechar{₀}{\ensuremath{{}_{0}}}
 \newunicodechar{₁}{\ensuremath{{}_{1}}}
-\newunicodechar{₃}{\ensuremath{{}_{2}}}
-\newunicodechar{₄}{\ensuremath{{}_{3}}}
-\newunicodechar{₅}{\ensuremath{{}_{4}}}
-\newunicodechar{₆}{\ensuremath{{}_{5}}}
-\newunicodechar{₇}{\ensuremath{{}_{6}}}
-\newunicodechar{₈}{\ensuremath{{}_{7}}}
-\newunicodechar{₉}{\ensuremath{{}_{8}}}
+\newunicodechar{₂}{\ensuremath{{}_{2}}}
+\newunicodechar{₃}{\ensuremath{{}_{3}}}
+\newunicodechar{₄}{\ensuremath{{}_{4}}}
+\newunicodechar{₅}{\ensuremath{{}_{5}}}
+\newunicodechar{₆}{\ensuremath{{}_{6}}}
+\newunicodechar{₇}{\ensuremath{{}_{7}}}
+\newunicodechar{₈}{\ensuremath{{}_{8}}}
+\newunicodechar{₉}{\ensuremath{{}_{9}}}
 \newunicodechar{∅}{\ensuremath{\emptyset}}
 \newunicodechar{⊢}{\ensuremath{\vdash}}
 \newunicodechar{⊥}{\ensuremath{\bot}}
+\newunicodechar{⊤}{\ensuremath{\top}}
 \newunicodechar{Γ}{\ensuremath{\Gamma}}
+\newunicodechar{φ}{\ensuremath{\varphi}}
+\newunicodechar{ϕ}{\ensuremath{\varphi}}
+\newunicodechar{ψ}{\ensuremath{\psi}}
+\newunicodechar{→}{\ensuremath{\rightarrow}}
 
 %\DeclareUnicodeCharacter{00A0}{~}
 
@@ -171,6 +192,7 @@
 \newcommand{\ITP}{\abbre{ITP}}
 \newcommand{\CPL}{\abbre{CPL}}
 \newcommand{\CNF}{\abbre{CNF}}
+\newcommand{\PROP}{\abbre{PROP}}
 
 \newcommand{\name}[1]{\texttt{#1}\xspace}
 \newcommand{\canonicalize}{\name{canonicalize}}
@@ -182,6 +204,10 @@
 \newcommand{\strip}{\name{strip}}
 \newcommand{\tptpaxiom}{\name{axiom}}
 \newcommand{\tptpconjecture}{\name{conjecture}}
+
+\newcommand{\nnf}{\name{nnf}}
+\newcommand{\unshunt}{\name{f}}
+\newcommand{\mysplit}{\name{split}}
 
 \newcommand{\prg}[1]{\texttt{#1}\xspace}
 \newcommand{\Agda}{\prg{Agda}}
@@ -238,6 +264,7 @@ Universidad EAFIT, Medell\'in, Colombia\\
 
 \subfile{sections/abstract.tex}
 \subfile{sections/introduction.tex}
+\subfile{sections/preliminaries.tex}
 \subfile{sections/metis-language-and-proofs.tex}
 \subfile{sections/proof-reconstruction.tex}
 \subfile{sections/conclusions.tex}

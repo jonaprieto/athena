@@ -104,7 +104,7 @@ support that allows us writing proofs similar as we find in math text books.
 %   ¬_               : (φ : Prop)   → Prop
 % \end{verbatim}
 
-% On the other hand, we represent theorems in\CPLusing an abstract data type
+% On the other hand, we represent theorems in \CPL using an abstract data type
 % to implement a natural deduction calculus.
 
 % \begin{verbatim}
