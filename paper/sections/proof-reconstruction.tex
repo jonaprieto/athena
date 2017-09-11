@@ -10,13 +10,12 @@
 \subsection{Workflow}
 \label{ssec:workflow}
 
-
 \begin{figure}
 \centering
 
 \begin{tikzpicture}[scale=0.9]
 \node[text width=2cm, align=center](problem) at (0,0)
-  {1. CPL \\ Problem.};
+  {1. \CPL \\ Problem.};
 
 \node[right = 1.1cm of problem, text width=2cm, align=center]
   (tptp){2. \TPTP \\ Problem.};
@@ -28,7 +27,7 @@
    (tstp) {4. \TSTP \\ Derivation.};
 
 \node[below= 0.5cm of tstp, text width=2cm, align=center, inner sep=10pt]
-  (athena) {5. \Haskell \\ Traslator.};
+  (athena) {5. \Haskell \\ Translator.};
 
 \node[left = 1.1cm of athena, text width=2cm, align=center]
    (agdafile) {6. \Agda \\ Proof.};
@@ -64,7 +63,7 @@
 \draw[->, thick] (agda) to (verified);
 \draw[->, thick, gray] (agda) to (failure);
 \end{tikzpicture}
-\caption{proof-reconstruction overview.}
+\caption{Proof-reconstruction overview.}
 \label{fig:proof-reconstruction-workflow}
 \end{figure}
 
@@ -74,18 +73,20 @@ of steps similar to the workflow presented by Sultana in
 system to a target system. In our case, the system of origin, the
 automatic theorem prover, is \Metis; the target system is the proof
 assistant, \Agda. We choose \Agda, but another proof assistant with
-support of type theory and features similar like \Agda is valid; our
-results do not depend on the proof assistant but the support of
-inductive data types, termination checking, and type-checking.
+support of type theory and similar features like \Agda
+(see a description of \Agda in section
+\ref{sec:implementation}) is valid; our results do not depend on 
+the proof assistant but the support of inductive data types, 
+termination checking, and type-checking.
 
 Following the diagram in Fig.
 \ref{fig:proof-reconstruction-workflow}, the process can begin with
 a problem in \CPL that we encode in \TPTP format to be sent as the
 input of the \Metis prover.
-The proof-search algorithms of \Metis in step No. 3 perform a
-search for a solution; if they success, \Metis
-replies a derivation in \TSTP format of the proof, else \Metis may
-no stop running forever or replies the problem is counter feasible.
+The proof-search algorithms of \Metis in step No. 3 intend to find 
+a solution; if they success, \Metis replies a derivation in \TSTP 
+format of the proof, else \Metis may no stop and running forever or 
+replies the problem is counter feasible.
 
 With such a derivation, we process it with our \Haskell translator
 tool, \Athena~\cite{Athena}.
@@ -94,13 +95,14 @@ derivation and generates a representation of the natural deduction
 proof using a version of a tree data structure (see the properties
 of this tree in subsection \ref{ssec:metis-proofs}). As a result,
 \Athena generates an \Agda file with such a proof. We have included
-in this file, imports for \Agda libraries that give the support for
-the logic~\cite{AgdaProp}, and versions of the \Metis' inference
-rules~\cite{AgdaMetis}.
+in this file, \emph{imports} that call \Agda libraries that give 
+support for the logic~\cite{AgdaProp}, and versions of the \Metis' 
+inference rules~\cite{AgdaMetis}.
 
 Finally, we use the proof assistant in step No. 7 to type-check the
 proof and verify its correctness. Next, we only have one answer:
-type-checking succeed (i.e., the proof is valid) or type-checking failed.
+type-checking succeed (i.e., the proof is valid) or type-checking 
+failed.
 If the type-check fails, one of the three actors in the process are
 responsible: \Metis, \Athena, or \Agda. We are responsible for
 errors committed in the translation from \TSTP to \Agda; lack of the
@@ -113,57 +115,10 @@ necessary to emulate the \Metis' inference rules.
 
 % ...................................................................
 
+\subsection{Recursion Theorems}
+
+\improvement{Convention notation := for equivalence between propositions}
 % \footnote{We use the \Agda standard library's implementation of the List data type.}.
-
-
-\subsection{A Brief Review of Agda}
-\label{ssec:agda-definition}
-
-\Agda is an interactive system for constructing proofs and programs,
-based on Martin-L\"{o}f's type theory and extended with records, parametrised
-modules, among other features.
-One of the main strengths of \Agda is its support for writing proofs,
-which we shall call \Agda's proof engine. It consists of: support for
-inductively defined types, including inductive families, and function
-definitions using pattern matching on such types, normalisation during type-
-checking, commands for refining proof terms, coverage checker and termination
-checker.
-
-The inductive approach for representing classical propositional logic
-is better because we benefit from \Agda's proof engine and its Unicode
-support that allows us writing proofs similar as we find in math text books.
-
-In \Agda, we define a proposition formula
-as an inductive type using the keyword \texttt{data}.
-The \name{PropFormula} data type stands for propositions,\cite{Altenkirch2015}.
-We include every connective, logic constant as a constructor.
-We also define the constructor for atomic propositions \verb!Var!
-to represent based on a natural number $i$, the atomic proposition
-$p_i$ for a finite universe of them ($i \leq n$), this is $Fin n$ in the
-definition.
-
-\begin{verbatim}
-data PropFormula : Set where
-  Var : Fin n → PropFormula
-  ⊤ : PropFormula
-  ⊥ : PropFormula
-  _∧_ _∨_ _⇒_ _⇔_ : (φ ψ : PropFormula) → PropFormula
-  ¬_ : (φ : PropFormula) → PropFormula
-\end{verbatim}
-
-\begin{remark}
-In the above definition, we defined all connectives, execept negation, as
-a binary connective. In \Agda, we named constructors for those functions
-that inhabit the data type, for example, the boolean connecetives and
-the function for atomic propositions, \verb!Var!, are constructors.
-The underscores in a definition like
-\begin{verbatim}
-_⇔_ : (φ ψ : PropFormula) → PropFormula
-\end{verbatim}
-stands for an argument, and \verb!(φ ψ : PropFormula)! intend for the
-uncurryfied version of the type:
-$$PropFormula → PropFormula → PropFormula$$
-\end{remark}
 
 \begin{definition}(Negative Normal Form (NNF))
 Una forma normal negativa para la formula $\varphi$ es aquella
@@ -312,8 +267,79 @@ our transformation functions like $nnf$.
 
 % ................................................
 
-\subsection{Splitting the goal}
+\subsection{Emulation \Metis' Inference Rules}
 
+\emph{Splitting.}
+We take a goal and generate subgoals that all in a conjunction
+prove the goal.
+
+\begin{theorem}[{\tt thm-$\unshunt^{*}$}] $Γ ⊢ \unshunt^{*}(φ, n)$ for $n\in \mathbb{N}$, then $Γ ⊢ φ$.
+\end{theorem}
+\begin{proof} Use induction on the cases defined by the result of
+$\unshunt^{*}$. When $n = 0$, by definition in Eq.
+\ref{eq:unshunt-structured} then $Γ ⊢ φ$.
+For the first case, we prove $Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃)$ from
+$Γ ⊢ \unshunt^{*}(φ₁ ⇒ (φ₂ ⇒ φ₃), n)$.
+Because $n > 0$, using induction on the second argument and the
+theorem $∧⇒$\texttt{-to-}$⇒⇒$ from \cite{AgdaProp}.
+
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{$Γ ⊢ \unshunt^{*}(φ₁ ⇒ (φ₂ ⇒ φ₃), n)$}
+\RightLabel{By definition}
+\UnaryInfC{$Γ ⊢ \unshunt^{*}(φ₁ ⇒ (φ₂ ⇒ φ₃), n-1)$}
+\RightLabel{\tt thm-$\unshunt^{*}$}
+\UnaryInfC{Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃}
+\RightLabel{\tt ∧⇒-to-⇒⇒}
+\UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃)}
+\end{bprooftree}
+\end{equation*}
+
+The second case proves $Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃)$ from
+ $Γ ⊢ \unshunt^{*}(φ₁ ⇒ (φ₂ ∧ φ₃), n)$ and the
+theorem $⇒∧⇒$\texttt{-to-}$⇒∧$ from \cite{AgdaProp}
+\begin{equation*}
+\scalebox{0.95}{
+$D_1$ := \begin{bprooftree}
+\AxiomC{$Γ ⊢ \unshunt^{*}(φ₁ ⇒ φ₂, n) ∧ \unshunt^{*}(φ₁ ⇒ φ₃, n)$}
+\RightLabel{\tt ∧-proj₁}
+\UnaryInfC{$Γ ⊢ \unshunt^{*}(φ₁ ⇒ φ₂, n)$}
+\RightLabel{By definition}
+\UnaryInfC{$Γ ⊢ \unshunt^{*}(φ₁ ⇒ φ₂, n-1)$}
+\RightLabel{\tt thm-$\unshunt^{*}$}
+\UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$}
+\end{bprooftree}
+}
+\end{equation*}
+
+\begin{equation*}
+D_2 :=
+\begin{bprooftree}
+\AxiomC{$Γ ⊢ \unshunt^{*}(φ₁ ⇒ φ₂) ∧ \unshunt^{*}(φ₁ ⇒ φ₃)$}
+\RightLabel{\tt ∧-proj₂}
+\UnaryInfC{$Γ ⊢ \unshunt^{*}(φ₁ ⇒ φ₃, n)$}
+\RightLabel{By definition}
+\UnaryInfC{$Γ ⊢ \unshunt^{*}(φ₁ ⇒ φ₃, n-1)$}
+\RightLabel{\tt thm-$\unshunt^{*}$}
+\UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₃$}
+\end{bprooftree}
+\end{equation*}
+
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{$D_1$}
+\AxiomC{$D_2$}
+\RightLabel{\tt ∧-intro}
+\BinaryInfC{$Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃)$}
+\RightLabel{\tt ⇒∧⇒-to-⇒∧}
+\UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃)}
+\end{bprooftree}
+\end{equation*}
+\end{proof}
+
+The function \mysplit performs such that strategy and it has the type
+\[ \mysplit : \PROP \to \PROP
+\]
 \begin{equation}
 \label{eq:split-definition}
 \mysplit(φ) =
@@ -352,5 +378,24 @@ our transformation functions like $nnf$.
 φ &\text{otherwise}
 \end{cases}
 \end{equation}
+
+The theorem is the following.
+
+\begin{theorem}[Splitting a Goal] $Γ ⊢ \mysplit(φ) ⇒ φ$
+\end{theorem}
+
+\begin{proof}
+ss
+\end{proof}
+
+The \mysplit function returns a conjunction of the subgoal. From each
+\TSTP derivation, we have information of the subgoals but no how they strictly appear in that conjunction. For that reason, with \Athena, we infer the exact order in the conjunction that coincides with the conjunction given by \mysplit.
+
+\begin{theorem} For a list of subgoals $s_0, \cdots, s_1$ with their respective theorem $Γ ⊢ s_i$, such that $\bigwedge_i s_i ⇒ \texttt{goal}$, then $Γ ⊢ \texttt{goal}$ 
+\end{theorem}
+
+
+
+
 
 \end{document}

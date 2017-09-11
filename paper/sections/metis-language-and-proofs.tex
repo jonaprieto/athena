@@ -39,7 +39,7 @@ form (denoted by \name{fof}) and clause normal form (denoted by
 \name{cnf}) formats~\cite{sutcliffe2009} -- is de facto input
 standard language to encode problems for many \ATPs. The \TPTP
 syntax describes a well-defined grammar to handle annotated formulas
-with the following form,
+with the following form.
 
 \begin{verbatim}
 language(name, role, formula).
@@ -54,7 +54,7 @@ The formulas include Boolean connectives (\verb!&!, \verb!|!,
 and \verb!$false!, for the symbols (∧, ∨, ⇒, ⇔, ¬, ⊤, ⊥), respectively.
 
 For instance, let us express the problem
-$p\, \vdash \neg (p \wedge \neg p) \vee (q \vee \neg q)$
+$p\, \vdash \neg (p \wedge \neg p) \vee (q \wedge \neg q)$
 in \TPTP syntax as follows, declaring an \tptpaxiom $p$, and the
 expected conclusion, the  \tptpconjecture
 \verb!~ ((p & ~ p) | (q & ~ q))!.
@@ -69,14 +69,14 @@ for derivations of ATPs~\cite{sutcliffe2004tstp}. A \TSTP derivation
 is a directed acyclic graph, a proof tree, where each leaf is a
 formula from the \TPTP input. A node is a formula inferred from the
 parent formulas. The root is the final derived formula. Such a
-derivation is a list of annotated formulas with the form,
+derivation is a list of annotated formulas with the form.
 
 \begin{verbatim}
 language(name, role, formula, source [,useful info]).
 \end{verbatim}
 
 The \name{source} field is an inference record with the following
-pattern,
+pattern.
 
 \begin{verbatim}
 inference(rule, useful info, parents).
@@ -220,7 +220,7 @@ undocumented rules found in \TSTP derivations are: \canonicalize,
   \RightLabel{\footnotesize canonicalize}
   \UnaryInfC{$\bot$}
 \end{bprooftree}
-\caption{The \Metis' refutation tree for $p \vdash p$ from the
+\caption{The \Metis' proof tree for $p \vdash p$ from the
 derivation in Fig.~\ref{fig:metis-proof-tstp}}
 \label{fig:metis-example}
 \end{figure}

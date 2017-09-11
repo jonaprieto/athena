@@ -7,7 +7,7 @@
 \section{Introduction}
 \label{sec:introduction}
 
-proof-reconstruction is a hard labor since it depends on the
+Proof-reconstruction is a hard labor since it depends on the
 integration of two complex systems. On the one hand, we have the
 automatic theorem provers (henceforth \ATP) and their specification
 logic. These tools are usually classified in at least one of the
@@ -64,19 +64,22 @@ programs are relevant not only because it helps to spread their
 usage but they also increase the confidence of their users about
 their algorithms and their correctness (see, for example, bugs in
 \ATPs~\cite{Keller2013}, \cite{Bohme2011}, \cite{Fleury2014} and
-\cite{Kanso2012}). We mention some of these tools in the related work,
-section \ref{sec:related-work}.
+\cite{Kanso2012}). We mention some of these tools in the related 
+work, section \ref{sec:related-work}.
 
 In this paper, we describe the integration of \Metis prover with the
 proof assistant \Agda by parsing \TSTP derivations to generate \Agda
-proof-terms. We structure the paper as follows. In section
-\ref{sec:metis-language-and-proofs}, we briefly introduce the \Metis
-prover. In section \ref{sec:proof-reconstruction}, we present our
+proof-terms. We structure the paper as follows. 
+We briefly mention notation and syntax of the classical propositional
+logic in section \ref{sec:preliminaries}.
+In section \ref{sec:metis-language-and-proofs}, we introduce the
+\Metis prover and its deduction system.
+In section \ref{sec:proof-reconstruction}, we present our
 approach to reconstruct proofs deliver by \Metis in type theory.
-In section~\ref{sec:conclusions}, we discuss
-some limitations, advantages, and disadvantages with other similar
-proof-reconstruction tools for ending up with some conclusions and
-the future work. Finally, we list some related works in proof
-reconstruction in section \ref{sec:related-work}.
+We listed some conclusions and future work in section
+\ref{sec:conclusions}. At the end, we list some related works in 
+proof reconstruction in section \ref{sec:related-work}.
+The appendix \textsc{A} shows a complete example of the proof 
+reconstruction workflow.
 
 \end{document}
