@@ -1,9 +1,73 @@
+\emph{NNF.}
+A negative normal form for the formula φ is one in which negations
+appear only in the literals and the expression is in terms only of
+the boolean operators (¬, ∧, ∨).
+
+To transform a formula φ to its equivalent \abbre{NNF} form, we
+apply recursively the following equations. The function type for
+\name{nnf} is $\PROP \to \PROP$.
+
+\begin{equation}
+\label{eq:nnf-definition}
+\nnf(φ) =
+\begin{cases}
+\nnf(φ₁) ∧ \nnf(φ₂)
+   & φ := φ₁ ∧ φ₂, \\
+
+\nnf(φ₁) ∨ \nnf(φ₂)
+   & φ := φ₁ ∨ φ₂, \\
+
+\nnf(¬ φ₁ ∨ φ₂)
+   & φ := φ₁ ⇒ φ₂, \\
+
+\nnf(φ₁ ⇒ φ₂ ∧ φ₂ ⇒ φ₁)
+   & φ := φ₁ ⇔ φ₂, \\
+
+\nnf(¬ φ₁ ∨ ¬ φ₂)
+   & φ := ¬ (φ₁ ∧ φ₂), \\
+
+\nnf(¬ φ₁ ∧ ¬ φ₂)
+   & φ := ¬ (φ₁ ∨ φ₂), \\
+
+\nnf(φ₁)
+   & φ := ¬ ¬ φ₁, \\
+
+
+\nnf(¬ (φ₂ ∨ ¬ φ₁))
+   & φ := ¬ (φ₁ ⇒ φ₂), \\
+
+\nnf(¬ (φ₁ ⇒ φ₂ ∧ φ₂ ⇒ φ₁))
+   & φ := ¬ (φ₁ ⇔ φ₂), \\
+⊥  & φ := ¬ ⊤, \\
+⊤  & φ := ¬ ⊥, \\
+
+φ  & \text{otherwise}.
+\end{cases}
+\end{equation}
 
 \subsection{The Translation Method}
 
 Our system (see Fig~\ref{fig:proof-reconstruction-overview}) translates a \TSTP file into an \Agda proof by parsing it with a \Haskell tool. This tool reconstructs the proof tree, removing redundancies and cutting unnecessary steps (see for example repetitions in the derivation shown in Fig~\ref{fig:metis-example}). The output is \Agda code. Then, we use \Agda as a proof checker to type-check the proof. If type-checking succeed, then our proof is checked. Else, we have a failure proof due to three possible factors. First, a soundness bug in the ATP or a bug in the output printing. Second, a bug in the translation process in our \TSTP parsing module, the inner algorithms in the analysis of the proof tree, the pretty printer module, or a bug in \Haskell. Lastly, a bug in our proof checker \Agda.
 
 % -------------------------------------------------------------------
+
+\subsection{Rules as Theorems}
+
+Main algorithms in \CPL need the propositions in some of their normal
+forms. For instance, from the negative normal form
+(henceforth, \abbre{NNF}), we can derive the conjunctive normal form,
+and the disjunctive normal form as well.
+Therefore, we start giving the definition of \abbre{NNF}, one
+function definition, \name{nnf} and a refinement of it.
+We will use it later for instance in the description of \canonicalize
+rule. The following treatment to this function, \name{nnf},
+applies for other conversion functions and theorems defined in
+\cite{AgdaProp,AgdaMetis}.
+We use the notation convention $:=$ for equivalence between
+propositions. The \PROP inductive data type is defined as usual
+based on the definition from section \ref{sec:preliminaries} and
+implemented in \Agda with \name{PropFormula} in section
+\ref{sec:implementation}.
 
 \subsection{Reconstruction Work-flow}
 

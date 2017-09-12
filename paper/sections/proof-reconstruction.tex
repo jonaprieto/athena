@@ -115,175 +115,131 @@ necessary to emulate the \Metis' inference rules.
 
 % ...................................................................
 
-\subsection{Rules as Theorems}
+\subsection{Well-structured Recursion}
+\label{ssec:well-structured recursion}
 
-Main algorithms in \CPL need the propositions in some of their normal
-forms. For instance, from the negative normal form
-(henceforth, \abbre{NNF}), we can derive the conjunctive normal form,
-and the disjunctive normal form as well.
-Therefore, we start giving the definition of \abbre{NNF}, one
-function definition, \name{nnf} and a refinement of it.
-We will use it later for instance in the description of \canonicalize
-rule. The following treatment to this function, \name{nnf},
-applies for other conversion functions and theorems defined in
-\cite{AgdaProp,AgdaMetis}.
-We use the notation convention $:=$ for equivalence between
-propositions. The \PROP inductive data type is defined as usual
-based on the definition from section \ref{sec:preliminaries} and
-implemented in \Agda with \name{PropFormula} in section
-\ref{sec:implementation}.
+To emulate the \Metis' Inference Rules in type theory.
+We encounter many functions involved with termination problems, that
+means, it is not possible to determine effectively if the function
+terminates. That makes impossible to translate in type theory
+directly. For that reason, we show a technique that will help us to fix such a issue and guide us how to proceed later.
 
-\subsubsection{\CPL Functions}
-\hspace*{5cm}\\[3mm]
-\emph{NNF.}
-A negative normal form for the formula φ is one in which negations
-appear only in the literals and the expression is in terms only of
-the boolean operators (¬, ∧, ∨).
+A recursive function is a \emph{well-structured recursion}, if the
+size of the arguments with which it is defined decrease in
+size for each call to the function in the definition.
+A well-structured function terminates and it can be translated
+directly to type theory.
 
-To transform a formula φ to its equivalent \abbre{NNF} form, we
-apply recursively the following equations. The function type for
-\name{nnf} is $\PROP \to \PROP$.
-
-\begin{equation}
-\label{eq:nnf-definition}
-\nnf(φ) =
-\begin{cases}
-\nnf(φ₁) ∧ \nnf(φ₂)
-   & φ := φ₁ ∧ φ₂  \\
-
-\nnf(φ₁) ∨ \nnf(φ₂)
-   & φ := φ₁ ∨ φ₂  \\
-
-\nnf(¬ φ₁ ∨ φ₂)
-   & φ := φ₁ ⇒ φ₂  \\
-
-\nnf(φ₁ ⇒ φ₂ ∧ φ₂ ⇒ φ₁)
-   & φ := φ₁ ⇔ φ₂\\
-
-\nnf(¬ φ₁ ∨ ¬ φ₂)
-   & φ := ¬ (φ₁ ∧ φ₂) \\
-
-\nnf(¬ φ₁ ∧ ¬ φ₂)
-   & φ := ¬ (φ₁ ∨ φ₂) \\
-
-\nnf(φ₁)
-   & φ := ¬ ¬ φ₁     \\
-
-
-\nnf(¬ (φ₂ ∨ ¬ φ₁))
-   & φ := ¬ (φ₁ ⇒ φ₂)  \\
-
-\nnf(¬ (φ₁ ⇒ φ₂ ∧ φ₂ ⇒ φ₁))
-   & φ := ¬ (φ₁ ⇔ φ₂) \\
-
-⊥  & φ := ¬ ⊤        \\
-
-⊤  & φ := ¬ ⊥        \\
-
-φ  & \text{otherwise}
-\end{cases}
-\end{equation}
-
-A recursive function is a well-structured recursion, if the size of
-the arguments with which it is defined decrease in size for each
-call to the function in the definition. That guarantee termination
-of the function, and its translation to constructive Type Theory.
-
-But we need to improve the definition for \name{nnf} in order to have
-a version of a well-structured recursion.
-We show a strategy to achieve that with a smaller example function,
-\unshunt, that we will use forward to formalize the inference
-\name{strip}.
+Consider the following example from the \strip inference.
 
 \begin{equation}
 \label{eq:unshunt-definition}
 \unshunt(φ) =
 \begin{cases}
 \unshunt((φ₁ ∧ φ₂) ⇒ φ₃)
-  & φ := φ₁ ⇒ (φ₂ ⇒ φ₃)\\
+  & φ := φ₁ ⇒ (φ₂ ⇒ φ₃),\\
 
 \unshunt(φ₁ ⇒ φ₂) ∧ \unshunt(φ₁ ⇒ φ₃)
-  & φ := φ₁ ⇒ (φ₂ ∧ φ₃)\\
+  & φ := φ₁ ⇒ (φ₂ ∧ φ₃),\\
 
-φ &\text{otherwise}
+φ &\text{otherwise}.
 \end{cases}
 \end{equation}
 
-To translate the functions in a way that is well defined,
-we used the method proposed by Bove and Capettra in
-\cite{Bove2005}, which basically consists of
+From the above definition, in the first case of the \unshunt
+function, the size of the argument doesn't really decrease.
+Actually, it maintains with the same size ((φ₁ ∧ φ₂) ⇒ φ₃ and  (φ₁ ⇒
+(φ₂ ⇒ φ₃))). Therefore, a termination checking will fail with \unshunt
+function.
 
-We take a general recursive function $f: \sigma \to \tau$.
-Its formalization in Type Theory will define an inductive
-predicate $Ind$, $ P: \sigma \to Ind$.
+To improve it, we will use the technique proposed by Bove and Capettra in
+\cite{Bove2005}, which in our case basically consists of
+take a general recursive function $f: \sigma \to \tau$.
+and an predicate $P: \sigma \to \abbre{Ind}$, where $\abbre{Ind}$
+is a type with a structure inductive definition.
+Then, we redefine the function as
+$f: \sigma \to \abbre{Ind}\ \to \tau$, and perform the recursion
+using induction on the structure of the \abbre{Ind} type.
 
-In our case, the set of natural numbers will serve as our
-inductive set $Ind$ and as second argument for new function.
-Thus, the function $\unshunt$ will be defined by structural
-recursion in his second term.
+In our case, $\abbre{Ind}$ will be the \abbre{Nat} data type for
+natural numbers with constructors \abbre{zero} and \abbre{suc} defined as usual.
 
-The new proposed $\unshunt^{*}$ has type,
+Thus, we have function $\unshunt : \PROP \to \Nat \to \PROP$ defined by structural recursion in his second term with type as follows,
 
-\[
-\unshunt^{*} : PROP \to \mathbb{N} \to PROP.
-\]
-
-\begin{equation}
+\begin{align*}
 \label{eq:unshunt-structured}
-\unshunt^{*}(φ, n) =
+\unshunt(φ, \zero) &= φ\\
+\unshunt(φ, \suc(n)) &=
 \begin{cases}
-\unshunt^{*}((φ₁ ∧ φ₂) ⇒ φ₃, n-1)
-  & φ := φ₁ ⇒ (φ₂ ⇒ φ₃)\\
-
-\unshunt^{*}(φ₁ ⇒ φ₂, n-1) ∧ \unshunt^{*}(φ₁ ⇒ φ₃,n-1)
-  & φ := φ₁ ⇒ (φ₂ ∧ φ₃)\\
-
-φ & n := 0
+\unshunt((φ₁ ∧ φ₂) ⇒ φ₃, n)
+  & φ := φ₁ ⇒ (φ₂ ⇒ φ₃),\\
+\unshunt(φ₁ ⇒ φ₂, n) ∧ \unshunt(φ₁ ⇒ φ₃,n)
+  & φ := φ₁ ⇒ (φ₂ ∧ φ₃).
 \end{cases}
-\end{equation}
+\end{align*}
 
+Finally, we define the complexity measure to handle the second argument for the \unshunt function.
 
-\begin{definition}
-Th rank of proposition φ denoted by $rank(\phi)$ is defined by the
-following equation.
+\newcommand{\rank}{\name{rank}}
+
+A \emph{complexity measure} defined in \cite{Agudelo-Agudelo2017} or
+a rank function presented in \cite{VanDalen1994} is a function
+$\PROP \to \Nat$ that indents to associate a natural number for a
+proposition φ. The following function is a complexity measure.
+
+\begin{equation*}
+\label{eq:rank-definition}
+\rank(φ)=
+\begin{cases}
+0 &\text{for atomic }φ, \\
+\rank(φ₁) + c_{¬}  & φ := \neg φ₁, \\
+\max(\rank(φ₁),\rank(φ₂)) + c_{\square}
+  & φ := φ₁\,\square\, φ₂.
+\end{cases}
+\end{equation*}
+where $c_{¬}$ or $c_{\square}$ is a non-negative integer called the
+complexity of the connective.
+
+Nevertheless, we need to define an appropriate complexity measure for the second argument in the $\unshunt$ function, in order to
+expect the same behavior of the original function as it was defined at first in Eq.~\ref{eq:unshunt-definition}.
 
 \begin{equation}
 \label{eq:rank-definition}
-rank(\phi)=
+\unshunt_{cm}(φ)=
 \begin{cases}
-0 &\text{for atomic }\phi\\
-
-\max(rank(\phi_1),rank(\phi_2)) + 1
-  & \phi := \phi_1\,\square\, \phi_2 \\
-rank(\phi_1) + 1  & \phi := \neg \phi_1
+\unshunt_{cm}(φ₃) + 2 & φ := φ₁ ⇒ (φ₂ ⇒ φ₃),\\
+\max(\unshunt_{cm}(φ₂),\unshunt_{cm}(φ₃)) + 1
+  & φ := φ₁ ⇒ (φ₂ ∧ φ₃),\\
+0 &\text{otherwise.}
 \end{cases}
 \end{equation}
-\end{definition}
 
-The final review for $\unshunt$ function is the
-$\unshunt^{+}$ function in Eq.~\ref{eq:unshunt-fixed}
-with $PROP \to PROP$ type.
-
+Then, a curated version of \unshunt is presented in Eq.
+\ref{eq:unshunt-fixed}.
 
 \begin{equation}
 \label{eq:unshunt-fixed}
-\unshunt^{+}(\varphi) = \unshunt^{*}(\varphi, rank(\varphi))
+\unshunt(\varphi) := \unshunt(\varphi, \unshunt_{cm}(\varphi))
 \end{equation}
 
-In the following section, our task will consist of searching
-appropriate functions like $rank$ to assure the termination for
-transformation functions like $nnf$.
+In the following section, we may need define such complexity measure
+functions for termination-checking.
 
 % ................................................
 
-\subsection{Emulation \Metis' Inference Rules}
+\subsection{Emulating \Metis' Inference Rules}
+\label{ssec:emulating-inferences}
+
 
 \emph{Splitting.}
 To prove a goal, we can prove smaller subgoals and combine their
 proofs to achieve the final target, a proof of the initial goal.
 
-\begin{theorem}[{\tt thm-$\unshunt^{*}$}] $Γ ⊢ \unshunt^{*}(φ, n)$ for $n\in \mathbb{N}$, then $Γ ⊢ φ$.
+\begin{theorem}[{\tt thm-$\unshunt^{*}$}] $Γ ⊢ \unshunt^{*}(φ, n)$
+for $n\in \Nat$, then $Γ ⊢ φ$.
+\label{thm:unshunt}
 \end{theorem}
+
 \begin{proof} Use induction on the cases defined by the result of
 $\unshunt^{*}$. When $n = 0$, by definition in Eq.
 \ref{eq:unshunt-structured} then $Γ ⊢ φ$.
@@ -309,7 +265,7 @@ The second case proves $Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃)$ from
 theorem $⇒∧⇒$\texttt{-to-}$⇒∧$ from \cite{AgdaProp}
 \begin{equation*}
 \scalebox{0.95}{
-$D_1$ := \begin{bprooftree}
+$\mathcal{D}_1$ := \begin{bprooftree}
 \AxiomC{$Γ ⊢ \unshunt^{*}(φ₁ ⇒ φ₂, n) ∧ \unshunt^{*}(φ₁ ⇒ φ₃, n)$}
 \RightLabel{\tt ∧-proj₁}
 \UnaryInfC{$Γ ⊢ \unshunt^{*}(φ₁ ⇒ φ₂, n)$}
@@ -322,7 +278,7 @@ $D_1$ := \begin{bprooftree}
 \end{equation*}
 
 \begin{equation*}
-D_2 :=
+\mathcal{D}_2 :=
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ \unshunt^{*}(φ₁ ⇒ φ₂) ∧ \unshunt^{*}(φ₁ ⇒ φ₃)$}
 \RightLabel{\tt ∧-proj₂}
@@ -336,8 +292,8 @@ D_2 :=
 
 \begin{equation*}
 \begin{bprooftree}
-\AxiomC{$D_1$}
-\AxiomC{$D_2$}
+\AxiomC{$\mathcal{D}_1$}
+\AxiomC{$\mathcal{D}_2$}
 \RightLabel{\tt ∧-intro}
 \BinaryInfC{$Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃)$}
 \RightLabel{\tt ⇒∧⇒-to-⇒∧}
@@ -346,59 +302,221 @@ D_2 :=
 \end{equation*}
 \end{proof}
 
-The function \mysplit has the type
-\[ \mysplit : \PROP \to \PROP
-\]
+\vskip 3mm
+
+From now on, we redefine the function $\unshunt$ with the
+definition of $\unshunt^{+}$ for no overloading the notation forward.
+
+\begin{theorem}[{\tt thm-\unshunt}] $Γ ⊢ \unshunt(φ)$ then $Γ ⊢ φ$.
+\end{theorem}
+\begin{proof} It follows from Thm.~\ref{thm:unshunt} using the
+\rank function as the second argument.
+\end{proof}
+
+The \mysplit function yields a conjunction of subformulas that
+implies the proposition φ, the argument of the function. This
+function has type $\PROP \to \NN \to PROP$, its definition is
+ $\mysplit(φ,0) = φ$, and
+for all$n\in \NN$, $n > 0$,
+
 \begin{equation}
 \label{eq:split-definition}
-\mysplit(φ) =
+\mysplit(φ,n+1) =
 \begin{cases}
-\unshunt(\mysplit(φ₁)) ∧ \unshunt(φ₁ ⇒ \mysplit(φ₂)
-  & φ := φ₁ ∧ φ₂\\
+\unshunt(\mysplit(φ₁,n)) ∧ \unshunt(φ₁ ⇒ \mysplit(φ₂,n)
+  & φ := φ₁ ∧ φ₂,\\
 
-\unshunt(¬ φ₁ ⇒ \mysplit(φ₂))
-  & φ := φ₁ ∨ φ₂\\
+\unshunt(¬ φ₁ ⇒ \mysplit(φ₂,n))
+  & φ := φ₁ ∨ φ₂,\\
 
-\unshunt(φ₁ ⇒ \mysplit(φ₂))
-  & φ := φ₁ ⇒ φ₂\\
+\unshunt(φ₁ ⇒ \mysplit(φ₂,n))
+  & φ := φ₁ ⇒ φ₂,\\
 
-\unshunt(φ₁ ⇒ \mysplit(φ₂)) ∧ \unshunt(φ₂ ⇒ \mysplit(φ₁))
-  & φ := φ₁ ⇔ φ₂\\
+\unshunt(φ₁ ⇒ \mysplit(φ₂,n)) ∧ \unshunt(φ₂ ⇒ \mysplit(φ₁,n))
+  & φ := φ₁ ⇔ φ₂,\\
 
-\unshunt(φ₁ ⇒ \mysplit(¬ φ₂))
-  & φ := ¬ (φ₁ ∧ φ₂)\\
+\unshunt(φ₁ ⇒ \mysplit(¬ φ₂, n))
+  & φ := ¬ (φ₁ ∧ φ₂),\\
 
-\unshunt(\mysplit(¬ φ₁)) ∧ \unshunt(¬ φ₁ ⇒ \mysplit(¬ φ₂))
-  & φ := ¬ (φ₁ ∨ φ₂)\\
+\unshunt(\mysplit(¬ φ₁,n)) ∧ \unshunt(¬ φ₁ ⇒ \mysplit(¬ φ₂,n))
+  & φ := ¬ (φ₁ ∨ φ₂),\\
 
-\unshunt(\mysplit(φ₁)) ∧ \unshunt(φ₁ ⇒ \mysplit(¬ φ₂))
-  & φ := ¬ (φ₁ ⇒ φ₂)\\
+\unshunt(\mysplit(φ₁,n)) ∧ \unshunt(φ₁ ⇒ \mysplit(¬ φ₂,n))
+  & φ := ¬ (φ₁ ⇒ φ₂),\\
 
-\unshunt(φ₁ ⇒ \mysplit(¬ φ₂)) ∧ \unshunt(¬ φ₂ ⇒ \mysplit(φ₁))
-  & φ := ¬ (φ₁ ⇔ φ₂)\\
+\unshunt(φ₁ ⇒ \mysplit(¬ φ₂,n)) ∧ \unshunt(¬ φ₂ ⇒ \mysplit(φ₁,n))
+  & φ := ¬ (φ₁ ⇔ φ₂),\\
 
-\unshunt(\mysplit(φ₁)
-  & φ := ¬ ¬ φ₁\\
+\unshunt(\mysplit(φ₁, n))
+  & φ := ¬ ¬ φ₁,\\
 
-⊤ & φ := ¬ ⊥\\
+⊤ & φ := ¬ ⊥,\\
 
-⊥ & φ := ¬ ⊤\\
-
-φ &\text{otherwise}
+⊥ & φ := ¬ ⊤.
 \end{cases}
 \end{equation}
 
-\begin{theorem}[Splitting a Goal] $Γ ⊢ \mysplit(φ) ⇒ φ$
+
+\newcommand{\thmsplit}{\name{thm-split}}
+\begin{theorem}[\thmsplit] $Γ ⊢ \mysplit(φ)$ then $Γ ⊢ φ$.
 \end{theorem}
 
-\begin{proof}
-ss
+\begin{proof} We use induction on the structure of the formula
+following the cases in the definition of \mysplit function.
+We proceed to show some cases since the others are proved in a
+similar way.\\[3mm]
+(φ := φ₁ ∧ φ₂)
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{$\mathcal{D}_1$}
+\UnaryInfC{Γ ⊢ φ₁}
+
+\AxiomC{$\mathcal{D}_1$}
+\UnaryInfC{Γ ⊢ φ₁}
+
+\AxiomC{$Γ ⊢ \mysplit(φ)$}
+\RightLabel{By Def.}
+\UnaryInfC{$Γ ⊢ \unshunt(φ₁) ∧ \unshunt(φ₁ ⇒ \mysplit(φ₂))$}
+\RightLabel{\tt $∧$-proj$₂$}
+\UnaryInfC{$Γ ⊢ \unshunt(φ₁ ⇒ \mysplit(φ₂))$}
+\RightLabel{\thmunshunt}
+\UnaryInfC{$Γ ⊢ φ₁ ⇒ \mysplit(φ₂)$}
+\RightLabel{\tt $⇒$-elim}
+\BinaryInfC{$Γ ⊢ \mysplit(φ₂)$}
+\RightLabel{\thmsplit}
+\UnaryInfC{$Γ ⊢ φ₂$}
+
+\RightLabel{\tt ∧-intro}
+\BinaryInfC{$Γ ⊢ φ₁ ∧ φ₂$}
+\end{bprooftree}
+\end{equation*}
+where
+\begin{equation*}
+\mathcal{D}_1 =
+\begin{bprooftree}
+\AxiomC{$Γ ⊢ \mysplit(φ)$}
+\UnaryInfC{$Γ ⊢ \unshunt(φ₁) ∧ \unshunt(φ₁ ⇒ \mysplit(φ₂))$}
+\RightLabel{\tt ∧-proj₁}
+\UnaryInfC{$Γ ⊢ \unshunt(φ₁)$}
+\RightLabel{\thmunshunt}
+\UnaryInfC{$Γ ⊢ φ₁$}
+\end{bprooftree}
+\end{equation*}
+
+
+(φ := φ₁ ⇒ φ₂)
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{}
+\RightLabel{\tt assume φ₁}
+\UnaryInfC{$Γ , φ₁ ⊢ φ₁$}
+\AxiomC{$Γ ⊢ \mysplit(φ)$}
+\RightLabel{By def.}
+\UnaryInfC{$Γ ⊢ \unshunt(φ₁ ⇒ \mysplit(φ₂))$}
+\RightLabel{\thmunshunt}
+\UnaryInfC{$Γ ⊢ φ₁ ⇒ \mysplit(φ₂)$}
+\RightLabel{weaken φ₁}
+\UnaryInfC{$Γ , φ₁ ⊢ φ₁ ⇒ \mysplit(φ₂)$}
+\RightLabel{\tt ⇒-elim}
+\BinaryInfC{$Γ , φ₁ ⊢ \mysplit(φ₂)$}
+\RightLabel{\thmsplit}
+\UnaryInfC{$Γ , φ₁ ⊢ φ₂$}
+\RightLabel{\tt ⇒-intro}
+\UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$}
+\end{bprooftree}
+\end{equation*}
+
+
+(φ := ¬ (φ₁ ∨ φ₂))
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{$\mathcal{D}$}
+\UnaryInfC{$Γ ⊢ ¬ φ₁$}
+
+\AxiomC{$\mathcal{D}$}
+\UnaryInfC{$Γ ⊢ ¬ φ₁$}
+
+\AxiomC{$Γ ⊢ \mysplit(φ)$}
+\RightLabel{By def.}
+\UnaryInfC{$Γ ⊢ \unshunt(¬ φ₁) ∧ \unshunt(¬ φ₁ ⇒ \mysplit(φ₂))$}
+\RightLabel{\tt ∧-proj₂}
+\UnaryInfC{$Γ ⊢ \unshunt(¬ φ₁ ⇒ \mysplit(φ₂))$}
+\RightLabel{\thmunshunt}
+\UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \mysplit(φ₂)$}
+\RightLabel{\tt ⇒-elim}
+\BinaryInfC{$Γ ⊢ \mysplit(φ₂)$}
+\RightLabel{\thmsplit}
+\UnaryInfC{$Γ ⊢ ¬ φ₂$}
+\RightLabel{\tt ∧-intro}
+\BinaryInfC{$Γ ⊢ ¬ φ₁ ∧ ¬ φ₂$}
+\RightLabel{\tt ¬∧¬-to-¬∨}
+\UnaryInfC{$Γ ⊢ ¬ (φ₁ ∨ φ₂)$}
+\end{bprooftree}
+\end{equation*}
+where
+\begin{equation*}
+\mathcal{D} =
+\begin{bprooftree}
+\AxiomC{$Γ ⊢ \mysplit(φ, n)$}
+\RightLabel{By def.}
+\UnaryInfC{$Γ ⊢ \unshunt(¬ φ₁) ∧ \unshunt(¬ φ₁ ⇒ \mysplit(φ₂, n))$}
+\RightLabel{\tt ∧-proj₁}
+\UnaryInfC{$Γ ⊢ \unshunt(¬ φ₁)$}
+\RightLabel{\thmunshunt}
+\UnaryInfC{$Γ ⊢ ¬ φ₁$}
+\end{bprooftree}
+\end{equation*}
+
+
+
+(φ := ¬ (φ₁ ⇔ φ₂))
+\begin{equation*}
+\begin{bprooftree}
+
+% -- right
+
+\AxiomC{$Γ ⊢ \mysplit(φ, n)$}
+\RightLabel{By def.}
+\UnaryInfC{$Γ ⊢ \unshunt(φ₁ ⇒ \mysplit(¬ φ₂)) ∧ \unshunt(¬ φ₂ ⇒ \mysplit(φ₁)) $}
+\RightLabel{\tt ∧-proj₂}
+\UnaryInfC{$Γ ⊢ \unshunt(¬ φ₂ ⇒ \mysplit(φ₁))$}
+\RightLabel{\tt \thmunshunt}
+\UnaryInfC{$Γ ⊢ ¬ φ₂ ⇒ \mysplit(φ₁)$}
+\RightLabel{\tt weaken ¬ φ₂}
+\UnaryInfC{$Γ , ¬ φ₂ ⊢ ¬ φ₂ ⇒ \mysplit(φ₁)$}
+
+% -- right
+
+% -- left
+\AxiomC{}
+\RightLabel{\tt assume (¬ φ₂)}
+\UnaryInfC{$Γ , ¬ φ₂ ⊢ ¬ φ₂$}
+\RightLabel{\tt ⇒-elim}
+
+\BinaryInfC{$Γ , ¬ φ₂ ⊢ \mysplit(φ₁)$}
+\RightLabel{\thmsplit}
+\UnaryInfC{$Γ , ¬ φ₂ ⊢ φ₁ $}
+\RightLabel{\tt ⇒-intro}
+\UnaryInfC{$Γ ⊢ ¬ φ₂ ⇒ φ₁$}
+% -- left
+
+% \RightLabel{\tt ∧-intro}
+% \BinaryInfC{$Γ ⊢ (φ₁ ⇒ ¬ φ₂) ∧ (¬ φ₂ ⇒ φ₁)$}
+% \RightLabel{\tt ⇒¬∧¬⇒-to-¬⇔}
+% \UnaryInfC{$Γ ⊢ ¬ (φ₁ ⇔ φ₂)$}
+\end{bprooftree}
+\end{equation*}
+
 \end{proof}
 
-The \mysplit function returns a conjunction of the subgoal. From each
-\TSTP derivation, we have information of the subgoals but no how they strictly appear in that conjunction. For that reason, with \Athena, we infer the exact order in the conjunction that coincides with the output by \mysplit.
+The \mysplit function returns a conjunction of the subgoals.
+From each \TSTP derivation, we actually have information of the
+subgoals but it is not explicit how they appear in the conjunction.
+For that reason, with \Athena, we infer the exact order in the
+conjunction that coincides with the output by \mysplit.
 
-\begin{theorem} For a list of subgoals $s_0, \cdots, s_1$ with their respective theorem $Γ ⊢ s_i$, such that $\bigwedge_i s_i ⇒ \texttt{goal}$, then $Γ ⊢ \texttt{goal}$.
+\begin{theorem} For a list of subgoals $s_0, \cdots, s_1$ with their
+respective theorem $Γ ⊢ s_i$, such that $\bigwedge_i s_i ⇒ \texttt{goal}$, then $Γ ⊢ \texttt{goal}$.
 \end{theorem}
 
 
