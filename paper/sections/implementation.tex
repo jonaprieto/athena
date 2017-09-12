@@ -12,29 +12,30 @@
 \label{ssec:agda-definition}
 
 \Agda is an interactive system for constructing proofs and programs,
-based on Martin-L\"{o}f's type theory and extended with records, parametrised
-modules, among other features.
-One of the main strengths of \Agda is its support for writing proofs,
-which we shall call \Agda's proof engine. It consists of: support for
-inductively defined types, including inductive families, and function
-definitions using pattern matching on such types, normalisation during type-
-checking, commands for refining proof terms, coverage checker and termination
-checker.
+based on Martin-L\"{o}f's type theory and extended with records,
+parametrised modules, among other features. One of the main
+strengths of \Agda is its support for writing proofs, which we shall
+call \Agda's proof engine. It consists of: support for inductively
+defined types, including inductive families, and function
+definitions using pattern matching on such types, normalisation
+during type- checking, commands for refining proof terms, coverage
+checker and termination checker.
 
-The inductive approach for representing classical propositional logic
-is better because we benefit from \Agda's proof engine and its Unicode
-support that allows us writing proofs similar as we find in math text books.
+The inductive approach for representing classical propositional
+logic is better because we benefit from \Agda's proof engine and its
+Unicode support that allows us writing proofs similar as we find in
+math text books.
 
 In \Agda, we define a proposition formula
 as an inductive type using the keyword \texttt{data} extending the
-its definition in \cite{Altenkirch2015}.  
+its definition in \cite{Altenkirch2015}.
 The \name{PropFormula} data type stands for propositions
 as we define in section \ref{sec:preliminaries}.
 We include every connective and logic constant as a constructor.
 We also define the constructor for atomic propositions denoted by
-\verb!Var!. This atomic expressions are represented using a natural 
-number $i$ bounded by a size of the universe $n$ for those atomic 
-propositions (in \Agda, we use the data type \verb!Fin! from the 
+\verb!Var!. These atomic expressions are represented using a natural
+number $i$ bounded by a size of the universe $n$ for those atomic
+propositions (in \Agda, we use the data type \verb!Fin! from the
 standard  library for such a purpose).
 
 \begin{verbatim}
@@ -62,8 +63,7 @@ PropFormula → PropFormula → PropFormula.
 \end{remark}
 
 \begin{example}
-Using Unicode translating a proposition from a textbook to \Agda 
-using the above data type is straightforward. 
+\hspace*{5cm}\\[3mm]
 \begin{verbatim}
 r : PropFormula
 p = Var (# 0)

@@ -73,19 +73,19 @@ of steps similar to the workflow presented by Sultana in
 system to a target system. In our case, the system of origin, the
 automatic theorem prover, is \Metis; the target system is the proof
 assistant, \Agda. We choose \Agda, but another proof assistant with
-support of type theory and similar features like \Agda
+support of Type Theory and similar features like \Agda
 (see a description of \Agda in section
-\ref{sec:implementation}) is valid; our results do not depend on 
-the proof assistant but the support of inductive data types, 
+\ref{sec:implementation}) is valid; our results do not depend on
+the proof assistant but the support of inductive data types,
 termination checking, and type-checking.
 
 Following the diagram in Fig.
 \ref{fig:proof-reconstruction-workflow}, the process can begin with
 a problem in \CPL that we encode in \TPTP format to be sent as the
 input of the \Metis prover.
-The proof-search algorithms of \Metis in step No. 3 intend to find 
-a solution; if they success, \Metis replies a derivation in \TSTP 
-format of the proof, else \Metis may no stop and running forever or 
+The proof-search algorithms of \Metis in step No. 3 intend to find
+a solution; if they success, \Metis replies a derivation in \TSTP
+format of the proof, else \Metis may no stop and running forever or
 replies the problem is counter feasible.
 
 With such a derivation, we process it with our \Haskell translator
@@ -95,13 +95,13 @@ derivation and generates a representation of the natural deduction
 proof using a version of a tree data structure (see the properties
 of this tree in subsection \ref{ssec:metis-proofs}). As a result,
 \Athena generates an \Agda file with such a proof. We have included
-in this file, \emph{imports} that call \Agda libraries that give 
-support for the logic~\cite{AgdaProp}, and versions of the \Metis' 
+in this file, \emph{imports} that call \Agda libraries that give
+support for the logic~\cite{AgdaProp}, and versions of the \Metis'
 inference rules~\cite{AgdaMetis}.
 
 Finally, we use the proof assistant in step No. 7 to type-check the
 proof and verify its correctness. Next, we only have one answer:
-type-checking succeed (i.e., the proof is valid) or type-checking 
+type-checking succeed (i.e., the proof is valid) or type-checking
 failed.
 If the type-check fails, one of the three actors in the process are
 responsible: \Metis, \Athena, or \Agda. We are responsible for
@@ -110,26 +110,39 @@ coverage of the \Metis' inference rules, or bad assumptions about
 them. \improvement{Make this statement stronger and clear.}
 
 In the rest of this section, we provide a formal description using
-type theory to build definitions and theorems for the functions
+Type Theory to build definitions and theorems for the functions
 necessary to emulate the \Metis' inference rules.
 
 % ...................................................................
 
-\subsection{Recursion Theorems}
+\subsection{Rules as Theorems}
 
-\improvement{Convention notation := for equivalence between propositions}
-% \footnote{We use the \Agda standard library's implementation of the List data type.}.
+Main algorithms in \CPL need the propositions in some of their normal
+forms. For instance, from the negative normal form
+(henceforth, \abbre{NNF}), we can derive the conjunctive normal form,
+and the disjunctive normal form as well.
+Therefore, we start giving the definition of \abbre{NNF}, one
+function definition, \name{nnf} and a refinement of it.
+We will use it later for instance in the description of \canonicalize
+rule. The following treatment to this function, \name{nnf},
+applies for other conversion functions and theorems defined in
+\cite{AgdaProp,AgdaMetis}.
+We use the notation convention $:=$ for equivalence between
+propositions. The \PROP inductive data type is defined as usual
+based on the definition from section \ref{sec:preliminaries} and
+implemented in \Agda with \name{PropFormula} in section
+\ref{sec:implementation}.
 
-\begin{definition}(Negative Normal Form (NNF))
-Una forma normal negativa para la formula $\varphi$ es aquella
-en la cual negaciones aparecen solamente en los literales y
-la expresión se encuentra en términos unicamente
-de los operadores booleanos ($\neg$, $\wedge$, $\vee$).
-\end{definition}
+\subsubsection{\CPL Functions}
+\hspace*{5cm}\\[3mm]
+\emph{NNF.}
+A negative normal form for the formula φ is one in which negations
+appear only in the literals and the expression is in terms only of
+the boolean operators (¬, ∧, ∨).
 
-Para transformar una formula $\varphi$ a su forma equivalente NNF,
-aplicamos recursivamente las siguientes ecuaciones que definen
-la función \name{nnf}.
+To transform a formula φ to its equivalent \abbre{NNF} form, we
+apply recursively the following equations. The function type for
+\name{nnf} is $\PROP \to \PROP$.
 
 \begin{equation}
 \label{eq:nnf-definition}
@@ -171,18 +184,16 @@ la función \name{nnf}.
 \end{cases}
 \end{equation}
 
-\begin{definition}
-Una funcion recursiva se dice bien estructura, si el tamaño de los argumentos
-con que con esta se define se reducen en tamaño por cada llamada a la
-funcion.
-\end{definition}
+A recursive function is a well-structured recursion, if the size of
+the arguments with which it is defined decrease in size for each
+call to the function in the definition. That guarantee termination
+of the function, and its translation to constructive Type Theory.
 
-De la anterior definincion, sintacticamente la funcion nnf no es recursivamente
-bien estructurado. El problem que no lo sea esta en nuestra traducion
-de este tipo de funciones a la teoria de tipos.
-
-Veamos otros ejemplos de funciones con el mismo problema que utilizaremos mas
-adelante para formalizar la inferencia strip.
+But we need to improve the definition for \name{nnf} in order to have
+a version of a well-structured recursion.
+We show a strategy to achieve that with a smaller example function,
+\unshunt, that we will use forward to formalize the inference
+\name{strip}.
 
 \begin{equation}
 \label{eq:unshunt-definition}
@@ -198,26 +209,23 @@ adelante para formalizar la inferencia strip.
 \end{cases}
 \end{equation}
 
+To translate the functions in a way that is well defined,
+we used the method proposed by Bove and Capettra in
+\cite{Bove2005}, which basically consists of
 
-Para traducir las funciones en un manera que esten bien definidas,
-utilizamos el metodo propuesto por Ana Bove, el cual basicamente consiste
+We take a general recursive function $f: \sigma \to \tau$.
+Its formalization in Type Theory will define an inductive
+predicate $Ind$, $ P: \sigma \to Ind$.
 
+In our case, the set of natural numbers will serve as our
+inductive set $Ind$ and as second argument for new function.
+Thus, the function $\unshunt$ will be defined by structural
+recursion in his second term.
 
-una funcion general recursiva $f:\sigma \to \tau$, su formalizacion en
-teoria de tipos consiste en definir un predicado inductivo $Ind$,
-$P:\sigma \to Ind$
-
-En nuestro caso, el conjunto de los numeros servira como nuestro
-conjunto inductivo y como segundo argumento para nueva funcion.
-De manera, que la funcion g estara definida por recursion estructural en
-su segundo termino.
-
-Para aplicar la tecnica antes mencionada para nuestras funciones,
-veamos su aplicación con la funcion \unshunt porque para las demas,
-seguiremos un camino similar, f con tipo:
+The new proposed $\unshunt^{*}$ has type,
 
 \[
-\unshunt^{*} : PROP \to \mathcal{N} \to PROP
+\unshunt^{*} : PROP \to \mathbb{N} \to PROP.
 \]
 
 \begin{equation}
@@ -236,7 +244,8 @@ seguiremos un camino similar, f con tipo:
 
 
 \begin{definition}
-El rango $rank(\phi)$ de una proposition $\phi$ es definido como
+Th rank of proposition φ denoted by $rank(\phi)$ is defined by the
+following equation.
 
 \begin{equation}
 \label{eq:rank-definition}
@@ -249,29 +258,28 @@ rank(\phi)=
 rank(\phi_1) + 1  & \phi := \neg \phi_1
 \end{cases}
 \end{equation}
-
 \end{definition}
 
-Then, we our final revision for the function $\unshunt$ is the
-function$\unshunt^{+}$ with type $PROP \to PROP$
-with a structured recursion,
+The final review for $\unshunt$ function is the
+$\unshunt^{+}$ function in Eq.~\ref{eq:unshunt-fixed}
+with $PROP \to PROP$ type.
 
 \begin{equation}
+\label{eq:unshunt-fixed}
 \unshunt^{+}(\varphi) = \unshunt^{*}(\varphi, rank(\varphi))
 \end{equation}
 
-In the following section, our task will consist of a searching
-appropriate functions like $rank$ to assure the termination of
-our transformation functions like $nnf$.
-
+In the following section, our task will consist of searching
+appropriate functions like $rank$ to assure the termination for
+transformation functions like $nnf$.
 
 % ................................................
 
 \subsection{Emulation \Metis' Inference Rules}
 
 \emph{Splitting.}
-We take a goal and generate subgoals that all in a conjunction
-prove the goal.
+To prove a goal, we can prove smaller subgoals and combine their
+proofs to achieve the final target, a proof of the initial goal.
 
 \begin{theorem}[{\tt thm-$\unshunt^{*}$}] $Γ ⊢ \unshunt^{*}(φ, n)$ for $n\in \mathbb{N}$, then $Γ ⊢ φ$.
 \end{theorem}
@@ -337,7 +345,7 @@ D_2 :=
 \end{equation*}
 \end{proof}
 
-The function \mysplit performs such that strategy and it has the type
+The function \mysplit has the type
 \[ \mysplit : \PROP \to \PROP
 \]
 \begin{equation}
@@ -379,8 +387,6 @@ The function \mysplit performs such that strategy and it has the type
 \end{cases}
 \end{equation}
 
-The theorem is the following.
-
 \begin{theorem}[Splitting a Goal] $Γ ⊢ \mysplit(φ) ⇒ φ$
 \end{theorem}
 
@@ -389,13 +395,10 @@ ss
 \end{proof}
 
 The \mysplit function returns a conjunction of the subgoal. From each
-\TSTP derivation, we have information of the subgoals but no how they strictly appear in that conjunction. For that reason, with \Athena, we infer the exact order in the conjunction that coincides with the conjunction given by \mysplit.
+\TSTP derivation, we have information of the subgoals but no how they strictly appear in that conjunction. For that reason, with \Athena, we infer the exact order in the conjunction that coincides with the output by \mysplit.
 
-\begin{theorem} For a list of subgoals $s_0, \cdots, s_1$ with their respective theorem $Γ ⊢ s_i$, such that $\bigwedge_i s_i ⇒ \texttt{goal}$, then $Γ ⊢ \texttt{goal}$ 
+\begin{theorem} For a list of subgoals $s_0, \cdots, s_1$ with their respective theorem $Γ ⊢ s_i$, such that $\bigwedge_i s_i ⇒ \texttt{goal}$, then $Γ ⊢ \texttt{goal}$.
 \end{theorem}
-
-
-
 
 
 \end{document}

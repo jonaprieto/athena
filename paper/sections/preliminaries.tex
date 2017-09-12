@@ -20,12 +20,12 @@ A proposition is an expression of indivisible propositional atoms
 binary logic connectives ($∧, ∨, ⇒, ⇔)$,
 propositional negation $(¬)$, and logic constants $⊥$
 and $⊤$. We use the inductive definition of the set \PROP
-defined in \cite{VanDalen1994} as the mechanism to produce any
+presented in \cite{VanDalen1994} as the mechanism to produce any
 propositional formula.
 Then, $ϕ_i \in \PROP$ for all $i \in \mathbb{N}$.
-If $(φ\ \square\ ψ)$ stands for a proposition that use a
-binary connective where is the symbol $\square$; when $φ, ψ\in
-\PROP$, then $(φ\ \square\ ψ) \in \PROP$.\change{rewrite this}
+If $φ, ψ\in \PROP$, then $(φ\ \square\ ψ) \in \PROP$,
+where $(φ\ \square\ ψ)$ stands for a proposition that use a
+binary connective in the place for the $\square$ symbol.
 If $φ \in \PROP$, then $(¬ φ) \in \PROP$.
 Finally, $⊥, ⊤ \in \PROP$.
 
@@ -34,11 +34,12 @@ A derivation of $φ$ is a mechanism to obtain the conclusion $φ$ from
 the application of some deduction steps. Such a deduction step has
 the form of a set of propositional \emph{premises} that conclude the
 result: one or more propositions. As we show in the following
-figure, the premises are always above the line, and the conclusions
-are below it. As a notation convention, if the name of a rule used
-in the derivation step is typed using verbatim, that means, it is
-available in our implementation for the \CPL (see the syntax module 
-in \cite{AgdaProp}) used in the proof reconstruction latter.
+figure, the premises are always above the line, the conclusions
+are below it, and the name of the inference or the theorem used is
+on the right the line. As a notation convention, if the name of a
+rule used in the derivation step is typed using verbatim, that
+means, it is available in our implementation (see for instance,
+theorems in \cite{AgdaProp}) used in some derivations latter.
 
 \[
 \label{eq:derivation}
@@ -230,10 +231,10 @@ how they can be remove them in the conclusion side of the theorems.
 \emph{Proof Trees.} We use trees to represent derivations and
 natural deduction proofs (see for instance, the proof tree in a
 \Metis' derivation in Fig.~\ref{fig:metis-example}).
-In a proof tree, the root is the conclusion of the entire 
-derivation. The nodes labeled with the name of the inference rule 
-contains the result of applying that rule to their parents. Lastly, 
-the leaves in the tree become the premises, not all necessary 
+In a proof tree, the root is the conclusion of the entire
+derivation. The nodes labeled with the name of the inference rule
+contains the result of applying that rule to their parents. Lastly,
+the leaves in the tree become the premises, not all necessary
 canceled (see a better discussion on cancellation of hypotheses in
 \cite{VanDalen1994}).
 
