@@ -466,46 +466,43 @@ where
 \UnaryInfC{$Γ ⊢ ¬ φ₁$}
 \end{bprooftree}
 \end{equation*}
+% (φ := ¬ (φ₁ ⇔ φ₂))
+% \begin{equation*}
+% \begin{bprooftree}
 
+% % -- right
 
+% \AxiomC{$Γ ⊢ \mysplit(φ, n)$}
+% \RightLabel{By def.}
+% \UnaryInfC{$Γ ⊢ \unshunt(φ₁ ⇒ \mysplit(¬ φ₂)) ∧ \unshunt(¬ φ₂ ⇒ \mysplit(φ₁)) $}
+% \RightLabel{\tt ∧-proj₂}
+% \UnaryInfC{$Γ ⊢ \unshunt(¬ φ₂ ⇒ \mysplit(φ₁))$}
+% \RightLabel{\tt \thmunshunt}
+% \UnaryInfC{$Γ ⊢ ¬ φ₂ ⇒ \mysplit(φ₁)$}
+% \RightLabel{\tt weaken ¬ φ₂}
+% \UnaryInfC{$Γ , ¬ φ₂ ⊢ ¬ φ₂ ⇒ \mysplit(φ₁)$}
 
-(φ := ¬ (φ₁ ⇔ φ₂))
-\begin{equation*}
-\begin{bprooftree}
+% % -- right
 
-% -- right
+% % -- left
+% \AxiomC{}
+% \RightLabel{\tt assume (¬ φ₂)}
+% \UnaryInfC{$Γ , ¬ φ₂ ⊢ ¬ φ₂$}
+% \RightLabel{\tt ⇒-elim}
 
-\AxiomC{$Γ ⊢ \mysplit(φ, n)$}
-\RightLabel{By def.}
-\UnaryInfC{$Γ ⊢ \unshunt(φ₁ ⇒ \mysplit(¬ φ₂)) ∧ \unshunt(¬ φ₂ ⇒ \mysplit(φ₁)) $}
-\RightLabel{\tt ∧-proj₂}
-\UnaryInfC{$Γ ⊢ \unshunt(¬ φ₂ ⇒ \mysplit(φ₁))$}
-\RightLabel{\tt \thmunshunt}
-\UnaryInfC{$Γ ⊢ ¬ φ₂ ⇒ \mysplit(φ₁)$}
-\RightLabel{\tt weaken ¬ φ₂}
-\UnaryInfC{$Γ , ¬ φ₂ ⊢ ¬ φ₂ ⇒ \mysplit(φ₁)$}
+% \BinaryInfC{$Γ , ¬ φ₂ ⊢ \mysplit(φ₁)$}
+% \RightLabel{\thmsplit}
+% \UnaryInfC{$Γ , ¬ φ₂ ⊢ φ₁ $}
+% \RightLabel{\tt ⇒-intro}
+% \UnaryInfC{$Γ ⊢ ¬ φ₂ ⇒ φ₁$}
+% % -- left
 
-% -- right
-
-% -- left
-\AxiomC{}
-\RightLabel{\tt assume (¬ φ₂)}
-\UnaryInfC{$Γ , ¬ φ₂ ⊢ ¬ φ₂$}
-\RightLabel{\tt ⇒-elim}
-
-\BinaryInfC{$Γ , ¬ φ₂ ⊢ \mysplit(φ₁)$}
-\RightLabel{\thmsplit}
-\UnaryInfC{$Γ , ¬ φ₂ ⊢ φ₁ $}
-\RightLabel{\tt ⇒-intro}
-\UnaryInfC{$Γ ⊢ ¬ φ₂ ⇒ φ₁$}
-% -- left
-
-% \RightLabel{\tt ∧-intro}
-% \BinaryInfC{$Γ ⊢ (φ₁ ⇒ ¬ φ₂) ∧ (¬ φ₂ ⇒ φ₁)$}
-% \RightLabel{\tt ⇒¬∧¬⇒-to-¬⇔}
-% \UnaryInfC{$Γ ⊢ ¬ (φ₁ ⇔ φ₂)$}
-\end{bprooftree}
-\end{equation*}
+% % \RightLabel{\tt ∧-intro}
+% % \BinaryInfC{$Γ ⊢ (φ₁ ⇒ ¬ φ₂) ∧ (¬ φ₂ ⇒ φ₁)$}
+% % \RightLabel{\tt ⇒¬∧¬⇒-to-¬⇔}
+% % \UnaryInfC{$Γ ⊢ ¬ (φ₁ ⇔ φ₂)$}
+% \end{bprooftree}
+% \end{equation*}
 
 \end{proof}
 
@@ -519,5 +516,7 @@ conjunction that coincides with the output by \mysplit.
 respective theorem $Γ ⊢ s_i$, such that $\bigwedge_i s_i ⇒ \texttt{goal}$, then $Γ ⊢ \texttt{goal}$.
 \end{theorem}
 
+\emph{Resolve.}
+\emph{Clausification.}
 
 \end{document}
