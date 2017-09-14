@@ -500,7 +500,8 @@ Where,
 \end{equation*}
 \end{proof}
 
-\begin{theorem} If $s_i$ are the subgoals for the goal φ, and $\{ Γ ⊢ s_i \}_{i}$, then $Γ ⊢ φ$.
+\begin{theorem} If $s_i$ are the subgoals for the goal φ, and
+$\{ Γ ⊢ s_i \}_{i}$, then $Γ ⊢ φ$.
 \end{theorem}
 
 \begin{proof}
@@ -558,14 +559,33 @@ formulas as the resolve inference shows.
 \label{fig:thm-resolve-best-case}
 \end{figure}
 
-To rearrange the proposition in order to match with a specific
-pattern of a formula, we define the following functions and provide
+To rearrange the propositions in order to match with a specific
+pattern for applying a particular theorem like resolution, we have
+define the following functions and provide
 its respective theorems in \cite{AgdaMetis}.
+These rearrangement functions are mainly inspired in
+\cite{bohme2010}, for their treatment for conjunction and
+disjunction equivalence.
+
+\improvement{provide examples for each of the following functions.}
 
 \begin{itemize}
-  \item[] \name{reorder-∨}
-  \item[] \name{reorder-∧}
-  \item[] \name{reorder-∧∨}
+  \item \name{reorder-∨.} Given two formulas, φ and ψ, both disjunctions, fix the order of the first one by following the syntactically
+  order of the second one. If the process succeed (denote by φ ⤳ ψ),
+  returns the target formula, ψ, otherwise, keep the first one, φ.
+  \begin{align}
+  \begin{split}
+&\name{reorder-∨}\ :\ \PROP \to \PROP \to \PROP\\
+&\name{reorder-∨}(φ, ψ) =
+  \begin{cases}
+  ψ   & φ ⤳ ψ\\
+  ϕ   & \text{otherwise.}
+  \end{cases}
+  \end{split}
+  \end{align}
+
+  \item \name{reorder-∧.} Given two formulas, φ and ψ, both conjunctions, fix the order of the first one by following the order  of the second one.
+  \item \name{reorder-∧∨.} Given two formulas, φ and ψ, both in CNF, fix the order of the first one by following the order  of the second one.
 \end{itemize}
 
 \begin{equation}
