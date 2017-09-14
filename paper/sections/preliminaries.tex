@@ -105,27 +105,28 @@ We define our inference rules for \CPL in the Fig.
 \ref{fig:CPL-inference-rules}. These rules give us the complete
 meaning of the connectives; how to introduce them and
 how they can be remove them in the conclusion side of the theorems.
+\change{the size of the text.}
 
 \begin{figure}
 \[%\scalebox{0.9}{
 \begin{bprooftree}
 \AxiomC{}
-\RightLabel{\scriptsize\tt assume $φ$}
+\RightLabel{\tt assume $φ$}
 \UnaryInfC{$Γ , φ ⊢ φ$}
 \end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ φ$}
-\RightLabel{\scriptsize\tt weaken $ψ$}
+\RightLabel{\tt weaken $ψ$}
 \UnaryInfC{$Γ , ψ ⊢ φ$}
 \end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{}
-\RightLabel{\scriptsize\tt $⊤$-intro}
+\RightLabel{\tt $⊤$-intro}
 \UnaryInfC{$Γ ⊢ ⊤$}
 \end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ ⊥$}
-\RightLabel{\scriptsize\tt $⊥$-elim $φ$}
+\RightLabel{\tt $⊥$-elim $φ$}
 \UnaryInfC{$Γ ⊢ φ$}
 \end{bprooftree}
 %}
@@ -134,19 +135,19 @@ how they can be remove them in the conclusion side of the theorems.
 \[%\scalebox{0.9}{
 \begin{bprooftree}
 \AxiomC{$Γ , φ ⊢ ⊥$}
-\RightLabel{\scriptsize\tt $¬$-intro}
+\RightLabel{\tt $¬$-intro}
 \UnaryInfC{$Γ ⊢ ¬ φ$}
 \end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ ¬ φ$}
 \AxiomC{$Γ ⊢ φ$}
-\RightLabel{\scriptsize\tt $¬$-elim}
+\RightLabel{\tt $¬$-elim}
 \BinaryInfC{$Γ ⊢ ⊥$}
 \end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ φ$}
 \AxiomC{$Γ ⊢ ψ$}
-\RightLabel{\scriptsize\tt $\wedge$-intro}
+\RightLabel{\tt $\wedge$-intro}
 \BinaryInfC{$Γ ⊢ φ \wedge ψ$}
 \end{bprooftree}
 %}
@@ -155,17 +156,17 @@ how they can be remove them in the conclusion side of the theorems.
 \[%\scalebox{0.9}{
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ φ \wedge ψ$}
-\RightLabel{\scriptsize\tt $\wedge$-proj$_1$}
+\RightLabel{\tt $\wedge$-proj$_1$}
 \UnaryInfC{$Γ⊢ φ$}
 \end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ φ \wedge ψ$}
-\RightLabel{\scriptsize\tt $\wedge$-proj$_2$}
+\RightLabel{\tt $\wedge$-proj$_2$}
 \UnaryInfC{$Γ⊢ ψ$}
 \end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ φ$}
-\RightLabel{\scriptsize\tt $\vee$-intro$_1$ $ψ$}
+\RightLabel{\tt $\vee$-intro$_1$ $ψ$}
 \UnaryInfC{$Γ ⊢ φ \vee ψ$}
 \end{bprooftree}
 %}
@@ -174,18 +175,18 @@ how they can be remove them in the conclusion side of the theorems.
 \[%\scalebox{0.9}{
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ ψ$}
-\RightLabel{\scriptsize\tt $\vee$-intro$_2$ $φ$}
+\RightLabel{\tt $\vee$-intro$_2$ $φ$}
 \UnaryInfC{$Γ ⊢ φ \vee ψ$}
 \end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$Γ ,φ ⊢ \gamma $}
 \AxiomC{$Γ , ψ  ⊢ \gamma$}
-\RightLabel{\scriptsize\tt $\vee$-elim}
+\RightLabel{\tt $\vee$-elim}
 \BinaryInfC{$Γ , φ \vee ψ ⊢ \gamma$}
 \end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$Γ , φ ⊢ ψ$}
-\RightLabel{\scriptsize\tt $\Rightarrow$-intro}
+\RightLabel{\tt $\Rightarrow$-intro}
 \UnaryInfC{$Γ ⊢ φ \Rightarrow ψ$}
 \end{bprooftree}
 %}
@@ -196,13 +197,13 @@ how they can be remove them in the conclusion side of the theorems.
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ φ \Rightarrow ψ$}
 \AxiomC{$Γ ⊢ φ$}
-\RightLabel{\scriptsize\tt $\Rightarrow$-elim}
+\RightLabel{\tt $\Rightarrow$-elim}
 \BinaryInfC{$Γ ⊢ ψ$}
 \end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$Γ , φ ⊢ ψ$}
 \AxiomC{$Γ , ψ ⊢ φ$}
-\RightLabel{\scriptsize\tt $⇔$-intro}
+\RightLabel{\tt $⇔$-intro}
 \BinaryInfC{$Γ ⊢ φ ⇔ ψ$}
 \end{bprooftree}
 %}
@@ -212,14 +213,14 @@ how they can be remove them in the conclusion side of the theorems.
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ φ$}
 \AxiomC{$Γ ⊢ φ ⇔ ψ$}
-\RightLabel{\scriptsize\tt $⇔$-elim$_1$}
+\RightLabel{\tt $⇔$-elim$_1$}
 \BinaryInfC{$Γ ⊢ ψ$}
 \end{bprooftree}
 \qquad
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ φ$}
 \AxiomC{$Γ ⊢ φ ⇔ ψ$}
-\RightLabel{\scriptsize\tt $⇔$-elim$_2$}
+\RightLabel{\tt $⇔$-elim$_2$}
 \BinaryInfC{$Γ ⊢ ψ$}
 \end{bprooftree}
 \]

@@ -68,7 +68,7 @@
 \end{figure}
 
 The proof-reconstruction approach proposed here consists of a series
-of steps similar to the workflow presented by Sultana in
+of steps similar to the workflow presented by Sultana et al in
 \cite{sultana2015}. This process is a translation from a source
 system to a target system. In our case, the system of origin, the
 automatic theorem prover, is \Metis; the target system is the proof
@@ -80,10 +80,9 @@ Following the diagram in Fig.
 \ref{fig:proof-reconstruction-workflow}, the process can begin with
 a problem in \CPL that we encode in \TPTP format to be sent as the
 input of the \Metis prover.
-The proof-search algorithms of \Metis in step No. 3 intend to find
+The algorithms of \Metis in step~3 intend to find
 a solution; if they success, \Metis replies a derivation in \TSTP
-format of the proof, else \Metis may no stop and running forever or
-replies the problem is counter feasible.
+format of the proof, else the problem is counter feasible.
 
 With such a derivation, we process it with our \Haskell translator
 tool, \Athena~\cite{Athena}.
@@ -96,7 +95,7 @@ in this file, \emph{imports} that call \Agda libraries that give
 support for the logic~\cite{AgdaProp}, and versions of the \Metis'
 inference rules~\cite{AgdaMetis}.
 
-Finally, we use the proof assistant in step No. 7 to type-check the
+Finally, we use the proof assistant in step 7 to type-check the
 proof and verify its correctness. Next, we only have one answer:
 type-checking succeed (i.e., the proof is valid) or type-checking
 failed.
@@ -116,11 +115,11 @@ equivalence.
 
 % ...................................................................
 
-\subsection{Well-Structured Recursion}
-\label{ssec:well-structured recursion}
+\subsection{Small Structured Recursion}
+\label{ssec:small-structured-recursion}
 
 In the process to emulate \Metis' inference rules in type theory,
-We encountered many recursive algorithms with termination problems,
+we encountered many recursive algorithms with termination problems,
 that is,when an algorithm could run forever or we can not guarantee
 that it will stop after some point. Such a problem makes impossible
 to translate the algorithm in type theory directly.
@@ -128,23 +127,23 @@ For that reason, we show a technique that will help us to define
 new algorithms based on the previous ones to solve the problem
 mentioned.
 
-A recursive function is a \emph{well-structured recursion}, if the
+A recursive function is a \emph{small-structured-recursion}, if the
 size of the arguments with which it is defined decrease in
 size for each call to the function in the definition~\cite{Bove2005}.
 A well-structured function terminates and it can be translated
 directly to type theory~\cite{Bove2002}.
 
-Let us consider the following example from a inner function
+Let us consider the following example from an inner function
 in the \strip inference.
 
 \begin{equation}
 \label{eq:unshunt-definition}
-\unshunt(φ) =
+\unshunt(φ)_{0} =
 \begin{cases}
-\unshunt((φ₁ ∧ φ₂) ⇒ φ₃)
+\unshunt_{0}((φ₁ ∧ φ₂) ⇒ φ₃)
   & φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃),\\
 
-\unshunt(φ₁ ⇒ φ₂) ∧ \unshunt(φ₁ ⇒ φ₃)
+\unshunt_{0}(φ₁ ⇒ φ₂) ∧ \unshunt_{0}(φ₁ ⇒ φ₃)
   & φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃),\\
 
 φ &\text{otherwise}.
@@ -152,10 +151,10 @@ in the \strip inference.
 \end{equation}
 
 From the definition above, in the first case of the \unshunt
-function, the size of the argument doesn't really decrease.
-Actually, it maintains with the same length syntactically
-(i.e., (φ₁ ∧ φ₂) ⇒ φ₃ compared with (φ₁ ⇒ (φ₂ ⇒ φ₃))).
-Therefore, a termination checking will fail with \unshunt function.
+function, the size of the argument in the recursion,(φ₁ ∧ φ₂) ⇒ φ₃,
+is not structured smaller than the decrease, (φ₁ ⇒ (φ₂ ⇒ φ₃)).
+Therefore, a termination checking will fail with the \unshunt
+function.
 
 To improve that definition for terminating, we will use the
 technique proposed by Bove and Capettra in
@@ -176,27 +175,27 @@ We also allow common arithmetic operations and numbers represented by
 $0,1,2,\dots$ that stand for $\zero, \suc, \suc(\zero), \dots$.
 
 Thus, we have a new function
-$\unshunt : \PROP \to \Nat \to \PROP$
+$\unshunt_{1} : \PROP \to \Nat \to \PROP$
 defined by structural recursion in its second argument in
 Eq.~\ref{eq:unshunt-structured}.
 
 \begin{align}
 \label{eq:unshunt-structured}
 \begin{split}
-\unshunt(φ, \zero) &= φ\\
-\unshunt(φ, \suc(n)) &=
+\unshunt_{1}(φ, \zero) &= φ\\
+\unshunt_{1}(φ, \suc(n)) &=
 \begin{cases}
-\unshunt((φ₁ ∧ φ₂) ⇒ φ₃, n)
+\unshunt_{1}((φ₁ ∧ φ₂) ⇒ φ₃, n)
   & φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃),\\
-\unshunt(φ₁ ⇒ φ₂, n)  & φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃).\\
-∧\ \unshunt(φ₁ ⇒ φ₃, n)
+\unshunt_{1}(φ₁ ⇒ φ₂, n)  & φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃).\\
+∧\ \unshunt_{1}(φ₁ ⇒ φ₃, n)
 \end{cases}
 \end{split}
 \end{align}
 
 To feed the second argument of this new function, we will use
 functions. For instance, we opted to use a complexity measure of
-the formula that \unshunt function transforms.
+the formula that $\unshunt_{1}$ function transforms.
 
 \newcommand{\rank}{\name{rank}}
 
@@ -228,7 +227,7 @@ Eq.~\ref{eq:unshunt-definition}.
 
 Therefore, we define an appropriate complexity measure
 $\unshunt_{cm}: \PROP → \NN$
-for the second argument of the $\unshunt$ function in
+for the second argument of the $\unshunt_{1}$ function in
 Eq.~\ref{eq:unshunt-rank-definition}.
 
 \begin{equation}
@@ -242,13 +241,16 @@ Eq.~\ref{eq:unshunt-rank-definition}.
 \end{cases}
 \end{equation}
 
-Then, a curated version of the \unshunt functions is presented in Eq.
+Then, a curated version of the $\unshunt_{0}$ function is presented in Eq.
 \ref{eq:unshunt-fixed}.
 
 \begin{equation}
 \label{eq:unshunt-fixed}
-\unshunt(\varphi) := \unshunt(\varphi, \unshunt_{cm}(\varphi)).
+\unshunt(\varphi) := \unshunt_{1}(\varphi, \unshunt_{cm}(\varphi)).
 \end{equation}
+\change{changes the name of the functions to avoid different
+functions with the same name.}
+
 
 % ................................................
 
@@ -381,7 +383,7 @@ yields the conjunction of subgoals from a proposition goal.
 
 We reformulate \mysplit function to match with the
 new definition after apply the process described above in
-subsection~\ref{ssec:well-structured recursion}, since
+subsection~\ref{ssec:small-structured-recursion}, since
 in the recursion calls of \mysplit in Eq.~\ref{eq:split-definition},
 the negations, $(¬ φ_{1,2})$ raise a terminating problem.
 
