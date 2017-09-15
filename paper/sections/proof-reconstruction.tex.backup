@@ -66,7 +66,7 @@ applies for other conversion functions and theorems defined in
 We use the notation convention $:=$ for equivalence between
 propositions. The \PROP inductive data type is defined as usual
 based on the definition from section \ref{sec:preliminaries} and
-implemented in \Agda with \name{PropFormula} in section
+implemented in \Agda with \name{PropFormula} in Section
 \ref{sec:implementation}.
 
 \subsection{Reconstruction Work-flow}

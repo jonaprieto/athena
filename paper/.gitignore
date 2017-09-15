@@ -5,6 +5,7 @@ main.pdf
 main.ptb
 main.tdo
 main.synctex.gz*
+*_bibertool.bib
 *.aux
 *.bbl
 *.dvi

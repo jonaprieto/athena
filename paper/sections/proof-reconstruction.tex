@@ -68,13 +68,13 @@
 \end{figure}
 
 The proof-reconstruction approach proposed here consists of a series
-of steps similar to the workflow presented by Sultana et al in
+of steps similar to the workflow presented by \citeauthor{sultana2015} in
 \cite{sultana2015}. This process is a translation from a source
 system to a target system. In our case, the system of origin, the
 automatic theorem prover, is \Metis; the target system is the proof
 assistant, \Agda. We choose \Agda, but a proof assistant with
 support of type theory and similar features like \Agda
-(see a description of \Agda in section
+(see a description of \Agda in Section
 \ref{sec:implementation}) can be used.
 Following the diagram in Fig.
 \ref{fig:proof-reconstruction-workflow}, the process can begin with
@@ -89,7 +89,7 @@ tool, \Athena~\cite{Athena}.
 \Athena parses the \TSTP format, analyze the
 derivation and generates a representation of the natural deduction
 proof using a version of a tree data structure (see the properties
-of this tree in subsection \ref{ssec:metis-proofs}). As a result,
+of this tree in Subsection \ref{ssec:metis-proofs}). As a result,
 \Athena generates an \Agda file with such a proof. We have included
 in this file, \emph{imports} that call \Agda libraries that give
 support for the logic~\cite{AgdaProp}, and versions of the \Metis'
@@ -230,6 +230,7 @@ $\unshunt_{cm}: \PROP → \NN$
 for the second argument of the $\unshunt_{1}$ function in
 Eq.~\ref{eq:unshunt-rank-definition}.
 
+\change{remove the use of tt for functions. (rank, etc..)}
 \begin{equation}
 \label{eq:unshunt-rank-definition}
 \unshunt_{cm}(φ)=
@@ -241,8 +242,8 @@ Eq.~\ref{eq:unshunt-rank-definition}.
 \end{cases}
 \end{equation}
 
-Then, a curated version of the $\unshunt_{0}$ function is presented in Eq.
-\ref{eq:unshunt-fixed}.
+Then, a curated version of the $\unshunt_{0}$ function is presented
+in Eq.~\ref{eq:unshunt-fixed}.
 
 \begin{equation}
 \label{eq:unshunt-fixed}
