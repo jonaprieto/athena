@@ -229,7 +229,6 @@ $\unshunt_{cm}: \Prop → \NN$
 for the second argument of the $\unshunt_{1}$ function in
 Eq.~\ref{eq:unshunt-rank-definition}.
 
-\change{remove the use of tt for functions. (rank, etc..)}
 \begin{equation}
 \label{eq:unshunt-rank-definition}
 \unshunt_{cm}(φ)=
@@ -248,8 +247,6 @@ in Eq.~\ref{eq:unshunt-fixed}.
 \label{eq:unshunt-fixed}
 \unshunt(\varphi) := \unshunt_{1}(\varphi, \unshunt_{cm}(\varphi)).
 \end{equation}
-\change{changes the name of the functions to avoid different
-functions with the same name.}
 
 
 % ................................................
@@ -274,8 +271,7 @@ and combining them in a final conjunction proves the original goal.
 $Γ ⊢ \unshunt(φ)$, then $Γ ⊢ φ$.
 \end{theorem}
 
-\begin{proof} Use induction on the cases defined by the result of
-$\unshunt$ in Eq.~\ref{eq:unshunt-structured}.
+\begin{proof} Use induction on the cases defined by the outcome of the $\unshunt$ function in Eq.~\ref{eq:unshunt-structured}.
 When $n = 0$, by definition, $Γ ⊢ φ$.
 When $n = 1$, we apply the following theorem presented in
 \cite{AgdaProp}
@@ -293,14 +289,15 @@ argument.
 \AxiomC{$Γ ⊢ \unshunt(φ₁ ⇒ (φ₂ ⇒ φ₃), n)$}
 \RightLabel{By def.}
 \UnaryInfC{$Γ ⊢ \unshunt(φ₁ ⇒ (φ₂ ⇒ φ₃), n-1)$}
-\RightLabel{\tt thm-$\unshunt$}
+\RightLabel{\thmunshunt}
 \UnaryInfC{Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃}
-\RightLabel{\tt ∧⇒-to-⇒⇒}
+\RightLabel{∧⇒-to-⇒⇒}
 \UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).}
 \end{bprooftree}
 \end{equation*}
 
 Second, using the following theorem from \cite{AgdaProp},
+
 \begin{equation*}
 \texttt{⇒∧-to-⇒∧}\ :\ Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃) → Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃).
 \end{equation*}
@@ -311,11 +308,11 @@ Second, using the following theorem from \cite{AgdaProp},
 ($\mathcal{D}_1$)
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ \unshunt(φ₁ ⇒ φ₂, n) ∧ \unshunt(φ₁ ⇒ φ₃, n)$}
-\RightLabel{\tt ∧-proj₁}
+\RightLabel{∧-proj₁}
 \UnaryInfC{$Γ ⊢ \unshunt(φ₁ ⇒ φ₂, n)$}
 \RightLabel{By def.}
 \UnaryInfC{$Γ ⊢ \unshunt(φ₁ ⇒ φ₂, n-1)$}
-\RightLabel{\tt thm-$\unshunt$}
+\RightLabel{\thmunshunt}
 \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$,}
 \end{bprooftree}
 }
@@ -325,11 +322,11 @@ Second, using the following theorem from \cite{AgdaProp},
 (\mathcal{D}_2)
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ \unshunt(φ₁ ⇒ φ₂) ∧ \unshunt(φ₁ ⇒ φ₃)$}
-\RightLabel{\tt ∧-proj₂}
+\RightLabel{∧-proj₂}
 \UnaryInfC{$Γ ⊢ \unshunt(φ₁ ⇒ φ₃, n)$}
 \RightLabel{By def.}
 \UnaryInfC{$Γ ⊢ \unshunt(φ₁ ⇒ φ₃, n-1)$}
-\RightLabel{\tt thm-$\unshunt$}
+\RightLabel{\thmunshunt}
 \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₃$,}
 \end{bprooftree}
 \end{equation*}
@@ -338,9 +335,9 @@ Second, using the following theorem from \cite{AgdaProp},
 \begin{bprooftree}
 \AxiomC{$\mathcal{D}_1$}
 \AxiomC{$\mathcal{D}_2$}
-\RightLabel{\tt ∧-intro}
+\RightLabel{∧-intro}
 \BinaryInfC{$Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃)$}
-\RightLabel{\tt ⇒∧⇒-to-⇒∧}
+\RightLabel{⇒∧⇒-to-⇒∧}
 \UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃).}
 \end{bprooftree}
 \end{equation*}
@@ -407,16 +404,16 @@ For a complete proof, we refer the reader to~\cite{AgdaMetis}.\\[3mm]
 \AxiomC{$Γ ⊢ \mysplit(φ,n)$}
 \RightLabel{By def.}
 \UnaryInfC{$Γ ⊢ \unshunt(φ₁) ∧ \unshunt(φ₁ ⇒ \mysplit(φ₂,n-1))$}
-\RightLabel{\tt $∧$-proj$₂$}
+\RightLabel{$∧$-proj$₂$}
 \UnaryInfC{$Γ ⊢ \unshunt(φ₁ ⇒ \mysplit(φ₂,n-1))$}
 \RightLabel{\thmunshunt}
 \UnaryInfC{$Γ ⊢ φ₁ ⇒ \mysplit(φ₂,n-1)$}
-\RightLabel{\tt $⇒$-elim}
+\RightLabel{$⇒$-elim}
 \BinaryInfC{$Γ ⊢ \mysplit(φ₂,n-1)$}
 \RightLabel{\thmsplit}
 \UnaryInfC{$Γ ⊢ φ₂$}
 
-\RightLabel{\tt ∧-intro}
+\RightLabel{∧-intro}
 \BinaryInfC{$Γ ⊢ φ₁ ∧ φ₂$.}
 \end{bprooftree}
 \end{equation*}
@@ -427,7 +424,7 @@ Where,
 \AxiomC{$Γ ⊢ \mysplit(φ,n)$}
 \RightLabel{By def.}
 \UnaryInfC{$Γ ⊢ \unshunt(φ₁) ∧ \unshunt(φ₁ ⇒ \mysplit(φ₂,n-1))$}
-\RightLabel{\tt ∧-proj₁}
+\RightLabel{∧-proj₁}
 \UnaryInfC{$Γ ⊢ \unshunt(φ₁)$}
 \RightLabel{\thmunshunt}
 \UnaryInfC{$Γ ⊢ φ₁$.}
@@ -439,7 +436,7 @@ Where,
 \begin{equation*}
 \begin{bprooftree}
 \AxiomC{}
-\RightLabel{\tt assume φ₁}
+\RightLabel{assume φ₁}
 \UnaryInfC{$Γ , φ₁ ⊢ φ₁$}
 \AxiomC{$Γ ⊢ \mysplit(φ,n-1)$}
 \RightLabel{By def.}
@@ -448,11 +445,11 @@ Where,
 \UnaryInfC{$Γ ⊢ φ₁ ⇒ \mysplit(φ₂,n-1)$}
 \RightLabel{weaken φ₁}
 \UnaryInfC{$Γ , φ₁ ⊢ φ₁ ⇒ \mysplit(φ₂,n-1)$}
-\RightLabel{\tt ⇒-elim}
+\RightLabel{⇒-elim}
 \BinaryInfC{$Γ , φ₁ ⊢ \mysplit(φ₂,n-1)$}
 \RightLabel{\thmsplit}
 \UnaryInfC{$Γ , φ₁ ⊢ φ₂$}
-\RightLabel{\tt ⇒-intro}
+\RightLabel{⇒-intro}
 \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$.}
 \end{bprooftree}
 \end{equation*}
@@ -470,17 +467,17 @@ Where,
 \AxiomC{$Γ ⊢ \mysplit(φ,n-1)$}
 \RightLabel{By def.}
 \UnaryInfC{$Γ ⊢ \unshunt(¬ φ₁) ∧ \unshunt(¬ φ₁ ⇒ \mysplit(φ₂,n-1))$}
-\RightLabel{\tt ∧-proj₂}
+\RightLabel{∧-proj₂}
 \UnaryInfC{$Γ ⊢ \unshunt(¬ φ₁ ⇒ \mysplit(φ₂,n-1))$}
 \RightLabel{\thmunshunt}
 \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \mysplit(φ₂,n-1)$}
-\RightLabel{\tt ⇒-elim}
+\RightLabel{⇒-elim}
 \BinaryInfC{$Γ ⊢ \mysplit(φ₂,n-1)$}
 \RightLabel{\thmsplit}
 \UnaryInfC{$Γ ⊢ ¬ φ₂$}
-\RightLabel{\tt ∧-intro}
+\RightLabel{∧-intro}
 \BinaryInfC{$Γ ⊢ ¬ φ₁ ∧ ¬ φ₂$}
-\RightLabel{\tt ¬∧¬-to-¬∨}
+\RightLabel{¬∧¬-to-¬∨}
 \UnaryInfC{$Γ ⊢ ¬ (φ₁ ∨ φ₂)$.}
 \end{bprooftree}
 \end{equation*}
@@ -493,7 +490,7 @@ Where,
 \AxiomC{$Γ ⊢ \mysplit(φ, n)$}
 \RightLabel{By def.}
 \UnaryInfC{$Γ ⊢ \unshunt(¬ φ₁) ∧ \unshunt(¬ φ₁ ⇒ \mysplit(φ₂, n))$}
-\RightLabel{\tt ∧-proj₁}
+\RightLabel{∧-proj₁}
 \UnaryInfC{$Γ ⊢ \unshunt(¬ φ₁)$}
 \RightLabel{\thmunshunt}
 \UnaryInfC{$Γ ⊢ ¬ φ₁$.}
@@ -509,11 +506,11 @@ $\{ Γ ⊢ s_i \}_{i}$, then $Γ ⊢ φ$.
 \begin{equation*}
 \begin{bprooftree}
 \AxiomC{$\left\{ Γ ⊢ s_i \right\}_{i}$}
-\RightLabel{\tt ∧-intro}
+\RightLabel{∧-intro}
 \UnaryInfC{$Γ ⊢ \bigwedge_i s_i$}
 
 \AxiomC{$\mysplit(φ) ≡ \bigwedge_i s_i $}
-\RightLabel{\tt subst}
+\RightLabel{subst}
 \BinaryInfC{$Γ ⊢ \mysplit(φ) $}
 
 \RightLabel{\thmsplit}
@@ -524,7 +521,7 @@ Where,
 \begin{equation*}
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ φ$}   \AxiomC{$ψ ≡ φ$}
-\RightLabel{\tt subst}
+\RightLabel{subst}
 \BinaryInfC{$Γ ⊢ ψ$.}
 \end{bprooftree}
 \end{equation*}
