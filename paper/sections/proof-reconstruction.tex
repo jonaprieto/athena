@@ -160,12 +160,12 @@ To improve that definition for terminating, we will use the
 technique proposed by Bove and Capettra in
 \cite{Bove2005}, which in particular with functions that
 transform propositions consists of:
-take a general recursive function $f: \PROP \to \PROP$.
-and a predicate $P: \PROP \to \abbre{Ind}$, where $\abbre{Ind}$
+take a general recursive function $f: \Prop \to \Prop$.
+and a predicate $P: \Prop \to \abbre{Ind}$, where $\abbre{Ind}$
 is a type with a structured inductive definition.
 
 Then, we redefine the function as
-$f: \PROP \to \abbre{Ind}\ \to \PROP$, and perform the recursion
+$f: \Prop \to \abbre{Ind}\ \to \Prop$, and perform the recursion
 using induction on the structure of the \abbre{Ind} type.
 
 In our case, the \abbre{Nat} data type for
@@ -175,7 +175,7 @@ We also allow common arithmetic operations and numbers represented by
 $0,1,2,\dots$ that stand for $\zero, \suc, \suc(\zero), \dots$.
 
 Thus, we have a new function
-$\unshunt_{1} : \PROP \to \Nat \to \PROP$
+$\unshunt_{1} : \Prop \to \Nat \to \Prop$
 defined by structural recursion in its second argument in
 Eq.~\ref{eq:unshunt-structured}.
 
@@ -201,7 +201,7 @@ the formula that $\unshunt_{1}$ function transforms.
 A \emph{complexity measure} defined in \cite{Agudelo-Agudelo2017}
 and presented in \cite{VanDalen1994} as well as \emph{the rank for a
 proposition} is a function with type
-$\PROP \to \Nat$ that assigns a natural number to a
+$\Prop \to \Nat$ that assigns a natural number to a
 proposition φ as follows.
 
 \begin{equation*}
@@ -210,7 +210,7 @@ rank(φ)=
 \begin{cases}
 0 &\text{for atomic }φ, \\
 rank(φ₁) + c_{¬}  & φ ≡ \neg φ₁, \\
-\max{(rank(φ₁),rank(φ₂)} + c_{\square}
+\max{(rank(φ₁),rank(φ₂))} + c_{\square}
   & φ ≡ φ₁\,\square\, φ₂.
 \end{cases}
 \end{equation*}
@@ -225,7 +225,7 @@ order to maintain the same outputs as the original \unshunt does in
 Eq.~\ref{eq:unshunt-definition}.
 
 Therefore, we define an appropriate complexity measure
-$\unshunt_{cm}: \PROP → \NN$
+$\unshunt_{cm}: \Prop → \NN$
 for the second argument of the $\unshunt_{1}$ function in
 Eq.~\ref{eq:unshunt-rank-definition}.
 
@@ -269,7 +269,6 @@ process in its \TSTP derivations nor in its documentation.
 We provide such a evidence that the process of creating subgoals,
 and combining them in a final conjunction proves the original goal.
 
-\newcommand{\thmunshunt}{\tt thm-$\unshunt$}
 \begin{theorem}[\thmunshunt]
 \label{thm:unshunt}
 $Γ ⊢ \unshunt(φ)$, then $Γ ⊢ φ$.
@@ -388,7 +387,7 @@ in the recursion calls of \mysplit in Eq.~\ref{eq:split-definition},
 the negations, $(¬ φ_{1,2})$ raise a terminating problem.
 
 
-\newcommand{\thmsplit}{\name{thm-split}}
+
 \begin{theorem}[\thmsplit] $Γ ⊢ \mysplit(φ)$ then $Γ ⊢ φ$.
 \end{theorem}
 
@@ -533,7 +532,7 @@ Where,
 
 
 \emph{Resolve.}
-\newcommand{\thmresolve}{\name{thm-resolve}}
+
 The \resolve rule is a generalization version for resolution
 in propositional logic since the formulas are not shaped always as
 the theorem expect (see Fig.~\ref{fig:metis-inferences}).
@@ -577,7 +576,7 @@ disjunction equivalence.
   returns the target formula, ψ, otherwise, keep the first one, φ.
   \begin{align}
   \begin{split}
-&\name{reorder-∨}\ :\ \PROP \to \PROP \to \PROP\\
+&\name{reorder-∨}\ :\ \Prop \to \Prop \to \Prop\\
 &\name{reorder-∨}(φ, ψ) =
   \begin{cases}
   ψ   & φ ⤳ ψ\\
