@@ -197,7 +197,6 @@ To feed the second argument of this new function, we will use
 functions. For instance, we opted to use a complexity measure of
 the formula that $\unshunt_{1}$ function transforms.
 
-\newcommand{\rank}{\name{rank}}
 
 A \emph{complexity measure} defined in \cite{Agudelo-Agudelo2017}
 and presented in \cite{VanDalen1994} as well as \emph{the rank for a
@@ -207,11 +206,11 @@ proposition φ as follows.
 
 \begin{equation*}
 \label{eq:rank-definition}
-\rank(φ)=
+rank(φ)=
 \begin{cases}
 0 &\text{for atomic }φ, \\
-\rank(φ₁) + c_{¬}  & φ ≡ \neg φ₁, \\
-\max(\rank(φ₁),\rank(φ₂)) + c_{\square}
+rank(φ₁) + c_{¬}  & φ ≡ \neg φ₁, \\
+\max{(rank(φ₁),rank(φ₂)} + c_{\square}
   & φ ≡ φ₁\,\square\, φ₂.
 \end{cases}
 \end{equation*}
@@ -384,7 +383,7 @@ yields the conjunction of subgoals from a proposition goal.
 
 We reformulate \mysplit function to match with the
 new definition after apply the process described above in
-subsection~\ref{ssec:small-structured-recursion}, since
+Subsection~\ref{ssec:small-structured-recursion}, since
 in the recursion calls of \mysplit in Eq.~\ref{eq:split-definition},
 the negations, $(¬ φ_{1,2})$ raise a terminating problem.
 
@@ -395,7 +394,7 @@ the negations, $(¬ φ_{1,2})$ raise a terminating problem.
 
 \begin{proof} We now proceed by induction on the structure of the
 formula φ in the definition of Eq.~\ref{eq:split-definition}.
-For a complete proof, we refer the reader to \cite{AgdaMetis}.\\[3mm]
+For a complete proof, we refer the reader to~\cite{AgdaMetis}.\\[3mm]
 
 (φ ≡ φ₁ ∧ φ₂)
 \begin{equation*}

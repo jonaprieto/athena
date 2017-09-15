@@ -11,26 +11,31 @@ Proof-reconstruction is a hard labor since it depends on the
 integration of two complex systems. On the one hand, we have the
 automatic theorem provers (henceforth \ATP) and their specification
 logic. These tools are usually classified in at least one of the
-following categories. A \SAT solver (e.g., \name{zChaff}
-\cite{Moskewicz2001} and \name{MiniSat}~\cite{Een2004}) to prove
-unsatisfiability of \CNF formulas, a \abbre{QBF} solver (e.g.,
-\name{GhostQ}~\cite{Klieber2014} and \name{DepQBF}
-\cite{Lonsing2017}) to prove satisfiability and invalidity of
-quantified Boolean formulas, a \SMT solver (e.g \name{CVC4}
-\cite{Barrett2011}, \name{veriT}~\cite{bouton2009}, and \name{Z3}
-\cite{DeMoura2008}) to prove unsatisfiability of formulas from
-first-order logic with theories, and a prover for validity of
-formulas from first-order logic with equality (e.g., \name{E}
-\cite{Schulz:AICOM-2002}, \name{leanCoP}~\cite{Otten2008}, \Metis
-\cite{hurd2003first}, \name{SPASS} ~\cite{Weidenbach2009} and
+following categories.
+A \SAT solver (e.g., \name{zChaff}~\cite{Moskewicz2001} and
+\name{MiniSat}~\cite{Een2004}) to prove unsatisfiability of \CNF
+formulas, a \abbre{QBF} solver (e.g.,
+\name{GhostQ}~\cite{Klieber2014} and
+\name{DepQBF}~\cite{Lonsing2017}) to prove satisfiability and
+invalidity of quantified Boolean formulas, a \SMT solver
+(e.g \name{CVC4}~\cite{Barrett2011},\name{veriT}~\cite{bouton2009},
+and \name{Z3}~\cite{DeMoura2008}) to prove unsatisfiability of
+formulas from first-order logic with theories, and a prover for
+validity of formulas from first-order logic with equality
+(e.g.,\name{E}~\cite{Schulz:AICOM-2002},
+\name{leanCoP}~\cite{Otten2008},
+\Metis~\cite{hurd2003first},
+\name{SPASS}~\cite{Weidenbach2009} and
 \name{Vampire}~\cite{Riazanov1999}), high-order logic (e.g.,
-\name{Leo-II} \cite{Benzmuller2008} and \name{Satallax}
-\cite{Brown2012}) or intuitionistic logic (e.g., \name{ileanCoP}
-\cite{Otten2008}, \name{JProver} \cite{Schmitt2001}, and
+\name{Leo-II}~\cite{Benzmuller2008} and
+\name{Satallax}~\cite{Brown2012}) or intuitionistic logic (e.g.,
+\name{ileanCoP}~\cite{Otten2008},
+\name{JProver}~\cite{Schmitt2001}, and
 \name{Gandalf}~\cite{Tammet1997}), among others. On the other hand,
 we have the proof checkers, interactive theorem provers (henceforth
-\ITP) or proof assistants (e.g., \Agda~\cite{agdateam}, \name{Coq}
-\cite{coqteam}, \name{Isabelle}~\cite{paulson1994isabelle}, and
+\ITP) or proof assistants (e.g., \Agda~\cite{agdateam},
+\name{Coq}~\cite{coqteam},
+\name{Isabelle}~\cite{paulson1994isabelle}, and
 \name{HOL4}~\cite{norrish2007hol}). The \ITP tools provide us the
 logic framework to check and validate the reply of the \ATPs since
 they allow us to define the formal language for the problems like
@@ -51,12 +56,12 @@ get the actual proof.
 For problems in classical propositional logic (henceforth \CPL),
 from a list of at least forty\footnote{\ATPs available from the web
 service \name{SystemOnTPTP} of the TPTP World.} \ATPs, just a few
-provers were able to deliver proofs (e.g., \name{CVC4}
-\cite{Barrett2011}, \name{SPASS}, and \name{Waldmeister}
-\cite{hillenbrand1997}) and a little bit less replied with a proof
+provers were able to deliver proofs (e.g.,
+\name{CVC4}~\cite{Barrett2011}, \name{SPASS}, and
+\name{Waldmeister}~\cite{hillenbrand1997}) and a little bit less replied with a proof
 in a file format like \TSTP~\cite{sutcliffe2004tstp} (e.g.,
-\name{E}, \Metis, \name{Vampire}, and \name{Z3}), \len{LFSC}
-\cite{Stump2008}, or the \len{SMT-LIB}~\cite{Bohme2011} format.
+\name{E}, \Metis, \name{Vampire}, and \name{Z3}),
+\len{LFSC}~\cite{Stump2008}, or the \len{SMT-LIB}~\cite{Bohme2011} format.
 
 Many approaches have been proposed and some tools have been
 implemented for proof-reconstruction in the last decades. These
@@ -65,16 +70,16 @@ usage but they also increase the confidence of their users about
 their algorithms and their correctness (see, for example, bugs in
 \ATPs~\cite{Keller2013}, \cite{Bohme2011}, \cite{Fleury2014} and
 \cite{Kanso2012}). We mention some of these tools in the related
-work, section \ref{sec:related-work}.
+work, Section \ref{sec:related-work}.
 
 In this paper, we describe the integration of \Metis prover with the
 proof assistant \Agda by parsing \TSTP derivations to generate \Agda
 proof-terms. We structure the paper as follows.
 We briefly mention notation and syntax of the classical propositional
 logic in Section \ref{sec:preliminaries}.
-In section \ref{sec:metis-language-and-proofs}, we introduce the
+In Section \ref{sec:metis-language-and-proofs}, we introduce the
 \Metis prover and its deduction system.
-In section \ref{sec:proof-reconstruction}, we present our
+In Section \ref{sec:proof-reconstruction}, we present our
 approach to reconstruct proofs deliver by \Metis in type theory.
 We listed some conclusions and future work in Section
 \ref{sec:conclusions}. At the end, we list some related works in
