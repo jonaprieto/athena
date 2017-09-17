@@ -78,7 +78,7 @@ executable athena
                 , split >= 0.2.3.1 && < 0.3
                 , text >= 0.11.0.0 && < 1.3
 
-  build-tools: cpphs >= 1.20.2
+  build-tools: cpphs >= 1.20.8
 
   other-modules:
     Athena.Options

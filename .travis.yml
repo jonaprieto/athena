@@ -59,7 +59,7 @@ install:
    fi
 
  - cabal install cabal-install
- - cabal install cpphs-1.20.2
+ - cabal install cpphs-1.20.8
  # - make install-fix-whitespace
  - cabal install hlint
  - hlint --version
