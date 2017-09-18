@@ -1,4 +1,4 @@
-% -*- root: main.tex -*-
+
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 
@@ -80,7 +80,7 @@ Following the diagram in Fig.
 \ref{fig:proof-reconstruction-workflow}, the process can begin with
 a problem in \CPL that we encode in \TPTP format to be sent as the
 input of the \Metis prover.
-The algorithms of \Metis in step~3 intend to find
+The algorithms of \Metis in Step~3 intend to find
 a solution; if they success, \Metis replies a derivation in \TSTP
 format of the proof, else the problem is counter feasible.
 
@@ -95,46 +95,67 @@ in this file, \emph{imports} that call \Agda libraries that give
 support for the logic~\cite{AgdaProp}, and versions of the \Metis'
 inference rules~\cite{AgdaMetis}.
 
-Finally, we use the proof assistant in step 7 to type-check the
-proof and verify its correctness. Next, we only have one answer:
-type-checking succeed (i.e., the proof is valid) or type-checking
-failed.
-If the type-check fails, one of the three actors in the process are
-responsible: \Metis, \Athena, or \Agda. We are responsible for
-errors committed in the translation from \TSTP to \Agda; lack of the
-coverage of the \Metis' inference rules, or bad assumptions about
-them. \improvement{Make this statement stronger and clear.}
+Finally, we use the proof checker in Step~7 to type-check the
+proof-term. If type-checking succeed, the proof from such a \TSTP
+derivation is correct, else if type-checking fails, one of the three
+actors in the process could be the responsible.
+They are \Metis, \Athena, or \Agda.
+
+We are responsible for errors committed in the translation from
+\TSTP to \Agda: bugs in the parsing module, lack of the coverage of
+the \Metis' inference rules since we are emulating them, and last
+but not least, the pretty print of the proof in \Agda code.
 
 In the rest of this section, we provide a formal description using
-type theory to build definitions and theorems for the functions
-necessary to emulate the \Metis' inference rules. We will write the
-type judgments with ``$a : A$'' to denote that $a$ has type $A$.
-For propositions, we will denote by $φ ≡ ψ$ the syntactic
+type theory to build definitions and theorems for functions
+necessary to emulate \Metis' inference rules.
+Some conventions about notations. We will write the
+type judgments with ``$a : A$'' to denote that $a$ has type
+$\abbre{A}$. Types are written using small caps.
+For propositions, we will denote by $φ ≡ ψ$, the syntactic
 equivalence.
 
 
 % ...................................................................
 
-\subsection{Small Structured Recursion}
-\label{ssec:small-structured-recursion}
+% section section_name (end)
+\subsection{Structural Recursion}
+\label{ssec:structural-recursion}
 
 In the process to emulate \Metis' inference rules in type theory,
-we encountered many recursive algorithms with termination problems,
-that is,when an algorithm could run forever or we can not guarantee
-that it will stop after some point. Such a problem makes impossible
-to translate the algorithm in type theory directly.
-For that reason, we show a technique that will help us to define
-new algorithms based on the previous ones to solve the problem
-mentioned.
+we encountered that some of \Metis' transformation for propositions in
+the inference rules were given by \emph{general recursion} functions.
+But algorithms based on general recursions can not be translated
+directly in type theory since it is not a guarantee they terminate.
+Then, since a termination checker in type theory recognizes
+\emph{structural recursion functions} as well-founded recursive
+functions, we modify our algorithms in order to follow such a
+definition mostly taken from \citeauthor{Abel2002}~\cite{Abel2002}.
 
-A recursive function is a \emph{small-structured-recursion}, if the
-size of the arguments with which it is defined decrease in
-size for each call to the function in the definition~\cite{Bove2005}.
-A well-structured function terminates and it can be translated
-directly to type theory~\cite{Bove2002}.
+\begin{definition} A recursive function is structurally recursive if
+it calls itself with only \emph{structurally smaller} arguments.
+\end{definition}
 
-Let us consider the following example from an inner function
-in the \strip inference.
+\begin{definition}
+Given an \emph{ordering relation} between $t_1 : T$ and $t_2 : T$,
+we say that $t_1$ is structurally smaller than $t_2$ if and only if,
+USE \cite{Coquand1992} definition.
+\begin{itemize}
+  \item $t_1$ and $t_2$ are different constructor for $T$ type.
+\end{itemize}
+\end{definition}
+
+To convert a general recursion function into a structural recursion
+function, for the sake of simplicity, we will follow a technique
+found mainly in \cite{Coquand1992,Abel2002,Bove2005}.
+It mostly consists of using a \emph{recursor}, an inductive type, to
+perform the \emph{induction} over its structure.
+A type-checker will recognize structurally smaller arguments by using
+the lexicographic order, as an extension of the structural ordering
+by the recursor.
+
+Let us consider the following example to exhibit the procedure
+mentioned above for an inner function in the \strip inference.
 
 \begin{equation}
 \label{eq:unshunt-definition}
@@ -224,6 +245,7 @@ what natural number should be feed that argument in
 order to maintain the same outputs as the original \unshunt does in
 Eq.~\ref{eq:unshunt-definition}.
 
+
 Therefore, we define an appropriate complexity measure
 $\unshunt_{cm}: \Prop → \NN$
 for the second argument of the $\unshunt_{1}$ function in
@@ -248,6 +270,11 @@ in Eq.~\ref{eq:unshunt-fixed}.
 \unshunt(\varphi) := \unshunt_{1}(\varphi, \unshunt_{cm}(\varphi)).
 \end{equation}
 
+For a more complete treatment of general recursion, and how to
+define well-founded and well-structural recursive functions, we refer
+the reader to Ref.~\cite{Bove2005}, where Bove and Capettra described
+not only general recursion but they also treat mutual recursive
+function, among other kinds.
 
 % ................................................
 
@@ -379,7 +406,7 @@ yields the conjunction of subgoals from a proposition goal.
 
 We reformulate \mysplit function to match with the
 new definition after apply the process described above in
-Subsection~\ref{ssec:small-structured-recursion}, since
+Subsection~\ref{ssec:structural-recursion}, since
 in the recursion calls of \mysplit in Eq.~\ref{eq:split-definition},
 the negations, $(¬ φ_{1,2})$ raise a terminating problem.
 
@@ -527,79 +554,6 @@ Where,
 \end{equation*}
 \end{proof}
 
-
-\emph{Resolve.}
-
-The \resolve rule is a generalization version for resolution
-in propositional logic since the formulas are not shaped always as
-the theorem expect (see Fig.~\ref{fig:metis-inferences}).
-Since our approach is mere syntactic, in order to apply such a
-theorem, we perform rearrangements inside the formulas to match with
-the pattern expected by the resolution theorem. If this strategy
-fails at some point, we could not check the rest of the proof.
-
-Therefore, the best scenario to apply resolution occurs when the
-literal $l$ and its negation appear in the exact place in the
-formulas as the resolve inference shows.
-
-\begin{figure}
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ (φ₁ ≡ l ∨ ψ₁)$}
-\AxiomC{$Γ ⊢ (φ₂ ≡ ¬ l ∨ ψ₂)$}
-\RightLabel{\thmresolve}
-\BinaryInfC{$Γ ⊢ \resolve(φ₁, φ₂, l, (ψ₁ ∧ ψ₂))$}
-\UnaryInfC{Γ ⊢ ψ₁ ∨ ψ₂}
-\end{bprooftree}
-%}
-\]
-% \caption{Resolution in \Metis.}
-\label{fig:thm-resolve-best-case}
-\end{figure}
-
-To rearrange the propositions in order to match with a specific
-pattern for applying a particular theorem like resolution, we have
-define the following functions and provide
-its respective theorems in \cite{AgdaMetis}.
-These rearrangement functions are mainly inspired in
-\cite{bohme2010}, for their treatment for conjunction and
-disjunction equivalence.
-
-\improvement{provide examples for each of the following functions.}
-
-\begin{itemize}
-  \item \name{reorder-∨.} Given two formulas, φ and ψ, both disjunctions, fix the order of the first one by following the syntactically
-  order of the second one. If the process succeed (denote by φ ⤳ ψ),
-  returns the target formula, ψ, otherwise, keep the first one, φ.
-  \begin{align}
-  \begin{split}
-&\name{reorder-∨}\ :\ \Prop \to \Prop \to \Prop\\
-&\name{reorder-∨}(φ, ψ) =
-  \begin{cases}
-  ψ   & φ ⤳ ψ\\
-  ϕ   & \text{otherwise.}
-  \end{cases}
-  \end{split}
-  \end{align}
-
-  \item \name{reorder-∧.} Given two formulas, φ and ψ, both conjunctions, fix the order of the first one by following the order  of the second one.
-  \item \name{reorder-∧∨.} Given two formulas, φ and ψ, both in CNF, fix the order of the first one by following the order  of the second one.
-\end{itemize}
-
-\begin{equation}
-\resolve((φ₁, φ₂, l, ψ)
-\end{equation}
-
-\begin{theorem}[\thmresolve] $Γ ⊢ φ₁$, $Γ ⊢ φ₂$,
-then $Γ ⊢ \resolve(φ₁, φ₂, l, ψ)$ where $l$ is a literal,
-and ψ is the expected result.
-\end{theorem}
-
-% \begin{proof}
-% \begin{equation*}
-
-% \end{equation*}
-% \end{proof}
 
 \emph{Clausification.}
 
