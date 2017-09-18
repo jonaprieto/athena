@@ -1,4 +1,4 @@
-% LLNCS DOCUMENT CLASS -- version 2.18 (27-Sep-2013)
+% LLNCS DOCUMENT CLASS -- version 2.19 (04-Sep-2017)
 % Springer Verlag LaTeX2e support for Lecture Notes in Computer Science
 %
 %%
@@ -19,7 +19,7 @@
 %%   Right brace   \}     Tilde         \~}
 %%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{llncs}[2013/09/27 v2.18
+\ProvidesClass{llncs}[2017/09/04 v2.19
 ^^J LaTeX document class for Lecture Notes in Computer Science]
 % Options
 \let\if@envcntreset\iffalse
@@ -875,6 +875,7 @@ to0pt{\kern0.55\wd0\vrule height0.45\ht0\hss}\box0}}}}
    \or \ddagger\ddagger \else\@ctrerr\fi}}
 
 \def\inst#1{\unskip$^{#1}$}
+\def\orcidID#1{\unskip$^{[#1]}$}
 \def\fnmsep{\unskip$^,$}
 \def\email#1{{\tt#1}}
 \AtBeginDocument{\@ifundefined{url}{\def\url#1{#1}}{}%

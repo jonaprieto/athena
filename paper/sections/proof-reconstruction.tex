@@ -128,38 +128,46 @@ the inference rules were given by \emph{general recursion} functions.
 But algorithms based on general recursions can not be translated
 directly in type theory since it is not a guarantee they terminate.
 Then, since a termination checker in type theory recognizes
-\emph{structural recursion functions} as well-founded recursive
-functions, we modify our algorithms in order to follow such a
-definition mostly taken from \citeauthor{Abel2002}~\cite{Abel2002}.
+\emph{structural recursion functions}, we modify our algorithms appropriately.
 
-\begin{definition} A recursive function is structurally recursive if
-it calls itself with only \emph{structurally smaller} arguments.
-\end{definition}
+Using the concept of \emph{structurally smaller} from
+\citeauthor{Abel2002}~\cite{Abel2002}. We say, a recursive function is
+structurally recursive if it calls itself with only \emph{structurally smaller}
+arguments.
 
-\begin{definition}
-Given an \emph{ordering relation} between $t_1 : T$ and $t_2 : T$,
-we say that $t_1$ is structurally smaller than $t_2$ if and only if,
-USE \cite{Coquand1992} definition.
-\begin{itemize}
-  \item $t_1$ and $t_2$ are different constructor for $T$ type.
-\end{itemize}
-\end{definition}
+To convert a general recursive call into a structurally recursive call, we use
+the \emph{Bounded Recursion} technique presented in \cite{Coquand1992} but others found in
+\cite{Coquand1992,Abel2002,Bove2005} could be used.
 
-To convert a general recursion function into a structural recursion
-function, for the sake of simplicity, we will follow a technique
-found mainly in \cite{Coquand1992,Abel2002,Bove2005}.
-It mostly consists of using a \emph{recursor}, an inductive type, to
-perform the \emph{induction} over its structure.
-A type-checker will recognize structurally smaller arguments by using
-the lexicographic order, as an extension of the structural ordering
-by the recursor.
+The \emph{Bounded Recursion} technique converts a general recursive
+function into a structural recursive function by adding an additional
+argument that handle the times the function can call itself.
 
-Let us consider the following example to exhibit the procedure
+In our case, we add a natural number $n : \Nat$ in the input of the general
+recursive function for such an argument in mostly cases, and perform the
+recursion over the structure of \Nat type. \abbre{Nat} type is the usual
+type with \zero and \suc constructors, and including the common arithmetic
+operations ($+,\,-,\,*$) and representations of $\zero, \suc, \suc(\zero),
+\dots$
+with $0,1,2,\dots$.
+
+Then, the type-checker will
+recognize structurally smaller arguments by using the lexicographic
+order~\cite{Abel2002} for such kind of functions.
+
+In other words, we take a general recursive function $f: \Prop \to \Prop$.
+and we redefine that function as
+$f: \Prop \to \Nat \to \Prop$, and perform the recursion
+using induction on the structure of the \Nat type.
+
+We define
+
+Let us consider the following example to exhibit the technique
 mentioned above for an inner function in the \strip inference.
 
 \begin{equation}
 \label{eq:unshunt-definition}
-\unshunt(φ)_{0} =
+\unshunt_{0}(φ) =
 \begin{cases}
 \unshunt_{0}((φ₁ ∧ φ₂) ⇒ φ₃)
   & φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃),\\
@@ -171,29 +179,9 @@ mentioned above for an inner function in the \strip inference.
 \end{cases}
 \end{equation}
 
-From the definition above, in the first case of the \unshunt
-function, the size of the argument in the recursion,(φ₁ ∧ φ₂) ⇒ φ₃,
-is not structured smaller than the decrease, (φ₁ ⇒ (φ₂ ⇒ φ₃)).
-Therefore, a termination checking will fail with the \unshunt
-function.
-
-To improve that definition for terminating, we will use the
-technique proposed by Bove and Capettra in
-\cite{Bove2005}, which in particular with functions that
-transform propositions consists of:
-take a general recursive function $f: \Prop \to \Prop$.
-and a predicate $P: \Prop \to \abbre{Ind}$, where $\abbre{Ind}$
-is a type with a structured inductive definition.
-
-Then, we redefine the function as
-$f: \Prop \to \abbre{Ind}\ \to \Prop$, and perform the recursion
-using induction on the structure of the \abbre{Ind} type.
-
-In our case, the \abbre{Nat} data type for
-natural numbers will be the $\abbre{Ind}$ type.
-We define \abbre{Nat} as usual (constructors \zero and \suc).
-We also allow common arithmetic operations and numbers represented by
-$0,1,2,\dots$ that stand for $\zero, \suc, \suc(\zero), \dots$.
+From the definition above, the size of the argument, ((φ₁ ∧ φ₂) ⇒ φ₃),
+is not structurally smaller than the input formula, (φ₁ ⇒ (φ₂ ⇒ φ₃));
+((φ₁ ∧ φ₂) ⇒ φ₃) is not a subformula of (φ₁ ⇒ (φ₂ ⇒ φ₃)).
 
 Thus, we have a new function
 $\unshunt_{1} : \Prop \to \Nat \to \Prop$
