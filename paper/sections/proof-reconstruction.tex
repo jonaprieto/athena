@@ -532,16 +532,47 @@ $\{ Γ ⊢ s_i \}_{i}$, then $Γ ⊢ φ$.
 \UnaryInfC{$Γ ⊢ φ$.}
 \end{bprooftree}
 \end{equation*}
-Where,
-\begin{equation*}
+Where, the $subst$ theorem is,
+\begin{equation}
+\label{eq:substitution-theorem}
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ φ$}   \AxiomC{$ψ ≡ φ$}
 \RightLabel{subst}
 \BinaryInfC{$Γ ⊢ ψ$.}
 \end{bprooftree}
-\end{equation*}
+\end{equation}
 \end{proof}
 
+\emph{Splitting a conjunct}.
+The \conjunct rule extracts from a conjunction, one of its conjunct.
+To achieve this, we use projections repeatedly until we finally find
+the conjunct required.
+
+\begin{align}
+\begin{split}
+conjunct(φ, ψ) =
+\begin{cases}
+ψ &\text{if }φ ≡ ψ\\
+ψ &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }ψ ≡ conjunct(φ₁, ψ)\\
+ψ &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }ψ ≡ conjunct(φ₂, ψ)\\
+φ &\text{otherwise}
+\end{cases}
+\end{split}
+\end{align}
+
+\begin{theorem}[thm-conjunct]  $Γ ⊢ φ$, and $ψ \in \Prop$, then $Γ ⊢ conjunct(φ, ψ)$.
+\end{theorem}
+
+\begin{proof}
+When φ ≡ ψ, from $Γ ⊢ conjunct(φ, ψ)$ by normalization, we get $Γ ⊢ ψ$.
+By using $subst$ theorem Eq.~\ref{eq:substitution-theorem}, we get the desire conclusion. If the proposition φ is a conjunction, and $ψ ≡ conjunct(φ_{i}, ψ)$
+for some $i = 1,\ 2$, from $Γ ⊢ conjunct(φ, ψ)$ by normalization, we get
+$Γ ⊢ ψ$, but since $conjunct(φ_{i}, ψ) ≡ ψ$; we apply $subst$ theorem again,
+and the theorem follows.
+For the latter case, by using the hypothesis, $Γ ⊢ φ$, the proof is complete.
+
+Note that $conjunct$ function and also its theorem are well defined structural recursions, since φ₁ and φ₂ in the argument from the definition are structurally smaller than φ.
+\end{proof}
 
 \emph{Clausification.}
 
