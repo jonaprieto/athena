@@ -136,20 +136,17 @@ structurally recursive if it calls itself with only \emph{structurally smaller}
 arguments.
 
 To convert a general recursive call into a structurally recursive call, we use
-the \emph{Bounded Recursion} technique presented in \cite{Coquand1992} but others found in
-\cite{Coquand1992,Abel2002,Bove2005} could be used.
-
-The \emph{Bounded Recursion} technique converts a general recursive
+the \emph{Bounded Recursion} technique presented in \cite{Bertot2004} but
+others found in \cite{Coquand1992,Abel2002,Bove2005} could be used.
+This technique converts a general recursive
 function into a structural recursive function by adding an additional
 argument that handle the times the function can call itself.
+As we show later, we use the complexity of the original function for the new argument in the new function.
 
-In our case, we add a natural number $n : \Nat$ in the input of the general
-recursive function for such an argument in mostly cases, and perform the
-recursion over the structure of \Nat type. \abbre{Nat} type is the usual
-type with \zero and \suc constructors, and including the common arithmetic
-operations ($+,\,-,\,*$) and representations of $\zero, \suc, \suc(\zero),
-\dots$
-with $0,1,2,\dots$.
+For that argument, we add the natural number $n : \Nat$ in the input of the
+general recursive function, and perform the recursion over the structure of
+\Nat type. \abbre{Nat} type is the usual type with \zero and \suc constructors, and including the common arithmetic operations ($+,\,-,\,*$) and
+representations of $\zero, \suc, \suc(\zero), \dots$ with $0,1,2,\dots$.
 
 Then, the type-checker will
 recognize structurally smaller arguments by using the lexicographic
