@@ -79,7 +79,7 @@ install:
  # - make install-fix-whitespace
  - cabal install hlint
  - hlint --version
- - cabal install agda
+ - cabal install agda-2.5.3
  - agda --version
 
  # Online-atps.

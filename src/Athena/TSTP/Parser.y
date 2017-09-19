@@ -23,7 +23,6 @@ import Data.Char
 import Data.Data
 import Data.List as L
 import Data.Ratio
-import Data.Set as S
 
 import Data.TSTP
   ( AtomicWord (..)

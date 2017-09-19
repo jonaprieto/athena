@@ -14,22 +14,18 @@ default: install
 # -----------------------------------------------------------------------------
 
 AGDA_VERSION := $(shell agda --version 2>/dev/null)
-TESTED_AGDA_VERSION1 =Agda version 2.5.2
-TESTED_AGDA_VERSION2 =Agda version 2.5.3
+TESTED_AGDA_VERSION1 =Agda version 2.5.3
 
 agdaversion:
 
 ifneq ($(AGDA_VERSION),$(TESTED_AGDA_VERSION1))
-ifneq ($(AGDA_VERSION),$(TESTED_AGDA_VERSION2))
 	@echo "==================================================================="
 	@echo "===================  WARNING: AGDA VERSION! ======================="
 	@echo "==================================================================="
 	@echo "[!] ATHENA was tested with:"
 	@echo "    * ${TESTED_AGDA_VERSION1}"
-	@echo "    * ${TESTED_AGDA_VERSION2}"
 	@echo "    Your system has a different version:"
 	@echo "    * ${AGDA_VERSION}"
-endif
 endif
 
 GHC_VERSION := $(shell ghc --version 2>/dev/null)
@@ -322,15 +318,15 @@ agda-stdlib:
 	@if [ ! -d lib/agda-stdlib ] ; \
 	 then \
 	 echo "===================================================================";\
-	 echo "===== Downloading Agda Standard Library v2.5.2.20170816    ========";\
+	 echo "=========== Downloading Agda Standard Library v0.14    ============";\
 	 echo "===================================================================";\
 	 git config --global advice.detachedHead false && \
 	 git clone -q --progress \
-			-b 'v2.5.2.20170816 ' \
+			-b 'v0.14' \
 			--single-branch \
 			https://github.com/agda/agda-stdlib.git \
 			lib/agda-stdlib; \
-	 echo "Installed agda-stdlib v2.5.2.20170816  in ${ATHENA_LIB}/agda-stdlib"; \
+	 echo "Installed agda-stdlib v0.14  in ${ATHENA_LIB}/agda-stdlib"; \
 	 else \
 		 echo "[!] agda-stdlib directory already exists"; \
 	 fi;
@@ -374,15 +370,12 @@ install-libraries: agda-stdlib agda-libraries
 	@echo "[!] To complete the installation, please set the AGDA_DIR variable:"
 	@echo "    $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
 
-.PHONY : install-bin
-install-bin : ghcversion
+.PHONY : install
+install : ghcversion
 	@echo "==================================================================="
 	@echo "================ Installing Athena v0.1 ==========================="
 	@echo "==================================================================="
-	cabal install --disable-documentation -v0 --jobs=1 -g --ghc
-
-.PHONY: install
-install : install-bin reconstruct check
+	cabal install --disable-documentation -g --ghc
 
 .PHONY : prop-pack
 prop-pack :
@@ -404,18 +397,18 @@ msg-tstp :
 	@echo "    $$ export ATP=\"online-atps --atp=metis\""
 
 .PHONY : problems
-problems : prop-pack \
-					 msg-tstp \
-					 $(TSTP_BASIC) \
-					 $(TSTP_CONJ)	\
-					 $(TSTP_DISJ) \
-					 $(TSTP_IMPL)	\
-					 $(TSTP_BICOND) \
-					 $(TSTP_NEG) \
-					 $(TSTP_PMETIS)
+problems :	prop-pack \
+			msg-tstp \
+			$(TSTP_BASIC) \
+			$(TSTP_CONJ)	\
+			$(TSTP_DISJ) \
+			$(TSTP_IMPL)	\
+			$(TSTP_BICOND) \
+			$(TSTP_NEG) \
+			$(TSTP_PMETIS)
 
 .PHONY : reconstruct
-reconstruct : install-bin problems
+reconstruct : install problems
 	@echo "==================================================================="
 	@echo "============== Generating Agda files of TSTP proofs ==============="
 	@echo "==================================================================="
@@ -427,15 +420,16 @@ reconstruct : install-bin problems
 
 .PHONY : check
 check : export AGDA_DIR := $(ATHENA_AGDA_LIB)
-check : agdaversion \
-				install-libraries \
-				$(AGDA_BASIC) \
-				$(AGDA_CONJ)	\
-				$(AGDA_DISJ) \
-				$(AGDA_IMPL)	\
-				$(AGDA_BICOND) \
-				$(AGDA_NEG) \
-				$(AGDA_PMETIS)
+check : reconstruct \
+		agdaversion \
+		install-libraries \
+		$(AGDA_BASIC) \
+		$(AGDA_CONJ)	\
+		$(AGDA_DISJ) \
+		$(AGDA_IMPL)	\
+		$(AGDA_BICOND) \
+		$(AGDA_NEG) \
+		$(AGDA_PMETIS)
 
 	@echo "==================================================================="
 	@echo "================== Type-checking Agda files ======================="
