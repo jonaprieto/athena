@@ -14,19 +14,16 @@ default: install
 # -----------------------------------------------------------------------------
 
 AGDA_VERSION := $(shell agda --version 2>/dev/null)
-TESTED_AGDA_VERSION1 =Agda version 2.5.2
-TESTED_AGDA_VERSION2 =Agda version 2.5.3
+TESTED_AGDA_VERSION1 =Agda version 2.5.3
 
 agdaversion:
 
 ifneq ($(AGDA_VERSION),$(TESTED_AGDA_VERSION1))
-ifneq ($(AGDA_VERSION),$(TESTED_AGDA_VERSION2))
 	@echo "==================================================================="
 	@echo "===================  WARNING: AGDA VERSION! ======================="
 	@echo "==================================================================="
 	@echo "[!] ATHENA was tested with:"
 	@echo "    * ${TESTED_AGDA_VERSION1}"
-	@echo "    * ${TESTED_AGDA_VERSION2}"
 	@echo "    Your system has a different version:"
 	@echo "    * ${AGDA_VERSION}"
 endif
@@ -374,15 +371,12 @@ install-libraries: agda-stdlib agda-libraries
 	@echo "[!] To complete the installation, please set the AGDA_DIR variable:"
 	@echo "    $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
 
-.PHONY : install-bin
-install-bin : ghcversion
+.PHONY : install
+install : ghcversion
 	@echo "==================================================================="
 	@echo "================ Installing Athena v0.1 ==========================="
 	@echo "==================================================================="
-	cabal install --disable-documentation -v0 --jobs=1 -g --ghc
-
-.PHONY: install
-install : install-bin reconstruct check
+	cabal install --disable-documentation -g --ghc
 
 .PHONY : prop-pack
 prop-pack :
@@ -404,18 +398,18 @@ msg-tstp :
 	@echo "    $$ export ATP=\"online-atps --atp=metis\""
 
 .PHONY : problems
-problems : prop-pack \
-					 msg-tstp \
-					 $(TSTP_BASIC) \
-					 $(TSTP_CONJ)	\
-					 $(TSTP_DISJ) \
-					 $(TSTP_IMPL)	\
-					 $(TSTP_BICOND) \
-					 $(TSTP_NEG) \
-					 $(TSTP_PMETIS)
+problems :	prop-pack \
+			msg-tstp \
+			$(TSTP_BASIC) \
+			$(TSTP_CONJ)	\
+			$(TSTP_DISJ) \
+			$(TSTP_IMPL)	\
+			$(TSTP_BICOND) \
+			$(TSTP_NEG) \
+			$(TSTP_PMETIS)
 
 .PHONY : reconstruct
-reconstruct : install-bin problems
+reconstruct : install problems
 	@echo "==================================================================="
 	@echo "============== Generating Agda files of TSTP proofs ==============="
 	@echo "==================================================================="
@@ -427,15 +421,16 @@ reconstruct : install-bin problems
 
 .PHONY : check
 check : export AGDA_DIR := $(ATHENA_AGDA_LIB)
-check : agdaversion \
-				install-libraries \
-				$(AGDA_BASIC) \
-				$(AGDA_CONJ)	\
-				$(AGDA_DISJ) \
-				$(AGDA_IMPL)	\
-				$(AGDA_BICOND) \
-				$(AGDA_NEG) \
-				$(AGDA_PMETIS)
+check : reconstruct \
+		agdaversion \
+		install-libraries \
+		$(AGDA_BASIC) \
+		$(AGDA_CONJ)	\
+		$(AGDA_DISJ) \
+		$(AGDA_IMPL)	\
+		$(AGDA_BICOND) \
+		$(AGDA_NEG) \
+		$(AGDA_PMETIS)
 
 	@echo "==================================================================="
 	@echo "================== Type-checking Agda files ======================="
