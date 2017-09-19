@@ -27,7 +27,6 @@ ifneq ($(AGDA_VERSION),$(TESTED_AGDA_VERSION1))
 	@echo "    Your system has a different version:"
 	@echo "    * ${AGDA_VERSION}"
 endif
-endif
 
 GHC_VERSION := $(shell ghc --version 2>/dev/null)
 TESTED_GHC_VERSION1 :=The Glorious Glasgow Haskell Compilation System, version 8.0.2
