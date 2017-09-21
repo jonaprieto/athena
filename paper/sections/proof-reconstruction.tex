@@ -243,7 +243,7 @@ Eq.~\ref{eq:unshunt-rank-definition}.
 \unshunt_{cm}(φ₃) + 2 & φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃),\\
 \max(\unshunt_{cm}(φ₂),\unshunt_{cm}(φ₃)) + 1
   & φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃),\\
-0 &\text{otherwise.}
+1 &\text{otherwise.}
 \end{cases}
 \end{equation}
 
@@ -258,7 +258,7 @@ in Eq.~\ref{eq:unshunt-fixed}.
 For a more complete treatment of general recursion, and how to
 define well-founded and well-structural recursive functions, we refer
 the reader to Ref.~\cite{Bove2005}, where Bove and Capettra described
-not only general recursion but they also treat mutual recursive
+not only general recursion, but they also treat mutual recursive
 function, among other kinds.
 
 % ................................................
@@ -275,7 +275,7 @@ of the goal.
 
 Nevertheless, \Metis does not provide neither an explanation of this
 process in its \TSTP derivations nor in its documentation.
-We provide such a evidence that the process of creating subgoals,
+We provide such an evidence that the process of creating subgoals,
 and combining them in a final conjunction proves the original goal.
 
 \begin{theorem}[\thmunshunt]
@@ -394,7 +394,6 @@ new definition after apply the process described above in
 Subsection~\ref{ssec:structural-recursion}, since
 in the recursion calls of \mysplit in Eq.~\ref{eq:split-definition},
 the negations, $(¬ φ_{1,2})$ raise a terminating problem.
-
 
 
 \begin{theorem}[\thmsplit] $Γ ⊢ \mysplit(φ)$ then $Γ ⊢ φ$.
