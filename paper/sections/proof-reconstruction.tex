@@ -71,7 +71,7 @@ The proof-reconstruction approach proposed here consists of a series
 of steps similar to the workflow presented by \citeauthor{sultana2015} in
 \cite{sultana2015}. This process is a translation from a source
 system to a target system. In our case, the system of origin, the
-automatic theorem prover, is \Metis; the target system is the proof
+automatic theorem prover, is \Metis; the target system are the proof
 assistant, \Agda. We choose \Agda, but a proof assistant with
 support of type theory and similar features like \Agda
 (see a description of \Agda in Section
@@ -162,19 +162,19 @@ We define
 Let us consider the following example to exhibit the technique
 mentioned above for an inner function in the \strip inference.
 
-\begin{equation}
+\begin{align}
+\begin{split}
 \label{eq:unshunt-definition}
-\unshunt_{0}(φ) =
-\begin{cases}
+&\unshunt_{0}(φ) =\\
+&\hspace{3mm}\begin{cases}
 \unshunt_{0}((φ₁ ∧ φ₂) ⇒ φ₃)
-  & φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃),\\
-
+  & \text{if }φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃),\\
 \unshunt_{0}(φ₁ ⇒ φ₂) ∧ \unshunt_{0}(φ₁ ⇒ φ₃)
-  & φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃),\\
-
-φ &\text{otherwise}.
+  & \text{if }φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃),\\
+φ &\text{otherwise.}
 \end{cases}
-\end{equation}
+\end{split}
+\end{align}
 
 From the definition above, the size of the argument, ((φ₁ ∧ φ₂) ⇒ φ₃),
 is not structurally smaller than the input formula, (φ₁ ⇒ (φ₂ ⇒ φ₃));
@@ -188,13 +188,12 @@ Eq.~\ref{eq:unshunt-structured}.
 \begin{align}
 \label{eq:unshunt-structured}
 \begin{split}
-\unshunt_{1}(φ, \zero) &= φ\\
-\unshunt_{1}(φ, \suc(n)) &=
-\begin{cases}
+&\unshunt_{1}(φ, \zero) = φ\\
+&\unshunt_{1}(φ, \suc(n)) =\\
+&\hspace{3mm}\begin{cases}
 \unshunt_{1}((φ₁ ∧ φ₂) ⇒ φ₃, n)
-  & φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃),\\
-\unshunt_{1}(φ₁ ⇒ φ₂, n)  & φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃).\\
-∧\ \unshunt_{1}(φ₁ ⇒ φ₃, n)
+  &\text{if } φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃),\\
+\unshunt_{1}(φ₁ ⇒ φ₂, n) ∧\ \unshunt_{1}(φ₁ ⇒ φ₃, n) &\text{if } φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃).
 \end{cases}
 \end{split}
 \end{align}
@@ -202,7 +201,6 @@ Eq.~\ref{eq:unshunt-structured}.
 To feed the second argument of this new function, we will use
 functions. For instance, we opted to use a complexity measure of
 the formula that $\unshunt_{1}$ function transforms.
-
 
 A \emph{complexity measure} defined in \cite{Agudelo-Agudelo2017}
 and presented in \cite{VanDalen1994} as well as \emph{the rank for a
@@ -215,9 +213,9 @@ proposition φ as follows.
 rank(φ)=
 \begin{cases}
 0 &\text{for atomic }φ, \\
-rank(φ₁) + c_{¬}  & φ ≡ \neg φ₁, \\
+rank(φ₁) + c_{¬}  &\text{if } φ ≡ \neg φ₁, \\
 \max{(rank(φ₁),rank(φ₂))} + c_{\square}
-  & φ ≡ φ₁\,\square\, φ₂.
+  &\text{if } φ ≡ φ₁\,\square\, φ₂.
 \end{cases}
 \end{equation*}
 
@@ -230,7 +228,6 @@ what natural number should be feed that argument in
 order to maintain the same outputs as the original \unshunt does in
 Eq.~\ref{eq:unshunt-definition}.
 
-
 Therefore, we define an appropriate complexity measure
 $\unshunt_{cm}: \Prop → \NN$
 for the second argument of the $\unshunt_{1}$ function in
@@ -242,7 +239,7 @@ Eq.~\ref{eq:unshunt-rank-definition}.
 \begin{cases}
 \unshunt_{cm}(φ₃) + 2 & φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃),\\
 \max(\unshunt_{cm}(φ₂),\unshunt_{cm}(φ₃)) + 1
-  & φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃),\\
+  &\text{if }  φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃),\\
 0 &\text{otherwise.}
 \end{cases}
 \end{equation}
@@ -270,18 +267,19 @@ function, among other kinds.
 \emph{Splitting a goal.}
 The goal of a proof is processed by \Metis to generated new targets,
 \Metis calls these new formulas \emph{subgoals}.
-Then, \Metis proves each subgoal and with that it finishes the proof
-of the goal.
+The conjunction of these subgoals is a proposition equivalent to the
+original goal. Then, for each subgoal, in a \Metis' \TSTP derivation
+we find a refutation.
 
-Nevertheless, \Metis does not provide neither an explanation of this
-process in its \TSTP derivations nor in its documentation.
-We provide such a evidence that the process of creating subgoals,
-and combining them in a final conjunction proves the original goal.
+Nevertheless, \Metis does not provide neither an explanation for the user about the process in its \TSTP derivations nor in its documentation.
 
-\begin{theorem}[\thmunshunt]
-\label{thm:unshunt}
+In the following, we show how the $split$ function jointly with Theorem.~\ref{thm:thm-strip} prove the correctness of the process mentioned above.
+First, we need to prove the correctness for the $\unshunt$ function in Eq~\ref{eq:unshunt-fixed}.
+
+\begin{lemma}[\thmunshunt]
+\label{lem:unshunt}
 $Γ ⊢ \unshunt(φ)$, then $Γ ⊢ φ$.
-\end{theorem}
+\end{lemma}
 
 \begin{proof} Use induction on the cases defined by the outcome of the $\unshunt$ function in Eq.~\ref{eq:unshunt-structured}.
 When $n = 0$, by definition, $Γ ⊢ φ$.
@@ -355,62 +353,72 @@ Second, using the following theorem from \cite{AgdaProp},
 \end{equation*}
 \end{proof}
 
-Now, let us consider the \mysplit function that
-yields the conjunction of subgoals from a proposition goal.
+Now, let us consider the $split$ function that
+yields the conjunction of subgoals from a proposition goal defined in Eq~\ref{eq:split-definition}.
 
 \begin{equation}
 \label{eq:split-definition}
-\mysplit(φ) =
+% \mysplit(φ) =
 \begin{cases}
-\unshunt(\mysplit(φ₁))              & φ ≡ φ₁ ∧ φ₂,\\
-∧\ \unshunt(φ₁ ⇒ \mysplit(φ₂))      &\\[2mm]
+\unshunt(\mysplit(φ₁)) ∧\ \unshunt(φ₁ ⇒ \mysplit(φ₂))  & \text{if }φ ≡ φ₁ ∧ φ₂,\\
+      &\\[2.5mm]
 
-\unshunt(¬ φ₁ ⇒ \mysplit(φ₂))       & φ ≡ φ₁ ∨ φ₂,\\
+\unshunt(¬ φ₁ ⇒ \mysplit(φ₂))       & \text{if }φ ≡ φ₁ ∨ φ₂,\\[2.5mm]
 
-\unshunt(φ₁ ⇒ \mysplit(φ₂))         & φ ≡ φ₁ ⇒ φ₂,\\
+\unshunt(φ₁ ⇒ \mysplit(φ₂))         & \text{if }φ ≡ φ₁ ⇒ φ₂,\\[2.5mm]
 
-\unshunt(φ₁ ⇒ \mysplit(φ₂))         & φ ≡ φ₁ ⇔ φ₂,\\
-∧\ \unshunt(φ₂ ⇒ \mysplit(φ₁))      &\\[2mm]
+\unshunt(φ₁ ⇒ \mysplit(φ₂))         & \text{if }φ ≡ φ₁ ⇔ φ₂,\\
+∧\ \unshunt(φ₂ ⇒ \mysplit(φ₁))      &\\[2.5mm]
 
-\unshunt(φ₁ ⇒ \mysplit(¬ φ₂))       & φ ≡ ¬ (φ₁ ∧ φ₂),\\
+\unshunt(φ₁ ⇒ \mysplit(¬ φ₂))       & \text{if }φ ≡ ¬ (φ₁ ∧ φ₂),\\[2.5mm]
 
-\unshunt(\mysplit(¬ φ₁))            & φ ≡ ¬ (φ₁ ∨ φ₂),\\
-∧\ \unshunt(¬ φ₁ ⇒ \mysplit(¬ φ₂))  &\\[2mm]
+\unshunt(\mysplit(¬ φ₁))            & \text{if }φ ≡ ¬ (φ₁ ∨ φ₂),\\
+∧\ \unshunt(¬ φ₁ ⇒ \mysplit(¬ φ₂))  &\\[2.5mm]
 
-\unshunt(\mysplit(φ₁))              & φ ≡ ¬ (φ₁ ⇒ φ₂),\\
-∧\ \unshunt(φ₁ ⇒ \mysplit(¬ φ₂))    &\\[2mm]
+\unshunt(\mysplit(φ₁))              & \text{if }φ ≡ ¬ (φ₁ ⇒ φ₂),\\
+∧\ \unshunt(φ₁ ⇒ \mysplit(¬ φ₂))    &\\[2.5mm]
 
-\unshunt(φ₁ ⇒ \mysplit(¬ φ₂))       & φ ≡ ¬ (φ₁ ⇔ φ₂),\\
-∧\ \unshunt(¬ φ₂ ⇒ \mysplit(φ₁))    &\\[2mm]
+\unshunt(φ₁ ⇒ \mysplit(¬ φ₂))       & \text{if }φ ≡ ¬ (φ₁ ⇔ φ₂),\\
+∧\ \unshunt(¬ φ₂ ⇒ \mysplit(φ₁))    &\\[2.5mm]
 
-\unshunt(\mysplit(φ₁))              & φ ≡ ¬ ¬ φ₁,\\
-⊤                                   & φ ≡ ¬ ⊥,\\
-⊥                                   & φ ≡ ¬ ⊤.
+\unshunt(\mysplit(φ₁))              & \text{if }φ ≡ ¬ ¬ φ₁,\\
+⊤                                   & \text{if }φ ≡ ¬ ⊥,\\
+⊥                                   & \text{if }φ ≡ ¬ ⊤.
 \end{cases}
 \end{equation}
 
-We reformulate \mysplit function to match with the
-new definition after apply the process described above in
-Subsection~\ref{ssec:structural-recursion}, since
-in the recursion calls of \mysplit in Eq.~\ref{eq:split-definition},
-the negations, $(¬ φ_{1,2})$ raise a terminating problem.
+The definition above suffers termination problems since it is not
+a structural recursion. Therefore, we have reformulated Def.~\ref{eq:split-definition} to solve such a issue following the technique
+described in Subsection~\ref{ssec:structural-recursion}.
+Here and below, we refer to $split$ as the function after applying
+the process mentioned above.
 
-
-
-\begin{theorem}[\thmsplit] $Γ ⊢ \mysplit(φ)$ then $Γ ⊢ φ$.
-\end{theorem}
+\begin{lemma}[\thmsplit] $Γ ⊢ \mysplit(φ)$ then $Γ ⊢ φ$.
+\label{lem:lem-split}
+\end{lemma}
 
 \begin{proof} We now proceed by induction on the structure of the
 formula φ in the definition of Eq.~\ref{eq:split-definition}.
 For a complete proof, we refer the reader to~\cite{AgdaMetis}.\\[3mm]
 
-(φ ≡ φ₁ ∧ φ₂)
+(φ ≡ φ₁ ∧ φ₂). We get a proof for each conjunct and using the introduction rule for conjunction, the result follows.
+
+\begin{equation*}
+(\mathcal{D})\hspace{3mm}
+\begin{bprooftree}
+\AxiomC{$Γ ⊢ \mysplit(φ,n)$}
+\RightLabel{By def.}
+\UnaryInfC{$Γ ⊢ \unshunt(φ₁) ∧ \unshunt(φ₁ ⇒ \mysplit(φ₂,n-1))$}
+\RightLabel{∧-proj₁}
+\UnaryInfC{$Γ ⊢ \unshunt(φ₁)$}
+\RightLabel{\thmunshunt}
+\UnaryInfC{$Γ ⊢ φ₁$.}
+\end{bprooftree}
+\end{equation*}
+
 \begin{equation*}
 \begin{bprooftree}
-\AxiomC{$\mathcal{D}_1$}
-\UnaryInfC{Γ ⊢ φ₁}
-
-\AxiomC{$\mathcal{D}_1$}
+\AxiomC{$\mathcal{D}$}
 \UnaryInfC{Γ ⊢ φ₁}
 
 \AxiomC{$Γ ⊢ \mysplit(φ,n)$}
@@ -423,28 +431,13 @@ For a complete proof, we refer the reader to~\cite{AgdaMetis}.\\[3mm]
 \RightLabel{$⇒$-elim}
 \BinaryInfC{$Γ ⊢ \mysplit(φ₂,n-1)$}
 \RightLabel{\thmsplit}
-\UnaryInfC{$Γ ⊢ φ₂$}
-
-\RightLabel{∧-intro}
-\BinaryInfC{$Γ ⊢ φ₁ ∧ φ₂$.}
-\end{bprooftree}
-\end{equation*}
-Where,
-\begin{equation*}
-(\mathcal{D}_1)\hspace{3mm}
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ \mysplit(φ,n)$}
-\RightLabel{By def.}
-\UnaryInfC{$Γ ⊢ \unshunt(φ₁) ∧ \unshunt(φ₁ ⇒ \mysplit(φ₂,n-1))$}
-\RightLabel{∧-proj₁}
-\UnaryInfC{$Γ ⊢ \unshunt(φ₁)$}
-\RightLabel{\thmunshunt}
-\UnaryInfC{$Γ ⊢ φ₁$.}
+\UnaryInfC{$Γ ⊢ φ₂.$}
 \end{bprooftree}
 \end{equation*}
 
+\vskip 3mm
 
-(φ ≡ φ₁ ⇒ φ₂)
+(φ ≡ φ₁ ⇒ φ₂).
 \begin{equation*}
 \begin{bprooftree}
 \AxiomC{}
@@ -465,14 +458,25 @@ Where,
 \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$.}
 \end{bprooftree}
 \end{equation*}
+\vskip 3mm
 
+(φ ≡ ¬ (φ₁ ∨ φ₂)). We show $Γ ⊢ ¬ φ₁$ and $Γ ⊢ ¬ φ₂$. Using their conjunction by the introduction rule, and De Morgan Law, the results follows.
 
-(φ ≡ ¬ (φ₁ ∨ φ₂))
+\begin{equation*}
+(\mathcal{D})\hspace{3mm}
+\begin{bprooftree}
+\AxiomC{$Γ ⊢ \mysplit(φ, n)$}
+\RightLabel{By def.}
+\UnaryInfC{$Γ ⊢ \unshunt(¬ φ₁) ∧ \unshunt(¬ φ₁ ⇒ \mysplit(φ₂, n))$}
+\RightLabel{∧-proj₁}
+\UnaryInfC{$Γ ⊢ \unshunt(¬ φ₁)$}
+\RightLabel{\thmunshunt}
+\UnaryInfC{$Γ ⊢ ¬ φ₁$,}
+\end{bprooftree}
+\end{equation*}
+
 \begin{equation*}
 \begin{bprooftree}
-\AxiomC{$\mathcal{D}$}
-\UnaryInfC{$Γ ⊢ ¬ φ₁$}
-
 \AxiomC{$\mathcal{D}$}
 \UnaryInfC{$Γ ⊢ ¬ φ₁$}
 
@@ -486,31 +490,14 @@ Where,
 \RightLabel{⇒-elim}
 \BinaryInfC{$Γ ⊢ \mysplit(φ₂,n-1)$}
 \RightLabel{\thmsplit}
-\UnaryInfC{$Γ ⊢ ¬ φ₂$}
-\RightLabel{∧-intro}
-\BinaryInfC{$Γ ⊢ ¬ φ₁ ∧ ¬ φ₂$}
-\RightLabel{¬∧¬-to-¬∨}
-\UnaryInfC{$Γ ⊢ ¬ (φ₁ ∨ φ₂)$.}
-\end{bprooftree}
-\end{equation*}
-
-Where,
-
-\begin{equation*}
-(\mathcal{D})
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ \mysplit(φ, n)$}
-\RightLabel{By def.}
-\UnaryInfC{$Γ ⊢ \unshunt(¬ φ₁) ∧ \unshunt(¬ φ₁ ⇒ \mysplit(φ₂, n))$}
-\RightLabel{∧-proj₁}
-\UnaryInfC{$Γ ⊢ \unshunt(¬ φ₁)$}
-\RightLabel{\thmunshunt}
-\UnaryInfC{$Γ ⊢ ¬ φ₁$.}
+\UnaryInfC{$Γ ⊢ ¬ φ₂.$}
 \end{bprooftree}
 \end{equation*}
 \end{proof}
 
-\begin{theorem} If $s_i$ are the subgoals for the goal φ, and
+\begin{theorem}[thm-strip]
+\label{thm:thm-strip}
+ If $s_i$ are the subgoals for the goal φ, and
 $\{ Γ ⊢ s_i \}_{i}$, then $Γ ⊢ φ$.
 \end{theorem}
 
@@ -549,10 +536,10 @@ the conjunct required.
 \begin{split}
 conjunct(φ, ψ) =
 \begin{cases}
-ψ &\text{if }φ ≡ ψ\\
-ψ &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }ψ ≡ conjunct(φ₁, ψ)\\
-ψ &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }ψ ≡ conjunct(φ₂, ψ)\\
-φ &\text{otherwise}
+  ψ &\text{if }φ ≡ ψ,\\
+  ψ &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }conjunct(φ₁, ψ)≡ ψ,\\
+  ψ &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }conjunct(φ₂, ψ)≡ ψ,\\
+  φ &\text{otherwise.}
 \end{cases}
 \end{split}
 \end{align}
@@ -563,14 +550,29 @@ conjunct(φ, ψ) =
 \begin{proof}
 When φ ≡ ψ, from $Γ ⊢ conjunct(φ, ψ)$ by normalization, we get $Γ ⊢ ψ$.
 By using $subst$ theorem Eq.~\ref{eq:substitution-theorem}, we get the desire conclusion. If the proposition φ is a conjunction, and $ψ ≡ conjunct(φ_{i}, ψ)$
-for some $i = 1,\ 2$, from $Γ ⊢ conjunct(φ, ψ)$ by normalization, we get
-$Γ ⊢ ψ$, but since $conjunct(φ_{i}, ψ) ≡ ψ$; we apply $subst$ theorem again,
-and the theorem follows.
-For the latter case, by using the hypothesis, $Γ ⊢ φ$, the proof is complete.
+for some $i = 1,\ 2$, then,
+
+\begin{equation}
+  \begin{bprooftree}
+  \AxiomC{$Γ ⊢ φ₁ ∧ φ₂$}
+  \RightLabel{∧-proj$_{i}$}
+  \UnaryInfC{$Γ ⊢ φ_{i}$}
+  \UnaryInfC{$Γ ⊢ conjunct(φ_{i}, ψ)$}
+  \AxiomC{$conjunct(φ_{i}, ψ) ≡ ψ$}
+  \RightLabel{subst}
+  \BinaryInfC{$Γ ⊢ ψ$}
+  \end{bprooftree}
+\end{equation}
+
+Finally, in the latter case, by using the hypothesis, $Γ ⊢ φ$,
+we complete the proof.
 
 Note that $conjunct$ function and also its theorem are well defined structural recursions, since φ₁ and φ₂ in the argument from the definition are structurally smaller than φ.
 \end{proof}
 
+
 \emph{Clausification.}
+
+
 
 \end{document}
