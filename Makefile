@@ -1,5 +1,5 @@
 SHELL :=/bin/bash
-PWD      =$(realpath .)
+PWD      :=$(realpath .)
 SRC_DIR  =src
 TEST_DIR =test
 
@@ -62,7 +62,7 @@ SEP='-------------------------------------------------------------------'
 
 AGDACALL ="${TIMELIMIT} \
 	${TIME_BIN} -f \"user = %U, system = %S, elapsed = %E, mem=%K, cpu=%P\" \
-	${AGDA} {} --verbose=0 && echo ${SEP}"
+	${AGDA} {} --verbose=0 --library=test && echo ${SEP}"
 
 ifdef MSVC     # Avoid the MingW/Cygwin sections
 		uname_S := Windows
@@ -416,26 +416,34 @@ reconstruct : install problems
 		-type f \
 		-name "*.tstp" \
 		-print \
-		-exec sh -c "athena {}" \;;
+		-exec sh -c "athena {} && echo ${SEP}" \;;
 
 .PHONY : check
 check : export AGDA_DIR := $(ATHENA_AGDA_LIB)
 check : reconstruct \
-		agdaversion \
-		install-libraries \
-		$(AGDA_BASIC) \
-		$(AGDA_CONJ)	\
-		$(AGDA_DISJ) \
-		$(AGDA_IMPL)	\
-		$(AGDA_BICOND) \
-		$(AGDA_NEG) \
-		$(AGDA_PMETIS)
+        agdaversion \
+        install-libraries \
+        $(AGDA_BASIC) \
+        $(AGDA_CONJ)    \
+        $(AGDA_DISJ) \
+        $(AGDA_IMPL)    \
+        $(AGDA_BICOND) \
+        $(AGDA_NEG) \
+        $(AGDA_PMETIS)
 
 	@echo "==================================================================="
 	@echo "================== Type-checking Agda files ======================="
 	@echo "==================================================================="
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
-	@echo '-------------------------------------------------------------------'
+	@echo ""
+	@echo "    If you want to type-check an isolote Agda file from the tests:"
+	@echo "    Execute the following in your shell."
+	@echo "    $$ pwd"
+	@echo "    $(PWD)"
+	@echo "    $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
+	@echo "    $$ agda --library=test AgdaFileGeneratedByAthena"
+	@echo "-------------------------------------------------------------------"
+
 	@find $(BASIC) \
 				-type f \
 				-name "*.agda" \

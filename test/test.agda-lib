@@ -5,12 +5,11 @@ depend:
   agda-metis
 include:
   prop-pack/
-  prop-pack/problems
   prop-pack/problems/
-  prop-pack/problems/basic
-  prop-pack/problems/biconditional
-  prop-pack/problems/conjunction
-  prop-pack/problems/disjunction
-  prop-pack/problems/implication
-  prop-pack/problems/negation
-  prop-pack/problems/prop-metis
+  prop-pack/problems/basic/
+  prop-pack/problems/biconditional/
+  prop-pack/problems/conjunction/
+  prop-pack/problems/disjunction/
+  prop-pack/problems/implication/
+  prop-pack/problems/negation/
+  prop-pack/problems/prop-metis/
