@@ -244,6 +244,7 @@ Eq.~\ref{eq:unshunt-rank-definition}.
 \end{cases}
 \end{equation}
 
+
 Then, a curated version of the $\unshunt_{0}$ function is presented
 in Eq.~\ref{eq:unshunt-fixed}.
 
@@ -281,7 +282,8 @@ First, we need to prove the correctness for the $\unshunt$ function in Eq~\ref{e
 $Γ ⊢ \unshunt(φ)$, then $Γ ⊢ φ$.
 \end{lemma}
 
-\begin{proof} Use induction on the cases defined by the outcome of the $\unshunt$ function in Eq.~\ref{eq:unshunt-structured}.
+\begin{proof} Use induction on the cases defined by the outcome of the
+$\unshunt$ function in Eq.~\ref{eq:unshunt-structured}.
 When $n = 0$, by definition, $Γ ⊢ φ$.
 When $n = 1$, we apply the following theorem presented in
 \cite{AgdaProp}
@@ -393,15 +395,10 @@ described in Subsection~\ref{ssec:structural-recursion}.
 Here and below, we refer to $split$ as the function after applying
 the process mentioned above.
 
-<<<<<<< HEAD
+
 \begin{lemma}[\thmsplit] $Γ ⊢ \mysplit(φ)$ then $Γ ⊢ φ$.
 \label{lem:lem-split}
 \end{lemma}
-=======
-
-\begin{theorem}[\thmsplit] $Γ ⊢ \mysplit(φ)$ then $Γ ⊢ φ$.
-\end{theorem}
->>>>>>> c620eb17f95839e9dfd4006ada5771755ab2e0d1
 
 \begin{proof} We now proceed by induction on the structure of the
 formula φ in the definition of Eq.~\ref{eq:split-definition}.
