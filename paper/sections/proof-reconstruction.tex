@@ -265,8 +265,8 @@ original goal. Then, we find a refutation for each subgoal in the \Metis' \TSTP 
 
 Nevertheless, \Metis does not provide neither an explanation for the user about the process in its \TSTP derivations nor in its documentation.
 
-In the following, we show how the $split$ function jointly with Theorem.~\ref{thm:thm-strip} prove the correctness of the process mentioned above.
-First, we need to prove the correctness for the $\unshunt$ function in Eq~\ref{eq:unshunt-fixed}.
+In the following, we show how Theorem.~\ref{thm:thm-strip} proves the correctness of the process mentioned above. But first, let prove some lemmas for $\unshunt$ function presented in Eq.~\ref{eq:unshunt-fixed},
+and $split$ function from the definition in Eq.~\ref{eq:split-definition}.
 
 \begin{lemma}[\thmunshunt]
 \label{lem:unshunt}
@@ -275,8 +275,7 @@ $Γ ⊢ \unshunt(φ)$, then $Γ ⊢ φ$.
 
 \begin{proof} Use induction on the cases defined by the outcome of the $\unshunt$ function in Eq.~\ref{eq:unshunt-structured}.
 When $n = 0$, by definition, $Γ ⊢ φ$.
-When $n = 1$, we apply the following theorem presented in
-\cite{AgdaProp}
+When $n = 1$, we apply the following theorem from~\cite{AgdaProp}
 
 \begin{equation*}
 \texttt{∧⇒-to-⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).
@@ -345,8 +344,8 @@ Second, using the following theorem from \cite{AgdaProp},
 \end{equation*}
 \end{proof}
 
-Now, let us consider the $split$ function that
-yields the conjunction of subgoals from a proposition goal defined in Eq~\ref{eq:split-definition}.
+Now, let us consider the $split$ function presented in
+Eq.~\ref{eq:split-definition} that yields a conjunction of subgoals from a proposition, the goal in \Metis.
 
 \begin{equation}
 \label{eq:split-definition}
@@ -385,15 +384,9 @@ described in Subsection~\ref{ssec:structural-recursion}.
 Here and below, we refer to $split$ as the function after applying
 the process mentioned above.
 
-<<<<<<< HEAD
 \begin{lemma}[\thmsplit] $Γ ⊢ \mysplit(φ)$ then $Γ ⊢ φ$.
 \label{lem:lem-split}
 \end{lemma}
-=======
-
-\begin{theorem}[\thmsplit] $Γ ⊢ \mysplit(φ)$ then $Γ ⊢ φ$.
-\end{theorem}
->>>>>>> c620eb17f95839e9dfd4006ada5771755ab2e0d1
 
 \begin{proof} We now proceed by induction on the structure of the
 formula φ in the definition of Eq.~\ref{eq:split-definition}.
