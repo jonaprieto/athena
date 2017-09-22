@@ -560,19 +560,40 @@ for some $i = 1,\ 2$, then,
   \UnaryInfC{$Γ ⊢ conjunct(φ_{i}, ψ)$}
   \AxiomC{$conjunct(φ_{i}, ψ) ≡ ψ$}
   \RightLabel{subst}
-  \BinaryInfC{$Γ ⊢ ψ$}
+  \BinaryInfC{$Γ ⊢ ψ$.}
   \end{bprooftree}
 \end{equation}
 
-Finally, in the latter case, by using the hypothesis, $Γ ⊢ φ$,
-we complete the proof.
-
-Note that $conjunct$ function and also its theorem are well defined structural recursions, since φ₁ and φ₂ in the argument from the definition are structurally smaller than φ.
+The last statement follows by using the hypothesis and the proof is complete.
 \end{proof}
 
+% To deal with nested conjunctions and nested disjunctions, we follow a similar strategy mainly described in \citeauthor{bohme2010}~\cite{bohme2010}.
 
-\emph{Clausification.}
+First, we define the $rconj$ function in Eq.~\ref{eq:rconj-def} to convert conjunctions to be right-associative conjunctions, and in a similar way with disjunctions,
+we define $rdisj$ function, to convert a general disjunction to a be right-associative disjunction.
 
+\begin{equation}
+\label{eq:rconj-def}
+\begin{split}
+&rconj(φ) =\begin{cases}
+ψ₁ ∧ rconj(ψ₂ ∧ φ₂) &\text{if }φ = φ₁ ∧ φ₂\text{, } ψ≡rconj(φ₁),\\
+&\text{and }ψ ≡ ψ₁ ∧ ψ₂,\\[3mm]
+ψ ∧ rconj(φ₂)  &\text{if }φ = φ₁ ∧ φ₂\text{, } ψ≡rconj(φ₁),\\
+φ &\text{otherwise.}
+\end{cases}
+\end{split}
+\end{equation}
 
+\begin{equation}
+\begin{split}
+\label{eq:buildOr}
+buildOr(φ, ψ) =
+\begin{cases}
+ψ &\text{if } ψ ≡ ψ₁ ∨ ψ₂\text{ and } buildOr(φ, ψ_{i}) ≡ ψ_{i}\text{ for some }i=1, 2,\\
+ψ &\text{if } φ ≡ ψ,\\
+φ &\text{otherwise.}
+\end{cases}
+\end{split}
+\end{equation}
 
 \end{document}
