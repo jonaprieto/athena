@@ -1,3 +1,11 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Series
+
+@string{LNAI = {Lecture Notes in Artifical Intellingence}}
+% @string{LNAI = {LNAI}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 @article{Abel2002,
   abstract     = {We introduce a language based upon lambda calculus with products, coproducts and strictly positive inductive types that allows the definition of recursive terms. We present the implementation (foetus) of a syntactical check that ensures that all such terms are structurally recursive, i.e. recursive calls appear only with arguments structurally smaller than the input parameters of terms considered. To ensure the correctness of the termination checker, we show that all structurally recursive terms are normalizing with respect to a given operational semantics. To this end, we define a semantics on all types and a structural ordering on the values in this semantics and prove that all values are accessible with regard to this ordering. Finally, we point out how to do this proof predicatively using set based operators.},
   author       = {Abel, Andreas and Altenkirch, Thorsten},
@@ -26,7 +34,7 @@
 }
 
 @article{appel1959,
-  author       = {Appel, K I},
+  author       = {Appel, K. I.},
   issn         = {00224812},
   journal      = {The Journal of Symbolic Logic},
   number       = {4},
@@ -67,7 +75,7 @@
 
 @incollection{Barrett2011,
   abstract  = {CVC4 is the latest version of the Cooperating Validity Checker. A joint project of NYU and U Iowa, CVC4 aims to support the useful feature set of CVC3 and SMT-LIBv2 while optimizing the design of the core system architecture and decision procedures to take advantage of recent engineering and algorithmic advances. CVC4 represents a completely new code base; it is a from-scratch rewrite of CVC3, and many subsystems have been completely redesigned. Additional decision procedures for CVC4 are currently under development, but for what it currently achieves, it is a lighter-weight and higher-performing tool than CVC3. We describe the system architecture, subsystems of note, and discuss some applications and continuing work.},
-  author    = {Barrett, Clark and Conway, Christopher L and Deters, Morgan and Hadarean, Liana and Jovanović, Dejan and King, Tim and Reynolds, Andrew and Tinelli, Cesare},
+  author    = {Barrett, Clark and Conway, Christopher L. and Deters, Morgan and Hadarean, Liana and Jovanović, Dejan and King, Tim and Reynolds, Andrew and Tinelli, Cesare},
   booktitle = {Computer Aided Verification: 23rd International Conference, CAV 2011, Snowbird, UT, USA, July 14-20, 2011. Proceedings},
   doi       = {10.1007/978-3-642-22110-1_14},
   editor    = {Gopalakrishnan, Ganesh and Qadeer, Shaz},
@@ -81,7 +89,7 @@
 
 @inproceedings{Benzmuller2008,
   abstract  = {LEO-II is a standalone, resolution-based higher-order theorem prover designed for effective cooperation with specialist provers for natural fragments of higher-order logic. At present LEO-II can cooperate with the first-order automated theorem provers E, SPASS, and Vampire. The improved performance of LEO-II, especially in comparison to its predecessor LEO, is due to several novel features including the exploitation of term sharing and term indexing techniques, support for primitive equality reasoning, and improved heuristics at the calculus level. LEO-II is implemented in Objective Caml and its problem representation language is the new TPTP THF language.},
-  author    = {Benzmüller, Christoph and Paulson, Lawrence C and Theiss, Frank and Fietzke, Arnaud},
+  author    = {Benzmüller, Christoph and Paulson, Lawrence C. and Theiss, Frank and Fietzke, Arnaud},
   booktitle = {Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)},
   doi       = {10.1007/978-3-540-71070-7_14},
   isbn      = {3540710698},
@@ -134,7 +142,7 @@
 
 @article{blanchette2013extending,
   abstract     = {Sledgehammer is a component of Isabelle/HOL that employs resolution-based first-order automatic theorem provers (ATPs) to discharge goals arising in interactive proofs. It heuristically selects relevant facts and, if an ATP is successful, produces a snippet that replays the proof in Isabelle. We extended Sledgehammer to invoke satisfiability modulo theories (SMT) solvers as well, exploiting its relevance filter and parallel architecture. The ATPs and SMT solvers nicely complement each other, and Isabelle users are now pleasantly surprised by SMT proofs for problems beyond the ATPs' reach.},
-  author       = {Blanchette, Jasmin and Böhme, Sascha and Paulson, Lawrence C},
+  author       = {Blanchette, Jasmin and Böhme, Sascha and Paulson, Lawrence C.},
   doi          = {10.1007/s10817-013-9278-5},
   issn         = {1573-0670},
   journal      = {Journal of Automated Reasoning},
@@ -255,7 +263,7 @@
 
 @misc{Coquand1992,
   abstract  = {Pattern Matching with Dependent Types Thierry Coquand Chalmers University Preliminary version, June 1992 Introduction This note deals with notation in type theory. The de nition of a function by pattern matching is by now common, and quite important in practice, in ...},
-  author    = {Coquand, T},
+  author    = {Coquand, T.},
   booktitle = {Informal proceedings of Logical Frameworks},
   doi       = {10.1.1.37.9541},
   number    = {June},
@@ -297,7 +305,7 @@
 
 @article{Ekici2017,
   abstract     = {This paper describes SMTCoq, a plug-in for the integration of external solvers into the Coq proof assistant. Based on a checker for generic first-order proof certificates fully implemented and proved correct in Coq, SMTCoq offers facilities to check answers from external SAT and SMT solvers and to increase Coq's automation using such solvers, all in a safeway. The current version supports proof certificates produced by the SAT solver ZChaff, for propositional logic, and the SMT solvers veriT and CVC4, for the quantifier-free fragment of the combined theory of fixed-size bit vectors, functional arrays with extensionality, linear integer arithmetic, and uninterpreted function symbols.},
-  author       = {Ekici, B and Mebsout, A and Tinelli, C and Keller, C and Katz, G},
+  author       = {Ekici, B. and Mebsout, A. and Tinelli, C. and Keller, C. and Katz, G.},
   journal      = {stanford.edu},
   title        = {{SMTCoq: A plug-in for integrating SMT solvers into Coq}},
   url          = {http://web.stanford.edu/~guyk/pub/CAV2017_C.pdf},
@@ -376,7 +384,7 @@
 }
 
 @report{Gomez-Londono2015,
-  author      = {Gómez-Londono, A},
+  author      = {Gómez-Londoño, A},
   institution = {EAFIT University},
   title       = {{Proof Reconstruction: Parsing Proofs}},
   type        = {techreport},
@@ -399,7 +407,7 @@
 }
 
 @book{humberstone2011,
-  author    = {Humberstone, L},
+  author    = {Humberstone, L.},
   publisher = {MIT Press},
   title     = {{The Connectives}},
   year      = {2011},
@@ -512,7 +520,7 @@
 }
 
 @article{meng2006automation,
-  author       = {Meng, Jia and Quigley, Claire and Paulson, Lawrence C},
+  author       = {Meng, Jia and Quigley, Claire and Paulson, Lawrence C.},
   journal      = {Information and computation},
   number       = {10},
   pages        = {1575--1596},
@@ -524,7 +532,7 @@
 
 @inproceedings{Moskewicz2001,
   abstract  = {Boolean Satisfiability is probably the most studied of combinatorial optimization/search problems. Significant effort has been devoted to trying to provide practical solutions to this problem for problem instances encountered in a range of applications in Electronic Design Automation (EDA), as well as in Artificial Intelligence (AI). This study has culminated in the development of several SAT packages, both proprietary and in the public domain (e.g. GRASP, SATO) which find significant use in both research and industry. Most existing complete solvers are variants of the Davis-Putnam (DP) search algorithm. In this paper we describe the development of a new complete solver, Chaff, which achieves significant performance gains through careful engineering of all aspects of the search - especially a particularly efficient implementation of Boolean constraint propagation (BCP) and a novel low overhead decision strategy. Chaff has been able to obtain one to two orders of magnitude performance improvement on difficult SAT benchmarks in comparison with other solvers (DP or otherwise), including GRASP and SATO.},
-  author    = {Moskewicz, Matthew W and Madigan, Conor F and Zhao, Ying and Zhang, Lintao and Malik, Sharad},
+  author    = {Moskewicz, Matthew W. and Madigan, Conor F. and Zhao, Ying and Zhang, Lintao and Malik, Sharad},
   booktitle = {Proceedings of the 38th Design Automation Conference (DAC 2001)},
   doi       = {http://doi.acm.org/10.1145/378239.379017},
   isbn      = {1-58113-297-2},
@@ -536,7 +544,7 @@
 }
 
 @book{nipkow2002isabelle,
-  author    = {Nipkow, Tobias and Paulson, Lawrence C and Wenzel, Markus},
+  author    = {Nipkow, Tobias and Paulson, Lawrence C. and Wenzel, Markus},
   publisher = {Springer Science {\&} Business Media},
   title     = {{Isabelle/HOL: A Proof Assistant for Higher-order Logic}},
   volume    = {2283},
@@ -562,7 +570,7 @@
 }
 
 @book{paulson1994isabelle,
-  author    = {Paulson, Lawrence C},
+  author    = {Paulson, Lawrence C.},
   publisher = {Springer Science {\&} Business Media},
   title     = {{Isabelle: A Generic Theorem Prover}},
   volume    = {828},
@@ -570,7 +578,7 @@
 }
 
 @inproceedings{paulson2010three,
-  author    = {Paulson, Lawrence C and Blanchette, Jasmin},
+  author    = {Paulson, Lawrence C. and Blanchette, Jasmin},
   booktitle = {PAAR@ IJCAR},
   pages     = {1--10},
   title     = {{Three Years Of Experience with Sledgehammer, A Practical Link Between Automatic And Interactive Theorem Provers.}},
@@ -578,7 +586,7 @@
 }
 
 @inproceedings{paulson2007source,
-  author       = {Paulson, Lawrence C and Susanto, Kong Woei},
+  author       = {Paulson, Lawrence C. and Susanto, Kong Woei},
   booktitle    = {TPHOLs},
   organization = {Springer},
   pages        = {232--245},
@@ -697,7 +705,7 @@
 
 @incollection{sultana2015,
   abstract  = {Implementing proof reconstruction is difficult because it involves symbolic manipulations of formal objects whose representation varies between different systems. It requires significant knowledge of the source and target systems. One cannot simply re-target to another logic. We present a modular proof reconstruction system with separate components, specifying their behaviour and describing how they interact. This system is demonstrated and evaluated through an implementation to reconstruct proofs generated by Leo-II and Satallax in Isabelle HOL, and is shown to work better than the current method of rediscovering proofs using a select set of provers.},
-  author    = {Sultana, Nik and Benzmüller, Christoph and Paulson, Lawrence C},
+  author    = {Sultana, Nik and Benzmüller, Christoph and Paulson, Lawrence C.},
   booktitle = {Frontiers of Combining Systems: 10th International Symposium, FroCoS 2015, Wroclaw, Poland, September 21-24, 2015, Proceedings},
   doi       = {10.1007/978-3-319-24246-0_16},
   editor    = {Lutz, Carsten and Ranise, Silvio},
@@ -711,7 +719,7 @@
 }
 
 @inproceedings{Sut07-CSR,
-  author    = {Sutcliffe, G},
+  author    = {Sutcliffe, G.},
   booktitle = {Proceedings of the 2nd International Computer Science Symposium in Russia},
   editor    = {Diekert, V and Volkov, M and Voronkov, A},
   number    = {4649},
@@ -838,3 +846,17 @@
   year      = {2009},
 }
 
+@InProceedings{Sutcliffe-Schulz-Claessen-VanGelder-2006,
+  author =       {Sutcliffe, Geoff and Schulz, Stephan and Claessen,
+                  Koen and Van Gelder, Allen},
+  title =        {Using the {TPTP} Language for Writing Derivations
+                  and Finite Interpretations},
+  booktitle =    {International Joint Conference on Automated
+                  Reasoning (IJCAR 2006)},
+  year =         2006,
+  editor =       {Furbach, Ulrich and Shankar, Natarajan},
+  volume =       4130,
+  series =       LNAI,
+  pages =        {67--81},
+  publisher =    {Springer},
+}

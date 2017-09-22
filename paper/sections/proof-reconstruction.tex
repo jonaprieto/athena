@@ -255,7 +255,7 @@ in Eq.~\ref{eq:unshunt-fixed}.
 For a more complete treatment of general recursion, and how to
 define well-founded and well-structural recursive functions, we refer
 the reader to Ref.~\cite{Bove2005}, where Bove and Capettra described
-not only general recursion but they also treat mutual recursive
+not only general recursion, but they also treat mutual recursive
 function, among other kinds.
 
 % ................................................
@@ -393,9 +393,15 @@ described in Subsection~\ref{ssec:structural-recursion}.
 Here and below, we refer to $split$ as the function after applying
 the process mentioned above.
 
+<<<<<<< HEAD
 \begin{lemma}[\thmsplit] $Γ ⊢ \mysplit(φ)$ then $Γ ⊢ φ$.
 \label{lem:lem-split}
 \end{lemma}
+=======
+
+\begin{theorem}[\thmsplit] $Γ ⊢ \mysplit(φ)$ then $Γ ⊢ φ$.
+\end{theorem}
+>>>>>>> c620eb17f95839e9dfd4006ada5771755ab2e0d1
 
 \begin{proof} We now proceed by induction on the structure of the
 formula φ in the definition of Eq.~\ref{eq:split-definition}.
