@@ -1,5 +1,5 @@
-SHELL :=/bin/bash
-PWD      =$(realpath .)
+SHELL    :=/bin/bash
+PWD      :=$(realpath .)
 SRC_DIR  =src
 TEST_DIR =test
 
@@ -51,7 +51,7 @@ endif
 # Targets and variables to generate test problems and type-checking.
 # -----------------------------------------------------------------------------
 
-ATP      ?=online-atps --atp=metis
+ATP             ?=online-atps --atp=metis
 ATHENA_LIB      =$(addprefix $(PWD), /lib)
 ATHENA_AGDA_LIB =$(addprefix $(ATHENA_LIB),/.agda)
 
@@ -62,7 +62,7 @@ SEP='-------------------------------------------------------------------'
 
 AGDACALL ="${TIMELIMIT} \
 	${TIME_BIN} -f \"user = %U, system = %S, elapsed = %E, mem=%K, cpu=%P\" \
-	${AGDA} {} --verbose=0 && echo ${SEP}"
+	${AGDA} {} --verbose=0 --library=test && echo ${SEP}"
 
 ifdef MSVC     # Avoid the MingW/Cygwin sections
 		uname_S := Windows
@@ -165,8 +165,6 @@ $(NEG)/%.tstp: $(NEG)/%.tptp
 $(PMETIS)/%.tstp: $(PMETIS)/%.tptp
 	@echo $@
 	@${ATP} $< > $@
-
-# ...
 
 $(BASIC)/%.agda: $(BASIC)/%.tstp
 	@echo $@
@@ -290,29 +288,35 @@ clean :
 	rm -rf lib/.agda
 
 	@echo
-	@echo 'Cleaning prop-pack test problems.'
+	@echo 'Cleaning Prop-Pack test problems.'
 	@echo ${SEP}
 	make --directory paper/ clean
 	make --directory slides/ clean
 	make --directory test/prop-pack clean
 
+.PHONY : agda
+agda :
+	@echo "==================================================================="
+	@echo "===================== Installing Agda v2.5.3  ====================="
+	@echo "==================================================================="
+	@cabal install agda-2.5.3
 
-
+.PHONY : online-atps
 online-atps:
-	 @echo "==================================================================="
-	 @echo "================= Installing Online-ATPs v0.1.1 ==================="
-	 @echo "==================================================================="
-	 @rm -Rf bin
-	 @mkdir -p bin
-	 @git config --global advice.detachedHead false && \
+	@echo "==================================================================="
+	@echo "================= Installing Online-ATPs v0.1.1 ==================="
+	@echo "==================================================================="
+	@rm -Rf bin
+	@mkdir -p bin
+	@git config --global advice.detachedHead false && \
 		git clone -q --progress \
 		-b 'v0.1.1' \
 		--single-branch \
 		https://github.com/jonaprieto/online-atps.git \
 		bin/online-atps
-	 @cabal update
-	 @cd bin/online-atps && cabal install
-	 @rm -Rf bin
+	@cabal update
+	@cd bin/online-atps && cabal install
+	@rm -Rf bin
 
 agda-stdlib:
 	@if [ ! -d lib/agda-stdlib ] ; \
@@ -333,6 +337,9 @@ agda-stdlib:
 
 .PHONY : submodules
 submodules :
+	@echo "==================================================================="
+	@echo "============ Pulling lastest version in the submodules ============"
+	@echo "==================================================================="
 	git submodule foreach git pull origin master
 
 .PHONY : agda-libraries
@@ -343,7 +350,6 @@ agda-libraries:
 	git submodule update --init lib/agda-prop
 	git submodule update --init lib/agda-metis
 
-
 .PHONY: install-libraries
 install-libraries: agda-stdlib agda-libraries
 	@echo "==================================================================="
@@ -351,7 +357,6 @@ install-libraries: agda-stdlib agda-libraries
 	@echo "==================================================================="
 
 	@mkdir -p lib/.agda
-
 	@> lib/.agda/libraries
 	@echo "${ATHENA_LIB}/agda-stdlib/standard-library.agda-lib" \
 		>> ${ATHENA_AGDA_LIB}/libraries
@@ -391,6 +396,7 @@ msg-tstp :
 	@echo "==================================================================="
 	@echo "[!] To use Metis locally instead of using Metis from OnlineATPs, "
 	@echo "    please set ATP variable in your environment:"
+	@echo
 	@echo "    $$ export ATP=\"metis --show proof\""
 	@echo "    If you don't have Metis anyway, you can install OnlineATPs:"
 	@echo "    $$ make online-atps"
@@ -400,11 +406,11 @@ msg-tstp :
 problems :	prop-pack \
 			msg-tstp \
 			$(TSTP_BASIC) \
-			$(TSTP_CONJ)	\
-			$(TSTP_DISJ) \
-			$(TSTP_IMPL)	\
+			$(TSTP_CONJ)  \
+			$(TSTP_DISJ)  \
+			$(TSTP_IMPL)  \
 			$(TSTP_BICOND) \
-			$(TSTP_NEG) \
+			$(TSTP_NEG)  \
 			$(TSTP_PMETIS)
 
 .PHONY : reconstruct
@@ -416,64 +422,37 @@ reconstruct : install problems
 		-type f \
 		-name "*.tstp" \
 		-print \
-		-exec sh -c "athena {}" \;;
+		-exec sh -c "${ATHENA} {} && echo ${SEP}" \;;
 
 .PHONY : check
 check : export AGDA_DIR := $(ATHENA_AGDA_LIB)
 check : reconstruct \
-		agdaversion \
-		install-libraries \
-		$(AGDA_BASIC) \
-		$(AGDA_CONJ)	\
-		$(AGDA_DISJ) \
-		$(AGDA_IMPL)	\
-		$(AGDA_BICOND) \
-		$(AGDA_NEG) \
-		$(AGDA_PMETIS)
+        agdaversion \
+        install-libraries \
+        $(AGDA_BASIC) \
+        $(AGDA_CONJ)    \
+        $(AGDA_DISJ) \
+        $(AGDA_IMPL)    \
+        $(AGDA_BICOND) \
+        $(AGDA_NEG) \
+        $(AGDA_PMETIS)
 
 	@echo "==================================================================="
 	@echo "================== Type-checking Agda files ======================="
 	@echo "==================================================================="
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
-	@echo '-------------------------------------------------------------------'
-	@find $(BASIC) \
-				-type f \
-				-name "*.agda" \
-				-print \
-				-exec sh -c $(AGDACALL) \;;
+	@echo
+	@echo "    If you want to type-check an isolote Agda file from the tests:"
+	@echo "    Execute the following in your shell."
+	@echo "    $$ pwd"
+	@echo "    $(PWD)"
+	@echo "    $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
+	@echo "    $$ agda --library=test AgdaFileGeneratedByAthena"
+	@echo "-------------------------------------------------------------------"
 
-	@find $(CONJ) \
-				-type f \
-				-name "*.agda" \
-				-print \
-				-exec sh -c $(AGDACALL) \;;
-
-	@find $(IMPL) \
-				-type f \
-				-name "*.agda" \
-				-print \
-				-exec sh -c $(AGDACALL) \;;
-
-	@find $(DISJ) \
-				-type f \
-				-name "*.agda" \
-				-print \
-				-exec sh -c $(AGDACALL) \;;
-
-	@find $(NEG) \
-				-type f \
-				-name "*.agda" \
-				-print \
-				-exec sh -c $(AGDACALL) \;;
-
-	@find $(BICOND) \
-				-type f \
-				-name "*.agda" \
-				-print \
-				-exec sh -c $(AGDACALL) \;;
-
-	@find $(PMETIS) \
-				-type f \
-				-name "*.agda" \
-				-print \
-				-exec sh -c $(AGDACALL) \;;
+	@find $(TEST_DIR) \
+		-type f \
+		-name "*.agda" \
+		-not -path "*prop-21.agda" \
+		-print \
+		-exec sh -c $(AGDACALL) \;;
