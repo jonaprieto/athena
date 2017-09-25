@@ -364,7 +364,6 @@ yields the conjunction of subgoals from a proposition goal defined in Eq~\ref{eq
 \begin{cases}
 \unshunt(\mysplit(φ₁)) ∧\ \unshunt(φ₁ ⇒ \mysplit(φ₂))  & \text{if }φ ≡ φ₁ ∧ φ₂,\\
       &\\[2.5mm]
-
 \unshunt(¬ φ₁ ⇒ \mysplit(φ₂))       & \text{if }φ ≡ φ₁ ∨ φ₂,\\[2.5mm]
 
 \unshunt(φ₁ ⇒ \mysplit(φ₂))         & \text{if }φ ≡ φ₁ ⇒ φ₂,\\[2.5mm]
@@ -373,7 +372,6 @@ yields the conjunction of subgoals from a proposition goal defined in Eq~\ref{eq
 ∧\ \unshunt(φ₂ ⇒ \mysplit(φ₁))      &\\[2.5mm]
 
 \unshunt(φ₁ ⇒ \mysplit(¬ φ₂))       & \text{if }φ ≡ ¬ (φ₁ ∧ φ₂),\\[2.5mm]
-
 \unshunt(\mysplit(¬ φ₁))            & \text{if }φ ≡ ¬ (φ₁ ∨ φ₂),\\
 ∧\ \unshunt(¬ φ₁ ⇒ \mysplit(¬ φ₂))  &\\[2.5mm]
 
@@ -572,8 +570,11 @@ The last statement follows by using the hypothesis and the proof is complete.
 
 % To deal with nested conjunctions and nested disjunctions, we follow a similar strategy mainly described in \citeauthor{bohme2010}~\cite{bohme2010}.
 
-First, we define the $rconj$ function in Eq.~\ref{eq:rconj-def} to convert conjunctions to be right-associative conjunctions, and in a similar way with disjunctions,
-we define $rdisj$ function, to convert a general disjunction to a be right-associative disjunction.
+For the rest of inference rules, we need some transformations useful
+to deal with conjunctions and disjunctions.
+
+First, we define the $rconj$ function in Eq.~\ref{eq:rconj-def} to convert conjunctions to be right-associative conjunctions, and following
+a similar approach we define $rdisj$ function for disjunctions.
 
 \begin{equation}
 \label{eq:rconj-def}
@@ -587,6 +588,10 @@ we define $rdisj$ function, to convert a general disjunction to a be right-assoc
 \end{split}
 \end{equation}
 
+The following function, buildOr intends to construct a disjunction from another disjunction, specifically, we want to rearrange the order of the disjuncts in a disjunctions, no other propositional shape we treat.
+This approach for rearrangement is inspired on the treatment for nested
+disjunctions in \citeauthor{bohme2010}~\cite{bohme2010}.
+
 \begin{equation}
 \begin{split}
 \label{eq:buildOr}
@@ -598,5 +603,10 @@ buildOr(φ, ψ) =
 \end{cases}
 \end{split}
 \end{equation}
+
+\subsubsection{Reordering}
+...
+
+
 
 \end{document}
