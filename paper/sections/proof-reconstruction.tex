@@ -30,10 +30,10 @@
   (athena) {5. \Haskell \\ Translator.};
 
 \node[left = 1.1cm of athena, text width=2cm, align=center]
-   (agdafile) {6. \Agda \\ Proof.};
+   (agdafile) {6. Proof-term.};
 
 \node[left = 1.1cm of agdafile, text width=2cm, align=center]
-   (agda) {7. Proof Checking.};
+   (agda) {7. Proof Checker.};
 
 \node[below = 0.5cm of problem, text width=2cm, align=center]
    (verified) {8.1 Proof \\ Checked.};
@@ -71,40 +71,41 @@ The proof-reconstruction approach proposed here consists of a series
 of steps similar to the workflow presented by \citeauthor{sultana2015} in
 \cite{sultana2015}. This process is a translation from a source
 system to a target system. In our case, the system of origin, the
-automatic theorem prover, is \Metis; the target system are the proof
-assistant, \Agda. We choose \Agda, but a proof assistant with
-support of type theory and similar features like \Agda
-(see a description of \Agda in Section
-\ref{sec:implementation}) can be used.
-Following the diagram in Fig.
-\ref{fig:proof-reconstruction-workflow}, the process can begin with
+automatic theorem prover, is \Metis; the target system is a proof
+assistant, \Agda. We choose \Agda, but another proof assistant with the same support of type theory and inductive types is valid (see a description of \Agda for its main features in
+Section~\ref{sec:implementation}).
+The overview of the proof-reconstruction is presented in
+Fig.~\ref{fig:proof-reconstruction-workflow}, the process can begin with
 a problem in \CPL that we encode in \TPTP format to be sent as the
 input of the \Metis prover.
-The algorithms of \Metis in Step~3 intend to find
-a solution; if they success, \Metis replies a derivation in \TSTP
-format of the proof, else the problem is counter feasible.
+The algorithms of \Metis in Step~3 find
+a solution if the problem is a theorem, in that case \Metis replies
+with a derivation in \TSTP format of the proof, otherwise the problem is counter feasible.
 
-With such a derivation, we process it with our \Haskell translator
-tool, \Athena~\cite{Athena}.
+With such a derivation, in Step~5, we process the derivation with our \Haskell translator tool, \Athena~\cite{Athena}.
 \Athena parses the \TSTP format, analyze the
 derivation and generates a representation of the natural deduction
-proof using a version of a tree data structure (see the properties
-of this tree in Subsection \ref{ssec:metis-proofs}). As a result,
-\Athena generates an \Agda file with such a proof. We have included
-in this file, \emph{imports} that call \Agda libraries that give
-support for the logic~\cite{AgdaProp}, and versions of the \Metis'
-inference rules~\cite{AgdaMetis}.
+proof using a tree data structure (see the properties
+of this tree in Subsection \ref{ssec:metis-proofs}).
+We perform an analysis of the proof-tree removing redundancies,
+unnecessary steps or unused output from the \TSTP derivation.
+
+As a result,
+\Athena generates an \Agda file with the proof-term. We have included
+in this file, \emph{imports} that call our \Agda libraries that give
+support for CPL presented in~\cite{AgdaProp}, and support for \Metis'
+inference rules implemented in~\cite{AgdaMetis}.
 
 Finally, we use the proof checker in Step~7 to type-check the
-proof-term. If type-checking succeed, the proof from such a \TSTP
-derivation is correct, else if type-checking fails, one of the three
-actors in the process could be the responsible.
-They are \Metis, \Athena, or \Agda.
+proof-term. If type-checking succeed, the \TSTP
+derivation is correct, otherwise when it fails, one of the three
+actors in the process could be the responsible: \Metis, \Athena, or
+\Agda.
 
 We are responsible for errors committed in the translation from
 \TSTP to \Agda: bugs in the parsing module, lack of the coverage of
-the \Metis' inference rules since we are emulating them, and last
-but not least, the pretty print of the proof in \Agda code.
+\Metis' inference rules, and last but not least, the pretty print of
+the proof in \Agda code.
 
 In the rest of this section, we provide a formal description using
 type theory to build definitions and theorems for functions
@@ -113,7 +114,9 @@ Some conventions about notations. We will write the
 type judgments with ``$a : A$'' to denote that $a$ has type
 $\abbre{A}$. Types are written using small caps.
 For propositions, we will denote by $φ ≡ ψ$, the syntactic
-equivalence.
+equivalence. We use the \Prop type for propositions and for theorems,
+the dependent type, $ Γ ⊢ φ$ where $Γ$ has type $\abbre{List} \Prop$ and
+$φ$ has type $\Prop$.
 
 
 % ...................................................................
@@ -122,31 +125,31 @@ equivalence.
 \subsection{Structural Recursion}
 \label{ssec:structural-recursion}
 
-In the process to emulate \Metis' inference rules in type theory,
-we encountered that some of \Metis' transformation for propositions in
-the inference rules were given by \emph{general recursion} functions.
+To emulate \Metis' inference rules in type theory,
+we observed that transformations performed by some rules were given by \emph{general recursive} functions.
 But algorithms based on general recursions can not be translated
 directly in type theory since it is not a guarantee they terminate.
-Then, since a termination checker in type theory recognizes
-\emph{structural recursion functions}, we modify our algorithms appropriately.
 
-Using the concept of \emph{structurally smaller} from
-\citeauthor{Abel2002}~\cite{Abel2002}. We say, a recursive function is
-structurally recursive if it calls itself with only \emph{structurally smaller}
+Then, we solve the termination problem by modifying problematic functions
+to be \emph{structural recursive}~\cite{Coquand1992,Abel2002,Bove2005}
+
+We use the same notion of \emph{structurally smaller} from
+\citeauthor{Abel2002}~\cite{Abel2002} to say, a recursive function is
+structurally recursive if it calls itself with only
+\emph{structurally smaller}
 arguments.
 
-To convert a general recursive call into a structurally recursive call, we use
-the \emph{Bounded Recursion} technique presented in \cite{Bertot2004} but
+To convert a general recursive call into a structurally recursive call,
+we use the \emph{Bounded Recursion} technique presented
+in~\cite{Bertot2004} but
 others found in \cite{Coquand1992,Abel2002,Bove2005} could be used.
 This technique converts a general recursive
 function into a structural recursive function by adding an additional
-argument that handle the times the function can call itself.
-As we show later, we use the complexity of the original function for the new argument in the new function.
+argument for the function complexity, the bound for the number of times, the function needs to call itself to get the final result.
 
-For that argument, we add the natural number $n : \Nat$ in the input of the
+Then, we add the natural number $n : \Nat$ in the input of the
 general recursive function, and perform the recursion over the structure of
-\Nat type. \abbre{Nat} type is the usual type with \zero and \suc constructors, and including the common arithmetic operations ($+,\,-,\,*$) and
-representations of $\zero, \suc, \suc(\zero), \dots$ with $0,1,2,\dots$.
+\Nat type. \abbre{Nat} type is the usual type for natural numbers with \zero and \suc as their constructors. We consider the common arithmetic operations ($+,\,-,\,*$) and numbers $0,1,2,\dots$ as representations of $\zero, \suc, \suc(\zero), \dots$.
 
 Then, the type-checker will
 recognize structurally smaller arguments by using the lexicographic
@@ -156,8 +159,6 @@ In other words, we take a general recursive function $f: \Prop \to \Prop$.
 and we redefine that function as
 $f: \Prop \to \Nat \to \Prop$, and perform the recursion
 using induction on the structure of the \Nat type.
-
-We define
 
 Let us consider the following example to exhibit the technique
 mentioned above for an inner function in the \strip inference.
@@ -177,12 +178,11 @@ mentioned above for an inner function in the \strip inference.
 \end{align}
 
 From the definition above, the size of the argument, ((φ₁ ∧ φ₂) ⇒ φ₃),
-is not structurally smaller than the input formula, (φ₁ ⇒ (φ₂ ⇒ φ₃));
-((φ₁ ∧ φ₂) ⇒ φ₃) is not a subformula of (φ₁ ⇒ (φ₂ ⇒ φ₃)).
+is not structurally smaller than the input formula, (φ₁ ⇒ (φ₂ ⇒ φ₃)), since ((φ₁ ∧ φ₂) ⇒ φ₃) is not a subformula of (φ₁ ⇒ (φ₂ ⇒ φ₃)).
 
-Thus, we have a new function
+Thus, we define the function
 $\unshunt_{1} : \Prop \to \Nat \to \Prop$
-defined by structural recursion in its second argument in
+by structural recursion in its second argument in
 Eq.~\ref{eq:unshunt-structured}.
 
 \begin{align}
@@ -198,15 +198,11 @@ Eq.~\ref{eq:unshunt-structured}.
 \end{split}
 \end{align}
 
-To feed the second argument of this new function, we will use
-functions. For instance, we opted to use a complexity measure of
-the formula that $\unshunt_{1}$ function transforms.
+As we mentioned above, the natural number in the second argument of the function used in Eq.~\ref{eq:unshunt-structured} stands for a complexity measure of the function, in this case $\unshunt_{1}$ function.
 
 A \emph{complexity measure} defined in \cite{Agudelo-Agudelo2017}
-and presented in \cite{VanDalen1994} as well as \emph{the rank for a
-proposition} is a function with type
-$\Prop \to \Nat$ that assigns a natural number to a
-proposition φ as follows.
+and presented in \cite{VanDalen1994} as \emph{the rank for a
+proposition}, is a function $\Prop \to \Nat$ that assigns a natural number for a proposition φ as follows.
 
 \begin{equation*}
 \label{eq:rank-definition}
@@ -222,15 +218,10 @@ rank(φ₁) + c_{¬}  &\text{if } φ ≡ \neg φ₁, \\
 where $c_{¬}$ or $c_{\square}$ is a non-negative integer called the
 complexity of the connective.
 
-We have already solved the terminating problem for the \unshunt
-function in Eq.~\ref{eq:unshunt-structured}, nevertheless we do not
-what natural number should be feed that argument in
-order to maintain the same outputs as the original \unshunt does in
-Eq.~\ref{eq:unshunt-definition}.
+Recall, we want to maintain the same outputs as the original \unshunt does in Eq.~\ref{eq:unshunt-definition} and the complexity measure of it, is a bound for the number of times this function can call itself.
 
 Therefore, we define an appropriate complexity measure
-$\unshunt_{cm}: \Prop → \NN$
-for the second argument of the $\unshunt_{1}$ function in
+$\unshunt_{cm}: \Prop → \NN$ for our $\unshunt_{1}$ function presented in
 Eq.~\ref{eq:unshunt-rank-definition}.
 
 \begin{equation}
@@ -244,8 +235,7 @@ Eq.~\ref{eq:unshunt-rank-definition}.
 \end{cases}
 \end{equation}
 
-
-Then, a curated version of the $\unshunt_{0}$ function is presented
+Finally, the curated version of $\unshunt_{0}$ function is presented
 in Eq.~\ref{eq:unshunt-fixed}.
 
 \begin{equation}
@@ -266,16 +256,17 @@ function, among other kinds.
 
 
 \emph{Splitting a goal.}
-The goal of a proof is processed by \Metis to generated new targets,
-\Metis calls these new formulas \emph{subgoals}.
+The goal of a problem to be proved by \Metis is processed to generate new
+propositions, the new targets, \Metis calls these formulas
+\emph{subgoals}.
+
 The conjunction of these subgoals is a proposition equivalent to the
-original goal. Then, for each subgoal, in a \Metis' \TSTP derivation
-we find a refutation.
+original goal. Then, we find a refutation for each subgoal in the \Metis' \TSTP derivation.
 
 Nevertheless, \Metis does not provide neither an explanation for the user about the process in its \TSTP derivations nor in its documentation.
 
-In the following, we show how the $split$ function jointly with Theorem.~\ref{thm:thm-strip} prove the correctness of the process mentioned above.
-First, we need to prove the correctness for the $\unshunt$ function in Eq~\ref{eq:unshunt-fixed}.
+In the following, we show how Theorem.~\ref{thm:thm-strip} proves the correctness of the process mentioned above. But first, let prove some lemmas for $\unshunt$ function presented in Eq.~\ref{eq:unshunt-fixed},
+and $split$ function from the definition in Eq.~\ref{eq:split-definition}.
 
 \begin{lemma}[\thmunshunt]
 \label{lem:unshunt}
@@ -285,8 +276,7 @@ $Γ ⊢ \unshunt(φ)$, then $Γ ⊢ φ$.
 \begin{proof} Use induction on the cases defined by the outcome of the
 $\unshunt$ function in Eq.~\ref{eq:unshunt-structured}.
 When $n = 0$, by definition, $Γ ⊢ φ$.
-When $n = 1$, we apply the following theorem presented in
-\cite{AgdaProp}
+When $n = 1$, we apply the following theorem from~\cite{AgdaProp}
 
 \begin{equation*}
 \texttt{∧⇒-to-⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).
@@ -355,8 +345,8 @@ Second, using the following theorem from \cite{AgdaProp},
 \end{equation*}
 \end{proof}
 
-Now, let us consider the $split$ function that
-yields the conjunction of subgoals from a proposition goal defined in Eq~\ref{eq:split-definition}.
+Now, let us consider the $split$ function presented in
+Eq.~\ref{eq:split-definition} that yields a conjunction of subgoals from a proposition, the goal in \Metis.
 
 \begin{equation}
 \label{eq:split-definition}
@@ -392,7 +382,6 @@ a structural recursion. Therefore, we have reformulated Def.~\ref{eq:split-defin
 described in Subsection~\ref{ssec:structural-recursion}.
 Here and below, we refer to $split$ as the function after applying
 the process mentioned above.
-
 
 \begin{lemma}[\thmsplit] $Γ ⊢ \mysplit(φ)$ then $Γ ⊢ φ$.
 \label{lem:lem-split}
@@ -603,10 +592,6 @@ buildOr(φ, ψ) =
 \end{cases}
 \end{split}
 \end{equation}
-
-\subsubsection{Reordering}
-...
-
 
 
 \end{document}
