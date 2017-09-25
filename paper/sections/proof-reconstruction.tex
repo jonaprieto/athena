@@ -255,7 +255,7 @@ function, among other kinds.
 \label{ssec:emulating-inferences}
 
 
-\emph{Splitting a goal.}
+\subsubsection{Splitting a Goal.}
 The goal of a problem to be proved by \Metis is processed to generate new
 propositions, the new targets, \Metis calls these formulas
 \emph{subgoals}.
@@ -557,41 +557,214 @@ for some $i = 1,\ 2$, then,
 The last statement follows by using the hypothesis and the proof is complete.
 \end{proof}
 
-% To deal with nested conjunctions and nested disjunctions, we follow a similar strategy mainly described in \citeauthor{bohme2010}~\cite{bohme2010}.
+% ------------------------------------------------------------------------
 
-For the rest of inference rules, we need some transformations useful
-to deal with conjunctions and disjunctions.
+\subsubsection{Reordering.}
 
-First, we define the $rconj$ function in Eq.~\ref{eq:rconj-def} to convert conjunctions to be right-associative conjunctions, and following
-a similar approach we define $rdisj$ function for disjunctions.
+Syntactically speaking, showing the logic equivalence between two conjunctive normal forms is a matter of rearrangements of the conjunctions
+but also of the inner disjunctions inside the propositions involved.
 
-\begin{equation}
-\label{eq:rconj-def}
-\begin{split}
-&rconj(φ) =\begin{cases}
-ψ₁ ∧ rconj(ψ₂ ∧ φ₂) &\text{if }φ = φ₁ ∧ φ₂\text{, } ψ≡rconj(φ₁),\\
-&\text{and }ψ ≡ ψ₁ ∧ ψ₂,\\[3mm]
-ψ ∧ rconj(φ₂)  &\text{if }φ = φ₁ ∧ φ₂\text{, } ψ≡rconj(φ₁),\\
-φ &\text{otherwise.}
-\end{cases}
-\end{split}
-\end{equation}
+We provide some useful theorems to perform the following tasks.
 
-The following function, buildOr intends to construct a disjunction from another disjunction, specifically, we want to rearrange the order of the disjuncts in a disjunctions, no other propositional shape we treat.
+\begin{itemize}
+  \item Reorder a disjunction like $φ = φ₁ ∨ φ₂ ∨ \cdots$ to match with another disjunction $ψ = ψ₁ ∨ ψ₂ ∨ \cdots$, when $φ$ is a disjunct of $ψ$.
+  \item Reorder a conjunction of disjuncts (CNF), $φ = φ₁ ∧ φ₂ ∧ \cdots$, to match with another CNF formula equivalent $ψ = ψ₁ ∧ ψ₂ ∧ \cdots$.
+\end{itemize}
+
+First, we define the $rdisj$ function in Eq.~\ref{eq:rdisj-def} to convert a disjunction to be a right-associative disjunction, and following
+a similar approach we define the $rconj$ function for conjunctions.
+
+\begin{align}
+    \begin{split}
+      \label{eq:rdisj-def}
+      rdisj(φ) =
+      \begin{cases}
+      rdisj(φ₁ ∨ (φ₂ ∨ φ₃)) & \text{if } φ ≡ (φ₁ ∨ φ₂) ∨ φ₃, \\
+      φ₁ ∨ rdisj(φ₂)        & \text{if } φ ≡ φ₁ ∨ φ₂, \\
+      φ                     & \text{otherwise.}
+      \end{cases}
+    \end{split}
+\end{align}
+
+\begin{lemma}[lem-rdisj]
+\label{lem:lem-rdisj}
+  $Γ ⊢ φ$ then $Γ ⊢ rdisj(φ)$.
+\end{lemma}
+
+The following function, $build_{∨} : \Prop → \Prop → \Prop$ in Eq.~\ref{eq:build-or}, intends to construct a disjunction from another disjunction, specifically, we want to rearrange the order of the disjuncts in a target disjunction.
 This approach for rearrangement is inspired on the treatment for nested
-disjunctions in \citeauthor{bohme2010}~\cite{bohme2010}.
+disjunctions mainly described in \citeauthor{bohme2010}~\cite{bohme2010}.
 
 \begin{equation}
 \begin{split}
-\label{eq:buildOr}
-buildOr(φ, ψ) =
+\label{eq:build-or}
+&build_{∨}(φ, ψ) =\\
+&\hspace{3mm}
 \begin{cases}
-ψ &\text{if } ψ ≡ ψ₁ ∨ ψ₂\text{ and } buildOr(φ, ψ_{i}) ≡ ψ_{i}\text{ for some }i=1, 2,\\
 ψ &\text{if } φ ≡ ψ,\\
+ψ &\text{if } ψ ≡ ψ₁ ∨ ψ₂\text{ and } build_{∨}(φ, ψ_{i}) ≡ ψ_{i}\text{ for some }i=1, 2,\\
 φ &\text{otherwise.}
 \end{cases}
 \end{split}
 \end{equation}
 
+\begin{lemma}[lem-build-or]
+\label{lem:lem-build-or}
+$Γ ⊢ φ$, and $ψ\in \Prop$ then $Γ ⊢ build_{∨}(φ)$.
+\end{lemma}
+
+
+The function $factor : \Prop → \Prop$  in Eq.~\ref{eq:factor-definition} is intended to work only for right-associative disjunctions, and reduces a disjunction of the same disjunct (e.g., $factor(φ ∨ (φ ∨ \cdots)) \mapsto\ φ$).
+
+\begin{align}
+\begin{split}
+  \label{eq:factor-definition}
+  factor(φ) =
+  \begin{cases}
+    φ₁ & \text{if }φ ≡ φ₁ ∨ φ₂ \text{ and } φ₁ ≡ factor(φ₂),\\
+    φ  & \text{otherwise.}
+  \end{cases}
+\end{split}
+\end{align}
+
+\begin{lemma}[lem-factor]
+\label{lem:lem-factor}
+$Γ ⊢ φ$ then $Γ ⊢ factor(φ)$.
+\end{lemma}
+
+Now, with a right-associative proposition,
+$strongBuild_{∨}: \Prop → \Prop → \Prop$ in
+Eq.~\ref{eq:strong-build-or-definition} aims to construct the disjunction
+ψ by using each of disjuncts from the proposition φ. This approach to
+build a disjunction from another is inspired on the description
+\citeauthor{bohme2010}~\cite{bohme2010} to prove equality between nested
+disjunctions.
+
+\begin{align}
+  \begin{split}
+  \label{eq:strong-build-or-definition}
+    &strongBuild_{∨}(φ, ψ) =\\
+    &\hspace{3mm}
+    \begin{cases}
+      factor(build_{∨}(φ₁, ψ) ∨ build_{∨}(φ₂,ψ))  & φ≡ φ₁ ∨ φ₂,\\
+      build_{∨}(φ, ψ)  & \text{otherwise.}
+    \end{cases}
+  \end{split}
+\end{align}
+
+\begin{lemma}[lem-sbuild-or]
+\label{lem:lem-sbuild-or}
+$Γ ⊢ φ$, and $ψ \in\Prop$ then $Γ ⊢ strongBuild_{∨}(φ, ψ)$.
+\end{lemma}
+
+Let see the following example of the idea behind $strongBuild_{∨}$
+function; from the disjunction $(r ∨ (q ∨ p))$, we build the disjunction
+$((p ∨ q) ∨ r)$.
+
+\begin{equation*}
+  \begin{bprooftree}
+  \AxiomC{Γ ⊢ q}
+  \RightLabel{∨-intro₂}
+  \UnaryInfC{Γ ⊢ p ∨ q}
+  \RightLabel{∨-intro₁}
+  \UnaryInfC{Γ ⊢ (p ∨ q) ∨ r}
+
+  \AxiomC{Γ ⊢ p}
+  \RightLabel{∨-intro₁}
+  \UnaryInfC{Γ ⊢ p ∨ q}
+  \RightLabel{∨-intro₁}
+  \UnaryInfC{Γ ⊢ (p ∨ q) ∨ r}
+
+  \RightLabel{∨-elim}
+  \BinaryInfC{Γ, q ∨ p ⊢ (p ∨ q) ∨ r}
+  \end{bprooftree}
+\end{equation*}
+
+\begin{equation*}
+  \begin{bprooftree}
+  \AxiomC{Γ ⊢ r}
+  \RightLabel{∨-intro₂}
+  \UnaryInfC{Γ ⊢ (p ∨ q) ∨ r}
+
+  \AxiomC{Γ, q ∨ p ⊢ (p ∨ q) ∨ r}
+
+  \RightLabel{∨-elim}
+  \BinaryInfC{Γ, r ∨ (q ∨ p) ⊢ (p ∨ q) ∨ r}
+
+  \RightLabel{⇒-intro}
+  \UnaryInfC{Γ ⊢ r ∨ (q ∨ p) ⇒ (p ∨ q) ∨ r}
+
+  \end{bprooftree}
+\end{equation*}
+
+\begin{theorem}[thm-reorder$_{∨}$] $Γ ⊢ φ$, and $ψ\in\Prop$ then $Γ ⊢ reorder_{∨}(φ, ψ)$, where,
+\begin{equation*}
+  \label{eq:reorder-or}
+  reorder_{∨} (φ, ψ) = strongBuild_{∨}(rdisj(φ), ψ).
+\end{equation*}
+\end{theorem}
+\begin{proof} Use Lemma~\ref{lem:lem-rdisj} and Lemma~\ref{lem:lem-sbuild-or}.
+\end{proof}
+
+To work with nest conjunctions of disjunctions (CNFs), we define similar
+functions and theorems as we previously did for disjunctions.
+
+\begin{lemma}[lem-reorder$_{∧}$]
+\label{lem:lem-reorder-and}
+$Γ ⊢ φ$, and $ψ \in\Prop$ then $Γ ⊢ reorder(φ, ψ)$, where,
+\begin{align*}
+    \begin{split}
+      reorder_{∧}(φ, ψ) =
+      \begin{cases}
+        φ &\text{if }φ ≡ ψ, \\
+        ψ₁ ∧ ψ₂ &\text{if } ψ ≡ ψ₁ ∧ ψ₂\text{, }reorder_{∧}(φ, ψ₁) ≡ ψ₁,\\
+                &\text{and }reorder_{∧}(φ, ψ₂)≡ ψ₂,\\
+        φ       &\text{if } ψ ≡ ψ₁ ∧ ψ₂,\\
+        conjunct(φ, ψ) &\text{otherwise.}
+      \end{cases}
+    \end{split}
+\end{align*}
+
+\end{lemma}
+
+\begin{lemma}[lem-conjunct$_{∨}$]
+\label{lem:lem-conjunct-or}
+$Γ ⊢ φ$, and $ψ \in\Prop$ then $Γ ⊢ conjunct_{∨}(φ, ψ)$, where,
+
+\begin{align*}
+\begin{split}
+  \label{eq:conjunct-or-definition}
+  conjunct_{∨}(φ, ψ)=
+  \begin{cases}
+    ψ &\text{if }reorder_{∨}(φ, ψ) ≡ ψ,\\
+    ψ &\text{if }ψ ≡ ψ₁ ∧ ψ₂, conjunct_{∨}(φ, ψ₁) = ψ₁,\\
+      &\text{and } reorder_{∨}(φ, ψ₂) ≡ ψ₂,\\
+    ψ &\text{if }φ ≡ φ₁ ∧ φ₂, conjunct_{∨}(φ₁, ψ) ≡ ψ,\\
+    ψ &\text{if }φ ≡ φ₁ ∧ φ₂, conjunct_{∨}(φ₂, ψ) ≡ ψ,\\
+    φ &\text{otherwise.}
+  \end{cases}
+\end{split}
+\end{align*}
+
+\end{lemma}
+
+\begin{theorem}[thm-reorder$_{∧∨}$]
+\label{thm:thm-reorder-or-and}
+$Γ ⊢ φ$, and $ψ \in\Prop$ then $Γ ⊢ reorder_{∧∨}(φ, ψ)$, where,
+
+\begin{align}
+    \begin{split}
+    reorder_{∧∨}(φ, ψ)=
+      \begin{cases}
+        ψ &\text{if } φ≡ψ,\\
+        ψ &\text{if } ψ ≡ ψ₁ ∧ ψ₂, reorder_{∧∨}(φ,ψ₁) ≡ ψ₁,\\
+          &\text{and }reorder_{∧∨}(φ, ψ₂) ≡ ψ₂,\\
+        φ &\text{if }ψ ≡ ψ₁ ∧ ψ₂,\\
+        conjunct_{∨}(φ, ψ) &\text{otherwise.}
+      \end{cases}
+    \end{split}
+\end{align}
+
+\end{theorem}
 
 \end{document}

@@ -1,3 +1,19 @@
+\begin{equation}
+\label{eq:rconj-def}
+\begin{split}
+&rconj(φ) =\begin{cases}
+ψ₁ ∧ rconj(ψ₂ ∧ φ₂) &\text{if }φ = φ₁ ∧ φ₂\text{, } ψ≡rconj(φ₁),\\
+&\text{and }ψ ≡ ψ₁ ∧ ψ₂,\\[3mm]
+ψ ∧ rconj(φ₂)  &\text{if }φ = φ₁ ∧ φ₂\text{, } ψ≡rconj(φ₁),\\
+φ &\text{otherwise.}
+\end{cases}
+\end{split}
+\end{equation}
+
+\begin{lemma}[thm-rconj] $Γ ⊢ φ$ then $Γ ⊢ rconj(φ)$.
+\end{lemma}
+
+
 \emph{Resolve.}
 
 The \resolve rule is a generalization version for resolution
