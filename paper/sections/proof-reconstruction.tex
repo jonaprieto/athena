@@ -168,11 +168,11 @@ mentioned above for an inner function in the \strip inference.
 \label{eq:unshunt-definition}
 &\unshunt_{0}(φ) =\\
 &\hspace{3mm}\begin{cases}
-\unshunt_{0}((φ₁ ∧ φ₂) ⇒ φ₃)
-  & \text{if }φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃),\\
-\unshunt_{0}(φ₁ ⇒ φ₂) ∧ \unshunt_{0}(φ₁ ⇒ φ₃)
-  & \text{if }φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃),\\
-φ &\text{otherwise.}
+\unshunt_{0}((φ₁ ∧ φ₂) ⇒ φ₃),
+  & \text{if }φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\
+\unshunt_{0}(φ₁ ⇒ φ₂) ∧ \unshunt_{0}(φ₁ ⇒ φ₃),
+  & \text{if }φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)\\
+φ, &\text{otherwise.}
 \end{cases}
 \end{split}
 \end{align}
@@ -191,9 +191,10 @@ Eq.~\ref{eq:unshunt-structured}.
 &\unshunt_{1}(φ, \zero) = φ\\
 &\unshunt_{1}(φ, \suc(n)) =\\
 &\hspace{3mm}\begin{cases}
-\unshunt_{1}((φ₁ ∧ φ₂) ⇒ φ₃, n)
-  &\text{if } φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃),\\
-\unshunt_{1}(φ₁ ⇒ φ₂, n) ∧\ \unshunt_{1}(φ₁ ⇒ φ₃, n) &\text{if } φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃).
+\unshunt_{1}((φ₁ ∧ φ₂) ⇒ φ₃, n),
+  &\text{if } φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\
+\unshunt_{1}(φ₁ ⇒ φ₂, n) ∧\ \unshunt_{1}(φ₁ ⇒ φ₃, n),
+   &\text{if } φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃).
 \end{cases}
 \end{split}
 \end{align}
@@ -208,9 +209,9 @@ proposition}, is a function $\Prop \to \Nat$ that assigns a natural number for a
 \label{eq:rank-definition}
 rank(φ)=
 \begin{cases}
-0 &\text{for atomic }φ, \\
-rank(φ₁) + c_{¬}  &\text{if } φ ≡ \neg φ₁, \\
-\max{(rank(φ₁),rank(φ₂))} + c_{\square}
+0, &\text{for atomic }φ \\
+rank(φ₁) + c_{¬},  &\text{if } φ ≡ \neg φ₁ \\
+\max{(rank(φ₁),rank(φ₂))} + c_{\square},
   &\text{if } φ ≡ φ₁\,\square\, φ₂.
 \end{cases}
 \end{equation*}
@@ -228,10 +229,10 @@ Eq.~\ref{eq:unshunt-rank-definition}.
 \label{eq:unshunt-rank-definition}
 \unshunt_{cm}(φ)=
 \begin{cases}
-\unshunt_{cm}(φ₃) + 2 & φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃),\\
-\max(\unshunt_{cm}(φ₂),\unshunt_{cm}(φ₃)) + 1
-  &\text{if }  φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃),\\
-0 &\text{otherwise.}
+\unshunt_{cm}(φ₃) + 2, &\text{if }φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\
+\max(\unshunt_{cm}(φ₂),\unshunt_{cm}(φ₃)) + 1,
+  &\text{if }  φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)\\
+0, &\text{otherwise.}
 \end{cases}
 \end{equation}
 
@@ -350,30 +351,38 @@ Eq.~\ref{eq:split-definition} that yields a conjunction of subgoals from a propo
 
 \begin{equation}
 \label{eq:split-definition}
-% \mysplit(φ) =
+\mysplit(φ) =
 \begin{cases}
-\unshunt(\mysplit(φ₁)) ∧\ \unshunt(φ₁ ⇒ \mysplit(φ₂))  & \text{if }φ ≡ φ₁ ∧ φ₂,\\
-      &\\[2.5mm]
-\unshunt(¬ φ₁ ⇒ \mysplit(φ₂))       & \text{if }φ ≡ φ₁ ∨ φ₂,\\[2.5mm]
-
-\unshunt(φ₁ ⇒ \mysplit(φ₂))         & \text{if }φ ≡ φ₁ ⇒ φ₂,\\[2.5mm]
-
-\unshunt(φ₁ ⇒ \mysplit(φ₂))         & \text{if }φ ≡ φ₁ ⇔ φ₂,\\
-∧\ \unshunt(φ₂ ⇒ \mysplit(φ₁))      &\\[2.5mm]
-
-\unshunt(φ₁ ⇒ \mysplit(¬ φ₂))       & \text{if }φ ≡ ¬ (φ₁ ∧ φ₂),\\[2.5mm]
-\unshunt(\mysplit(¬ φ₁))            & \text{if }φ ≡ ¬ (φ₁ ∨ φ₂),\\
-∧\ \unshunt(¬ φ₁ ⇒ \mysplit(¬ φ₂))  &\\[2.5mm]
-
-\unshunt(\mysplit(φ₁))              & \text{if }φ ≡ ¬ (φ₁ ⇒ φ₂),\\
-∧\ \unshunt(φ₁ ⇒ \mysplit(¬ φ₂))    &\\[2.5mm]
-
-\unshunt(φ₁ ⇒ \mysplit(¬ φ₂))       & \text{if }φ ≡ ¬ (φ₁ ⇔ φ₂),\\
-∧\ \unshunt(¬ φ₂ ⇒ \mysplit(φ₁))    &\\[2.5mm]
-
-\unshunt(\mysplit(φ₁))              & \text{if }φ ≡ ¬ ¬ φ₁,\\
-⊤                                   & \text{if }φ ≡ ¬ ⊥,\\
-⊥                                   & \text{if }φ ≡ ¬ ⊤.
+\unshunt(\mysplit(φ₁)) &\text{if }φ ≡ φ₁ ∧ φ₂\\
+∧\ \unshunt(φ₁ ⇒ \mysplit(φ₂)), &\\[2.5mm]
+\unshunt(¬ φ₁ ⇒ \mysplit(φ₂)),
+  & \text{if }φ ≡ φ₁ ∨ φ₂\\[2.5mm]
+\unshunt(φ₁ ⇒ \mysplit(φ₂)),
+  & \text{if }φ ≡ φ₁ ⇒ φ₂\\[2.5mm]
+\unshunt(φ₁ ⇒ \mysplit(φ₂))
+  & \text{if }φ ≡ φ₁ ⇔ φ₂\\
+∧\ \unshunt(φ₂ ⇒ \mysplit(φ₁)),
+  &\\[2.5mm]
+\unshunt(φ₁ ⇒ \mysplit(¬ φ₂)),
+  & \text{if }φ ≡ ¬ (φ₁ ∧ φ₂)\\[2.5mm]
+\unshunt(\mysplit(¬ φ₁))
+  & \text{if }φ ≡ ¬ (φ₁ ∨ φ₂)\\
+∧\ \unshunt(¬ φ₁ ⇒ \mysplit(¬ φ₂)),
+  &\\[2.5mm]
+\unshunt(\mysplit(φ₁))
+  & \text{if }φ ≡ ¬ (φ₁ ⇒ φ₂)\\
+∧\ \unshunt(φ₁ ⇒ \mysplit(¬ φ₂)),
+  &\\[2.5mm]
+\unshunt(φ₁ ⇒ \mysplit(¬ φ₂))
+  & \text{if }φ ≡ ¬ (φ₁ ⇔ φ₂)\\
+∧\ \unshunt(¬ φ₂ ⇒ \mysplit(φ₁)),
+  &\\[2.5mm]
+\unshunt(\mysplit(φ₁)),
+  & \text{if }φ ≡ ¬ ¬ φ₁\\
+⊤,
+  & \text{if }φ ≡ ¬ ⊥\\
+⊥,
+  & \text{if }φ ≡ ¬ ⊤.
 \end{cases}
 \end{equation}
 
@@ -526,10 +535,10 @@ the conjunct required.
   \begin{split}
   conjunct(φ, ψ) =
     \begin{cases}
-      ψ &\text{if }φ ≡ ψ,\\
-      ψ &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }conjunct(φ₁, ψ)≡ ψ,\\
-      ψ &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }conjunct(φ₂, ψ)≡ ψ,\\
-      φ &\text{otherwise.}
+      ψ, &\text{if }φ ≡ ψ\\
+      ψ, &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }conjunct(φ₁, ψ)≡ ψ\\
+      ψ, &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }conjunct(φ₂, ψ)≡ ψ\\
+      φ, &\text{otherwise.}
     \end{cases}
   \end{split}
 \end{align}
@@ -581,9 +590,9 @@ a similar approach we define the $rconj$ function for conjunctions.
     \label{eq:rdisj-def}
     rdisj(φ) =
     \begin{cases}
-    rdisj(φ₁ ∨ (φ₂ ∨ φ₃)) & \text{if } φ ≡ (φ₁ ∨ φ₂) ∨ φ₃, \\
-    φ₁ ∨ rdisj(φ₂)        & \text{if } φ ≡ φ₁ ∨ φ₂, \\
-    φ                     & \text{otherwise.}
+    rdisj(φ₁ ∨ (φ₂ ∨ φ₃)),  & \text{if } φ ≡ (φ₁ ∨ φ₂) ∨ φ₃\\
+    φ₁ ∨ rdisj(φ₂),         & \text{if } φ ≡ φ₁ ∨ φ₂\\
+    φ,                      & \text{otherwise.}
     \end{cases}
   \end{split}
 \end{align}
@@ -603,9 +612,9 @@ disjunctions mainly described in \citeauthor{bohme2010}~\cite{bohme2010}.
   &build_{∨}(φ, ψ) =\\
   &\hspace{3mm}
   \begin{cases}
-  ψ &\text{if } φ ≡ ψ,\\
-  ψ &\text{if } ψ ≡ ψ₁ ∨ ψ₂\text{ and } build_{∨}(φ, ψ_{i}) ≡ ψ_{i}\text{ for some }i=1, 2,\\
-  φ &\text{otherwise.}
+  ψ, &\text{if } φ ≡ ψ\\
+  ψ, &\text{if } ψ ≡ ψ₁ ∨ ψ₂\text{ and } build_{∨}(φ, ψ_{i}) ≡ ψ_{i}\text{ for some }i=1, 2\\
+  φ, &\text{otherwise.}
   \end{cases}
   \end{split}
 \end{equation}
@@ -622,8 +631,8 @@ The function $factor : \Prop → \Prop$  in Eq.~\ref{eq:factor-definition} is in
   \label{eq:factor-definition}
   factor(φ) =
   \begin{cases}
-    φ₁ & \text{if }φ ≡ φ₁ ∨ φ₂ \text{ and } φ₁ ≡ factor(φ₂),\\
-    φ  & \text{otherwise.}
+    φ₁,  &\text{if }φ ≡ φ₁ ∨ φ₂ \text{ and } φ₁ ≡ factor(φ₂)\\
+    φ,   &\text{otherwise.}
   \end{cases}
 \end{split}
 \end{align}
@@ -644,11 +653,10 @@ disjunctions.
 \begin{align}
   \begin{split}
   \label{eq:strong-build-or-definition}
-    &sbuild_{∨}(φ, ψ) =\\
-    &\hspace{3mm}
+    sbuild_{∨}(φ, ψ) =
     \begin{cases}
-      factor(build_{∨}(φ₁, ψ) ∨ build_{∨}(φ₂,ψ))  & φ≡ φ₁ ∨ φ₂,\\
-      build_{∨}(φ, ψ)  & \text{otherwise.}
+      factor(build_{∨}(φ₁, ψ) ∨ build_{∨}(φ₂,ψ)),  &\text{if }φ≡ φ₁ ∨ φ₂\\
+      build_{∨}(φ, ψ),  & \text{otherwise.}
     \end{cases}
   \end{split}
 \end{align}
@@ -720,10 +728,10 @@ functions and theorems as we previously did for disjunctions.
       \begin{split}
         reorder_{∧}(φ, ψ) =
         \begin{cases}
-          φ &\text{if }φ ≡ ψ, \\
-          ψ₁ ∧ ψ₂ &\text{if } ψ ≡ ψ₁ ∧ ψ₂\text{, }reorder_{∧}(φ, ψ₁) ≡ ψ₁,\\
-                  &\text{and }reorder_{∧}(φ, ψ₂)≡ ψ₂,\\
-          φ       &\text{if } ψ ≡ ψ₁ ∧ ψ₂,\\
+          φ, &\text{if }φ ≡ ψ\\
+          ψ₁ ∧ ψ₂, &\text{if } ψ ≡ ψ₁ ∧ ψ₂\text{, }reorder_{∧}(φ, ψ₁) ≡ ψ₁\\
+                  &\text{and }reorder_{∧}(φ, ψ₂)≡ ψ₂\\
+          φ,       &\text{if } ψ ≡ ψ₁ ∧ ψ₂\\
           conjunct(φ, ψ) &\text{otherwise.}
         \end{cases}
       \end{split}
@@ -738,12 +746,12 @@ functions and theorems as we previously did for disjunctions.
     \label{eq:conjunct-or-definition}
     conjunct_{∨}(φ, ψ) =
     \begin{cases}
-      ψ &\text{if }reorder_{∨}(φ, ψ) ≡ ψ,\\
-      ψ &\text{if }ψ ≡ ψ₁ ∧ ψ₂, conjunct_{∨}(φ, ψ₁) = ψ₁,\\
-        &\text{and } reorder_{∨}(φ, ψ₂) ≡ ψ₂,\\
-      ψ &\text{if }φ ≡ φ₁ ∧ φ₂, conjunct_{∨}(φ₁, ψ) ≡ ψ,\\
-      ψ &\text{if }φ ≡ φ₁ ∧ φ₂, conjunct_{∨}(φ₂, ψ) ≡ ψ,\\
-      φ &\text{otherwise.}
+      ψ, &\text{if }reorder_{∨}(φ, ψ) ≡ ψ\\
+      ψ, &\text{if }ψ ≡ ψ₁ ∧ ψ₂, conjunct_{∨}(φ, ψ₁) = ψ₁\\
+        &\text{and } reorder_{∨}(φ, ψ₂) ≡ ψ₂\\
+      ψ, &\text{if }φ ≡ φ₁ ∧ φ₂, conjunct_{∨}(φ₁, ψ) ≡ ψ\\
+      ψ, &\text{if }φ ≡ φ₁ ∧ φ₂, conjunct_{∨}(φ₂, ψ) ≡ ψ\\
+      φ, &\text{otherwise.}
     \end{cases}
   \end{split}
   \end{align*}
@@ -758,10 +766,10 @@ functions and theorems as we previously did for disjunctions.
       \begin{split}
       reorder_{∧∨}(φ, ψ)=
         \begin{cases}
-          ψ &\text{if } φ≡ψ,\\
-          ψ &\text{if } ψ ≡ ψ₁ ∧ ψ₂, reorder_{∧∨}(φ,ψ₁) ≡ ψ₁,\\
-            &\text{and }reorder_{∧∨}(φ, ψ₂) ≡ ψ₂,\\
-          φ &\text{if }ψ ≡ ψ₁ ∧ ψ₂,\\
+          ψ, &\text{if } φ≡ψ\\
+          ψ, &\text{if } ψ ≡ ψ₁ ∧ ψ₂, reorder_{∧∨}(φ,ψ₁) ≡ ψ₁\\
+             &\text{and }reorder_{∧∨}(φ, ψ₂) ≡ ψ₂\\
+          φ, &\text{if }ψ ≡ ψ₁ ∧ ψ₂\\
           conjunct_{∨}(φ, ψ) &\text{otherwise.}
         \end{cases}
       \end{split}
@@ -770,7 +778,7 @@ functions and theorems as we previously did for disjunctions.
 
 % --------------------------------------------------------------------
 
-\subsubsection{Resolve} % (fold)
+\subsubsection{Resolve}
 \label{ssub:resolve}
 
 The \resolve rule is a generalization version for resolution in propositional logic since the formulas are not shaped always as the theorem expect (see Fig.~\ref{fig:metis-inferences}).
@@ -786,9 +794,9 @@ the pattern expected by the resolution theorem.
       \begin{split}
         rsol(φ) =
         \begin{cases}
-          φ₂ &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (φ₃ ∨ φ₄), φ₃ ≡ ¬ φ₁, φ₂ ≡ φ₄,\\
-          φ₂ ∨ φ₄ &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (φ₃ ∨ φ₄), φ₃ ≡ ¬ φ₁,\\
-          φ &\text{otherwise.}
+          φ₂, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (φ₃ ∨ φ₄), φ₃ ≡ ¬ φ₁, φ₂ ≡ φ₄\\
+          φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (φ₃ ∨ φ₄), φ₃ ≡ ¬ φ₁\\
+          φ, &\text{otherwise.}
         \end{cases}
       \end{split}
   \end{align*}
@@ -828,7 +836,7 @@ the pattern expected by the resolution theorem.
 
 % --------------------------------------------------------------------
 
-\subsubsection{Normal Forms.} % (fold)
+\subsubsection{Normal Forms.}
 \label{ssub:normal_forms}
 
 A negative normal form for the formula φ is one in which negations
@@ -847,27 +855,27 @@ apply recursively the following equations. The function type for
     \label{eq:nnf-definition}
     nnf(φ) =
       \begin{cases}
-      nnf(φ₁) ∧ nnf(φ₂)
-         &\text{if }φ ≡ φ₁ ∧ φ₂, \\
-      nnf(φ₁) ∨ nnf(φ₂)
-         &\text{if }φ ≡ φ₁ ∨ φ₂, \\
-      nnf(¬ φ₁ ∨ φ₂)
-         &\text{if }φ ≡ φ₁ ⇒ φ₂, \\
-      nnf(φ₁ ⇒ φ₂ ∧ φ₂ ⇒ φ₁)
-         &\text{if }φ ≡ φ₁ ⇔ φ₂, \\
-      nnf(¬ φ₁ ∨ ¬ φ₂)
-         &\text{if }φ ≡ ¬ (φ₁ ∧ φ₂), \\
-      nnf(¬ φ₁ ∧ ¬ φ₂)
-         &\text{if }φ ≡ ¬ (φ₁ ∨ φ₂), \\
-      nnf(φ₁)
-         &\text{if }φ ≡ ¬ ¬ φ₁, \\
-      nnf(¬ (φ₂ ∨ ¬ φ₁))
-         &\text{if }φ ≡ ¬ (φ₁ ⇒ φ₂), \\
-      nnf(¬ (φ₁ ⇒ φ₂ ∧ φ₂ ⇒ φ₁))
-         &\text{if }φ ≡ ¬ (φ₁ ⇔ φ₂), \\
-      ⊥  &\text{if }φ ≡ ¬ ⊤, \\
-      ⊤  &\text{if }φ ≡ ¬ ⊥, \\
-      φ  & \text{otherwise}.
+      nnf(φ₁) ∧ nnf(φ₂),
+         &\text{if }φ ≡ φ₁ ∧ φ₂ \\
+      nnf(φ₁) ∨ nnf(φ₂),
+         &\text{if }φ ≡ φ₁ ∨ φ₂ \\
+      nnf(¬ φ₁ ∨ φ₂),
+         &\text{if }φ ≡ φ₁ ⇒ φ₂ \\
+      nnf(φ₁ ⇒ φ₂ ∧ φ₂ ⇒ φ₁),
+         &\text{if }φ ≡ φ₁ ⇔ φ₂ \\
+      nnf(¬ φ₁ ∨ ¬ φ₂),
+         &\text{if }φ ≡ ¬ (φ₁ ∧ φ₂) \\
+      nnf(¬ φ₁ ∧ ¬ φ₂),
+         &\text{if }φ ≡ ¬ (φ₁ ∨ φ₂) \\
+      nnf(φ₁),
+         &\text{if }φ ≡ ¬ ¬ φ₁ \\
+      nnf(¬ (φ₂ ∨ ¬ φ₁)),
+         &\text{if }φ ≡ ¬ (φ₁ ⇒ φ₂) \\
+      nnf(¬ (φ₁ ⇒ φ₂ ∧ φ₂ ⇒ φ₁)),
+         &\text{if }φ ≡ ¬ (φ₁ ⇔ φ₂) \\
+      ⊥,  &\text{if }φ ≡ ¬ ⊤ \\
+      ⊤,  &\text{if }φ ≡ ¬ ⊥ \\
+      φ,  & \text{otherwise}.
       \end{cases}
     \end{split}
   \end{align*}
@@ -880,11 +888,11 @@ apply recursively the following equations. The function type for
       \begin{split}
       dist_{∨} =
         \begin{cases}
-          dist_{∨}(φ₁ ∨ φ₂) ∧ dist_{∨}(φ₂ ∨ φ₃)
-            &\text{if }φ ≡ (φ₁ ∧ φ₂) ∨ φ₃,\\
-          dist_{∨}(φ₁ ∨ φ₃) ∧ dist_{∨}(φ₁ ∨ φ₃)
-            &\text{if }φ ≡ φ₁ ∨ (φ₂ ∧ φ₃),\\
-          φ &\text{otherwise.}
+          dist_{∨}(φ₁ ∨ φ₂) ∧ dist_{∨}(φ₂ ∨ φ₃),
+            &\text{if }φ ≡ (φ₁ ∧ φ₂) ∨ φ₃\\
+          dist_{∨}(φ₁ ∨ φ₃) ∧ dist_{∨}(φ₁ ∨ φ₃),
+            &\text{if }φ ≡ φ₁ ∨ (φ₂ ∧ φ₃)\\
+          φ, &\text{otherwise.}
         \end{cases}
       \end{split}
   \end{align*}
@@ -897,11 +905,11 @@ apply recursively the following equations. The function type for
       \begin{split}
       dist =
         \begin{cases}
-          dist(φ₁) ∧ dist(φ₂)
-            &\text{if }φ ≡ φ₁ ∧ φ₂,\\
-          dist_{∨}(dist(φ₁) ∨ dist(φ₂))
-            &\text{if }φ ≡ φ₁ ∨ φ₂,\\
-          φ &\text{otherwise.}
+          dist(φ₁) ∧ dist(φ₂),
+            &\text{if }φ ≡ φ₁ ∧ φ₂\\
+          dist_{∨}(dist(φ₁) ∨ dist(φ₂)),
+            &\text{if }φ ≡ φ₁ ∨ φ₂\\
+          φ, &\text{otherwise.}
         \end{cases}
       \end{split}
   \end{align*}
@@ -941,10 +949,10 @@ $Γ, φ₁ ∨ φ₂ ⊢ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$, and the lemma
 
 % --------------------------------------------------------------------
 
-\subsubsection{Clausification.} % (fold)
-\label{ssub:clausification}
+\subsubsection{Clausification.}
+\label{ssec:clausification}
 
-\begin{theorem}[thm-clausify] % (fold)
+\begin{theorem}[thm-clausify]
 \label{thm:thm_clausify}
   $Γ ⊢ φ$ and $ψ \in\Prop$ then $Γ ⊢ clausify(φ, ψ)$, where,
   \begin{align}
@@ -961,5 +969,6 @@ $Γ, φ₁ ∨ φ₂ ⊢ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$, and the lemma
 
 % subsubsection clausification (end)
 % --------------------------------------------------------------------
+
 
 \end{document}
