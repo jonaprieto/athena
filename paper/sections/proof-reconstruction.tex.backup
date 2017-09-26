@@ -43,43 +43,11 @@ formulas as the resolve inference shows.
 \label{fig:thm-resolve-best-case}
 \end{figure}
 
-To rearrange the propositions in order to match with a specific
-pattern for applying a particular theorem like resolution, we have
-define the following functions and provide
-its respective theorems in \cite{AgdaMetis}.
-These rearrangement functions are mainly inspired in
-\cite{bohme2010}, for their treatment for conjunction and
-disjunction equivalence.
-
-\improvement{provide examples for each of the following functions.}
-
-\begin{itemize}
-  \item \name{reorder-∨.} Given two formulas, φ and ψ, both disjunctions, fix the order of the first one by following the syntactically
-  order of the second one. If the process succeed (denote by φ ⤳ ψ),
-  returns the target formula, ψ, otherwise, keep the first one, φ.
-  \begin{align}
-  \begin{split}
-&\name{reorder-∨}\ :\ \Prop \to \Prop \to \Prop\\
-&\name{reorder-∨}(φ, ψ) =
-  \begin{cases}
-  ψ   & φ ⤳ ψ\\
-  ϕ   & \text{otherwise.}
-  \end{cases}
-  \end{split}
-  \end{align}
-
-  \item \name{reorder-∧.} Given two formulas, φ and ψ, both conjunctions, fix the order of the first one by following the order  of the second one.
-  \item \name{reorder-∧∨.} Given two formulas, φ and ψ, both in CNF, fix the order of the first one by following the order  of the second one.
-\end{itemize}
-
-\begin{equation}
-\resolve((φ₁, φ₂, l, ψ)
-\end{equation}
-
 \begin{theorem}[\thmresolve] $Γ ⊢ φ₁$, $Γ ⊢ φ₂$,
 then $Γ ⊢ \resolve(φ₁, φ₂, l, ψ)$ where $l$ is a literal,
 and ψ is the expected result.
 \end{theorem}
+
 \emph{NNF.}
 A negative normal form for the formula φ is one in which negations
 appear only in the literals and the expression is in terms only of

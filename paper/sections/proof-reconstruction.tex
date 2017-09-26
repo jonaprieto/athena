@@ -697,12 +697,14 @@ $((p ∨ q) ∨ r)$.
   \end{bprooftree}
 \end{equation*}
 
-\begin{theorem}[thm-reorder$_{∨}$] $Γ ⊢ φ$, and $ψ\in\Prop$ then $Γ ⊢ reorder_{∨}(φ, ψ)$, where,
+\begin{theorem}[thm-reorder$_{∨}$]
+$Γ ⊢ φ$, and $ψ\in\Prop$ then $Γ ⊢ reorder_{∨}(φ, ψ)$, where,
 \begin{equation*}
   \label{eq:reorder-or}
   reorder_{∨} (φ, ψ) = strongBuild_{∨}(rdisj(φ), ψ).
 \end{equation*}
 \end{theorem}
+
 \begin{proof} Use Lemma~\ref{lem:lem-rdisj} and Lemma~\ref{lem:lem-sbuild-or}.
 \end{proof}
 
@@ -764,7 +766,16 @@ $Γ ⊢ φ$, and $ψ \in\Prop$ then $Γ ⊢ reorder_{∧∨}(φ, ψ)$, where,
       \end{cases}
     \end{split}
 \end{align}
-
 \end{theorem}
+
+\subsubsection{Resolve.} The \resolve rule is a generalization version for resolution in propositional logic since the formulas are not shaped always as the theorem expect (see Fig.~\ref{fig:metis-inferences}).
+
+Since our approach is mere syntactic, in order to apply such a
+theorem, we perform rearrangements inside the formulas to match with
+the pattern expected by the resolution theorem.
+
+\begin{lemma}[lem-resolution]
+
+\end{lemma}
 
 \end{document}
