@@ -14,39 +14,6 @@
 \end{lemma}
 
 
-\emph{Resolve.}
-
-The \resolve rule is a generalization version for resolution
-in propositional logic since the formulas are not shaped always as
-the theorem expect (see Fig.~\ref{fig:metis-inferences}).
-Since our approach is mere syntactic, in order to apply such a
-theorem, we perform rearrangements inside the formulas to match with
-the pattern expected by the resolution theorem. If this strategy
-fails at some point, we could not check the rest of the proof.
-
-Therefore, the best scenario to apply resolution occurs when the
-literal $l$ and its negation appear in the exact place in the
-formulas as the resolve inference shows.
-
-\begin{figure}
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ (φ₁ ≡ l ∨ ψ₁)$}
-\AxiomC{$Γ ⊢ (φ₂ ≡ ¬ l ∨ ψ₂)$}
-\RightLabel{\thmresolve}
-\BinaryInfC{$Γ ⊢ \resolve(φ₁, φ₂, l, (ψ₁ ∧ ψ₂))$}
-\UnaryInfC{Γ ⊢ ψ₁ ∨ ψ₂}
-\end{bprooftree}
-%}
-\]
-% \caption{Resolution in \Metis.}
-\label{fig:thm-resolve-best-case}
-\end{figure}
-
-\begin{theorem}[\thmresolve] $Γ ⊢ φ₁$, $Γ ⊢ φ₂$,
-then $Γ ⊢ \resolve(φ₁, φ₂, l, ψ)$ where $l$ is a literal,
-and ψ is the expected result.
-\end{theorem}
 
 \emph{NNF.}
 A negative normal form for the formula φ is one in which negations
