@@ -108,3 +108,7 @@ script:
 # - make checklines
 # testing the reconstruction
  - make check
+
+branches:
+  only:
+    - master
