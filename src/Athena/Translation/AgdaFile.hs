@@ -319,7 +319,7 @@ getRefutes dict tstp = map (\tag → fromJust (Map.lookup tag dict)) names
     names = [ "refute-" ++ show n ++ "-" ++ show k | (n,k) <- rootRefutes ]
 
     rootRefutes ∷ [ (Int, Int) ]
-    rootRefutes = [ maximum (filter (\l -> (fst l == r)) refutesID) 
+    rootRefutes = [ maximum (filter (\l -> (fst l == r)) refutesID)
                   | r ← numRefutes ]
 
     extractRefuteId ∷ String → (Int, Int)
@@ -494,7 +494,7 @@ docSteps subgoalN (Root Negate _ [subtree@(Root Strip _ _)]) agdaFile =
 -}
 
 docSteps subgoalN (Root Resolve tag [left, right]) agdaFile =
-  parens $ pretty Resolve <+> getFormulaByTag agdaFile tag <+> pretty literal 
+  parens $ pretty Resolve <+> getFormulaByTag agdaFile tag <+> pretty literal
   <> line <> indent 2
     (docSteps subgoalN left agdaFile <> line <>
       docSteps subgoalN right agdaFile)

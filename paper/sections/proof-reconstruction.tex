@@ -188,7 +188,7 @@ Eq.~\ref{eq:unshunt-structured}.
 \begin{align}
 \label{eq:unshunt-structured}
 \begin{split}
-&\unshunt_{1}(φ, \zero) = φ\\
+&\unshunt_{1}(φ, \zero)\hspace{3mm}= φ\\
 &\unshunt_{1}(φ, \suc(n)) =\\
 &\hspace{3mm}\begin{cases}
 \unshunt_{1}((φ₁ ∧ φ₂) ⇒ φ₃, n),
@@ -779,7 +779,7 @@ functions and theorems as we previously did for disjunctions.
 % --------------------------------------------------------------------
 
 \subsubsection{Resolve.}
-\label{ssub:resolve}
+\label{sssec:resolve}
 
 The \resolve rule is a generalization version for resolution in propositional logic since the formulas are not shaped always as the theorem expect (see Fig.~\ref{fig:metis-inferences}).
 
@@ -837,7 +837,7 @@ the pattern expected by the resolution theorem.
 % --------------------------------------------------------------------
 
 \subsubsection{Normal Forms.}
-\label{ssub:normal_forms}
+\label{sssec:normal_forms}
 
 A negative normal form for the formula φ is one in which negations
 appear only in the literals and the expression is in terms only of
@@ -950,7 +950,7 @@ $Γ, φ₁ ∨ φ₂ ⊢ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$, and the lemma
 % --------------------------------------------------------------------
 
 \subsubsection{Clausification.}
-\label{ssec:clausification}
+\label{sssec:clausification}
 
 \begin{theorem}[thm-clausify]
 \label{thm:thm_clausify}
@@ -970,5 +970,57 @@ $Γ, φ₁ ∨ φ₂ ⊢ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$, and the lemma
 % subsubsection clausification (end)
 % --------------------------------------------------------------------
 
+% --------------------------------------------------------------------
+\subsubsection{Normalization.}
+\label{sssec:normalization}
+
+In a disjunction, $φ = φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
+if there is some $i = 1, \cdots, n$ such that $ψ = φᵢ$.
+Then, we define the $rm_{∨}$ function to remove in a disjunction φ, those propositions ψ repeated in the formula.
+
+\begin{equation*}
+\label{eq:rm-or}
+  rm_{∨}(φ) =
+  \begin{cases}
+    rm_{∨}(φ₂), &\text{if }φ ≡ φ₁ ∨ φ₂, φ₁ ∈_{∨} φ₂\\
+    φ₁ ∨ rm_{∨}(φ₂), &\text{if }φ ≡ φ₁ ∨ φ₂\\
+    φ,  &\text{otherwise.}
+  \end{cases}
+\end{equation*}
+
+Since, our goal consists of normalizing prepositions in \abbre{CNF}, we also need to generalize $rm_{∨}$ to work with conjunctions. We define $rm_{∧∨}$ function for that purpose.
+
+\begin{equation*}
+\label{eq:rm-and-or}
+  rm_{∧∨}(φ) =
+  \begin{cases}
+    rm_{∧∨}(φ₁) ∧ rm_{∧∨}(φ₂), &\text{if }φ ≡ φ₁ ∧ φ₂\\
+    rm_{∨}(rconj(φ)),  &\text{otherwise.}
+  \end{cases}
+\end{equation*}
+
+Now, we have removed redundancies in the disjunctions, we move forward and we remove redundancies at the level of the conjunction of the CNFs by applying the $rm_{∧}$ function, we remove conjunct repeated in the formula. We define $ψ ∈_{∧} φ$ similar as we described above for disjunction. In a conjunction, $φ = φ₁ ∧ φ₂ ∧ \cdots ∧ φₙ$, we say
+$ψ ∈_{∧} φ$, if there is some $i = 1, \cdots, n$ such that $ψ = φᵢ$.
+
+\begin{equation*}
+\label{eq:rm-and}
+  rm_{∧}(φ) =
+  \begin{cases}
+    rm_{∧}(φ₁) ∧ rm_{∧}(φ₂), &\text{if }φ ≡ φ₁ ∧ φ₂, φ₁ ∈_{∧} φ₂\\
+    φ₁ ∧ rm_{∧}(φ₂), &\text{if }φ ≡ φ₁ ∧ φ₂\\
+    φ,  &\text{otherwise.}
+  \end{cases}
+\end{equation*}
+
+Finally, we remove redundancies in a proposition in its conjunctive normal form, by composing the functions described above in the Eq.~\ref{eq:rm-cnf} for the function $cleanCNF$.
+
+\begin{equation*}
+  \label{eq:rm-cnf}
+  cleanCNF = rm_{∧} ∘ rm_{∧∨} ∘ rconj ∘ cnf.
+\end{equation*}
+
+
+% subsection normalization (end)
+% --------------------------------------------------------------------
 
 \end{document}
