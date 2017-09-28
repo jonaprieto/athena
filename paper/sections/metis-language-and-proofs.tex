@@ -54,7 +54,7 @@ The formulas include Boolean connectives (\verb!&!, \verb!|!,
 and \verb!$false!, for the symbols (∧, ∨, ⇒, ⇔, ¬, ⊤, ⊥), respectively.
 
 For instance, let us express the problem
-$p\, \vdash \neg (p \wedge \neg p) \vee (q \wedge \neg q)$
+$p\, \vdash \neg (p \wedge \neg p) ∨ (q \wedge \neg q)$
 in \TPTP syntax as follows, declaring an \tptpaxiom $p$, and the
 expected conclusion, the  \tptpconjecture
 \verb!~ ((p & ~ p) | (q & ~ q))!.
@@ -134,7 +134,7 @@ Fig.~\ref{fig:metis-example}).
 \begin{bprooftree}
   \AxiomC{}
   \RightLabel{assume $L$}
-  \UnaryInfC{$L \vee \neg L$}
+  \UnaryInfC{$L ∨ \neg L$}
 \end{bprooftree}
 \qquad
 \begin{bprooftree}
@@ -156,14 +156,14 @@ Fig.~\ref{fig:metis-example}).
 \begin{bprooftree}
   \AxiomC{}
   \RightLabel{equality $L$ $p$ $t$}
-  \UnaryInfC{$\neg (L[p] = t) \vee \neg L \vee L[ p \mapsto t]$}
+  \UnaryInfC{$\neg (L[p] = t) ∨ \neg L ∨ L[ p \mapsto t]$}
 \end{bprooftree}
 \qquad
 \begin{bprooftree}
-  \AxiomC{$L \vee C$}
-  \AxiomC{$\neg L \vee D$}
+  \AxiomC{$L ∨ C$}
+  \AxiomC{$\neg L ∨ D$}
   \RightLabel{resolve $L$}
-  \BinaryInfC{$C \vee D$}
+  \BinaryInfC{$C ∨ D$}
 \end{bprooftree}
 % }
 \]
@@ -177,7 +177,7 @@ in the tree represent formulas in the given problem. Each node is
 labeled with a name of the inference rule (e.g., \canonicalize in
 Fig.~\ref{fig:metis-example}). Each edge links a premise with one
 conclusion. The proof graphs have at their root the conclusion
-$\bot$, since \Metis delivers proofs by refutation.
+$⊥$, since \Metis delivers proofs by refutation.
 
 % -------------------------------------------------------------------
 
@@ -216,9 +216,9 @@ undocumented rules found in \TSTP derivations are: \canonicalize,
   \RightLabel{\footnotesize canonicalize}
   \UnaryInfC{$p$}
   \RightLabel{\footnotesize simplify}
-  \BinaryInfC{$\bot$}
+  \BinaryInfC{$⊥$}
   \RightLabel{\footnotesize canonicalize}
-  \UnaryInfC{$\bot$}
+  \UnaryInfC{$⊥$}
 \end{bprooftree}
 \caption{The \Metis' proof tree for $p \vdash p$ from the
 derivation in Fig.~\ref{fig:metis-proof-tstp}}
@@ -299,46 +299,46 @@ conjunction and disjunction connectives).
 \begin{figure}
 \[%\scalebox{0.9}{
   \begin{bprooftree}
-    \AxiomC{$\varphi \wedge \bot$}
-    \UnaryInfC{$\bot$}
+    \AxiomC{$φ ∧ ⊥$}
+    \UnaryInfC{$⊥$}
   \end{bprooftree}
   \qquad
   \begin{bprooftree}
-    \AxiomC{$\varphi \wedge \top$}
-    \UnaryInfC{$\varphi$}
+    \AxiomC{$φ ∧ ⊤$}
+    \UnaryInfC{$φ$}
   \end{bprooftree}
   \qquad
   \begin{bprooftree}
-    \AxiomC{$\varphi \wedge \neg \varphi$}
-    \UnaryInfC{$\bot$}
+    \AxiomC{$φ ∧ ¬ φ$}
+    \UnaryInfC{$⊥$}
   \end{bprooftree}
   \qquad
   \begin{bprooftree}
-    \AxiomC{$\varphi \wedge \varphi$}
-    \UnaryInfC{$\varphi$}
+    \AxiomC{$φ ∧ φ$}
+    \UnaryInfC{$φ$}
   \end{bprooftree}
 %}
 \]
 
 \[%\scalebox{0.9}{
   \begin{bprooftree}
-    \AxiomC{$\varphi \vee \bot$}
-    \UnaryInfC{$\varphi$}
+    \AxiomC{$φ ∨ ⊥$}
+    \UnaryInfC{$φ$}
   \end{bprooftree}
   \qquad
   \begin{bprooftree}
-    \AxiomC{$\varphi \vee \top$}
-    \UnaryInfC{$\top$}
+    \AxiomC{$φ ∨ ⊤$}
+    \UnaryInfC{$⊤$}
   \end{bprooftree}
   \qquad
   \begin{bprooftree}
-    \AxiomC{$\varphi \vee \neg \varphi$}
-    \UnaryInfC{$\top$}
+    \AxiomC{$φ ∨ ¬ φ$}
+    \UnaryInfC{$⊤$}
   \end{bprooftree}
   \qquad
   \begin{bprooftree}
-    \AxiomC{$\varphi \vee \varphi$}
-    \UnaryInfC{$\varphi$}
+    \AxiomC{$φ ∨ φ$}
+    \UnaryInfC{$φ$}
   \end{bprooftree}
 %}
 \]
@@ -404,10 +404,5 @@ transverses a list of formulas by applying different theorems (e.g.,
 syllogism}) including the list of theorems used by \canonicalize in
 Fig. \ref{fig:conjunctive-disjunctive-simpl} and the resolution
 theorem of the \resolve rule.
-
-Moreover, we are not completely covered every detail in the behavior
-for all \Metis' inference rules. It is somewhat complicated to grasp
-completely the inference rules since the source code is around the
-10.000 lines of code.
 
 \end{document}

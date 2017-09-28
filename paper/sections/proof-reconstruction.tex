@@ -747,7 +747,7 @@ functions and theorems as we previously did for disjunctions.
     conjunct_{∨}(φ, ψ) =
     \begin{cases}
       ψ, &\text{if }reorder_{∨}(φ, ψ) ≡ ψ\\
-      ψ, &\text{if }ψ ≡ ψ₁ ∧ ψ₂, conjunct_{∨}(φ, ψ₁) = ψ₁\\
+      ψ, &\text{if }ψ ≡ ψ₁ ∧ ψ₂, conjunct_{∨}(φ, ψ₁) ≡ ψ₁\\
         &\text{and } reorder_{∨}(φ, ψ₂) ≡ ψ₂\\
       ψ, &\text{if }φ ≡ φ₁ ∧ φ₂, conjunct_{∨}(φ₁, ψ) ≡ ψ\\
       ψ, &\text{if }φ ≡ φ₁ ∧ φ₂, conjunct_{∨}(φ₂, ψ) ≡ ψ\\
@@ -976,7 +976,7 @@ $Γ, φ₁ ∨ φ₂ ⊢ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$, and the lemma
 
 In a disjunction, $φ = φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
 if there is some $i = 1, \cdots, n$ such that $ψ = φᵢ$.
-Then, we define the $rm_{∨}$ function to remove in a disjunction φ, those propositions ψ repeated in the formula.
+Then, we define the $rm_{∨}$ function to remove in a disjunction φ, those propositions ψ repeated in the formula. The formula $φ$ must be a right-associative disjunction.
 
 \begin{equation*}
 \label{eq:rm-or}
@@ -995,7 +995,7 @@ Since, our goal consists of normalizing prepositions in \abbre{CNF}, we also nee
   rm_{∧∨}(φ) =
   \begin{cases}
     rm_{∧∨}(φ₁) ∧ rm_{∧∨}(φ₂), &\text{if }φ ≡ φ₁ ∧ φ₂\\
-    rm_{∨}(rconj(φ)),  &\text{otherwise.}
+    rm_{∨}(rdisj(φ)),  &\text{otherwise.}
   \end{cases}
 \end{equation*}
 
@@ -1012,15 +1012,35 @@ $ψ ∈_{∧} φ$, if there is some $i = 1, \cdots, n$ such that $ψ = φᵢ$.
   \end{cases}
 \end{equation*}
 
-Finally, we remove redundancies in a proposition in its conjunctive normal form, by composing the functions described above in the Eq.~\ref{eq:rm-cnf} for the function $cleanCNF$.
+Finally, we remove redundancies in a proposition assuming that it is given in conjunctive normal form and right-associative, by composing the functions described above in the Eq.~\ref{eq:redun-ast}
+for the function $redun^{*}$.
 
 \begin{equation*}
-  \label{eq:rm-cnf}
-  cleanCNF = rm_{∧} ∘ rm_{∧∨} ∘ rconj ∘ cnf.
+  \label{eq:redun-ast}
+  redun^{*} = rm_{∧} ∘ rm_{∧∨}.
 \end{equation*}
 
+Then, performing rearrangements to match with the expected output
+by $redon^{*}$ function.
+
+\begin{equation*}
+  \label{eq:redun}
+  redun(φ) = reorder_{∧∨}(φ, redun^{*}(φ)).
+\end{equation*}
+
+\begin{theorem}[thm-redun]
+  \label{thm:thm_redun}
+  $Γ ⊢ φ$ then $Γ ⊢ redun(φ)$.
+\end{theorem}
+
+\begin{proof}
+Use in Theorem~\ref{thm:thm-reorder-and-or} with $ψ$ equals to
+$redun^{*}(φ)$.
+\end{proof}
 
 % subsection normalization (end)
 % --------------------------------------------------------------------
+
+
 
 \end{document}
