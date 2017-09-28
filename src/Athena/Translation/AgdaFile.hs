@@ -319,7 +319,7 @@ getRefutes dict tstp = map (\tag → fromJust (Map.lookup tag dict)) names
     names = [ "refute-" ++ show n ++ "-" ++ show k | (n,k) <- rootRefutes ]
 
     rootRefutes ∷ [ (Int, Int) ]
-    rootRefutes = [ maximum (filter (\l -> (fst l == r)) refutesID) 
+    rootRefutes = [ maximum (filter (\l -> (fst l == r)) refutesID)
                   | r ← numRefutes ]
 
     extractRefuteId ∷ String → (Int, Int)
@@ -342,7 +342,7 @@ docProof agdaFile =
   <> hypenline
   <@> vsep
        [ docProofSubgoals agdaFile
-      , docProofGoal agdaFile  -- TODO
+       , docProofGoal agdaFile  -- TODO
        ]
 
 docProofSubgoals ∷ AgdaFile → Doc
@@ -399,6 +399,7 @@ docSteps subgoalN (Leaf _ axiom) agdaFile =
   parens $
        prettyWeaken <> line
     <> indent 2 (parens prettyAssume)
+    <+> pretty "-- " <+> getFormulaByTag agdaFile axiom
   where
 
     dict ∷ ProofMap
@@ -477,8 +478,10 @@ docSteps subgoalN (Root Conjunct tag [subtree]) agdaFile =
 ------------------------------------------------------------------------------
 
 docSteps subgoalN (Root Negate _ [subtree@(Root Strip _ _)]) agdaFile =
-  parens $ pretty "assume {Γ = Γ}" <> line
-    <> indent 2 (parens (pretty "¬" <+> docSteps subgoalN subtree agdaFile))
+  parens (pretty "assume {Γ = Γ}"
+    <+> pretty "--" <+> getFormulaByTag agdaFile ("subgoal-" ++ show subgoalN)
+    <> line
+    <+> indent 2 (parens (pretty "¬" <+> docSteps subgoalN subtree agdaFile)))
 
 ------------------------------------------------------------------------------
 -- Resolve.
@@ -494,7 +497,7 @@ docSteps subgoalN (Root Negate _ [subtree@(Root Strip _ _)]) agdaFile =
 -}
 
 docSteps subgoalN (Root Resolve tag [left, right]) agdaFile =
-  parens $ pretty Resolve <+> getFormulaByTag agdaFile tag <+> pretty literal 
+  parens $ pretty Resolve <+> getFormulaByTag agdaFile tag <+> pretty literal
   <> line <> indent 2
     (docSteps subgoalN left agdaFile <> line <>
       docSteps subgoalN right agdaFile)
