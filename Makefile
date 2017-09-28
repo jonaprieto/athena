@@ -60,9 +60,6 @@ TIMELIMIT       =timeout 49m
 # timelimit -T240 -t240 -S9
 SEP='-------------------------------------------------------------------'
 
-AGDACALL ="${TIMELIMIT} \
-	${TIME_BIN} -f \"user = %U, system = %S, elapsed = %E, mem=%K, cpu=%P\" \
-	${AGDA} {} --verbose=0 --library=test && echo ${SEP}"
 
 ifdef MSVC     # Avoid the MingW/Cygwin sections
 		uname_S := Windows
@@ -429,18 +426,23 @@ reconstruct : install problems
 		-name "*.tstp" \
 		-exec sh -c "athena --debug {} && echo ${SEP}" {} \;;
 
+
+AGDACALL ="${TIMELIMIT} \
+	${TIME_BIN} -f \"user = %U, system = %S, elapsed = %E, mem=%K, cpu=%P\" \
+	${AGDA} $$agdaFile --verbose=0 --library=test"
+
 .PHONY : check
 check : export AGDA_DIR := $(ATHENA_AGDA_LIB)
-check : reconstruct \
-        agdaversion \
-        install-libraries \
-        $(AGDA_BASIC) \
-        $(AGDA_CONJ)    \
-        $(AGDA_DISJ) \
-        $(AGDA_IMPL)    \
-        $(AGDA_BICOND) \
-        $(AGDA_NEG) \
-        $(AGDA_PMETIS)
+check : reconstruct  \
+		agdaversion  \
+		install-libraries  \
+		$(AGDA_BASIC) \
+		$(AGDA_CONJ)  \
+		$(AGDA_DISJ)  \
+		$(AGDA_IMPL)  \
+		$(AGDA_BICOND)  \
+		$(AGDA_NEG)   \
+		$(AGDA_PMETIS)
 
 	@echo "==================================================================="
 	@echo "================== Type-checking Agda files ======================="
@@ -455,9 +457,10 @@ check : reconstruct \
 	@echo "    $$ agda --library=test AgdaFileGeneratedByAthena"
 	@echo "-------------------------------------------------------------------"
 
-	@find $(TEST_DIR) \
-		-type f \
-		-name "*.agda" \
-		-not -path "*prop-21.agda" \
-		-print \
-		-exec sh -c $(AGDACALL) \;;
+	@for agdaFile in `find ${TEST_DIR} \
+			-type f -name "*.agda" \
+			-not -path "*prop-21.agda" | sort`; do \
+		echo $$agdaFile ; \
+		sh -c $(AGDACALL) ; \
+		echo ${SEP}; \
+	done
