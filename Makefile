@@ -401,6 +401,8 @@ msg-tstp :
 	@echo "    If you don't have Metis anyway, you can install OnlineATPs:"
 	@echo "    $$ make online-atps"
 	@echo "    $$ export ATP=\"online-atps --atp=metis\""
+	@echo "-------------------------------------------------------------------"
+
 
 .PHONY : problems
 problems :	prop-pack \
@@ -418,11 +420,14 @@ reconstruct : install problems
 	@echo "==================================================================="
 	@echo "============== Generating Agda files of TSTP proofs ==============="
 	@echo "==================================================================="
+	@echo "    If you want to generate an Agda file from the tests:"
+	@echo "    Execute the following command in your shell."
+	@echo "    $$ athena TSTPFileGeneratedByMETIS.tpsp"
+	@echo "-------------------------------------------------------------------"
 	@find test/prop-pack/problems \
 		-type f \
 		-name "*.tstp" \
-		-print \
-		-exec sh -c "${ATHENA} {} && echo ${SEP}" \;;
+		-exec sh -c "athena --debug {} && echo ${SEP}" {} \;;
 
 .PHONY : check
 check : export AGDA_DIR := $(ATHENA_AGDA_LIB)
@@ -443,7 +448,7 @@ check : reconstruct \
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
 	@echo
 	@echo "    If you want to type-check an isolote Agda file from the tests:"
-	@echo "    Execute the following in your shell."
+	@echo "    Execute the following command in your shell."
 	@echo "    $$ pwd"
 	@echo "    $(PWD)"
 	@echo "    $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"

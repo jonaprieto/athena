@@ -7,10 +7,10 @@ module Athena.Options
   , OM
   , Options
     ( Options --Improve Haddock information.
+    , optDebug
     , optHelp
     , optInputFile
     , optOutputFile
-    , optProofName
     , optVersion
     )
   , printUsage
@@ -36,24 +36,27 @@ import System.Environment        ( getProgName )
 
 -- | Program command-line options.
 data Options = Options
-  { optHelp           ∷ Bool
-  , optInputFile      ∷ Maybe FilePath
-  , optOutputFile     ∷ Maybe FilePath
-  , optProofName      ∷ String
-  , optVersion        ∷ Bool
+  { optDebug      ∷ Bool
+  , optHelp       ∷ Bool
+  , optInputFile  ∷ Maybe FilePath
+  , optOutputFile ∷ Maybe FilePath
+  , optVersion    ∷ Bool
   }
 
 defaultOptions ∷ Options
 defaultOptions = Options
-  { optHelp           = False
-  , optInputFile      = Nothing
-  , optOutputFile     = Nothing
-  , optProofName      = "proof"
-  , optVersion        = False
+  { optDebug      = False
+  , optHelp       = False
+  , optInputFile  = Nothing
+  , optOutputFile = Nothing
+  , optVersion    = False
   }
 
 -- | 'Options' monad.
 type OM = Options → Either Doc Options
+
+debugOpt ∷ OM
+debugOpt opts = Right opts { optDebug = True }
 
 helpOpt ∷ OM
 helpOpt opts = Right opts { optHelp = True }
@@ -70,24 +73,16 @@ outputFileOpt file opts =
     Nothing → Right opts { optOutputFile = Just file }
     Just _  → Left $ pretty "only one input file allowed"
 
-proofNameOpt ∷ String → OM
-proofNameOpt [] _ = Left $
-  pretty "option " <> squotes (pretty "--proof-name") <>
-    pretty " requires an argument NAME"
-proofNameOpt pname opts = Right opts { optProofName = pname}
-
 versionOpt ∷ OM
 versionOpt opts = Right opts { optVersion = True }
 
 -- | Description of the command-line 'Options'.
 options ∷ [OptDescr OM]
 options =
-  [ Option ['h'] ["help"] (NoArg helpOpt)
+  [ Option []    ["debug"] (NoArg debugOpt)
+      ""
+  , Option ['h'] ["help"] (NoArg helpOpt)
       "Prints help message"
-  , Option ['o'] ["output"] (ReqArg outputFileOpt "FILE")
-      "Output to file"
-  , Option ['p'] ["proof-name"] (ReqArg proofNameOpt "NAME")
-      "Main proof name     (default: proof)"
   , Option []    ["version"] (NoArg versionOpt)
       "Show version number"
   ]
