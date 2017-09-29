@@ -451,9 +451,13 @@ docSteps subgoalN (Leaf _ axiom) agdaFile =
 ------------------------------------------------------------------------------
 
 docSteps subgoalN (Root Canonicalize tag [subtree]) agdaFile =
-  parens $
-       pretty Canonicalize <+> getFormulaByTag agdaFile tag <> line
-    <> indent 2 (docSteps subgoalN subtree agdaFile)
+  parens (canonicalizeThm <+> getFormulaByTag agdaFile tag <> line <> indent 2 (docSteps subgoalN subtree agdaFile))
+  where
+    canonicalizeThm ∷ Doc
+    canonicalizeThm = case subtree of
+      (Leaf _ axiom )   → pretty "thm-canonicalize-axiom"
+      (Root Negate _ _) → pretty "thm-canonicalize"
+      _                 → pretty "{!!}"
 
 ------------------------------------------------------------------------------
 -- Clausify.
