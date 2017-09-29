@@ -363,10 +363,13 @@ install-libraries: agda-stdlib agda-libraries
 		>> ${ATHENA_AGDA_LIB}/libraries
 	@echo "${PWD}/test/test.agda-lib" \
 		>> ${ATHENA_AGDA_LIB}/libraries
+	@echo "${PWD}/notes/notes.agda-lib" \
+		>> ${ATHENA_AGDA_LIB}/libraries
 
 	@> lib/.agda/defaults
 	@echo "standard-library" >> lib/.agda/defaults
 	@echo "test" >> lib/.agda/defaults
+	@echo "notes" >> lib/.agda/defaults
 	@echo "Libraries in ${ATHENA_AGDA_LIB}/libraries:"
 	@cat  ${ATHENA_AGDA_LIB}/libraries
 	@echo "[!] To complete the installation, please set the AGDA_DIR variable:"
