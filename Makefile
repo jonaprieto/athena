@@ -460,7 +460,7 @@ check : reconstruct  \
 	@for agdaFile in `find ${TEST_DIR} \
 			-type f -name "*.agda" \
 			-not -path "*prop-21.agda" | sort`; do \
-		echo $$agdaFile ; \
-		sh -c $(AGDACALL) ; \
+		echo $$agdaFile; \
+		sh -c $(AGDACALL); \
 		echo ${SEP}; \
 	done
