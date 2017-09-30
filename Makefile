@@ -499,7 +499,8 @@ check : reconstruct  \
 
 .PHONY : test
 test:
-	- make check 2>&1 | tee notes/log.$(date +"%Y-%m-%d_%H%M%S")
+	- make check 2>&1 | tee notes/log
+	- @cp notes/log notes/log.$(date +"%Y-%m-%d_%H%M%S")
 	- @git add notes/*
 	- @git commit -m "[ test-$(shell date +"%Y-%m-%d_%H%M%S") ] added."
 	- @git push origin master
