@@ -85,9 +85,6 @@ executable athena
     Athena.Translation.AgdaFile
     Athena.Translation.Core
     Athena.Translation.Rules
-    Athena.Translation.Rules.Canonicalize
-    Athena.Translation.Rules.Clausify
-    Athena.Translation.Rules.Simplify
     Athena.Translation.Rules.Strip
     Athena.Translation.Utils
     Athena.TSTP
