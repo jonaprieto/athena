@@ -26,8 +26,17 @@ import Athena.Translation.AgdaFile
   , getSubgoals
   )
 import Athena.Utils.PrettyPrint ( hPutDoc, Doc, pretty )
-import Athena.Options           ( Options ( optInputFile, optOutputFile ) )
+import Athena.Options
+  ( Options
+    ( optDebug
+    , optInputFile
+    , optOutputFile
+    )
+  )
+
 import Athena.TSTP              ( parseFile )
+
+import Control.Monad            ( when )
 import Data.Maybe               ( fromJust, fromMaybe )
 
 import Data.Proof
@@ -45,11 +54,14 @@ import Data.TSTP.Formula        ( getFreeVars )
 import System.FilePath          ( replaceExtension )
 import System.IO                ( hClose, IOMode( WriteMode ), openFile )
 
-import Data.List (nub, isPrefixOf)
+import Data.List                ( nub, isPrefixOf )
 ------------------------------------------------------------------------------
 
 mainCore ∷ Options → IO ()
 mainCore opts = do
+
+  when (optDebug opts) $
+    putStrLn ("tstp proof: " ++ show (optInputFile opts))
 
   tstp ∷ [F] ← parseFile . fromJust $ optInputFile opts
 
@@ -76,6 +88,7 @@ mainCore opts = do
           (replaceExtension (fromJust (optInputFile opts)) ".agda")
           (optOutputFile opts)
 
+
   -- Agda file.
   hAgdaFile ← openFile filename WriteMode
 
@@ -99,3 +112,6 @@ mainCore opts = do
 
   -- Close the file.
   hClose hAgdaFile
+
+  when (optDebug opts) $
+    putStrLn ("file generated: " ++ filename)

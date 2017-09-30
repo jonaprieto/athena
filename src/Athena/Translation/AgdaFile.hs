@@ -342,7 +342,7 @@ docProof agdaFile =
   <> hypenline
   <@> vsep
        [ docProofSubgoals agdaFile
-      , docProofGoal agdaFile  -- TODO
+       , docProofGoal agdaFile  -- TODO
        ]
 
 docProofSubgoals ∷ AgdaFile → Doc
@@ -399,6 +399,7 @@ docSteps subgoalN (Leaf _ axiom) agdaFile =
   parens $
        prettyWeaken <> line
     <> indent 2 (parens prettyAssume)
+    <+> pretty "-- " <+> getFormulaByTag agdaFile axiom
   where
 
     dict ∷ ProofMap
@@ -450,9 +451,13 @@ docSteps subgoalN (Leaf _ axiom) agdaFile =
 ------------------------------------------------------------------------------
 
 docSteps subgoalN (Root Canonicalize tag [subtree]) agdaFile =
-  parens $
-       pretty Canonicalize <+> getFormulaByTag agdaFile tag <> line
-    <> indent 2 (docSteps subgoalN subtree agdaFile)
+  parens (canonicalizeThm <+> getFormulaByTag agdaFile tag <> line <> indent 2 (docSteps subgoalN subtree agdaFile))
+  where
+    canonicalizeThm ∷ Doc
+    canonicalizeThm = case subtree of
+      (Leaf _ axiom )   → pretty "thm-canonicalize-axiom"
+      (Root Negate _ _) → pretty "thm-canonicalize"
+      _                 → pretty "{!!}"
 
 ------------------------------------------------------------------------------
 -- Clausify.
@@ -477,8 +482,10 @@ docSteps subgoalN (Root Conjunct tag [subtree]) agdaFile =
 ------------------------------------------------------------------------------
 
 docSteps subgoalN (Root Negate _ [subtree@(Root Strip _ _)]) agdaFile =
-  parens $ pretty "assume {Γ = Γ}" <> line
-    <> indent 2 (parens (pretty "¬" <+> docSteps subgoalN subtree agdaFile))
+  parens (pretty "assume {Γ = Γ}"
+    <+> pretty "--" <+> getFormulaByTag agdaFile ("subgoal-" ++ show subgoalN)
+    <> line
+    <+> indent 2 (parens (pretty "¬" <+> docSteps subgoalN subtree agdaFile)))
 
 ------------------------------------------------------------------------------
 -- Resolve.

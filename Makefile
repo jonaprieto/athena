@@ -60,9 +60,6 @@ TIMELIMIT       =timeout 49m
 # timelimit -T240 -t240 -S9
 SEP='-------------------------------------------------------------------'
 
-AGDACALL ="${TIMELIMIT} \
-	${TIME_BIN} -f \"user = %U, system = %S, elapsed = %E, mem=%K, cpu=%P\" \
-	${AGDA} {} --verbose=0 --library=test && echo ${SEP}"
 
 ifdef MSVC     # Avoid the MingW/Cygwin sections
 		uname_S := Windows
@@ -366,10 +363,13 @@ install-libraries: agda-stdlib agda-libraries
 		>> ${ATHENA_AGDA_LIB}/libraries
 	@echo "${PWD}/test/test.agda-lib" \
 		>> ${ATHENA_AGDA_LIB}/libraries
+	@echo "${PWD}/notes/notes.agda-lib" \
+		>> ${ATHENA_AGDA_LIB}/libraries
 
 	@> lib/.agda/defaults
 	@echo "standard-library" >> lib/.agda/defaults
 	@echo "test" >> lib/.agda/defaults
+	@echo "notes" >> lib/.agda/defaults
 	@echo "Libraries in ${ATHENA_AGDA_LIB}/libraries:"
 	@cat  ${ATHENA_AGDA_LIB}/libraries
 	@echo "[!] To complete the installation, please set the AGDA_DIR variable:"
@@ -401,6 +401,8 @@ msg-tstp :
 	@echo "    If you don't have Metis anyway, you can install OnlineATPs:"
 	@echo "    $$ make online-atps"
 	@echo "    $$ export ATP=\"online-atps --atp=metis\""
+	@echo "-------------------------------------------------------------------"
+
 
 .PHONY : problems
 problems :	prop-pack \
@@ -418,24 +420,32 @@ reconstruct : install problems
 	@echo "==================================================================="
 	@echo "============== Generating Agda files of TSTP proofs ==============="
 	@echo "==================================================================="
+	@echo "    If you want to generate an Agda file from the tests:"
+	@echo "    Execute the following command in your shell."
+	@echo "    $$ athena TSTPFileGeneratedByMETIS.tpsp"
+	@echo "-------------------------------------------------------------------"
 	@find test/prop-pack/problems \
 		-type f \
 		-name "*.tstp" \
-		-print \
-		-exec sh -c "${ATHENA} {} && echo ${SEP}" \;;
+		-exec sh -c "athena --debug {} && echo ${SEP}" {} \;;
+
+
+AGDACALL ="${TIMELIMIT} \
+	${TIME_BIN} -f \"user = %U, system = %S, elapsed = %E, mem=%K, cpu=%P\" \
+	${AGDA} $$agdaFile --verbose=0 --library=test"
 
 .PHONY : check
 check : export AGDA_DIR := $(ATHENA_AGDA_LIB)
-check : reconstruct \
-        agdaversion \
-        install-libraries \
-        $(AGDA_BASIC) \
-        $(AGDA_CONJ)    \
-        $(AGDA_DISJ) \
-        $(AGDA_IMPL)    \
-        $(AGDA_BICOND) \
-        $(AGDA_NEG) \
-        $(AGDA_PMETIS)
+check : reconstruct  \
+		agdaversion  \
+		install-libraries  \
+		$(AGDA_BASIC) \
+		$(AGDA_CONJ)  \
+		$(AGDA_DISJ)  \
+		$(AGDA_IMPL)  \
+		$(AGDA_BICOND)  \
+		$(AGDA_NEG)   \
+		$(AGDA_PMETIS)
 
 	@echo "==================================================================="
 	@echo "================== Type-checking Agda files ======================="
@@ -443,16 +453,17 @@ check : reconstruct \
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
 	@echo
 	@echo "    If you want to type-check an isolote Agda file from the tests:"
-	@echo "    Execute the following in your shell."
+	@echo "    Execute the following command in your shell."
 	@echo "    $$ pwd"
 	@echo "    $(PWD)"
 	@echo "    $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
 	@echo "    $$ agda --library=test AgdaFileGeneratedByAthena"
 	@echo "-------------------------------------------------------------------"
 
-	@find $(TEST_DIR) \
-		-type f \
-		-name "*.agda" \
-		-not -path "*prop-21.agda" \
-		-print \
-		-exec sh -c $(AGDACALL) \;;
+	@for agdaFile in `find ${TEST_DIR} \
+			-type f -name "*.agda" \
+			-not -path "*prop-21.agda" | sort`; do \
+		echo $$agdaFile; \
+		sh -c $(AGDACALL); \
+		echo ${SEP}; \
+	done
