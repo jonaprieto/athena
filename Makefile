@@ -445,10 +445,11 @@ reconstruct : install problems
 	@echo "  $$ athena TSTPFileGeneratedByMETIS.tpsp"
 	@echo
 	@echo ${SEP}
-	@find test/prop-pack/problems \
-		-type f \
-		-name "*.tstp" \
-		-exec sh -c "athena --debug {} && echo ${SEP}" {} \;;
+	@for tptpFile in `find ${TEST_DIR} \
+			-type f -name "*.tstp" | sort`; do \
+		${ATHENA} --debug $$tptpFile ;\
+		echo ${SEP}; \
+	done
 
 
 AGDACALL ="${TIMELIMIT} \
