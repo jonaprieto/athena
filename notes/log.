@@ -14,6 +14,9 @@ Installed athena-0.1
 ==== Downloading problems from github.com/jonaprieto/prop-pack ====
 ===================================================================
 git submodule update --init test/prop-pack
+Submodule 'test/prop-pack' (https://github.com/jonaprieto/prop-pack) registered for path 'test/prop-pack'
+Cloning into 'test/prop-pack'...
+Submodule path 'test/prop-pack': checked out '8baeb530c09672dd18eeb14da212a52e6be5f93b'
 ===================================================================
 ================= Generating TSTP files of proofs =================
 ===================================================================
@@ -29,117 +32,6 @@ If you don't have Metis anyway, you can install OnlineATPs:
   $ export ATP="online-atps --atp=metis"
 
 -------------------------------------------------------------------
-test/prop-pack/problems/basic/basic-04.tstp
-test/prop-pack/problems/basic/basic-03.tstp
-test/prop-pack/problems/basic/basic-01.tstp
-test/prop-pack/problems/basic/basic-02.tstp
-test/prop-pack/problems/conjunction/conj-03.tstp
-test/prop-pack/problems/conjunction/conj-01.tstp
-test/prop-pack/problems/conjunction/conj-05.tstp
-test/prop-pack/problems/conjunction/conj-04.tstp
-test/prop-pack/problems/conjunction/conj-02.tstp
-test/prop-pack/problems/conjunction/conj-06.tstp
-test/prop-pack/problems/disjunction/disj-15.tstp
-test/prop-pack/problems/disjunction/disj-07.tstp
-test/prop-pack/problems/disjunction/disj-02.tstp
-test/prop-pack/problems/disjunction/disj-13.tstp
-test/prop-pack/problems/disjunction/disj-08.tstp
-test/prop-pack/problems/disjunction/disj-09.tstp
-test/prop-pack/problems/disjunction/disj-11.tstp
-test/prop-pack/problems/disjunction/disj-06.tstp
-test/prop-pack/problems/disjunction/disj-04.tstp
-test/prop-pack/problems/disjunction/disj-05.tstp
-test/prop-pack/problems/disjunction/disj-03.tstp
-test/prop-pack/problems/disjunction/disj-14.tstp
-test/prop-pack/problems/disjunction/disj-12.tstp
-test/prop-pack/problems/disjunction/disj-01.tstp
-test/prop-pack/problems/disjunction/disj-10.tstp
-test/prop-pack/problems/implication/impl-17.tstp
-test/prop-pack/problems/implication/impl-07.tstp
-test/prop-pack/problems/implication/impl-09.tstp
-test/prop-pack/problems/implication/impl-11.tstp
-test/prop-pack/problems/implication/impl-08.tstp
-test/prop-pack/problems/implication/impl-18.tstp
-test/prop-pack/problems/implication/impl-06.tstp
-test/prop-pack/problems/implication/impl-12.tstp
-test/prop-pack/problems/implication/impl-16.tstp
-test/prop-pack/problems/implication/impl-14.tstp
-test/prop-pack/problems/implication/impl-04.tstp
-test/prop-pack/problems/implication/impl-01.tstp
-test/prop-pack/problems/implication/impl-10.tstp
-test/prop-pack/problems/implication/impl-15.tstp
-test/prop-pack/problems/implication/impl-05.tstp
-test/prop-pack/problems/implication/impl-02.tstp
-test/prop-pack/problems/implication/impl-13.tstp
-test/prop-pack/problems/implication/impl-03.tstp
-test/prop-pack/problems/biconditional/bicond-12.tstp
-test/prop-pack/problems/biconditional/bicond-01.tstp
-test/prop-pack/problems/biconditional/bicond-10.tstp
-test/prop-pack/problems/biconditional/bicond-07.tstp
-test/prop-pack/problems/biconditional/bicond-08.tstp
-test/prop-pack/problems/biconditional/bicond-02.tstp
-test/prop-pack/problems/biconditional/bicond-13.tstp
-test/prop-pack/problems/biconditional/bicond-09.tstp
-test/prop-pack/problems/biconditional/bicond-05.tstp
-test/prop-pack/problems/biconditional/bicond-06.tstp
-test/prop-pack/problems/biconditional/bicond-11.tstp
-test/prop-pack/problems/biconditional/bicond-04.tstp
-test/prop-pack/problems/biconditional/bicond-03.tstp
-test/prop-pack/problems/negation/neg-05.tstp
-test/prop-pack/problems/negation/neg-27.tstp
-test/prop-pack/problems/negation/neg-22.tstp
-test/prop-pack/problems/negation/neg-15.tstp
-test/prop-pack/problems/negation/neg-25.tstp
-test/prop-pack/problems/negation/neg-28.tstp
-test/prop-pack/problems/negation/neg-07.tstp
-test/prop-pack/problems/negation/neg-14.tstp
-test/prop-pack/problems/negation/neg-02.tstp
-test/prop-pack/problems/negation/neg-32.tstp
-test/prop-pack/problems/negation/neg-20.tstp
-test/prop-pack/problems/negation/neg-08.tstp
-test/prop-pack/problems/negation/neg-13.tstp
-test/prop-pack/problems/negation/neg-19.tstp
-test/prop-pack/problems/negation/neg-24.tstp
-test/prop-pack/problems/negation/neg-09.tstp
-test/prop-pack/problems/negation/neg-31.tstp
-test/prop-pack/problems/negation/neg-17.tstp
-test/prop-pack/problems/negation/neg-06.tstp
-test/prop-pack/problems/negation/neg-23.tstp
-test/prop-pack/problems/negation/neg-26.tstp
-test/prop-pack/problems/negation/neg-18.tstp
-test/prop-pack/problems/negation/neg-11.tstp
-test/prop-pack/problems/negation/neg-29.tstp
-test/prop-pack/problems/negation/neg-04.tstp
-test/prop-pack/problems/negation/neg-03.tstp
-test/prop-pack/problems/negation/neg-12.tstp
-test/prop-pack/problems/negation/neg-30.tstp
-test/prop-pack/problems/negation/neg-16.tstp
-test/prop-pack/problems/negation/neg-21.tstp
-test/prop-pack/problems/negation/neg-01.tstp
-test/prop-pack/problems/negation/neg-10.tstp
-test/prop-pack/problems/prop-metis/prop-21.tstp
-test/prop-pack/problems/prop-metis/prop-01.tstp
-test/prop-pack/problems/prop-metis/prop-14.tstp
-test/prop-pack/problems/prop-metis/prop-10.tstp
-test/prop-pack/problems/prop-metis/prop-03.tstp
-test/prop-pack/problems/prop-metis/prop-22.tstp
-test/prop-pack/problems/prop-metis/prop-15.tstp
-test/prop-pack/problems/prop-metis/prop-08.tstp
-test/prop-pack/problems/prop-metis/prop-02.tstp
-test/prop-pack/problems/prop-metis/prop-06.tstp
-test/prop-pack/problems/prop-metis/prop-20.tstp
-test/prop-pack/problems/prop-metis/prop-13.tstp
-test/prop-pack/problems/prop-metis/prop-17.tstp
-test/prop-pack/problems/prop-metis/prop-18.tstp
-test/prop-pack/problems/prop-metis/prop-23.tstp
-test/prop-pack/problems/prop-metis/prop-04.tstp
-test/prop-pack/problems/prop-metis/prop-19.tstp
-test/prop-pack/problems/prop-metis/prop-11.tstp
-test/prop-pack/problems/prop-metis/prop-09.tstp
-test/prop-pack/problems/prop-metis/prop-07.tstp
-test/prop-pack/problems/prop-metis/prop-05.tstp
-test/prop-pack/problems/prop-metis/prop-12.tstp
-test/prop-pack/problems/prop-metis/prop-16.tstp
 ===================================================================
 ============== Generating Agda files of TSTP proofs ===============
 ===================================================================
@@ -150,339 +42,6 @@ you can execute the following command in your shell:
   $ athena TSTPFileGeneratedByMETIS.tpsp
 
 -------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/biconditional/bicond-03.tstp"
-file generated: test/prop-pack/problems/biconditional/bicond-03.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/biconditional/bicond-01.tstp"
-file generated: test/prop-pack/problems/biconditional/bicond-01.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/biconditional/bicond-07.tstp"
-file generated: test/prop-pack/problems/biconditional/bicond-07.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/biconditional/bicond-06.tstp"
-file generated: test/prop-pack/problems/biconditional/bicond-06.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/biconditional/bicond-10.tstp"
-file generated: test/prop-pack/problems/biconditional/bicond-10.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/biconditional/bicond-04.tstp"
-file generated: test/prop-pack/problems/biconditional/bicond-04.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/biconditional/bicond-05.tstp"
-file generated: test/prop-pack/problems/biconditional/bicond-05.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/biconditional/bicond-02.tstp"
-file generated: test/prop-pack/problems/biconditional/bicond-02.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/biconditional/bicond-08.tstp"
-file generated: test/prop-pack/problems/biconditional/bicond-08.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/biconditional/bicond-13.tstp"
-file generated: test/prop-pack/problems/biconditional/bicond-13.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/biconditional/bicond-09.tstp"
-file generated: test/prop-pack/problems/biconditional/bicond-09.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/biconditional/bicond-11.tstp"
-file generated: test/prop-pack/problems/biconditional/bicond-11.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/biconditional/bicond-12.tstp"
-file generated: test/prop-pack/problems/biconditional/bicond-12.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-15.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-15.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-06.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-06.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-11.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-11.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-08.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-08.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-03.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-03.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-14.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-14.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-13.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-13.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-05.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-05.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-09.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-09.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-07.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-07.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-12.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-12.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-10.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-10.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-02.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-02.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-04.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-04.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/disjunction/disj-01.tstp"
-file generated: test/prop-pack/problems/disjunction/disj-01.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-18.tstp"
-file generated: test/prop-pack/problems/implication/impl-18.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-14.tstp"
-file generated: test/prop-pack/problems/implication/impl-14.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-13.tstp"
-file generated: test/prop-pack/problems/implication/impl-13.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-07.tstp"
-file generated: test/prop-pack/problems/implication/impl-07.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-10.tstp"
-file generated: test/prop-pack/problems/implication/impl-10.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-06.tstp"
-file generated: test/prop-pack/problems/implication/impl-06.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-16.tstp"
-file generated: test/prop-pack/problems/implication/impl-16.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-03.tstp"
-file generated: test/prop-pack/problems/implication/impl-03.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-02.tstp"
-file generated: test/prop-pack/problems/implication/impl-02.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-05.tstp"
-file generated: test/prop-pack/problems/implication/impl-05.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-04.tstp"
-file generated: test/prop-pack/problems/implication/impl-04.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-01.tstp"
-file generated: test/prop-pack/problems/implication/impl-01.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-08.tstp"
-file generated: test/prop-pack/problems/implication/impl-08.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-17.tstp"
-file generated: test/prop-pack/problems/implication/impl-17.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-12.tstp"
-file generated: test/prop-pack/problems/implication/impl-12.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-09.tstp"
-file generated: test/prop-pack/problems/implication/impl-09.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-11.tstp"
-file generated: test/prop-pack/problems/implication/impl-11.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/implication/impl-15.tstp"
-file generated: test/prop-pack/problems/implication/impl-15.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-20.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-20.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-18.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-18.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-02.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-02.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-23.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-23.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-11.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-11.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-15.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-15.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-14.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-14.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-06.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-06.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-16.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-16.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-13.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-13.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-08.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-08.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-12.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-12.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-22.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-22.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-10.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-10.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-01.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-01.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-05.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-05.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-09.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-09.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-19.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-19.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-03.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-03.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-17.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-17.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-07.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-07.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-21.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-21.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/prop-metis/prop-04.tstp"
-file generated: test/prop-pack/problems/prop-metis/prop-04.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/conjunction/conj-01.tstp"
-file generated: test/prop-pack/problems/conjunction/conj-01.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/conjunction/conj-02.tstp"
-file generated: test/prop-pack/problems/conjunction/conj-02.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/conjunction/conj-06.tstp"
-file generated: test/prop-pack/problems/conjunction/conj-06.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/conjunction/conj-05.tstp"
-file generated: test/prop-pack/problems/conjunction/conj-05.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/conjunction/conj-04.tstp"
-file generated: test/prop-pack/problems/conjunction/conj-04.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/conjunction/conj-03.tstp"
-file generated: test/prop-pack/problems/conjunction/conj-03.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-18.tstp"
-file generated: test/prop-pack/problems/negation/neg-18.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-02.tstp"
-file generated: test/prop-pack/problems/negation/neg-02.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-30.tstp"
-file generated: test/prop-pack/problems/negation/neg-30.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-13.tstp"
-file generated: test/prop-pack/problems/negation/neg-13.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-12.tstp"
-file generated: test/prop-pack/problems/negation/neg-12.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-32.tstp"
-file generated: test/prop-pack/problems/negation/neg-32.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-06.tstp"
-file generated: test/prop-pack/problems/negation/neg-06.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-10.tstp"
-file generated: test/prop-pack/problems/negation/neg-10.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-07.tstp"
-file generated: test/prop-pack/problems/negation/neg-07.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-25.tstp"
-file generated: test/prop-pack/problems/negation/neg-25.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-01.tstp"
-file generated: test/prop-pack/problems/negation/neg-01.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-26.tstp"
-file generated: test/prop-pack/problems/negation/neg-26.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-20.tstp"
-file generated: test/prop-pack/problems/negation/neg-20.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-22.tstp"
-file generated: test/prop-pack/problems/negation/neg-22.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-28.tstp"
-file generated: test/prop-pack/problems/negation/neg-28.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-19.tstp"
-file generated: test/prop-pack/problems/negation/neg-19.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-23.tstp"
-file generated: test/prop-pack/problems/negation/neg-23.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-16.tstp"
-file generated: test/prop-pack/problems/negation/neg-16.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-31.tstp"
-file generated: test/prop-pack/problems/negation/neg-31.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-04.tstp"
-file generated: test/prop-pack/problems/negation/neg-04.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-14.tstp"
-file generated: test/prop-pack/problems/negation/neg-14.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-11.tstp"
-file generated: test/prop-pack/problems/negation/neg-11.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-29.tstp"
-file generated: test/prop-pack/problems/negation/neg-29.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-15.tstp"
-file generated: test/prop-pack/problems/negation/neg-15.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-21.tstp"
-file generated: test/prop-pack/problems/negation/neg-21.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-03.tstp"
-file generated: test/prop-pack/problems/negation/neg-03.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-05.tstp"
-file generated: test/prop-pack/problems/negation/neg-05.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-08.tstp"
-file generated: test/prop-pack/problems/negation/neg-08.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-27.tstp"
-file generated: test/prop-pack/problems/negation/neg-27.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-09.tstp"
-file generated: test/prop-pack/problems/negation/neg-09.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-17.tstp"
-file generated: test/prop-pack/problems/negation/neg-17.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/negation/neg-24.tstp"
-file generated: test/prop-pack/problems/negation/neg-24.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/basic/basic-03.tstp"
-file generated: test/prop-pack/problems/basic/basic-03.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/basic/basic-02.tstp"
-file generated: test/prop-pack/problems/basic/basic-02.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/basic/basic-04.tstp"
-file generated: test/prop-pack/problems/basic/basic-04.agda
--------------------------------------------------------------------
-tstp proof: Just "test/prop-pack/problems/basic/basic-01.tstp"
-file generated: test/prop-pack/problems/basic/basic-01.agda
--------------------------------------------------------------------
 ===================================================================
 ===================  WARNING: AGDA VERSION! =======================
 ===================================================================
@@ -490,17 +49,69 @@ file generated: test/prop-pack/problems/basic/basic-01.agda
     * Agda version 2.5.3
     Your system has a different version:
     * Agda version 2.5.2.20170816
-[!] agda-stdlib directory already exists
+===================================================================
+=========== Downloading Agda Standard Library v0.14    ============
+===================================================================
+remote: Counting objects: 12984, done.        
+remote: Compressing objects:   4% (1/22)           remote: Compressing objects:   9% (2/22)           remote: Compressing objects:  13% (3/22)           remote: Compressing objects:  18% (4/22)           remote: Compressing objects:  22% (5/22)           remote: Compressing objects:  27% (6/22)           remote: Compressing objects:  31% (7/22)           remote: Compressing objects:  36% (8/22)           remote: Compressing objects:  40% (9/22)           remote: Compressing objects:  45% (10/22)           remote: Compressing objects:  50% (11/22)           remote: Compressing objects:  54% (12/22)           remote: Compressing objects:  59% (13/22)           remote: Compressing objects:  63% (14/22)           remote: Compressing objects:  68% (15/22)           remote: Compressing objects:  72% (16/22)           remote: Compressing objects:  77% (17/22)           remote: Compressing objects:  81% (18/22)           remote: Compressing objects:  86% (19/22)           remote: Compressing objects:  90% (20/22)           remote: Compressing objects:  95% (21/22)           remote: Compressing objects: 100% (22/22)           remote: Compressing objects: 100% (22/22), done.        
+Receiving objects:   0% (1/12984)   Receiving objects:   1% (130/12984)   Receiving objects:   2% (260/12984)   Receiving objects:   3% (390/12984)   Receiving objects:   4% (520/12984)   Receiving objects:   5% (650/12984)   Receiving objects:   6% (780/12984)   Receiving objects:   7% (909/12984)   Receiving objects:   8% (1039/12984)   Receiving objects:   9% (1169/12984)   Receiving objects:  10% (1299/12984)   Receiving objects:  11% (1429/12984)   Receiving objects:  12% (1559/12984)   Receiving objects:  13% (1688/12984)   Receiving objects:  14% (1818/12984)   Receiving objects:  15% (1948/12984)   Receiving objects:  16% (2078/12984)   Receiving objects:  17% (2208/12984)   Receiving objects:  18% (2338/12984)   Receiving objects:  19% (2467/12984)   Receiving objects:  20% (2597/12984)   Receiving objects:  21% (2727/12984)   Receiving objects:  22% (2857/12984)   Receiving objects:  23% (2987/12984)   Receiving objects:  24% (3117/12984)   Receiving objects:  25% (3246/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  26% (3376/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  27% (3506/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  28% (3636/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  29% (3766/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  30% (3896/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  31% (4026/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  32% (4155/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  33% (4285/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  34% (4415/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  35% (4545/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  36% (4675/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  37% (4805/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  38% (4934/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  39% (5064/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  40% (5194/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  41% (5324/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  42% (5454/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  43% (5584/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  44% (5713/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  45% (5843/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  46% (5973/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  47% (6103/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  48% (6233/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  49% (6363/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  50% (6492/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  51% (6622/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  52% (6752/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  53% (6882/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  54% (7012/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  55% (7142/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  56% (7272/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  57% (7401/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  58% (7531/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  59% (7661/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  60% (7791/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  61% (7921/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  62% (8051/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  63% (8180/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  64% (8310/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  65% (8440/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  66% (8570/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  67% (8700/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  68% (8830/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  69% (8959/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  70% (9089/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  71% (9219/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  72% (9349/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  73% (9479/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  74% (9609/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  75% (9738/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  76% (9868/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  77% (9998/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  78% (10128/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  79% (10258/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  80% (10388/12984), 1.18 MiB | 2.32 MiB/s   Receiving objects:  80% (10495/12984), 5.40 MiB | 5.23 MiB/s   Receiving objects:  81% (10518/12984), 5.40 MiB | 5.23 MiB/s   Receiving objects:  82% (10647/12984), 5.40 MiB | 5.23 MiB/s   Receiving objects:  83% (10777/12984), 5.40 MiB | 5.23 MiB/s   Receiving objects:  84% (10907/12984), 5.40 MiB | 5.23 MiB/s   Receiving objects:  85% (11037/12984), 5.40 MiB | 5.23 MiB/s   Receiving objects:  86% (11167/12984), 5.40 MiB | 5.23 MiB/s   Receiving objects:  87% (11297/12984), 5.40 MiB | 5.23 MiB/s   Receiving objects:  88% (11426/12984), 5.92 MiB | 3.66 MiB/s   Receiving objects:  89% (11556/12984), 5.92 MiB | 3.66 MiB/s   Receiving objects:  90% (11686/12984), 5.92 MiB | 3.66 MiB/s   Receiving objects:  91% (11816/12984), 5.92 MiB | 3.66 MiB/s   Receiving objects:  92% (11946/12984), 5.92 MiB | 3.66 MiB/s   Receiving objects:  93% (12076/12984), 5.92 MiB | 3.66 MiB/s   Receiving objects:  94% (12205/12984), 5.92 MiB | 3.66 MiB/s   Receiving objects:  95% (12335/12984), 5.92 MiB | 3.66 MiB/s   Receiving objects:  96% (12465/12984), 5.92 MiB | 3.66 MiB/s   Receiving objects:  97% (12595/12984), 5.92 MiB | 3.66 MiB/s   Receiving objects:  98% (12725/12984), 5.92 MiB | 3.66 MiB/s   remote: Total 12984 (delta 1), reused 18 (delta 0), pack-reused 12962        
+Receiving objects:  99% (12855/12984), 5.92 MiB | 3.66 MiB/s   Receiving objects: 100% (12984/12984), 5.92 MiB | 3.66 MiB/s   Receiving objects: 100% (12984/12984), 6.70 MiB | 3.66 MiB/s, done.
+Resolving deltas:   0% (0/9678)   Resolving deltas:   1% (119/9678)   Resolving deltas:   2% (235/9678)   Resolving deltas:   3% (298/9678)   Resolving deltas:   4% (404/9678)   Resolving deltas:   5% (503/9678)   Resolving deltas:   6% (585/9678)   Resolving deltas:   7% (684/9678)   Resolving deltas:   8% (777/9678)   Resolving deltas:   9% (878/9678)   Resolving deltas:  10% (982/9678)   Resolving deltas:  11% (1082/9678)   Resolving deltas:  12% (1162/9678)   Resolving deltas:  13% (1270/9678)   Resolving deltas:  14% (1356/9678)   Resolving deltas:  15% (1459/9678)   Resolving deltas:  16% (1617/9678)   Resolving deltas:  17% (1665/9678)   Resolving deltas:  18% (1744/9678)   Resolving deltas:  19% (1842/9678)   Resolving deltas:  20% (1977/9678)   Resolving deltas:  21% (2050/9678)   Resolving deltas:  22% (2133/9678)   Resolving deltas:  23% (2234/9678)   Resolving deltas:  24% (2374/9678)   Resolving deltas:  26% (2530/9678)   Resolving deltas:  27% (2633/9678)   Resolving deltas:  28% (2711/9678)   Resolving deltas:  29% (2808/9678)   Resolving deltas:  30% (2907/9678)   Resolving deltas:  31% (3024/9678)   Resolving deltas:  33% (3206/9678)   Resolving deltas:  34% (3302/9678)   Resolving deltas:  35% (3390/9678)   Resolving deltas:  36% (3490/9678)   Resolving deltas:  37% (3582/9678)   Resolving deltas:  38% (3721/9678)   Resolving deltas:  39% (3802/9678)   Resolving deltas:  40% (3887/9678)   Resolving deltas:  41% (3968/9678)   Resolving deltas:  42% (4118/9678)   Resolving deltas:  43% (4164/9678)   Resolving deltas:  44% (4281/9678)   Resolving deltas:  45% (4363/9678)   Resolving deltas:  46% (4537/9678)   Resolving deltas:  47% (4549/9678)   Resolving deltas:  48% (4677/9678)   Resolving deltas:  49% (4748/9678)   Resolving deltas:  50% (4868/9678)   Resolving deltas:  51% (4961/9678)   Resolving deltas:  52% (5033/9678)   Resolving deltas:  53% (5130/9678)   Resolving deltas:  54% (5236/9678)   Resolving deltas:  55% (5329/9678)   Resolving deltas:  56% (5422/9678)   Resolving deltas:  57% (5525/9678)   Resolving deltas:  58% (5616/9678)   Resolving deltas:  59% (5726/9678)   Resolving deltas:  60% (5813/9678)   Resolving deltas:  61% (5961/9678)   Resolving deltas:  62% (6048/9678)   Resolving deltas:  63% (6130/9678)   Resolving deltas:  64% (6206/9678)   Resolving deltas:  65% (6294/9678)   Resolving deltas:  66% (6395/9678)   Resolving deltas:  67% (6486/9678)   Resolving deltas:  68% (6584/9678)   Resolving deltas:  69% (6684/9678)   Resolving deltas:  70% (6776/9678)   Resolving deltas:  71% (6872/9678)   Resolving deltas:  72% (6971/9678)   Resolving deltas:  73% (7089/9678)   Resolving deltas:  74% (7162/9678)   Resolving deltas:  75% (7273/9678)   Resolving deltas:  76% (7364/9678)   Resolving deltas:  77% (7458/9678)   Resolving deltas:  78% (7561/9678)   Resolving deltas:  79% (7646/9678)   Resolving deltas:  80% (7747/9678)   Resolving deltas:  81% (7841/9678)   Resolving deltas:  82% (7944/9678)   Resolving deltas:  83% (8043/9678)   Resolving deltas:  84% (8132/9678)   Resolving deltas:  85% (8227/9678)   Resolving deltas:  86% (8330/9678)   Resolving deltas:  87% (8439/9678)   Resolving deltas:  88% (8556/9678)   Resolving deltas:  89% (8628/9678)   Resolving deltas:  90% (8717/9678)   Resolving deltas:  91% (8813/9678)   Resolving deltas:  92% (8917/9678)   Resolving deltas:  93% (9012/9678)   Resolving deltas:  94% (9102/9678)   Resolving deltas:  95% (9206/9678)   Resolving deltas:  96% (9293/9678)   Resolving deltas:  97% (9395/9678)   Resolving deltas:  98% (9489/9678)   Resolving deltas:  99% (9592/9678)   Resolving deltas: 100% (9678/9678)   Resolving deltas: 100% (9678/9678), done.
+Checking connectivity... done.
+Installed agda-stdlib v0.14  in /home/curie/athena/lib/agda-stdlib
 ===================================================================
 ======== Downloading libraries: Agda-Prop and Agda-Metis ==========
 ===================================================================
 git submodule update --init lib/agda-prop
+Submodule 'lib/agda-prop' (https://github.com/jonaprieto/agda-prop.git) registered for path 'lib/agda-prop'
+Cloning into 'lib/agda-prop'...
+Submodule path 'lib/agda-prop': checked out '9e1263d4b7fccc88010fe3634110bc473e63ce72'
 git submodule update --init lib/agda-metis
-error: Your local changes to the following files would be overwritten by checkout:
-	src/ATP/Metis/Rules/Canonicalize.agda
-Please, commit your changes or stash them before you can switch branches.
-Aborting
-Unable to checkout 'ff482b837e45151f9d34225dce2a76f07520cd7b' in submodule path 'lib/agda-metis'
-Makefile:344: recipe for target 'agda-libraries' failed
-make[1]: *** [agda-libraries] Error 1
+Submodule 'lib/agda-metis' (https://github.com/jonaprieto/agda-metis.git) registered for path 'lib/agda-metis'
+Cloning into 'lib/agda-metis'...
+Submodule path 'lib/agda-metis': checked out 'ff482b837e45151f9d34225dce2a76f07520cd7b'
+===================================================================
+====== Installing libraries: Agda-Prop and Agda-Metis (./lib) =====
+===================================================================
+
+Libraries
+---------
+
+  $ cat /home/curie/athena/lib/.agda/libraries
+
+/home/curie/athena/lib/agda-stdlib/standard-library.agda-lib
+/home/curie/athena/lib/agda-prop/agda-prop.agda-lib
+/home/curie/athena/lib/agda-metis/agda-metis.agda-lib
+/home/curie/athena/test/test.agda-lib
+/home/curie/athena/notes/notes.agda-lib
+
+Defaults
+---------
+
+  $ cat /home/curie/athena/lib/.agda/defaults
+
+standard-library
+test
+notes
+
+[!] To complete the installation, please set the AGDA_DIR variable,
+you can do that executing the following command:
+
+  $ export AGDA_DIR=/home/curie/athena/lib/.agda
+
+===================================================================
+================== Type-checking Agda files =======================
+===================================================================
+
+[!] AGDA_DIR=/home/curie/athena/lib/.agda
+
+If you want to type-check an isolote Agda file from the tests,
+you can execute the following command in your shell:
+
+  $ pwd
+  /home/curie/athena
+  $ export AGDA_DIR=/home/curie/athena/lib/.agda
+  $ agda --library=test AgdaFileGeneratedByAthena
+
+-------------------------------------------------------------------
 make[1]: Leaving directory '/home/curie/athena'
