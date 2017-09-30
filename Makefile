@@ -56,7 +56,7 @@ ATHENA_LIB      =$(addprefix $(PWD), /lib)
 ATHENA_AGDA_LIB =$(addprefix $(ATHENA_LIB),/.agda)
 
 TIME_BIN        := $(shell which time)
-TIMELIMIT       =timeout 1m
+TIMELIMIT       =timeout 10m
 # timelimit -T60 -t60 -S9
 SEP='-------------------------------------------------------------------'
 
@@ -78,14 +78,14 @@ ifeq ($(uname_S),Darwin)
 		TIME_BIN  := $(shell which gtime)
 endif
 ifeq ($(uname_S),Linux)
-		TIMELIMIT =timeout 1m
+		TIMELIMIT =timeout 10m
 endif
 ifeq ($(uname_S),GNU/kFreeBSD)
 		TIMELIMIT =timelimit -T60 -t60 -S9
 		TIME_BIN  := $(shell which gtime)
 endif
 ifeq ($(uname_S),UnixWare)
-		TIMELIMIT =timeout 1m
+		TIMELIMIT =timeout 10m
 endif
 
 
@@ -491,3 +491,14 @@ check : reconstruct  \
 		sh -c $(AGDACALL); \
 		echo ${SEP}; \
 	done
+
+# -----------------------------------------------------------------------------
+# Test
+# -----------------------------------------------------------------------------
+
+.PHONY : test
+test:
+	- make check 2>&1 | tee notes/log.$(date +"%Y-%m-%d_%H%M%S")
+	- @git add notes/*
+	- @git commit -m "[ test-$(shell date +"%Y-%m-%d_%H%M%S") ] added."
+	- @git push origin master
