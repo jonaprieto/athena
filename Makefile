@@ -369,16 +369,30 @@ install-libraries: agda-stdlib agda-libraries
 	@echo "standard-library" >> lib/.agda/defaults
 	@echo "test" >> lib/.agda/defaults
 	@echo "notes" >> lib/.agda/defaults
-	@echo "Libraries in ${ATHENA_AGDA_LIB}/libraries:"
+	@echo "Libraries"
+	@echo "---------"
+	@echo
+	@echo "  $$ cat ${ATHENA_AGDA_LIB}/libraries"
+	@echo
 	@cat  ${ATHENA_AGDA_LIB}/libraries
-	@echo "[!] To complete the installation, please set the AGDA_DIR variable:"
-	@echo "    $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
+	@echo
+	@echo "Defaults"
+	@echo "---------"
+	@echo
+	@echo "  $$ cat ${ATHENA_AGDA_LIB}/defaults"
+	@echo
+	@cat  ${ATHENA_AGDA_LIB}/defaults
+	@echo
+	@echo "[!] To complete the installation, please set the AGDA_DIR variable,"
+	@echo "you can do that executing the following command:"
+	@echo 
+	@echo "  $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
 	@echo
 
 .PHONY : install
 install : ghcversion
 	@echo "==================================================================="
-	@echo "================ Installing Athena v0.1 ==========================="
+	@echo "===================== Installing Athena v0.1 ======================"
 	@echo "==================================================================="
 	cabal install --disable-documentation -g --ghc
 
@@ -392,18 +406,18 @@ prop-pack :
 .PHONY: msg-tstp
 msg-tstp :
 	@echo "==================================================================="
-	@echo "=============== Generating TSTP files of proofs ==================="
+	@echo "================= Generating TSTP files of proofs ================="
 	@echo "==================================================================="
 	@echo
 	@echo "[!] To use Metis locally instead of using Metis from OnlineATPs, "
-	@echo "    please set ATP variable in your environment:"
+	@echo "please set ATP variable in your environment:"
 	@echo
-	@echo "      $$ export ATP=\"metis --show proof\""
+	@echo "  $$ export ATP=\"metis --show proof\""
 	@echo
-	@echo "    If you don't have Metis anyway, you can install OnlineATPs:"
+	@echo "If you don't have Metis anyway, you can install OnlineATPs:"
 	@echo
-	@echo "      $$ make online-atps"
-	@echo "      $$ export ATP=\"online-atps --atp=metis\""
+	@echo "  $$ make online-atps"
+	@echo "  $$ export ATP=\"online-atps --atp=metis\""
 	@echo
 	@echo ${SEP}
 
@@ -425,9 +439,10 @@ reconstruct : install problems
 	@echo "============== Generating Agda files of TSTP proofs ==============="
 	@echo "==================================================================="
 	@echo
-	@echo "    If you want to generate an Agda file from the tests,"
-	@echo "    you can execute the following command in your shell:"
-	@echo "      $$ athena TSTPFileGeneratedByMETIS.tpsp"
+	@echo "If you want to generate an Agda file from the tests,"
+	@echo "you can execute the following command in your shell:"
+	@echo
+	@echo "  $$ athena TSTPFileGeneratedByMETIS.tpsp"
 	@echo
 	@echo ${SEP}
 	@find test/prop-pack/problems \
@@ -459,13 +474,13 @@ check : reconstruct  \
 	@echo
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
 	@echo
-	@echo "    If you want to type-check an isolote Agda file from the tests,"
-	@echo "    you can execute the following command in your shell:"
+	@echo "If you want to type-check an isolote Agda file from the tests,"
+	@echo "you can execute the following command in your shell:"
 	@echo
-	@echo "      $$ pwd"
-	@echo "      $(PWD)"
-	@echo "      $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
-	@echo "      $$ agda --library=test AgdaFileGeneratedByAthena"
+	@echo "  $$ pwd"
+	@echo "  $(PWD)"
+	@echo "  $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
+	@echo "  $$ agda --library=test AgdaFileGeneratedByAthena"
 	@echo
 	@echo ${SEP}
 
