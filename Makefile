@@ -385,7 +385,7 @@ install-libraries: agda-stdlib agda-libraries
 	@echo
 	@echo "[!] To complete the installation, please set the AGDA_DIR variable,"
 	@echo "you can do that executing the following command:"
-	@echo 
+	@echo
 	@echo "  $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
 	@echo
 
@@ -494,13 +494,14 @@ check : reconstruct  \
 	done
 
 # -----------------------------------------------------------------------------
-# Test
+# Commit the log file
 # -----------------------------------------------------------------------------
 
-.PHONY : test
-test:
+.PHONY : commit-test
+commit-test:
 	- make check 2>&1 | tee notes/log
-	- @cp notes/log notes/log.$(date +"%Y-%m-%d_%H%M%S")
+	- @cp notes/log notes/log."$(shell date +"%Y-%m-%d_%H%M%S")"
+	- @rm -f notes/log
 	- @git add notes/*
 	- @git commit -m "[ test-$(shell date +"%Y-%m-%d_%H%M%S") ] added."
 	- @git push origin master
