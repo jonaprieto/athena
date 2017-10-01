@@ -55,6 +55,7 @@ import System.FilePath          ( replaceExtension )
 import System.IO                ( hClose, IOMode( WriteMode ), openFile )
 
 import Data.List                ( nub, isPrefixOf )
+
 ------------------------------------------------------------------------------
 
 mainCore ∷ Options → IO ()

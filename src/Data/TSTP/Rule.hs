@@ -36,13 +36,11 @@ data Rule = Canonicalize
           deriving (Eq, Ord, Read, Show)
 
 instance Pretty Rule where
-  pretty Canonicalize = pretty "atp" <> hypen <> pretty "canonicalize"
-  pretty Clausify     = pretty "atp" <> hypen <> pretty "clausify"
-  pretty Conjunct     = pretty "atp" <> hypen <> pretty "conjunct"
-  pretty Negate       = pretty "atp" <> hypen <> pretty "negate"
-  pretty (NewRule r)  = pretty "atp" <> hypen <> pretty r
-  pretty Resolve      = pretty "atp" <> hypen <> pretty "resolve"
-  pretty Simplify     = pretty "atp" <> hypen <> pretty "simplify"
-  pretty Skolemize    = pretty "atp" <> hypen <> pretty "skolemize"
-  pretty Specialize   = pretty "atp" <> hypen <> pretty "specialize"
-  pretty Strip        = pretty "atp" <> hypen <> pretty "strip"
+  pretty Canonicalize = pretty "thm" <> hypen <> pretty "canonicalize"
+  pretty Clausify     = pretty "thm" <> hypen <> pretty "clausify"
+  pretty Conjunct     = pretty "thm" <> hypen <> pretty "conjunct"
+  pretty Negate       = pretty "thm" <> hypen <> pretty "negate"
+  pretty Resolve      = pretty "thm" <> hypen <> pretty "resolve"
+  pretty Simplify     = pretty "thm" <> hypen <> pretty "simplify"
+  pretty Strip        = pretty "thm" <> hypen <> pretty "strip"
+  pretty _            = error "Rule no supported yet"

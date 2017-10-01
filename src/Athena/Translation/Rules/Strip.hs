@@ -4,7 +4,7 @@
 {-# LANGUAGE UnicodeSyntax       #-}
 
 module Athena.Translation.Rules.Strip
-  ( atpSplit
+  ( inferSplit
   , split
   , unshunt
   )
@@ -102,7 +102,6 @@ split ((:~:) (PredApp (AtomicWord "$false") [])) = PredApp (AtomicWord "$true") 
 split ((:~:) (PredApp (AtomicWord "$true") []))  = PredApp (AtomicWord "$false") []
 split fm = fm
 
-
 proofSplit :: Formula → [Formula] → Int → (Doc, [Formula], Int)
 proofSplit _ [] n  = (empty, [], n)
 proofSplit _ [_] n = (pretty . stdName $ "proof" ++ show n, [], n+1)
@@ -122,14 +121,14 @@ proofSplit φ gs@(goal : goals) n
   | otherwise = (empty,gs,n)
 
 
-atpSplit ∷ Formula → [Formula] → Doc
-atpSplit _ []     = pretty '?'
-atpSplit _ [_]    = pretty "proof₀"
-atpSplit _ [_,_]  =
+inferSplit ∷ Formula → [Formula] → Doc
+inferSplit _ []     = pretty '?'
+inferSplit _ [_]    = pretty "proof₀"
+inferSplit _ [_,_]  =
   parens $ pretty "∧-intro"
     <+> pretty "proof₀"
     <+> pretty "proof₁"
-atpSplit φ sgoals = doc
+inferSplit φ sgoals = doc
   where
     splitted ∷ Formula
     splitted  = split φ

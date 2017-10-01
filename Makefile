@@ -56,8 +56,8 @@ ATHENA_LIB      =$(addprefix $(PWD), /lib)
 ATHENA_AGDA_LIB =$(addprefix $(ATHENA_LIB),/.agda)
 
 TIME_BIN        := $(shell which time)
-TIMELIMIT       =timeout 49m
-# timelimit -T240 -t240 -S9
+TIMELIMIT       =timeout 10m
+# timelimit -T60 -t60 -S9
 SEP='-------------------------------------------------------------------'
 
 
@@ -70,22 +70,22 @@ endif
 # https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
 
 ifeq ($(uname_S),OSF1)
-		TIMELIMIT =timelimit -T240 -t240 -S9
+		TIMELIMIT =timelimit -T60 -t60 -S9
 		TIME_BIN  := $(shell which gtime) # install gnu-time
 endif
 ifeq ($(uname_S),Darwin)
-		TIMELIMIT =timelimit -T240 -t240 -S9
+		TIMELIMIT =timelimit -T60 -t60 -S9
 		TIME_BIN  := $(shell which gtime)
 endif
 ifeq ($(uname_S),Linux)
-		TIMELIMIT =timeout 49m
+		TIMELIMIT =timeout 10m
 endif
 ifeq ($(uname_S),GNU/kFreeBSD)
-		TIMELIMIT =timelimit -T240 -t240 -S9
+		TIMELIMIT =timelimit -T60 -t60 -S9
 		TIME_BIN  := $(shell which gtime)
 endif
 ifeq ($(uname_S),UnixWare)
-		TIMELIMIT =timeout 49m
+		TIMELIMIT =timeout 10m
 endif
 
 
@@ -259,18 +259,18 @@ slides :
 
 .PHONY : clean
 clean :
+	@echo "==================================================================="
+	@echo "======================== Cleaning routines ========================"
+	@echo "==================================================================="
 	@echo "Cleaning Parser's files."
 	@echo ${SEP}
-
 	rm -f ${SRC_DIR}/TSTP/Lexer.hs
 	rm -f ${SRC_DIR}/TSTP/Lexer.hi
 	rm -f ${SRC_DIR}/TSTP/Lexer.o
 	rm -f ${SRC_DIR}/TSTP/Parser.hs
-
 	@echo
 	@echo "Cleaning Agda and Haskell auxiliar files."
 	@echo ${SEP}
-
 	rm -Rf bin/
 	find ${SRC_DIR} -regex '.*\(\.hi\|\.o\|\.agdai\)$$' -delete
 	find ${SRC_DIR} -name 'cnf*' -delete
@@ -283,7 +283,6 @@ clean :
 		-name '*.agda' -delete
 	rm -rf dist
 	rm -rf lib/.agda
-
 	@echo
 	@echo 'Cleaning Prop-Pack test problems.'
 	@echo ${SEP}
@@ -315,6 +314,7 @@ online-atps:
 	@cd bin/online-atps && cabal install
 	@rm -Rf bin
 
+.PHONY : agda-stdlib
 agda-stdlib:
 	@if [ ! -d lib/agda-stdlib ] ; \
 	 then \
@@ -352,7 +352,7 @@ install-libraries: agda-stdlib agda-libraries
 	@echo "==================================================================="
 	@echo "====== Installing libraries: Agda-Prop and Agda-Metis (./lib) ====="
 	@echo "==================================================================="
-
+	@echo
 	@mkdir -p lib/.agda
 	@> lib/.agda/libraries
 	@echo "${ATHENA_LIB}/agda-stdlib/standard-library.agda-lib" \
@@ -365,20 +365,34 @@ install-libraries: agda-stdlib agda-libraries
 		>> ${ATHENA_AGDA_LIB}/libraries
 	@echo "${PWD}/notes/notes.agda-lib" \
 		>> ${ATHENA_AGDA_LIB}/libraries
-
 	@> lib/.agda/defaults
 	@echo "standard-library" >> lib/.agda/defaults
 	@echo "test" >> lib/.agda/defaults
 	@echo "notes" >> lib/.agda/defaults
-	@echo "Libraries in ${ATHENA_AGDA_LIB}/libraries:"
+	@echo "Libraries"
+	@echo "---------"
+	@echo
+	@echo "  $$ cat ${ATHENA_AGDA_LIB}/libraries"
+	@echo
 	@cat  ${ATHENA_AGDA_LIB}/libraries
-	@echo "[!] To complete the installation, please set the AGDA_DIR variable:"
-	@echo "    $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
+	@echo
+	@echo "Defaults"
+	@echo "---------"
+	@echo
+	@echo "  $$ cat ${ATHENA_AGDA_LIB}/defaults"
+	@echo
+	@cat  ${ATHENA_AGDA_LIB}/defaults
+	@echo
+	@echo "[!] To complete the installation, please set the AGDA_DIR variable,"
+	@echo "you can do that executing the following command:"
+	@echo
+	@echo "  $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
+	@echo
 
 .PHONY : install
 install : ghcversion
 	@echo "==================================================================="
-	@echo "================ Installing Athena v0.1 ==========================="
+	@echo "===================== Installing Athena v0.1 ======================"
 	@echo "==================================================================="
 	cabal install --disable-documentation -g --ghc
 
@@ -392,42 +406,50 @@ prop-pack :
 .PHONY: msg-tstp
 msg-tstp :
 	@echo "==================================================================="
-	@echo "=============== Generating TSTP files of proofs ==================="
+	@echo "================= Generating TSTP files of proofs ================="
 	@echo "==================================================================="
-	@echo "[!] To use Metis locally instead of using Metis from OnlineATPs, "
-	@echo "    please set ATP variable in your environment:"
 	@echo
-	@echo "    $$ export ATP=\"metis --show proof\""
-	@echo "    If you don't have Metis anyway, you can install OnlineATPs:"
-	@echo "    $$ make online-atps"
-	@echo "    $$ export ATP=\"online-atps --atp=metis\""
-	@echo "-------------------------------------------------------------------"
+	@echo "[!] To use Metis locally instead of using Metis from OnlineATPs, "
+	@echo "please set ATP variable in your environment:"
+	@echo
+	@echo "  $$ export ATP=\"metis --show proof\""
+	@echo
+	@echo "If you don't have Metis anyway, you can install OnlineATPs:"
+	@echo
+	@echo "  $$ make online-atps"
+	@echo "  $$ export ATP=\"online-atps --atp=metis\""
+	@echo
+	@echo ${SEP}
 
 
 .PHONY : problems
-problems :	prop-pack \
-			msg-tstp \
-			$(TSTP_BASIC) \
-			$(TSTP_CONJ)  \
-			$(TSTP_DISJ)  \
-			$(TSTP_IMPL)  \
-			$(TSTP_BICOND) \
-			$(TSTP_NEG)  \
-			$(TSTP_PMETIS)
+problems : prop-pack \
+					 msg-tstp \
+					 $(TSTP_BASIC) \
+					 $(TSTP_CONJ)  \
+					 $(TSTP_DISJ)  \
+					 $(TSTP_IMPL)  \
+					 $(TSTP_BICOND) \
+					 $(TSTP_NEG)  \
+					 $(TSTP_PMETIS)
 
 .PHONY : reconstruct
 reconstruct : install problems
 	@echo "==================================================================="
 	@echo "============== Generating Agda files of TSTP proofs ==============="
 	@echo "==================================================================="
-	@echo "    If you want to generate an Agda file from the tests:"
-	@echo "    Execute the following command in your shell."
-	@echo "    $$ athena TSTPFileGeneratedByMETIS.tpsp"
-	@echo "-------------------------------------------------------------------"
-	@find test/prop-pack/problems \
-		-type f \
-		-name "*.tstp" \
-		-exec sh -c "athena --debug {} && echo ${SEP}" {} \;;
+	@echo
+	@echo "If you want to generate an Agda file from the tests,"
+	@echo "you can execute the following command in your shell:"
+	@echo
+	@echo "  $$ athena TSTPFileGeneratedByMETIS.tpsp"
+	@echo
+	@echo ${SEP}
+	@for tptpFile in `find ${TEST_DIR} \
+			-type f -name "*.tstp" | sort`; do \
+		${ATHENA} --debug $$tptpFile ;\
+		echo ${SEP}; \
+	done
 
 
 AGDACALL ="${TIMELIMIT} \
@@ -437,28 +459,31 @@ AGDACALL ="${TIMELIMIT} \
 .PHONY : check
 check : export AGDA_DIR := $(ATHENA_AGDA_LIB)
 check : reconstruct  \
-		agdaversion  \
-		install-libraries  \
-		$(AGDA_BASIC) \
-		$(AGDA_CONJ)  \
-		$(AGDA_DISJ)  \
-		$(AGDA_IMPL)  \
-		$(AGDA_BICOND)  \
-		$(AGDA_NEG)   \
-		$(AGDA_PMETIS)
+				agdaversion  \
+				install-libraries  \
+				$(AGDA_BASIC) \
+				$(AGDA_CONJ)  \
+				$(AGDA_DISJ)  \
+				$(AGDA_IMPL)  \
+				$(AGDA_BICOND)  \
+				$(AGDA_NEG)   \
+				$(AGDA_PMETIS)
 
 	@echo "==================================================================="
 	@echo "================== Type-checking Agda files ======================="
 	@echo "==================================================================="
+	@echo
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
 	@echo
-	@echo "    If you want to type-check an isolote Agda file from the tests:"
-	@echo "    Execute the following command in your shell."
-	@echo "    $$ pwd"
-	@echo "    $(PWD)"
-	@echo "    $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
-	@echo "    $$ agda --library=test AgdaFileGeneratedByAthena"
-	@echo "-------------------------------------------------------------------"
+	@echo "If you want to type-check an isolote Agda file from the tests,"
+	@echo "you can execute the following command in your shell:"
+	@echo
+	@echo "  $$ pwd"
+	@echo "  $(PWD)"
+	@echo "  $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
+	@echo "  $$ agda --library=test AgdaFileGeneratedByAthena"
+	@echo
+	@echo ${SEP}
 
 	@for agdaFile in `find ${TEST_DIR} \
 			-type f -name "*.agda" \
@@ -467,3 +492,16 @@ check : reconstruct  \
 		sh -c $(AGDACALL); \
 		echo ${SEP}; \
 	done
+
+# -----------------------------------------------------------------------------
+# Commit the log file
+# -----------------------------------------------------------------------------
+
+.PHONY : commit-test
+commit-test:
+	- make check 2>&1 | tee notes/log
+	- @cp notes/log notes/log."$(shell date +"%Y-%m-%d_%H%M%S")"
+	- @rm -f notes/log
+	- @git add notes/*
+	- @git commit -m "[ test-$(shell date +"%Y-%m-%d_%H%M%S") ] added."
+	- @git push origin master
