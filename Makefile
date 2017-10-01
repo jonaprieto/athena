@@ -445,10 +445,11 @@ reconstruct : install problems
 	@echo "  $$ athena TSTPFileGeneratedByMETIS.tpsp"
 	@echo
 	@echo ${SEP}
-	@find test/prop-pack/problems \
-		-type f \
-		-name "*.tstp" \
-		-exec sh -c "athena --debug {} && echo ${SEP}" {} \;;
+	@for tptpFile in `find ${TEST_DIR} \
+			-type f -name "*.tstp" | sort`; do \
+		${ATHENA} --debug $$tptpFile ;\
+		echo ${SEP}; \
+	done
 
 
 AGDACALL ="${TIMELIMIT} \
@@ -498,7 +499,8 @@ check : reconstruct  \
 
 .PHONY : test
 test:
-	- make check 2>&1 | tee notes/log.$(date +"%Y-%m-%d_%H%M%S")
+	- make check 2>&1 | tee notes/log
+	- @cp notes/log notes/log.$(date +"%Y-%m-%d_%H%M%S")
 	- @git add notes/*
 	- @git commit -m "[ test-$(shell date +"%Y-%m-%d_%H%M%S") ] added."
 	- @git push origin master
