@@ -86,7 +86,7 @@ With such a derivation, in Step~5, we process the derivation with our \Haskell t
 \Athena parses the \TSTP format, analyze the
 derivation and generates a representation of the natural deduction
 proof using a tree data structure (see the properties
-of this tree in Subsection \ref{ssec:metis-proofs}).
+of this tree in Section~\ref{ssec:metis-proofs}).
 We perform an analysis of the proof-tree removing redundancies,
 unnecessary steps or unused output from the \TSTP derivation.
 
@@ -396,7 +396,7 @@ unshunt(\mysplit(φ₁)),
 
 The definition above suffers termination problems since it is not
 a structural recursion. Therefore, we have reformulated Def.~\ref{eq:split-definition} to solve such a issue following the technique
-described in Subsection~\ref{ssec:structural-recursion}.
+described in Section~\ref{ssec:structural-recursion}.
 Here and below, we refer to $split$ as the function after applying
 the process mentioned above.
 
@@ -581,6 +581,8 @@ The last statement follows by using the hypothesis and the proof is complete.
 
 Syntactically speaking, showing the logic equivalence between two conjunctive normal forms is a matter of rearrangements of the conjunctions
 but also of the inner disjunctions inside the propositions involved.
+\improvement{Make clear: we are dealing with CNFs, and prove equivalence between two formulas is equivalent to show two trees are  isomorphic.
+And that problem is NP-hard, and for that, we mostly do brute force.}
 
 We provide some useful theorems to perform the following tasks.
 
@@ -609,9 +611,8 @@ a similar approach we define the $rconj$ function for conjunctions.
   $Γ ⊢ φ$ then $Γ ⊢ rdisj(φ)$.
 \end{lemma}
 
-The following function, $build_{∨} : \Prop → \Prop → \Prop$ in Eq.~\ref{eq:build-or}, intends to construct a disjunction from another disjunction, specifically, we want to rearrange the order of the disjuncts in a target disjunction.
-This approach for rearrangement is inspired on the treatment for nested
-disjunctions mainly described in \citeauthor{bohme2010}~\cite{bohme2010}.
+The following function, $build_{∨} : \Prop → \Prop → \Prop$ in Eq.~\ref{eq:build-or}, intends to construct a disjunction from another disjunction, specifically, we want to rearrange the disjuncts in the source formula to match with the target disjunction for syntactic
+equivalence.
 
 \begin{equation}
   \begin{split}
@@ -649,13 +650,13 @@ The function $factor : \Prop → \Prop$  in Eq.~\ref{eq:factor-definition} is in
   $Γ ⊢ φ$ then $Γ ⊢ factor(φ)$.
 \end{lemma}
 
-Now, with a right-associative proposition,
-$sbuild_{∨}: \Prop → \Prop → \Prop$ in
+Now, with a right-associative disjunction by applying $rdisj$ function to
+a proposition $φ$, $sbuild_{∨}: \Prop → \Prop → \Prop$ in
 Eq.~\ref{eq:strong-build-or-definition} aims to construct the disjunction
-ψ by using each of disjuncts from the proposition φ. This approach to
-build a disjunction from another is inspired on the description
+ψ by using each of its disjuncts from the proposition φ. This approach to
+build a disjunction from another is inspired on the description in
 \citeauthor{bohme2010}~\cite{bohme2010} to prove equality between nested
-disjunctions.
+disjunctions. \change{Make clear this, It's not clear the difference with build-or and sbuild-or.}
 
 \begin{align}
   \begin{split}
@@ -748,11 +749,13 @@ functions and theorems as we previously did for disjunctions.
 \begin{lemma}[lem-conjunct$_{∨}$]
   \label{lem:lem-conjunct-or}
   $Γ ⊢ φ$, and $ψ \in\Prop$ then $Γ ⊢ conjunct_{∨}(φ, ψ)$, where,
+  \improvement{The first case is not implemented in Agda}
   \begin{align*}
   \begin{split}
     \label{eq:conjunct-or-definition}
     conjunct_{∨}(φ, ψ) =
     \begin{cases}
+      ψ, &\text{if }φ ≡ ψ\\
       ψ, &\text{if }reorder_{∨}(φ, ψ) ≡ ψ\\
       ψ, &\text{if }ψ ≡ ψ₁ ∧ ψ₂, conjunct_{∨}(φ, ψ₁) ≡ ψ₁\\
         &\text{and } reorder_{∨}(φ, ψ₂) ≡ ψ₂\\
@@ -788,7 +791,7 @@ functions and theorems as we previously did for disjunctions.
 \subsubsection{Resolve.}
 \label{sssec:resolve}
 
-The \resolve rule is a generalization version for resolution in propositional logic since the formulas are not shaped always as the theorem expect (see Fig.~\ref{fig:metis-inferences}).
+The \resolve rule is a generalization version for resolution in propositional logic since the formulas are not shaped always as the aforementioned theorem expects (see Fig.~\ref{fig:metis-inferences}).
 
 Since our approach is mere syntactic, in order to apply such a
 theorem, we perform rearrangements inside the formulas to match with
@@ -845,7 +848,7 @@ the pattern expected by the resolution theorem.
 
 \subsubsection{Normal Forms.}
 \label{sssec:normal_forms}
-
+\change{Here lacks of an introduction!}
 A negative normal form for the formula φ is one in which negations
 appear only in the literals and the expression is in terms only of
 the boolean operators (¬, ∧, ∨).
@@ -893,7 +896,7 @@ apply recursively the following equations. The function type for
   $Γ ⊢ φ$ then $Γ ⊢ dist_{∨}(φ)$, where,
   \begin{align*}
       \begin{split}
-      dist_{∨} =
+      dist_{∨}(φ) =
         \begin{cases}
           dist_{∨}(φ₁ ∨ φ₂) ∧ dist_{∨}(φ₂ ∨ φ₃),
             &\text{if }φ ≡ (φ₁ ∧ φ₂) ∨ φ₃\\
@@ -910,7 +913,7 @@ apply recursively the following equations. The function type for
   $Γ ⊢ φ$ then $Γ ⊢ dist(φ)$, where,
   \begin{align*}
       \begin{split}
-      dist =
+      dist(φ) =
         \begin{cases}
           dist(φ₁) ∧ dist(φ₂),
             &\text{if }φ ≡ φ₁ ∧ φ₂\\
@@ -922,7 +925,8 @@ apply recursively the following equations. The function type for
   \end{align*}
 \end{lemma}
 
-\begin{proof} Sketch. Case when $φ ≡ φ₁ ∨ φ₂$.\\
+\begin{sketchproof}
+Case when $φ ≡ φ₁ ∨ φ₂$.\\
 For $i = 1, 2$,
 \begin{equation}
   \begin{bprooftree}
@@ -938,7 +942,7 @@ For $i = 1, 2$,
 \end{equation}
 Then, by using the ∨-elim rule, from the last derivation above we derive
 $Γ, φ₁ ∨ φ₂ ⊢ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$, and the lemma follows.
-\end{proof}
+\end{sketchproof}
 
 \begin{theorem}[thm-cnf]
 \label{thm:thm-cnf}
@@ -1045,6 +1049,9 @@ Use in Theorem~\ref{thm:thm-reorder-and-or} with $ψ$ equals to
 $redun^{*}(φ)$.
 \end{proof}
 
+\improvement{We need here a text, or a comment about what
+is going next.}
+
 % subsection normalization (end)
 % --------------------------------------------------------------------
 \begin{lemma}[lem-rmPEM$_{∨}$]
@@ -1103,13 +1110,15 @@ $redun^{*}(φ)$.
   &canon(φ) =\\
   &\hspace{3mm}
   \begin{cases}
-      canon(φⱼ), &\text{if } φ ≡ φ₁ ∧ φ₂,\ canon(φᵢ) ≡ ⊤, i,j = 1,2, i≠j\\
+      canon(φⱼ), &\text{if } φ ≡ φ₁ ∧ φ₂,\ canon(φᵢ) ≡ ⊤,\\
+                 &\text{for same } i,j = 1,2, i≠j\\
      ⊥, &\text{if } φ ≡ φ₁ ∧ φ₂,\ canon(φᵢ) ≡ ⊥, i = 1,2\\
      canon(φ₁) ∧ canon(φ₂), &\text{if } φ ≡ φ₁ ∧ φ₂\\
      ⊤, &\text{if } φ ≡ φ₁ ∨ φ₂,\ canon(φᵢ) ≡ ⊤, i = 1,2\\
-     canon(φⱼ), &\text{if } φ ≡ φ₁ ∨ φ₂,\ canon(φᵢ) ≡ ⊥,  i,j = 1,2, i≠j\\
+     canon(φⱼ), &\text{if } φ ≡ φ₁ ∨ φ₂,\ canon(φᵢ) ≡ ⊥,\\
+                &\text{for same } i,j = 1,2, i≠j\\
      canon(φ₁) ∨ canon(φ₂), &\text{if } φ ≡ φ₁ ∨ φ₂\\
-     φ &\text{otherwise.}
+     φ, &\text{otherwise.}
     \end{cases}
   \end{split}
   \end{align*}
@@ -1132,6 +1141,12 @@ To justify the two first cases, we use the Theorem~\ref{thm:thm-canonicalize}. F
 % -------------------------------------------------------------------
 \subsubsection{Simplify}
 \label{sssec:simplify}
+
+The \simplify rule is the application of the the lemma showed above,
+but also the following lemmas that intend to reduce a list of derivations,
+a conjunction of their formulas into a one smaller.
+
+\improvement{Missing theorems here.}
 
 
 % subsubsection simplify (end)
