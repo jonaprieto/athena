@@ -1,0 +1,8 @@
+name : notes
+depend:
+  standard-library
+  agda-prop
+  agda-metis
+include:
+  issue31/
+

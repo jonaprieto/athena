@@ -33,7 +33,7 @@ module Athena.Translation.AgdaFile
 
 ------------------------------------------------------------------------------
 
-import Athena.Translation.Rules.Strip        ( atpSplit, unshunt, split )
+import Athena.Translation.Rules.Strip ( inferSplit, unshunt, split )
 
 import Athena.Options            ( Options ( optInputFile ) )
 import Athena.Translation.Utils  ( stdName )
@@ -97,7 +97,7 @@ import Data.TSTP
   , V(..)
   )
 
-import System.FilePath          ( takeBaseName )
+import System.FilePath ( takeBaseName )
 
 ------------------------------------------------------------------------------
 
@@ -179,8 +179,8 @@ docImports ∷ Int → Doc
 docImports n =
        hypenline
    <@> pretty "open import ATP.Metis" <+> int n <+> pretty "public" <> line
-   <>  pretty "open import Data.PropFormula" <+> int n <+> pretty "public" <> line
-   <@> hypenline
+   <>  pretty "open import Data.PropFormula" <+> int n <+> pretty "public" 
+   <> line <@> hypenline
 
 ------------------------------------------------------------------------------
 -- Variables.
@@ -342,7 +342,7 @@ docProof agdaFile =
   <> hypenline
   <@> vsep
        [ docProofSubgoals agdaFile
-      , docProofGoal agdaFile  -- TODO
+       , docProofGoal agdaFile  -- TODO
        ]
 
 docProofSubgoals ∷ AgdaFile → Doc
@@ -371,11 +371,11 @@ docProofGoal agdaFile =
        <+> pretty "Γ ⊢ " <> (pretty (fileConjecture agdaFile)) <> line
   <> pretty "proof" <+> equals <> line
   <> indent 2 (pretty "⇒-elim" <> line)
-  <> indent 2 (pretty "atp-split" <> line <> nestedproofs) <> line
+  <> indent 2 (pretty "thm-strip" <> line <> nestedproofs) <> line
     where
       nestedproofs :: Doc
       nestedproofs =
-        atpSplit
+        inferSplit
           (formula (fileConjecture agdaFile))
           (map formula (fileSubgoals agdaFile))
 
@@ -396,9 +396,10 @@ docSteps ∷ Int        -- ^ The number of the subgoal.
 docSteps _ (Leaf Conjecture conjecture) _ = pretty conjecture
 
 docSteps subgoalN (Leaf _ axiom) agdaFile =
-  parens $
-       prettyWeaken <> line
-    <> indent 2 (parens prettyAssume)
+  parens (prettyWeaken <> line
+    <> indent 2
+      (parens (pretty "--" <+> getFormulaByTag agdaFile axiom <> line
+        <> prettyAssume)))
   where
 
     dict ∷ ProofMap
@@ -450,9 +451,13 @@ docSteps subgoalN (Leaf _ axiom) agdaFile =
 ------------------------------------------------------------------------------
 
 docSteps subgoalN (Root Canonicalize tag [subtree]) agdaFile =
-  parens $
-       pretty Canonicalize <+> getFormulaByTag agdaFile tag <> line
-    <> indent 2 (docSteps subgoalN subtree agdaFile)
+  parens (canonicalizeThm <+> getFormulaByTag agdaFile tag <> line
+    <> indent 2 (docSteps subgoalN subtree agdaFile))
+  where
+    canonicalizeThm ∷ Doc
+    canonicalizeThm = case subtree of
+      (Leaf _ axiom ) → pretty "thm-canonicalize-axiom"
+      _               → pretty "thm-canonicalize"
 
 ------------------------------------------------------------------------------
 -- Clausify.
@@ -477,8 +482,12 @@ docSteps subgoalN (Root Conjunct tag [subtree]) agdaFile =
 ------------------------------------------------------------------------------
 
 docSteps subgoalN (Root Negate _ [subtree@(Root Strip _ _)]) agdaFile =
-  parens $ pretty "assume {Γ = Γ}" <> line
-    <> indent 2 (parens (pretty "¬" <+> docSteps subgoalN subtree agdaFile))
+  parens $
+    pretty "-- ¬"
+    <+> parens (getFormulaByTag agdaFile ("subgoal-" ++ show subgoalN))
+    <> line
+    <> pretty "assume {Γ = Γ}" 
+    <+> parens (pretty "¬" <+> docSteps subgoalN subtree agdaFile)
 
 ------------------------------------------------------------------------------
 -- Resolve.
