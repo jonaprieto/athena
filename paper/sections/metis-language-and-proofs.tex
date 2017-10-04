@@ -244,7 +244,7 @@ disjoint cases. This process produces a list of new subgoals, the
 conjunction of these subgoals implies the goal. Then, a proof of the
 goal becomes in smaller proofs, one refutation for each subgoal.
 These subgoals are introduced in the \TSTP derivation with the \strip
-inference rule. We refer the reader to see Theorem~\ref{thm:thm-strip}.
+inference rule. We refer the reader to see Section~\ref{sssec:splitting-goal} for the formalization of \strip rule.
 
 \begin{verbatim}
 fof(goal, conjecture, p & r & q).
@@ -259,7 +259,7 @@ fof(subgoal_2, plain, (p & r) => q, inference(strip, [], [goal])).
 propositional formula in clausal normal form, a conjunction
 of clauses. Where a \emph{clause} is the disjunction of zero or more
 literals and a \emph{literal} is an atom (positive literal) or a
-negation of an atom (negative literal). Be aware this kind of conversion between one formula to its clausal normal form is not unique, and \Metis has a customized approach to perform that transformation. We refer the reader to see Theorem~\ref{thm:thm-clausify}.
+negation of an atom (negative literal). Be aware this kind of conversion between one formula to its clausal normal form is not unique, and \Metis has a customized approach to perform that transformation. We refer the reader to see Section~\ref{sssec:clausification} for the formalization of \clausify rule.
 
 \vskip 2mm
 
@@ -333,16 +333,15 @@ in the \canonicalize inference.}
 \end{figure}
 
 % ...................................................................
+\vskip 2mm
 
-\textit{Resolution.} The \resolve rule is the resolution theorem
-showed in Fig.~\ref{fig:metis-inferences}. For its application, we
-need the positive literal for resolution and two derivations to
-deduce the \emph{resolvent}. The positive literal $p$ must occur in
-the formula from the first derivation, and the negative literal must
-occur in the formula from the second derivation (this follows the
-same pattern in \Metis' logic core in Fig.~\ref{fig:metis-inferences}
-for the resolve inference).
-We refer the reader to see Theorem~\ref{thm:thm-resolve}.
+\textit{Resolution.} The \resolve rule incorporates  the resolution theorem showed in Fig.~\ref{fig:metis-inferences} with
+three arguments: a positive literal $l$ to apply the resolution theorem, and two derivations, $\mathcal{D}₁$ and $\mathcal{D}₂$.
+
+The positive literal $l$ must occur in
+the formula from the first derivation $\mathcal{D}₁$, and the
+negative literal must occur in the formula from the second derivation $\mathcal{D}₂$ (see the pattern in \Metis' logic core for the \emph{resolve} rule in Fig.~\ref{fig:metis-inferences}).
+We refer the reader to see Section~\ref{sssec:resolve} for the formalization of the \resolve rule.
 
 \begin{verbatim}
 cnf(refute_0_0, plain, p | q,
@@ -359,7 +358,8 @@ cnf(refute_0_2, plain, q,
 conjunction one of its conjuncts; it is a generalization of the
 projection rules for the conjunction connective as the
 following \TSTP derivation shows.
-We refer the reader to see Theorem~\ref{thm:thm-conjunct}.
+We refer the reader to see Theorem~\ref{thm:thm-conjunct}
+in Section~\ref{sssec:splitting-a-conjunct} for its formalization.
 
 \begin{verbatim}
 fof(normalize_1, plain, p & q & r,
