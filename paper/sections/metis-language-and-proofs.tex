@@ -206,18 +206,18 @@ undocumented rules found in \TSTP derivations are: \canonicalize,
 \centering
 \begin{bprooftree}\tt
   \AxiomC{}
-  \RightLabel{\footnotesize negate}
+  \RightLabel{negate}
   \UnaryInfC{$\neg p$}
-  \RightLabel{\footnotesize strip}
+  \RightLabel{strip}
   \UnaryInfC{$\neg p$}
   \AxiomC{}
-  \RightLabel{\footnotesize axiom}
+  \RightLabel{axiom}
   \UnaryInfC{$p$}
-  \RightLabel{\footnotesize canonicalize}
+  \RightLabel{canonicalize}
   \UnaryInfC{$p$}
-  \RightLabel{\footnotesize simplify}
+  \RightLabel{simplify}
   \BinaryInfC{$⊥$}
-  \RightLabel{\footnotesize canonicalize}
+  \RightLabel{canonicalize}
   \UnaryInfC{$⊥$}
 \end{bprooftree}
 \caption{The \Metis' proof tree for $p \vdash p$ from the
@@ -259,11 +259,10 @@ such rules.
 
 \textit{Splitting}. To prove a goal, \Metis splits the goal into
 disjoint cases. This process produces a list of new subgoals, the
-conjunction of these subgoals implies the goal as we show later in
-Subsection~\ref{ssec:emulating-inferences}. Then, a proof of the
+conjunction of these subgoals implies the goal. Then, a proof of the
 goal becomes in smaller proofs, one refutation for each subgoal.
 These subgoals are introduced in the \TSTP derivation with the \strip
-inference rule.
+inference rule. We refer the reader to see Theorem~\ref{thm:thm-strip}.
 
 \begin{verbatim}
 fof(goal, conjecture, p & r & q).
@@ -280,6 +279,8 @@ of clauses. Where a clause is the disjunction of zero or more
 literals and a literal is an atom (positive literal) or a negation
 of an atom (negative literal). This conversion is not unique, and
 \Metis performs this transformation using its criteria.
+We refer the reader to see Theorem~\ref{thm:thm-clausify}.
+
 \improvement{We should mention that it was indeed a problem for the
 proof-reconstruction? and refer the section next?}
 
@@ -295,6 +296,8 @@ formula conjunctions and disjunctions simplifications to remove
 tautologies (see Fig.~\ref{fig:conjunctive-disjunctive-simpl} for a
 list of these theorems. We assume the commutative property for the
 conjunction and disjunction connectives).
+We refer the reader to see Section~\ref{sssec:normalization} and the
+lemmas and theorems described there.
 
 \begin{figure}
 \[%\scalebox{0.9}{
@@ -357,6 +360,7 @@ the formula from the first derivation, and the negative literal must
 occur in the formula from the second derivation (this follows the
 same pattern in \Metis' logic core in Fig.~\ref{fig:metis-inferences}
 for the resolve inference).
+We refer the reader to see Theorem~\ref{thm:thm-resolve}.
 
 \begin{verbatim}
 cnf(refute_0_0, plain, p | q,
@@ -373,6 +377,7 @@ cnf(refute_0_2, plain, q,
 conjunction one of its conjuncts; it is a generalization of the
 projection rules for the conjunction connective as the
 following \TSTP derivation shows.
+We refer the reader to see Theorem~\ref{thm:thm-conjunct}.
 
 \begin{verbatim}
 fof(normalize_1, plain, p & q & r,
@@ -384,8 +389,8 @@ fof(normalize_2, plain, q,
 \textit{Negate.}
 Each subgoal proof is a refutation, thereby each proof assumes
 the negation of its subgoal. The \negate rule
-introduces the negation of a subgoal that results
-after applies the \strip inference to the goal.
+assumes the negation of a given subgoal. This rules always
+appears after applies the \strip inference to the goal.
 
 \begin{verbatim}
 fof(subgoal_0, plain, p,
@@ -404,5 +409,6 @@ transverses a list of formulas by applying different theorems (e.g.,
 syllogism}) including the list of theorems used by \canonicalize in
 Fig. \ref{fig:conjunctive-disjunctive-simpl} and the resolution
 theorem of the \resolve rule.
+We refer the reader to see Section~\ref{sssec:simplify}.
 
 \end{document}

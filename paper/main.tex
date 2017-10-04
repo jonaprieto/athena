@@ -125,6 +125,11 @@
 \usepackage{comment}
 \usepackage{url}
 \usepackage{amsmath}
+
+\newenvironment{sketchproof}{%
+  \renewcommand{\proofname}{Sketch of the Proof}\proof}{\endproof}
+
+
 \usepackage{amssymb}
 \usepackage{amsmath}
 %\usepackage{stmaryrd} %new symbol font for tcs
@@ -161,6 +166,7 @@
 \newunicodechar{ϕ}{\ensuremath{\varphi}}
 \newunicodechar{ψ}{\ensuremath{\psi}}
 \newunicodechar{≡}{\ensuremath{\equiv}}
+\newunicodechar{≠}{\ensuremath{\neq}}
 \newunicodechar{→}{\ensuremath{\rightarrow}}
 \newunicodechar{∈}{\ensuremath{\in}}
 \newunicodechar{∘}{\ensuremath{\circ}}
@@ -216,8 +222,6 @@
 \newcommand{\suc}{\name{suc}}
 \newcommand{\nnf}{\name{nnf}}
 
-\newcommand{\unshunt}{ushunt}
-\newcommand{\thmunshunt}{lem-unshunt}
 
 \newcommand{\mysplit}{split}
 \newcommand{\thmsplit}{lem-split}
