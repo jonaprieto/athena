@@ -16,8 +16,11 @@ pdf :
 ref-mendeley : ref-mendeley.bib
 	- biber --tool --output_align --output_indent=2 \
 		--output_fieldcase=lower -w \
-		-O=ref-mendeley.bib ref-mendeley.bib
+		-O=ref-mendeley.bib.new ref-mendeley.bib
+	- mv ref-mendeley.bib.new ref-mendeley.bib
+	- rm -f ref-mendeley.bib.blg
 	- sh fix-references.sh
+	- cp ref-mendeley.bib ref.bib
 
 .PHONY : clean
 clean:
