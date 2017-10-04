@@ -265,25 +265,21 @@ negation of an atom (negative literal). Be aware this kind of conversion between
 
 % ...................................................................
 
-\textit{Normalization.}
-Each application of the clausify rule described above is preceded by
-\canonicalize rule. Both rules aim to perform a common task for
-automatic theorem provers, clausification, mainly described on paper
-by \citeauthor{Sutcliffe1996}~\cite{Sutcliffe1996}.
+\textit{Normalization.} We observed \clausify rule described above is preceded by \canonicalize rule when \Metis introduces at some point of the derivation an axiom or a definition of the problem. In that case, both rules aim to perform a common task for
+automatic theorem provers, Clausification, mainly described on paper
+by \citeauthor{Sutcliffe1996}~\cite{Sutcliffe1996}. When the
+aforementioned case does not occur we argue \canonicalize transforms
+proposition into another one that mainly matches with its negative
+normal form, its conjunctive normal form or its disjunctive normal
+form. In addition, \canonicalize could also perform other tasks like
+removing logic constants (⊥, ⊤), definitions, and tautologies, or even reorder both conjunctions and disjunctions of the proposition.
 
-
-\Metis uses the \canonicalize rule to
-normalize a propositional formula that comes from an axiom or a
-definition. It often converts each expression in one of its normal
-form: the conjunctive normal form, the negative normal form or the
-disjunctive normal form. Next, this rule simplifies the formula
-with some definitions, applying recursively on the structure's
-formula conjunctions and disjunctions simplifications to remove
-tautologies (see Fig.~\ref{fig:conjunctive-disjunctive-simpl} for a
-list of these theorems. We assume the commutative property for the
-conjunction and disjunction connectives).
-We refer the reader to see Section~\ref{sssec:normalization} for the
-lemmas and theorems described there.
+For instance, assuming the commutative properties for both
+connectives, conjunction and disjunction, and using the theorems
+in Fig.~\ref{fig:conjunctive-disjunctive-simpl}, \canonicalize could
+use them to reduce a proposition to a one smaller by applying
+recursively on the structure of the formula those theorems.
+We refer the reader to see Section~\ref{sssec:normalization} to continue our approach to emulate this rule.
 
 \begin{figure}
 \[%\scalebox{0.9}{
