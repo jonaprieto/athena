@@ -183,7 +183,7 @@ is not structurally smaller than the input formula, (φ₁ ⇒ (φ₂ ⇒ φ₃)
 Thus, we define the function
 $unshunt_{1} : \Prop \to \Nat \to \Prop$
 by structural recursion in its second argument in
-Eq.~\ref{eq:unshunt-structured}.
+Eq.~(\ref{eq:unshunt-structured}).
 
 \begin{align}
 \label{eq:unshunt-structured}
@@ -200,7 +200,7 @@ unshunt_{1}(φ₁ ⇒ φ₂, n) ∧\ unshunt_{1}(φ₁ ⇒ φ₃, n),
 \end{align}
 
 As we mentioned above, the natural number in the second argument of the
-function used in Eq.~\ref{eq:unshunt-structured} stands for a complexity
+function used in Eq.~(\ref{eq:unshunt-structured}) stands for a complexity
 measure of the function, in this case $unshunt_{1}$ function.
 
 A \emph{complexity measure} defined in \cite{Agudelo-Agudelo2017}
@@ -223,12 +223,12 @@ where $c_{¬}$ or $c_{\square}$ is a non-negative integer called the
 complexity of the connective.
 
 Recall, we want to maintain the same outputs as the original unshunt
-does in Eq.~\ref{eq:unshunt-definition} and the complexity measure of it,
+does in Eq.~(\ref{eq:unshunt-definition}) and the complexity measure of it,
 is a bound for the number of times this function can call itself.
 
 Therefore, we define an appropriate complexity measure
 $unshunt_{cm}: \Prop → \NN$ for our $unshunt_{1}$ function presented in
-Eq.~\ref{eq:unshunt-rank-definition}.
+Eq.~(\ref{eq:unshunt-rank-definition}).
 
 \begin{align}
 \begin{split}
@@ -245,7 +245,7 @@ unshunt_{cm}(φ₃) + 2, &\text{if }φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\
 \end{align}
 
 Finally, the curated version of $unshunt_{0}$ function is presented
-in Eq.~\ref{eq:unshunt-fixed}.
+in Eq.~(\ref{eq:unshunt-fixed}).
 
 \begin{equation}
 \label{eq:unshunt-fixed}
@@ -274,8 +274,8 @@ original goal. Then, we find a refutation for each subgoal in the \Metis' \TSTP 
 
 Nevertheless, \Metis does not provide neither an explanation for the user about the process in its \TSTP derivations nor in its documentation.
 
-In the following, we show how Theorem.~\ref{thm:thm-strip} proves the correctness of the process mentioned above. But first, let prove some lemmas for $unshunt$ function presented in Eq.~\ref{eq:unshunt-fixed},
-and $split$ function from the definition in Eq.~\ref{eq:split-definition}.
+In the following, we show how Theorem.~\ref{thm:thm-strip} proves the correctness of the process mentioned above. But first, let prove some lemmas for $unshunt$ function presented in Eq.~(\ref{eq:unshunt-fixed}),
+and $split$ function from the definition in Eq.~(\ref{eq:split-definition}).
 
 \begin{lemma}[lem-unshunt]
   \label{lem:unshunt}
@@ -283,7 +283,7 @@ and $split$ function from the definition in Eq.~\ref{eq:split-definition}.
 \end{lemma}
 
 \begin{proof} Use induction on the cases defined by the outcome of the
-$unshunt$ function in Eq.~\ref{eq:unshunt-structured}.
+$unshunt$ function in Eq.~(\ref{eq:unshunt-structured}).
 When $n = 0$, by definition, $Γ ⊢ φ$.
 When $n = 1$, we apply the following theorem from~\cite{AgdaProp}
 
@@ -355,7 +355,7 @@ Second, using the following theorem from \cite{AgdaProp},
 \end{proof}
 
 Now, let us consider the $split$ function presented in
-Eq.~\ref{eq:split-definition} that yields a conjunction of subgoals from a proposition, the goal in \Metis.
+Eq.~(\ref{eq:split-definition}) that yields a conjunction of subgoals from a proposition, the goal in \Metis.
 
 \begin{equation}
 \label{eq:split-definition}
@@ -405,7 +405,7 @@ the process mentioned above.
 \end{lemma}
 
 \begin{proof} We now proceed by induction on the structure of the
-formula φ in the definition of Eq.~\ref{eq:split-definition}.
+formula φ in the definition of Eq.~(\ref{eq:split-definition}).
 For a complete proof, we refer the reader to~\cite{AgdaMetis}.\\[3mm]
 
 ($φ ≡ φ₁ ∧ φ₂$). We get a proof for each conjunct and using the introduction rule for conjunction, the result follows.
@@ -557,7 +557,7 @@ the conjunct required.
 
 \begin{proof}
 When φ ≡ ψ, from $Γ ⊢ conjunct(φ, ψ)$ by normalization, we get $Γ ⊢ ψ$.
-By using $subst$ theorem Eq.~\ref{eq:substitution-theorem}, we get the desire conclusion. If the proposition φ is a conjunction, and $ψ ≡ conjunct(φ_{i}, ψ)$
+By using $subst$ theorem Eq.~(\ref{eq:substitution-theorem}), we get the desire conclusion. If the proposition φ is a conjunction, and $ψ ≡ conjunct(φ_{i}, ψ)$
 for some $i = 1,\ 2$, then,
 
 \begin{equation}
@@ -591,7 +591,7 @@ We provide some useful theorems to perform the following tasks.
   \item Reorder a conjunction of disjuncts (CNF), $φ = φ₁ ∧ φ₂ ∧ \cdots$, to match with another CNF formula equivalent $ψ = ψ₁ ∧ ψ₂ ∧ \cdots$.
 \end{itemize}
 
-First, we define the $rdisj$ function in Eq.~\ref{eq:rdisj-def} to convert a disjunction to be a right-associative disjunction, and following
+First, we define the $rdisj$ function in Eq.~(\ref{eq:rdisj-def}) to convert a disjunction to be a right-associative disjunction, and following
 a similar approach we define the $rconj$ function for conjunctions.
 
 \begin{align}
@@ -611,7 +611,7 @@ a similar approach we define the $rconj$ function for conjunctions.
   $Γ ⊢ φ$ then $Γ ⊢ rdisj(φ)$.
 \end{lemma}
 
-The following function, $build_{∨} : \Prop → \Prop → \Prop$ in Eq.~\ref{eq:build-or}, intends to construct a disjunction from another disjunction, specifically, we want to rearrange the disjuncts in the source formula to match with the target disjunction for syntactic
+The following function, $build_{∨} : \Prop → \Prop → \Prop$ in Eq.~(\ref{eq:build-or}), intends to construct a disjunction from another disjunction, specifically, we want to rearrange the disjuncts in the source formula to match with the target disjunction for syntactic
 equivalence.
 
 \begin{equation}
@@ -632,7 +632,7 @@ equivalence.
 $Γ ⊢ φ$, and $ψ\in \Prop$ then $Γ ⊢ build_{∨}(φ)$.
 \end{lemma}
 
-The function $factor : \Prop → \Prop$  in Eq.~\ref{eq:factor-definition} is intended to work only for right-associative disjunctions, and reduces a disjunction of the same disjunct (e.g., $factor(φ ∨ (φ ∨ \cdots)) \mapsto\ φ$).
+The function $factor : \Prop → \Prop$  in Eq.~(\ref{eq:factor-definition}) is intended to work only for right-associative disjunctions, and reduces a disjunction of the same disjunct (e.g., $factor(φ ∨ (φ ∨ \cdots)) \mapsto\ φ$).
 
 \begin{align}
 \begin{split}
@@ -652,7 +652,7 @@ The function $factor : \Prop → \Prop$  in Eq.~\ref{eq:factor-definition} is in
 
 Now, with a right-associative disjunction by applying $rdisj$ function to
 a proposition $φ$, $sbuild_{∨}: \Prop → \Prop → \Prop$ in
-Eq.~\ref{eq:strong-build-or-definition} aims to construct the disjunction
+Eq.~(\ref{eq:strong-build-or-definition}) aims to construct the disjunction
 ψ by using each of its disjuncts from the proposition φ. This approach to
 build a disjunction from another is inspired on the description in
 \citeauthor{bohme2010}~\cite{bohme2010} to prove equality between nested
@@ -964,7 +964,7 @@ $Γ, φ₁ ∨ φ₂ ⊢ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$, and the lemma
 \label{sssec:clausification}
 
 \begin{theorem}[thm-clausify]
-\label{thm:thm_clausify}
+\label{thm:thm-clausify}
   $Γ ⊢ φ$ and $ψ \in\Prop$ then $Γ ⊢ clausify(φ, ψ)$, where,
   \begin{align}
       clausify(φ,ψ) =
@@ -975,7 +975,7 @@ $Γ, φ₁ ∨ φ₂ ⊢ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$, and the lemma
   \end{align}
 \end{theorem}
 
-\begin{proof} When $φ ≡ ψ$, we use the $subs$ theorem Eq.~\ref{eq:substitution-theorem}. Otherwise, we use Theorem \ref{thm:thm-reorder-and-or} and Theorem \ref{thm:thm-cnf}.
+\begin{proof} When $φ ≡ ψ$, we use the $subs$ theorem Eq.~(\ref{eq:substitution-theorem}). Otherwise, we use Theorem \ref{thm:thm-reorder-and-or} and Theorem \ref{thm:thm-cnf}.
 \end{proof}
 
 % subsubsection clausification (end)
@@ -1023,7 +1023,7 @@ $ψ ∈_{∧} φ$, if there is some $i = 1, \cdots, n$ such that $ψ = φᵢ$.
   \end{cases}
 \end{equation*}
 
-Finally, we remove redundancies in a proposition assuming that it is given in conjunctive normal form and right-associative, by composing the functions described above in the Eq.~\ref{eq:redun-ast}
+Finally, we remove redundancies in a proposition assuming that it is given in conjunctive normal form and right-associative, by composing the functions described above in the Eq.~(\ref{eq:redun-ast})
 for the function $redun^{*}$.
 
 \begin{equation*}

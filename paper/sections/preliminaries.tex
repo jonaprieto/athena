@@ -21,42 +21,43 @@ propositional negation $(¬)$, and logic constants $⊥$
 and $⊤$. We use the inductive definition of the set \Prop
 presented in \cite{VanDalen1994} as the mechanism to produce any
 propositional formula.
-Then, $ϕ_i \in \Prop$ for all $i \in \mathbb{N}$.
+%Then, $ϕ_i \in \Prop$ for all $i \in \mathbb{N}$.
+$⊥, ⊤ \in \Prop$.
 If $φ, ψ\in \Prop$, then $(φ\ \square\ ψ) \in \Prop$,
-where $(φ\ \square\ ψ)$ stands for a proposition that use a
-binary connective in the place for the $\square$ symbol.
+where $(φ\ \square\ ψ)$ stands for a proposition that use the $\square$ symbol as one of the binary connectives mentioned above.
 If $φ \in \Prop$, then $(¬ φ) \in \Prop$.
-Finally, $⊥, ⊤ \in \Prop$.
 
 \emph{Derivations.}
 A derivation of $φ$ is a mechanism to obtain the conclusion $φ$ from
 the application of some deduction steps. Such a deduction step has
-the form of a set of propositional \emph{premises} that conclude the
-result: one or more propositions. As we show in the following
+the form of a set of propositional \emph{premises} that conclude
+one or more proposition as the conclusion.
+
+As we show in the following
 figure, the premises are always above the line, the conclusions
 are below it, and the name of the inference or the theorem used is
-on the right the line. As a notation convention, if the name of a
-rule used in the derivation step is typed using verbatim, that
-means, it is available in our implementation (see for instance,
-theorems in \cite{AgdaProp}) used in some derivations latter.
+on the left or on the right of the line. As a notation convention, if the name of a rule used in the derivation step is typed using verbatim font face, it means, the inference rule belongs to our implementation~\cite{AgdaProp, AgdaMetis} in the Proof Assistant of a inference rule presented
+with a similar name.
 
-\[
+\begin{equation*}
 \label{eq:derivation}
 \begin{bprooftree}
-\AxiomC{φ}
-\AxiomC{ψ}
-\BinaryInfC{φ ∧ ψ}
-\end{bprooftree}\qquad
-\begin{bprooftree}
-\AxiomC{[¬ φ]}
-\noLine
-\UnaryInfC{$\vdots$}
-\noLine
-\UnaryInfC{⊥}
-\RightLabel{\abbre{RAA}}
-\UnaryInfC{φ}
+  \AxiomC{$φ$}
+  \AxiomC{$ψ$}
+  \RightLabel{∧-intro}
+  \BinaryInfC{$φ ∧ ψ$.}
 \end{bprooftree}
-\]
+% \qquad
+% \begin{bprooftree}
+%   \AxiomC{$[¬ φ]$}
+%   \noLine
+%   \UnaryInfC{$\vdots$}
+%   \noLine
+%   \UnaryInfC{$⊥$}
+%   \RightLabel{\abbre{RAA}}
+%   \UnaryInfC{φ}
+% \end{bprooftree}
+\end{equation*}
 
 \vskip 2mm
 
@@ -78,33 +79,29 @@ formulation of the principle of proof by contradiction, that is, a derivation
 of a contradiction, $⊥$, from the hypothesis $(¬ φ)$, is a
 derivation of $φ$.
 
+\begin{equation*}
 \label{eq:PEM-RAA}
-\[
 \begin{bprooftree}
-\AxiomC{\ }
-\RightLabel{\scriptsize\tt PEM}
-\UnaryInfC{Γ ⊢ φ ∨ ¬ φ}
-\end{bprooftree}
-\qquad
+\AxiomC{}
+\RightLabel{PEM}
+\UnaryInfC{$Γ ⊢ φ ∨ ¬ φ$,}
+\end{bprooftree}\qquad
 \begin{bprooftree}
-\AxiomC{Γ, ¬ φ ⊢ ⊥}
-\RightLabel{\scriptsize\tt RAA}
-\UnaryInfC{Γ ⊢ φ}
+\AxiomC{$Γ, ¬ φ ⊢ ⊥$}
+\RightLabel{RAA}
+\UnaryInfC{$Γ ⊢ φ$.}
 \end{bprooftree}
-\qquad
-\]
+\end{equation*}
 
 \emph{Natural Deductions.}
-The natural deduction designed by Gentzen \improvement{Cite the work
-by Gentzen.} defines a formal system for derivations that uses a set
+The natural deduction designed by Gerhard Gentzen in 1930s defines a formal system for derivations that uses a set
 of inference rules as the only way to obtain a conclusion.
 We use this system to refer to formal proofs as natural deduction
-proofs and conversely, in the latter.
-We define our inference rules for \CPL in the Fig.
-\ref{fig:CPL-inference-rules}. These rules give us the complete
+proofs and conversely.
+We define the \CPL formal system in the
+Fig.~\ref{fig:CPL-inference-rules}. The rules described in the aforementioned figure give us the complete
 meaning of the connectives; how to introduce them and
 how they can be remove them in the conclusion side of the theorems.
-\change{the size of the text.}
 
 \begin{figure}
 \[%\scalebox{0.9}{
@@ -235,8 +232,6 @@ In a proof tree, the root is the conclusion of the entire
 derivation. The nodes labeled with the name of the inference rule
 contains the result of applying that rule to their parents. Lastly,
 the leaves in the tree become the premises, not all necessary
-canceled (see a better discussion on cancellation of hypotheses in
-\cite{VanDalen1994}).
-
+canceled (see a better discussion about canceling  hypotheses in proof trees in Section 2.4 in \citeauthor{VanDalen1994}~\cite{VanDalen1994}).
 
 \end{document}
