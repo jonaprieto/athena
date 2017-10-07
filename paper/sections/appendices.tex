@@ -1,0 +1,26 @@
+
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+\begin{subappendices}
+
+\renewcommand{\thesection}{\Alph{section}}%
+% or try \arabic{section}
+
+\section{A Complete Example}
+\label{appendix}
+
+\subsection{The Problem}
+
+\begin{equation*}
+\{\ (p ∨ q) ∧ (p ∨ r)\ \} \vdash p ∨ (q ∧ r)
+\end{equation*}
+
+\subsection{\TSTP Derivation}
+\verbatiminput{sections/data/problem.tstp}
+
+\subsection{\Agda Proof}
+\verbatiminput{sections/data/problem.agda}
+\end{subappendices}
+
+\end{document}

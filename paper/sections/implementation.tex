@@ -1,0 +1,79 @@
+
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+% ===================================================================
+
+\section{Implementation}
+\label{sec:implementation}
+
+
+\subsection{A Brief Review of Agda}
+\label{ssec:agda-definition}
+
+\Agda is an interactive system for constructing proofs and programs,
+based on Martin-L\"{o}f's type theory and extended with records,
+parametrised modules, among other features. One of the main
+strengths of \Agda is its support for writing proofs, which we shall
+call \Agda's proof engine. It consists of: support for inductively
+defined types, including inductive families, and function
+definitions using pattern matching on such types, normalisation
+during type- checking, commands for refining proof terms, coverage
+checker and termination checker.
+
+The inductive approach for representing classical propositional
+logic is better because we benefit from \Agda's proof engine and its
+Unicode support that allows us writing proofs similar as we find in
+math text books.
+
+In \Agda, we have defined a proposition formula
+as an inductive type using the keyword \texttt{data} and the name
+\name{PropFormula}.
+We extended the definition for propositions presented in
+\cite{Altenkirch2015} to mathc the definion in Section
+\ref{sec:preliminaries}.
+We include every connective and logic constant as a constructor.
+We also define the constructor for atomic propositions denoted by
+\verb!Var!. These atomic expressions are represented using a natural
+number $i$ bounded by a size of the universe $n$ for those atomic
+propositions (in \Agda, we use the data type \verb!Fin! from the
+standard  library for such a purpose).
+
+\begin{verbatim}
+data PropFormula : Set where
+  Var : Fin n → PropFormula
+  ⊤ : PropFormula
+  ⊥ : PropFormula
+  _∧_ _∨_ _⇒_ _⇔_ : (φ ψ : PropFormula) → PropFormula
+  ¬_ : (φ : PropFormula) → PropFormula
+\end{verbatim}
+
+\begin{remark}
+The underscores in the above definition denote holes for a function of arity equivalent to the number of such holes.
+\end{remark}
+
+\begin{remark}
+The type notation
+\begin{verbatim}
+_⇔_ : (φ ψ : PropFormula) → PropFormula
+\end{verbatim}
+is a syntax sugar for the type
+\begin{verbatim}
+PropFormula → PropFormula → PropFormula.
+\end{verbatim}
+\end{remark}
+
+\begin{example}
+\hspace*{5cm}\\[3mm]
+\begin{verbatim}
+r : PropFormula
+p = Var (# 0)
+q = Var (# 1)
+r = Var (# 2)
+
+φ : PropFormula
+φ = (¬ r ∨ p) ∧ (¬ r ∨ q)
+\end{verbatim}
+\end{example}
+
+\end{document}
