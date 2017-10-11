@@ -186,19 +186,19 @@ $⊥$, since \Metis delivers proofs by refutation.
 \subsubsection{Proof Rules.}
 \label{ssec:proof-rules}
 
-Una demostración de Metis para un problema logica propositional sin igualdad puede incluir en su derivacion \TSTP hasta 6 diferentes reglas de inferencia:
-\canonicalize, \clausify, \conjunct, \negate, \simplify, y \strip.
-Contrastando el codigo fuente de Metis y las reglas de la figura~\ref{fig:metis-inferences}. Podemos observar lo siguiente:
-la regla de inferencia \emph{axiom} aparece por medio  de las reglas:
-\canonicalize, \clausify, \conjunct, and \simplify.
-La regla de inferencia \emph{resolve} aparece con el mismo nombre, \resolve.
-Las ultimas reglas son \strip y \negate que son la representacion de la regla de inferencia \emph{assume}, las cuales sirven para
-introducir en una demostracion la conjectura que se pretende demostrar, a esta conjetura nos referiremos tambien como el goal.
-Toda prueba de un goal, tiene en su derivacion la negacion de dicho goal,
-o de uno o varias proposiciones equivalentes, porque recordemos que
-las pruebas son por refutacion.
+A proof derivation reply by \Metis for a classic propositional logic
+without equality include in the \TSTP file at least six different inferences rules. These are exactly the same six rules from the
+\Metis's description in Fig.~\ref{fig:metis-inferences}. The aforementioned rules are \canonicalize, \clausify, \conjunct, \simplify, \negate, and \strip.
+Based on the scope of the problems (CPL) but also from the list of 6 inferences rules described on the \Metis' documentation, only 3 rules can be applied: \emph{axiom}, \emph{assume} and \emph{resolve}.
 
-De esta manera concluimos con una breve descripcion del probador de teoremas Metis. En lo siguiente, intentaremos justificar derivación de Metis paso por paso. Para esto,estudiamos cada una de las reglas antes mencionadas en más detalle, y para cada una de ellas, proponemos un teorema para emular
-su  razonamiento.
+Comparing these rules with \TSTP derivations but also after looking at the
+\Metis' source code, we speculate to say that for example.
+The \emph{axiom} rule appears by using one the rules: \canonicalize, \clausify, \conjunct, and \simplify. The \emph{resolve} appears using the
+same name with the binary rule \resolve. The \emph{assume} rule is the inference rule \negate to introduce the negation of the conjecture since
+\Metis replies refutation proofs. The \strip rule works with the conjecture, also named as the \emph{goal} of the problem. This intends for finding a equivalent conjunction of easier or smaller in size propositions, named \emph{subgoals}.
+
+This section briefly describes the \Metis prover for our purposes.
+In the next section, we discuss the proof-reconstruction for \Metis \TSTP derivations. In addition, we show a more detailed discussion around
+the aforementioned proof rules.
 
 \end{document}

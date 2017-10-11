@@ -12,20 +12,20 @@
 
 \input{sections/diagram.tex}
 
-% The proof-reconstruction approach proposed here consists of a series
-% of steps similar to the workflow presented by \citeauthor{sultana2015} in
-% \cite{sultana2015}. This process is a translation from a source
-% system to a target system. In our case, the system of origin, the
-% automatic theorem prover, is \Metis; the target system is a proof
-% assistant, \Agda. We choose \Agda, but another proof assistant with the same support of type theory and inductive types is valid (see a description of \Agda for its main features in
-% Section~\ref{sec:implementation}).
-% The overview of the proof-reconstruction is presented in
-% Fig.~\ref{fig:proof-reconstruction-workflow}, the process can begin with
-% a problem in \CPL that we encode in \TPTP format to be sent as the
-% input of the \Metis prover.
-% The algorithms of \Metis in Step~3 find
-% a solution if the problem is a theorem, in that case \Metis replies
-% with a derivation in \TSTP format of the proof, otherwise the problem is counter feasible.
+The proof-reconstruction approach proposed here consists of a series
+of steps similar to the workflow presented by \citeauthor{sultana2015} in
+\cite{sultana2015}. This process is a translation from a source
+system to a target system. In our case, the system of origin, the
+automatic theorem prover, is \Metis; the target system is a proof
+assistant, \Agda. We choose \Agda, but another proof assistant with the same support of type theory and inductive types is valid (see a description of \Agda for its main features in
+Section~\ref{sec:implementation}).
+The overview of the proof-reconstruction is presented in
+Fig.~\ref{fig:proof-reconstruction-workflow}, the process can begin with
+a problem in \CPL that we encode in \TPTP format to be sent as the
+input of the \Metis prover.
+The algorithms of \Metis in Step~3 find
+a solution if the problem is a theorem, in that case \Metis replies
+with a derivation in \TSTP format of the proof, otherwise the problem is counter feasible.
 
 % With such a derivation, in Step~5, we process the derivation with our \Haskell translator tool, \Athena~\cite{Athena}.
 % \Athena parses the \TSTP format, analyze the
