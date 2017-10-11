@@ -1,0 +1,130 @@
+\begin{figure}
+\centering
+
+\begin{tikzpicture}[
+  scale=0.9
+ , base/.style =
+      { font=\small
+      , align=center
+      }
+ , file/.style =
+      { base
+      , minimum height=3em
+      , shape=rectangle
+      , rounded corners
+      , fill=blue!2
+      , inner sep=5pt
+      , outer sep=2pt
+      , draw=blue!20
+      }
+  , program/.style =
+      { base
+      % , fill=gray!1
+      , rounded corners
+      , inner sep=5pt
+      , outer sep=0pt
+      }
+  , library/.style =
+      { shape=rectangle
+      , font=\small
+      , rounded corners
+      , fill=blue!2
+      , draw=blue!20
+      , inner sep=2.5pt
+      , outer sep=2pt
+      }
+  , diamondFile/.style =
+      { font=\small
+      , base
+      , fill=blue!2
+      , draw=blue!20
+      , diamond
+      , draw
+      , align=center
+      , inner sep=1pt
+      , outer sep=2pt
+      }
+ ]
+\node[file]
+(tptp){1.~\TPTP file \\ (CPL problem)};
+
+\node[ program
+     , right=0.6cm of tptp
+     ]
+(metis) {\Metis \\ (prover) };
+
+\node[ file
+     , right=0.6cm of metis
+     ]
+(tstp) {2.~\TSTP file\\(derivation)};
+
+\node[ program
+     , right=0.6cm of tstp
+     ]
+(athena) {\Athena tool\\(translator)
+};
+
+% ---- Agda libraries
+\node[ library
+     , above=3mm of athena
+     ]
+(agdametis) {\texttt{agda-metis} };
+\draw[->, thick] (agdametis) to (athena);
+
+\node[ library
+     , right=3mm of athena
+     ]
+(agdaprop) {\texttt{agda-prop} };
+\draw[->, thick] (agdaprop) to (athena);
+
+% ---------------------------------------------------
+
+\node[ file
+     , below =0.6cm of athena
+     ]
+(agdaproof) {3.~\Agda File\\(proof-term)};
+
+\node[ program
+     , align=left
+     , left=0.6cm of agdaproof
+     ]
+(libraries)
+{
+- \prg{agda-metis}\\
+- \prg{agda-prop}\\
+- \prg{agda-stdlib}\\
+(ext. libraries)
+};
+
+\node[ align=center
+     , left=0mm of libraries
+     ]
+(plus) {\textbf{+}};
+
+\node[ program
+     , left=0mm of plus
+     ]
+(agda) {\Agda\\(type-checker)};
+
+\node[ diamondFile
+     , below left =0.9cm and 1mm of agda
+     ]
+(agdai) {Interfase\\ \Agda File};
+
+\node[ diamondFile
+     , below right =0.9cm and 1mm of agda
+     ]
+(invalid) {Invalid\\ \Agda File};
+
+\draw[->, thick] (tptp)      to (metis);
+\draw[->, thick] (metis)     to (tstp);
+\draw[->, thick] (tstp)      to (athena);
+\draw[->, thick] (athena)    to (agdaproof);
+\draw[->, thick] (agdaproof) to (libraries);
+\draw[->, thick] (agda)      to (agdai);
+\draw[->, thick] (agda)      to (invalid);
+
+\end{tikzpicture}
+\caption{Proof-reconstruction overview.}
+\label{fig:proof-reconstruction-workflow}
+\end{figure}
