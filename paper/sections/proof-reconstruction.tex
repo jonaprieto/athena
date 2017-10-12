@@ -20,32 +20,26 @@ automatic theorem prover, is \Metis; the target system is a proof
 assistant, \Agda. We choose \Agda, but another proof assistant with the same support of type theory and inductive types is valid (see a description of \Agda for its main features in
 Section~\ref{sec:implementation}).
 The overview of the proof-reconstruction is presented in
-Fig.~\ref{fig:proof-reconstruction-workflow}, the process can begin with
-a problem in \CPL that we encode in \TPTP format to be sent as the
-input of the \Metis prover.
-The algorithms of \Metis in Step~3 find
-a solution if the problem is a theorem, in that case \Metis replies
-with a derivation in \TSTP format of the proof, otherwise the problem is counter feasible.
+Fig.~\ref{fig:proof-reconstruction-workflow}, the process begin with
+a \TPTP file that encodes a problem in \CPL. We use this file as the
+input of the \Metis prover and if the problem is a theorem, \Metis can reply with a derivation in \TSTP format of the proof.
 
-% With such a derivation, in Step~5, we process the derivation with our \Haskell translator tool, \Athena~\cite{Athena}.
-% \Athena parses the \TSTP format, analyze the
-% derivation and generates a representation of the natural deduction
-% proof using a tree data structure (see the properties
-% of this tree in Section~\ref{ssec:metis-proofs}).
-% We perform an analysis of the proof-tree removing redundancies,
-% unnecessary steps or unused output from the \TSTP derivation.
+With the \TSTP  derivation from the Step~2, we process the derivation with the \Athena translator tool~\cite{Athena}.
+\Athena parses the \TSTP format, analyzes the
+derivation and generates a representation of the natural deduction
+proof using a tree data structure (see the properties
+of this tree in Section~\ref{sssec:metis-proofs}).
+We perform an analysis of the proof-tree to remove some
+unnecessary steps that introduce redundancies or unused input for
+\Athena.
 
-% As a result,
-% \Athena generates an \Agda file with the proof-term. We have included
-% in this file, \emph{imports} that call our \Agda libraries that give
-% support for CPL presented in~\cite{AgdaProp}, and support for \Metis'
-% inference rules implemented in~\cite{AgdaMetis}.
+As a result of using \Athena, we get an \Agda file, the proof-term. To generate this file, \Athena has used names of functions and theorems from \Agda libraries:
+\texttt{agda-prop}~\cite{AgdaProp}, and \texttt{agda-metis}~\cite{AgdaMetis}.
 
-% Finally, we use the proof checker in Step~7 to type-check the
-% proof-term. If type-checking succeed, the \TSTP
-% derivation is correct, otherwise when it fails, one of the three
-% actors in the process could be the responsible: \Metis, \Athena, or
-% \Agda.
+
+Finally, we type-check the \Agda proof-term. If type-checking succeed, the \TSTP derivation delivered by \Metis was correct.
+In that case \Agda outputs an interface file.
+Otherwise, when type-checking fails, the failure must be investigated by the user, checking \Metis, \Athena, or even \Agda.
 
 % We are responsible for errors committed in the translation from
 % \TSTP to \Agda: bugs in the parsing module, lack of the coverage of

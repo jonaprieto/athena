@@ -68,23 +68,20 @@ implemented for proof-reconstruction in the last decades. These
 programs are relevant not only because it helps to spread their
 usage but they also increase the confidence of their users about
 their algorithms and their correctness (see, for example, bugs in
-\ATPs~\cite{Keller2013}, \cite{Bohme2011}, \cite{Fleury2014} and
+\ATPs~\cite{Keller2013,Bohme2011,Fleury2014} and
 \cite{Kanso2012}). We mention some of these tools in the related
 work, Section \ref{sec:related-work}.
 
-In this paper, we describe the integration of \Metis prover with the
-proof assistant \Agda by parsing \TSTP derivations to generate \Agda
-proof-terms. We structure the paper as follows.
-We briefly mention notation and syntax of the classical propositional
-logic in Section \ref{sec:preliminaries}.
-In Section \ref{ssec:metis-language-and-proofs}, we introduce the
+In this paper, we ported a subset of the \Metis' inference rules to
+\Agda, the propositional fragmented without equality. The formalization of these rules allowed us to justify step-by-step \Metis' \TSTP derivations by translating automatically to \Agda by a proof-reconstruction tool built for this research named \Athena.
+We structure the paper as follows.
+We briefly mention some notation and syntax of the classical propositional logic in Section~\ref{ssec:CPL}.
+In Section~\ref{ssec:metis-language-and-proofs}, we introduce the
 \Metis prover and its deduction system.
-In Section \ref{sec:proof-reconstruction}, we present our
+In Section~\ref{sec:proof-reconstruction}, we present our
 approach to reconstruct proofs deliver by \Metis in type theory.
-We listed some conclusions and future work in Section
-\ref{sec:conclusions}. At the end, we list some related works in
-proof reconstruction in Section \ref{sec:related-work}.
-The appendix \textsc{A} shows a complete example of the proof
-reconstruction workflow.
+We listed some conclusions and future work in
+Section~\ref{sec:conclusions}. Some related works with this paper is presented in Section~\ref{sec:related-work}.
+Finally, we provide a complete example in the appendix \textsc{A} of the proof reconstruction workflow.
 
 \end{document}

@@ -109,7 +109,7 @@
 \node[ diamondFile
      , below left =0.9cm and 1mm of agda
      ]
-(agdai) {Interfase\\ \Agda File};
+(agdai) {Interface\\ \Agda File};
 
 \node[ diamondFile
      , below right =0.9cm and 1mm of agda
@@ -125,6 +125,6 @@
 \draw[->, thick] (agda)      to (invalid);
 
 \end{tikzpicture}
-\caption{Proof-reconstruction overview. The rectangles nodes represent a file involved in the process. Between two nodes, we find direct edges that represent calls to programs. The programs here involved process an input file and reply always an output file.}
+\caption{Proof-reconstruction overview. The rectangles or rhombuses nodes represent a file involved in the process. Between two nodes, we find direct edges that represent calls to programs where the input file is pointed by the edge entering and the out edge points to the reply file.}
 \label{fig:proof-reconstruction-workflow}
 \end{figure}
