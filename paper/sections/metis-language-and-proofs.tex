@@ -118,25 +118,19 @@ problem $p\vdash p$.}
 % -------------------------------------------------------------------
 
 \subsubsection{Proof Rules.}
-\label{ssec:proof-rules}
+\label{sssec:proof-rules}
 
-Based on the scope of the problems treated in this research (CPL), only three rules from Fig.~\ref{fig:metis-inferences} apply: \emph{axiom}, \emph{assume} and \emph{resolve} rule.
-
-Nonetheless, the \Metis' \TSTP derivations includes other different rules. They are \canonicalize, \clausify, \conjunct, \simplify, \negate, and
+Since the scope of the problems treated in this research is CPL, from the list of \Metis inference rules in~\ref{fig:metis-inferences}, we found that only three rules apply: \emph{axiom}, \emph{assume} and \emph{resolve} rule.
+Nonetheless, \TSTP derivations replied by \Metis use other rules. They are \canonicalize, \clausify, \conjunct, \simplify, \negate, and
 \strip.
 
-Comparing the \Metis' rules by looking at the \Metis' source code, we conclude the following.
+\Metis looks for a refutation to prove \verb!fof! problems.
+A \verb!fof! problem contains the conjecture also named the \emph{goal} in the problem. This goal is stripped into subgoals by using the \strip rule. The subgoals are the conjuncts in a general conjunction that is equivalent to the aforementioned goal. Therefore, to prove the goal, \Metis proves independently each subgoal since they tend to be less complex or even smaller propositions. At the end, the conjunction of all subgoal proofs must prove the goal. Nevertheless, this last reasoning is not explicit neither in the \TSTP derivations nor in the \Metis' documentation.
+Since \Metis replies refutation proofs, to prove each subgoal, in the \TSTP derivation, the inference rule \negate introduces the negation of such subgoals. The \negate rule is a specification of the \emph{assume} rule.
 
-When \Metis looks for a refutation to prove a \verb!fof! problem.
-A conjecture, also named as the \emph{goal} of the problem, is stripped into
-subgoals. The subgoals are the conjuncts of a general conjunction equivalents to the goal. The \Metis' strategy here is Divide and Conquer. To prove the goal, it proves independently each subgoal. They are less complex or even smaller propositions. Then, then conjunction of all subgoal proofs must prove the goal. Unfortunately, this last reasoning is not explicit in its \TSTP derivations.
-
-The \emph{axiom} rule appears by using one the rules: \canonicalize, \clausify, \conjunct, and \simplify. The \emph{resolve} rule appears using the
-same name in the binary resolution rule, \resolve. The \emph{assume} rule is the inference rule \negate that introduces the negation of a conjecture, since \Metis replies refutation proofs. To end with the rules, we found the \strip rule. This one works only for conjectures. In \Metis, a conjecture is also named as the \emph{goal} of the problem. This rule intends to prove conjuncts from a equivalent conjunction of the goal. These conjuncts intends to split the goal into less complex propositions, not necessary smaller. These conjuncts are named \emph{subgoals}. At the end, a derivation is a proof of the goal, composed by proofs of each of these subgoals.
-
-This section briefly describes the \Metis prover for our purposes.
-In the next section, we discuss the proof-reconstruction for \Metis' \TSTP derivations. In addition, we show a more detailed discussion around
-the aforementioned proof rules.
+Finally, \emph{axiom} rule appears in \TSTP derivation by one of the following rules to in the problem a \verb!fof! axiom: \canonicalize, \clausify, \conjunct, or \simplify. Then, the last rule remains is \emph{resolve}, it appears by the
+binary rule, \resolve, the version in \Metis of the resolution
+theorem. For a more detailed description of this rules see the Section~\ref{sec:proof-reconsruction}.
 
 \subsubsection{Proofs.}
 \label{ssec:metis-proofs}
