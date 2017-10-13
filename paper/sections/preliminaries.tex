@@ -106,12 +106,12 @@ how they can be remove them in the conclusion side of the theorems.
 \[%\scalebox{0.9}{
 \begin{bprooftree}
 \AxiomC{}
-\RightLabel{assume $φ$}
+\RightLabel{assume}
 \UnaryInfC{$Γ , φ ⊢ φ$}
 \end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ φ$}
-\RightLabel{weaken $ψ$}
+\RightLabel{weaken}
 \UnaryInfC{$Γ , ψ ⊢ φ$}
 \end{bprooftree}\quad
 \begin{bprooftree}
@@ -121,7 +121,7 @@ how they can be remove them in the conclusion side of the theorems.
 \end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ ⊥$}
-\RightLabel{$⊥$-elim $φ$}
+\RightLabel{$⊥$-elim}
 \UnaryInfC{$Γ ⊢ φ$}
 \end{bprooftree}
 %}
@@ -161,7 +161,7 @@ how they can be remove them in the conclusion side of the theorems.
 \end{bprooftree}\quad
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ φ$}
-\RightLabel{$\vee$-intro$_1$ $ψ$}
+\RightLabel{$\vee$-intro$_1$}
 \UnaryInfC{$Γ ⊢ φ \vee ψ$}
 \end{bprooftree}
 %}
@@ -170,7 +170,7 @@ how they can be remove them in the conclusion side of the theorems.
 \[%\scalebox{0.9}{
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ ψ$}
-\RightLabel{$\vee$-intro$_2$ $φ$}
+\RightLabel{$\vee$-intro$_2$}
 \UnaryInfC{$Γ ⊢ φ \vee ψ$}
 \end{bprooftree}\quad
 \begin{bprooftree}

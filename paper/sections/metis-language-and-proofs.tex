@@ -50,8 +50,8 @@ and \verb!$false!, for the symbols (∧, ∨, ⇒, ⇔, ¬, ⊤, ⊥), respectiv
 
 For instance, let us express the problem
 $p\, \vdash \neg (p \wedge \neg p) ∨ (q \wedge \neg q)$
-in \TPTP syntax. We begin by declaring the $p$ axiom using the keyword,
-\verb!axiom!. Later, we include the expected conclusion using the \verb!conjecture! keyword.
+in \TPTP syntax. We begin by declaring the $p$ axiom using the \verb!axiom!
+keyword. Later, we include the expected conclusion using the \verb!conjecture! keyword.
 
 \begin{verbatim}
 fof(h, axiom, p).
@@ -111,58 +111,6 @@ problem $p\vdash p$.}
 \label{fig:metis-proof-tstp}
 \end{figure}
 
-% -------------------------------------------------------------------
-
-\subsubsection{Proof Rules.}
-\label{sssec:proof-rules}
-
-Since the scope of the problems treated in this research is CPL, from the list of \Metis inference rules in~\ref{fig:metis-inferences}, we found that only three rules apply: \emph{axiom}, \emph{assume} and \emph{resolve} rule.
-Nonetheless, \TSTP derivations replied by \Metis use other rules. They are \canonicalize, \clausify, \conjunct, \simplify, \negate, and
-\strip.
-
-\begin{figure}
-\centering
-  \begin{bprooftree}\tt
-    \AxiomC{}
-    \RightLabel{negate}
-    \UnaryInfC{$\neg p$}
-    \RightLabel{strip}
-    \UnaryInfC{$\neg p$}
-    \AxiomC{}
-    \RightLabel{axiom}
-    \UnaryInfC{$p$}
-    \RightLabel{canonicalize}
-    \UnaryInfC{$p$}
-    \RightLabel{simplify}
-    \BinaryInfC{$⊥$}
-    \RightLabel{canonicalize}
-    \UnaryInfC{$⊥$}
-  \end{bprooftree}
-  \caption{The \Metis' proof tree for $p \vdash p$ from the
-  derivation in Fig.~\ref{fig:metis-proof-tstp}}
-  \label{fig:metis-example}
-\end{figure}
-
-
-\Metis looks for a refutation to prove \verb!fof! problems.
-A \verb!fof! problem contains the conjecture also named the \emph{goal} in the problem. This goal is stripped into subgoals by using the \strip rule. The subgoals are the conjuncts in a general conjunction that is equivalent to the aforementioned goal. Therefore, to prove the goal, \Metis proves independently each subgoal since they tend to be less complex or even smaller propositions. At the end, the conjunction of all subgoal proofs must prove the goal. Nevertheless, this last reasoning is not explicit neither in the \TSTP derivations nor in the \Metis' documentation.
-Since \Metis replies refutation proofs, to prove each subgoal, in the \TSTP derivation, the inference rule \negate introduces the negation of such subgoals. The \negate rule is a specification of the \emph{assume} rule.
-
-Finally, \emph{axiom} rule appears in \TSTP derivation by one of the following rules to in the problem a \verb!fof! axiom: \canonicalize, \clausify, \conjunct, or \simplify. Then, the last rule remains is \emph{resolve}, it appears by the
-binary rule, \resolve, the version in \Metis of the resolution
-theorem. For a more detailed description of this rules see the Section~\ref{sec:proof-reconstruction}.
-
-\subsubsection{Proofs.}
-\label{sssec:metis-proofs}
-
-A proof-object delivered in a \Metis' proof encodes a natural
-deduction proof. The deduction system uses six inference rules
-\cite{hurd2003first} listed in Fig.~\ref{fig:metis-inferences}.
-With these inference rules as the only valid deduction steps, \Metis
-attempts to prove conjectures by refutation (see. e.g.,
-\emph{falsium} in the last conclusion of the \TSTP derivation in
-Fig.~\ref{fig:metis-example}).
-
 \begin{figure}
 \[
 % \scalebox{0.9}{
@@ -211,6 +159,58 @@ Fig.~\ref{fig:metis-example}).
 \caption{CNF Inference rules of the \texttt{Metis} prover.}
 \label{fig:metis-inferences}
 \end{figure}
+
+% -------------------------------------------------------------------
+
+\subsubsection{Proof Rules.}
+\label{sssec:proof-rules}
+
+Since the scope of the problems treated in this research is \CPL, from the list of \Metis inference rules in Fig.~\ref{fig:metis-inferences}, we found that only three rules apply: \emph{axiom}, \emph{assume} and \emph{resolve} rule.
+Nonetheless, \TSTP derivations replied by \Metis use other rules. They are \canonicalize, \clausify, \conjunct, \simplify, \negate, and
+\strip.
+
+\Metis looks for a refutation to prove \verb!fof! problems.
+A \verb!fof! problem contains the conjecture also named the \emph{goal} in the problem. This goal is stripped into subgoals by using the \strip rule. The subgoals are the conjuncts in a general conjunction that is equivalent to the aforementioned goal.
+Therefore, to prove the goal, \Metis proves independently each subgoal since they tend to be less complex or even smaller propositions. At the end, the conjunction of all subgoal proofs must prove the goal. Nevertheless, this last reasoning is not explicit neither in the \TSTP derivations nor in the \Metis' documentation.
+Since \Metis replies refutation proofs, to prove each subgoal, in the \TSTP derivation, the inference rule \negate introduces the negation of such subgoals. The \negate rule is a specification of the \emph{assume} rule.
+
+Finally, \emph{axiom} rule appears in \TSTP derivation by one of the following rules to in the problem a \verb!fof! axiom: \canonicalize, \clausify, \conjunct, or \simplify. Then, the last rule remains is \emph{resolve}, it appears by the
+binary rule, \resolve, the version in \Metis of the resolution
+theorem. For a more detailed description of this rules see the Section~\ref{sec:proof-reconstruction}.
+
+\subsubsection{Proofs.}
+\label{sssec:metis-proofs}
+
+\begin{figure}
+\centering
+  \begin{bprooftree}\tt
+    \AxiomC{}
+    \RightLabel{negate}
+    \UnaryInfC{$\neg p$}
+    \RightLabel{strip}
+    \UnaryInfC{$\neg p$}
+    \AxiomC{}
+    \RightLabel{axiom}
+    \UnaryInfC{$p$}
+    \RightLabel{canonicalize}
+    \UnaryInfC{$p$}
+    \RightLabel{simplify}
+    \BinaryInfC{$⊥$}
+    \RightLabel{canonicalize}
+    \UnaryInfC{$⊥$}
+  \end{bprooftree}
+  \caption{The \Metis' proof tree for $p \vdash p$ from the
+  derivation in Fig.~\ref{fig:metis-proof-tstp}}
+  \label{fig:metis-example}
+\end{figure}
+
+A proof-object delivered in a \Metis' proof encodes a natural
+deduction proof. The deduction system uses six inference rules
+\cite{hurd2003first} listed in Fig.~\ref{fig:metis-inferences}.
+With these inference rules as the only valid deduction steps, \Metis
+attempts to prove conjectures by refutation (see. e.g.,
+\emph{falsium} in the last conclusion of the \TSTP derivation in
+Fig.~\ref{fig:metis-example}).
 
 These proofs are directed acyclic graphs, trees of refutations. Each
 node stands for an application of an inference rule and the leaves

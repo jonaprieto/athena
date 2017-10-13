@@ -60,7 +60,7 @@ disjoint cases. This process produces a list of new subgoals, the
 conjunction of these subgoals implies the goal. Then, a proof of the
 goal becomes in smaller proofs, one refutation for each subgoal.
 These subgoals are introduced in the \TSTP derivation with the \strip
-inference rule. We refer the reader to see Section~\ref{sssec:splitting-goal} for the formalization of \strip rule.
+inference rule. We refer the reader to see Section~\ref{sssec:strip-a-goal} for the formalization of \strip rule.
 
 \begin{verbatim}
 fof(goal, conjecture, p & r & q).
@@ -151,12 +151,12 @@ in the \canonicalize inference.}
 % ...................................................................
 \vskip 2mm
 
-\textit{Resolution.} The \resolve rule incorporates  the resolution theorem showed in Fig.~\ref{fig:metis-inferences} with
-three arguments: a positive literal $l$ to apply the resolution theorem, and two derivations, $\mathcal{D}₁$ and $\mathcal{D}₂$.
+\textit{Resolution.} The \resolve rule incorporates the resolution theorem showed in Fig.~\ref{fig:metis-inferences} for the \TSTP derivations.
+This rule posses three arguments: a positive literal $l$ to apply the resolution theorem, and two derivations, $\mathcal{D}₁$ and $\mathcal{D}₂$.
 
 The positive literal $l$ must occur in
 the formula from the first derivation $\mathcal{D}₁$, and the
-negative literal must occur in the formula from the second derivation $\mathcal{D}₂$ (see the pattern in \Metis' logic core for the \emph{resolve} rule in Fig.~\ref{fig:metis-inferences}).
+negative literal must occur in the formula from the second derivation $\mathcal{D}₂$ (see the pattern in the \emph{resolve} rule).
 We refer the reader to see Section~\ref{sssec:resolve} for the formalization of the \resolve rule.
 
 \begin{verbatim}

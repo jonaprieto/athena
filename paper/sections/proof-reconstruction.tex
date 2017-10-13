@@ -201,16 +201,15 @@ function, among other kinds.
 \subsection{Emulating \Metis' Inference Rules}
 \label{ssec:emulating-inferences}
 
+\subsubsection{Strip a Goal.}
+\label{sssec:strip-a-goal}
 
-\subsubsection{Splitting a Goal.}
-\label{sssec:splitting-goal}
-
- To prove a goal, \Metis splits the goal into
+To prove a goal, \Metis splits the goal into
 disjoint cases. This process produces a list of new subgoals, the
 conjunction of these subgoals implies the goal. Then, a proof of the
 goal becomes in smaller proofs, one refutation for each subgoal.
 These subgoals are introduced in the \TSTP derivation with the \strip
-inference rule.
+inference rule as we show with the following excerpt.
 
 \begin{verbatim}
 fof(goal, conjecture, p & r & q).
@@ -219,8 +218,8 @@ fof(subgoal_1, plain, p => r, inference(strip, [], [goal])).
 fof(subgoal_2, plain, (p & r) => q, inference(strip, [], [goal])).
 \end{verbatim}
 
-In the following, we show how Theorem~\ref{thm:thm-strip} proves the
-correctness of the process mentioned above. But first, let us prove some
+To prove the correctness of the process mentioned above, we state
+the Theorem~\ref{thm:thm-strip}. But first, let us prove some
 lemmas for $unshunt$ function presented in Eq.~(\ref{eq:unshunt-fixed}),
 and $split$ function from the definition in Eq.~(\ref{eq:split-definition}).
 
@@ -245,46 +244,47 @@ $unshunt$ function in Eq.~(\ref{eq:unshunt-structured}).
 \begin{equation*}
   \begin{bprooftree}
   \AxiomC{$Γ ⊢ unshunt(φ₁ ⇒ (φ₂ ⇒ φ₃), n)$}
-  \RightLabel{By def.}
+  \RightLabel{axiom}
   \UnaryInfC{$Γ ⊢ unshunt(φ₁ ⇒ (φ₂ ⇒ φ₃), n-1)$}
   \RightLabel{lem-unshunt}
   \UnaryInfC{Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃}
-  \RightLabel{∧⇒-to-⇒⇒}
-  \UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).}
+  \RightLabel{∧⇒-to-⇒⇒.}
+  \UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃)}
   \end{bprooftree}
 \end{equation*}
 
 \item $(φ₁ ⇒ (φ₂ ∧ φ₃))$
 \begin{equation*}
-\scalebox{0.95}{
-($\mathcal{D}_1$)
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ unshunt(φ₁ ⇒ φ₂, n) ∧ unshunt(φ₁ ⇒ φ₃, n)$}
-\RightLabel{∧-proj₁}
-\UnaryInfC{$Γ ⊢ unshunt(φ₁ ⇒ φ₂, n)$}
-\RightLabel{By def.}
-\UnaryInfC{$Γ ⊢ unshunt(φ₁ ⇒ φ₂, n-1)$}
-\RightLabel{lem-unshunt}
-\UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$,}
-\end{bprooftree}
-}
+  \scalebox{0.95}{
+  ($\mathcal{D}_1$)
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ unshunt(φ₁ ⇒ φ₂, n) ∧ unshunt(φ₁ ⇒ φ₃, n)$}
+    \RightLabel{∧-proj₁}
+    \UnaryInfC{$Γ ⊢ unshunt(φ₁ ⇒ φ₂, n)$}
+    \RightLabel{axiom}
+    \UnaryInfC{$Γ ⊢ unshunt(φ₁ ⇒ φ₂, n-1)$}
+    \RightLabel{lem-unshunt,}
+    \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$}
+  \end{bprooftree}
+  }
 \end{equation*}
 
 \begin{equation*}
-(\mathcal{D}_2)
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ unshunt(φ₁ ⇒ φ₂) ∧ unshunt(φ₁ ⇒ φ₃)$}
-\RightLabel{∧-proj₂}
-\UnaryInfC{$Γ ⊢ unshunt(φ₁ ⇒ φ₃, n)$}
-\RightLabel{By def.}
-\UnaryInfC{$Γ ⊢ unshunt(φ₁ ⇒ φ₃, n-1)$}
-\RightLabel{lem-unshunt,}
-\UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₃$}
-\end{bprooftree}
+  (\mathcal{D}_2)
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ unshunt(φ₁ ⇒ φ₂) ∧ unshunt(φ₁ ⇒ φ₃)$}
+    \RightLabel{∧-proj₂}
+    \UnaryInfC{$Γ ⊢ unshunt(φ₁ ⇒ φ₃, n)$}
+    \RightLabel{axiom}
+    \UnaryInfC{$Γ ⊢ unshunt(φ₁ ⇒ φ₃, n-1)$}
+    \RightLabel{lem-unshunt.}
+    \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₃$}
+    \end{bprooftree}
 \end{equation*}
-Finally, using the theorem, \texttt{⇒∧⇒-to-⇒∧} from~\cite{AgdaProp},
+
+Finally, using the theorem \texttt{⇒∧⇒-to-⇒∧} from~\cite{AgdaProp},
 \begin{equation*}
-  \texttt{⇒∧⇒-to-⇒∧}\ :\ Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃) → Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃).
+  \texttt{⇒∧⇒-to-⇒∧}\ :\ Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃) → Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃),
 \end{equation*}
 \begin{equation*}
   \begin{bprooftree}
@@ -299,13 +299,14 @@ Finally, using the theorem, \texttt{⇒∧⇒-to-⇒∧} from~\cite{AgdaProp},
 
 \end{itemize}
 \end{itemize}
-
 \end{proof}
 
 Let us now consider the $split$ function presented in
-Eq.~(\ref{eq:split-definition}) that yields the conjunction of subgoals that implies the goal in a \Metis \TSTP derivation.
+Eq.~(\ref{eq:split-definition}) that yields the conjunction of subgoals that implies the goal of the problem in the \Metis \TSTP derivations.
 
 \begin{definition}[split]
+\label{def:split}
+
 \begin{equation}
 \label{eq:split-definition}
 \mysplit(φ) =
@@ -347,7 +348,6 @@ unshunt(\mysplit(φ₁)),
 The definition above suffers termination problems since it is not
 a structural recursion. Therefore, we have reformulated the equation above to solve such a issue following the technique
 described in Section~\ref{ssec:structural-recursion}.
-
 Here and below, we refer to $split$ as the function after applying
 the process mentioned above.
 
@@ -356,21 +356,22 @@ the process mentioned above.
 \end{lemma}
 
 \begin{proof} We now proceed by induction on the structure of the
-formula φ in the definition of Eq.~(\ref{eq:split-definition}).
+formula $φ$ in the definition of Eq.~(\ref{eq:split-definition}).
 For a complete proof, we refer the reader to~\cite{AgdaMetis}.\\[3mm]
 
-($φ ≡ φ₁ ∧ φ₂$). We get a proof for each conjunct and using the introduction rule for conjunction, the result follows.
+\begin{itemize}
+\item $(φ ≡ φ₁ ∧ φ₂)$. We get a proof for each conjunct and using the introduction rule for conjunction connective, the result follows.
 
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
   \begin{bprooftree}
   \AxiomC{$Γ ⊢ \mysplit(φ,n)$}
-  \RightLabel{By def.}
+  \RightLabel{axiom}
   \UnaryInfC{$Γ ⊢ unshunt(φ₁) ∧ unshunt(φ₁ ⇒ \mysplit(φ₂,n-1))$}
   \RightLabel{∧-proj₁}
   \UnaryInfC{$Γ ⊢ unshunt(φ₁)$}
-  \RightLabel{lem-unshunt}
-  \UnaryInfC{$Γ ⊢ φ₁$.}
+  \RightLabel{lem-unshunt.}
+  \UnaryInfC{$Γ ⊢ φ₁$}
   \end{bprooftree}
 \end{equation*}
 
@@ -379,7 +380,7 @@ For a complete proof, we refer the reader to~\cite{AgdaMetis}.\\[3mm]
   \AxiomC{$\mathcal{D}$}
   \UnaryInfC{Γ ⊢ φ₁}
   \AxiomC{$Γ ⊢ \mysplit(φ,n)$}
-  \RightLabel{By def.}
+  \RightLabel{axiom}
   \UnaryInfC{$Γ ⊢ unshunt(φ₁) ∧ unshunt(φ₁ ⇒ \mysplit(φ₂,n-1))$}
   \RightLabel{$∧$-proj$₂$}
   \UnaryInfC{$Γ ⊢ unshunt(φ₁ ⇒ \mysplit(φ₂,n-1))$}
@@ -387,21 +388,19 @@ For a complete proof, we refer the reader to~\cite{AgdaMetis}.\\[3mm]
   \UnaryInfC{$Γ ⊢ φ₁ ⇒ \mysplit(φ₂,n-1)$}
   \RightLabel{$⇒$-elim}
   \BinaryInfC{$Γ ⊢ \mysplit(φ₂,n-1)$}
-  \RightLabel{\thmsplit}
-  \UnaryInfC{$Γ ⊢ φ₂.$}
+  \RightLabel{\thmsplit.}
+  \UnaryInfC{$Γ ⊢ φ₂$}
   \end{bprooftree}
 \end{equation*}
 
-\vskip 3mm
-
-($φ ≡ φ₁ ⇒ φ₂$).
+\item $(φ ≡ φ₁ ⇒ φ₂)$
 \begin{equation*}
   \begin{bprooftree}
   \AxiomC{}
   \RightLabel{assume φ₁}
   \UnaryInfC{$Γ , φ₁ ⊢ φ₁$}
   \AxiomC{$Γ ⊢ \mysplit(φ,n-1)$}
-  \RightLabel{By def.}
+  \RightLabel{axiom}
   \UnaryInfC{$Γ ⊢ unshunt(φ₁ ⇒ \mysplit(φ₂,n-1))$}
   \RightLabel{lem-unshunt}
   \UnaryInfC{$Γ ⊢ φ₁ ⇒ \mysplit(φ₂,n-1)$}
@@ -411,26 +410,29 @@ For a complete proof, we refer the reader to~\cite{AgdaMetis}.\\[3mm]
   \BinaryInfC{$Γ , φ₁ ⊢ \mysplit(φ₂,n-1)$}
   \RightLabel{\thmsplit}
   \UnaryInfC{$Γ , φ₁ ⊢ φ₂$}
-  \RightLabel{⇒-intro}
-  \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$.}
+  \RightLabel{⇒-intro.}
+  \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$}
   \end{bprooftree}
 \end{equation*}
-\vskip 3mm
 
-(φ ≡ ¬ (φ₁ ∨ φ₂)). We show $Γ ⊢ ¬ φ₁$ and $Γ ⊢ ¬ φ₂$. Using their conjunction by the introduction rule, and De Morgan Law, the results follows.
+\item $(φ ≡ ¬ (φ₁ ∨ φ₂))$. We show that $Γ ⊢ ¬ φ₁$ and $Γ ⊢ ¬ φ₂$.
+The result follows by introducing the conjunction and applying after
+De Morgan Law.
 
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ \mysplit(φ, n)$}
-\RightLabel{By def.}
+\RightLabel{axiom}
 \UnaryInfC{$Γ ⊢ unshunt(¬ φ₁) ∧ unshunt(¬ φ₁ ⇒ \mysplit(φ₂, n))$}
 \RightLabel{∧-proj₁}
 \UnaryInfC{$Γ ⊢ unshunt(¬ φ₁)$}
-\RightLabel{lem-unshunt}
-\UnaryInfC{$Γ ⊢ ¬ φ₁$,}
+\RightLabel{lem-unshunt,}
+\UnaryInfC{$Γ ⊢ ¬ φ₁$}
 \end{bprooftree}
 \end{equation*}
+\end{itemize}
+\end{proof}
 
 \begin{equation*}
   \begin{bprooftree}
@@ -438,7 +440,7 @@ For a complete proof, we refer the reader to~\cite{AgdaMetis}.\\[3mm]
   \UnaryInfC{$Γ ⊢ ¬ φ₁$}
 
   \AxiomC{$Γ ⊢ \mysplit(φ,n-1)$}
-  \RightLabel{By def.}
+  \RightLabel{axiom}
   \UnaryInfC{$Γ ⊢ unshunt(¬ φ₁) ∧ unshunt(¬ φ₁ ⇒ \mysplit(φ₂,n-1))$}
   \RightLabel{∧-proj₂}
   \UnaryInfC{$Γ ⊢ unshunt(¬ φ₁ ⇒ \mysplit(φ₂,n-1))$}
@@ -446,16 +448,28 @@ For a complete proof, we refer the reader to~\cite{AgdaMetis}.\\[3mm]
   \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \mysplit(φ₂,n-1)$}
   \RightLabel{⇒-elim}
   \BinaryInfC{$Γ ⊢ \mysplit(φ₂,n-1)$}
-  \RightLabel{\thmsplit}
-  \UnaryInfC{$Γ ⊢ ¬ φ₂.$}
+  \RightLabel{\thmsplit.}
+  \UnaryInfC{$Γ ⊢ ¬ φ₂$}
   \end{bprooftree}
 \end{equation*}
-\end{proof}
+
+\begin{lemma}[subst]
+  \label{lem:subst}
+  Substitution theorem.
+\begin{equation}
+  \label{eq:substitution-theorem}
+  \begin{bprooftree}
+  \AxiomC{$Γ ⊢ φ$}   \AxiomC{$ψ ≡ φ$}
+  \RightLabel{subst.}
+  \BinaryInfC{$Γ ⊢ ψ$}
+  \end{bprooftree}
+\end{equation}
+\end{lemma}
 
 \begin{theorem}[thm-strip]
 \label{thm:thm-strip}
- If $s_i$ are the subgoals for the goal φ, and
-$\{ Γ ⊢ s_i \}_{i}$, then $Γ ⊢ φ$.
+ If $s_i$ are the subgoals of the goal $φ$, and
+ $\{ Γ ⊢ s_i \}_{i}$, then $Γ ⊢ φ$.
 \end{theorem}
 
 \begin{proof}
@@ -467,338 +481,404 @@ $\{ Γ ⊢ s_i \}_{i}$, then $Γ ⊢ φ$.
 
   \AxiomC{$\mysplit(φ) ≡ \bigwedge_i s_i $}
   \RightLabel{subst}
-  \BinaryInfC{$Γ ⊢ \mysplit(φ) $}
-
-  \RightLabel{\thmsplit}
-  \UnaryInfC{$Γ ⊢ φ$.}
+  \BinaryInfC{$Γ ⊢ \mysplit(φ)$}
+  \RightLabel{\thmsplit.}
+  \UnaryInfC{$Γ ⊢ φ$}
 \end{bprooftree}
 \end{equation*}
-Where, the $subst$ theorem is,
-\begin{equation}
-  \label{eq:substitution-theorem}
-  \begin{bprooftree}
-  \AxiomC{$Γ ⊢ φ$}   \AxiomC{$ψ ≡ φ$}
-  \RightLabel{subst}
-  \BinaryInfC{$Γ ⊢ ψ$.}
-  \end{bprooftree}
-\end{equation}
 \end{proof}
 
-% % -------------------------------------------------------------------
-% \subsubsection{splitting a Conjunct}
-% \label{sssec:splitting-a-conjunct}
+% -------------------------------------------------------------------
+\subsubsection{Splitting a Conjunct.}
+\label{sssec:splitting-a-conjunct}
 
-% The \conjunct rule extracts from a conjunction, one of its conjunct.
-% To achieve this, we use projections repeatedly until we finally find
-% the conjunct required.
+The \conjunct rule extracts from a
+conjunction one of its conjuncts; it is a generalization of the
+projection rules for the conjunction connective as the
+following \TSTP excerpt shows.
 
-% \begin{align}
-%   \begin{split}
-%   conjunct(φ, ψ) =
-%     \begin{cases}
-%       ψ, &\text{if }φ ≡ ψ\\
-%       ψ, &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }conjunct(φ₁, ψ)≡ ψ\\
-%       ψ, &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }conjunct(φ₂, ψ)≡ ψ\\
-%       φ, &\text{otherwise.}
-%     \end{cases}
-%   \end{split}
-% \end{align}
+\begin{verbatim}
+fof(normalize_1, plain, p & q & (r | ~ p),
+  inference(canonicalize, [], [x])).
+fof(normalize_2, plain, q,
+  inference(conjunct, [], [normalize_1])).
+fof(normalize_2, plain, (r | ~ p),
+  inference(conjunct, [], [normalize_1])).
+\end{verbatim}
 
-% \begin{theorem}[thm-conjunct]
-%   \label{thm:thm-conjunct}
-%   $Γ ⊢ φ$, and $ψ \in \Prop$ , then $Γ ⊢ conjunct(φ, ψ)$.
-% \end{theorem}
+\begin{definition}[conjunct]
+\begin{align}
+  \begin{split}
+  &conjunct : \Prop \to \Prop \to \Prop\\
+  &conjunct(φ, ψ) =\\
+  &\hspace{3mm}
+  \begin{cases}
+      ψ, &\text{if }φ ≡ ψ\\
+      ψ, &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }ψ ≡ conjunct(φ₁, ψ)\\
+      ψ, &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }ψ ≡ conjunct(φ₂, ψ)\\
+      φ, &\text{otherwise.}
+    \end{cases}
+  \end{split}
+\end{align}
+\end{definition}
 
-% \begin{proof}
-% When φ ≡ ψ, from $Γ ⊢ conjunct(φ, ψ)$ by normalization, we get $Γ ⊢ ψ$.
-% By using $subst$ theorem Eq.~(\ref{eq:substitution-theorem}), we get the desire conclusion. If the proposition φ is a conjunction, and $ψ ≡ conjunct(φ_{i}, ψ)$
-% for some $i = 1,\ 2$, then,
+\begin{theorem}[thm-conjunct]
+  \label{thm:thm-conjunct}
+  $Γ ⊢ φ$, and $ψ  : \Prop$ , then $Γ ⊢ conjunct(φ, ψ)$.
+\end{theorem}
+~\begin{proof}\hspace{2cm}\\
+\begin{itemize}
+  \item For the case, $φ ≡ ψ$, $Γ ⊢ conjunct(φ, ψ)$ normalizes to $Γ ⊢ ψ$.
+Then, we get the desire conclusion by applying the $subst$ theorem.
+  \item If the proposition $φ$ is a conjunction, and we can get $ψ ≡ conjunct(φ_{i}, ψ)$ for some $i = 1,\ 2$, then,
 
-% \begin{equation}
-%   \begin{bprooftree}
-%   \AxiomC{$Γ ⊢ φ₁ ∧ φ₂$}
-%   \RightLabel{∧-proj$_{i}$}
-%   \UnaryInfC{$Γ ⊢ φ_{i}$}
-%   \UnaryInfC{$Γ ⊢ conjunct(φ_{i}, ψ)$}
-%   \AxiomC{$conjunct(φ_{i}, ψ) ≡ ψ$}
-%   \RightLabel{subst}
-%   \BinaryInfC{$Γ ⊢ ψ$.}
-%   \end{bprooftree}
-% \end{equation}
+\begin{equation}
+  \begin{bprooftree}
+  \AxiomC{$Γ ⊢ φ₁ ∧ φ₂$}
+  \RightLabel{∧-proj$_{i}$}
+  \UnaryInfC{$Γ ⊢ φ_{i}$}
+  \UnaryInfC{$Γ ⊢ conjunct(φ_{i}, ψ)$}
+  \AxiomC{$ψ ≡ conjunct(φ_{i}, ψ)$}
+  \RightLabel{subst.}
+  \BinaryInfC{$Γ ⊢ ψ$}
+  \end{bprooftree}
+\end{equation}
+\item The last case follows trivially by using the same hypothesis.
+\end{itemize}
+\end{proof}
 
-% The last statement follows by using the hypothesis and the proof is complete.
-% \end{proof}
-
-% % subsubsection splitting-a-conjunct (end)
-% % -------------------------------------------------------------------
+% subsubsection splitting-a-conjunct (end)
+% -------------------------------------------------------------------
 
 % % ------------------------------------------------------------------------
 
-% \subsubsection{Reordering.}
+\subsubsection{Reordering.}
+Logic equivalence between propositions is a major issue to justify
+prover reasoning steps. Since we left out semantics to treat only the
+syntax aspects of the propositions, our approach shows that equivalence
+by converting propositions to their conjunctive normal forms and showing equivalence by reordering the conjunctions and the inner disjunctions.
+In this section, we provide some theorems to perform such reordering tasks, the goals are the following.
 
-% Syntactically speaking, showing the logic equivalence between two conjunctive normal forms is a matter of rearrangements of the conjunctions
-% but also of the inner disjunctions inside the propositions involved.
-% \improvement{Make clear: we are dealing with CNFs, and prove equivalence between two formulas is equivalent to show two trees are  isomorphic.
-% And that problem is NP-hard, and for that, we mostly do brute force.}
+\begin{itemize}
+  \item Reorder the disjunction $φ = φ₁ ∨ φ₂ ∨ \cdots φₙ$ to match with $ψ = ψ₁ ∨ ψ₂ ∨ \cdots ∨ ψₙ$, when for all $i = 1, \cdots, n$, exists at least one $ψⱼ$ such that $φᵢ ≡ ψⱼ$ for $j = 1, \cdots, n$.
+  \item Reorder a CNF formula, $φ = φ₁ ∧ φ₂ ∧ \cdots$, to match with another CNF formula $ψ = ψ₁ ∧ ψ₂ ∧ \cdots$ when for all $i = 1, \cdots, n$, exists at least one $ψⱼ$ such that $φᵢ ≡ ψⱼ$ for $j = 1, \cdots, n$.
+\end{itemize}
 
-% We provide some useful theorems to perform the following tasks.
+First, we define the $rdisj$ function in Eq.~(\ref{eq:rdisj-def}) to convert a disjunction in its right-associative form.
+\begin{definition}[rdisj]
+\begin{align}
+  \begin{split}
+    \label{eq:rdisj-def}
+    &rdisj(φ) : \Prop \to \Prop\\
+    &rdisj(φ) =
+    \begin{cases}
+    rdisj(φ₁ ∨ (φ₂ ∨ φ₃)),  & \text{if } φ ≡ (φ₁ ∨ φ₂) ∨ φ₃\\
+    φ₁ ∨ rdisj(φ₂),         & \text{if } φ ≡ φ₁ ∨ φ₂\\
+    φ,                      & \text{otherwise.}
+    \end{cases}
+  \end{split}
+\end{align}
+\end{definition}
 
-% \begin{itemize}
-%   \item Reorder a disjunction like $φ = φ₁ ∨ φ₂ ∨ \cdots$ to match with another disjunction $ψ = ψ₁ ∨ ψ₂ ∨ \cdots$, when $φ$ is a disjunct of $ψ$.
-%   \item Reorder a conjunction of disjuncts (CNF), $φ = φ₁ ∧ φ₂ ∧ \cdots$, to match with another CNF formula equivalent $ψ = ψ₁ ∧ ψ₂ ∧ \cdots$.
-% \end{itemize}
+\begin{lemma}[lem-rdisj]
+\label{lem:lem-rdisj}
+  $Γ ⊢ φ$ then $Γ ⊢ rdisj(φ)$.
+\end{lemma}
+Following a similar way to define $rdisj$, we define the $rconj$ function,
+to convert a conjunction into its right-associative form.
 
-% First, we define the $rdisj$ function in Eq.~(\ref{eq:rdisj-def}) to convert a disjunction to be a right-associative disjunction, and following
-% a similar approach we define the $rconj$ function for conjunctions.
+The $build_{∨}$ function in Eq.~(\ref{eq:build-or}) function intends to construct a disjunction from another disjunction, specifically, it rearranges the disjuncts in the source formula to match with the target disjunction formula as we described above.
 
-% \begin{align}
-%   \begin{split}
-%     \label{eq:rdisj-def}
-%     rdisj(φ) =
-%     \begin{cases}
-%     rdisj(φ₁ ∨ (φ₂ ∨ φ₃)),  & \text{if } φ ≡ (φ₁ ∨ φ₂) ∨ φ₃\\
-%     φ₁ ∨ rdisj(φ₂),         & \text{if } φ ≡ φ₁ ∨ φ₂\\
-%     φ,                      & \text{otherwise.}
-%     \end{cases}
-%   \end{split}
-% \end{align}
+\begin{definition}[build$_{∨}$]
+\begin{equation}
+  \begin{split}
+  \label{eq:build-or}
+  &build_{∨} : \Prop → \Prop → \Prop\\
+  &build_{∨}(φ, ψ) =\\
+  &\hspace{3mm}
+  \begin{cases}
+  ψ, &\text{if } φ ≡ ψ\\
+  ψ, &\text{if } ψ ≡ ψ₁ ∨ ψ₂\text{ and } build_{∨}(φ, ψ_{i}) ≡ ψ_{i}\text{ for some }i=1, 2\\
+  φ, &\text{otherwise.}
+  \end{cases}
+  \end{split}
+\end{equation}
+\end{definition}
 
-% \begin{lemma}[lem-rdisj]
-% \label{lem:lem-rdisj}
-%   $Γ ⊢ φ$ then $Γ ⊢ rdisj(φ)$.
-% \end{lemma}
+\begin{lemma}[lem-build$_{∨}$]
+\label{lem:lem-build-or}
+$Γ ⊢ φ$, and $ψ : \Prop$ then $Γ ⊢ build_{∨}(φ)$.
+\end{lemma}
 
-% The following function, $build_{∨} : \Prop → \Prop → \Prop$ in Eq.~(\ref{eq:build-or}), intends to construct a disjunction from another disjunction, specifically, we want to rearrange the disjuncts in the source formula to match with the target disjunction for syntactic
-% equivalence.
+From now, we assume all propositions are right-associative unless otherwise stated. The $factor$ function in
+Eq.~(\ref{eq:factor-definition}) intends to simplify a special case of disjunction, the repeated disjuncts (e.g., $factor(φ ∨ φ) \mapsto\ φ$).
+Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $(ψ ∨ φ)$.
 
-% \begin{equation}
-%   \begin{split}
-%   \label{eq:build-or}
-%   &build_{∨}(φ, ψ) =\\
-%   &\hspace{3mm}
-%   \begin{cases}
-%   ψ, &\text{if } φ ≡ ψ\\
-%   ψ, &\text{if } ψ ≡ ψ₁ ∨ ψ₂\text{ and } build_{∨}(φ, ψ_{i}) ≡ ψ_{i}\text{ for some }i=1, 2\\
-%   φ, &\text{otherwise.}
-%   \end{cases}
-%   \end{split}
-% \end{equation}
+\begin{definition}[factor]
+\begin{align}
+\begin{split}
+  \label{eq:factor-definition}
+  &factor : \Prop → \Prop\\
+  &factor(φ) =
+  \begin{cases}
+    φ₁,  &\text{if }φ ≡ φ₁ ∨ φ₂ \text{ and } φ₁ ≡ factor(φ₂)\\
+    φ,   &\text{otherwise.}
+  \end{cases}
+\end{split}
+\end{align}
+\end{definition}
 
-% \begin{lemma}[lem-build$_{∨}$]
-% \label{lem:lem-build-or}
-% $Γ ⊢ φ$, and $ψ\in \Prop$ then $Γ ⊢ build_{∨}(φ)$.
-% \end{lemma}
+\begin{lemma}[lem-factor]
+\label{lem:lem-factor}
+  $Γ ⊢ φ$ then $Γ ⊢ factor(φ)$.
+\end{lemma}
 
-% The function $factor : \Prop → \Prop$  in Eq.~(\ref{eq:factor-definition}) is intended to work only for right-associative disjunctions, and reduces a disjunction of the same disjunct (e.g., $factor(φ ∨ (φ ∨ \cdots)) \mapsto\ φ$).
+To construct a disjunction $ψ$ from another disjunction $φ$, we have used ideas from the description in \citeauthor{bohme2010}~\cite{bohme2010} to prove equality between nested disjunctions. The result is the
+$sbuild_{∨}$ function that uses every disjunct from the source formula, $φ$, to build up the target disjunction $ψ$.
 
-% \begin{align}
-% \begin{split}
-%   \label{eq:factor-definition}
-%   factor(φ) =
-%   \begin{cases}
-%     φ₁,  &\text{if }φ ≡ φ₁ ∨ φ₂ \text{ and } φ₁ ≡ factor(φ₂)\\
-%     φ,   &\text{otherwise.}
-%   \end{cases}
-% \end{split}
-% \end{align}
+\begin{definition}[sbuild$_{∨}$]
+\begin{align}
+  \begin{split}
+  \label{eq:strong-build-or-definition}
+    &sbuild_{∨} : \Prop → \Prop → \Prop\\
+    &sbuild_{∨}(φ, ψ) =\\
+    &\hspace{3mm}
+    \begin{cases}
+      factor(build_{∨}(φ₁, ψ) ∨ build_{∨}(φ₂,ψ)),  &\text{if }φ≡ φ₁ ∨ φ₂\\
+      build_{∨}(φ, ψ),  & \text{otherwise.}
+    \end{cases}
+  \end{split}
+\end{align}
+\end{definition}
 
-% \begin{lemma}[lem-factor]
-% \label{lem:lem-factor}
-%   $Γ ⊢ φ$ then $Γ ⊢ factor(φ)$.
-% \end{lemma}
+\begin{lemma}[lem-sbuild$_{∨}$]
+\label{lem:lem-sbuild-or}
+$Γ ⊢ φ$, and $ψ \in\Prop$ then $Γ ⊢ sbuild_{∨}(φ, ψ)$.
+\end{lemma}
 
-% Now, with a right-associative disjunction by applying $rdisj$ function to
-% a proposition $φ$, $sbuild_{∨}: \Prop → \Prop → \Prop$ in
-% Eq.~(\ref{eq:strong-build-or-definition}) aims to construct the disjunction
-% ψ by using each of its disjuncts from the proposition φ. This approach to
-% build a disjunction from another is inspired on the description in
-% \citeauthor{bohme2010}~\cite{bohme2010} to prove equality between nested
-% disjunctions. \change{Make clear this, It's not clear the difference with build-or and sbuild-or.}
+\begin{example}
+Let see the main idea behind the lem-sbuild$_{∨}$ lemma.
+We will build the disjunction $((p ∨ q) ∨ r)$ from the disjunction
+$(r ∨ (q ∨ p))$.
+\begin{equation*}
+  \begin{bprooftree}
+  \AxiomC{$Γ ⊢ q$}
+  \RightLabel{∨-intro₂}
+  \UnaryInfC{$Γ ⊢ p ∨ q$}
+  \RightLabel{∨-intro₁}
+  \UnaryInfC{$Γ ⊢ (p ∨ q) ∨ r$}
 
-% \begin{align}
-%   \begin{split}
-%   \label{eq:strong-build-or-definition}
-%     sbuild_{∨}(φ, ψ) =
-%     \begin{cases}
-%       factor(build_{∨}(φ₁, ψ) ∨ build_{∨}(φ₂,ψ)),  &\text{if }φ≡ φ₁ ∨ φ₂\\
-%       build_{∨}(φ, ψ),  & \text{otherwise.}
-%     \end{cases}
-%   \end{split}
-% \end{align}
+  \AxiomC{$Γ ⊢ p$}
+  \RightLabel{∨-intro₁}
+  \UnaryInfC{$Γ ⊢ p ∨ q$}
+  \RightLabel{∨-intro₁}
+  \UnaryInfC{$Γ ⊢ (p ∨ q) ∨ r$}
 
-% \begin{lemma}[lem-sbuild$_{∨}$]
-% \label{lem:lem-sbuild-or}
-% $Γ ⊢ φ$, and $ψ \in\Prop$ then $Γ ⊢ sbuild_{∨}(φ, ψ)$.
-% \end{lemma}
+  \RightLabel{∨-elim}
+  \BinaryInfC{$Γ, q ∨ p ⊢ (p ∨ q) ∨ r$}
+  \end{bprooftree}
+\end{equation*}
 
-% Let see the following example of the idea behind $sbuild_{∨}$
-% function; from the disjunction $(r ∨ (q ∨ p))$, we build the disjunction
-% $((p ∨ q) ∨ r)$.
+\begin{equation*}
+  \begin{bprooftree}
+  \AxiomC{$Γ ⊢ r$}
+  \RightLabel{∨-intro₂}
+  \UnaryInfC{$Γ ⊢ (p ∨ q) ∨ r$}
 
-% \begin{equation*}
-%   \begin{bprooftree}
-%   \AxiomC{$Γ ⊢ q$}
-%   \RightLabel{∨-intro₂}
-%   \UnaryInfC{$Γ ⊢ p ∨ q$}
-%   \RightLabel{∨-intro₁}
-%   \UnaryInfC{$Γ ⊢ (p ∨ q) ∨ r$}
+  \AxiomC{$Γ, q ∨ p ⊢ (p ∨ q) ∨ r$}
 
-%   \AxiomC{$Γ ⊢ p$}
-%   \RightLabel{∨-intro₁}
-%   \UnaryInfC{$Γ ⊢ p ∨ q$}
-%   \RightLabel{∨-intro₁}
-%   \UnaryInfC{$Γ ⊢ (p ∨ q) ∨ r$}
+  \RightLabel{∨-elim}
+  \BinaryInfC{$Γ, r ∨ (q ∨ p) ⊢ (p ∨ q) ∨ r$}
 
-%   \RightLabel{∨-elim}
-%   \BinaryInfC{$Γ, q ∨ p ⊢ (p ∨ q) ∨ r$}
-%   \end{bprooftree}
-% \end{equation*}
+  \RightLabel{⇒-intro}
+  \UnaryInfC{$Γ ⊢ r ∨ (q ∨ p) ⇒ (p ∨ q) ∨ r$}
 
-% \begin{equation*}
-%   \begin{bprooftree}
-%   \AxiomC{$Γ ⊢ r$}
-%   \RightLabel{∨-intro₂}
-%   \UnaryInfC{$Γ ⊢ (p ∨ q) ∨ r$}
+  \end{bprooftree}
+\end{equation*}
+\end{example}
 
-%   \AxiomC{$Γ, q ∨ p ⊢ (p ∨ q) ∨ r$}
+Notice that using $sbuild_{∨}$ we can build not only a disjunction with the same disjuncts of the source formula but also a complete different formula by adding new disjuncts to the source formula.
 
-%   \RightLabel{∨-elim}
-%   \BinaryInfC{$Γ, r ∨ (q ∨ p) ⊢ (p ∨ q) ∨ r$}
+\begin{definition}[reorder$_{∨}$]
+\begin{align*}
+    \label{eq:reorder-or}
+    \begin{split}
+    &reorder_{∨} : \Prop \to \Prop \to \Prop\\
+    &reorder_{∨} (φ, ψ) = sbuild_{∨}(rdisj(φ), ψ).
+    \end{split}
+  \end{align*}
+\end{definition}
 
-%   \RightLabel{⇒-intro}
-%   \UnaryInfC{$Γ ⊢ r ∨ (q ∨ p) ⇒ (p ∨ q) ∨ r$}
+\begin{theorem}[thm-reorder$_{∨}$]
+  \label{thm-reorder-or}
+  $Γ ⊢ φ$, and $ψ\in\Prop$ then $Γ ⊢ reorder_{∨}(φ, ψ)$.
+\end{theorem}
 
-%   \end{bprooftree}
-% \end{equation*}
+\begin{proof}
+Use Lemma~\ref{lem:lem-rdisj} and Lemma~\ref{lem:lem-sbuild-or}.
+\end{proof}
 
-% \begin{theorem}[thm-reorder$_{∨}$]
-%   \label{thm-reorder-or}
-%   $Γ ⊢ φ$, and $ψ\in\Prop$ then $Γ ⊢ reorder_{∨}(φ, ψ)$, where,
-%   \begin{equation*}
-%     \label{eq:reorder-or}
-%     reorder_{∨} (φ, ψ) = sbuild_{∨}(rdisj(φ), ψ).
-%   \end{equation*}
-% \end{theorem}
+We define similar functions and state some theorems as we previously did for disjunctions, but instead, we treat conjunctive normal forms.
 
-% \begin{proof} Use Lemma~\ref{lem:lem-rdisj} and Lemma~\ref{lem:lem-sbuild-or}.
-% \end{proof}
+\begin{definition}[reorder$_{∧}$]
+  \begin{align*}
+      \begin{split}
+        &reorder : \Prop → \Prop \to Prop\\
+        &reorder_{∧}(φ, ψ) =
+        \begin{cases}
+          φ, &\text{if }φ ≡ ψ\\
+          ψ₁ ∧ ψ₂, &\text{if } ψ ≡ ψ₁ ∧ ψ₂\text{, }reorder_{∧}(φ, ψ₁) ≡ ψ₁\\
+                  &\text{and }reorder_{∧}(φ, ψ₂)≡ ψ₂\\
+          φ,       &\text{if } ψ ≡ ψ₁ ∧ ψ₂\\
+          conjunct(φ, ψ), &\text{otherwise.}
+        \end{cases}
+      \end{split}
+  \end{align*}
+\end{definition}
 
-% To work with nest conjunctions of disjunctions (CNFs), we define similar
-% functions and theorems as we previously did for disjunctions.
+\begin{lemma}[lem-reorder$_{∧}$]
+  \label{lem:lem-reorder-and}
+  $Γ ⊢ φ$, and $ψ \in\Prop$ then $Γ ⊢ reorder(φ, ψ)$.
+\end{lemma}
 
-% \begin{lemma}[lem-reorder$_{∧}$]
-%   \label{lem:lem-reorder-and}
-%   $Γ ⊢ φ$, and $ψ \in\Prop$ then $Γ ⊢ reorder(φ, ψ)$, where,
-%   \begin{align*}
-%       \begin{split}
-%         reorder_{∧}(φ, ψ) =
-%         \begin{cases}
-%           φ, &\text{if }φ ≡ ψ\\
-%           ψ₁ ∧ ψ₂, &\text{if } ψ ≡ ψ₁ ∧ ψ₂\text{, }reorder_{∧}(φ, ψ₁) ≡ ψ₁\\
-%                   &\text{and }reorder_{∧}(φ, ψ₂)≡ ψ₂\\
-%           φ,       &\text{if } ψ ≡ ψ₁ ∧ ψ₂\\
-%           conjunct(φ, ψ) &\text{otherwise.}
-%         \end{cases}
-%       \end{split}
-%   \end{align*}
-% \end{lemma}
+\begin{definition}[conjunct$_{∨}$]
+  \label{eq:conjunct-or-definition}
+\begin{align*}
+  \begin{split}
+    &conjunct_{∨} : \Prop → \Prop \to Prop\\
+    &conjunct_{∨}(φ, ψ) =
+    \begin{cases}
+      ψ, &\text{if }φ ≡ ψ\\
+      ψ, &\text{if }reorder_{∨}(φ, ψ) ≡ ψ\\
+      ψ, &\text{if }ψ ≡ ψ₁ ∧ ψ₂, conjunct_{∨}(φ, ψ₁) ≡ ψ₁\\
+        &\text{and } reorder_{∨}(φ, ψ₂) ≡ ψ₂\\
+      ψ, &\text{if }φ ≡ φ₁ ∧ φ₂, conjunct_{∨}(φ₁, ψ) ≡ ψ\\
+      ψ, &\text{if }φ ≡ φ₁ ∧ φ₂, conjunct_{∨}(φ₂, ψ) ≡ ψ\\
+      φ, &\text{otherwise.}
+    \end{cases}
+  \end{split}
+  \end{align*}
+\end{definition}
 
-% \begin{lemma}[lem-conjunct$_{∨}$]
-%   \label{lem:lem-conjunct-or}
-%   $Γ ⊢ φ$, and $ψ \in\Prop$ then $Γ ⊢ conjunct_{∨}(φ, ψ)$, where,
-%   \improvement{The first case is not implemented in Agda}
-%   \begin{align*}
-%   \begin{split}
-%     \label{eq:conjunct-or-definition}
-%     conjunct_{∨}(φ, ψ) =
-%     \begin{cases}
-%       ψ, &\text{if }φ ≡ ψ\\
-%       ψ, &\text{if }reorder_{∨}(φ, ψ) ≡ ψ\\
-%       ψ, &\text{if }ψ ≡ ψ₁ ∧ ψ₂, conjunct_{∨}(φ, ψ₁) ≡ ψ₁\\
-%         &\text{and } reorder_{∨}(φ, ψ₂) ≡ ψ₂\\
-%       ψ, &\text{if }φ ≡ φ₁ ∧ φ₂, conjunct_{∨}(φ₁, ψ) ≡ ψ\\
-%       ψ, &\text{if }φ ≡ φ₁ ∧ φ₂, conjunct_{∨}(φ₂, ψ) ≡ ψ\\
-%       φ, &\text{otherwise.}
-%     \end{cases}
-%   \end{split}
-%   \end{align*}
-% \end{lemma}
+\begin{lemma}[lem-conjunct$_{∨}$]
+  \label{lem:lem-conjunct-or}
+  $Γ ⊢ φ$, and $ψ \in\Prop$ then $Γ ⊢ conjunct_{∨}(φ, ψ)$.
+\end{lemma}
 
-% \begin{theorem}[thm-reorder$_{∧∨}$]
-%   \label{thm:thm-reorder-and-or}
+\begin{definition}[reorder$_{∧∨}$]
+ \begin{align*}
+      \begin{split}
+      &reorder : \Prop \to \Prop \to \Prop\\
+      &reorder_{∧∨}(φ, ψ)=
+        \begin{cases}
+          ψ, &\text{if } φ≡ψ\\
+          ψ, &\text{if } ψ ≡ ψ₁ ∧ ψ₂, reorder_{∧∨}(φ,ψ₁) ≡ ψ₁\\
+             &\text{and }reorder_{∧∨}(φ, ψ₂) ≡ ψ₂\\
+          φ, &\text{if }ψ ≡ ψ₁ ∧ ψ₂\\
+          conjunct_{∨}(φ, ψ) &\text{otherwise.}
+        \end{cases}
+      \end{split}
+  \end{align*}
+  \end{definition}
 
-%   $Γ ⊢ φ$, and $ψ \in\Prop$ then $Γ ⊢ reorder_{∧∨}(φ, ψ)$, where,
-
-%   \begin{align}
-%       \begin{split}
-%       reorder_{∧∨}(φ, ψ)=
-%         \begin{cases}
-%           ψ, &\text{if } φ≡ψ\\
-%           ψ, &\text{if } ψ ≡ ψ₁ ∧ ψ₂, reorder_{∧∨}(φ,ψ₁) ≡ ψ₁\\
-%              &\text{and }reorder_{∧∨}(φ, ψ₂) ≡ ψ₂\\
-%           φ, &\text{if }ψ ≡ ψ₁ ∧ ψ₂\\
-%           conjunct_{∨}(φ, ψ) &\text{otherwise.}
-%         \end{cases}
-%       \end{split}
-%   \end{align}
-% \end{theorem}
+\begin{theorem}[thm-reorder$_{∧∨}$]
+  \label{thm:thm-reorder-and-or}
+  $Γ ⊢ φ$, and $ψ \in\Prop$ then $Γ ⊢ reorder_{∧∨}(φ, ψ)$.
+\end{theorem}
 
 % % --------------------------------------------------------------------
 
-% \subsubsection{Resolve.}
-% \label{sssec:resolve}
+\subsubsection{Resolution.}
+\label{sssec:resolve}
 
-% The \resolve rule is a generalization version for resolution in propositional logic since the formulas are not shaped always as the aforementioned theorem expects (see Fig.~\ref{fig:metis-inferences}).
+The \resolve rule incorporates the resolution theorem showed in
+Fig.~\ref{fig:metis-inferences} for the \TSTP derivations.
+This rule posses three arguments: a positive literal $l$ to apply the resolution theorem, and two derivations,
+$\mathcal{D}₁$ and $\mathcal{D}₂$.
+The positive literal $l$ must occur in
+the formula from the first derivation $\mathcal{D}₁$, and the
+negative literal must occur in the formula from the second derivation $\mathcal{D}₂$ (see the pattern in the \emph{resolve} rule).
+The following excerpt is an \Metis \TSTP example for the \resolve rule.
 
-% Since our approach is mere syntactic, in order to apply such a
-% theorem, we perform rearrangements inside the formulas to match with
-% the pattern expected by the resolution theorem.
+\begin{verbatim}
+cnf(refute_0_0, plain, p | q,
+  inference(canonicalize, [], [normalize_0_0])).
+cnf(refute_0_1, plain, ~ p,
+  inference(canonicalize, [], [normalize_0_4])).
+cnf(refute_0_2, plain, q,
+  inference(resolve, [$cnf(p)], [refute_0_0, refute_0_1])).
+\end{verbatim}
 
-% \begin{lemma}[lem-rsol]
-%   \label{lem:lem-rsol}
-%   $Γ ⊢ φ$ then $Γ ⊢ rsol(φ)$, where,
-%   \begin{align*}
-%       \begin{split}
-%         rsol(φ) =
-%         \begin{cases}
-%           φ₂, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (φ₃ ∨ φ₄), φ₃ ≡ ¬ φ₁, φ₂ ≡ φ₄\\
-%           φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (φ₃ ∨ φ₄), φ₃ ≡ ¬ φ₁\\
-%           φ, &\text{otherwise.}
-%         \end{cases}
-%       \end{split}
-%   \end{align*}
-% \end{lemma}
+To emulate this rule, we perform rearrangements inside the formulas
+involved to match with the pattern expected by the resolution theorem
+described above.
 
-% \begin{theorem}[thm-resolve]
-%   \label{thm:thm-resolve}
-%   $Γ ⊢ φ₁$, $Γ ⊢ φ₂$, a literal $l$, and $ψ\in\Prop$ then $Γ ⊢ resolve(φ₁, φ₂, l, ψ)$, where,
-%   \begin{equation*}
-%     resolve(φ₁, φ₂, l, ψ) =
-%       rsol(reorder_{∨}(φ₁, l ∨ ψ) ∧ reorder_{∨} (φ₂, ¬ l ∨ ψ)).
-%   \end{equation*}
-% \end{theorem}
+\begin{definition}[rsol]
+\begin{align*}
+      \begin{split}
+        &rsol : \Prop \to \Prop\\
+        &rsol(φ) =
+        \begin{cases}
+          φ₂, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (φ₃ ∨ φ₄), φ₃ ≡ ¬ φ₁, φ₂ ≡ φ₄\\
+          φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (φ₃ ∨ φ₄), φ₃ ≡ ¬ φ₁\\
+          φ, &\text{otherwise.}
+        \end{cases}
+      \end{split}
+  \end{align*}
+\end{definition}
 
-% \begin{proof}
-% \begin{equation*}
-%   \begin{bprooftree}
-%     \AxiomC{$Γ ⊢ φ₁$}
-%     \RightLabel{thm-reorder$_{∨}$}
-%     \UnaryInfC{$Γ ⊢ reorder_{∨}(φ₁, l ∨ ψ)$}
+\begin{lemma}[lem-rsol]
+  \label{lem:lem-rsol}
+  $Γ ⊢ φ$ then $Γ ⊢ rsol(φ)$.
+\end{lemma}
 
-%     \AxiomC{$Γ ⊢ φ₂$}
-%     \RightLabel{thm-reorder$_{∨}$}
-%     \UnaryInfC{$Γ ⊢ reorder_{∨}(φ₂, ¬ l ∨ ψ)$}
+\begin{definition}[resolve]
+ \begin{equation*}
+    resolve(φ₁, φ₂, l, ψ) =
+      rsol(reorder_{∨}(φ₁, l ∨ ψ) ∧ reorder_{∨} (φ₂, ¬ l ∨ ψ)).
+  \end{equation*}
+\end{definition}
 
-%     \RightLabel{∧-intro}
-%     \BinaryInfC{$Γ ⊢ reorder_{∨}(φ₁, l ∨ ψ) ∧ reorder_{∨}(φ₂, ¬ l ∨ ψ)$}
-%     \RightLabel{lem-rsol}
-%     \UnaryInfC{$Γ ⊢ rsol(reorder_{∨}(φ₁, l ∨ ψ) ∧ reorder_{∨}(φ₂, ¬ l ∨ ψ))$}
-%   \end{bprooftree}
-%   \end{equation*}
-% \end{proof}
+\begin{theorem}[thm-resolve]
+  \label{thm:thm-resolve}
+  $Γ ⊢ φ₁$, $Γ ⊢ φ₂$, a literal $l$, and $ψ\in\Prop$ then $Γ ⊢ resolve(φ₁, φ₂, l, ψ)$.
+\end{theorem}
 
-% % subsubsection resolve (end)
-% % --------------------------------------------------------------------
+\begin{proof}
+\hspace{3mm}\\
+\begin{itemize}
+ \item
+ \begin{equation*}
+    \begin{bprooftree}
+      \AxiomC{$Γ ⊢ φ₁$}
+      \RightLabel{thm-reorder$_{∨}$.}
+      \UnaryInfC{$Γ ⊢ reorder_{∨}(φ₁, l ∨ ψ)$}
+   \end{bprooftree}
+  \end{equation*}
+\item
+ \begin{equation*}
+    \begin{bprooftree}
+      \AxiomC{$Γ ⊢ φ₂$}
+      \RightLabel{thm-reorder$_{∨}$.}
+      \UnaryInfC{$Γ ⊢ reorder_{∨}(φ₂, ¬ l ∨ ψ)$}
+   \end{bprooftree}
+  \end{equation*}
+  \item
+  \begin{equation*}
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ reorder_{∨}(φ₁, l ∨ ψ)$}
+    \AxiomC{$Γ ⊢ reorder_{∨}(φ₂, ¬ l ∨ ψ)$}
+    \RightLabel{∧-intro}
+    \BinaryInfC{$Γ ⊢ reorder_{∨}(φ₁, l ∨ ψ) ∧ reorder_{∨}(φ₂, ¬ l ∨ ψ)$}
+    \RightLabel{lem-rsol.}
+    \UnaryInfC{$Γ ⊢ rsol(reorder_{∨}(φ₁, l ∨ ψ) ∧ reorder_{∨}(φ₂, ¬ l ∨ ψ))$}
+  \end{bprooftree}
+  \end{equation*}
+\end{itemize}
+\end{proof}
+
+% subsubsection resolve (end)
+% --------------------------------------------------------------------
 
 
 % % --------------------------------------------------------------------

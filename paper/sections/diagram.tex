@@ -67,14 +67,16 @@
 % ---- Agda libraries
 \node[ library
      , above=3mm of athena
+     , align=center
      ]
-(agdametis) {\texttt{agda-metis} };
+(agdametis) {\texttt{agda-metis}\\(library) };
 \draw[->, thick] (agdametis) to (athena);
 
 \node[ library
      , right=3mm of athena
+     , align=center
      ]
-(agdaprop) {\texttt{agda-prop} };
+(agdaprop) {\texttt{agda-prop}\\(library)};
 \draw[->, thick] (agdaprop) to (athena);
 
 % ---------------------------------------------------
@@ -125,6 +127,6 @@
 \draw[->, thick] (agda)      to (invalid);
 
 \end{tikzpicture}
-\caption{Proof-reconstruction overview. The rectangles or rhombuses nodes represent a file involved in the process. Between two nodes, we find direct edges that represent calls to programs where the input file is pointed by the edge entering and the out edge points to the reply file.}
+\caption{Proof-reconstruction overview. The rectangles or rhombuses nodes represent text files. The direct edges in the diagram represent calls to programs where the input file is pointed by the edge entering and the out edge points to the reply file.}
 \label{fig:proof-reconstruction-workflow}
 \end{figure}
