@@ -49,7 +49,7 @@ type theory to build definitions and theorems for functions
 necessary to emulate \Metis' inference rules. For this description,
 we will write the type judgments with ``$a : A$'' to denote that $a$
 has $\abbre{A}$ type. Types are written using small caps.
-We use \Prop type for propositions and a the dependent type, $Γ ⊢ φ$ for theorems. In the latter type, $Γ$ has $\abbre{List}~\Prop$ type
+We use \Prop type for propositions and the dependent type, $Γ ⊢ φ$ for theorems. In the latter type, $Γ$ has $\abbre{List}~\Prop$ type
 and $φ$ has type $\Prop$. $\abbre{List}$ is the usual inductive type
 for lists. Finally, we will denote by $φ ≡ ψ$, the syntactic
 equivalence between propositions.
@@ -115,9 +115,9 @@ unshunt_{0}(φ₁ ⇒ φ₂) ∧ unshunt_{0}(φ₁ ⇒ φ₃),
 \end{split}
 \end{align}
 
-From the definition above, the size of the argument, ((φ₁ ∧ φ₂) ⇒ φ₃),
-is not structurally smaller than the input formula, (φ₁ ⇒ (φ₂ ⇒ φ₃)),
-since ((φ₁ ∧ φ₂) ⇒ φ₃) is not a subformula of (φ₁ ⇒ (φ₂ ⇒ φ₃)).
+From the definition above, the size of the argument, $((φ₁ ∧ φ₂) ⇒ φ₃)$,
+is not structurally smaller than the input formula, $(φ₁ ⇒ (φ₂ ⇒ φ₃))$,
+since $((φ₁ ∧ φ₂) ⇒ φ₃)$ is not a subformula of $(φ₁ ⇒ (φ₂ ⇒ φ₃))$.
 
 Thus, we define the function
 $unshunt_{1} : \Prop \to \Nat \to \Prop$
@@ -181,13 +181,16 @@ unshunt_{cm}(φ₃) + 2, &\text{if }φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\
 \end{align}
 
 Finally, following the technique mentioned, we get a curated version of
-$unshunt_{0}$ function presented in Eq.~(\ref{eq:unshunt-fixed}).
+$unshunt_{0}$ function presented in the following definition.
 
 \begin{definition}[unshunt]
-\begin{equation}
-\label{eq:unshunt-fixed}
-unshunt(\varphi) := unshunt_{1}(\varphi, unshunt_{cm}(\varphi)).
-\end{equation}
+\label{def:unshunt}
+  \begin{align*}
+    \begin{split}
+    &unshunt : \Prop → \Prop\\
+    &unshunt(\varphi) = unshunt_{1}(\varphi, unshunt_{cm}(\varphi)).
+    \end{split}
+  \end{align*}
 \end{definition}
 
 For a more complete treatment of general recursion, and how to
@@ -200,6 +203,33 @@ function, among other kinds.
 
 \subsection{Emulating \Metis' Inference Rules}
 \label{ssec:emulating-inferences}
+
+We emulate each \Metis inference rule by proving a
+function with the same name, and a theorem that
+proves the soundness of the function.
+The pattern is the following.
+
+\begin{itemize}
+\item \texttt{rule} is the \Metis inference rule.
+\item $rule$ is the emulated version function for \texttt{rule} inference.
+\begin{align*}
+\begin{split}
+&rule : \Prop → \Prop → \Prop\\
+&rule(φ, ψ) =
+  \begin{cases}
+  ψ, &\text{if }rule\text{ built }ψ\text{ by applying valid transformations to }φ\\
+  φ, &\text{otherwise.}
+  \end{cases}
+\end{split}
+\end{align*}
+
+\begin{itemize}
+  \item $φ$ is the \emph{source} formula.
+  \item $ψ$ is the \emph{target} formula.
+\end{itemize}
+\item thm-rule is the theorem, $Γ ⊢ rule(φ, ψ)$, that proves
+the soundness of the $rule$ function.
+\end{itemize}
 
 \subsubsection{Strip a Goal.}
 \label{sssec:strip-a-goal}
@@ -232,7 +262,7 @@ and $split$ function from the definition in Eq.~(\ref{eq:split-definition}).
 $unshunt$ function in Eq.~(\ref{eq:unshunt-structured}).
 \begin{itemize}
 	\item When $n = 0$, by definition, $Γ ⊢ φ$.
-	\item When $n = 1$, we apply the following theorem from~\cite{AgdaProp}
+	\item When $n = 1$, we apply the following theorem from~\cite{AgdaProp},
 		\begin{equation*}
 		\texttt{∧⇒-to-⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).
 		\end{equation*}
@@ -309,7 +339,9 @@ Eq.~(\ref{eq:split-definition}) that yields the conjunction of subgoals that imp
 
 \begin{equation}
 \label{eq:split-definition}
-\mysplit(φ) =
+\begin{split}
+&split : \Prop → \Prop\\
+&\mysplit(φ) =
 \begin{cases}
 unshunt(\mysplit(φ₁)) &\text{if }φ ≡ φ₁ ∧ φ₂\\
 ∧\ unshunt(φ₁ ⇒ \mysplit(φ₂)), &\\[2.5mm]
@@ -342,6 +374,7 @@ unshunt(\mysplit(φ₁)),
 ⊥,
   & \text{if }φ ≡ ¬ ⊤.
 \end{cases}
+\end{split}
 \end{equation}
 \end{definition}
 
@@ -546,7 +579,7 @@ fof(normalize_2, plain, (r | ~ p),
   \label{thm:thm-conjunct}
   $Γ ⊢ φ$, and $ψ  : \Prop$ , then $Γ ⊢ conjunct(φ, ψ)$.
 \end{theorem}
-~\begin{proof}\hspace{2cm}\\
+\begin{proof}\hspace{2cm}
 \begin{itemize}
   \item For the case, $φ ≡ ψ$, $Γ ⊢ conjunct(φ, ψ)$ normalizes to $Γ ⊢ ψ$.
 Then, we get the desire conclusion by applying the $subst$ theorem.
@@ -604,10 +637,10 @@ First, we define the $rdisj$ function in Eq.~(\ref{eq:rdisj-def}) to convert a d
 \label{lem:lem-rdisj}
   $Γ ⊢ φ$ then $Γ ⊢ rdisj(φ)$.
 \end{lemma}
-Following a similar way to define $rdisj$, we define the $rconj$ function,
-to convert a conjunction into its right-associative form.
+% Following a similar way to define $rdisj$, we define the $rconj$ function,
+% to convert a conjunction into its right-associative form.
 
-The $build_{∨}$ function in Eq.~(\ref{eq:build-or}) function intends to construct a disjunction from another disjunction, specifically, it rearranges the disjuncts in the source formula to match with the target disjunction formula as we described above.
+The $build_{∨}$ function in Eq.~(\ref{eq:build-or}) intends to construct a disjunction from another disjunction, specifically, this functions will try to rearrange the disjuncts in the source formula to match with the target disjunction formula, similar as we described above.
 
 \begin{definition}[build$_{∨}$]
 \begin{equation}
@@ -738,7 +771,7 @@ Notice that using $sbuild_{∨}$ we can build not only a disjunction with the sa
 Use Lemma~\ref{lem:lem-rdisj} and Lemma~\ref{lem:lem-sbuild-or}.
 \end{proof}
 
-We define similar functions and state some theorems as we previously did for disjunctions, but instead, we treat conjunctive normal forms.
+We define similar functions and state some theorems as we previously did for disjunctions, but instead, we treat only with conjunctive normal forms.
 
 \begin{definition}[reorder$_{∧}$]
   \begin{align*}
@@ -864,8 +897,7 @@ described above.
   $Γ ⊢ φ₁$, $Γ ⊢ φ₂$, a literal $l$, and $ψ\in\Prop$ then $Γ ⊢ resolve(φ₁, φ₂, l, ψ)$.
 \end{theorem}
 
-\begin{proof}
-\hspace{3mm}\\
+\begin{proof}\hspace{3mm}
 \begin{itemize}
  \item
  \begin{equation*}
@@ -1015,28 +1047,51 @@ the boolean operators (¬, ∧, ∨).
 % % subsubsection normal_forms (end)
 % % --------------------------------------------------------------------
 
-% % --------------------------------------------------------------------
+% --------------------------------------------------------------------
 
-% \subsubsection{Clausification.}
-% \label{sssec:clausification}
+\subsubsection{Clausification.}
+\label{sssec:clausification}
 
-% \begin{theorem}[thm-clausify]
-% \label{thm:thm-clausify}
-%   $Γ ⊢ φ$ and $ψ \in\Prop$ then $Γ ⊢ clausify(φ, ψ)$, where,
-%   \begin{align}
-%       clausify(φ,ψ) =
-%       \begin{cases}
-%         ψ, &\text{ if }φ≡ψ\\
-%         reorder_{∧∨}(cnf(φ), ψ), &\text{otherwise.}
-%       \end{cases}
-%   \end{align}
-% \end{theorem}
+The \clausify rule transforms a
+propositional formula in its clausal normal form, a conjunction
+of clauses. Where a \emph{clause} is the disjunction of zero or more
+literals and a \emph{literal} is an atom (positive literal) or a
+negation of an atom (negative literal). Be aware this kind of conversion between one formula to its clausal normal form is not unique, and \Metis has a customized approach to perform that transformation.
+In the following \Metis \TSTP derivation, we saw a clear example, where
+clausify expands the formula \texttt{normalize\_0\_0} by using distributive
+laws.
 
-% \begin{proof} When $φ ≡ ψ$, we use the $subs$ theorem Eq.~(\ref{eq:substitution-theorem}). Otherwise, we use Theorem \ref{thm:thm-reorder-and-or} and Theorem \ref{thm:thm-cnf}.
-% \end{proof}
+\begin{verbatim}
+fof(normalize_0_0, plain, (~ p | (q & r)),
+    inference(canonicalize, [], [a1])).
+fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
+    inference(clausify, [], [normalize_0_0])).
+\end{verbatim}
 
-% % subsubsection clausification (end)
-% % --------------------------------------------------------------------
+\begin{definition}[clausify]
+  \label{def:clausify}
+ \begin{align*}
+   \begin{split}
+      &clausify : \Prop → \Prop → Prop\\
+      &clausify(φ,ψ) =
+      \begin{cases}
+        ψ, &\text{ if }φ≡ψ\\
+        reorder_{∧∨}(cnf(φ), ψ), &\text{otherwise.}
+      \end{cases}
+      \end{split}
+  \end{align*}
+\end{definition}
+
+\begin{theorem}[thm-clausify]
+\label{thm:thm-clausify}
+  $Γ ⊢ φ$ and $ψ \in\Prop$ then $Γ ⊢ clausify(φ, ψ)$
+\end{theorem}
+
+\begin{proof} When $φ ≡ ψ$, we use the $subs$ theorem Eq.~(\ref{eq:substitution-theorem}). Otherwise, we use Theorem \ref{thm:thm-reorder-and-or} and Theorem \ref{thm:thm-cnf}.
+\end{proof}
+
+% subsubsection clausification (end)
+% --------------------------------------------------------------------
 
 % % --------------------------------------------------------------------
 % \subsubsection{Normalization.}
@@ -1195,18 +1250,29 @@ the boolean operators (¬, ∧, ∨).
 % Third, introducing an axiom or a definition of the.
 % To justify the two first cases, we use the Theorem~\ref{thm:thm-canonicalize}. For the last case, we use the Lemma~\ref{lem:lem-nnf}.
 
-% % -------------------------------------------------------------------
-% \subsubsection{Simplify}
-% \label{sssec:simplify}
+% -------------------------------------------------------------------
+\subsubsection{Simplify}
+\label{sssec:simplify}
 
-% The \simplify rule is the application of the the lemma showed above,
-% but also the following lemmas that intend to reduce a list of derivations,
-% a conjunction of their formulas into a one smaller.
+The \simplify rule is an inference that performs simplification of
+definitions and tautologies. This rule
+transverses a list of formulas by applying different theorems (e.g.,
+\emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive
+syllogism}) including those theorems for removing redundancies and definitions  from the description of the \canonicalize rule,
+Fig. \ref{fig:conjunctive-disjunctive-simpl}. This rules also use the resolution as we show in the description of the \resolve rule~\ref{thm:thm-resolve}. Let see the following excerpt from a \Metis \TSTP derivation where \simplify appears.
 
-% \improvement{Missing theorems here.}
+\begin{verbatim}
+fof(normalize_1_0, plain, (~ p & ~ r & q),
+    inference(canonicalize, [], [negate_1_0])).
+fof(normalize_1_1, plain, ((p | q) & (p | r)),
+    inference(canonicalize, [], [a1])).
+fof(normalize_1_2, plain, (p | r),
+    inference(conjunct, [], [normalize_1_1])).
+fof(normalize_1_3, plain, ($false),
+    inference(simplify, [], [normalize_1_0, normalize_1_2])).
+\end{verbatim}
 
-
-% % subsubsection simplify (end)
-% % -------------------------------------------------------------------
+% subsubsection simplify (end)
+% -------------------------------------------------------------------
 
 \end{document}
