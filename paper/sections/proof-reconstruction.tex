@@ -489,6 +489,26 @@ De Morgan Law.
 \end{proof}
 
 % -------------------------------------------------------------------
+
+\subsubsection{Negate.}
+
+Each proof of a subgoal is a refutation, thereby each proof assumes
+the negation of its subgoal. The \negate rule
+assumes the negation of such subgoals. This rules always
+appears after apply the \strip inference to the goal.
+
+\begin{verbatim}
+fof(goal, conjecture, (p & q)).
+fof(subgoal_0, plain, (p), inference(strip, [], [goal])).
+fof(subgoal_1, plain, (p => q), inference(strip, [], [goal])).
+fof(negate_0_0, plain, (~ p), inference(negate, [], [subgoal_0])).
+\end{verbatim}
+
+Then, to emulate this rule, we just introduce the negation
+of the subgoal by using the assume rule from the inferences in
+Fig.~\ref{fig:CPL-inference-rules}.
+
+% -------------------------------------------------------------------
 \subsubsection{Splitting a Conjunct.}
 \label{sssec:splitting-a-conjunct}
 
@@ -550,7 +570,7 @@ Then, we get the desire conclusion by applying the $subst$ theorem.
 % subsubsection splitting-a-conjunct (end)
 % -------------------------------------------------------------------
 
-% % ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
 
 \subsubsection{Reordering.}
 Logic equivalence between propositions is a major issue to justify
@@ -883,12 +903,12 @@ described above.
 
 % % --------------------------------------------------------------------
 
-% \subsubsection{Normal Forms.}
-% \label{sssec:normal_forms}
-% \change{Here lacks of an introduction!}
-% A negative normal form for the formula φ is one in which negations
-% appear only in the literals and the expression is in terms only of
-% the boolean operators (¬, ∧, ∨).
+\subsubsection{Normalization.}
+\label{sssec:normal_forms}
+\change{Here lacks of an introduction!}
+A negative normal form for the formula φ is one in which negations
+appear only in the literals and the expression is in terms only of
+the boolean operators (¬, ∧, ∨).
 
 % To transform a formula φ to its equivalent \abbre{NNF} form, we
 % apply recursively the following equations. The function type for
