@@ -2,6 +2,7 @@
 pdf :
 	- make clean
 	- latexmk -pdf main.tex
+# - pdflatex main.tex
 
 
 

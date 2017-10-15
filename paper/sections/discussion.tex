@@ -1,3 +1,7 @@
+In the following, we use the \Bool type for booleans defined as usual as
+well as $not$ function, $and$ function for the boolean conjunction,
+and $if_then_else$ dependent function type.
+
 
 We noted in \TSTP derivations that \Metis does not take into account
 some inference rules for the \Metis' official documentation; we
@@ -147,64 +151,3 @@ We refer the reader to see Section~\ref{sssec:normalization} to continue our app
 in the \canonicalize inference.}
 \label{fig:conjunctive-disjunctive-simpl}
 \end{figure}
-
-% ...................................................................
-\vskip 2mm
-
-\textit{Resolution.} The \resolve rule incorporates the resolution theorem showed in Fig.~\ref{fig:metis-inferences} for the \TSTP derivations.
-This rule posses three arguments: a positive literal $l$ to apply the resolution theorem, and two derivations, $\mathcal{D}₁$ and $\mathcal{D}₂$.
-
-The positive literal $l$ must occur in
-the formula from the first derivation $\mathcal{D}₁$, and the
-negative literal must occur in the formula from the second derivation $\mathcal{D}₂$ (see the pattern in the \emph{resolve} rule).
-We refer the reader to see Section~\ref{sssec:resolve} for the formalization of the \resolve rule.
-
-\begin{verbatim}
-cnf(refute_0_0, plain, p | q,
-  inference(canonicalize, [], [normalize_0_0])).
-cnf(refute_0_1, plain, ~ p,
-  inference(canonicalize, [], [normalize_0_4])).
-cnf(refute_0_2, plain, q,
-  inference(resolve, [$cnf(p)], [refute_0_0, refute_0_1])).
-\end{verbatim}
-
-% ...................................................................
-
-\textit{Splitting a conjunct.} The \conjunct rule extracts from a
-conjunction one of its conjuncts; it is a generalization of the
-projection rules for the conjunction connective as the
-following \TSTP derivation shows.
-We refer the reader to see Theorem~\ref{thm:thm-conjunct}
-in Section~\ref{sssec:splitting-a-conjunct} for its formalization.
-
-\begin{verbatim}
-fof(normalize_1, plain, p & q & r,
-  inference(canonicalize, [], [x])).
-fof(normalize_2, plain, q,
-  inference(conjunct, [], [normalize_1])).
-\end{verbatim}
-
-\textit{Negate.}
-Each subgoal proof is a refutation, thereby each proof assumes
-the negation of its subgoal. The \negate rule
-assumes the negation of a given subgoal. This rules always
-appears after applies the \strip inference to the goal.
-
-\begin{verbatim}
-fof(subgoal_0, plain, p,
-  inference(strip, [], [goal])).
-fof(negate_0_0, plain, ~ p,
-  inference(negate, [], [subgoal_0])).
-\end{verbatim}
-
-% ...................................................................
-
-\textit{Simplification.}
-The \simplify rule is an inference that performs simplification of
-definitions and tautologies. This rule
-transverses a list of formulas by applying different theorems (e.g.,
-\emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive
-syllogism}) including the list of theorems used by \canonicalize in
-Fig. \ref{fig:conjunctive-disjunctive-simpl} and the resolution
-theorem of the \resolve rule.
-We refer the reader to see Section~\ref{sssec:simplify}.

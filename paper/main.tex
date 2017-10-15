@@ -13,6 +13,10 @@
 
 \usepackage{subfiles}
 
+\usepackage{needspace}
+%https://tex.stackexchange.com/questions/28203/
+%thmtools-how-to-prevent-pagebreak-between-theorem-and-proof
+
 \setcounter{tocdepth}{5}
 \usepackage{graphicx}
 \usepackage{array}
@@ -141,6 +145,7 @@
 \usepackage[verbose]{newunicodechar}
 \newunicodechar{∧}{\ensuremath{\wedge}}
 \newunicodechar{∨}{\ensuremath{\vee}}
+\newunicodechar{⊻}{\ensuremath{\veebar}}
 \newunicodechar{¬}{\ensuremath{\neg}}
 \newunicodechar{⇒}{\ensuremath{\Rightarrow}}
 \newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
@@ -166,11 +171,17 @@
 \newunicodechar{φ}{\ensuremath{\varphi}}
 \newunicodechar{ϕ}{\ensuremath{\varphi}}
 \newunicodechar{ψ}{\ensuremath{\psi}}
+\newunicodechar{γ}{\ensuremath{\gamma}}
 \newunicodechar{≡}{\ensuremath{\equiv}}
 \newunicodechar{≠}{\ensuremath{\neq}}
 \newunicodechar{→}{\ensuremath{\rightarrow}}
 \newunicodechar{∈}{\ensuremath{\in}}
 \newunicodechar{∘}{\ensuremath{\circ}}
+\newunicodechar{⊕}{\ensuremath{\oplus}}
+\newunicodechar{⊖}{\ensuremath{\ominus}}
+\newunicodechar{⟝}{\ensuremath{\vdash_{2}}}
+% \newunicodechar{⨥}{\ensuremath{\dotplus}}
+% \newunicodechar{⨪}{\ensuremath{\dotminus}}
 
 %\DeclareUnicodeCharacter{00A0}{~}
 
@@ -205,7 +216,9 @@
 \newcommand{\ITP}{\abbre{ITP}}
 \newcommand{\CPL}{\abbre{CPL}}
 \newcommand{\CNF}{\abbre{CNF}}
+\newcommand{\Bool}{\abbre{Bool}}
 \newcommand{\Prop}{\abbre{Prop}}
+\newcommand{\NProp}{\abbre{NProp}}
 \newcommand{\Nat}{\abbre{Nat}}
 
 \newcommand{\name}[1]{\texttt{#1}\xspace}
