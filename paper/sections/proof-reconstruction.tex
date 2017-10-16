@@ -50,7 +50,8 @@ type theory to build definitions and theorems for functions
 necessary to emulate \Metis' inference rules. For this description,
 we will write the type judgments with ``$a : A$'' to denote that $a$
 has $\abbre{A}$ type. Types are written using small caps.
-We use \Prop type for propositions and the dependent type, $Γ ⊢ φ$ for theorems. In the latter type, $Γ$ has $\abbre{List}~\Prop$ type
+We use \Prop type for propositions and the dependent type, $Γ ⊢ φ$ for
+theorems. In the latter type, $Γ$ has $\abbre{List}~\Prop$ type
 and $φ$ has type $\Prop$. $\abbre{List}$ is the usual inductive type
 for lists. Finally, we will denote by $φ ≡ ψ$, the syntactic
 equivalence between propositions.
@@ -62,7 +63,8 @@ equivalence between propositions.
 \label{ssec:structural-recursion}
 
 To emulate \Metis' inference rules in type theory,
-we observed that transformations performed by some rules were given by \emph{general recursive} functions.
+we observed that transformations performed by some rules were given
+by \emph{general recursive} functions.
 But algorithms based on general recursions can not be translated
 directly in type theory since it is not a guarantee they terminate.
 For that reason, we present in this section, a technique to avoid
@@ -94,8 +96,9 @@ sugar for $\zero$, $\suc$, $\suc(\zero)$, $\cdots$, with the
 classical representation: $1$, $2$, $\cdots$ as well.
 
 Therefore, for a general recursive function $f: \Prop \to \Prop$
-with termination problems, we states a new function $f^{*} : \Prop \to \Nat \to \Prop$ where all recursive calls must done by
-using induction on the \Nat type structure.
+with termination problems, we states a new function
+$f^{*} : \Prop \to \Nat \to \Prop$ where all recursive calls must be
+done by using induction on the \Nat type structure.
 
 \subsubsection*{A Practical Example.}
 Let us consider the following example to exhibit the technique
@@ -128,7 +131,7 @@ Eq.~(\ref{eq:unshunt-structured}).
 \begin{align}
 \label{eq:unshunt-structured}
 \begin{split}
-&unshunt_{1}(φ, \zero)\hspace{3mm}= φ\\
+&unshunt_{1}(φ, \zero)\hspace{3mm}= φ\\%\hspace{10cm}\\
 &unshunt_{1}(φ, \suc(n)) =\\
 &\hspace{3mm}\begin{cases}
 unshunt_{1}((φ₁ ∧ φ₂) ⇒ φ₃, n),
@@ -162,27 +165,25 @@ rank(φ₁) + c_{¬},  &\text{if } φ ≡ \neg φ₁ \\
 \end{cases}
 \end{equation*}
 
-In the case of the $unshunt_0$ function in
-Eq.~(\ref{eq:unshunt-definition}), we define the complexity function
-$unshunt_{cm}: \Prop → \NN$ for our $unshunt_{1}$
-presented in Eq.~(\ref{eq:unshunt-rank-definition}).
+We define the $unshunt_{cm}: \Prop → \NN$ function as
+the complexity measure for $unshunt_0$ function.
 
 \begin{align}
-\begin{split}
-\label{eq:unshunt-rank-definition}
-&unshunt_{cm}(φ) =\\
-&\hspace{3mm}
-\begin{cases}
-unshunt_{cm}(φ₃) + 2, &\text{if }φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\
-\max(unshunt_{cm}(φ₂),unshunt_{cm}(φ₃)) + 1,
-  &\text{if }  φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)\\
-0, &\text{otherwise.}
-\end{cases}
-\end{split}
+  \begin{split}
+  \label{eq:unshunt-rank-definition}
+      &unshunt_{cm}(φ) =\\
+      &\hspace{3mm}
+        \begin{cases}
+        unshunt_{cm}(φ₃) + 2, &\text{if }φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\
+        \max(unshunt_{cm}(φ₂),unshunt_{cm}(φ₃)) + 1,
+          &\text{if }  φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)\\
+        0, &\text{otherwise.}
+        \end{cases}
+  \end{split}
 \end{align}
 
 Finally, following the technique mentioned, we get a curated version of
-$unshunt_{0}$ function presented in the following definition.
+$unshunt_{0}$ function presented in Def.~\ref{def:unshunt}.
 
 \begin{definition}[unshunt]
 \label{def:unshunt}
@@ -550,8 +551,8 @@ De Morgan Law.
 
 Each proof of a subgoal is a refutation, thereby each proof assumes
 the negation of its subgoal. The \negate rule
-assumes the negation of such subgoals. This rules always
-appears after apply the \strip inference to the goal.
+assumes the negation of such subgoals. This rule
+appears after applying the \strip inference to the goal.
 
 \begin{verbatim}
 fof(goal, conjecture, (p & q)).
@@ -569,9 +570,9 @@ Fig.~\ref{fig:CPL-inference-rules}.
 \label{sssec:splitting-a-conjunct}
 
 The \conjunct rule extracts from a
-conjunction one of its conjuncts; it is a generalization of the
+conjunction one of its conjuncts. This rule is a generalization of the
 projection rules for the conjunction connective as the
-following \TSTP excerpt shows.
+following \TSTP excerpt shows us.
 
 \begin{verbatim}
 fof(normalize_1, plain, p & q & (r | ~ p),
@@ -586,14 +587,13 @@ fof(normalize_2, plain, (r | ~ p),
 \begin{align}
   \begin{split}
   &conjunct : \Prop \to \Prop \to \Prop\\
-  &conjunct(φ, ψ) =\\
-  &\hspace{3mm}
-  \begin{cases}
-      ψ, &\text{if }φ ≡ ψ\\
-      ψ, &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }ψ ≡ conjunct(φ₁, ψ)\\
-      ψ, &\text{if }φ ≡ φ₁ ∧ φ₁\text{ and }ψ ≡ conjunct(φ₂, ψ)\\
-      φ, &\text{otherwise.}
-    \end{cases}
+  &conjunct(φ, ψ) =
+    \begin{cases}
+        ψ, &\text{if }φ ≡ ψ\\
+        ψ, &\text{if }φ ≡ φ₁ ∧ φ₂\text{ , }ψ ≡ conjunct(φ₁, ψ)\\
+        ψ, &\text{if }φ ≡ φ₁ ∧ φ₂\text{ , }ψ ≡ conjunct(φ₂, ψ)\\
+        φ, &\text{otherwise.}
+      \end{cases}
   \end{split}
 \end{align}
 \end{definition}
@@ -632,15 +632,22 @@ Then, we get the desire conclusion by applying the $subst$ theorem.
 Logic equivalence between propositions is a major issue to justify
 prover reasoning steps. Since we left out semantics to treat only the
 syntax aspects of the propositions, our approach shows that equivalence
-by converting propositions to their conjunctive normal forms and showing equivalence by reordering the conjunctions and the inner disjunctions.
-In this section, we provide some theorems to perform such reordering tasks, the goals are the following.
+by converting propositions to their conjunctive normal forms and showing
+equivalence by reordering the conjunctions and the inner disjunctions.
+In this section, we provide some theorems to perform such reordering tasks,
+the goals are the following.
 
 \begin{itemize}
-  \item Reorder the disjunction $φ = φ₁ ∨ φ₂ ∨ \cdots φₙ$ to match with $ψ = ψ₁ ∨ ψ₂ ∨ \cdots ∨ ψₙ$, when for all $i = 1, \cdots, n$, exists at least one $ψⱼ$ such that $φᵢ ≡ ψⱼ$ for $j = 1, \cdots, n$.
-  \item Reorder a CNF formula, $φ = φ₁ ∧ φ₂ ∧ \cdots$, to match with another CNF formula $ψ = ψ₁ ∧ ψ₂ ∧ \cdots$ when for all $i = 1, \cdots, n$, exists at least one $ψⱼ$ such that $φᵢ ≡ ψⱼ$ for $j = 1, \cdots, n$.
+  \item Reorder the disjunction $φ = φ₁ ∨ φ₂ ∨ \cdots φₙ$ to match with
+$ψ = ψ₁ ∨ ψ₂ ∨ \cdots ∨ ψₙ$, when for all $i = 1, \cdots, n$, exists at
+least one $ψⱼ$ such that $φᵢ ≡ ψⱼ$ for $j = 1, \cdots, n$.
+  \item Reorder a CNF formula, $φ = φ₁ ∧ φ₂ ∧ \cdots$, to match with another
+CNF formula $ψ = ψ₁ ∧ ψ₂ ∧ \cdots$ when for all $i = 1, \cdots, n$, exists at
+least one $ψⱼ$ such that $φᵢ ≡ ψⱼ$ for $j = 1, \cdots, n$.
 \end{itemize}
 
-First, we define the $rdisj$ function in Eq.~(\ref{eq:rdisj-def}) to convert a disjunction in its right-associative form.
+First, we define the $rdisj$ function in Eq.~(\ref{eq:rdisj-def}) to convert
+a disjunction in its right-associative form.
 
 \begin{definition}[rdisj]
 \label{def:rdisj}
@@ -665,7 +672,10 @@ First, we define the $rdisj$ function in Eq.~(\ref{eq:rdisj-def}) to convert a d
 % Following a similar way to define $rdisj$, we define the $rconj$ function,
 % to convert a conjunction into its right-associative form.
 
-The $build_{∨}$ function in Eq.~(\ref{eq:build-or}) intends to construct a disjunction from another disjunction, specifically, this functions will try to rearrange the disjuncts in the source formula to match with the target disjunction formula, similar as we described above.
+The $build_{∨}$ function in Eq.~(\ref{eq:build-or}) intends to construct a
+disjunction from another disjunction, specifically, this functions will try
+to rearrange the disjuncts in the source formula to match with the target
+disjunction formula, similar as we described above.
 
 \begin{definition}[build$_{∨}$]
 \begin{equation}
@@ -688,8 +698,9 @@ The $build_{∨}$ function in Eq.~(\ref{eq:build-or}) intends to construct a dis
 $Γ ⊢ φ$, and $ψ : \Prop$ then $Γ ⊢ build_{∨}(φ)$.
 \end{lemma}
 
-From now, we assume all propositions are right-associative unless otherwise stated. The $factor$ function in
-Eq.~(\ref{eq:factor-definition}) intends to simplify a special case of disjunction, the repeated disjuncts (e.g., $factor(φ ∨ φ) \mapsto\ φ$).
+From now, we assume all propositions are right-associative unless otherwise stated.
+The $factor$ function in Eq.~(\ref{eq:factor-definition}) intends to simplify a
+special case of disjunction, the repeated disjuncts (e.g., $factor(φ ∨ φ) \mapsto\ φ$).
 Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $(ψ ∨ φ)$.
 
 \begin{definition}[factor]
@@ -711,8 +722,10 @@ Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $(ψ ∨ φ)$.
   $Γ ⊢ φ$ then $Γ ⊢ factor(φ)$.
 \end{lemma}
 
-To construct a disjunction $ψ$ from another disjunction $φ$, we have used ideas from the description in \citeauthor{bohme2010}~\cite{bohme2010} to prove equality between nested disjunctions. The result is the
-$sbuild_{∨}$ function that uses every disjunct from the source formula, $φ$, to build up the target disjunction $ψ$.
+To construct a disjunction $ψ$ from another disjunction $φ$, we have used ideas
+from the description in \citeauthor{bohme2010}~\cite{bohme2010} to prove equality
+between nested disjunctions. The result is the $sbuild_{∨}$ function that uses
+every disjunct from the source formula, $φ$, to build up the target disjunction $ψ$.
 
 \begin{definition}[sbuild$_{∨}$]
 \begin{align}
@@ -801,7 +814,7 @@ We define similar functions and state some theorems as we previously did for dis
 \begin{definition}[reorder$_{∧}$]
   \begin{align*}
       \begin{split}
-        &reorder : \Prop → \Prop \to Prop\\
+        &reorder : \Prop → \Prop \to \Prop\\
         &reorder_{∧}(φ, ψ) =
         \begin{cases}
           φ, &\text{if }φ ≡ ψ\\
@@ -823,15 +836,15 @@ We define similar functions and state some theorems as we previously did for dis
   \label{eq:conjunct-or-definition}
 \begin{align*}
   \begin{split}
-    &conjunct_{∨} : \Prop → \Prop \to Prop\\
+    &conjunct_{∨} : \Prop → \Prop \to \Prop\\
     &conjunct_{∨}(φ, ψ) =
     \begin{cases}
       ψ, &\text{if }φ ≡ ψ\\
       ψ, &\text{if }reorder_{∨}(φ, ψ) ≡ ψ\\
-      ψ, &\text{if }ψ ≡ ψ₁ ∧ ψ₂, conjunct_{∨}(φ, ψ₁) ≡ ψ₁\\
+      ψ, &\text{if }ψ ≡ ψ₁ ∧ ψ₂,\ conjunct_{∨}(φ, ψ₁) ≡ ψ₁,\\
         &\text{and } reorder_{∨}(φ, ψ₂) ≡ ψ₂\\
-      ψ, &\text{if }φ ≡ φ₁ ∧ φ₂, conjunct_{∨}(φ₁, ψ) ≡ ψ\\
-      ψ, &\text{if }φ ≡ φ₁ ∧ φ₂, conjunct_{∨}(φ₂, ψ) ≡ ψ\\
+      ψ, &\text{if }φ ≡ φ₁ ∧ φ₂,\ conjunct_{∨}(φ₁, ψ) ≡ ψ\\
+      ψ, &\text{if }φ ≡ φ₁ ∧ φ₂,\ conjunct_{∨}(φ₂, ψ) ≡ ψ\\
       φ, &\text{otherwise.}
     \end{cases}
   \end{split}
@@ -850,7 +863,7 @@ We define similar functions and state some theorems as we previously did for dis
       &reorder_{∧∨}(φ, ψ)=
         \begin{cases}
           ψ, &\text{if } φ≡ψ\\
-          ψ, &\text{if } ψ ≡ ψ₁ ∧ ψ₂, reorder_{∧∨}(φ,ψ₁) ≡ ψ₁\\
+          ψ, &\text{if } ψ ≡ ψ₁ ∧ ψ₂,\ reorder_{∧∨}(φ,ψ₁) ≡ ψ₁\\
              &\text{and }reorder_{∧∨}(φ, ψ₂) ≡ ψ₂\\
           φ, &\text{if }ψ ≡ ψ₁ ∧ ψ₂\\
           conjunct_{∨}(φ, ψ) &\text{otherwise.}
@@ -923,10 +936,13 @@ derivation.
 
 \begin{definition}[resolve]
 \label{def:resolve}
- \begin{equation*}
-    resolve(φ₁, φ₂, l, ψ) =
+ \begin{align*}
+ \begin{split}
+    &resolve : \Prop \to \Prop \to \Prop \to \Prop \to \Prop\\
+    &resolve(φ₁, φ₂, l, ψ) =
       rsol(reorder_{∨}(φ₁, l ∨ ψ) ∧ reorder_{∨} (φ₂, ¬ l ∨ ψ)).
-  \end{equation*}
+  \end{split}
+  \end{align*}
 \end{definition}
 
 \begin{theorem}[thm-resolve]
@@ -1187,7 +1203,7 @@ take into account the following cases.
     &ndisj_{∨}(φ) =
       \begin{cases}
         ⊤, &\text{if }φ ≡ ¬ φ₁ ∨ φ₂,\ φ₁ ∈_{∨} φ₂\\
-        ⊤, &\text{if}φ ≡ ¬ φ₁ ∨ φ₂,\ ndisj_{∨}(φ₂) ≡ ⊤\\
+        ⊤, &\text{if }φ ≡ ¬ φ₁ ∨ φ₂,\ ndisj_{∨}(φ₂) ≡ ⊤\\
         ¬ φ₁ ∨ ndisj_{∨}(φ₂), &\text{if }φ ≡ ¬ φ₁ ∨ φ₂\\
         ⊤, &\text{if }φ ≡ φ₁ ∨ φ₂,\ ¬φ₁ ∈_{∨} φ₂ \\
         ⊤, &\text{if }φ ≡ φ₁ ∨ φ₂,\ ndisj_{∨}(φ₂) ≡ ⊤\\
@@ -1343,7 +1359,8 @@ polarity.
   $Γ ⟝ φ$ then $Γ ⟝ dist_{∨}(φ)$, where,
   \begin{align*}
       \begin{split}
-      dist_{∨}(φ) =
+      &dist_{∨} : \Prop \to \Prop\\
+      &dist_{∨}(φ) =
         \begin{cases}
           dist_{∨}(φ₁ ∨ φ₂) ∧ dist_{∨}(φ₂ ∨ φ₃),
             &\text{if }φ ≡ (φ₁ ∧ φ₂) ∨ φ₃\\
@@ -1360,7 +1377,8 @@ polarity.
   $Γ ⟝ φ$ then $Γ ⟝ dist(φ)$, where,
   \begin{align*}
       \begin{split}
-      dist(φ) =
+      &dist : \Prop \to \Prop\\
+      &dist(φ) =
         \begin{cases}
           dist(φ₁) ∧ dist(φ₂),
             &\text{if }φ ≡ φ₁ ∧ φ₂\\
@@ -1604,23 +1622,34 @@ fof(normalize_1_3, plain, ($false),
 \caption{Example of \simplify rule in a \TSTP derivation of \Metis.}
 \end{figure}
 
-
+%TODO check canonicalize can reduce a conjunction into one smaller.
+\begin{definition}[simpl]
+\label{def:simpl}
 \begin{align}
     \begin{split}
-      &\textit{simpl} : \Prop \to \Prop \to \Prop \to \Prop\\
-      &\textit{simpl}(φ₁, φ₂ ψ) =
+      &\textit{simpl} : \Prop → \Prop → \Prop\\
+      &\textit{simpl}(φ₁, φ₂) =
       \begin{cases}
-        ψ, &\text{if }φᵢ ≡ ψ,\text{ for some }i = 1, 2\\
-        ψ, &\text{if }φ₁ ≡ φ₂ ⇒ ψ\\
+        ⊥,  &\text{ if }φᵢ ≡ ⊥,\\
+        γ   &\text{ if }φᵢ ≡ φⱼ ⇒ γ\\
+        γ   &\text{ if }φᵢ ≡ γ ⇒ ¬ φⱼ\\
+        γ   &\text{ if }φᵢ ≡ φⱼ ⇔ γ \\
+        γ   &\text{ if }φᵢ ≡ ¬ φⱼ ∨ γ\\
+        ⊥   &\text{ if }conjunct(φᵢ, ¬ φⱼ)\\
+        ⊥,  &\text{ if }canonicalize(φᵢ, ¬ φⱼ) ≡ ¬ φⱼ\\
+        φ₁, &\text{ otherwise.}\\
       \end{cases}
     \end{split}
 \end{align}
+For $i = 1, 2$, $i\neq j$. We assume here some commutative properties for brevity.
+\end{definition}
 
 \begin{theorem}[thm-simplify] % (fold)
   \label{thm:thm-simplify}
 $\{ Γ ⊢ φᵢ \}$ for $i = 1, \cdots, n$ then
 $Γ ⊢ simplify (\bigwedge_{i=1}^n φ)$.
 \end{theorem}
+
 
 % subsubsection simplify (end)
 % -------------------------------------------------------------------
