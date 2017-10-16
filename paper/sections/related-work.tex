@@ -71,14 +71,10 @@ step, but authors' approach is restricted to pure equational logic
 first-order logic with equality but no other predicate symbols and
 no functions symbols~\cite{appel1959}.
 
-% Kanso and Setzer~\cite{kanso2016light} integrate \name{Z3} in \Agda
-% but they also integrate the propositional fragment of the \name{E} prover in
-% \cite{Kanso2012}. They cataloged these two integration as
-% \emph{Oracle and Reflection} and \emph{Oracle and Justification}, respectively.
-% Their integration with the \name{E} prover is the most related work with our
-% approach found at the moment while we write this document. Besides the use
-% of the same \ITP, crucial differences easily arise like decidability of
-% propositional logic using semantics that we do not take into account for the
-% reason we describe later on in Section~\ref{sec:conclusions}.
-
+Kanso and Setzer~\cite{kanso2016light} integrate the propositional fragment of \name{EProver} in \Agda. In this work, the authors translate automatically propositional logic problems written in \Agda to \TPTP problems. By calling an external wrapper the ATP, this tool gets a \TSTP derivation. The tool parses the \name{EProver} derivation and outputs
+\Agda code. After that, we say their proof-reconstruction is almost
+similar as the approach presented in Section~\ref{ssec:workflow}.
+Nevertheless, Kanso and Setzer aim to justify some of the inference rules
+by using propositional semantics instead of just syntactic derivation
+steps.
 \end{document}

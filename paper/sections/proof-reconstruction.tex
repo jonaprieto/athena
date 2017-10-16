@@ -17,8 +17,9 @@ of steps similar to the workflow presented by \citeauthor{sultana2015} in
 \cite{sultana2015}. This process is a translation from a source
 system to a target system. In our case, the system of origin, the
 automatic theorem prover, is \Metis; the target system is a proof
-assistant, \Agda. We choose \Agda, but another proof assistant with the same support of type theory and inductive types is valid (see a description of \Agda for its main features in
-Section~\ref{sec:implementation}).
+assistant, \Agda. We choose \Agda, but another proof assistant with the same support of type theory and inductive types is valid.
+%  (see a description of \Agda for its main features in
+% Section~\ref{sec:implementation}).
 The overview of the proof-reconstruction is presented in
 Fig.~\ref{fig:proof-reconstruction-workflow}, the process begin with
 a \TPTP file that encodes a problem in \CPL. We use this file as the
@@ -96,7 +97,7 @@ Therefore, for a general recursive function $f: \Prop \to \Prop$
 with termination problems, we states a new function $f^{*} : \Prop \to \Nat \to \Prop$ where all recursive calls must done by
 using induction on the \Nat type structure.
 
-\subsubsection{A Practical Example.}
+\subsubsection*{A Practical Example.}
 Let us consider the following example to exhibit the technique
 mentioned above for an inner function present in the emulated version
 of the \strip inference.
@@ -233,7 +234,7 @@ the \texttt{rule} inference.
 the soundness of the $rule$ function.
 \end{itemize}
 
-\subsubsection{Strip a Goal.}
+\subsubsection{Stripping a Goal.}
 \label{sssec:strip-a-goal}
 
 To prove a goal, \Metis splits the goal into
@@ -545,7 +546,7 @@ De Morgan Law.
 
 % -------------------------------------------------------------------
 
-\subsubsection{Negate.}
+\subsubsection{Negating Subgoals.}
 
 Each proof of a subgoal is a refutation, thereby each proof assumes
 the negation of its subgoal. The \negate rule
@@ -870,27 +871,33 @@ We define similar functions and state some theorems as we previously did for dis
 
 The \resolve rule incorporates the resolution theorem showed in
 Fig.~\ref{fig:metis-inferences} for the \TSTP derivations.
-This rule posses three arguments: a positive literal $l$ to apply the resolution theorem, and two derivations,
-$\mathcal{D}₁$ and $\mathcal{D}₂$.
+This rule posses three arguments: a positive literal $l$ to apply the
+resolution theorem, and two derivations.
 The positive literal $l$ must occur in
-the formula from the first derivation $\mathcal{D}₁$, and the
-negative literal must occur in the formula from the second derivation $\mathcal{D}₂$ (see the pattern in the \emph{resolve} rule).
-The following excerpt is an \Metis \TSTP example for the \resolve rule.
+the formula from the first derivation and the
+negative literal must occur in the formula from the second derivation,
+see the pattern of \emph{resolve} rule in Fig.~\ref{fig:metis-inferences}.
 
+% \begin{figure}
+\label{fig:resolve-tstp-example}
 \begin{verbatim}
-cnf(refute_0_0, plain, p | q,
-  inference(canonicalize, [], [normalize_0_0])).
-cnf(refute_0_1, plain, ~ p,
-  inference(canonicalize, [], [normalize_0_4])).
-cnf(refute_0_2, plain, q,
-  inference(resolve, [$cnf(p)], [refute_0_0, refute_0_1])).
+cnf(refute_0_4, plain, (~ r | p | q),
+    inference(canonicalize, [], [normalize_0_5])).
+cnf(refute_0_5, plain, (p | q | r),
+    inference(canonicalize, [], [normalize_0_6])).
+cnf(refute_0_6, plain, (p | q),
+    inference(resolve, [$cnf(r)], [refute_0_5, refute_0_4])).
 \end{verbatim}
+% \caption{Excerpt of a \Metis \TSTP example for the \resolve rule.}
+% \end{figure}
 
 To emulate this rule, we perform rearrangements inside the formulas
 involved to match with the pattern expected by the resolution theorem
-described above.
+described above. We begin by defining a convenient version of
+the binary resolution in Def.~\ref{def:rsol}.
 
 \begin{definition}[rsol]
+\label{def:rsol}
 \begin{align*}
       \begin{split}
         &rsol : \Prop \to \Prop\\
@@ -909,7 +916,13 @@ described above.
   $Γ ⊢ φ$ then $Γ ⊢ rsol(φ)$.
 \end{lemma}
 
+In Def.~\ref{def:resolve}, the emulated rule for $resolve$
+has four arguments. The first three were described
+above. The last one, ψ, represents the expected conclusion in the \Metis
+derivation.
+
 \begin{definition}[resolve]
+\label{def:resolve}
  \begin{equation*}
     resolve(φ₁, φ₂, l, ψ) =
       rsol(reorder_{∨}(φ₁, l ∨ ψ) ∧ reorder_{∨} (φ₂, ¬ l ∨ ψ)).
@@ -949,6 +962,22 @@ described above.
   \end{bprooftree}
   \end{equation*}
 \end{proof}
+
+\begin{figure}
+\label{fig:resolve-example}
+\begin{equation*}
+  \begin{bprooftree}
+  \AxiomC{$Γ ⊢ ¬ r ∨ p ∨ q$}
+  \AxiomC{$Γ ⊢ p ∨ q ∨ r $}
+  \RightLabel{thm-resolve}
+  \BinaryInfC{$Γ ⊢ resolve(¬ r ∨ p ∨ q, p ∨ q ∨ r, r, p ∨ q)$}
+  \UnaryInfC{$Γ ⊢ p ∨ q$}
+  \end{bprooftree}
+\end{equation*}
+\caption{Example of a resolution in \Metis using
+Thm.~\ref{thm:thm-resolve}.}
+%Application of Thm.~\ref{thm:thm-resolve} for the \TSTP excerpt Fig.~\ref{fig:resolve-tstp-example}.}
+\end{figure}
 
 % subsubsection resolve (end)
 % --------------------------------------------------------------------
@@ -1419,10 +1448,11 @@ clausal form to a CNF clause. \Metis can introduce axioms, and definitions
 by using this rule. Since the nature of this rule consists of dealing with
 CNF clauses, our strategy to justify its reasoning mainly consists of
 testing for equality with normalized negative form of the formula, or a
-reordering of the conjunctive normal form of the source formula that
-matches the conjunctive normal form of the target formula.
+reordering of the conjunctive normal form of the source formula to match
+the conjunctive normal form of the target formula.
 
 \begin{definition}[canonicalize]
+\label{def:canonicalize}
 \begin{align*}
     \begin{split}
       &canonicalize : \Prop \to \Prop \to \Prop\\
@@ -1526,62 +1556,41 @@ fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
 \end{proof}
 
 \begin{remark}
-The \clausify rule is always preceded by the application of the
-\canonicalize rule. Both rules perform Clausification that introduces
+The \clausify rule is often preceded by the \canonicalize rule.
+Both rules perform \emph{Clausification} that introduces
 into the problem axioms or definitions in the domain of the solution.
-The process is mainly described on paper by \citeauthor{Sutcliffe1996}~\cite{Sutcliffe1996}.
+The Clausification algorithms is mainly described on paper by
+\citeauthor{Sutcliffe1996}~\cite{Sutcliffe1996}. We left for future work
+investigate the consequences of removing $clausify$ inference by
+strengthen $canonicalize$ rule in Def.~\ref{def:canonicalize}
 \end{remark}
 
 % subsubsection clausification (end)
 % --------------------------------------------------------------------
 
-
-% \begin{lemma}[lem-canon]
-%   \label{lem:lem-canon}
-%   \begin{align*}
-%   \begin{split}
-%   &canon(φ) =\\
-%   &\hspace{3mm}
-%   \begin{cases}
-%       canon(φⱼ), &\text{if } φ ≡ φ₁ ∧ φ₂,\ canon(φᵢ) ≡ ⊤,\\
-%                  &\text{for same } i,j = 1,2, i≠j\\
-%      ⊥, &\text{if } φ ≡ φ₁ ∧ φ₂,\ canon(φᵢ) ≡ ⊥, i = 1,2\\
-%      canon(φ₁) ∧ canon(φ₂), &\text{if } φ ≡ φ₁ ∧ φ₂\\
-%      ⊤, &\text{if } φ ≡ φ₁ ∨ φ₂,\ canon(φᵢ) ≡ ⊤, i = 1,2\\
-%      canon(φⱼ), &\text{if } φ ≡ φ₁ ∨ φ₂,\ canon(φᵢ) ≡ ⊥,\\
-%                 &\text{for same } i,j = 1,2, i≠j\\
-%      canon(φ₁) ∨ canon(φ₂), &\text{if } φ ≡ φ₁ ∨ φ₂\\
-%      φ, &\text{otherwise.}
-%     \end{cases}
-%   \end{split}
-%   \end{align*}
-% \end{lemma}
-
-% \begin{theorem}[thm-canonicalize] % (fold)
-%   \label{thm:thm-canonicalize}
-%   $Γ ⊢ φ$ then $Γ ⊢ canonicalize(φ)$, where,
-%   \begin{equation*}
-%     canonicalize =
-%      canon ∘ ndisj_{∧} ∘ ndisj_{∧∨} ∘ redun ∘ rconj ∘ cnf.
-%   \end{equation*}
-% \end{theorem}
-
-% The \canonicalize rule acts in \Metis' \TSTP derivations in three main cases. First, introducing the
-% negation of a subgoal. Second, to simplify an intermediate derivation.
-% Third, introducing an axiom or a definition of the.
-% To justify the two first cases, we use the Theorem~\ref{thm:thm-canonicalize}. For the last case, we use the Lemma~\ref{lem:lem-nnf}.
-
 % -------------------------------------------------------------------
-\subsubsection{Simplify.}
+\subsubsection{Simplification.}
 \label{sssec:simplify}
 
 The \simplify rule is an inference that performs simplification of
 definitions and tautologies. This rule
-transverses a list of formulas by applying different theorems (e.g.,
-\emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive
-syllogism}) including those theorems for removing redundancies and definitions  from the description of the \canonicalize rule,
-Fig. \ref{fig:conjunctive-disjunctive-simpl}. This rules also use the resolution as we show in the description of the \resolve rule~\ref{thm:thm-resolve}. Let see the following excerpt from a \Metis \TSTP derivation where \simplify appears.
+transverses a list of inner derivations by applying different theorems
+(e.g., \emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive
+syllogism}) to get a contradiction or just simplify the formulas.
+To emulate this rule, we have included theorems
+from \canonicalize rule Section~\ref{sssec:canonicalize} and
+\resolve rule Section~\ref{sssec:resolve}.
 
+\begin{remark}
+Besides the fact, $\List\ \Prop \to \Prop$ is the type that coincides
+with the reading of a \TSTP derivation, we choose a different option.
+In the translation from \TSTP to \Agda, we build a conjunction
+from the list of derivations by introducing binary conjunction
+with $∧$-intro rule. That avoids us to define a new sequent type
+to support \List \Prop type in the conclusion side.
+\end{remark}
+
+\begin{figure}
 \begin{verbatim}
 fof(normalize_1_0, plain, (~ p & ~ r & q),
     inference(canonicalize, [], [negate_1_0])).
@@ -1592,6 +1601,26 @@ fof(normalize_1_2, plain, (p | r),
 fof(normalize_1_3, plain, ($false),
     inference(simplify, [], [normalize_1_0, normalize_1_2])).
 \end{verbatim}
+\caption{Example of \simplify rule in a \TSTP derivation of \Metis.}
+\end{figure}
+
+
+\begin{align}
+    \begin{split}
+      &\textit{simpl} : \Prop \to \Prop \to \Prop \to \Prop\\
+      &\textit{simpl}(φ₁, φ₂ ψ) =
+      \begin{cases}
+        ψ, &\text{if }φᵢ ≡ ψ,\text{ for some }i = 1, 2\\
+        ψ, &\text{if }φ₁ ≡ φ₂ ⇒ ψ\\
+      \end{cases}
+    \end{split}
+\end{align}
+
+\begin{theorem}[thm-simplify] % (fold)
+  \label{thm:thm-simplify}
+$\{ Γ ⊢ φᵢ \}$ for $i = 1, \cdots, n$ then
+$Γ ⊢ simplify (\bigwedge_{i=1}^n φ)$.
+\end{theorem}
 
 % subsubsection simplify (end)
 % -------------------------------------------------------------------
