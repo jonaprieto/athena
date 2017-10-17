@@ -1,15 +1,5 @@
-
 \documentclass[runningheads]{llncs}
 \usepackage[numbers]{natbib}
-% \usepackage{geometry}
-% \geometry{
-%   a4paper,         % or letterpaper
-%   textwidth=15cm,  % llncs has 12.2cm
-%   textheight=24cm, % llncs has 19.3cm
-%   heightrounded,   % integer number of lines
-%   hratio=1:1,      % horizontally centered
-%   vratio=2:3,      % not vertically centered
-% }
 
 \usepackage{subfiles}
 
@@ -30,7 +20,6 @@
 \def\EnableBpAbbreviations{true}
 
 \usepackage[title]{appendix}
-
 
 \usepackage{hyphenat}
 \hyphenation{proof-re-cons-truc-tion proof-ob-ject}
@@ -134,7 +123,6 @@
 \newenvironment{sketchproof}{%
   \renewcommand{\proofname}{Sketch of the Proof}\proof}{\endproof}
 
-
 \usepackage{amssymb}
 \usepackage{amsmath}
 %\usepackage{stmaryrd} %new symbol font for tcs
@@ -143,13 +131,13 @@
 
 \usepackage{textcomp}
 \usepackage[verbose]{newunicodechar}
-\newunicodechar{∧}{\ensuremath{\wedge}}
-\newunicodechar{∨}{\ensuremath{\vee}}
-\newunicodechar{⊻}{\ensuremath{\veebar}}
 \newunicodechar{¬}{\ensuremath{\neg}}
-\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
-\newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
-\newunicodechar{∼}{\ensuremath{\sim}}
+\newunicodechar{Γ}{\ensuremath{\Gamma}}
+\newunicodechar{γ}{\ensuremath{\gamma}}
+\newunicodechar{φ}{\ensuremath{\varphi}}
+\newunicodechar{ψ}{\ensuremath{\psi}}
+\newunicodechar{ϕ}{\ensuremath{\varphi}}
+\newunicodechar{ᵢ}{\ensuremath{{}_{i}}}
 \newunicodechar{₀}{\ensuremath{{}_{0}}}
 \newunicodechar{₁}{\ensuremath{{}_{1}}}
 \newunicodechar{₂}{\ensuremath{{}_{2}}}
@@ -160,30 +148,26 @@
 \newunicodechar{₇}{\ensuremath{{}_{7}}}
 \newunicodechar{₈}{\ensuremath{{}_{8}}}
 \newunicodechar{₉}{\ensuremath{{}_{9}}}
-\newunicodechar{ᵢ}{\ensuremath{{}_{i}}}
-\newunicodechar{ⱼ}{\ensuremath{{}_{j}}}
 \newunicodechar{ₙ}{\ensuremath{{}_{n}}}
-\newunicodechar{∅}{\ensuremath{\emptyset}}
-\newunicodechar{⊢}{\ensuremath{\vdash}}
-\newunicodechar{⊥}{\ensuremath{\bot}}
-\newunicodechar{⊤}{\ensuremath{\top}}
-\newunicodechar{Γ}{\ensuremath{\Gamma}}
-\newunicodechar{φ}{\ensuremath{\varphi}}
-\newunicodechar{ϕ}{\ensuremath{\varphi}}
-\newunicodechar{ψ}{\ensuremath{\psi}}
-\newunicodechar{γ}{\ensuremath{\gamma}}
-\newunicodechar{≡}{\ensuremath{\equiv}}
-\newunicodechar{≠}{\ensuremath{\neq}}
 \newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
+\newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
+\newunicodechar{∅}{\ensuremath{\emptyset}}
 \newunicodechar{∈}{\ensuremath{\in}}
 \newunicodechar{∘}{\ensuremath{\circ}}
+\newunicodechar{∧}{\ensuremath{\wedge}}
+\newunicodechar{∨}{\ensuremath{\vee}}
+\newunicodechar{∼}{\ensuremath{\sim}}
+\newunicodechar{≠}{\ensuremath{\neq}}
+\newunicodechar{≡}{\ensuremath{\equiv}}
 \newunicodechar{⊕}{\ensuremath{\oplus}}
 \newunicodechar{⊖}{\ensuremath{\ominus}}
+\newunicodechar{⊢}{\ensuremath{\vdash}}
+\newunicodechar{⊤}{\ensuremath{\top}}
+\newunicodechar{⊥}{\ensuremath{\bot}}
+\newunicodechar{⊻}{\ensuremath{\veebar}}
 \newunicodechar{⟝}{\ensuremath{\vdash_{2}}}
-% \newunicodechar{⨥}{\ensuremath{\dotplus}}
-% \newunicodechar{⨪}{\ensuremath{\dotminus}}
-
-%\DeclareUnicodeCharacter{00A0}{~}
+\newunicodechar{ⱼ}{\ensuremath{{}_{j}}}
 
 \usepackage{verbatim}
 \usepackage{relsize}
@@ -209,18 +193,18 @@
 \usepackage{xspace}
 
 \newcommand{\abbre}[1]{\textsc{#1}\xspace}
-\newcommand{\ATP}{\abbre{ATP}}
 \newcommand{\ATPs}{\abbre{ATPs}}
-\newcommand{\SAT}{\abbre{SAT}}
-\newcommand{\SMT}{\abbre{SMT}}
-\newcommand{\ITP}{\abbre{ITP}}
-\newcommand{\CPL}{\abbre{CPL}}
-\newcommand{\CNF}{\abbre{CNF}}
+\newcommand{\ATP}{\abbre{ATP}}
 \newcommand{\Bool}{\abbre{Bool}}
+\newcommand{\CNF}{\abbre{CNF}}
+\newcommand{\CPL}{\abbre{CPL}}
+\newcommand{\ITP}{\abbre{ITP}}
 \newcommand{\List}{\abbre{List}}
-\newcommand{\Prop}{\abbre{Prop}}
 \newcommand{\NProp}{\abbre{NProp}}
 \newcommand{\Nat}{\abbre{Nat}}
+\newcommand{\Prop}{\abbre{Prop}}
+\newcommand{\SAT}{\abbre{SAT}}
+\newcommand{\SMT}{\abbre{SMT}}
 
 \newcommand{\name}[1]{\texttt{#1}\xspace}
 \newcommand{\canonicalize}{\name{canonicalize}}
@@ -237,7 +221,6 @@
 \newcommand{\suc}{\name{suc}}
 \newcommand{\nnf}{\name{nnf}}
 
-
 \newcommand{\mysplit}{split}
 \newcommand{\thmsplit}{lem-split}
 
@@ -245,9 +228,9 @@
 
 \newcommand{\prg}[1]{\texttt{#1}\xspace}
 \newcommand{\Agda}{\prg{Agda}}
-\newcommand{\Metis}{\prg{Metis}}
 \newcommand{\Athena}{\prg{Athena}}
 \newcommand{\IsabelleHOL}{\prg{IsabelleHOL}}
+\newcommand{\Metis}{\prg{Metis}}
 
 \newcommand{\len}[1]{\texttt{#1}\xspace}
 \newcommand{\Haskell}{\len{Haskell}}
