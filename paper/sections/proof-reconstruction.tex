@@ -641,6 +641,8 @@ Then, we get the desire conclusion by applying the $subst$ theorem.
 % ------------------------------------------------------------------------
 
 \subsubsection{Reordering.}
+\label{sssec:reordering}
+
 Logic equivalence between propositions is a major issue to justify
 prover reasoning steps. Since we left out semantics to treat only the
 syntax aspects of the propositions, our approach shows equivalence
@@ -1016,13 +1018,16 @@ Thm.~\ref{thm:thm-resolve}.}
 % % --------------------------------------------------------------------
 
 \subsubsection{Normalization.}
-\label{sssec:normal_forms}
-In the core of \Metis, we find an important module:
-\texttt{Normalize.sml}.
-This module is the responsible for rules like \canonicalize, \clausify,
-\conjunct or \simplify.
-One of the main purposes of the module consists of adding the axioms to the problem. Into this process, some transformation are carried out by different inference rules.
-For example, the \canonicalize rule can convert a first-order form formulas to their clausal normal form. In that process, the formula can suffers different transformations by removing redundancies (tautologies or definitions), converting the proposition to its normalized negative normal form, to its conjunctive normal form, or to a specialized normal form.
+\label{sssec:normalization}
+The normalization module in \Metis is the responsible for
+\canonicalize, \clausify, \conjunct and \simplify.
+One of the main purposes of the module consists of adding the axioms
+to the problem. In this process, some transformations are carried
+out by convert a \verb!fof! formula to their clausal normal form.
+The process mainly consists of removing redundancies (tautologies or
+definitions) and converting the proposition to its normalized
+negative normal form, conjunctive normal form, or
+definitional normal form.
 
 \begin{definition}[\abbre{NProp}]
   \NProp is the type for a formula in normalized negative normal form
@@ -1032,7 +1037,7 @@ For example, the \canonicalize rule can convert a first-order form formulas to t
 
 A sequent $Γ ⟝ φ$ represents a theorem where
 $Γ$ is a set of \Prop propositions premises, and $φ : \NProp$ is the
-sequent's conclusion. These theorems have a subset of rules from
+conclusion of the theorem. These theorems have a subset of rules from
 the classical inference rules in Fig.~\ref{fig:CPL-inference-rules}
 that apply for the connectives that coincides with \NProp type.
 
@@ -1103,7 +1108,7 @@ functions for normalized propositions (see Def.~\ref{def:rdisj}).
 
 In a disjunction, $φ = φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
 if there is some $i = 1, \cdots, n$ such that $ψ = φᵢ$.
-Note that $ψ ∈_{∨} φ$ can be defined as the equality
+$ψ ∈_{∨} φ$ is another name for the equality
 $ψ ≡ conjunct_{∨}(φ, ψ)$.
 
 \begin{definition}[rm$_∨$]
@@ -1127,7 +1132,8 @@ $ψ ≡ conjunct_{∨}(φ, ψ)$.
 \end{lemma}
 
 Now, we have removed redundancies in the disjunctions by applying
-$rm_{∨}$ function, we can define a similar function to work with conjunctions.
+$rm_{∨}$ function, we can define a similar function to work with
+conjunctions, the $rm_{∧}$ function.
 
 \begin{equation*}
   \begin{bprooftree}
@@ -1260,9 +1266,8 @@ take into account the following cases.
 % subsubsection redundancy (end)
 % -------------------------------------------------------------------
 
-We are ready to combine all function defined above in two function
-$canon_{∧}$ for removing redundancies in conjunctions, and
-$canon_{∨}$ for removing redundancies in disjunctions.
+We use the functions defined above to remove redundancies in conjunctions with $canon_{∧}$ function, and
+$canon_{∨}$ function to remove redundancies in disjunctions.
 
 \begin{definition}[canon$_{∧}$]
 \label{def:canon-and}
@@ -1316,17 +1321,17 @@ document and refer the interested reader to \cite{AgdaMetis} for
 more details.
 \end{remark}
 
-Finally, we can translate formulas from \Prop to \NProp by defining the
-$nnf₀$ function based on the \Metis'source code. We have taken
+Finally, we can translate formulas from \Prop to \NProp by defining
+the $nnf₀$ function. We have taken
 inspiration on the $nnf$ function described in
-\citeauthor{Bezem2002}~\cite{Bezem2002}. Their $nnf$ function translates
-formulas to their classical negative normal form. In the reference, the
-authors avoid a termination problem with a similar function by using as an
-extra argument, the polarity of the formula.
-
-For the polarity of a formula, we use the \abbre{Polarity} type with two
-constructors: $⊕$ to denote positive polarity, and $⊖$ to denote negative
-polarity.
+\citeauthor{Bezem2002}~\cite{Bezem2002}. Their $nnf$ function
+translates formulas to their classical negative normal form. In the
+reference, the authors avoid a termination problem with a similar
+function by using as an extra argument, the polarity of the formula.
+We follow the same idea in Def.~\ref{def:nnf-zero}.
+Therefore, we need the \abbre{Polarity} type with
+two constructors: $⊕$ to denote positive polarity, and $⊖$ to denote
+negative polarity of the formula.
 
 \begin{definition}[nnf₀]
 \label{def:nnf-zero}
@@ -1415,9 +1420,14 @@ polarity.
     \UnaryInfC{$Γ, φ_{i} ⊢ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$}
     \end{bprooftree}
 \end{equation*}
-Then, by using the ∨-elim rule, from the last derivation above we derive
-$Γ, φ₁ ∨ φ₂ ⟝ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$, and the lemma follows.
+Then, by using the ∨-elim rule in the last derivation above, we
+derive $Γ, φ₁ ∨ φ₂ ⟝ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$ and the lemma
+follows.
 \end{sketchproof}
+
+To convert normalized propositions to classical propositions, we
+make the following definition, completing the translation between
+these two types.
 
 \begin{definition}[form]
 \begin{align*}
@@ -1441,12 +1451,15 @@ $Γ, φ₁ ∨ φ₂ ⟝ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$, and the lemma
    $Γ ⟝ φ$ then $Γ ⊢ form(φ)$.
 \end{lemma}
 
+As a result, we can get a conjunctive normal form by applying the
+following theorem.
+
 \begin{theorem}[thm-cnf]
 \label{thm:thm-cnf}
   $Γ ⊢ φ$ then $Γ ⊢ cnf(φ)$, where,
   \begin{align*}
     \begin{split}
-    &cnf : \NProp \to \NProp\\
+    &cnf : \Prop \to \Prop\\
     &cnf = form ∘ dist ∘ nnf.
     \end{split}
   \end{align*}
@@ -1457,8 +1470,7 @@ $Γ, φ₁ ∨ φ₂ ⟝ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$, and the lemma
 \end{proof}
 
 Since all transformations performed above come from equivalences
-in classical propositional logic, we can also states the following theorem
-convenient for the next section.
+in classical propositional logic, we have stated the following theorem with a purpose for the next section.
 
 \begin{theorem}[thm-inv-cnf]
 \label{thm:thm-inv-cnf}
@@ -1474,12 +1486,17 @@ convenient for the next section.
 
 The \canonicalize rule is an overloaded inference rule that performs
 mainly normalization of the proposition input by using theorems
-described in the section above.  It can introduce axioms and definitions
-in the problem. This rule convert a \texttt{fof} %TODO
+described in the section above.  It can introduce axioms and
+definitions into the problem solution.
+This rule convert a \texttt{fof} %TODO
 formula in clausal form to a \CNF clause but also it perform some
-simplification in the process (removing ⊤ and ⊥ from the formula).
+simplification in the process (e.g., removing ⊤ and ⊥ in the formula).
 
-Since this rule mostly consists of dealing with \CNF clauses, to justify its reasoning, our strategy mainly consists of checking the equality of normalized negative form between the source and the target formula. If it fails, we try to reorder the conjunctive normal form of the source formula to match with
+Since this rule mostly consists of dealing with \CNF clauses, to
+justify its reasoning, our strategy mainly consists of checking the
+equality of normalized negative form between the source and the
+target formula. If it fails, we try to reorder the conjunctive
+normal form of the source formula to match with
 the conjunctive normal form of the target formula.
 
 \begin{definition}[canonicalize]
@@ -1589,7 +1606,8 @@ fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
   $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ clausify(φ, ψ)$.
 \end{theorem}
 
-\begin{proof} When $φ ≡ ψ$, we use the $subs$ theorem Eq.~(\ref{eq:substitution-theorem}). Otherwise, we use Theorem \ref{thm:thm-reorder-and-or} and Theorem \ref{thm:thm-cnf}.
+\begin{proof} If $φ ≡ ψ$, this lemmas follows after applies $subs$
+lemma. Otherwise, we use Theorem~\ref{thm:thm-reorder-and-or} and Theorem~\ref{thm:thm-cnf}.
 \end{proof}
 
 \begin{remark}
