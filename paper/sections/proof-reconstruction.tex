@@ -1126,8 +1126,8 @@ $ψ ≡ conjunct_{∨}(φ, ψ)$.
   $Γ ⟝ φ$ then $Γ ⟝ rm_{∨}(φ)$.
 \end{lemma}
 
-Now, we have removed redundancies in the disjunctions by applying the
-$rm_{∨}$, we can define a similar function to work with conjunctions.
+Now, we have removed redundancies in the disjunctions by applying
+$rm_{∨}$ function, we can define a similar function to work with conjunctions.
 
 \begin{equation*}
   \begin{bprooftree}
@@ -1474,13 +1474,12 @@ convenient for the next section.
 
 The \canonicalize rule is an overloaded inference rule that performs
 mainly normalization of the proposition input by using theorems
-described in the section above. Metis can introduce axioms, and definitions
-by using it. This rule can convert a \texttt{fof} %TODO
-formula in clausal form into a CNF clause. Since the nature of this rule
-consists of dealing with CNF clauses, to justify its reasoning, our strategy
-mainly consists of checking the equality of normalized negative form between
-the source and the target formula. If it fails, we try to reorder the
-conjunctive normal form of the source formula to match
+described in the section above.  It can introduce axioms and definitions
+in the problem. This rule convert a \texttt{fof} %TODO
+formula in clausal form to a \CNF clause but also it perform some
+simplification in the process (removing ⊤ and ⊥ from the formula).
+
+Since this rule mostly consists of dealing with \CNF clauses, to justify its reasoning, our strategy mainly consists of checking the equality of normalized negative form between the source and the target formula. If it fails, we try to reorder the conjunctive normal form of the source formula to match with
 the conjunctive normal form of the target formula.
 
 \begin{definition}[canonicalize]
@@ -1521,7 +1520,7 @@ the conjunctive normal form of the target formula.
     \BinaryInfC{$Γ ⊢ ψ$}
   \end{bprooftree}
 \end{equation*}
-\item If $γ := cnf(ψ) ≡ reorder_{∧∨}(cnf(φ), cnf(ψ))$,
+\item If $γ = cnf(ψ) ≡ reorder_{∧∨}(cnf(φ), cnf(ψ))$,
 \begin{equation*}
   \begin{bprooftree}
      \AxiomC{$Γ ⊢ φ$}
@@ -1551,10 +1550,16 @@ The \clausify rule transforms a
 propositional formula in its clausal normal form, a conjunction
 of clauses. Where a \emph{clause} is the disjunction of zero or more
 literals and a \emph{literal} is an atom (positive literal) or a
-negation of an atom (negative literal). Be aware this kind of conversion between one formula to its clausal normal form is not unique, and \Metis has a customized approach to perform that transformation.
-In the following \Metis \TSTP derivation, we see a clear example, where
-clausify expands the formula \texttt{normalize\_0\_0} by using distributive
-laws.
+negation of an atom (negative literal). Be aware this kind of conversion
+between one formula to its clausal normal form is not unique, and \Metis has a
+customized approach to perform that transformation. That is the reason we
+perform some reordering for the CNF of the source formula to fulfill this
+issue.
+
+
+In the following \Metis \TSTP derivation, we see a clear example where
+\clausify expands the formula \texttt{normalize\_0\_0} by using distributive
+laws presented in conjunctive normal form conversion.
 
 \begin{verbatim}
 fof(a1, axiom, (p => (q & r))).
