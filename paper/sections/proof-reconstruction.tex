@@ -17,15 +17,18 @@ of steps similar to the workflow presented by \citeauthor{sultana2015} in
 \cite{sultana2015}. This process is a translation from a source
 system to a target system. In our case, the system of origin, the
 automatic theorem prover, is \Metis; the target system is a proof
-assistant, \Agda. We choose \Agda, but another proof assistant with the same support of type theory and inductive types is valid.
+assistant, \Agda. We choose \Agda, but another proof assistant with the same
+support of type theory and inductive types is valid.
 %  (see a description of \Agda for its main features in
 % Section~\ref{sec:implementation}).
 The overview of the proof-reconstruction is presented in
 Fig.~\ref{fig:proof-reconstruction-workflow}, the process begin with
 a \TPTP file that encodes a problem in \CPL. We use this file as the
-input of the \Metis prover and if the problem is a theorem, \Metis can reply with a derivation in \TSTP format of the proof.
+input of the \Metis prover and if the problem is a theorem, \Metis can reply
+with a derivation in \TSTP format of the proof.
 
-With the \TSTP  derivation from the Step~2, we process the derivation with the \Athena translator tool~\cite{Athena}.
+With the \TSTP  derivation from the Step~2, we process the derivation with the
+\Athena translator tool~\cite{Athena}.
 \Athena parses the \TSTP format, analyzes the
 derivation and generates a representation of the natural deduction
 proof using a tree data structure (see the properties
@@ -34,7 +37,9 @@ We perform an analysis of the proof-tree to remove some
 unnecessary steps that introduce redundancies or unused input for
 \Athena.
 
-As a result of using \Athena, we get an \Agda file, the proof-term. To generate this file, \Athena has used names of functions and theorems from \Agda libraries:
+As a result of using \Athena, we get an \Agda file, the proof-term. To
+generate this file, \Athena has used names of functions and theorems from
+\Agda libraries:
 \texttt{agda-prop}~\cite{AgdaProp}, and \texttt{agda-metis}~\cite{AgdaMetis}.
 
 
@@ -45,16 +50,15 @@ Otherwise, when type-checking fails, the failure must be
 investigated by the user, checking for the error in \Metis, \Athena,
 or in \Agda.
 
-In the rest of this section, we provide a formal description using
-type theory to build definitions and theorems for functions
-necessary to emulate \Metis' inference rules. For this description,
-we will write the type judgments with ``$a : A$'' to denote that $a$
+In the remainder part of this section, a formal description using
+type theory is presented to build definitions and theorems of functions
+necessary to emulate \Metis' inference rules. As notation convention,
+We write the type judgments with ``$a : A$'' to denote that $a$
 has $\abbre{A}$ type. Types are written using small caps.
 We use \Prop type for propositions and the dependent type, $Γ ⊢ φ$ for
-theorems. In the latter type, $Γ$ has $\abbre{List}~\Prop$ type
-and $φ$ has type $\Prop$. $\abbre{List}$ is the usual inductive type
-for lists. Finally, we will denote by $φ ≡ ψ$, the syntactic
-equivalence between propositions.
+theorems where $Γ$ has $\abbre{List}~\Prop$ type, and $φ$ has type $\Prop$.
+$\abbre{List}$ type is the usual inductive type for lists. For syntactical
+equivalence, we write $φ ≡ ψ$ for $φ : \Prop$ and $ψ : \Prop$.
 
 % ...................................................................
 
@@ -67,12 +71,13 @@ we observed that transformations performed by some rules were given
 by \emph{general recursive} functions.
 But algorithms based on general recursions can not be translated
 directly in type theory since it is not a guarantee they terminate.
-For that reason, we present in this section, a technique to avoid
-such termination problems by modifying the recursive functions
-to be \emph{structural recursive}.
+For that reason, we follow the technique described
+in~\cite{Bertot2004} to avoid termination problems by modifying the
+recursive
+functions to be \emph{structural recursive}.
 % (see \cite{Coquand1992,Abel2002,Bove2005} for more details).
 
-We adopt the notion of \emph{structurally smaller} from
+This paper adopts the notion of \emph{structurally smaller} from
 \citeauthor{Abel2002}~\cite{Abel2002} to say, a recursive function is
 structurally recursive if it calls itself with only
 \emph{structurally smaller}
@@ -106,17 +111,18 @@ mentioned above for an inner function present in the emulated version
 of the \strip inference.
 
 \begin{align}
-\begin{split}
-\label{eq:unshunt-definition}
-&unshunt_{0}(φ) =\\
-&\hspace{3mm}\begin{cases}
-unshunt_{0}((φ₁ ∧ φ₂) ⇒ φ₃),
-  & \text{if }φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\
-unshunt_{0}(φ₁ ⇒ φ₂) ∧ unshunt_{0}(φ₁ ⇒ φ₃),
-  & \text{if }φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)\\
-φ, &\text{otherwise.}
-\end{cases}
-\end{split}
+  \label{eq:unshunt-definition}
+  \begin{split}
+    &unshunt_{0} : \Prop → \Prop\\
+    &unshunt_{0}(φ) =\\
+    &\hspace{3mm}\begin{cases}
+    unshunt_{0}((φ₁ ∧ φ₂) ⇒ φ₃),
+      & \text{ if }φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\
+    unshunt_{0}(φ₁ ⇒ φ₂) ∧ unshunt_{0}(φ₁ ⇒ φ₃),
+      & \text{ if }φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)\\
+    φ, &\text{ otherwise.}
+    \end{cases}
+  \end{split}
 \end{align}
 
 From the definition above, the size of the argument, $((φ₁ ∧ φ₂) ⇒ φ₃)$,
@@ -124,23 +130,23 @@ is not structurally smaller than the input formula, $(φ₁ ⇒ (φ₂ ⇒ φ₃
 since $((φ₁ ∧ φ₂) ⇒ φ₃)$ is not a subformula of $(φ₁ ⇒ (φ₂ ⇒ φ₃))$.
 
 Thus, we define the function
-$unshunt_{1} : \Prop \to \Nat \to \Prop$
-by structural recursion in its second argument in
+$unshunt_{1}$ by structural recursion in its second argument in
 Eq.~(\ref{eq:unshunt-structured}).
 
 \begin{align}
-\label{eq:unshunt-structured}
-\begin{split}
-&unshunt_{1}(φ, \zero)\hspace{3mm}= φ\\%\hspace{10cm}\\
-&unshunt_{1}(φ, \suc(n)) =\\
-&\hspace{3mm}\begin{cases}
-unshunt_{1}((φ₁ ∧ φ₂) ⇒ φ₃, n),
-  &\text{if } φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\[2mm]
-unshunt_{1}(φ₁ ⇒ φ₂, n)\\
-∧\ unshunt_{1}(φ₁ ⇒ φ₃, n),
-   &\text{if } φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃).
-\end{cases}
-\end{split}
+  \label{eq:unshunt-structured}
+  \begin{split}
+    &unshunt_{1} : \Prop → \Nat \to \Prop\\
+    &unshunt_{1}(φ, \zero)\hspace{3mm}= φ\\%\hspace{10cm}\\
+    &unshunt_{1}(φ, \suc(n)) =\\
+    &\hspace{3mm}\begin{cases}
+    unshunt_{1}((φ₁ ∧ φ₂) ⇒ φ₃, n),
+      &\text{ if } φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\[2mm]
+    unshunt_{1}(φ₁ ⇒ φ₂, n)\\
+    ∧\ unshunt_{1}(φ₁ ⇒ φ₃, n),
+       &\text{ if } φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃).
+  \end{cases}
+  \end{split}
 \end{align}
 
 As we mentioned above, the natural number in the second argument of
@@ -154,30 +160,34 @@ number for a proposition $φ$ like the following $rank$ function.
 The symbols, $c_{¬}$ and $c_{\square}$ is a non-negative integer
 number called the complexity of the connective.
 
-\begin{equation*}
-\label{eq:rank-definition}
-rank(φ)=
-\begin{cases}
-0, &\text{for atomic }φ \\
-rank(φ₁) + c_{¬},  &\text{if } φ ≡ \neg φ₁ \\
-\max{(rank(φ₁),rank(φ₂))} + c_{\square},
-  &\text{if } φ ≡ φ₁\,\square\, φ₂.
-\end{cases}
-\end{equation*}
+\begin{align*}
+  \begin{split}
+  % \label{eq:rank-definition}
+    &rank : \Prop → \Nat\\
+    &rank(φ) =
+    \begin{cases}
+    0, &\text{for atomic }φ \\
+    rank(φ₁) + c_{¬},  &\text{ if } φ ≡ \neg φ₁ \\
+    \max{(rank(φ₁),rank(φ₂))} + c_{\square},
+      &\text{ if } φ ≡ φ₁\,\square\, φ₂.
+    \end{cases}
+  \end{split}
+\end{align*}
 
 We define the $unshunt_{cm}: \Prop → \NN$ function as
 the complexity measure for $unshunt_0$ function.
 
 \begin{align}
-  \begin{split}
   \label{eq:unshunt-rank-definition}
+  \begin{split}
+      &unshunt_{cm} : \Prop → \Nat\\
       &unshunt_{cm}(φ) =\\
       &\hspace{3mm}
         \begin{cases}
-        unshunt_{cm}(φ₃) + 2, &\text{if }φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\
+        unshunt_{cm}(φ₃) + 2, &\text{ if }φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\
         \max(unshunt_{cm}(φ₂),unshunt_{cm}(φ₃)) + 1,
-          &\text{if }  φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)\\
-        0, &\text{otherwise.}
+          &\text{ if }  φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)\\
+        0, &\text{ otherwise.}
         \end{cases}
   \end{split}
 \end{align}
@@ -186,13 +196,13 @@ Finally, following the technique mentioned, we get a curated version of
 $unshunt_{0}$ function presented in Def.~\ref{def:unshunt}.
 
 \begin{definition}[unshunt]
-\label{def:unshunt}
-  \begin{align*}
-    \begin{split}
-    &unshunt : \Prop → \Prop\\
-    &unshunt(\varphi) = unshunt_{1}(\varphi, unshunt_{cm}(\varphi)).
-    \end{split}
-  \end{align*}
+  \label{def:unshunt}
+    \begin{align*}
+      \begin{split}
+      &unshunt : \Prop → \Prop\\
+      &unshunt(\varphi) = unshunt_{1}(\varphi, unshunt_{cm}(\varphi)).
+      \end{split}
+    \end{align*}
 \end{definition}
 
 For a more complete treatment of general recursion, and how to
@@ -210,29 +220,33 @@ In this section, we emulate each \Metis inference rule by proving a
 function with the same name, and a theorem that
 proves the soundness of the function. Then, we will find
 the following pattern to present the formalization for
-the \Metis inference rules.
+the \Metis inference rules. The function name written in bold print is a \Metis
+inference rule in \TSTP derivation. The same function name written
+in italics refers to the emulated version presents in this section.
+Each emulated version states a theorem to prove the soundness of the rule.
+This theorem is named by using the prefix \emph{thm}
+and the name of the rule.
 
 \begin{itemize}
-\item \texttt{rule} is a \Metis inference rule
-\item $rule$ is the emulated version function for
+\item \texttt{rule} is a $n$-ary \Metis inference rule
+\item $rule$ is the emulated version function  for
 the \texttt{rule} inference.
 \begin{align*}
-\begin{split}
-&rule : \Prop → \Prop → \Prop\\
-&rule(φ, ψ) =
-  \begin{cases}
-  ψ, &\text{if }rule\text{ built }ψ\text{ by applying valid transformations to }φ\\
-  φ, &\text{otherwise.}
-  \end{cases}
-\end{split}
+  \begin{split}
+    &rule : \Prop → \Prop → \cdots → \Prop\\
+    &rule(φ₁,\cdots, φₙ, ψ) =
+      \begin{cases}
+      ψ, &\text{ if }rule\text{ built }ψ\text{ by applying valid}\\
+         &\text{ transformations or other rules to }φ\\
+      φ, &\text{ otherwise.}
+      \end{cases}
+  \end{split}
 \end{align*}
 
 \begin{itemize}
-  \item $φ$ is the \emph{source} formula.
-  \item $ψ$ is the \emph{target} formula.
+  \item $φᵢ$ are \emph{source} formulas from previous deducted derivations.
+  \item $ψ$ is the \emph{target} formula. The excepted result of \texttt{rule}.
 \end{itemize}
-\item thm-rule is the theorem, $Γ ⊢ rule(φ, ψ)$, that proves
-the soundness of the $rule$ function.
 \end{itemize}
 
 \subsubsection{Stripping a Goal.}
@@ -255,10 +269,9 @@ fof(subgoal_2, plain, (p & r) => q,
     inference(strip, [], [goal])).
 \end{verbatim}
 
-To prove the correctness of the process mentioned above, we state
-the Theorem~\ref{thm:thm-strip}. But first, let us prove some
-lemmas for $unshunt$ function presented in Def.~(\ref{def:unshunt}),
-and for $split$ function presented in Eq.~(\ref{eq:split-definition}).
+To prove the correctness of the process mentioned above, first,
+we need to establish some lemmas before introduce our main goal of this part,
+Theorem~\ref{thm:thm-strip}.
 
 \begin{lemma}[lem-unshunt]
   \label{lem:unshunt}
@@ -337,56 +350,53 @@ Finally, using the theorem \texttt{⇒∧⇒-to-⇒∧} from~\cite{AgdaProp},
 \end{itemize}
 \end{sketchproof}
 
-Let us now consider the $split$ function presented in
-Eq.~(\ref{eq:split-definition}) that yields the conjunction of subgoals that implies the goal of the problem in the \Metis \TSTP derivations.
+Let us now define the $split$ function that yields the conjunction of subgoals that implies the goal of the problem in the \Metis \TSTP derivations.
 
 \begin{definition}[split]
 \label{def:split}
-
-\begin{equation}
-\label{eq:split-definition}
-\begin{split}
-&split : \Prop → \Prop\\
-&\mysplit(φ) =
-\begin{cases}
-unshunt(\mysplit(φ₁)) &\text{if }φ ≡ φ₁ ∧ φ₂\\
-∧\ unshunt(φ₁ ⇒ \mysplit(φ₂)), &\\[2.5mm]
-unshunt(¬ φ₁ ⇒ \mysplit(φ₂)),
-  & \text{if }φ ≡ φ₁ ∨ φ₂\\[2.5mm]
-unshunt(φ₁ ⇒ \mysplit(φ₂)),
-  & \text{if }φ ≡ φ₁ ⇒ φ₂\\[2.5mm]
-unshunt(φ₁ ⇒ \mysplit(φ₂))
-  & \text{if }φ ≡ φ₁ ⇔ φ₂\\
-∧\ unshunt(φ₂ ⇒ \mysplit(φ₁)),
-  &\\[2.5mm]
-unshunt(φ₁ ⇒ \mysplit(¬ φ₂)),
-  & \text{if }φ ≡ ¬ (φ₁ ∧ φ₂)\\[2.5mm]
-unshunt(\mysplit(¬ φ₁))
-  & \text{if }φ ≡ ¬ (φ₁ ∨ φ₂)\\
-∧\ unshunt(¬ φ₁ ⇒ \mysplit(¬ φ₂)),
-  &\\[2.5mm]
-unshunt(\mysplit(φ₁))
-  & \text{if }φ ≡ ¬ (φ₁ ⇒ φ₂)\\
-∧\ unshunt(φ₁ ⇒ \mysplit(¬ φ₂)),
-  &\\[2.5mm]
-unshunt(φ₁ ⇒ \mysplit(¬ φ₂))
-  & \text{if }φ ≡ ¬ (φ₁ ⇔ φ₂)\\
-∧\ unshunt(¬ φ₂ ⇒ \mysplit(φ₁)),
-  &\\[2.5mm]
-unshunt(\mysplit(φ₁)),
-  & \text{if }φ ≡ ¬ ¬ φ₁\\
-⊤,
-  & \text{if }φ ≡ ¬ ⊥\\
-⊥,
-  & \text{if }φ ≡ ¬ ⊤.
-\end{cases}
-\end{split}
-\end{equation}
+  \begin{equation*}
+    \begin{split}
+    &split : \Prop → \Prop\\
+    &\mysplit(φ) =
+      \begin{cases}
+      unshunt(\mysplit(φ₁)) &\text{ if }φ ≡ φ₁ ∧ φ₂\\
+      ∧\ unshunt(φ₁ ⇒ \mysplit(φ₂)), &\\[2.5mm]
+      unshunt(¬ φ₁ ⇒ \mysplit(φ₂)),
+        & \text{ if }φ ≡ φ₁ ∨ φ₂\\[2.5mm]
+      unshunt(φ₁ ⇒ \mysplit(φ₂)),
+        & \text{ if }φ ≡ φ₁ ⇒ φ₂\\[2.5mm]
+      unshunt(φ₁ ⇒ \mysplit(φ₂))
+        & \text{ if }φ ≡ φ₁ ⇔ φ₂\\
+      ∧\ unshunt(φ₂ ⇒ \mysplit(φ₁)),
+        &\\[2.5mm]
+      unshunt(φ₁ ⇒ \mysplit(¬ φ₂)),
+        & \text{ if }φ ≡ ¬ (φ₁ ∧ φ₂)\\[2.5mm]
+      unshunt(\mysplit(¬ φ₁))
+        & \text{ if }φ ≡ ¬ (φ₁ ∨ φ₂)\\
+      ∧\ unshunt(¬ φ₁ ⇒ \mysplit(¬ φ₂)),
+        &\\[2.5mm]
+      unshunt(\mysplit(φ₁))
+        & \text{ if }φ ≡ ¬ (φ₁ ⇒ φ₂)\\
+      ∧\ unshunt(φ₁ ⇒ \mysplit(¬ φ₂)),
+        &\\[2.5mm]
+      unshunt(φ₁ ⇒ \mysplit(¬ φ₂))
+        & \text{ if }φ ≡ ¬ (φ₁ ⇔ φ₂)\\
+      ∧\ unshunt(¬ φ₂ ⇒ \mysplit(φ₁)),
+        &\\[2.5mm]
+      unshunt(\mysplit(φ₁)),
+        & \text{ if }φ ≡ ¬ ¬ φ₁\\
+      ⊤,
+        & \text{ if }φ ≡ ¬ ⊥\\
+      ⊥,
+        & \text{ if }φ ≡ ¬ ⊤.
+      \end{cases}
+    \end{split}
+  \end{equation*}
 \end{definition}
 
 The definition above suffers termination problems since it is not
 a structural recursion. Therefore, we have reformulated the equation
-above to solve such a issue following the technique
+above to solve such an issue following the technique
 described in Section~\ref{ssec:structural-recursion}. We refer to $split$
 as the function after applying the process mentioned above here and below
 unless otherwise stated.
@@ -396,13 +406,11 @@ unless otherwise stated.
 \end{lemma}
 
 \begin{sketchproof}
-We now proceed by induction on the structure of the
-formula $φ$ by following the cases defined in
-Eq.~(\ref{eq:split-definition}).
+The proof is by induction on the structure of the
+formula $φ$ by following the cases in Def.~\ref{def:split}.
 We present some cases but for a complete proof, we refer the reader to~\cite{AgdaMetis}.
 \begin{itemize}
 \item $(φ ≡ ¬ ¬ φ₁)$
-%Using the double negation equivalence, we conclude.
 \begin{equation*}
   \begin{bprooftree}
  \AxiomC{$Γ ⊢ \mysplit(φ,n)$}
@@ -523,20 +531,23 @@ De Morgan Law.
 \end{equation}
 \end{lemma}
 
+We can now formulate our main result of this part that
+justifies the stripping strategy of \Metis to prove goals.
+
 \begin{theorem}[thm-strip]
 \label{thm:thm-strip}
- If $s_i$ are the subgoals of the goal $φ$, and
- $\{ Γ ⊢ s_i \}_{i}$, then $Γ ⊢ φ$.
+ If $s_i$ are the subgoals of the goal $φ$ for $i=1,\cdots,n$, and
+ $\{ Γ ⊢ s_i \}_{i =1}^n$, then $Γ ⊢ φ$.
 \end{theorem}
 
 \begin{proof}
 \begin{equation*}
   \begin{bprooftree}
-  \AxiomC{$\left\{ Γ ⊢ s_i \right\}_{i}$}
+  \AxiomC{$\left\{ Γ ⊢ s_i \right\}_{i=1}^n$}
   \RightLabel{∧-intro}
-  \UnaryInfC{$Γ ⊢ \bigwedge_i s_i$}
+  \UnaryInfC{$Γ ⊢ \bigwedge_{i=1}^n s_i$}
 
-  \AxiomC{$\mysplit(φ) ≡ \bigwedge_i s_i $}
+  \AxiomC{$\mysplit(φ) ≡ \bigwedge_{i=1}^n s_i $}
   \RightLabel{subst}
   \BinaryInfC{$Γ ⊢ \mysplit(φ)$}
   \RightLabel{\thmsplit.}
@@ -562,10 +573,11 @@ fof(negate_0_0, plain, (~ p), inference(negate, [], [subgoal_0])).
 \end{verbatim}
 
 Then, to emulate this rule, we just introduce the negation
-of the subgoal by using the assume rule from the inferences in
+of the subgoal by using $assume$ rule from the inferences in
 Fig.~\ref{fig:CPL-inference-rules}.
 
 % -------------------------------------------------------------------
+
 \subsubsection{Splitting a Conjunct.}
 \label{sssec:splitting-a-conjunct}
 
@@ -589,10 +601,10 @@ fof(normalize_2, plain, (r | ~ p),
   &conjunct : \Prop \to \Prop \to \Prop\\
   &conjunct(φ, ψ) =
     \begin{cases}
-        ψ, &\text{if }φ ≡ ψ\\
-        ψ, &\text{if }φ ≡ φ₁ ∧ φ₂\text{ , }ψ ≡ conjunct(φ₁, ψ)\\
-        ψ, &\text{if }φ ≡ φ₁ ∧ φ₂\text{ , }ψ ≡ conjunct(φ₂, ψ)\\
-        φ, &\text{otherwise.}
+        ψ, &\text{ if }φ ≡ ψ\\
+        ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ , }ψ ≡ conjunct(φ₁, ψ)\\
+        ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ , }ψ ≡ conjunct(φ₂, ψ)\\
+        φ, &\text{ otherwise.}
       \end{cases}
   \end{split}
 \end{align}
@@ -631,14 +643,15 @@ Then, we get the desire conclusion by applying the $subst$ theorem.
 \subsubsection{Reordering.}
 Logic equivalence between propositions is a major issue to justify
 prover reasoning steps. Since we left out semantics to treat only the
-syntax aspects of the propositions, our approach shows that equivalence
-by converting propositions to their conjunctive normal forms and showing
-equivalence by reordering the conjunctions and the inner disjunctions.
+syntax aspects of the propositions, our approach shows equivalence
+by converting propositions to their conjunctive normal forms.
+But also, reordering the conjunctions and the inner disjunctions into the
+formulas to match them.
 In this section, we provide some theorems to perform such reordering tasks,
 the goals are the following.
 
 \begin{itemize}
-  \item Reorder the disjunction $φ = φ₁ ∨ φ₂ ∨ \cdots φₙ$ to match with
+  \item Reorder a disjunction $φ = φ₁ ∨ φ₂ ∨ \cdots φₙ$ to match with
 $ψ = ψ₁ ∨ ψ₂ ∨ \cdots ∨ ψₙ$, when for all $i = 1, \cdots, n$, exists at
 least one $ψⱼ$ such that $φᵢ ≡ ψⱼ$ for $j = 1, \cdots, n$.
   \item Reorder a CNF formula, $φ = φ₁ ∧ φ₂ ∧ \cdots$, to match with another
@@ -646,31 +659,32 @@ CNF formula $ψ = ψ₁ ∧ ψ₂ ∧ \cdots$ when for all $i = 1, \cdots, n$, e
 least one $ψⱼ$ such that $φᵢ ≡ ψⱼ$ for $j = 1, \cdots, n$.
 \end{itemize}
 
-First, we define the $rdisj$ function in Eq.~(\ref{eq:rdisj-def}) to convert
+First, we define the $rdisj$ function to convert
 a disjunction in its right-associative form.
+The $rconj$ function converts conjunction to its right-associative form is not
+presented here, but is defined in a similar way (see its implementation
+in~\cite{AgdaMetis}).
 
 \begin{definition}[rdisj]
 \label{def:rdisj}
-\begin{align}
-  \begin{split}
-  \label{eq:rdisj-def}
-    &rdisj(φ) : \Prop \to \Prop\\
-    &rdisj(φ) =
-    \begin{cases}
-    rdisj(φ₁ ∨ (φ₂ ∨ φ₃)),  & \text{if } φ ≡ (φ₁ ∨ φ₂) ∨ φ₃\\
-    φ₁ ∨ rdisj(φ₂),         & \text{if } φ ≡ φ₁ ∨ φ₂\\
-    φ,                      & \text{otherwise.}
-    \end{cases}
-  \end{split}
-\end{align}
+  \begin{align*}
+    \begin{split}
+    \label{eq:rdisj-def}
+      &rdisj(φ) : \Prop \to \Prop\\
+      &rdisj(φ) =
+      \begin{cases}
+      rdisj(φ₁ ∨ (φ₂ ∨ φ₃)),  & \text{ if } φ ≡ (φ₁ ∨ φ₂) ∨ φ₃\\
+      φ₁ ∨ rdisj(φ₂),         & \text{ if } φ ≡ φ₁ ∨ φ₂\\
+      φ,                      & \text{ otherwise.}
+      \end{cases}
+    \end{split}
+  \end{align*}
 \end{definition}
 
 \begin{lemma}[lem-rdisj]
 \label{lem:lem-rdisj}
   $Γ ⊢ φ$ then $Γ ⊢ rdisj(φ)$.
 \end{lemma}
-% Following a similar way to define $rdisj$, we define the $rconj$ function,
-% to convert a conjunction into its right-associative form.
 
 The $build_{∨}$ function in Eq.~(\ref{eq:build-or}) intends to construct a
 disjunction from another disjunction, specifically, this functions will try
@@ -685,9 +699,9 @@ disjunction formula, similar as we described above.
   &build_{∨}(φ, ψ) =\\
   &\hspace{3mm}
   \begin{cases}
-  ψ, &\text{if } φ ≡ ψ\\
-  ψ, &\text{if } ψ ≡ ψ₁ ∨ ψ₂\text{ and } build_{∨}(φ, ψ_{i}) ≡ ψ_{i}\text{ for some }i=1, 2\\
-  φ, &\text{otherwise.}
+  ψ, &\text{ if } φ ≡ ψ\\
+  ψ, &\text{ if } ψ ≡ ψ₁ ∨ ψ₂\text{, } build_{∨}(φ, ψ_{i}) ≡ ψ_{i}\text{ for some }i=1, 2\\
+  φ, &\text{ otherwise.}
   \end{cases}
   \end{split}
 \end{equation}
@@ -710,8 +724,8 @@ Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $(ψ ∨ φ)$.
   &factor : \Prop → \Prop\\
   &factor(φ) =
   \begin{cases}
-    φ₁,  &\text{if }φ ≡ φ₁ ∨ φ₂ \text{ and } φ₁ ≡ factor(φ₂)\\
-    φ,   &\text{otherwise.}
+    φ₁,  &\text{ if }φ ≡ φ₁ ∨ φ₂ \text{, } φ₁ ≡ factor(φ₂)\\
+    φ,   &\text{ otherwise.}
   \end{cases}
 \end{split}
 \end{align}
@@ -735,8 +749,8 @@ every disjunct from the source formula, $φ$, to build up the target disjunction
     &sbuild_{∨}(φ, ψ) =\\
     &\hspace{3mm}
     \begin{cases}
-      factor(build_{∨}(φ₁, ψ) ∨ build_{∨}(φ₂,ψ)),  &\text{if }φ≡ φ₁ ∨ φ₂\\
-      build_{∨}(φ, ψ),  & \text{otherwise.}
+      factor(build_{∨}(φ₁, ψ) ∨ build_{∨}(φ₂,ψ)),  &\text{ if }φ≡ φ₁ ∨ φ₂\\
+      build_{∨}(φ, ψ),  & \text{ otherwise.}
     \end{cases}
   \end{split}
 \end{align}
@@ -817,11 +831,11 @@ We define similar functions and state some theorems as we previously did for dis
         &reorder : \Prop → \Prop \to \Prop\\
         &reorder_{∧}(φ, ψ) =
         \begin{cases}
-          φ, &\text{if }φ ≡ ψ\\
-          ψ₁ ∧ ψ₂, &\text{if } ψ ≡ ψ₁ ∧ ψ₂\text{, }reorder_{∧}(φ, ψ₁) ≡ ψ₁\\
+          φ, &\text{ if }φ ≡ ψ\\
+          ψ₁ ∧ ψ₂, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\text{, }reorder_{∧}(φ, ψ₁) ≡ ψ₁\\
                   &\text{and }reorder_{∧}(φ, ψ₂)≡ ψ₂\\
-          φ,       &\text{if } ψ ≡ ψ₁ ∧ ψ₂\\
-          conjunct(φ, ψ), &\text{otherwise.}
+          φ,       &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\\
+          conjunct(φ, ψ), &\text{ otherwise.}
         \end{cases}
       \end{split}
   \end{align*}
@@ -839,13 +853,13 @@ We define similar functions and state some theorems as we previously did for dis
     &conjunct_{∨} : \Prop → \Prop \to \Prop\\
     &conjunct_{∨}(φ, ψ) =
     \begin{cases}
-      ψ, &\text{if }φ ≡ ψ\\
-      ψ, &\text{if }reorder_{∨}(φ, ψ) ≡ ψ\\
-      ψ, &\text{if }ψ ≡ ψ₁ ∧ ψ₂,\ conjunct_{∨}(φ, ψ₁) ≡ ψ₁,\\
+      ψ, &\text{ if }φ ≡ ψ\\
+      ψ, &\text{ if }reorder_{∨}(φ, ψ) ≡ ψ\\
+      ψ, &\text{ if }ψ ≡ ψ₁ ∧ ψ₂,\ conjunct_{∨}(φ, ψ₁) ≡ ψ₁,\\
         &\text{and } reorder_{∨}(φ, ψ₂) ≡ ψ₂\\
-      ψ, &\text{if }φ ≡ φ₁ ∧ φ₂,\ conjunct_{∨}(φ₁, ψ) ≡ ψ\\
-      ψ, &\text{if }φ ≡ φ₁ ∧ φ₂,\ conjunct_{∨}(φ₂, ψ) ≡ ψ\\
-      φ, &\text{otherwise.}
+      ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ conjunct_{∨}(φ₁, ψ) ≡ ψ\\
+      ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ conjunct_{∨}(φ₂, ψ) ≡ ψ\\
+      φ, &\text{ otherwise.}
     \end{cases}
   \end{split}
   \end{align*}
@@ -862,11 +876,11 @@ We define similar functions and state some theorems as we previously did for dis
       &reorder : \Prop \to \Prop \to \Prop\\
       &reorder_{∧∨}(φ, ψ)=
         \begin{cases}
-          ψ, &\text{if } φ≡ψ\\
-          ψ, &\text{if } ψ ≡ ψ₁ ∧ ψ₂,\ reorder_{∧∨}(φ,ψ₁) ≡ ψ₁\\
+          ψ, &\text{ if } φ≡ψ\\
+          ψ, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂,\ reorder_{∧∨}(φ,ψ₁) ≡ ψ₁\\
              &\text{and }reorder_{∧∨}(φ, ψ₂) ≡ ψ₂\\
-          φ, &\text{if }ψ ≡ ψ₁ ∧ ψ₂\\
-          conjunct_{∨}(φ, ψ) &\text{otherwise.}
+          φ, &\text{ if }ψ ≡ ψ₁ ∧ ψ₂\\
+          conjunct_{∨}(φ, ψ) &\text{ otherwise.}
         \end{cases}
       \end{split}
   \end{align*}
@@ -918,7 +932,7 @@ the binary resolution in Def.~\ref{def:rsol}.
         \begin{cases}
           φ₂, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (φ₃ ∨ φ₄), φ₃ ≡ ¬ φ₁, φ₂ ≡ φ₄\\
           φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (φ₃ ∨ φ₄), φ₃ ≡ ¬ φ₁\\
-          φ, &\text{otherwise.}
+          φ, &\text{ otherwise.}
         \end{cases}
       \end{split}
   \end{align*}
@@ -1008,7 +1022,7 @@ In the core of \Metis, we find an important module:
 This module is the responsible for rules like \canonicalize, \clausify,
 \conjunct or \simplify.
 One of the main purposes of the module consists of adding the axioms to the problem. Into this process, some transformation are carried out by different inference rules.
-For example, the \canonicalize rule can convert a FOF formula to their CNF form. In that process, the formula can suffers different transformations by removing redundancies (tautologies or definitions), converting the proposition to its normalized negative normal form, to its conjunctive normal form, or to a specialized normal form.
+For example, the \canonicalize rule can convert a first-order form formulas to their clausal normal form. In that process, the formula can suffers different transformations by removing redundancies (tautologies or definitions), converting the proposition to its normalized negative normal form, to its conjunctive normal form, or to a specialized normal form.
 
 \begin{definition}[\abbre{NProp}]
   \NProp is the type for a formula in normalized negative normal form
@@ -1099,9 +1113,9 @@ $ψ ≡ conjunct_{∨}(φ, ψ)$.
       &rm_{∨} :  \NProp \to \NProp\\
       &rm_{∨}(φ) =
       \begin{cases}
-        rm_{∨}(φ₂), &\text{if }φ ≡ φ₁ ∨ φ₂,\ φ₁ ∈_{∨} φ₂\\
-        φ₁ ∨ rm_{∨}(φ₂), &\text{if }φ ≡ φ₁ ∨ φ₂\\
-        φ,  &\text{otherwise.}
+        rm_{∨}(φ₂), &\text{ if }φ ≡ φ₁ ∨ φ₂,\ φ₁ ∈_{∨} φ₂\\
+        φ₁ ∨ rm_{∨}(φ₂), &\text{ if }φ ≡ φ₁ ∨ φ₂\\
+        φ,  &\text{ otherwise.}
       \end{cases}
     \end{split}
   \end{align*}
@@ -1140,9 +1154,9 @@ We define $ψ ∈_{∧} φ$ as the equality $ψ ≡ conjunct(φ, ψ)$.
     &rm_{∧} : \NProp \to \NProp\\
     &rm_{∧}(φ) =
     \begin{cases}
-      rm_{∧}(φ₂),      &\text{if }φ ≡ φ₁ ∧ φ₂, φ₁ ∈_{∧} φ₂\\
-      φ₁ ∧ rm_{∧}(φ₂), &\text{if }φ ≡ φ₁ ∧ φ₂\\
-      φ,               &\text{otherwise.}
+      rm_{∧}(φ₂),      &\text{ if }φ ≡ φ₁ ∧ φ₂, φ₁ ∈_{∧} φ₂\\
+      φ₁ ∧ rm_{∧}(φ₂), &\text{ if }φ ≡ φ₁ ∧ φ₂\\
+      φ,               &\text{ otherwise.}
     \end{cases}
     \end{split}
   \end{align*}
@@ -1202,13 +1216,13 @@ take into account the following cases.
     &ndisj_{∨} : \NProp \to \NProp\\
     &ndisj_{∨}(φ) =
       \begin{cases}
-        ⊤, &\text{if }φ ≡ ¬ φ₁ ∨ φ₂,\ φ₁ ∈_{∨} φ₂\\
-        ⊤, &\text{if }φ ≡ ¬ φ₁ ∨ φ₂,\ ndisj_{∨}(φ₂) ≡ ⊤\\
-        ¬ φ₁ ∨ ndisj_{∨}(φ₂), &\text{if }φ ≡ ¬ φ₁ ∨ φ₂\\
-        ⊤, &\text{if }φ ≡ φ₁ ∨ φ₂,\ ¬φ₁ ∈_{∨} φ₂ \\
-        ⊤, &\text{if }φ ≡ φ₁ ∨ φ₂,\ ndisj_{∨}(φ₂) ≡ ⊤\\
-        φ₁ ∨ ndisj_{∨}(φ₂), &\text{if }φ ≡ φ₁ ∨ φ₂\\
-        φ, &\text{otherwise.}
+        ⊤, &\text{ if }φ ≡ ¬ φ₁ ∨ φ₂,\ φ₁ ∈_{∨} φ₂\\
+        ⊤, &\text{ if }φ ≡ ¬ φ₁ ∨ φ₂,\ ndisj_{∨}(φ₂) ≡ ⊤\\
+        ¬ φ₁ ∨ ndisj_{∨}(φ₂), &\text{ if }φ ≡ ¬ φ₁ ∨ φ₂\\
+        ⊤, &\text{ if }φ ≡ φ₁ ∨ φ₂,\ ¬φ₁ ∈_{∨} φ₂ \\
+        ⊤, &\text{ if }φ ≡ φ₁ ∨ φ₂,\ ndisj_{∨}(φ₂) ≡ ⊤\\
+        φ₁ ∨ ndisj_{∨}(φ₂),  &\text{ if }φ ≡ φ₁ ∨ φ₂\\
+        φ, &\text{ otherwise.}
       \end{cases}
     \end{split}
   \end{align*}
@@ -1231,8 +1245,8 @@ take into account the following cases.
         ¬ φ₁ ∧ ndisj_{∧}(φ₂), &\text{ if }φ ≡ ¬ φ₁ ∧ φ₂\\
         ⊥, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ φ₁ ∈_{∧} φ₂\\
         ⊥, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ ndisj_{∧}(φ₂) ≡ ⊥\\
-        φ₁ ∧ ndisj_{∧}(φ₂), &\text{if }φ ≡ φ₁ ∧ φ₂\\
-        φ, &\text{otherwise.}
+        φ₁ ∧ ndisj_{∧}(φ₂), &\text{ if }φ ≡ φ₁ ∧ φ₂\\
+        φ, &\text{ otherwise.}
       \end{cases}
     \end{split}
   \end{align*}
@@ -1257,10 +1271,10 @@ $canon_{∨}$ for removing redundancies in disjunctions.
       &canon_{∧} : \NProp \to \NProp\\
       &canon_{∧}(φ) =
         \begin{cases}
-        φⱼ, &\text{if } φ ≡ φ₁ ∧ φ₂,\ φᵢ ≡ ⊤,\text{ for } i,j = 1,2, i≠j\\
-        ⊥, &\text{if } φ ≡ φ₁ ∧ φ₂,\ φᵢ ≡ ⊥,\text{ for } i,j = 1,2\\
-       rm_∧(ndisj_∧(φ)), &\text{if } φ ≡ φ₁ ∧ φ₂\\
-       φ, &\text{otherwise.}
+          φⱼ, &\text{ if } φ ≡ φ₁ ∧ φ₂,\ φᵢ ≡ ⊤,\text{ for } i,j = 1,2, i≠j\\
+          ⊥,  &\text{ if } φ ≡ φ₁ ∧ φ₂,\ φᵢ ≡ ⊥,\text{ for } i,j = 1,2\\
+          rm_∧(ndisj_∧(φ)), &\text{ if } φ ≡ φ₁ ∧ φ₂\\
+          φ,                &\text{ otherwise.}
         \end{cases}
     \end{split}
 \end{align*}
@@ -1278,10 +1292,10 @@ $canon_{∨}$ for removing redundancies in disjunctions.
       &canon_{∨} : \NProp \to \NProp\\
       &canon_{∨}(φ) =
         \begin{cases}
-        φⱼ, &\text{if } φ ≡ φ₁ ∨ φ₂,\ φᵢ ≡ ⊥,\text{ for } i,j = 1,2, i≠j\\
-        ⊤, &\text{if } φ ≡ φ₁ ∨ φ₂,\ φᵢ ≡ ⊤,\text{ for } i,j = 1,2\\
-        rm_∨(ndisj_∨(φ)), &\text{if } φ ≡ φ₁ ∧ φ₂\\
-        φ, &\text{otherwise.}
+        φⱼ, &\text{ if } φ ≡ φ₁ ∨ φ₂,\ φᵢ ≡ ⊥,\text{ for } i,j = 1,2, i≠j\\
+        ⊤, &\text{ if } φ ≡ φ₁ ∨ φ₂,\ φᵢ ≡ ⊤,\text{ for } i,j = 1,2\\
+        rm_∨(ndisj_∨(φ)), &\text{ if } φ ≡ φ₁ ∧ φ₂\\
+        φ, &\text{ otherwise.}
         \end{cases}
     \end{split}
 \end{align*}
@@ -1293,13 +1307,13 @@ $canon_{∨}$ for removing redundancies in disjunctions.
 \end{lemma}
 
 \begin{remark}
-A similar treatment we do to define the $canon_{⊻} : \NProp \to \NProp$
+A similar treatment defines the $canon_{⊻} : \NProp \to \NProp$
 function that removes redundancies related with the exclusive
-disjunction connective, and to prove its soundness with the respective
-theorem thm-canon$_{⊻}$ in~\cite{AgdaMetis}.
+disjunction connective.
+% Its theorem, thm-canon$_{⊻}$ is presented in~\cite{AgdaMetis}.
 We left out this description for the brevity of this
-document and refer the interested reader to the implementation
-in~\cite{AgdaMetis}.
+document and refer the interested reader to \cite{AgdaMetis} for
+more details.
 \end{remark}
 
 Finally, we can translate formulas from \Prop to \NProp by defining the
@@ -1307,7 +1321,7 @@ $nnf₀$ function based on the \Metis'source code. We have taken
 inspiration on the $nnf$ function described in
 \citeauthor{Bezem2002}~\cite{Bezem2002}. Their $nnf$ function translates
 formulas to their classical negative normal form. In the reference, the
-authors avoid a termination problem with a similar function by using as a
+authors avoid a termination problem with a similar function by using as an
 extra argument, the polarity of the formula.
 
 For the polarity of a formula, we use the \abbre{Polarity} type with two
@@ -1321,23 +1335,23 @@ polarity.
     &nnf₀ : \abbre{Polarity} \to \Prop \to \NProp\\
     &nnf₀(⊕, φ) =
       \begin{cases}
-      canon_{∧}(nnf₀(⊕, φ₁) ∧ nnf₀(⊕, φ₂)), &\text{if }φ ≡ φ₁ ∧ φ₂ \\
-      canon_{∨}(nnf₀(⊕, φ₁) ∨ nnf₀(⊕, φ₂)), &\text{if }φ ≡ φ₁ ∨ φ₂ \\
-      canon_{∨}(nnf₀(⊖, φ₁) ∨ nnf₀(⊕, φ₂)), &\text{if }φ ≡ φ₁ ⇒ φ₂ \\
-      canon_{⊻}(nnf₀(⊖, φ₁) ⊻ nnf₀(⊕, φ₂)), &\text{if }φ ≡ φ₁ ⇔ φ₂ \\
-      nnf₀(⊖, φ₁),                          &\text{if }φ ≡ ¬ φ₁ \\
-      φ,                                    &\text{otherwise.} \\
+      canon_{∧}(nnf₀(⊕, φ₁) ∧ nnf₀(⊕, φ₂)), &\text{ if }φ ≡ φ₁ ∧ φ₂ \\
+      canon_{∨}(nnf₀(⊕, φ₁) ∨ nnf₀(⊕, φ₂)), &\text{ if }φ ≡ φ₁ ∨ φ₂ \\
+      canon_{∨}(nnf₀(⊖, φ₁) ∨ nnf₀(⊕, φ₂)), &\text{ if }φ ≡ φ₁ ⇒ φ₂ \\
+      canon_{⊻}(nnf₀(⊖, φ₁) ⊻ nnf₀(⊕, φ₂)), &\text{ if }φ ≡ φ₁ ⇔ φ₂ \\
+      nnf₀(⊖, φ₁),                          &\text{ if }φ ≡ ¬ φ₁ \\
+      φ,                                    &\text{ otherwise.} \\
       \end{cases}\\
     &nnf₀(⊖, φ) =
       \begin{cases}
-      canon_{∨}(nnf₀(⊖, φ₁) ∨ nnf₀(⊖, φ₂)),  &\text{if }φ ≡ φ₁ ∧ φ₂ \\
-      canon_{∧}(nnf₀(⊖, φ₁) ∧ nnf₀(⊖, φ₂)),  &\text{if }φ ≡ φ₁ ∨ φ₂ \\
-      canon_{∧}(nnf₀(⊖, φ₂) ∧ nnf₀(⊖, φ₁)),  &\text{if }φ ≡ φ₁ ⇒ φ₂ \\
-      canon_{⊻}(nnf₀(⊕, φ₁) ⊻ nnf₀(⊕, φ₂)),  &\text{if }φ ≡ φ₁ ⇔ φ₂ \\
-      nnf₀(⊕, φ₁),                           &\text{if }φ ≡ ¬ φ₁ \\
-      ⊥,                                     &\text{if }φ ≡ ⊤ \\
-      ⊤,                                     &\text{if }φ ≡ ⊥ \\
-      φ,                                     &\text{otherwise.} \\
+      canon_{∨}(nnf₀(⊖, φ₁) ∨ nnf₀(⊖, φ₂)),  &\text{ if }φ ≡ φ₁ ∧ φ₂ \\
+      canon_{∧}(nnf₀(⊖, φ₁) ∧ nnf₀(⊖, φ₂)),  &\text{ if }φ ≡ φ₁ ∨ φ₂ \\
+      canon_{∧}(nnf₀(⊖, φ₂) ∧ nnf₀(⊖, φ₁)),  &\text{ if }φ ≡ φ₁ ⇒ φ₂ \\
+      canon_{⊻}(nnf₀(⊕, φ₁) ⊻ nnf₀(⊕, φ₂)),  &\text{ if }φ ≡ φ₁ ⇔ φ₂ \\
+      nnf₀(⊕, φ₁),                           &\text{ if }φ ≡ ¬ φ₁ \\
+      ⊥,                                     &\text{ if }φ ≡ ⊤ \\
+      ⊤,                                     &\text{ if }φ ≡ ⊥ \\
+      φ,                                     &\text{ otherwise.} \\
       \end{cases}
     \end{split}
   \end{align*}
@@ -1358,17 +1372,15 @@ polarity.
   \label{lem:lem-dist-or}
   $Γ ⟝ φ$ then $Γ ⟝ dist_{∨}(φ)$, where,
   \begin{align*}
-      \begin{split}
-      &dist_{∨} : \Prop \to \Prop\\
-      &dist_{∨}(φ) =
-        \begin{cases}
-          dist_{∨}(φ₁ ∨ φ₂) ∧ dist_{∨}(φ₂ ∨ φ₃),
-            &\text{if }φ ≡ (φ₁ ∧ φ₂) ∨ φ₃\\
-          dist_{∨}(φ₁ ∨ φ₃) ∧ dist_{∨}(φ₁ ∨ φ₃),
-            &\text{if }φ ≡ φ₁ ∨ (φ₂ ∧ φ₃)\\
-          φ, &\text{otherwise.}
-        \end{cases}
-      \end{split}
+    \begin{split}
+    &dist_{∨} : \Prop \to \Prop\\
+    &dist_{∨}(φ) =
+      \begin{cases}
+        dist_{∨}(φ₁ ∨ φ₂) ∧ dist_{∨}(φ₂ ∨ φ₃), &\text{ if }φ ≡ (φ₁ ∧ φ₂) ∨ φ₃\\
+        dist_{∨}(φ₁ ∨ φ₃) ∧ dist_{∨}(φ₁ ∨ φ₃), &\text{ if }φ ≡ φ₁ ∨ (φ₂ ∧ φ₃)\\
+        φ,                                     &\text{ otherwise.}
+      \end{cases}
+    \end{split}
   \end{align*}
 \end{lemma}
 
@@ -1381,10 +1393,10 @@ polarity.
       &dist(φ) =
         \begin{cases}
           dist(φ₁) ∧ dist(φ₂),
-            &\text{if }φ ≡ φ₁ ∧ φ₂\\
+            &\text{ if }φ ≡ φ₁ ∧ φ₂\\
           dist_{∨}(dist(φ₁) ∨ dist(φ₂)),
-            &\text{if }φ ≡ φ₁ ∨ φ₂\\
-          φ, &\text{otherwise.}
+            &\text{ if }φ ≡ φ₁ ∨ φ₂\\
+          φ, &\text{ otherwise.}
         \end{cases}
       \end{split}
   \end{align*}
@@ -1418,7 +1430,7 @@ $Γ, φ₁ ∨ φ₂ ⟝ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$, and the lemma
         form_{⊻}(φ₂),        &\text{ if }φ ≡ φ₁ ⊻ φ₂\\
         % ⊥, &\text{ if }φ ≡ ⊥\\
         % ⊤, &\text{ if }φ ≡ ⊤\\
-        φ, &\text{otherwise.}\\
+        φ, &\text{ otherwise.}\\
       \end{cases}
     \end{split}
 \end{align*}
@@ -1445,7 +1457,8 @@ $Γ, φ₁ ∨ φ₂ ⟝ dist_{∨}(dist(φ₁) ∨ dist(φ₂))$, and the lemma
 \end{proof}
 
 Since all transformations performed above come from equivalences
-in classical propositional logic, we can also states the following theorem convenient for the next section.
+in classical propositional logic, we can also states the following theorem
+convenient for the next section.
 
 \begin{theorem}[thm-inv-cnf]
 \label{thm:thm-inv-cnf}
@@ -1461,12 +1474,13 @@ in classical propositional logic, we can also states the following theorem conve
 
 The \canonicalize rule is an overloaded inference rule that performs
 mainly normalization of the proposition input by using theorems
-described in the section above. This rule  can convert a FOF formula in
-clausal form to a CNF clause. \Metis can introduce axioms, and definitions
-by using this rule. Since the nature of this rule consists of dealing with
-CNF clauses, our strategy to justify its reasoning mainly consists of
-testing for equality with normalized negative form of the formula, or a
-reordering of the conjunctive normal form of the source formula to match
+described in the section above. Metis can introduce axioms, and definitions
+by using it. This rule can convert a \texttt{fof} %TODO
+formula in clausal form into a CNF clause. Since the nature of this rule
+consists of dealing with CNF clauses, to justify its reasoning, our strategy
+mainly consists of checking the equality of normalized negative form between
+the source and the target formula. If it fails, we try to reorder the
+conjunctive normal form of the source formula to match
 the conjunctive normal form of the target formula.
 
 \begin{definition}[canonicalize]
@@ -1476,10 +1490,10 @@ the conjunctive normal form of the target formula.
       &canonicalize : \Prop \to \Prop \to \Prop\\
       &canonicalize(φ, ψ) =
       \begin{cases}
-        ψ, &\text{if }ψ ≡ φ\\
-        ψ, &\text{if }ψ ≡ form(nnf(φ))\\
-        ψ, &\text{if }cnf(ψ) ≡ reorder_{∧∨}(cnf(φ), cnf(ψ))\\
-        φ, &\text{otherwise.}\\
+        ψ, &\text{ if }ψ ≡ φ\\
+        ψ, &\text{ if }ψ ≡ form(nnf(φ))\\
+        ψ, &\text{ if }cnf(ψ) ≡ reorder_{∧∨}(cnf(φ), cnf(ψ))\\
+        φ, &\text{ otherwise.}\\
       \end{cases}
     \end{split}
 \end{align*}
@@ -1559,7 +1573,7 @@ fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
       &clausify(φ,ψ) =
       \begin{cases}
         ψ, &\text{ if }φ≡ψ\\
-        reorder_{∧∨}(cnf(φ), ψ), &\text{otherwise.}
+        reorder_{∧∨}(cnf(φ), ψ), &\text{ otherwise.}
       \end{cases}
       \end{split}
   \end{align*}
@@ -1592,64 +1606,104 @@ strengthen $canonicalize$ rule in Def.~\ref{def:canonicalize}
 
 The \simplify rule is an inference that performs simplification of
 definitions and tautologies. This rule
-transverses a list of inner derivations by applying different theorems
+transverses a list of previous derivations by applying different theorems
 (e.g., \emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive
-syllogism}) to get a contradiction or just simplify the formulas.
-To emulate this rule, we have included theorems
-from \canonicalize rule Section~\ref{sssec:canonicalize} and
-\resolve rule Section~\ref{sssec:resolve}.
+syllogism}) to get a contradiction in the first place, or a smaller
+convenient formula
+
+% To emulate this rule, we use theorems from Section~\ref{sssec:canonicalize},
+% Section~\ref{sssec:conjunct}.
+The following \TSTP excerpt is an example of the \simplify rule.
+
+% \begin{figure}
+\begin{verbatim}
+fof(normalize_0_1, plain, (g | (~ a & k)),
+    inference(conjunct, [], [normalize_0_0])).
+fof(normalize_0_2, plain, (~ g | q),
+    inference(conjunct, [], [normalize_0_0])).
+fof(normalize_0_3, plain, (~ q),
+  inference(conjunct, [], [normalize_0_0])).
+fof(normalize_0_4, plain, (~ g),
+    inference(simplify, [], [normalize_0_2, normalize_0_3])).
+fof(normalize_0_5, plain, (~ k),
+inference(conjunct, [], [normalize_0_0])).
+fof(normalize_0_6, plain, ($false),
+    inference(simplify, [],
+              [normalize_0_1, normalize_0_4, normalize_0_5])).
+\end{verbatim}
+% \caption{Example of \simplify rule in a \TSTP derivation of \Metis.}
+% \end{figure}
+
+%TODO check canonicalize can reduce a conjunction into one smaller.
+\begin{definition}[simplify]
+\label{def:simplify}
+For $i,j = 1, 2$, $i\neq j$ and $γ : \Prop$,
+\begin{align}
+    \begin{split}
+      &\textit{simplify} : \Prop → \Prop → \Prop → \Prop\\
+      &\textit{simplify}(φ₁, φ₂,ψ) =\\
+      &\hspace{4mm}
+      \begin{cases}
+        ψ,          &\text{ if }φᵢ ≡ ψ,\\
+        ⊥,          &\text{ if }φᵢ ≡ ⊥,\\
+        φⱼ,         &\text{ if }φᵢ ≡ ⊤,\\
+        γ,          &\text{ if }φᵢ ≡ φⱼ ⇒ γ\\
+        γ,          &\text{ if }φᵢ ≡ γ ⇒ nnf(¬ φⱼ)\\
+        γ,          &\text{ if }φᵢ ≡ φⱼ ⇔ γ \\
+        nnf(¬ γ),   &\text{ if }φᵢ ≡ nnf(¬ φⱼ) ⇔ γ \\
+        γ,          &\text{ if }φᵢ ≡ nnf(¬ φⱼ) ∨ γ\\
+        ⊥,          &\text{ if } nnf(¬ φⱼ) ≡ conjunct(φᵢ, nnf(¬ φⱼ))\\
+      % φ          &\text{ if }conjunct(nnf(¬ φᵢ), φⱼ) ≡  φⱼ\\
+        ⊥,          &\text{ if } ¬ φⱼ ≡ canonicalize(φᵢ, ¬ φⱼ) \\
+        φ₁,         &\text{ otherwise.}\\
+      \end{cases}%\hspace{10cm}
+    \end{split}
+\end{align}
+\end{definition}
 
 \begin{remark}
 Besides the fact, $\List\ \Prop \to \Prop$ is the type that coincides
-with the reading of a \TSTP derivation, we choose a different option.
-In the translation from \TSTP to \Agda, we build a conjunction
-from the list of derivations by introducing binary conjunction
-with $∧$-intro rule. That avoids us to define a new sequent type
-to support \List \Prop type in the conclusion side.
+with the \simplify rule in \TSTP derivations, we choose a different option.
+In the translation from \TSTP to \Agda, we take the list of derivations
+and use a classical left folding ($foldl$) with $simplify$ and the list with
+$φ₁, φ₂, \cdots, φₙ$. That avoids us to define a new sequent type to
+support \List \Prop type in the conclusion side.
 \end{remark}
-
-\begin{figure}
-\begin{verbatim}
-fof(normalize_1_0, plain, (~ p & ~ r & q),
-    inference(canonicalize, [], [negate_1_0])).
-fof(normalize_1_1, plain, ((p | q) & (p | r)),
-    inference(canonicalize, [], [a1])).
-fof(normalize_1_2, plain, (p | r),
-    inference(conjunct, [], [normalize_1_1])).
-fof(normalize_1_3, plain, ($false),
-    inference(simplify, [], [normalize_1_0, normalize_1_2])).
-\end{verbatim}
-\caption{Example of \simplify rule in a \TSTP derivation of \Metis.}
-\end{figure}
-
-%TODO check canonicalize can reduce a conjunction into one smaller.
-\begin{definition}[simpl]
-\label{def:simpl}
-\begin{align}
-    \begin{split}
-      &\textit{simpl} : \Prop → \Prop → \Prop\\
-      &\textit{simpl}(φ₁, φ₂) =
-      \begin{cases}
-        ⊥,  &\text{ if }φᵢ ≡ ⊥,\\
-        γ   &\text{ if }φᵢ ≡ φⱼ ⇒ γ\\
-        γ   &\text{ if }φᵢ ≡ γ ⇒ ¬ φⱼ\\
-        γ   &\text{ if }φᵢ ≡ φⱼ ⇔ γ \\
-        γ   &\text{ if }φᵢ ≡ ¬ φⱼ ∨ γ\\
-        ⊥   &\text{ if }conjunct(φᵢ, ¬ φⱼ)\\
-        ⊥,  &\text{ if }canonicalize(φᵢ, ¬ φⱼ) ≡ ¬ φⱼ\\
-        φ₁, &\text{ otherwise.}\\
-      \end{cases}
-    \end{split}
-\end{align}
-For $i = 1, 2$, $i\neq j$. We assume here some commutative properties for brevity.
-\end{definition}
 
 \begin{theorem}[thm-simplify] % (fold)
   \label{thm:thm-simplify}
-$\{ Γ ⊢ φᵢ \}$ for $i = 1, \cdots, n$ then
-$Γ ⊢ simplify (\bigwedge_{i=1}^n φ)$.
+For $i=1,2, \cdots, n$, $Γ ⊢ φᵢ$ and $ψ : \Prop$ then
+if $n > 2$, $Γ ⊢ simplify(γ_{n-2}, φ_{n}, ψ)$ where $γ_{i} = simplify(φ_{i}, φ_{i+1}, ψ)$
+else $Γ ⊢ simplify(φ₁, φ₂, ψ)$.
 \end{theorem}
 
+% \begin{sketchproof}
+% If $Γ ⊢ φᵢ$ for $i=1, \cdots, n$, we prove this theorem by induction on $n$.
+% Let us show one case.
+% \begin{itemize}
+%   \item If $n ==2$ and $(canonicalize(φ₁, ¬ φ₂) ≡ ¬ φ₂)$, we need to prove
+%   $Γ ⊢ simplify(φ₁, φ₂, ψ)$.
+% \begin{equation*}
+%   \begin{bprooftree}
+%     \AxiomC{$Γ ⊢ φ₁$}
+%     \RightLabel{thm-canonicalize}
+%     \UnaryInfC{$Γ ⊢ canonicalize(φ₁, ¬φ₂)$}
+%     \AxiomC{$¬ φ₂ ≡ canonicalize(φ₁, ¬ φ₂)$}
+%     \RightLabel{subst}
+%     \BinaryInfC{$Γ ⊢ ¬ φ₂ $}
+%   \end{bprooftree}
+%   \begin{bprooftree}
+%   \AxiomC{$Γ ⊢ ¬ φ₂ $}
+%   \AxiomC{$Γ ⊢ φ₂$}
+%   \RightLabel{¬-elim}
+%   \BinaryInfC{$Γ ⊢ ⊥$}
+%   \RightLabel{axiom}
+%   \UnaryInfC{$Γ ⊢ simplify(φ₁, φ₂, ψ)$}
+%   \end{bprooftree}
+% \end{equation*}
+
+% \end{itemize}
+% \end{sketchproof}
 
 % subsubsection simplify (end)
 % -------------------------------------------------------------------

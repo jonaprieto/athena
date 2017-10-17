@@ -58,9 +58,10 @@ from a list of at least forty\footnote{\ATPs available from the web
 service \name{SystemOnTPTP} of the TPTP World.} \ATPs, just a few
 provers were able to deliver proofs (e.g.,
 \name{CVC4}~\cite{Barrett2011}, \name{SPASS}, and
-\name{Waldmeister}~\cite{hillenbrand1997}) and a little bit less replied with a proof
-in a file format like \TSTP~\cite{Sutcliffe-Schulz-Claessen-VanGelder-2006} (e.g.,
-\name{E}, \Metis, \name{Vampire}, and \name{Z3}),
+\name{Waldmeister}~\cite{hillenbrand1997}) and a little bit less replied with
+a proof
+in a file format like \TSTP~\cite{Sutcliffe-Schulz-Claessen-VanGelder-2006}
+(e.g., \name{E}, \Metis, \name{Vampire}, and \name{Z3}),
 \len{LFSC}~\cite{Stump2008}, or the \len{SMT-LIB}~\cite{Bohme2011} format.
 
 Many approaches have been proposed and some tools have been
@@ -69,19 +70,25 @@ programs are relevant not only because it helps to spread their
 usage but they also increase the confidence of their users about
 their algorithms and their correctness (see, for example, bugs in
 \ATPs~\cite{Keller2013,Bohme2011,Fleury2014} and
-\cite{Kanso2012}). We mention some of these tools in the related
-work, Section \ref{sec:related-work}.
+\cite{Kanso2012}).
+We mention some of these tools in Section~\ref{sec:related-work}.
 
 In this paper, we ported a subset of the \Metis' inference rules to
-\Agda, the propositional fragmented without equality. The formalization of these rules allowed us to justify step-by-step \Metis' \TSTP derivations by translating automatically to \Agda by a proof-reconstruction tool built for this research named \Athena.
-We structure the paper as follows.
-We briefly mention some notation and syntax of the classical propositional logic in Section~\ref{ssec:CPL}.
+\Agda, the propositional fragmented without equality. The formalization of
+these rules allowed us to justify step-by-step \Metis' \TSTP derivations by
+translating automatically to \Agda by a proof-reconstruction tool built for
+this research named \Athena.
+This paper has been organized in the following way.
+The first section of the paper, Section~\ref{ssec:CPL}, will mention some
+notation and syntax of the classical propositional logic.
 In Section~\ref{ssec:metis-language-and-proofs}, we introduce the
 \Metis prover and its deduction system.
 In Section~\ref{sec:proof-reconstruction}, we present our
 approach to reconstruct proofs deliver by \Metis in type theory.
-We listed some conclusions and future work in
-Section~\ref{sec:conclusions}. Some related works with this paper is presented in Section~\ref{sec:related-work}.
-Finally, we provide a complete example in the appendix \textsc{A} of the proof reconstruction workflow.
+Section~\ref{sec:conclusions} summarizes the main findings and includes a
+discussion of future work.
+Some related works with this paper is presented in Section~\ref{sec:related-work}.
+Finally, we provide a small example in the appendix \textsc{A} of the
+proof-reconstruction workflow.
 
 \end{document}
