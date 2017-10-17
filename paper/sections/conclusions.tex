@@ -12,8 +12,8 @@ solutions for problems in classical propositional logic without
 equality. As a product of this research, we built a proof-reconstruction tool written in \Haskell. This tool generates
 \Agda proof-terms of \Metis \TSTP derivations. \Agda files
 delivered by the aforementioned tool are supported by the
-formalization in \Agda of the \Metis rules described in
-Section~\ref{ssec:emulating-inferences}.
+formalization in \Agda~\cite{AgdaProp,AgdaMetis} of the \Metis rules
+described in Section~\ref{ssec:emulating-inferences}.
 
 The reconstruction approach in this study was designed to use
 only syntactical aspects of the logic. This decision was first a
@@ -50,8 +50,8 @@ has a real significant impact for these automatic tools.
 The reverse engineering task can reveal important issues or bugs
 in many parts of these system (e.g., preprocessing, reasoning, or
 deduction modules). During this research, we had the opportunity
-to find some of bugs\footnote{Issues No.~2, No.~4. and
-commit \name{8a3f11e} in the \Metis' official repository
+to improve \Metis by reporting some bugs\footnote{Issues No.~2,
+No.~4. and commit \name{8a3f11e} in the \Metis' official repository
 \url{https://github.com/gilith/metis}} in \Metis.
 Fortunately, all these problems were fixed quickly by Joe Hurd in
 20170810 release.

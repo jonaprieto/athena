@@ -177,7 +177,7 @@ number called the complexity of the connective.
 We define the $unshunt_{cm}: \Prop → \NN$ function as
 the complexity measure for $unshunt_0$ function.
 
-\begin{align}
+\begin{align*}
   \label{eq:unshunt-rank-definition}
   \begin{split}
       &unshunt_{cm} : \Prop → \Nat\\
@@ -190,7 +190,7 @@ the complexity measure for $unshunt_0$ function.
         0, &\text{ otherwise.}
         \end{cases}
   \end{split}
-\end{align}
+\end{align*}
 
 Finally, following the technique mentioned, we get a curated version of
 $unshunt_{0}$ function presented in Def.~\ref{def:unshunt}.
@@ -521,14 +521,14 @@ De Morgan Law.
 \begin{lemma}[subst]
   \label{lem:subst}
   Substitution theorem.
-\begin{equation}
+\begin{equation*}
   \label{eq:substitution-theorem}
   \begin{bprooftree}
   \AxiomC{$Γ ⊢ φ$}   \AxiomC{$ψ ≡ φ$}
   \RightLabel{subst.}
   \BinaryInfC{$Γ ⊢ ψ$}
   \end{bprooftree}
-\end{equation}
+\end{equation*}
 \end{lemma}
 
 We can now formulate our main result of this part that
@@ -596,7 +596,7 @@ fof(normalize_2, plain, (r | ~ p),
 \end{verbatim}
 
 \begin{definition}[conjunct]
-\begin{align}
+\begin{align*}
   \begin{split}
   &conjunct : \Prop \to \Prop \to \Prop\\
   &conjunct(φ, ψ) =
@@ -607,7 +607,7 @@ fof(normalize_2, plain, (r | ~ p),
         φ, &\text{ otherwise.}
       \end{cases}
   \end{split}
-\end{align}
+\end{align*}
 \end{definition}
 
 \begin{theorem}[thm-conjunct]
@@ -620,7 +620,7 @@ fof(normalize_2, plain, (r | ~ p),
 Then, we get the desire conclusion by applying the $subst$ theorem.
   \item If the proposition $φ$ is a conjunction, and we can get $ψ ≡ conjunct(φ_{i}, ψ)$ for some $i = 1,\ 2$, then,
 
-\begin{equation}
+\begin{equation*}
   \begin{bprooftree}
   \AxiomC{$Γ ⊢ φ₁ ∧ φ₂$}
   \RightLabel{∧-proj$_{i}$}
@@ -630,7 +630,7 @@ Then, we get the desire conclusion by applying the $subst$ theorem.
   \RightLabel{subst.}
   \BinaryInfC{$Γ ⊢ ψ$}
   \end{bprooftree}
-\end{equation}
+\end{equation*}
 \item The last case follows trivially by using the same hypothesis.
 \end{itemize}
 \end{proof}
@@ -744,7 +744,7 @@ between nested disjunctions. The result is the $sbuild_{∨}$ function that uses
 every disjunct from the source formula, $φ$, to build up the target disjunction $ψ$.
 
 \begin{definition}[sbuild$_{∨}$]
-\begin{align}
+\begin{align*}
   \begin{split}
   \label{eq:strong-build-or-definition}
     &sbuild_{∨} : \Prop → \Prop → \Prop\\
@@ -755,7 +755,7 @@ every disjunct from the source formula, $φ$, to build up the target disjunction
       build_{∨}(φ, ψ),  & \text{ otherwise.}
     \end{cases}
   \end{split}
-\end{align}
+\end{align*}
 \end{definition}
 
 \begin{lemma}[lem-sbuild$_{∨}$]
@@ -1661,7 +1661,7 @@ fof(normalize_0_6, plain, ($false),
 \begin{definition}[simplify]
 \label{def:simplify}
 For $i,j = 1, 2$, $i\neq j$ and $γ : \Prop$,
-\begin{align}
+\begin{align*}
     \begin{split}
       &\textit{simplify} : \Prop → \Prop → \Prop → \Prop\\
       &\textit{simplify}(φ₁, φ₂,ψ) =\\
@@ -1681,7 +1681,7 @@ For $i,j = 1, 2$, $i\neq j$ and $γ : \Prop$,
         φ₁,         &\text{ otherwise.}\\
       \end{cases}%\hspace{10cm}
     \end{split}
-\end{align}
+\end{align*}
 \end{definition}
 
 \begin{remark}
