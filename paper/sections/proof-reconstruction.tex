@@ -217,13 +217,13 @@ function, among other kinds.
 \label{ssec:emulating-inferences}
 
 In this section, we emulate each \Metis inference rule by proving a
-function with the same name, and a theorem that
-proves the soundness of the function. Then, we will find
-the following pattern to present the formalization for
-the \Metis inference rules. The function name written in bold print is a \Metis
-inference rule in \TSTP derivation. The same function name written
-in italics refers to the emulated version presents in this section.
-Each emulated version states a theorem to prove the soundness of the rule.
+function with the same name, and a associated theorem.
+The following pattern is used to present the formalization.
+The function name written in bold print
+is a \Metis inference rule in \TSTP derivations.
+The same function name written in italics refers to its emulated
+version.
+Each emulated rule states a theorem to prove its soundness.
 This theorem is named by using the prefix \emph{thm}
 and the name of the rule.
 
@@ -1686,10 +1686,11 @@ For $i,j = 1, 2$, $i\neq j$ and $γ : \Prop$,
 
 \begin{remark}
 Besides the fact, $\List\ \Prop \to \Prop$ is the type that coincides
-with the \simplify rule in \TSTP derivations, we choose a different option.
-In the translation from \TSTP to \Agda, we take the list of derivations
-and use a classical left folding ($foldl$) with $simplify$ and the list with
-$φ₁, φ₂, \cdots, φₙ$. That avoids us to define a new sequent type to
+with the \simplify rule in \TSTP derivations, we choose a different
+option. In the translation from \TSTP to \Agda, we take the list of
+derivations and use a classical left folding ($foldl$) with
+$simplify$ function over the list of $φ₁, φ₂, \cdots, φₙ$.
+That avoids us to define a new sequent type to
 support \List \Prop type in the conclusion side.
 \end{remark}
 
