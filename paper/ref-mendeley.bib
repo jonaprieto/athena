@@ -22,7 +22,7 @@
 
 @incollection{armand2011,
   abstract  = {We present a way to enjoy the power of SAT and SMT provers in Coq without compromising soundness. This requires these provers to return not only a yes/no answer, but also a proof witness that can be independently rechecked. We present such a checker, written and fully certified in Coq. It is conceived in a modular way, in order to tame the proofs' complexity and to be extendable. It can currently check witnesses from the SAT solver ZChaff and from the SMT solver veriT. Experiments highlight the efficiency of this checker. On top of it, new reflexive Coq tactics have been built that can decide a subset of Coq's logic by calling external provers and carefully checking their answers.},
-  author    = {Armand, Michael and Faure, Germain and Gr{é}goire, Benjamin and Keller, Chantal and Th{é}ry, Laurent and Werner, Benjamin},
+  author    = {Armand, Michael and Faure, Germain and Grégoire, Benjamin and Keller, Chantal and Théry, Laurent and Werner, Benjamin},
   booktitle = {Certified Programs and Proofs: First International Conference, CPP 2011, Kenting, Taiwan, December 7-9, 2011. Proceedings},
   doi       = {10.1007/978-3-642-25379-9_12},
   isbn      = {978-3-642-25379-9},
@@ -32,20 +32,6 @@
   title     = {{A Modular Integration of SAT/SMT Solvers to Coq through Proof Witnesses}},
   url       = {https://doi.org/10.1007/978-3-642-25379-9_12},
   year      = {2011},
-}
-
-@article{Abel2002,
-  abstract     = {We introduce a language based upon lambda calculus with products, coproducts and strictly positive inductive types that allows the definition of recursive terms. We present the implementation (foetus) of a syntactical check that ensures that all such terms are structurally recursive, i.e. recursive calls appear only with arguments structurally smaller than the input parameters of terms considered. To ensure the correctness of the termination checker, we show that all structurally recursive terms are normalizing with respect to a given operational semantics. To this end, we define a semantics on all types and a structural ordering on the values in this semantics and prove that all values are accessible with regard to this ordering. Finally, we point out how to do this proof predicatively using set based operators.},
-  author       = {Abel, Andreas and Altenkirch, Thorsten},
-  doi          = {10.1017/S0956796801004191},
-  issn         = {0956-7968},
-  journal      = {Journal of Functional Programming},
-  number       = {01},
-  pages        = {1--41},
-  title        = {{A Predicative Analysis of Structural Recursion}},
-  url          = {http://www.journals.cambridge.org/abstract_S0956796801004191},
-  volume       = {12},
-  year         = {2002},
 }
 
 @incollection{Tammet1996,
@@ -69,7 +55,7 @@
   year          = {2013},
 }
 
-@manual{agdateam,
+@misc{agdateam,
   author  = {Team, The Agda Developement},
   edition = {Version 8.},
   title   = {{Agda 2.4.2.3}},
@@ -85,7 +71,7 @@
 }
 
 @misc{AgdaMetis,
-  author = {Prieto-Cubides, Jonathan and Sicard-Ram{í}rez, Andr{é}s},
+  author = {Prieto-Cubides, Jonathan and Sicard-Ramírez, Andrés},
   doi    = {10.5281/zenodo.398862},
   title  = {{Agda-Metis Library}},
   url    = {https://doi.org/10.5281/zenodo.398862},
@@ -93,7 +79,7 @@
 }
 
 @misc{AgdaProp,
-  author = {Prieto-Cubides, Jonathan and Sicard-Ram{í}rez, Andr{é}s},
+  author = {Prieto-Cubides, Jonathan and Sicard-Ramírez, Andrés},
   doi    = {10.5281/zenodo.398852},
   title  = {{Agda-Prop Library for Classical Propositional Logic}},
   url    = {https://doi.org/10.5281/zenodo.398852},
@@ -101,27 +87,13 @@
 }
 
 @incollection{Een2004,
-  author    = {E{é}n, Niklas and S{ö}rensson, Niklas},
+  author    = {Eén, Niklas and Sörensson, Niklas},
   doi       = {10.1007/978-3-540-24605-3_37},
   pages     = {502--518},
   publisher = {Springer, Berlin, Heidelberg},
   title     = {{An Extensible SAT-solver}},
   url       = {http://link.springer.com/10.1007/978-3-540-24605-3_37},
   year      = {2004},
-}
-
-@article{Bezem2002,
-  author       = {Bezem, Marc and Hendriks, Dimitri and {De Nivelle}, Hans},
-  doi          = {10.1023/A:1021939521172},
-  isbn         = {3540676643},
-  issn         = {01687433},
-  journal      = {Journal of Automated Reasoning},
-  keywords     = {Proof construction,Resolution theorem proving,Type theory},
-  number       = {3-4},
-  pages        = {253--275},
-  title        = {{Automated proof construction in type theory using resolution}},
-  volume       = {29},
-  year         = {2002},
 }
 
 @article{meng2006automation,
@@ -156,7 +128,7 @@
 
 @inproceedings{Bove2012,
   abstract  = {We propose a new approach to the computer-assisted verification of functional programs. We work in first order theories of functional programs which are obtained by extending Aczel's first order theory of combinatory formal arithmetic with positive inductive and coinductive predicates. Rather than building a special purpose system we implement our theories in Agda, a proof assistant for dependent type theory which can be used as a generic theorem prover. Agda provides support for interactive reasoning by encoding first order theories using the formulae-as-types principle. Further support is provided by off-the-shelf automatic theorem provers for first order logic which can be called by a program which translates Agda representations of first order formulae into the TPTP language understood by the provers. We show some examples where we combine interactive and automatic reasoning, covering both proof by induction and coinduction.},
-  author    = {Bove, Ana and Dybjer, Peter and Sicard-Ram{í}rez, Andr{é}s},
+  author    = {Bove, Ana and Dybjer, Peter and Sicard-Ramírez, Andrés},
   booktitle = {Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)},
   doi       = {10.1007/978-3-642-28729-9_7},
   isbn      = {9783642287282},
@@ -171,7 +143,7 @@
 
 @incollection{Barrett2011,
   abstract  = {CVC4 is the latest version of the Cooperating Validity Checker. A joint project of NYU and U Iowa, CVC4 aims to support the useful feature set of CVC3 and SMT-LIBv2 while optimizing the design of the core system architecture and decision procedures to take advantage of recent engineering and algorithmic advances. CVC4 represents a completely new code base; it is a from-scratch rewrite of CVC3, and many subsystems have been completely redesigned. Additional decision procedures for CVC4 are currently under development, but for what it currently achieves, it is a lighter-weight and higher-performing tool than CVC3. We describe the system architecture, subsystems of note, and discuss some applications and continuing work.},
-  author    = {Barrett, Clark and Conway, Christopher L. and Deters, Morgan and Hadarean, Liana and Jovanovi{ć}, Dejan and King, Tim and Reynolds, Andrew and Tinelli, Cesare},
+  author    = {Barrett, Clark and Conway, Christopher L. and Deters, Morgan and Hadarean, Liana and Jovanović, Dejan and King, Tim and Reynolds, Andrew and Tinelli, Cesare},
   booktitle = {Computer Aided Verification: 23rd International Conference, CAV 2011, Snowbird, UT, USA, July 14-20, 2011. Proceedings},
   doi       = {10.1007/978-3-642-22110-1_14},
   editor    = {Gopalakrishnan, Ganesh and Qadeer, Shaz},
@@ -196,7 +168,7 @@
 
 @inproceedings{Bohme2011,
   abstract  = {Automatic provers that can produce proof certificates do not need to be trusted. The certificate can be checked by an independent tool, for example an LCF-style proof assistant such as IsabelleHOL or HOL. Currently, the design of proof formats is mostly dictated by internal constraints of automatic provers and less guided by applications such as checking of certificates. In the worst case, checking can be as involved as the actual proof search simply because important information is missing in the proof certificate. To address this and other issues, we describe design choices for proof formats that we consider both feasible for implementors of automatic provers as well as effective to simplify checking of certificates.},
-  author    = {B{ö}hme, Sascha and Weber, Tjark},
+  author    = {Böhme, Sascha and Weber, Tjark},
   booktitle = {First International Workshop on Proof eXchange for Theorem Proving - PxTP 2011},
   title     = {{Designing Proof Formats: A User's Perspective - Experience Report}},
   url       = {http://hal.inria.fr/hal-00677244},
@@ -243,7 +215,7 @@
 
 @inproceedings{Armand2010,
   abstract  = {Coq has within its logic a programming language that can be used to replace many deduction steps into a single computation, this is the so-called reflection. In this paper, we present two extensions of the evaluation mechanism that preserve its correctness and make it possible to deal with cpu-intensive tasks such as proof checking of SAT traces.},
-  author    = {Armand, Michael and Gr{é}goire, Benjamin and Spiwack, Arnaud and Th{é}ry, Laurent},
+  author    = {Armand, Michael and Grégoire, Benjamin and Spiwack, Arnaud and Théry, Laurent},
   booktitle = {Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)},
   doi       = {10.1007/978-3-642-14052-5_8},
   isbn      = {3642140513},
@@ -256,7 +228,7 @@
 
 @article{blanchette2013extending,
   abstract     = {Sledgehammer is a component of Isabelle/HOL that employs resolution-based first-order automatic theorem provers (ATPs) to discharge goals arising in interactive proofs. It heuristically selects relevant facts and, if an ATP is successful, produces a snippet that replays the proof in Isabelle. We extended Sledgehammer to invoke satisfiability modulo theories (SMT) solvers as well, exploiting its relevance filter and parallel architecture. The ATPs and SMT solvers nicely complement each other, and Isabelle users are now pleasantly surprised by SMT proofs for problems beyond the ATPs' reach.},
-  author       = {Blanchette, Jasmin and B{ö}hme, Sascha and Paulson, Lawrence C.},
+  author       = {Blanchette, Jasmin and Böhme, Sascha and Paulson, Lawrence C.},
   doi          = {10.1007/s10817-013-9278-5},
   issn         = {1573-0670},
   journal      = {Journal of Automated Reasoning},
@@ -271,7 +243,7 @@
 
 @incollection{bohme2010,
   abstract  = {The Satisfiability Modulo Theories (SMT) solver Z3 can generate proofs of unsatisfiability. We present independent reconstruction of these proofs in the theorem provers Isabelle/HOL and HOL4 with particular focus on efficiency. Our highly optimized implementations outperform previous LCF-style proof checkers for SMT, often by orders of magnitude. Detailed performance data shows that LCF-style proof reconstruction can be faster than proof search in Z3.},
-  author    = {B{ö}hme, Sascha and Weber, Tjark},
+  author    = {Böhme, Sascha and Weber, Tjark},
   booktitle = {Interactive Theorem Proving: First International Conference, ITP 2010, Edinburgh, UK, July 11-14, 2010. Proceedings},
   doi       = {10.1007/978-3-642-14052-5_14},
   editor    = {Kaufmann, Matt and Paulson, Lawrence C},
@@ -293,13 +265,12 @@
   year         = {2003},
 }
 
-@thesis{kanso:MResThesis:2013,
+@misc{kanso:MResThesis:2013,
   abstract    = {This project studied whether a digital interlocking which had been pro- grammed with ladder logic (Boolean program) would obey generic safety properties. This was carried out by translating the ladder logic into an alternate representation and applying various techniques to allow specifica- tion of safety properties. Finally, a proof engine was used to formally verify if these properties were fulfilled and if they are not, then human readable documentation would be generated. III},
   annotation  = {{\{}M{\}}aster of {\{}R{\}}esearch thesis, Dept.{\~{}}of Computer Science, Swansea University, Swansea SA2 8PP, UK. Available from http://www.swan.ac.uk/{\$}{\~{}}{\$}csetzer/articlesFromOthers/index.html},
   author      = {Kanso, Karim},
   institution = {Swansea University},
   title       = {{Formal Verification of Ladder Logic}},
-  type        = {phdthesis},
   url         = {http://www.cs.swan.ac.uk/~csetzer/articlesFromOthers/kanso/karimKansoMResThesisFormalVerificationOfLadderLogic.pdf},
   year        = {2010},
 }
@@ -316,7 +287,7 @@
 }
 
 @article{Altenkirch2015,
-  abstract = {A computer formalisation of the completeness of the boolean model of classical propositional logic is presented. The work follows Huth and Ryan's proof [9]. The proof is constructed for a classical logic system in natural deduction style with all logical connectives. The formalisation is constructive and uses the interactive theorem prover Agda which is an implementation of intensional Martin-L{ö}f type theory [11]. Functions have to be defined in a structurally recursive way to pass the termination checker of Agda. The basic definitions of the formal system must be carefully chosen in order to provide a convenient environment to build correct proofs and meanwhile prevent from getting warnings from the type checker. The formalisation is written in an accessible way so that it can be used for educational purposes. The full source code is available online1. Keywords:},
+  abstract = {A computer formalisation of the completeness of the boolean model of classical propositional logic is presented. The work follows Huth and Ryan's proof [9]. The proof is constructed for a classical logic system in natural deduction style with all logical connectives. The formalisation is constructive and uses the interactive theorem prover Agda which is an implementation of intensional Martin-Löf type theory [11]. Functions have to be defined in a structurally recursive way to pass the termination checker of Agda. The basic definitions of the formal system must be carefully chosen in order to provide a convenient environment to build correct proofs and meanwhile prevent from getting warnings from the type checker. The formalisation is written in an accessible way so that it can be used for educational purposes. The full source code is available online1. Keywords:},
   author   = {Cai, Leran and Kaposi, Ambrus and Altenkirch, Thorsten},
   title    = {{Formalising the Completeness Theorem of Classical Propositional Logic in Agda}},
   url      = {https://akaposi.github.io/proplogic.pdf},
@@ -401,7 +372,7 @@
 
 @book{Bertot2004,
   abstract  = {Coq is an interactive proof assistant for the development of mathematical theories and formally certified software. It is based on a theory called the calculus of inductive constructions, a variant of type theory. This book provides a pragmatic introduction to the development of proofs and certified programs using Coq. With its large collection of examples and exercises it is an invaluable tool for researchers, students, and engineers interested in formal methods and the development of zero-fault software.},
-  author    = {Bertot, Yves and Cast{é}ran, Pierre},
+  author    = {Bertot, Yves and Castéran, Pierre},
   booktitle = {Springer},
   doi       = {10.1007/978-3-662-07964-5},
   isbn      = {3540208542},
@@ -450,7 +421,7 @@
 
 @inproceedings{Benzmuller2008,
   abstract  = {LEO-II is a standalone, resolution-based higher-order theorem prover designed for effective cooperation with specialist provers for natural fragments of higher-order logic. At present LEO-II can cooperate with the first-order automated theorem provers E, SPASS, and Vampire. The improved performance of LEO-II, especially in comparison to its predecessor LEO, is due to several novel features including the exploitation of term sharing and term indexing techniques, support for primitive equality reasoning, and improved heuristics at the calculus level. LEO-II is implemented in Objective Caml and its problem representation language is the new TPTP THF language.},
-  author    = {Benzm{ü}ller, Christoph and Paulson, Lawrence C. and Theiss, Frank and Fietzke, Arnaud},
+  author    = {Benzmüller, Christoph and Paulson, Lawrence C. and Theiss, Frank and Fietzke, Arnaud},
   booktitle = {Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)},
   doi       = {10.1007/978-3-540-71070-7_14},
   isbn      = {3540710698},
@@ -476,7 +447,7 @@
 
 @inproceedings{Farber2015,
   abstract  = {Metis is an automated theorem prover based on ordered paramodulation. It is widely employed in the interactive theorem provers Isabelle/HOL and HOL4 to automate proofs as well as reconstruct proofs found by automated provers. For both these purposes, the tableaux-based MESON tactic is frequently used in HOL Light. However, paramodulation-based provers such as Metis perform better on many problems involving equality. We created a Metis-based tactic in HOL Light which translates HOL problems to Metis, runs an OCaml version of Metis, and reconstructs proofs in Metis' paramodulation calculus as HOL proofs. We evaluate the performance of Metis as proof reconstruction method in HOL Light. 1},
-  author    = {F{ä}rber, Michael and Kaliszyk, Cezary},
+  author    = {Färber, Michael and Kaliszyk, Cezary},
   booktitle = {GCAI 2015. Global Conference on Artificial Intelligence Metis-based},
   pages     = {127--136},
   title     = {{Metis-based Paramodulation Tactic for HOL Light}},
@@ -486,7 +457,7 @@
 
 @article{Farber2016,
   abstract     = {Copyright ? by the paper's authors.Proof assistants based on higher-order logic frequently use first-order automated theorem provers as proof search mechanisms. The reconstruction of the proofs generated by common tools, such as MESON and Metis, typically involves the use of the axiom of choice to simulate the Skolemisation steps. In this paper we present a method to reconstruct the proofs without introducing Skolem functions. This enables us to integrate tactics that use first-order automated theorem provers in logics that feature neither the axiom of choice nor the definite description operator.},
-  author       = {F{ä}rber, Michael and Kaliszyk, Cezary},
+  author       = {Färber, Michael and Kaliszyk, Cezary},
   issn         = {16130073},
   journal      = {CEUR Workshop Proceedings},
   number       = {Paar},
@@ -535,7 +506,7 @@
 }
 
 @misc{Athena,
-  author = {Prieto-Cubides, Jonathan and Sicard-Ram{í}rez, Andr{é}s},
+  author = {Prieto-Cubides, Jonathan and Sicard-Ramírez, Andrés},
   doi    = {10.5281/zenodo.437196},
   title  = {{Proof Reconstruction of Classical Propositional Logic with Athena}},
   url    = {https://doi.org/10.5281/zenodo.437196},
@@ -543,7 +514,7 @@
 }
 
 @report{Gomez-Londono2015,
-  author      = {G{ó}mez-Londo{ñ}o, A},
+  author      = {Gómez-Londoño, A},
   institution = {EAFIT University},
   title       = {{Proof Reconstruction: Parsing Proofs}},
   type        = {techreport},
@@ -564,7 +535,7 @@
 
 @incollection{sultana2015,
   abstract  = {Implementing proof reconstruction is difficult because it involves symbolic manipulations of formal objects whose representation varies between different systems. It requires significant knowledge of the source and target systems. One cannot simply re-target to another logic. We present a modular proof reconstruction system with separate components, specifying their behaviour and describing how they interact. This system is demonstrated and evaluated through an implementation to reconstruct proofs generated by Leo-II and Satallax in Isabelle HOL, and is shown to work better than the current method of rediscovering proofs using a select set of provers.},
-  author    = {Sultana, Nik and Benzm{ü}ller, Christoph and Paulson, Lawrence C.},
+  author    = {Sultana, Nik and Benzmüller, Christoph and Paulson, Lawrence C.},
   booktitle = {Frontiers of Combining Systems: 10th International Symposium, FroCoS 2015, Wroclaw, Poland, September 21-24, 2015, Proceedings},
   doi       = {10.1007/978-3-319-24246-0_16},
   editor    = {Lutz, Carsten and Ranise, Silvio},
@@ -585,17 +556,6 @@
   title    = {{Prop-Pack: Collection of TPTP problems of propositional logic}},
   url      = {https://zenodo.org/record/817997#.WYdjIbb5iAw},
   year     = {2017},
-}
-
-@thesis{Sicard2015,
-  abstract    = {We propose a new approach to computer-assisted verification of lazy functional programs where functions can be defined by general recursion. We work in first-order theories of functional programs which are obtained by translating Dybjer's programming logic (Dybjer, P. [1985]. Program Veri- fication in a Logical Theory of Constructions. In: Functional Programming Languages and Computer Architecture. Ed. by Jouannaud, J.-P. Vol. 201. Lecture Notes in Computer Science. Springer, pp. 334–349) into a first-order theory, and by extending this programming logic with new (co-)inductive predicates. Rather than building a special purpose system, we formalise our theories in Agda, a proof assistant for dependent type theory which can be used as a generic theorem prover. Agda provides support for interact- ive reasoning by representing first-order theories using the propositions-as- types principle. Further support is provided by off-the-shelf automatic the- orem provers for first-order-logic called by a Haskell program that translates our Agda representations of first-order formulae into the TPTP language understood by the provers. We show some examples where we combine interactive and automatic reasoning, covering both proofs by induction and co- induction. The examples include functions defined by structural recursion, simple general recursion, nested recursion, higher-order recursion, guarded and unguarded co-recursion. Keywords:},
-  author      = {Sicard-Ram{í}rez, Andr{é}s and Bove, Ana and Dybjer, Peter},
-  institution = {Universidad de la Rep{\{}{ú}{\}}blica},
-  keywords    = {automatic proofs,correctness,first-order theories,functional program,general recursion,interactive proofs,lazy evaluation,total lan- guages,type theory},
-  title       = {{Reasoning about Functional Programs by Combining Interactive and Automatic Proofs}},
-  type        = {phdthesis},
-  url         = {https://www.colibri.udelar.edu.uy/handle/123456789/4715},
-  year        = {2015},
 }
 
 @incollection{Bove2005,
@@ -623,7 +583,7 @@
 }
 
 @article{Blanchette2016,
-  author       = {Blanchette, Jasmin and B{ö}hme, Sascha and Fleury, Mathias and Smolka, Steffen Juilf and Steckermeier, Albert},
+  author       = {Blanchette, Jasmin and Böhme, Sascha and Fleury, Mathias and Smolka, Steffen Juilf and Steckermeier, Albert},
   doi          = {10.1007/s10817-015-9335-3},
   issn         = {15730670},
   journal      = {Journal of Automated Reasoning},
@@ -689,14 +649,14 @@
   year      = {2011},
 }
 
-@manual{coqteam,
+@misc{coqteam,
   author  = {Team, The Coq Developement},
   edition = {Version 8.},
   title   = {{The Coq Proof Assistant. Reference Manual}},
   year    = {2015},
 }
 
-@article{norrish2007hol,
+@misc{norrish2007hol,
   author = {Norrish, Michael and Slind, Konrad},
   title  = {{The HOL system description}},
   year   = {2007},
@@ -776,7 +736,7 @@
 @report{Fleury2014,
   abstract    = {Sledgehammer is a powerful interface from Isabelle to automated provers, to discharge subgoals that appear during the interactive proofs. It chooses facts related to this goal and asks some automatic provers to find a proof. The proof can be either reconstructed or just used to extract the relevant lemmas: in both cases the proof is not trusted. We extend the support by adding one first-order prover (Zipperposition), the reconstruction for two higher-order ATPs (Leo-II and Satallax) and an SMT solver veriT. The support of higher-order prover should especially improve Sledgehammer's performance for higher-order goals. Acknowledgement I would like to thank Jasmin Blanchette for the internship about a very interesting subject, and the members of the logic and verification chair for the welcome. Then Simon Cruanes and Pascal Fontaine (developer of Zipperposition and veriT) were very helpful and provided many explanations concerning their provers and bug fixes.},
   author      = {Fleury, Mathias and Blanchette, Jasmin},
-  institution = {Techniche Universit{ä}t M{ü}nchen},
+  institution = {Techniche Universität München},
   keywords    = {Isabelle,Leo-II,Satallax,Sledgehammer,TSTP proof,Zipperposition,higher-order proofs,proof reconstruc-tion,veriT},
   pages       = {2--0},
   title       = {{Translation of Proofs Provided by External Provers More Automatic Prover Support for Isabelle: Two Higher-Order Provers and a SMT Solver}},
@@ -786,7 +746,7 @@
 }
 
 @article{sutcliffe2004tstp,
-  author       = {Sutcliffe, Geoff and Zimmer, J{ü}rgen and Schulz, Stephan},
+  author       = {Sutcliffe, Geoff and Zimmer, Jürgen and Schulz, Stephan},
   journal      = {Distributed Constraint Problem Solving and Reasoning in Multi-Agent Systems},
   pages        = {201--215},
   title        = {{TSTP data-exchange formats for automated theorem proving tools}},
@@ -821,7 +781,7 @@
 
 @incollection{bouton2009,
   abstract  = {This article describes the first public version of the satisfiability modulo theory (SMT) solver veriT. It is open-source, proof-producing, and complete for quantifier-free formulas with uninterpreted functions and difference logic on real numbers and integers.},
-  author    = {Bouton, Thomas and de Oliveira, Diego and D{é}harbe, David and Fontaine, Pascal},
+  author    = {Bouton, Thomas and de Oliveira, Diego and Déharbe, David and Fontaine, Pascal},
   booktitle = {Automated Deduction -- CADE-22: 22nd International Conference on Automated Deduction, Montreal, Canada, August 2-7, 2009. Proceedings},
   doi       = {10.1007/978-3-642-02959-2_12},
   isbn      = {978-3-642-02959-2},
@@ -834,7 +794,7 @@
 
 @article{hillenbrand1997,
   abstract     = {Waldmeister is a high-performance theorem prover for unit equational first-order logic. In the making of Waldmeister, we have applied an engineering approach, identifying the critical points with respect to efficiency in time and space. Our logical three-level system model consists of the basic operations on the lowest level, where we put great stress on efficient data structures and algorithms. For the middle level, where the inference steps are aggregated into an inference machine, flexible adjustment has proven essential during experimental evaluation. The top level holds control strategy and reduction ordering. Although at this level only standard strategies are employed, really large proof tasks have been managed in reasonable time.},
-  author       = {Hillenbrand, Thomas and Buch, Arnim and Vogt, Roland and L{ö}chner, Bernd},
+  author       = {Hillenbrand, Thomas and Buch, Arnim and Vogt, Roland and Löchner, Bernd},
   doi          = {10.1023/A:1005872405899},
   issn         = {1573-0670},
   journal      = {Journal of Automated Reasoning},
@@ -857,5 +817,52 @@
   title     = {{Z3: An efficient SMT Solver}},
   volume    = {4963 LNCS},
   year      = {2008},
+}
+
+@article{Abel2002,
+  abstract     = {We introduce a language based upon lambda calculus with products, coproducts and strictly positive inductive types that allows the definition of recursive terms. We present the implementation (foetus) of a syntactical check that ensures that all such terms are structurally recursive, i.e. recursive calls appear only with arguments structurally smaller than the input parameters of terms considered. To ensure the correctness of the termination checker, we show that all structurally recursive terms are normalizing with respect to a given operational semantics. To this end, we define a semantics on all types and a structural ordering on the values in this semantics and prove that all values are accessible with regard to this ordering. Finally, we point out how to do this proof predicatively using set based operators.},
+  author       = {Abel, Andreas and Altenkirch, Thorsten},
+  doi          = {10.1017/S0956796801004191},
+  issn         = {0956-7968},
+  journal      = {Journal of Functional Programming},
+  number       = {01},
+  pages        = {1--41},
+  title        = {{A Predicative Analysis of Structural Recursion}},
+  url          = {http://www.journals.cambridge.org/abstract_S0956796801004191},
+  volume       = {12},
+  year         = {2002},
+}
+
+@article{Bezem2002,
+  author       = {Bezem, Marc and Hendriks, Dimitri and {De Nivelle}, Hans},
+  doi          = {10.1023/A:1021939521172},
+  isbn         = {3540676643},
+  issn         = {01687433},
+  journal      = {Journal of Automated Reasoning},
+  keywords     = {Proof construction,Resolution theorem proving,Type theory},
+  number       = {3-4},
+  pages        = {253--275},
+  title        = {{Automated proof construction in type theory using resolution}},
+  volume       = {29},
+  year         = {2002},
+}
+
+@incollection{Sicard-Ramirez2016,
+  author    = {Sicard-Ramírez, Andrés and Ospina-Giraldo, Juan-Fernando},
+  location  = {Medellín, Colombia},
+  publisher = {Universidad EAFIT},
+  title     = {{First-Order Proof Reconstruction (Research Proposal)}},
+  year      = {2016},
+}
+
+@thesis{Sicard2015,
+  abstract    = {We propose a new approach to computer-assisted verification of lazy functional programs where functions can be defined by general recursion. We work in first-order theories of functional programs which are obtained by translating Dybjer's programming logic (Dybjer, P. [1985]. Program Veri- fication in a Logical Theory of Constructions. In: Functional Programming Languages and Computer Architecture. Ed. by Jouannaud, J.-P. Vol. 201. Lecture Notes in Computer Science. Springer, pp. 334–349) into a first-order theory, and by extending this programming logic with new (co-)inductive predicates. Rather than building a special purpose system, we formalise our theories in Agda, a proof assistant for dependent type theory which can be used as a generic theorem prover. Agda provides support for interact- ive reasoning by representing first-order theories using the propositions-as- types principle. Further support is provided by off-the-shelf automatic the- orem provers for first-order-logic called by a Haskell program that translates our Agda representations of first-order formulae into the TPTP language understood by the provers. We show some examples where we combine interactive and automatic reasoning, covering both proofs by induction and co- induction. The examples include functions defined by structural recursion, simple general recursion, nested recursion, higher-order recursion, guarded and unguarded co-recursion. Keywords:},
+  author      = {Sicard-Ramírez, Andrés and Bove, Ana and Dybjer, Peter},
+  institution = {Universidad de la Rep{\{}ú{\}}blica},
+  keywords    = {automatic proofs,correctness,first-order theories,functional program,general recursion,interactive proofs,lazy evaluation,total lan- guages,type theory},
+  title       = {{Reasoning about Functional Programs by Combining Interactive and Automatic Proofs}},
+  type        = {phdthesis},
+  url         = {https://www.colibri.udelar.edu.uy/handle/123456789/4715},
+  year        = {2015},
 }
 
