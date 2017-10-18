@@ -27,7 +27,7 @@ a \TPTP file that encodes a problem in \CPL. We use this file as the
 input of the \Metis prover and if the problem is a theorem, \Metis can reply
 with a derivation in \TSTP format of the proof.
 
-With the \TSTP  derivation from the Step~2, we process the derivation with the
+With the \TSTP  derivation from Step~2, we process the derivation with the
 \Athena translator tool~\cite{Athena}.
 \Athena parses the \TSTP format, analyzes the
 derivation and generates a representation of the natural deduction
@@ -38,13 +38,13 @@ unnecessary steps that introduce redundancies or unused input for
 \Athena.
 
 As a result of using \Athena, we get an \Agda file, the proof-term. To
-generate this file, \Athena has used names of functions and theorems from
+generate this file, \Athena uses names of functions and theorems from
 \Agda libraries:
 \texttt{agda-prop}~\cite{AgdaProp}, and \texttt{agda-metis}~\cite{AgdaMetis}.
 
 
-Finally, we type-check the \Agda proof-term. If type-checking
-succeed, the \TSTP derivation delivered by \Metis was correct.
+Finally, we type-check the \Agda proof-term. If the type-checking
+success, the \TSTP derivation delivered by \Metis is correct.
 In that case \Agda outputs an interface file.
 Otherwise, when type-checking fails, the failure must be
 investigated by the user, checking for the error in \Metis, \Athena,
@@ -52,8 +52,8 @@ or in \Agda.
 
 In the remainder part of this section, a formal description using
 type theory is presented to build definitions and theorems of functions
-necessary to emulate \Metis' inference rules. As notation convention,
-We write the type judgments with ``$a : A$'' to denote that $a$
+necessary to emulate \Metis' inference rules. As a convention,
+We write the type judgments as ``$a : A$'' to denote that $a$
 has $\abbre{A}$ type. Types are written using small caps.
 We use \Prop type for propositions and the dependent type, $Γ ⊢ φ$ for
 theorems where $Γ$ has $\abbre{List}~\Prop$ type, and $φ$ has type $\Prop$.
@@ -67,9 +67,9 @@ equivalence, we write $φ ≡ ψ$ for $φ : \Prop$ and $ψ : \Prop$.
 \label{ssec:structural-recursion}
 
 To emulate \Metis' inference rules in type theory,
-we observed that transformations performed by some rules were given
+we observed that transformations performed by some rules are given
 by \emph{general recursive} functions.
-But algorithms based on general recursions can not be translated
+Algorithms based on general recursions can not be translated
 directly in type theory since it is not a guarantee they terminate.
 For that reason, we follow the technique described
 in~\cite{Bertot2004} to avoid termination problems by modifying the
@@ -88,20 +88,20 @@ calls by using for instance, the \emph{Bounded Recursion} technique
 presented in~\cite{Bertot2004}. For a yet another method, we refer
 the reader to \cite{Coquand1992,Abel2002,Bove2005}.
 The former technique defines a new function based on the original
-recursive function by adding an additional argument to the function.
+recursive function by adding an argument to the function.
 The new argument is the \emph{bound}, a natural number given by the
 function complexity. In other words, the added argument will store
 the number of times the function needs to call itself to get the
 expected outcome.
 
 Henceforth, a natural number has \Nat type, and it is defined as
-usual. That is, \zero and \suc are the data constructors and some
-arithmetic operations are defined: ($+,\,-,\,*$). We include syntax
+usual, i.e., \zero and \suc are the data constructors and some
+arithmetic operations are defined: ($+,\ -,\ *$). We include syntax
 sugar for $\zero$, $\suc$, $\suc(\zero)$, $\cdots$, with the
 classical representation: $1$, $2$, $\cdots$ as well.
 
 Therefore, for a general recursive function $f: \Prop \to \Prop$
-with termination problems, we states a new function
+with termination problems, we state a new function
 $f^{*} : \Prop \to \Nat \to \Prop$ where all recursive calls must be
 done by using induction on the \Nat type structure.
 
@@ -153,12 +153,12 @@ As we mentioned above, the natural number in the second argument of
 the function used in Eq.~(\ref{eq:unshunt-structured}) stands for a
 complexity measure of the function, in this case $unshunt_{1}$ function.
 
-Recall, the \emph{complexity measure} defined in \cite{Agudelo-Agudelo2017}
+Recall the \emph{complexity measure} defined in \cite{Agudelo-Agudelo2017}
 and presented in \cite{VanDalen1994} as \emph{the rank for a
 proposition}, is a function $\Prop \to \Nat$ that assigns a natural
 number for a proposition $φ$ like the following $rank$ function.
-The symbols, $c_{¬}$ and $c_{\square}$ is a non-negative integer
-number called the complexity of the connective.
+The symbols $c_{¬}$ and $c_{\square}$ are non-negative integer
+numbers called the complexity of the respective connective.
 
 \begin{align*}
   \begin{split}
@@ -168,14 +168,14 @@ number called the complexity of the connective.
     \begin{cases}
     0, &\text{for atomic }φ \\
     rank(φ₁) + c_{¬},  &\text{ if } φ ≡ \neg φ₁ \\
-    \max{(rank(φ₁),rank(φ₂))} + c_{\square},
+    \max{(rank(φ₁),\ rank(φ₂))} + c_{\square},
       &\text{ if } φ ≡ φ₁\,\square\, φ₂.
     \end{cases}
   \end{split}
 \end{align*}
 
 We define the $unshunt_{cm}: \Prop → \NN$ function as
-the complexity measure for $unshunt_0$ function.
+the complexity measure for the $unshunt_0$ function.
 
 \begin{align*}
   \label{eq:unshunt-rank-definition}
@@ -185,7 +185,7 @@ the complexity measure for $unshunt_0$ function.
       &\hspace{3mm}
         \begin{cases}
         unshunt_{cm}(φ₃) + 2, &\text{ if }φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\
-        \max(unshunt_{cm}(φ₂),unshunt_{cm}(φ₃)) + 1,
+        \max(unshunt_{cm}(φ₂),\ unshunt_{cm}(φ₃)) + 1,
           &\text{ if }  φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)\\
         0, &\text{ otherwise.}
         \end{cases}
@@ -209,7 +209,7 @@ For a more complete treatment of general recursion, and how to
 define well-founded and well-structural recursive functions, we refer
 the reader to Ref.~\cite{Bove2005}, where Bove and Capettra described
 not only general recursion, but they also treat mutual recursive
-function, among other kinds.
+function, among others.
 
 % % ................................................
 
@@ -223,7 +223,7 @@ The function name written in bold print
 is a \Metis inference rule in \TSTP derivations.
 The same function name written in italics refers to its emulated
 version.
-Each emulated rule states a theorem to prove its soundness.
+Each emulated rule states a respective theorem that proves its soundness.
 This theorem is named by using the prefix \emph{thm}
 and the name of the rule.
 
@@ -234,7 +234,7 @@ the \texttt{rule} inference.
 \begin{align*}
   \begin{split}
     &rule : \Prop → \Prop → \cdots → \Prop\\
-    &rule(φ₁,\cdots, φₙ, ψ) =
+    &rule(φ₁,\ \cdots, φₙ, ψ) =
       \begin{cases}
       ψ, &\text{ if }rule\text{ built }ψ\text{ by applying valid}\\
          &\text{ transformations or other rules to }φ\\
@@ -255,7 +255,7 @@ the \texttt{rule} inference.
 To prove a goal, \Metis splits the goal into
 disjoint cases. This process produces a list of new subgoals, the
 conjunction of these subgoals implies the goal. Then, a proof of the
-goal becomes in smaller proofs, one refutation for each subgoal.
+goal becomes, in smaller proofs, one refutation for each subgoal.
 These subgoals are introduced in the \TSTP derivation with the \strip
 inference rule as we show with the following excerpt.
 
@@ -269,7 +269,7 @@ fof(subgoal_2, plain, (p & r) => q,
     inference(strip, [], [goal])).
 \end{verbatim}
 
-To prove the correctness of the process mentioned above, first,
+To prove the correctness of the process mentioned above,
 we need to establish some lemmas before introduce our main goal of this part,
 Theorem~\ref{thm:thm-strip}.
 
@@ -286,7 +286,7 @@ $unshunt$ function in Eq.~(\ref{eq:unshunt-structured}).
 		\begin{equation*}
 		\texttt{∧⇒-to-⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).
 		\end{equation*}
-  \item For $n > 1$, we will use induction on the structure of the second
+  \item For $n > 1$, we use induction on the structure of the second
 			  argument.
 \begin{itemize}
 \item $(φ₁ ⇒ (φ₂ ⇒ φ₃))$
@@ -350,7 +350,8 @@ Finally, using the theorem \texttt{⇒∧⇒-to-⇒∧} from~\cite{AgdaProp},
 \end{itemize}
 \end{sketchproof}
 
-Let us now define the $split$ function that yields the conjunction of subgoals that implies the goal of the problem in the \Metis \TSTP derivations.
+We now define the $split$ function that yields the conjunction of subgoals
+that implies the goal of the problem in the \Metis \TSTP derivations.
 
 \begin{definition}[split]
 \label{def:split}
@@ -394,7 +395,7 @@ Let us now define the $split$ function that yields the conjunction of subgoals t
   \end{equation*}
 \end{definition}
 
-The definition above suffers termination problems since it is not
+The definition above has termination problems since it is not
 a structural recursion. Therefore, we have reformulated the equation
 above to solve such an issue following the technique
 described in Section~\ref{ssec:structural-recursion}. We refer to $split$
@@ -481,8 +482,8 @@ We present some cases but for a complete proof, we refer the reader to~\cite{Agd
 \end{equation*}
 
 \item $(φ ≡ ¬ (φ₁ ∨ φ₂))$. We show that $Γ ⊢ ¬ φ₁$ and $Γ ⊢ ¬ φ₂$.
-The result follows by introducing the conjunction and applying after
-De Morgan Law.
+The result follows by introducing the conjunction and applying
+De Morgan Laws.
 
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
@@ -536,7 +537,7 @@ justifies the stripping strategy of \Metis to prove goals.
 
 \begin{theorem}[thm-strip]
 \label{thm:thm-strip}
- If $s_i$ are the subgoals of the goal $φ$ for $i=1,\cdots,n$, and
+ If $s_i$ are the subgoals of the goal $φ$ for $i=1,\cdots,n$ and
  $\{ Γ ⊢ s_i \}_{i =1}^n$, then $Γ ⊢ φ$.
 \end{theorem}
 
@@ -562,7 +563,7 @@ justifies the stripping strategy of \Metis to prove goals.
 
 Each proof of a subgoal is a refutation, thereby each proof assumes
 the negation of its subgoal. The \negate rule
-assumes the negation of such subgoals. This rule
+assumes the negation of such subgoals, and
 appears after applying the \strip inference to the goal.
 
 \begin{verbatim}
@@ -572,7 +573,7 @@ fof(subgoal_1, plain, (p => q), inference(strip, [], [goal])).
 fof(negate_0_0, plain, (~ p), inference(negate, [], [subgoal_0])).
 \end{verbatim}
 
-Then, to emulate this rule, we just introduce the negation
+To emulate this rule, we introduce the negation
 of the subgoal by using $assume$ rule from the inferences in
 Fig.~\ref{fig:CPL-inference-rules}.
 
@@ -584,7 +585,7 @@ Fig.~\ref{fig:CPL-inference-rules}.
 The \conjunct rule extracts from a
 conjunction one of its conjuncts. This rule is a generalization of the
 projection rules for the conjunction connective as the
-following \TSTP excerpt shows us.
+following \TSTP excerpt shows.
 
 \begin{verbatim}
 fof(normalize_1, plain, p & q & (r | ~ p),
@@ -616,7 +617,7 @@ fof(normalize_2, plain, (r | ~ p),
 \end{theorem}
 \begin{proof}\hspace{2cm}
 \begin{itemize}
-  \item For the case, $φ ≡ ψ$, $Γ ⊢ conjunct(φ, ψ)$ normalizes to $Γ ⊢ ψ$.
+  \item For the case $φ ≡ ψ$, $Γ ⊢ conjunct(φ, ψ)$ normalizes to $Γ ⊢ ψ$.
 Then, we get the desire conclusion by applying the $subst$ theorem.
   \item If the proposition $φ$ is a conjunction, and we can get $ψ ≡ conjunct(φ_{i}, ψ)$ for some $i = 1,\ 2$, then,
 
@@ -646,25 +647,22 @@ Then, we get the desire conclusion by applying the $subst$ theorem.
 Logic equivalence between propositions is a major issue to justify
 prover reasoning steps. Since we left out semantics to treat only the
 syntax aspects of the propositions, our approach shows equivalence
-by converting propositions to their conjunctive normal forms.
-But also, reordering the conjunctions and the inner disjunctions into the
-formulas to match them.
+by converting propositions to their conjunctive normal forms,
+and reordering those and the inner disjunctions  to match them
 In this section, we provide some theorems to perform such reordering tasks,
 the goals are the following.
 
 \begin{itemize}
-  \item Reorder a disjunction $φ = φ₁ ∨ φ₂ ∨ \cdots φₙ$ to match with
-$ψ = ψ₁ ∨ ψ₂ ∨ \cdots ∨ ψₙ$, when for all $i = 1, \cdots, n$, exists at
-least one $ψⱼ$ such that $φᵢ ≡ ψⱼ$ for $j = 1, \cdots, n$.
+  \item Reorder a disjunction $φ = φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$ to match with
+$ψ = ψ₁ ∨ ψ₂ ∨ \cdots ∨ ψₙ$. For all $i$, there exists at least one $j$ such that $φᵢ ≡ ψⱼ$.
   \item Reorder a CNF formula, $φ = φ₁ ∧ φ₂ ∧ \cdots$, to match with another
-CNF formula $ψ = ψ₁ ∧ ψ₂ ∧ \cdots$ when for all $i = 1, \cdots, n$, exists at
-least one $ψⱼ$ such that $φᵢ ≡ ψⱼ$ for $j = 1, \cdots, n$.
+CNF formula $ψ = ψ₁ ∧ ψ₂ ∧ \cdots$. For all $i$, there exists at least one $j$ such that $φᵢ ≡ ψⱼ$.
 \end{itemize}
 
 First, we define the $rdisj$ function to convert
 a disjunction in its right-associative form.
-The $rconj$ function converts conjunction to its right-associative form is not
-presented here, but is defined in a similar way (see its implementation
+The $rconj$ function that converts conjunction to its right-associative form
+is not presented here, but is defined in a similar way (see its implementation
 in~\cite{AgdaMetis}).
 
 \begin{definition}[rdisj]
@@ -691,7 +689,7 @@ in~\cite{AgdaMetis}).
 The $build_{∨}$ function in Eq.~(\ref{eq:build-or}) intends to construct a
 disjunction from another disjunction, specifically, this functions will try
 to rearrange the disjuncts in the source formula to match with the target
-disjunction formula, similar as we described above.
+disjunction formula, similar as we describe above.
 
 \begin{definition}[build$_{∨}$]
 \begin{equation}
@@ -714,7 +712,7 @@ disjunction formula, similar as we described above.
 $Γ ⊢ φ$, and $ψ : \Prop$ then $Γ ⊢ build_{∨}(φ)$.
 \end{lemma}
 
-From now, we assume all propositions are right-associative unless otherwise stated.
+From now, we assume all propositions to be right-associative unless otherwise stated.
 The $factor$ function in Eq.~(\ref{eq:factor-definition}) intends to simplify a
 special case of disjunction, the repeated disjuncts (e.g., $factor(φ ∨ φ) \mapsto\ φ$).
 Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $(ψ ∨ φ)$.
@@ -738,7 +736,7 @@ Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $(ψ ∨ φ)$.
   $Γ ⊢ φ$ then $Γ ⊢ factor(φ)$.
 \end{lemma}
 
-To construct a disjunction $ψ$ from another disjunction $φ$, we have used ideas
+To construct a disjunction $ψ$ from a disjunction $φ$, we have used ideas
 from the description in \citeauthor{bohme2010}~\cite{bohme2010} to prove equality
 between nested disjunctions. The result is the $sbuild_{∨}$ function that uses
 every disjunct from the source formula, $φ$, to build up the target disjunction $ψ$.
@@ -765,7 +763,7 @@ $Γ ⊢ φ$, and $ψ : \Prop$ then $Γ ⊢ sbuild_{∨}(φ, ψ)$.
 
 \begin{example}
 Let see the main idea behind the lem-sbuild$_{∨}$ lemma.
-We will build the disjunction $((p ∨ q) ∨ r)$ from the disjunction
+We build the disjunction $((p ∨ q) ∨ r)$ from the disjunction
 $(r ∨ (q ∨ p))$.
 \begin{equation*}
   \begin{bprooftree}
@@ -830,7 +828,7 @@ We define similar functions and state some theorems as we previously did for dis
 \begin{definition}[reorder$_{∧}$]
   \begin{align*}
       \begin{split}
-        &reorder : \Prop → \Prop \to \Prop\\
+        &reorder_{∧} : \Prop → \Prop \to \Prop\\
         &reorder_{∧}(φ, ψ) =
         \begin{cases}
           φ, &\text{ if }φ ≡ ψ\\
@@ -845,7 +843,7 @@ We define similar functions and state some theorems as we previously did for dis
 
 \begin{lemma}[lem-reorder$_{∧}$]
   \label{lem:lem-reorder-and}
-  $Γ ⊢ φ$, and $ψ : \Prop$ then $Γ ⊢ reorder(φ, ψ)$.
+  $Γ ⊢ φ$, and $ψ : \Prop$ then $Γ ⊢ reorder_{∧}(φ, ψ)$.
 \end{lemma}
 
 \begin{definition}[conjunct$_{∨}$]
@@ -920,8 +918,8 @@ cnf(refute_0_6, plain, (p | q),
 % \caption{Excerpt of a \Metis \TSTP example for the \resolve rule.}
 % \end{figure}
 
-To emulate this rule, we perform rearrangements inside the formulas
-involved to match with the pattern expected by the resolution theorem
+To emulate this rule, we perform a sequence of rearrangements inside the
+formulas involved to match with the pattern expected by the resolution theorem
 described above. We begin by defining a convenient version of
 the binary resolution in Def.~\ref{def:rsol}.
 
@@ -947,7 +945,7 @@ the binary resolution in Def.~\ref{def:rsol}.
 
 In Def.~\ref{def:resolve}, the emulated rule for $resolve$
 has four arguments. The first three were described
-above. The last one, ψ, represents the expected conclusion in the \Metis
+above, the last one, ψ, represents the expected conclusion in the \Metis
 derivation.
 
 \begin{definition}[resolve]
@@ -1096,8 +1094,7 @@ normalized normal form.}
 \subsubsection{Redundancy.}
 \label{sssec:redundancy}
 
-In this section we provide the functions and theorems to
-remove inside a normalized formula the definitions showed in
+In this section we provide functions and theorems to remove, inside a normalized formula, the definitions showed in
 Fig.~\ref{fig:conjunctive-disjunctive-simpl}.
 
 \begin{remark}
@@ -1133,7 +1130,7 @@ $ψ ≡ conjunct_{∨}(φ, ψ)$.
 
 Now, we have removed redundancies in the disjunctions by applying
 $rm_{∨}$ function, we can define a similar function to work with
-conjunctions, the $rm_{∧}$ function.
+conjunctions, i.e., $rm_{∧}$.
 
 \begin{equation*}
   \begin{bprooftree}
@@ -1174,7 +1171,7 @@ We define $ψ ∈_{∧} φ$ as the equality $ψ ≡ conjunct(φ, ψ)$.
 \end{lemma}
 
 Continuing with the rest of tautologies from
-Fig.~\ref{fig:conjunctive-disjunctive-simpl}, we define
+Fig.~\ref{fig:conjunctive-disjunctive-simpl}, we define the
 $ndisj_{∨}$ function and $ndisj_{∨}$ function that
 take into account the following cases.
 
@@ -1312,8 +1309,8 @@ $canon_{∨}$ function to remove redundancies in disjunctions.
 \end{lemma}
 
 \begin{remark}
-A similar treatment defines the $canon_{⊻} : \NProp \to \NProp$
-function that removes redundancies related with the exclusive
+A similar treatment defines the $canon_{⊻} : \NProp \to \NProp$.
+This function removes redundancies related with the exclusive
 disjunction connective.
 % Its theorem, thm-canon$_{⊻}$ is presented in~\cite{AgdaMetis}.
 We left out this description for the brevity of this
@@ -1322,12 +1319,11 @@ more details.
 \end{remark}
 
 Finally, we can translate formulas from \Prop to \NProp by defining
-the $nnf₀$ function. We have taken
-inspiration on the $nnf$ function described in
+the $nnf₀$ function. This function is based on the $nnf$ function described in
 \citeauthor{Bezem2002}~\cite{Bezem2002}. Their $nnf$ function
 translates formulas to their classical negative normal form. In the
 reference, the authors avoid a termination problem with a similar
-function by using as an extra argument, the polarity of the formula.
+function by using, as an extra argument, the polarity of the formula.
 We follow the same idea in Def.~\ref{def:nnf-zero}.
 Therefore, we need the \abbre{Polarity} type with
 two constructors: $⊕$ to denote positive polarity, and $⊖$ to denote
@@ -1469,8 +1465,9 @@ following theorem.
   Composition of the Lemmas \ref{lem:lem-form}, \ref{lem:lem-dist} and \ref{lem:lem-nnf}.
 \end{proof}
 
-Since all transformations performed above come from equivalences
-in classical propositional logic, we have stated the following theorem with a purpose for the next section.
+Since all the previous transformations came from  equivalences in  the
+classical propositional logic, the following theorem plays an important role
+in the next section.
 
 \begin{theorem}[thm-inv-cnf]
 \label{thm:thm-inv-cnf}
@@ -1484,13 +1481,12 @@ in classical propositional logic, we have stated the following theorem with a pu
 \subsubsection{Canonicalize.}
 \label{sssec:canonicalize}
 
-The \canonicalize rule is an overloaded inference rule that performs
-mainly normalization of the proposition input by using theorems
-described in the section above.  It can introduce axioms and
-definitions into the problem solution.
-This rule convert a \texttt{fof} %TODO
-formula in clausal form to a \CNF clause but also it perform some
-simplification in the process (e.g., removing ⊤ and ⊥ in the formula).
+The \canonicalize rule is an overloaded inference rule which performs
+normalization of the proposition input.
+%This rule can introduce axioms and definitions into the problem solution.
+This rule converts a \texttt{fof} %TODO
+formula in clausal form to a \CNF clause but also it performs some
+simplifications in the process (e.g., removing ⊤ and ⊥ in the formula).
 
 Since this rule mostly consists of dealing with \CNF clauses, to
 justify its reasoning, our strategy mainly consists of checking the
@@ -1564,17 +1560,17 @@ the conjunctive normal form of the target formula.
 \label{sssec:clausification}
 
 The \clausify rule transforms a
-propositional formula in its clausal normal form, a conjunction
-of clauses. Where a \emph{clause} is the disjunction of zero or more
+propositional formula into its clausal normal form, a conjunction
+of clauses. A \emph{clause} is the disjunction of zero or more
 literals and a \emph{literal} is an atom (positive literal) or a
-negation of an atom (negative literal). Be aware this kind of conversion
+negation of an atom (negative literal).
+It is important to notice that this kind of conversion
 between one formula to its clausal normal form is not unique, and \Metis has a
 customized approach to perform that transformation. That is the reason we
 perform some reordering for the CNF of the source formula to fulfill this
 issue.
 
-
-In the following \Metis \TSTP derivation, we see a clear example where
+In the following \Metis \TSTP derivation, we see an example where
 \clausify expands the formula \texttt{normalize\_0\_0} by using distributive
 laws presented in conjunctive normal form conversion.
 
@@ -1606,7 +1602,7 @@ fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
   $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ clausify(φ, ψ)$.
 \end{theorem}
 
-\begin{proof} If $φ ≡ ψ$, this lemmas follows after applies $subs$
+\begin{proof} If $φ ≡ ψ$, this lemmas follows after applying $subs$
 lemma. Otherwise, we use Theorem~\ref{thm:thm-reorder-and-or} and Theorem~\ref{thm:thm-cnf}.
 \end{proof}
 
@@ -1660,16 +1656,16 @@ fof(normalize_0_6, plain, ($false),
 %TODO check canonicalize can reduce a conjunction into one smaller.
 \begin{definition}[simplify]
 \label{def:simplify}
-For $i,j = 1, 2$, $i\neq j$ and $γ : \Prop$,
+For $i,\, j = 1, 2$, $i\neq j$ and $γ : \Prop$,
 \begin{align*}
     \begin{split}
       &\textit{simplify} : \Prop → \Prop → \Prop → \Prop\\
-      &\textit{simplify}(φ₁, φ₂,ψ) =\\
+      &\textit{simplify}(φ₁, φ₂, ψ) =\\
       &\hspace{4mm}
       \begin{cases}
-        ψ,          &\text{ if }φᵢ ≡ ψ,\\
-        ⊥,          &\text{ if }φᵢ ≡ ⊥,\\
-        φⱼ,         &\text{ if }φᵢ ≡ ⊤,\\
+        ψ,          &\text{ if }φᵢ ≡ ψ\\
+        ⊥,          &\text{ if }φᵢ ≡ ⊥\\
+        φⱼ,         &\text{ if }φᵢ ≡ ⊤\\
         γ,          &\text{ if }φᵢ ≡ φⱼ ⇒ γ\\
         γ,          &\text{ if }φᵢ ≡ γ ⇒ nnf(¬ φⱼ)\\
         γ,          &\text{ if }φᵢ ≡ φⱼ ⇔ γ \\
@@ -1685,18 +1681,18 @@ For $i,j = 1, 2$, $i\neq j$ and $γ : \Prop$,
 \end{definition}
 
 \begin{remark}
-Besides the fact, $\List\ \Prop \to \Prop$ is the type that coincides
+Besides the fact that $\List\ \Prop \to \Prop$ is the type that coincides
 with the \simplify rule in \TSTP derivations, we choose a different
 option. In the translation from \TSTP to \Agda, we take the list of
 derivations and use a classical left folding ($foldl$) with
-$simplify$ function over the list of $φ₁, φ₂, \cdots, φₙ$.
-That avoids us to define a new sequent type to
+$simplify$ function over the list of $φ₁, φ₂, \cdots, φₙ$
+that avoids us to define a new sequent type to
 support \List \Prop type in the conclusion side.
 \end{remark}
 
 \begin{theorem}[thm-simplify] % (fold)
   \label{thm:thm-simplify}
-For $i=1,2, \cdots, n$, $Γ ⊢ φᵢ$ and $ψ : \Prop$ then
+For $i=1,\, 2, \cdots, n$, $Γ ⊢ φᵢ$ and $ψ : \Prop$ then
 if $n > 2$, $Γ ⊢ simplify(γ_{n-2}, φ_{n}, ψ)$ where $γ_{i} = simplify(φ_{i}, φ_{i+1}, ψ)$
 else $Γ ⊢ simplify(φ₁, φ₂, ψ)$.
 \end{theorem}

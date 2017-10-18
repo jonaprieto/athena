@@ -29,13 +29,13 @@ where the $\square$ symbol is one of the binary connectives mentioned above.
 \emph{Derivations.}
 A derivation of $φ$ is a mechanism to obtain the conclusion $φ$ from
 the application of some deduction steps. Such a deduction step has
-the form of a set of propositional \emph{premises} that conclude
+the form of a set of propositional \emph{premises} that produces
 one or more proposition as the conclusion.
 
 As we show in the following
 figure, the premises are always above the line, the conclusions
 are below it, and the name of the inference or the theorem used is
-on the left or on the right of the line. As a notation convention, if the name of a rule used in the derivation step is typed using verbatim font face, it means, the inference rule belongs to our implementation~\cite{AgdaProp, AgdaMetis} in the Proof Assistant of a inference rule presented
+on the left or on the right of the line. As a notation convention, if the name of a rule used in the derivation step is typed using verbatim font face, it means the inference rule belongs to our implementation~\cite{AgdaProp, AgdaMetis} in the Proof Assistant of a inference rule presented
 with a similar name.
 
 \begin{equation*}
@@ -66,7 +66,7 @@ define it as a relation between a set of propositions premises $Γ$,
 and $φ$ as the conclusion of the sequent.
 The symbol $⊢$ is called turnstile.
 If $Γ = ∅$, we write $⊢ φ$, and we say that $φ$ is a theorem.
-Then, a theorem, $Γ ⊢ φ$ , means that there is a derivation with
+A theorem, $Γ ⊢ φ$ , means that there is a derivation with
 conclusion $φ$ and with all (uncanceled) hypotheses in $Γ$.
 
 
@@ -97,7 +97,7 @@ The natural deduction designed by Gerhard Gentzen in 1930s defines a formal syst
 of inference rules as the only way to obtain a conclusion.
 We use this system to refer to formal proofs as natural deduction
 proofs and conversely.
-We define the \CPL formal system in the
+We define the \CPL formal system in
 Fig.~\ref{fig:CPL-inference-rules}. The rules described in the aforementioned figure give us the complete
 meaning of the connectives; how to introduce them and
 how they can be remove them in the conclusion side of the theorems.
@@ -174,7 +174,7 @@ how they can be remove them in the conclusion side of the theorems.
 \UnaryInfC{$Γ ⊢ φ \vee ψ$}
 \end{bprooftree}\quad
 \begin{bprooftree}
-\AxiomC{$Γ ,φ ⊢ \gamma $}
+\AxiomC{$Γ , φ ⊢ \gamma $}
 \AxiomC{$Γ , ψ  ⊢ \gamma$}
 \RightLabel{$\vee$-elim}
 \BinaryInfC{$Γ , φ \vee ψ ⊢ \gamma$}

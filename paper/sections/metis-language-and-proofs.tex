@@ -13,7 +13,7 @@ for first-order logic with equality developed by John Hurd
 reconstruction since it provides well-documented proof-objects to
 justify its deduction steps from the basis of only six inference
 rules. There are already some tools that perform proof-reconstruction
-with \Metis. Some of these systems are the following.
+with \Metis. %Some of these systems are the following.
 
 \name{Isabelle/HOL} incorporated \Metis as a macro-step
 reconstruction tool for explaining proof steps (usually \CNF goals)
@@ -70,8 +70,8 @@ The \TSTP language is de facto output standard language
 for derivations of ATPs~\cite{Sutcliffe-Schulz-Claessen-VanGelder-2006}.
 A \TSTP derivation is a directed acyclic graph, a proof tree,
 where each leaf is a formula from the \TPTP input. A node is a formula
-inferred from the parent formulas. The root is the final derived formula.
-Such a derivation is a list of annotated formulas with the form.
+inferred from the parent formulas. The root is the final derived formula,
+such a derivation is a list of annotated formulas with the form.
 
 \begin{verbatim}
 language(name, role, formula, source [,useful info]).
@@ -173,12 +173,12 @@ Nonetheless, \TSTP derivations replied by \Metis use other rules. They are
 \canonicalize, \clausify, \conjunct, \simplify, \negate, and \strip.
 
 \Metis looks for a refutation to prove \verb!fof! problems.
-A \verb!fof! problem contains the conjecture also named the \emph{goal} in the
+A \verb!fof! problem contains the conjecture, the \emph{goal}, in the
 problem. This goal is stripped into subgoals by using the \strip rule. The
 subgoals are the conjuncts in a general conjunction that is equivalent to the
 aforementioned goal.
 Therefore, to prove the goal, \Metis proves independently each subgoal since
-they tend to be less complex or even smaller propositions. At the end, the
+they tend to be less complex or even fewer propositions. At the end, the
 conjunction of all subgoal proofs must prove the goal. Nevertheless, this last
 reasoning is not explicit neither in the \TSTP derivations nor in the
 documentation available about \Metis.
@@ -186,11 +186,10 @@ Since \Metis replies refutation proofs, to prove each subgoal, in the \TSTP
 derivation, the inference rule \negate introduces the negation of such
 subgoals. The \negate rule is a specification of the \emph{assume} rule.
 
-Finally, \emph{axiom} rule appears in \TSTP derivation by one of the following
-rules to in the problem a \verb!fof! axiom: \canonicalize, \clausify,
-\conjunct, or \simplify. Then, the last rule remains is \emph{resolve}, it
+Finally, \emph{axiom} rule appears in \TSTP derivations by using one of the following rules: \canonicalize, \clausify, \conjunct, or \simplify.
+Then, the last rule remains is \emph{resolve}, it
 appears by the binary rule, \resolve, the version in \Metis of the resolution
-theorem. For a more detailed description of this rules see the Section~\ref{sec:proof-reconstruction}.
+theorem. For a more detailed description of this rules see Section~\ref{sec:proof-reconstruction}.
 
 \subsubsection{Proofs.}
 \label{sssec:metis-proofs}
