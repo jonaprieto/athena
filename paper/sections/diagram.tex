@@ -1,8 +1,10 @@
 \begin{figure}
 \centering
+\tikzstyle{line} = [draw, -latex']
 
 \begin{tikzpicture}[
-  scale=0.9
+   node distance = 1.5cm
+ , auto
  , base/.style =
       { font=\small
       , align=center
@@ -30,108 +32,118 @@
       , rounded corners
 %      , fill=blue!2
       , draw%=blue!20
-      , inner sep=2.5pt
+      %, inner sep=2.5pt
       , outer sep=2pt
       }
-  , diamondFile/.style =
+  , Rhoumbus/.style =
       { font=\small
       , base
+      , aspect=2
       % , fill=blue!2
       , draw%=blue!20
       , diamond
       , draw
       , align=center
-      , inner sep=1pt
-      , outer sep=2pt
+      , inner xsep=1pt,
+      , inner ysep=1.5pt
+      , outer sep = 2pt
       }
  ]
 \node[file]
 (tptp){1.~\TPTP file \\ (CPL problem)};
 
 \node[ program
-     , right=0.6cm of tptp
+     , below of=tptp
      ]
 (metis) {\Metis \\ (prover) };
 
 \node[ file
-     , right=0.6cm of metis
+     , below of=metis
      ]
 (tstp) {2.~\TSTP file\\(derivation)};
 
 \node[ program
-     , right=0.6cm of tstp
+     , below of=tstp
      ]
 (athena) {\Athena tool\\(translator)
 };
 
 % ---- Agda libraries
 \node[ library
-     , above=3mm of athena
+     , left of=athena
      , align=center
-     ]
-(agdametis) {\texttt{agda-metis}\\(library) };
-\draw[->, thick] (agdametis) to (athena);
-
-\node[ library
-     , right=3mm of athena
-     , align=center
+     , node distance=3cm
      ]
 (agdaprop) {\texttt{agda-prop}\\(library)};
 \draw[->, thick] (agdaprop) to (athena);
 
+\node[ library
+     , right of=athena
+     , align=center
+     , node distance=3cm
+     ]
+(agdametis) {\texttt{agda-metis}\\(library) };
+\draw[->, thick] (agdametis) to (athena);
+
 % ---------------------------------------------------
 
 \node[ file
-     , below =0.6cm of athena
+     , below of =athena
      ]
 (agdaproof) {3.~\Agda File\\(proof-term)};
 
-\node[ program
-     , align=left
-     , left=0.6cm of agdaproof
-     ]
-(libraries)
-{
-- \prg{agda-metis}\\
-- \prg{agda-prop}\\
-- \prg{agda-stdlib}\\
-(ext. libraries)
-};
 
-\node[ align=center
-     , left=0mm of libraries
-     ]
-(plus) {\textbf{+}};
+% \node[ align=center
+%      , left=0mm of libraries
+%      ]
+% (plus) {\textbf{+}};
 
-\node[ program
-     , left=0mm of plus
+\node[ Rhoumbus
+     , below of=agdaproof
+     , node distance=2cm
      ]
 (agda) {\Agda\\(type-checker)};
 
-\node[ diamondFile
-     , below left =0.9cm and 1mm of agda
+\node[ library
+     , align=center
+     , left of=agda
+     , node distance=4cm
      ]
-(agdai) {Interface\\ \Agda File};
+(libraries)
+{
+\prg{agda-metis}\\
+\prg{agda-prop}\\
+(imports)
+};
 
-\node[ diamondFile
-     , below right =0.9cm and 1mm of agda
+\node[ file
+     , below of= agda
+     , node distance=2.5cm
      ]
-(invalid) {Invalid\\ \Agda File};
+(agdai) {4.1. Interface\\ \Agda File};
 
-\draw[->, thick] (tptp)      to (metis);
-\draw[->, thick] (metis)     to (tstp);
-\draw[->, thick] (tstp)      to (athena);
-\draw[->, thick] (athena)    to (agdaproof);
-\draw[->, thick] (agdaproof) to (libraries);
-\draw[->, thick] (agda)      to (agdai);
-\draw[->, thick] (agda)      to (invalid);
+\node[ file
+     , right of =agda
+     , node distance=4cm
+     ]
+(invalid) {4.2. Invalid\\ \Agda File};
+
+\path [line] (tptp)      -- (metis);
+\path [line] (metis)     -- (tstp);
+\path [line] (tstp)      -- (athena);
+\path [line] (athena)    -- (agdaproof);
+\path [line] (agdaproof)    -- (agda);
+\path [line] (libraries)    -- (agda);
+\path [line] (agda)      -- node {success} (agdai);
+\path [line] (agda)      -- node {failure} (invalid);
 
 \end{tikzpicture}
 
-\caption{Proof-reconstruction overview. The rectangles or rhombuses nodes
-represent text files. The direct edges in the diagram represent calls to
-programs where the input file is pointed by the edge entering and the out edge
-points to the reply file.}
+\caption{Proof-reconstruction overview.
+The rectangles nodes represent text files.
+The direct edges in the diagram represent calls to
+programs where the input file is pointed by the edge entering and the out edge points to the reply file. The rhombus nore represent a decision,
+success if the proof type-checked, or failure if the proof does not.}
 
 \label{fig:proof-reconstruction-workflow}
 \end{figure}

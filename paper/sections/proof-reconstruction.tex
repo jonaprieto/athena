@@ -12,20 +12,18 @@
 
 \input{sections/diagram.tex}
 
-The proof-reconstruction approach proposed here consists of a series
+The proof-reconstruction approach proposed consists of a series
 of steps similar to the workflow presented by \citeauthor{sultana2015} in
 \cite{sultana2015}. This process is a translation from a source
 system to a target system. In our case, the system of origin, the
 automatic theorem prover, is \Metis; the target system is a proof
-assistant, \Agda. We choose \Agda, but another proof assistant with the same
-support of type theory and inductive types is valid.
+assistant, \Agda. We choose \Agda, but another proof assistant with the same support of type theory and inductive types can be used.
 %  (see a description of \Agda for its main features in
 % Section~\ref{sec:implementation}).
 The overview of the proof-reconstruction is presented in
-Fig.~\ref{fig:proof-reconstruction-workflow}, the process begin with
+Fig.~\ref{fig:proof-reconstruction-workflow}. The process begin with
 a \TPTP file that encodes a problem in \CPL. We use this file as the
-input of the \Metis prover and if the problem is a theorem, \Metis can reply
-with a derivation in \TSTP format of the proof.
+input of the \Metis prover and if the problem is a theorem, \Metis can reply a derivation in \TSTP format of the proof.
 
 With the \TSTP  derivation from Step~2, we process the derivation with the
 \Athena translator tool~\cite{Athena}.
@@ -51,10 +49,10 @@ investigated by the user, checking for the error in \Metis, \Athena,
 or in \Agda.
 
 In the remainder part of this section, a formal description using
-type theory is presented to build definitions and theorems of functions
-necessary to emulate \Metis' inference rules. As a convention,
-We write the type judgments as ``$a : A$'' to denote that $a$
-has $\abbre{A}$ type. Types are written using small caps.
+type theory is presented to build definitions and theorems of
+functions necessary to emulate \Metis' inference rules.
+As a convention, we write the type judgments as ``$m : M$'' to denote that $m$ has $\abbre{M}$ type.
+Types are written using small caps.
 We use \Prop type for propositions and the dependent type, $Γ ⊢ φ$ for
 theorems where $Γ$ has $\abbre{List}~\Prop$ type, and $φ$ has type $\Prop$.
 $\abbre{List}$ type is the usual inductive type for lists. For syntactical
@@ -98,7 +96,7 @@ Henceforth, a natural number has \Nat type, and it is defined as
 usual, i.e., \zero and \suc are the data constructors and some
 arithmetic operations are defined: ($+,\ -,\ *$). We include syntax
 sugar for $\zero$, $\suc$, $\suc(\zero)$, $\cdots$, with the
-classical representation: $1$, $2$, $\cdots$ as well.
+classical representation: $0$, $1$, $2$, $\cdots$ as well.
 
 Therefore, for a general recursive function $f: \Prop \to \Prop$
 with termination problems, we state a new function

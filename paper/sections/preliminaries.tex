@@ -10,14 +10,14 @@
 \label{ssec:CPL}
 
 \textit{Propositions.}
-We define the classical propositional logic as usual.
+We define the propositional logic as usual.
 A proposition is an expression of indivisible propositional atoms
-(e.g., symbols $φ₀, φ₁, \cdots$),
-binary logic connectives ($∧, ∨, ⇒, ⇔)$,
-propositional negation $(¬)$, and logic constants $⊥$
-and $⊤$. We use the inductive definition of the set \Prop
+(e.g., symbols $φ₀, φ₁, \cdots$), the logic constants:
+$⊥$, $⊤$, the binary connectives ($∧, ∨, ⇒, ⇔)$, and the negation
+$(¬)$. We use the inductive definition of the set \Prop
 presented in \cite{VanDalen1994} as the mechanism to produce any
 propositional formula.
+
 \begin{itemize}
 \item $⊥, ⊤ \in \Prop$.
 \item $ϕ_i \in \Prop$ for all $i \in \mathbb{N}$.
@@ -28,37 +28,28 @@ where the $\square$ symbol is one of the binary connectives mentioned above.
 
 \emph{Derivations.}
 A derivation of $φ$ is a mechanism to obtain the conclusion $φ$ from
-the application of some deduction steps. Such a deduction step has
+the application of some deduction steps. Such deduction step has
 the form of a set of propositional \emph{premises} that produces
-one or more proposition as the conclusion.
+propositions as the conclusion.
 
-As we show in the following
-figure, the premises are always above the line, the conclusions
-are below it, and the name of the inference or the theorem used is
-on the left or on the right of the line. As a notation convention, if the name of a rule used in the derivation step is typed using verbatim font face, it means the inference rule belongs to our implementation~\cite{AgdaProp, AgdaMetis} in the Proof Assistant of a inference rule presented
-with a similar name.
+As we show in Fig.~\ref{fig:derivation}, the premises are always above the line, the conclusion
+is below it, and the name of the inference or the theorem used is
+on the left or on the right of the line.
+% As a notation convention, if the name of a rule used in the derivation step is typed using verbatim font face, for example, \verb!resolve!, it means the inference rule belongs to our implementation~\cite{AgdaProp, AgdaMetis} in the Proof Assistant of a inference rule presented
+% with a similar name.
 
+\begin{figure}
+\label{fig:derivation}
 \begin{equation*}
-\label{eq:derivation}
 \begin{bprooftree}
   \AxiomC{$φ$}
   \AxiomC{$ψ$}
-  \RightLabel{∧-intro.}
+  \RightLabel{∧-intro}
   \BinaryInfC{$φ ∧ ψ$}
 \end{bprooftree}
-% \qquad
-% \begin{bprooftree}
-%   \AxiomC{$[¬ φ]$}
-%   \noLine
-%   \UnaryInfC{$\vdots$}
-%   \noLine
-%   \UnaryInfC{$⊥$}
-%   \RightLabel{\abbre{RAA}}
-%   \UnaryInfC{φ}
-% \end{bprooftree}
 \end{equation*}
-
-\vskip 2mm
+\caption{Derivation example.}
+\end{figure}
 
 \emph{Theorems.}
 A sequent $Γ ⊢ φ$ represents a theorem, but we
@@ -220,7 +211,21 @@ how they can be remove them in the conclusion side of the theorems.
 \end{bprooftree}
 \]
 
-\caption{Inference rules in classical propositional logic.}
+\[
+\begin{bprooftree}
+\AxiomC{}
+\RightLabel{PEM}
+\UnaryInfC{$Γ ⊢ φ ∨ ¬ φ$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+\AxiomC{$Γ, ¬ φ ⊢ ⊥$}
+\RightLabel{RAA}
+\UnaryInfC{$Γ ⊢ φ$}
+\end{bprooftree}
+\]
+
+
+\caption{Inference rules for propositional logic.}
 \label{fig:CPL-inference-rules}
 \end{figure}
 

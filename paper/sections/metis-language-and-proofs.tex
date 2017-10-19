@@ -7,7 +7,7 @@
 \subsection{Metis: Language and Proofs}
 \label{ssec:metis-language-and-proofs}
 
-\Metis is an automatic theorem prover written in \len{Standard ML}
+\Metis is an automatic theorem prover written in \len{ML}
 for first-order logic with equality developed by John Hurd
 \cite{hurd2003first}. This prover is suitable for proof
 reconstruction since it provides well-documented proof-objects to
@@ -87,8 +87,7 @@ inference(rule, useful info, parents).
 The \name{rule} stands for the inference name; the other fields are
 supporting arguments or useful information to apply the reasoning
 step, and the list of parents nodes. For instance, in Fig.
-\ref{fig:metis-proof-tstp}, \strip is the name of one of the
-inference with no arguments and only one parent node, the
+\ref{fig:metis-proof-tstp}, \strip for example is the name of one of the inference with no arguments and only one parent node, the
 \name{goal}.
 
 \begin{figure}
@@ -106,7 +105,7 @@ fof(normalize_0_2, plain, $false,
 cnf(refute_0_0, plain, $false,
   inference(canonicalize, [], [normalize_0_2])).
 \end{verbatim}
-\caption{The \texttt{Metis}' \texttt{TSTP} derivation for the
+\caption{\texttt{Metis}' \texttt{TSTP} derivation for the
 problem $p\vdash p$.}
 \label{fig:metis-proof-tstp}
 \end{figure}
@@ -212,16 +211,15 @@ theorem. For a more detailed description of this rules see Section~\ref{sec:proo
     \RightLabel{canonicalize}
     \UnaryInfC{$⊥$}
   \end{bprooftree}
-  \caption{The \Metis' proof tree for $p \vdash p$ from the
-  derivation in Fig.~\ref{fig:metis-proof-tstp}}
+  \caption{\Metis' proof tree for $p \vdash p$. Derivation in Fig.~\ref{fig:metis-proof-tstp}}
   \label{fig:metis-example}
 \end{figure}
 
-A proof-object delivered by \Metis encodes a natural
+The output of a proof delivered by \Metis encodes a natural
 deduction proof. The deduction system uses six inference rules
 \cite{hurd2003first} listed in Fig.~\ref{fig:metis-inferences}.
 With these inference rules as the only valid deduction steps, \Metis
-attempts to prove conjectures by refutation (see. e.g.,
+attempts to prove conjectures by refutation (e.g.,
 \emph{falsium} in the last conclusion of the \TSTP derivation in
 Fig.~\ref{fig:metis-example}).
 
