@@ -10,18 +10,39 @@
 \Metis is an automatic theorem prover written in \len{ML}
 for first-order logic with equality developed by John Hurd
 \cite{hurd2003first}. This prover is suitable for proof
-reconstruction since it provides well-documented proof-objects to
-justify its deduction steps from the basis of only six inference
-rules. There are already some tools that perform proof-reconstruction
-with \Metis. %Some of these systems are the following.
+reconstruction since it provides well-documented proof-objects
+to justify its deduction steps from the basis of only six inference
+rules.
+In Fig.~\ref{fig:metis-inferences}, we show the three \Metis rules for
+propositional logic.
 
-\name{Isabelle/HOL} incorporated \Metis as a macro-step
-reconstruction tool for explaining proof steps (usually \CNF goals)
-replied from other \ATPs like \name{CVC4}, \name{Vampire}, or
-\name{Z3} (more details in Ref.~\cite{paulson2007source}).
-\citeauthor{Farber2015} in \cite{Farber2015} present tactic based on \Metis for
-\name{HOL Light} capable to challenge others tactics like \emph{MESON}
-or the \emph{leanCoP} tactic~\cite{Farber2016}.
+
+\begin{figure}
+\begin{equation*}
+  \begin{bprooftree}
+    \AxiomC{}
+    \RightLabel{axiom}
+    \UnaryInfC{$Γ ⊢ φ$}
+  \end{bprooftree}
+  \qquad
+  \begin{bprooftree}
+    \AxiomC{}
+    \RightLabel{assume $L$}
+    \UnaryInfC{$Γ ⊢ φ ∨ ¬ φ$}
+  \end{bprooftree}
+  \end{equation*}
+  \vskip2mm
+  \begin{equation*}
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ l ∨ φ$}
+    \AxiomC{$Γ ⊢ ¬ l ∨ ψ$}
+    \RightLabel{resolve $l$}
+    \BinaryInfC{$Γ ⊢ φ ∨ ψ$}
+  \end{bprooftree}
+\end{equation*}
+\caption{CPL inference rules of the \texttt{Metis} prover.}
+\label{fig:metis-inferences}
+\end{figure}
 
 % -------------------------------------------------------------------
 
@@ -110,54 +131,6 @@ problem $p\vdash p$.}
 \label{fig:metis-proof-tstp}
 \end{figure}
 
-\begin{figure}
-\[
-% \scalebox{0.9}{
-\begin{bprooftree}
-  \AxiomC{}
-  \RightLabel{axiom}
-  \UnaryInfC{$C$}
-\end{bprooftree}
-\qquad
-\begin{bprooftree}
-  \AxiomC{}
-  \RightLabel{assume $L$}
-  \UnaryInfC{$L ∨ \neg L$}
-\end{bprooftree}
-\qquad
-\begin{bprooftree}
-  \AxiomC{}
-  \RightLabel{refl $t$}
-  \UnaryInfC{$t = t$}
-\end{bprooftree}
-\qquad
-\begin{bprooftree}
-  \AxiomC{$C$}
-  \RightLabel{subst $\sigma$}
-  \UnaryInfC{$\sigma\,C$}
-\end{bprooftree}
-\qquad
-% }
-\]
-\[
-% \scalebox{0.9}{
-\begin{bprooftree}
-  \AxiomC{}
-  \RightLabel{equality $L$ $p$ $t$}
-  \UnaryInfC{$\neg (L[p] = t) ∨ \neg L ∨ L[ p \mapsto t]$}
-\end{bprooftree}
-\qquad
-\begin{bprooftree}
-  \AxiomC{$L ∨ C$}
-  \AxiomC{$\neg L ∨ D$}
-  \RightLabel{resolve $L$}
-  \BinaryInfC{$C ∨ D$}
-\end{bprooftree}
-% }
-\]
-\caption{CNF Inference rules of the \texttt{Metis} prover.}
-\label{fig:metis-inferences}
-\end{figure}
 
 % -------------------------------------------------------------------
 

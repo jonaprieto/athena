@@ -9,6 +9,47 @@
 
 In this section, we present an extended version of the related work description made in the proposal for this research~\cite{Sicard-Ramirez2016}.
 
+
+
+% On the one hand, we have the
+% automatic theorem provers (henceforth \ATP) and their specification
+% logic. These tools are usually classified in at least one of the
+% following categories.
+% A \SAT solver (e.g., \name{zChaff}~\cite{Moskewicz2001} and
+% \name{MiniSat}~\cite{Een2004}) to prove unsatisfiability of \CNF
+% formulas, a \abbre{QBF} solver (e.g.,
+% \name{GhostQ}~\cite{Klieber2014} and
+% \name{DepQBF}~\cite{Lonsing2017}) to prove satisfiability and
+% invalidity of quantified Boolean formulas, a \SMT solver
+% (e.g \name{CVC4}~\cite{Barrett2011}, \name{veriT}~\cite{bouton2009},
+% and \name{Z3}~\cite{DeMoura2008}) to prove unsatisfiability of
+% formulas from first-order logic with theories, and a prover for
+% validity of formulas from first-order logic with equality
+% (e.g., \name{E}~\cite{Schulz:AICOM-2002},
+% \name{leanCoP}~\cite{Otten2008},
+% \Metis~\cite{hurd2003first},
+% \name{SPASS}~\cite{Weidenbach2009} and
+% \name{Vampire}~\cite{Riazanov1999}), high-order logic (e.g.,
+% \name{Leo-II}~\cite{Benzmuller2008} and
+% \name{Satallax}~\cite{Brown2012}) or intuitionistic logic (e.g.,
+% \name{ileanCoP}~\cite{Otten2008},
+% \name{JProver}~\cite{Schmitt2001}, and
+% \name{Gandalf}~\cite{Tammet1997}), among others. On the other hand,
+% we have the proof checkers, interactive theorem provers (henceforth
+% \ITP) or proof assistants (e.g., \Agda~\cite{agdateam},
+% \name{Coq}~\cite{coqteam},
+% \name{Isabelle}~\cite{paulson1994isabelle}, and
+% \name{HOL4}~\cite{norrish2007hol}).
+
+
+\name{Isabelle/HOL} incorporated \Metis as a macro-step
+reconstruction tool for explaining proof steps (usually \CNF goals)
+replied from other \ATPs like \name{CVC4}, \name{Vampire}, or
+\name{Z3} (more details in Ref.~\cite{paulson2007source}).
+\citeauthor{Farber2015} in \cite{Farber2015} present tactic based on \Metis for
+\name{HOL Light} capable to challenge others tactics like \emph{MESON}
+or the \emph{leanCoP} tactic~\cite{Farber2016}.
+
 \name{Sledgehammer} is a tool for \name{Isabelle} proof assistant
 \cite{paulson1994isabelle} that provides a full integration of
 automatic theorem provers including \ATPs (see, for example,

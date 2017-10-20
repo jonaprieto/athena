@@ -6,7 +6,7 @@
 \section{Preliminaries}
 \label{sec:preliminaries}
 
-\subsection{Classical Propositional Logic}
+\subsection*{Classical Propositional Logic}
 \label{ssec:CPL}
 
 \textit{Propositions.}
@@ -26,11 +26,13 @@ where the $\square$ symbol is one of the binary connectives mentioned above.
 \item If $φ \in \Prop$, then $(¬ φ) \in \Prop$.
 \end{itemize}
 
-\emph{Derivations.}
-A derivation of $φ$ is a mechanism to obtain the conclusion $φ$ from
+\emph{Inference Rule.}
+An inference rule is a deduction step of the form of a set of propositional
+\emph{premises} that produces propositions as the conclusion.
+A derivation is a
+
+is a mechanism to obtain the conclusion $φ$ from
 the application of some deduction steps. Such deduction step has
-the form of a set of propositional \emph{premises} that produces
-propositions as the conclusion.
 
 As we show in Fig.~\ref{fig:derivation}, the premises are always above the line, the conclusion
 is below it, and the name of the inference or the theorem used is
@@ -42,10 +44,14 @@ on the left or on the right of the line.
 \label{fig:derivation}
 \begin{equation*}
 \begin{bprooftree}
-  \AxiomC{$φ$}
-  \AxiomC{$ψ$}
+  \AxiomC{$φ ∧ ψ$}
+  \RightLabel{∧-proj₂}
+  \UnaryInfC{$ψ$}
+  \AxiomC{$φ ∧ ψ$}
+  \RightLabel{∧-proj₁}
+  \UnaryInfC{$φ$}
   \RightLabel{∧-intro}
-  \BinaryInfC{$φ ∧ ψ$}
+  \BinaryInfC{$ψ ∧ φ$}
 \end{bprooftree}
 \end{equation*}
 \caption{Derivation example.}
@@ -61,122 +67,119 @@ A theorem, $Γ ⊢ φ$ , means that there is a derivation with
 conclusion $φ$ and with all (uncanceled) hypotheses in $Γ$.
 
 
-\emph{Postulates.}
-We only postulate the principle of excluded third
-(\abbre{PEM}). Assuming \abbre{PEM}, we derive the
-\emph{reductio ad absurdum} rule (\abbre{RAA}) as the
-formulation of the principle of proof by contradiction, that is, a derivation
-of a contradiction, $⊥$, from the hypothesis $(¬ φ)$, is a
-derivation of $φ$.
+% \emph{Postulates.}
+% We postulate the principle of excluded third
+% (\abbre{PEM}). Assuming \abbre{PEM}, we derive the
+% \emph{reductio ad absurdum} rule (\abbre{RAA}) as the
+% formulation of the principle of proof by contradiction, that is, a derivation
+% of a contradiction, $⊥$, from the hypothesis $(¬ φ)$, is a
+% derivation of $φ$.
 
-\begin{equation*}
-\label{eq:PEM-RAA}
-\begin{bprooftree}
-\AxiomC{}
-\RightLabel{PEM,}
-\UnaryInfC{$Γ ⊢ φ ∨ ¬ φ$}
-\end{bprooftree}\qquad
-\begin{bprooftree}
-\AxiomC{$Γ, ¬ φ ⊢ ⊥$}
-\RightLabel{RAA.}
-\UnaryInfC{$Γ ⊢ φ$}
-\end{bprooftree}
-\end{equation*}
+% \begin{equation*}
+% \label{eq:PEM-RAA}
+% \begin{bprooftree}
+% \AxiomC{}
+% \RightLabel{PEM,}
+% \UnaryInfC{$Γ ⊢ φ ∨ ¬ φ$}
+% \end{bprooftree}\qquad
+% \begin{bprooftree}
+% \AxiomC{$Γ, ¬ φ ⊢ ⊥$}
+% \RightLabel{RAA.}
+% \UnaryInfC{$Γ ⊢ φ$}
+% \end{bprooftree}
+% \end{equation*}
 
 \emph{Natural Deductions.}
-The natural deduction designed by Gerhard Gentzen in 1930s defines a formal system for derivations that uses a set
-of inference rules as the only way to obtain a conclusion.
-We use this system to refer to formal proofs as natural deduction
+The natural deduction introduced by Gentzen in 1930s defines a formal system
+for derivations that uses a set of inference rules as the only way to obtain a
+conclusion. We use this system to refer to formal proofs as natural deduction
 proofs and conversely.
-We define the \CPL formal system in
-Fig.~\ref{fig:CPL-inference-rules}. The rules described in the aforementioned figure give us the complete
-meaning of the connectives; how to introduce them and
-how they can be remove them in the conclusion side of the theorems.
+
+In this document, we extend the \CPL formal system
+Fig.~\ref{fig:CPL-inference-rules} described on
+paper~\cite{Altenkirch2015} to include inferences rules for the biconditional
+connective, $PEM$ and $RAA$ postulates, among others.
 
 \begin{figure}
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{}
-\RightLabel{assume}
-\UnaryInfC{$Γ , φ ⊢ φ$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ φ$}
-\RightLabel{weaken}
-\UnaryInfC{$Γ , ψ ⊢ φ$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{}
-\RightLabel{$⊤$-intro}
-\UnaryInfC{$Γ ⊢ ⊤$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ ⊥$}
-\RightLabel{$⊥$-elim}
-\UnaryInfC{$Γ ⊢ φ$}
-\end{bprooftree}
-%}
-\]
+\begin{equation*}
+  \begin{bprooftree}
+    \AxiomC{}
+    \RightLabel{assume}
+    \UnaryInfC{$Γ , φ ⊢ φ$}
+  \end{bprooftree}\quad
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ φ$}
+    \RightLabel{weaken}
+    \UnaryInfC{$Γ , ψ ⊢ φ$}
+  \end{bprooftree}\quad
+  \begin{bprooftree}
+    \AxiomC{}
+    \RightLabel{$⊤$-intro}
+    \UnaryInfC{$Γ ⊢ ⊤$}
+  \end{bprooftree}\quad
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ ⊥$}
+    \RightLabel{$⊥$-elim}
+    \UnaryInfC{$Γ ⊢ φ$}
+  \end{bprooftree}
+\end{equation*}
 
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$Γ , φ ⊢ ⊥$}
-\RightLabel{$¬$-intro}
-\UnaryInfC{$Γ ⊢ ¬ φ$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ ¬ φ$}
-\AxiomC{$Γ ⊢ φ$}
-\RightLabel{$¬$-elim}
-\BinaryInfC{$Γ ⊢ ⊥$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ φ$}
-\AxiomC{$Γ ⊢ ψ$}
-\RightLabel{$\wedge$-intro}
-\BinaryInfC{$Γ ⊢ φ \wedge ψ$}
-\end{bprooftree}
-%}
-\]
+\begin{equation*}
+  \begin{bprooftree}
+    \AxiomC{$Γ , φ ⊢ ⊥$}
+    \RightLabel{$¬$-intro}
+    \UnaryInfC{$Γ ⊢ ¬ φ$}
+  \end{bprooftree}\quad
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ ¬ φ$}
+    \AxiomC{$Γ ⊢ φ$}
+    \RightLabel{$¬$-elim}
+    \BinaryInfC{$Γ ⊢ ⊥$}
+  \end{bprooftree}\quad
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ φ$}
+    \AxiomC{$Γ ⊢ ψ$}
+    \RightLabel{$\wedge$-intro}
+    \BinaryInfC{$Γ ⊢ φ \wedge ψ$}
+  \end{bprooftree}
+\end{equation*}
 
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ φ \wedge ψ$}
-\RightLabel{$\wedge$-proj$_1$}
-\UnaryInfC{$Γ⊢ φ$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ φ \wedge ψ$}
-\RightLabel{$\wedge$-proj$_2$}
-\UnaryInfC{$Γ⊢ ψ$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ φ$}
-\RightLabel{$\vee$-intro$_1$}
-\UnaryInfC{$Γ ⊢ φ \vee ψ$}
-\end{bprooftree}
-%}
-\]
+\begin{equation*}
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ φ \wedge ψ$}
+    \RightLabel{$\wedge$-proj$_1$}
+    \UnaryInfC{$Γ⊢ φ$}
+  \end{bprooftree}\quad
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ φ \wedge ψ$}
+    \RightLabel{$\wedge$-proj$_2$}
+    \UnaryInfC{$Γ⊢ ψ$}
+  \end{bprooftree}\quad
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ φ$}
+    \RightLabel{$\vee$-intro$_1$}
+    \UnaryInfC{$Γ ⊢ φ \vee ψ$}
+  \end{bprooftree}
+\end{equation*}
 
-\[%\scalebox{0.9}{
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ ψ$}
-\RightLabel{$\vee$-intro$_2$}
-\UnaryInfC{$Γ ⊢ φ \vee ψ$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$Γ , φ ⊢ \gamma $}
-\AxiomC{$Γ , ψ  ⊢ \gamma$}
-\RightLabel{$\vee$-elim}
-\BinaryInfC{$Γ , φ \vee ψ ⊢ \gamma$}
-\end{bprooftree}\quad
-\begin{bprooftree}
-\AxiomC{$Γ , φ ⊢ ψ$}
-\RightLabel{$\Rightarrow$-intro}
-\UnaryInfC{$Γ ⊢ φ \Rightarrow ψ$}
-\end{bprooftree}
-%}
-\]
+\begin{equation*}
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ ψ$}
+    \RightLabel{$\vee$-intro$_2$}
+    \UnaryInfC{$Γ ⊢ φ \vee ψ$}
+  \end{bprooftree}\quad
+  \begin{bprooftree}
+    \AxiomC{$Γ , φ ⊢ γ $}
+    \AxiomC{$Γ , ψ  ⊢ γ$}
+    \RightLabel{$\vee$-elim}
+    \BinaryInfC{$Γ , φ \vee ψ ⊢ γ$}
+  \end{bprooftree}\quad
+  \begin{bprooftree}
+    \AxiomC{$Γ , φ ⊢ ψ$}
+    \RightLabel{$\Rightarrow$-intro}
+    \UnaryInfC{$Γ ⊢ φ \Rightarrow ψ$}
+  \end{bprooftree}
+\end{equation*}
 
 \[
 %\scalebox{0.9}{

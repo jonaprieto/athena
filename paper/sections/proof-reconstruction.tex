@@ -257,7 +257,7 @@ disjoint cases. This process produces a list of new subgoals, the
 conjunction of these subgoals implies the goal. Then, a proof of the
 goal becomes, in smaller proofs, one refutation for each subgoal.
 These subgoals are introduced in the \TSTP derivation with the \strip
-inference rule as we show with the following excerpt.
+inference rule as we show in the following excerpt.
 
 \begin{verbatim}
 fof(goal, conjecture, p & r & q).
@@ -288,6 +288,7 @@ $\fuh$ function in Eq.~(\ref{eq:uh-structured}).
 		\end{equation*}
   \item For $n > 1$, we use induction on the structure of the second
 			  argument.
+\vskip 2mm
 \begin{itemize}
 \item $(φ₁ ⇒ (φ₂ ⇒ φ₃))$
 \begin{equation*}
@@ -392,7 +393,8 @@ The definition above has termination problems since it is not
 a structural recursion. Therefore, we have reformulated the equation
 above to solve such an issue following the technique
 described in Section~\ref{ssec:structural-recursion}.
-We refer to $\fstrip$ as the function after applying the process mentioned above here and below unless otherwise stated.
+We refer to $\fstrip$ as the function after applying the process mentioned
+above here and below unless otherwise stated.
 
 \begin{lemma}[lem-inv-strip] $Γ ⊢ \fstrip(φ)$ then $Γ ⊢ φ$.
 \label{lem:lem-inv-strip}
