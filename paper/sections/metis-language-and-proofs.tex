@@ -10,7 +10,7 @@
 \Metis is an automatic theorem prover written in \len{ML}
 for first-order logic with equality developed by John Hurd
 \cite{hurd2003first}. This prover is suitable for proof
-reconstruction since it provides well-documented proof-objects
+reconstruction since it provides well-documented proofs
 to justify its deduction steps from the basis of only six inference
 rules.
 In Fig.~\ref{fig:metis-inferences}, we show the three \Metis rules for
@@ -50,10 +50,10 @@ propositional logic.
 
 The \TPTP language --which includes the first-order
 form (denoted by \name{fof}) and clause normal form (denoted by
-\name{cnf}) formats~\cite{sutcliffe2009,Sicard-Ramirez2016} -- is de facto input
-standard language to encode problems for many \ATPs. The \TPTP
-syntax describes a well-defined grammar to handle annotated formulas
-with the following form.
+\name{cnf}) formats~\cite{sutcliffe2009,Sicard-Ramirez2016} -- is the
+input language to encode problems used by \Metis.
+The \TPTP syntax describes a well-defined grammar to handle annotated
+formulas with the following form.
 
 \begin{verbatim}
 language(name, role, formula).
@@ -61,10 +61,23 @@ language(name, role, formula).
 
 The \name{language} can be \name{fof} or \name{cnf}. The \name{name}
 serves to identify the formula within the problem. Each formula
-assumes one \name{role}, this could be an \name{axiom},
+assumes a \name{role}, this could be an \name{axiom},
 \name{conjecture}, \name{definition}, or a \name{hypothesis}.
-The formulas include Boolean connectives (\verb!&!, \verb!|!,
-\verb!=>!, \verb!<=>!, \verb!~!) and logic constants \verb!$true!
+%existen otros
+%----Keywords:    fof cnf thf tff include
+%----Punctuation: ( ) , . [ ] :
+%----Operators:   ! ? ~ & | <=> => <= <~> ~| ~& * +
+%----Predicates:  = != $true $false
+
+%----Top of Page---------------------------------------------------------------
+%----CNF formulae (variables implicitly universally quantified)
+% <cnf_formula>          ::= <disjunction> | (<disjunction>)
+% <disjunction>          ::= <literal> | <disjunction> <vline> <literal>
+% <literal>              ::= <fof_atomic_formula> | ~ <fof_atomic_formula> |
+%                            <fof_infix_unary>
+The formulas include the binary Boolean connectives
+(\verb!&!, \verb!|!, \verb!=>!, \verb!<=>!, \verb!~!) and logic constants \verb!$true!
+% the boolean type ($true and $false)
 and \verb!$false!, for the symbols (∧, ∨, ⇒, ⇔, ¬, ⊤, ⊥), respectively.
 
 For instance, let us express the problem
@@ -106,9 +119,46 @@ inference(rule, useful info, parents).
 
 The \name{rule} stands for the inference name; the other fields are
 supporting arguments or useful information to apply the reasoning
-step, and the list of parents nodes. For instance, in Fig.
-\ref{fig:metis-proof-tstp}, \strip for example is the name of one of the inference with no arguments and only one parent node, the
+step, and the list of parents nodes.
+
+\begin{verbatim}
+fof(subgoal_0, plain, p, inference(strip, [], [goal])).
+\end{verbatim}
+
+In the script above, \strip is for example the name of the inference.
+It has no arguments and derives from one parent node with goal name.
 \name{goal}.
+
+
+% -------------------------------------------------------------------
+
+\subsection{Inference Rules.}
+\label{ssec:metis-inferences-rules}
+
+% \TSTP derivations replied by \Metis use other rules. They are
+% \canonicalize, \clausify, \conjunct, \simplify, \negate, and \strip.
+
+% \Metis looks for a refutation to prove \verb!fof! problems.
+% A \verb!fof! problem contains the conjecture, the \emph{goal}, in the
+% problem. This goal is stripped into subgoals by using the \strip rule. The
+% subgoals are the conjuncts in a general conjunction that is equivalent to the
+% aforementioned goal.
+% Therefore, to prove the goal, \Metis proves independently each subgoal since
+% they tend to be less complex or even fewer propositions. At the end, the
+% conjunction of all subgoal proofs must prove the goal. Nevertheless, this last
+% reasoning is not explicit neither in the \TSTP derivations nor in the
+% documentation available about \Metis.
+% Since \Metis replies refutation proofs, to prove each subgoal, in the \TSTP
+% derivation, the inference rule \negate introduces the negation of such
+% subgoals. The \negate rule is a specification of the \emph{assume} rule.
+
+Finally, \emph{axiom} rule appears in \TSTP derivations by using one of the following rules: \canonicalize, \clausify, \conjunct, or \simplify.
+Then, the last rule remains is \emph{resolve}, it
+appears by the binary rule, \resolve, the version in \Metis of the resolution
+theorem. For a more detailed description of this rules see Section~\ref{sec:proof-reconstruction}.
+
+\subsection{Proofs.}
+\label{ssec:metis-proofs}
 
 \begin{figure}
 \begin{verbatim}
@@ -129,41 +179,6 @@ cnf(refute_0_0, plain, $false,
 problem $p\vdash p$.}
 \label{fig:metis-proof-tstp}
 \end{figure}
-
-
-% -------------------------------------------------------------------
-
-\subsection{Proof Rules.}
-\label{ssec:proof-rules}
-
-Since the scope of the problems treated in this research is \CPL, from the
-list of \Metis inference rules in Fig.~\ref{fig:metis-inferences}, we found
-that only three rules apply: \emph{axiom}, \emph{assume} and \emph{resolve}
-rule.
-Nonetheless, \TSTP derivations replied by \Metis use other rules. They are
-\canonicalize, \clausify, \conjunct, \simplify, \negate, and \strip.
-
-\Metis looks for a refutation to prove \verb!fof! problems.
-A \verb!fof! problem contains the conjecture, the \emph{goal}, in the
-problem. This goal is stripped into subgoals by using the \strip rule. The
-subgoals are the conjuncts in a general conjunction that is equivalent to the
-aforementioned goal.
-Therefore, to prove the goal, \Metis proves independently each subgoal since
-they tend to be less complex or even fewer propositions. At the end, the
-conjunction of all subgoal proofs must prove the goal. Nevertheless, this last
-reasoning is not explicit neither in the \TSTP derivations nor in the
-documentation available about \Metis.
-Since \Metis replies refutation proofs, to prove each subgoal, in the \TSTP
-derivation, the inference rule \negate introduces the negation of such
-subgoals. The \negate rule is a specification of the \emph{assume} rule.
-
-Finally, \emph{axiom} rule appears in \TSTP derivations by using one of the following rules: \canonicalize, \clausify, \conjunct, or \simplify.
-Then, the last rule remains is \emph{resolve}, it
-appears by the binary rule, \resolve, the version in \Metis of the resolution
-theorem. For a more detailed description of this rules see Section~\ref{sec:proof-reconstruction}.
-
-\subsection{Proofs.}
-\label{ssec:metis-proofs}
 
 \begin{figure}
 \centering

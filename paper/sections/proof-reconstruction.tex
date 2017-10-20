@@ -17,13 +17,15 @@ of steps similar to the workflow presented by \citeauthor{sultana2015} in
 \cite{sultana2015}. This process is a translation from a source
 system to a target system. In our case, the system of origin, the
 automatic theorem prover, is \Metis; the target system is a proof
-assistant, \Agda. We choose \Agda, but another proof assistant with the same support of type theory and inductive types can be used.
+assistant, \Agda. We choose \Agda, but another proof assistant with the
+same support of type theory and inductive types can be used.
 %  (see a description of \Agda for its main features in
 % Section~\ref{sec:implementation}).
 The overview of the proof-reconstruction is presented in
 Fig.~\ref{fig:proof-reconstruction-workflow}. The process begin with
 a \TPTP file that encodes a problem in \CPL. We use this file as the
-input of the \Metis prover and if the problem is a theorem, \Metis can reply a derivation in \TSTP format of the proof.
+input of the \Metis prover and if the problem is a theorem, \Metis can
+reply a derivation in \TSTP format of the proof.
 
 With the \TSTP derivation from Step~2, we process the derivation with the
 \Athena translator tool~\cite{Athena}.
@@ -41,7 +43,9 @@ generate this file, \Athena uses names of functions and theorems from
 \texttt{agda-prop}~\cite{AgdaProp}, and \texttt{agda-metis}~\cite{AgdaMetis}.
 
 Finally, we type-check the \Agda proof-term. If the type-checking
-success, the \TSTP derivation delivered by \Metis is correct.
+success, the \TSTP derivation delivered by \Metis is correct
+module \Agda and the formalizations of \Metis inferences.
+
 In that case \Agda outputs an interface file.
 Otherwise, when type-checking fails, the failure must be
 investigated by the user, checking for the error in \Metis, \Athena,
@@ -50,7 +54,8 @@ or in \Agda.
 In the remainder part of this section, a formal description using
 type theory is presented to build definitions and theorems of
 functions necessary to emulate \Metis' inference rules.
-As a convention, we write the type judgments as ``$m : M$'' to denote that $m$ has $\abbre{M}$ type.
+As a convention, we write the type judgments as ``$m : M$'' to denote
+that $m$ has $\abbre{M}$ type.
 Types are written using small caps.
 We use \Prop type for propositions and the dependent type, $Γ ⊢ φ$ for
 theorems where $Γ$ has $\abbre{List}~\Prop$ type, and $φ$ has type $\Prop$.
@@ -421,7 +426,8 @@ We present some cases but for a complete proof, we refer the reader to~\cite{Agd
   \end{bprooftree}
 \end{equation*}
 
-\item $(φ ≡ φ₁ ∧ φ₂)$. We get a proof for each conjunct and using the introduction rule for conjunction connective, the result follows.
+\item $(φ ≡ φ₁ ∧ φ₂)$. We get a proof for each conjunct and using the
+introduction rule for conjunction connective, the result follows.
 
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
@@ -683,7 +689,7 @@ in~\cite{AgdaMetis}).
   $Γ ⊢ φ$ then $Γ ⊢ \rm{rdisj}(φ)$.
 \end{lemma}
 
-\begin{definition}[build$_{∨}$]
+\begin{definition}[build$_{\boldsymbol{∨}}$]
 \begin{equation*}
   \begin{split}
   \label{eq:build-or}
@@ -704,7 +710,7 @@ disjunction from another disjunction, specifically, this functions will
 try to rearrange the disjuncts in the source formula to match with the
 target disjunction formula, similar as we describe above.
 
-\begin{lemma}[lem-build$_{∨}$]
+\begin{lemma}[lem-build$_{\boldsymbol{∨}}$]
 \label{lem:lem-build-or}
 $Γ ⊢ φ$, and $ψ : \Prop$ then $Γ ⊢ \rm{build}_{∨}(φ)$.
 \end{lemma}
@@ -742,7 +748,7 @@ The result is the $\rm{sbuild}_{∨}$ function
 that uses every disjunct from the source formula, $φ$, to build up the
 target disjunction $ψ$.
 
-\begin{definition}[sbuild$_{∨}$]
+\begin{definition}[sbuild$_{\boldsymbol{∨}}$]
 \begin{align*}
   \begin{split}
   \label{eq:strong-build-or-definition}
@@ -758,7 +764,7 @@ target disjunction $ψ$.
 \end{align*}
 \end{definition}
 
-\begin{lemma}[lem-sbuild$_{∨}$]
+\begin{lemma}[lem-sbuild$_{\boldsymbol{∨}}$]
 \label{lem:lem-sbuild-or}
 $Γ ⊢ φ$, and $ψ : \Prop$ then $Γ ⊢ \rm{sbuild}_{∨}(φ, ψ)$.
 \end{lemma}
@@ -806,7 +812,7 @@ $(r ∨ (q ∨ p))$.
 
 Notice that using $\rm{sbuild}_{∨}$ we can build not only a disjunction with the same disjuncts of the source formula but also a complete different formula by adding new disjuncts to the source formula.
 
-\begin{definition}[reorder$_{∨}$]
+\begin{definition}[reorder$_{\boldsymbol{∨}}$]
 \begin{align*}
     \label{eq:reorder-or}
     \begin{split}
@@ -816,7 +822,7 @@ Notice that using $\rm{sbuild}_{∨}$ we can build not only a disjunction with t
   \end{align*}
 \end{definition}
 
-\begin{theorem}[thm-reorder$_{∨}$]
+\begin{theorem}[thm-reorder$_{\boldsymbol{∨}}$]
   \label{thm-reorder-or}
   $Γ ⊢ φ$, and $ψ: \Prop$ then $Γ ⊢ \rm{reorder}_{∨}(φ, ψ)$.
 \end{theorem}
@@ -827,7 +833,7 @@ Use Lemma~\ref{lem:lem-rdisj} and Lemma~\ref{lem:lem-sbuild-or}.
 
 We define similar functions and state some theorems as we previously did for disjunctions, but instead, we treat only with conjunctive normal forms.
 
-\begin{definition}[reorder$_{∧}$]
+\begin{definition}[reorder$_{\boldsymbol{∧}}$]
   \begin{align*}
       \begin{split}
         &\rm{reorder}_{∧} : \Prop → \Prop \to \Prop\\
@@ -843,12 +849,12 @@ We define similar functions and state some theorems as we previously did for dis
   \end{align*}
 \end{definition}
 
-\begin{lemma}[lem-reorder$_{∧}$]
+\begin{lemma}[lem-reorder$_{\boldsymbol{∧}}$]
   \label{lem:lem-reorder-and}
   $Γ ⊢ φ$, and $ψ : \Prop$ then $Γ ⊢ \rm{reorder}_{∧}(φ, ψ)$.
 \end{lemma}
 
-\begin{definition}[conjunct$_{∨}$]
+\begin{definition}[conjunct$_{\boldsymbol{∨}}$]
   \label{eq:conjunct-or-definition}
 \begin{align*}
   \begin{split}
@@ -867,12 +873,12 @@ We define similar functions and state some theorems as we previously did for dis
   \end{align*}
 \end{definition}
 
-\begin{lemma}[lem-conjunct$_{∨}$]
+\begin{lemma}[lem-conjunct$_{\boldsymbol{∨}}$]
   \label{lem:lem-conjunct-or}
   $Γ ⊢ φ$, and $ψ : \Prop$ then $Γ ⊢ \fconjunct_{∨}(φ, ψ)$.
 \end{lemma}
 
-\begin{definition}[reorder$_{∧∨}$]
+\begin{definition}[reorder$_{\boldsymbol{∧∨}}$]
  \begin{align*}
       \begin{split}
       &\freorder : \Prop \to \Prop \to \Prop\\
@@ -888,7 +894,7 @@ We define similar functions and state some theorems as we previously did for dis
   \end{align*}
   \end{definition}
 
-\begin{theorem}[thm-reorder$_{∧∨}$]
+\begin{theorem}[thm-reorder$_{\boldsymbol{∧∨}}$]
   \label{thm:thm-reorder-and-or}
   $Γ ⊢ φ$, and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧∨}(φ, ψ)$.
 \end{theorem}
@@ -1033,7 +1039,7 @@ definitional normal form.
 \begin{definition}[\abbre{NProp}]
   \NProp is the type for a formula in normalized negative normal form
   in which negations appear only in the literals and the expression is
-  in terms only of ($⊥$, $⊤$, $¬$, $∧$, $∨$, $⊻$) connectives.
+  in terms only of ($⊥$, $⊤$, $¬$, $∧$, $∨$, $\overline{\vee}$) connectives.
   The $⊻$ connective is the exclusive disjunction.
   We define the \NProp type in a similar way as we did for \Prop type.
 \end{definition}
