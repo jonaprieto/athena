@@ -129,8 +129,14 @@
 \usepackage{color}
 \usepackage{fancybox}
 
+% -------------------------------------------------------------------
+% Unicode Characters.
+% -------------------------------------------------------------------
+
+
 \usepackage{textcomp}
 \usepackage[verbose]{newunicodechar}
+
 \newunicodechar{¬}{\ensuremath{\neg}}
 \newunicodechar{Γ}{\ensuremath{\Gamma}}
 \newunicodechar{γ}{\ensuremath{\gamma}}
@@ -168,6 +174,10 @@
 \newunicodechar{⊻}{\ensuremath{\veebar}}
 \newunicodechar{⟝}{\ensuremath{\vdash_{2}}}
 \newunicodechar{ⱼ}{\ensuremath{{}_{j}}}
+
+% -------------------------------------------------------------------
+% Verbatim.
+% -------------------------------------------------------------------
 
 \usepackage{verbatim}
 \usepackage{relsize}
@@ -221,10 +231,6 @@
 \newcommand{\suc}{\name{suc}}
 \newcommand{\nnf}{\name{nnf}}
 
-\newcommand{\mysplit}{split}
-\newcommand{\thmsplit}{lem-split}
-
-\newcommand{\thmresolve}{thm-resolve}
 
 \newcommand{\prg}[1]{\texttt{#1}\xspace}
 \newcommand{\Agda}{\prg{Agda}}
@@ -238,6 +244,50 @@
 \newcommand{\TSTP}{\len{TSTP}}
 
 \newcommand{\NN}{\ensuremath{\mathbb{N}}}
+
+% \newcommand{\rm}[1]{\textrm{#1}}
+
+\newcommand{\fbuild}{\rm{build}}
+\newcommand{\fcanon}{\rm{canon}}
+\newcommand{\fcnf}{\rm{cnf}}
+\newcommand{\fdist}{\rm{dist}}
+\newcommand{\ffactor}{\rm{factor}}
+\newcommand{\fform}{\rm{form}}
+\newcommand{\fmax}{\rm{max}}
+\newcommand{\fndisj}{\rm{ndisj}}
+\newcommand{\fnnf}{\rm{nnf}}
+\newcommand{\frank}{\rm{rank}}
+\newcommand{\frconj}{\rm{rconj}}
+\newcommand{\frdisj}{\rm{rdisj}}
+\newcommand{\freorder}{\rm{reorder}}
+\newcommand{\frm}{\rm{rm}}
+\newcommand{\fsbuild}{\rm{sbuild}}
+\newcommand{\fsubst}{\rm{subst}}
+\newcommand{\fuh}{\rm{uh}}
+\newcommand{\tunshunt}{\rm{thm-uh}}
+
+
+\newcommand{\fstrip}{\rm{strip}}
+\newcommand{\tstrip}{\rm{thm-strip}}
+
+\newcommand{\fcanonicalize}{\rm{canonicalize}}
+\newcommand{\tcanonicalize}{\rm{thm-canonicalize}}
+
+\newcommand{\fconjunct}{\rm{conjunct}}
+\newcommand{\tconjunct}{\rm{thm-conjunct}}
+
+\newcommand{\fresolve}{\rm{resolve}}
+\newcommand{\tresolve}{\rm{thm-resolve}}
+
+\newcommand{\fclausify}{\rm{clausify}}
+\newcommand{\tclausify}{\rm{thm-clausify}}
+
+
+\newcommand{\fsimplify}{\rm{simplify}}
+\newcommand{\tsimplify}{\rm{thm-simplify}}
+
+\newcommand{\fnegate}{\rm{negate}}
+\newcommand{\tnegate}{\rm{thm-negate}}
 
 % -------------------------------------------------------------------
 % Rest.
