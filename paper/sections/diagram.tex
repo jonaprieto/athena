@@ -1,10 +1,11 @@
-\begin{figure}
+\begin{figure}[!ht]
 \centering
 \tikzstyle{line} = [draw, -latex']
 
 \begin{tikzpicture}[
-   node distance = 1.5cm
+   node distance = 1.4cm
  , auto
+ , scale=0.9
  , base/.style =
       { font=\small
       , align=center
@@ -15,16 +16,16 @@
       , shape=rectangle
       , rounded corners
 %      , fill=blue!2
-      , inner sep=5pt
-      , outer sep=2pt
+      , inner sep=3pt
+      , outer sep=1pt
       , draw%=blue!20
       }
   , program/.style =
       { base
       %% , fill=gray!1
       , rounded corners
-      , inner sep=5pt
-      , outer sep=0pt
+      , inner sep=3pt
+      , outer sep=1pt
       }
   , library/.style =
       { shape=rectangle
@@ -32,8 +33,8 @@
       , rounded corners
 %      , fill=blue!2
       , draw%=blue!20
-      %, inner sep=2.5pt
-      , outer sep=2pt
+      , inner sep=3pt
+      , outer sep=1pt
       }
   , Rhoumbus/.style =
       { font=\small
@@ -72,18 +73,17 @@
 \node[ library
      , left of=athena
      , align=center
-     , node distance=3cm
+     , node distance=4cm
      ]
 (agdaprop) {\texttt{agda-prop}\\(library)};
-\draw[->, thick] (agdaprop) to (athena);
+
 
 \node[ library
      , right of=athena
      , align=center
-     , node distance=3cm
+     , node distance=4cm
      ]
 (agdametis) {\texttt{agda-metis}\\(library) };
-\draw[->, thick] (agdametis) to (athena);
 
 % ---------------------------------------------------
 
@@ -105,7 +105,7 @@
 (agda) {\Agda\\(type-checker)};
 
 \node[ library
-     , align=center
+     , align=left
      , left of=agda
      , node distance=4cm
      ]
@@ -113,12 +113,13 @@
 {
 \prg{agda-metis}\\
 \prg{agda-prop}\\
+\prg{agda-stdlib}\\
 (imports)
 };
 
 \node[ file
      , below of= agda
-     , node distance=2.5cm
+     , node distance=2.2cm
      ]
 (agdai) {4.1. Interface\\ \Agda File};
 
@@ -128,22 +129,24 @@
      ]
 (invalid) {4.2. Invalid\\ \Agda File};
 
-\path [line] (tptp)      -- (metis);
-\path [line] (metis)     -- (tstp);
-\path [line] (tstp)      -- (athena);
-\path [line] (athena)    -- (agdaproof);
-\path [line] (agdaproof)    -- (agda);
-\path [line] (libraries)    -- (agda);
-\path [line] (agda)      -- node {success} (agdai);
-\path [line] (agda)      -- node {failure} (invalid);
+\path [line, thick] (tptp)      -- (metis);
+\path [line, thick] (metis)     -- (tstp);
+\path [line, thick] (tstp)      -- (athena);
+\path [line, thick] (athena)    -- (agdaproof);
+\path [line, thick] (agdaprop)    -- (athena);
+\path [line, thick] (agdametis)   -- (athena);
+\path [line, thick] (agdaproof)    -- (agda);
+\path [line, thick] (libraries)    -- (agda);
+\path [line, thick] (agda)      -- node {success} (agdai);
+\path [line, thick] (agda)      -- node {failure} (invalid);
 
 \end{tikzpicture}
 
 \caption{Proof-reconstruction overview.
 The rectangles nodes represent text files.
 The direct edges in the diagram represent calls to
-programs where the input file is pointed by the edge entering and the out edge points to the reply file. The rhombus nore represent a decision,
-success if the proof type-checked, or failure if the proof does not.}
+programs where the input file is pointed by the edge entering and the out edge points to the reply file. The rhombus node stands for the
+type-checking process.}
 
 \label{fig:proof-reconstruction-workflow}
 \end{figure}

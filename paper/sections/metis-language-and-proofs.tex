@@ -4,8 +4,8 @@
 
 % ===================================================================
 
-\subsection{Metis: Language and Proofs}
-\label{ssec:metis-language-and-proofs}
+\section{Metis: Language and Proofs}
+\label{sec:metis-language-and-proofs}
 
 \Metis is an automatic theorem prover written in \len{ML}
 for first-order logic with equality developed by John Hurd
@@ -15,7 +15,6 @@ to justify its deduction steps from the basis of only six inference
 rules.
 In Fig.~\ref{fig:metis-inferences}, we show the three \Metis rules for
 propositional logic.
-
 
 \begin{figure}
 \begin{equation*}
@@ -46,7 +45,7 @@ propositional logic.
 
 % -------------------------------------------------------------------
 
-\subsubsection{Input Language.}
+\subsection{Input Language.}
 \label{ssec:input-language}
 
 The \TPTP language --which includes the first-order
@@ -84,7 +83,7 @@ proofs. Then, we annotated \abbre{CPL} problems using \verb!fof! formulas.
 \Metis converts \abbre{FOF} formulas to \abbre{CNF} clauses to look for a
 refutation.
 
-\subsubsection{Output Language.}
+\subsection{Output Language.}
 \label{ssec:output-language}
 
 The \TSTP language is de facto output standard language
@@ -134,8 +133,8 @@ problem $p\vdash p$.}
 
 % -------------------------------------------------------------------
 
-\subsubsection{Proof Rules.}
-\label{sssec:proof-rules}
+\subsection{Proof Rules.}
+\label{ssec:proof-rules}
 
 Since the scope of the problems treated in this research is \CPL, from the
 list of \Metis inference rules in Fig.~\ref{fig:metis-inferences}, we found
@@ -163,8 +162,8 @@ Then, the last rule remains is \emph{resolve}, it
 appears by the binary rule, \resolve, the version in \Metis of the resolution
 theorem. For a more detailed description of this rules see Section~\ref{sec:proof-reconstruction}.
 
-\subsubsection{Proofs.}
-\label{sssec:metis-proofs}
+\subsection{Proofs.}
+\label{ssec:metis-proofs}
 
 \begin{figure}
 \centering

@@ -1,7 +1,8 @@
 .PHONY : pdf
 pdf :
 	- make clean
-	- pdflatex  main.tex
+	- pdflatex main.tex
+# - latexmk -pdf main.tex
 
 
 
