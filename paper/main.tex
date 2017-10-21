@@ -118,7 +118,6 @@
 \usepackage{afterpage}
 \usepackage{comment}
 \usepackage[hyphens]{url}
-\usepackage{amsmath}
 \usepackage{bm}
 
 \newenvironment{sketchproof}{%
@@ -138,7 +137,7 @@
 \usepackage{textcomp}
 \usepackage[verbose]{newunicodechar}
 
-\newunicodechar{¬}{\ensuremath{\neg}}
+\newunicodechar{¬}{\ensuremath{\neg}\;}
 \newunicodechar{Γ}{\ensuremath{\Gamma}}
 \newunicodechar{γ}{\ensuremath{\gamma}}
 \newunicodechar{φ}{\ensuremath{\varphi}}
@@ -229,8 +228,9 @@
 \newcommand{\tptpaxiom}{\name{axiom}}
 \newcommand{\tptpconjecture}{\name{conjecture}}
 
-\newcommand{\zero}{\name{zero}}
-\newcommand{\suc}{\name{succ}}
+\newcommand{\zero}{\rm{zero}\xspace}
+\newcommand{\suc}{\rm{succ}\xspace}
+
 \newcommand{\nnf}{\name{nnf}}
 
 
@@ -289,6 +289,18 @@
 
 \newcommand{\fnegate}{\fun{negate}}
 \newcommand{\tnegate}{\fun{thm-negate}}
+
+% latin etc. abbrev
+\newcommand{\abbrev}[1]{#1} % alternative: \emph{#1}
+\newcommand{\cf}{\abbrev{cf.}\ }
+\newcommand{\eg}{\abbrev{e.\,g.}}
+\newcommand{\Eg}{\abbrev{E.\,g.}}
+\newcommand{\ie}{\abbrev{i.\,e.}}
+\newcommand{\Ie}{\abbrev{I.\,e.}}
+\newcommand{\etal}{\abbrev{et.\,al.}}
+\newcommand{\wwlog}{w.\,l.\,o.\,g.} % \wlog is ``write into log file''
+\newcommand{\Wlog}{W.\,l.\,o.\,g.}
+\newcommand{\wrt}{w.\,r.\,t.}
 
 % -------------------------------------------------------------------
 % Rest.

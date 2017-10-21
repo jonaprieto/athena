@@ -35,21 +35,20 @@ proof using a tree data structure (see the properties
 of this tree in Section~\ref{ssec:metis-proofs}).
 In the \Athena analysis, some unnecessary steps that introduce redundancies
 and some unused input is removed from the proof-tree.
-
-As a result of using \Athena, we get an \Agda file of the proof.
-To generate this file, \Athena uses names of functions and theorems from
-our \Agda libraries: \texttt{agda-prop}, and \texttt{agda-metis}.
+As result, we get from \Athena an \Agda file of the proof
+with names of functions and theorems from
+the \Agda libraries that accompany this article:
+\texttt{agda-prop} and \texttt{agda-metis}.
 
 Finally, we type-check the \Agda proof-term. If the type-checking
 success, the \TSTP derivation delivered by \Metis is correct
 module \Agda and the proposed formalizations for the
 propositional logic and the \Metis inferences.
 In that case \Agda outputs an interface file.
-
 Otherwise, when type-checking fails, the failure must be
-investigated by the user looking at the error in the \TSTP derivation by \Metis,
-in the translation by \Athena,in the \Agda formalisations mentioned above or
-even in the type-checker, \Agda..
+investigated by the user looking at the error in the \TSTP derivation
+by \Metis, in the translation by \Athena, in the \Agda formalizations
+mentioned above or even in the type-checker~\Agda.
 
 In the remainder part of this section, a formal description using
 type theory is presented to build definitions and theorems of
@@ -96,7 +95,7 @@ the number of times the function needs to call itself to get the
 expected outcome~\cite{Bertot2004}.
 
 The type of natural numbers is called \Nat type, and it is defined as
-usual, i.e., \zero and \suc are the data constructors. We use names
+usual, \ie \zero and \suc are the data constructors. We use names
 and symbols of the arithmetic operations as usual.
 We include syntax sugar for $\zero$, $\suc$, $\suc(\zero)$,
 $\cdots$, with the decimal representation: $0$, $1$, $2$, $\cdots$
@@ -208,10 +207,10 @@ the reader to \citeauthor{Bove2005}~\cite{Bove2005}.
 \subsection{Emulating \Metis' inference rules}
 \label{ssec:emulating-inferences}
 
-In this section, we emulate each \Metis inference rule with
+In this section, we emulate each \Metis inference rule with a
 function and its respective theorem.
 The following pattern is used to present the formalization.
-The function name written in bold face
+The function name written in bold font
 is a \Metis inference rule in \TSTP derivations.
 The same function name written in roman letters refers to the proposed
 version of the rule.
@@ -255,7 +254,7 @@ a binary rule and we extend it for $n$-ary rules in a natural way.
 \end{itemize}
 \item \rm{thm-rule} is the theorem that proves the soundness of the
 $\rm{rule}$ function.
-\begin{equation*}\text{If }Γ ⊢ φ\text{ then }Γ ⊢ rule\ φ.\end{equation*}
+\begin{equation*}\text{If }Γ ⊢ φ\text{ then }Γ ⊢ \rm{rule}\ φ.\end{equation*}
 
 \end{itemize}
 
@@ -370,22 +369,25 @@ subgoals that implies the goal of the problem in the \Metis \TSTP derivations.
 
 \begin{definition}[strip]
 \label{def:strip}
-  \begin{align}
-  \label{eq:strip}
-    &\fstrip &&: \Prop → \Nat → \Prop\\
-    &\fstrip\ (φ₁ ∧ φ₂)\ n     &&= \fuh\ (\fstrip\ φ₁) ∧ \fuh\ (φ₁ ⇒ \fstrip\ φ₂)\\
-    &\fstrip\ (φ₁ ∨ φ₂)\ n     &&= \fuh\ (¬ φ₁ ⇒ \fstrip\ φ₂)\\
-    &\fstrip\ (φ₁ ⇒ φ₂)\ n     &&= \fuh\ (φ₁ ⇒ \fstrip\ φ₂)\\
-    &\fstrip\ (φ₁ ⇔ φ₂)\ n     &&= \fuh\ φ₁ ⇒ \fstrip\ φ₂) ∧ \fuh\ φ₂ ⇒ \fstrip φ₁)\\
-    &\fstrip\ (¬ (φ₁ ∧ φ₂))\ n &&= \fuh\ φ₁ ⇒ \fstrip(¬ φ₂))\\
-    &\fstrip\ (¬ (φ₁ ∨ φ₂))\ n &&= \fuh\ \fstrip(¬ φ₁)) ∧\ \fuh ¬ φ₁ ⇒ \fstrip(¬ φ₂))\\
-    &\fstrip\ (¬ (φ₁ ⇒ φ₂))\ n &&= \fuh\ \fstrip(φ₁)) ∧\ \fuh φ₁ ⇒ \fstrip(¬ φ₂))\\
-    &\fstrip\ (¬ (φ₁ ⇔ φ₂))\ n &&= \fuh\ φ₁ ⇒ \fstrip(¬ φ₂)) ∧\ \fuh ¬ φ₂ ⇒ \fstrip(φ₁))\\
-    &\fstrip\ (¬ ¬ φ₁)\ n      &&= \fuh\ \fstrip(φ₁))\\
-    &\fstrip\ (¬ ⊥)\ n         &&= ⊤\\
-    &\fstrip\ (¬ ⊤.)\ n        &&= ⊥\\
-    &\fstrip\ φ\ n             &&= φ
-  \end{align}
+\label{eq:strip}
+
+\begin{equation}
+\begin{aligned}
+&\hspace{.495mm}\fstrip : \Prop → \Nat → \Prop\\
+&\begin{array}{lll}
+\fstrip &(φ₁ ∧ φ₂)     ~(\suc~n) &= \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)\\
+\fstrip &(φ₁ ∨ φ₂)     ~(\suc~n) &= \fuh~(¬ φ₁ ⇒ \fstrip~φ₂~n)\\
+\fstrip &(φ₁ ⇒ φ₂)     ~(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip~φ₂~n)\\
+\fstrip &(¬ (φ₁ ∧ φ₂)) ~(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip~¬ φ₂~n)\\
+\fstrip &(¬ (φ₁ ∨ φ₂)) ~(\suc~n) &= \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh (¬ φ₁ ⇒ \fstrip~¬ φ₂~n)\\
+\fstrip &(¬ (φ₁ ⇒ φ₂)) ~(\suc~n) &= \fuh~(\fstrip~φ₁~n) ∧ \fuh (φ₁ ⇒ \fstrip~¬ φ₂~n)\\
+\fstrip &(¬ ¬ φ₁)      ~(\suc~n) &= \fuh~(\fstrip~φ₁~n)\\
+\fstrip &(¬ ⊥)         ~(\suc~n) &= ⊤\\
+\fstrip &(¬ ⊤)         ~(\suc~n) &= ⊥\\
+\fstrip &φ             ~n &= φ
+\end{array}
+\end{aligned}
+\end{equation}
 \end{definition}
 
 % The definition above has termination problems since it is not
@@ -396,7 +398,7 @@ subgoals that implies the goal of the problem in the \Metis \TSTP derivations.
 % above here and below unless otherwise stated.
 
 \begin{lemma}[lem-inv-strip]
-If $Γ ⊢ \fstrip\ φ$ then $Γ ⊢ φ$.
+If $Γ ⊢ \fstrip~φ$ then $Γ ⊢ φ$.
 \label{lem:lem-inv-strip}
 \end{lemma}
 
@@ -409,11 +411,11 @@ We present some cases but for a complete proof, we refer the reader to~\cite{Agd
 \item Case $φ ≡ ¬ ¬ φ₁$.
 \begin{equation*}
   \begin{bprooftree}
- \AxiomC{$Γ ⊢ \fstrip(¬¬φ₁,n)$}
+ \AxiomC{$Γ ⊢ \fstrip~(¬¬φ₁)~(\suc~n)$}
   \RightLabel{by def.}
-  \UnaryInfC{$Γ ⊢ \fuh(\fstrip(φ₁,n-1))$}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
   \RightLabel{lem-inv-uh}
-  \UnaryInfC{$Γ ⊢ \fstrip(φ₁,n-1)$}
+  \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
   \RightLabel{lem-inv-strip}
   \UnaryInfC{$Γ ⊢ φ₁$}
   \end{bprooftree}
@@ -425,29 +427,31 @@ introduction rule for conjunction connective, the result follows.
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
   \begin{bprooftree}
-  \AxiomC{$Γ ⊢ \fstrip(φ,n)$}
+  \AxiomC{$Γ ⊢ \fstrip~(φ₁ ∧ φ₂)~(\suc~n)$}
   \RightLabel{by def.}
-  \UnaryInfC{$Γ ⊢ \fuh(φ₁) ∧ \fuh(φ₁ ⇒ \fstrip(φ₂,n-1))$}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
   \RightLabel{∧-proj₁}
-  \UnaryInfC{$Γ ⊢ \fuh(φ₁)$}
-  \RightLabel{lem-inv-uh.}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
+  \RightLabel{lem-inv-uh}
+  \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
+  \RightLabel{lem-inv-strip}
   \UnaryInfC{$Γ ⊢ φ₁$}
-  \end{bprooftree}
+    \end{bprooftree}
 \end{equation*}
 
 \begin{equation*}
   \begin{bprooftree}
   \AxiomC{$\mathcal{D}$}
   \UnaryInfC{Γ ⊢ φ₁}
-  \AxiomC{$Γ ⊢ \fstrip(φ,n)$}
+  \AxiomC{$Γ ⊢ \fstrip~(φ)~(\suc~n)$}
   \RightLabel{by def.}
-  \UnaryInfC{$Γ ⊢ \fuh(φ₁) ∧ \fuh(φ₁ ⇒ \fstrip(φ₂,n-1))$}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
   \RightLabel{$∧$-proj$₂$}
-  \UnaryInfC{$Γ ⊢ \fuh(φ₁ ⇒ \fstrip(φ₂,n-1))$}
+  \UnaryInfC{$Γ ⊢ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
   \RightLabel{lem-inv-uh}
-  \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip(φ₂,n-1)$}
+  \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
   \RightLabel{$⇒$-elim}
-  \BinaryInfC{$Γ ⊢ \fstrip(φ₂,n-1)$}
+  \BinaryInfC{$Γ ⊢ \fstrip~φ₂~n$}
   \RightLabel{lem-inv-strip.}
   \UnaryInfC{$Γ ⊢ φ₂$}
   \end{bprooftree}
@@ -459,15 +463,15 @@ introduction rule for conjunction connective, the result follows.
   \AxiomC{}
   \RightLabel{assume φ₁}
   \UnaryInfC{$Γ , φ₁ ⊢ φ₁$}
-  \AxiomC{$Γ ⊢ \fstrip(φ,n-1)$}
+  \AxiomC{$Γ ⊢ \fstrip~(φ)~(\suc~n)$}
   \RightLabel{by def.}
-  \UnaryInfC{$Γ ⊢ \fuh(φ₁ ⇒ \fstrip(φ₂,n-1))$}
+  \UnaryInfC{$Γ ⊢ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
   \RightLabel{lem-inv-uh}
-  \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip(φ₂,n-1)$}
+  \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
   \RightLabel{weaken φ₁}
-  \UnaryInfC{$Γ , φ₁ ⊢ φ₁ ⇒ \fstrip(φ₂,n-1)$}
+  \UnaryInfC{$Γ , φ₁ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
   \RightLabel{⇒-elim}
-  \BinaryInfC{$Γ , φ₁ ⊢ \fstrip(φ₂,n-1)$}
+  \BinaryInfC{$Γ , φ₁ ⊢ \fstrip~φ₂~n$}
   \RightLabel{lem-inv-strip}
   \UnaryInfC{$Γ , φ₁ ⊢ φ₂$}
   \RightLabel{⇒-intro.}
@@ -482,9 +486,9 @@ De Morgan Laws.
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
 \begin{bprooftree}
-\AxiomC{$Γ ⊢ \fstrip(φ, n)$}
+\AxiomC{$Γ ⊢ \fstrip~φ, n)$}
 \RightLabel{by def.}
-\UnaryInfC{$Γ ⊢ \fuh(¬ φ₁) ∧ \fuh(¬ φ₁ ⇒ \fstrip(φ₂, n))$}
+\UnaryInfC{$Γ ⊢ \fuh(¬ φ₁) ∧ \fuh(¬ φ₁ ⇒ \fstrip~φ₂, n))$}
 \RightLabel{∧-proj₁}
 \UnaryInfC{$Γ ⊢ \fuh(¬ φ₁)$}
 \RightLabel{lem-inv-uh,}
@@ -498,16 +502,15 @@ De Morgan Laws.
   \begin{bprooftree}
   \AxiomC{$\mathcal{D}$}
   \UnaryInfC{$Γ ⊢ ¬ φ₁$}
-
-  \AxiomC{$Γ ⊢ \fstrip(φ,n-1)$}
+  \AxiomC{$Γ ⊢ \fstrip~φ,n-1)$}
   \RightLabel{by def.}
-  \UnaryInfC{$Γ ⊢ \fuh(¬ φ₁) ∧ \fuh(¬ φ₁ ⇒ \fstrip(φ₂,n-1))$}
+  \UnaryInfC{$Γ ⊢ \fuh(¬ φ₁) ∧ \fuh(¬ φ₁ ⇒ \fstrip~φ₂,n-1))$}
   \RightLabel{∧-proj₂}
-  \UnaryInfC{$Γ ⊢ \fuh(¬ φ₁ ⇒ \fstrip(φ₂,n-1))$}
+  \UnaryInfC{$Γ ⊢ \fuh(¬ φ₁ ⇒ \fstrip~φ₂,n-1))$}
   \RightLabel{lem-inv-uh}
-  \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \fstrip(φ₂,n-1)$}
+  \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \fstrip~φ₂,n-1)$}
   \RightLabel{⇒-elim}
-  \BinaryInfC{$Γ ⊢ \fstrip(φ₂,n-1)$}
+  \BinaryInfC{$Γ ⊢ \fstrip~φ₂,n-1)$}
   \RightLabel{lem-inv-strip.}
   \UnaryInfC{$Γ ⊢ ¬ φ₂$}
   \end{bprooftree}
@@ -542,9 +545,9 @@ of \Metis to prove goals.
   \RightLabel{∧-intro}
   \UnaryInfC{$Γ ⊢ \bigwedge_{i=1}^n s_i$}
 
-  \AxiomC{$\fstrip(φ) ≡ \bigwedge_{i=1}^n s_i $}
+  \AxiomC{$\fstrip~φ) ≡ \bigwedge_{i=1}^n s_i $}
   \RightLabel{subst}
-  \BinaryInfC{$Γ ⊢ \fstrip(φ)$}
+  \BinaryInfC{$Γ ⊢ \fstrip~φ)$}
   \RightLabel{lem-inv-strip.}
   \UnaryInfC{$Γ ⊢ φ$}
 \end{bprooftree}
@@ -948,7 +951,7 @@ the binary resolution in Def.~\ref{def:rsol}.
   If $Γ ⊢ φ$ then $Γ ⊢ \rm{rsol}(φ)$.
 \end{lemma}
 
-In Def.~\ref{def:resolve}, the emulated rule for $resolve$
+In Def.~\ref{def:resolve}, the proposed rule for $resolve$
 has four arguments. The first three were described
 above, the last one, ψ, represents the expected conclusion in the \Metis
 derivation.
@@ -1046,8 +1049,6 @@ conclusion of the theorem. These theorems have a subset of rules from
 the classical inference rules in Fig.~\ref{fig:CPL-inference-rules}
 that apply for the connectives that coincides with \NProp type.
 
-% φ ⊻ ψ if and only if ¬ (φ ⇔ ψ).
-
 \begin{figure}
   \[
     \begin{bprooftree}
@@ -1138,7 +1139,7 @@ $ψ ≡ \fconjunct_{∨}(φ, ψ)$.
 
 Now, we have removed redundancies in the disjunctions by applying
 $\frm_{∨}$ function, we can define a similar function to work with
-conjunctions, i.e., $\frm_{∧}$.
+conjunctions, \ie, $\frm_{∧}$.
 
 \begin{equation*}
   \begin{bprooftree}
@@ -1366,11 +1367,11 @@ negative polarity of the formula.
 
 \begin{lemma}[lem-nnf]
   \label{lem:lem-nnf}
-  If $Γ ⊢ φ$ then $Γ ⟝ \fnnf(φ)$ where,
+  If $Γ ⊢ φ$ then $Γ ⟝ \fnnf~φ$ where,
   \begin{align*}
    \begin{split}
      &\fnnf : \NProp \to \NProp\\
-     &\fnnf(φ) = \fnnf₀(⊕, φ).
+     &\fnnf~φ = \fnnf₀(⊕, φ).
    \end{split}
   \end{align*}
 \end{lemma}
@@ -1507,8 +1508,8 @@ the conjunctive normal form of the target formula.
       &\fcanonicalize(φ, ψ) =
       \begin{cases}
         ψ, &\text{ if }ψ ≡ φ\\
-        ψ, &\text{ if }ψ ≡ \fform(\fnnf(φ))\\
-        ψ, &\text{ if }\fcnf(ψ) ≡ \freorder_{∧∨}(\fcnf(φ), \fcnf(ψ))\\
+        ψ, &\text{ if }ψ ≡ \fform(\fnnf~φ)\\
+        ψ, &\text{ if }\fcnf~ψ ≡ \freorder_{∧∨}(\fcnf~φ, \fcnf~ψ)\\
         φ, &\text{ otherwise.}\\
       \end{cases}
     \end{split}
@@ -1524,31 +1525,31 @@ the conjunctive normal form of the target formula.
 \begin{proof}\hspace{3mm}
 \begin{itemize}
 \item If $φ ≡ ψ$ by substitution theorem we conclude $Γ ⊢ ψ$.
-\item If $ψ ≡ \fform(\fnnf(φ))$,
+\item If $ψ ≡ \fform(\fnnf~φ)$,
 \begin{equation*}
   \begin{bprooftree}
     \AxiomC{$Γ ⊢ φ$}
     \RightLabel{lem-nnf}
-    \UnaryInfC{$Γ ⊢₂~\fnnf(φ)$}
+    \UnaryInfC{$Γ ⊢₂~\fnnf~φ$}
     \RightLabel{lem-form}
-    \UnaryInfC{$Γ ⊢ \fform(\fnnf(φ))$}
-    \AxiomC{$ψ ≡ \fform(\fnnf(φ))$}
+    \UnaryInfC{$Γ ⊢ \fform(\fnnf~φ)$}
+    \AxiomC{$ψ ≡ \fform(\fnnf~φ)$}
     \RightLabel{subst.}
     \BinaryInfC{$Γ ⊢ ψ$}
   \end{bprooftree}
 \end{equation*}
 
-\item If $γ = \fcnf(ψ) ≡ \freorder_{∧∨}(\fcnf(φ), \fcnf(ψ))$,
+\item If $γ = \fcnf~ψ ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$,
   \begin{equation*}
     \begin{bprooftree}
       \AxiomC{$Γ ⊢ φ$}
       \RightLabel{thm-cnf}
-      \UnaryInfC{$Γ ⊢ \fcnf(φ)$}
+      \UnaryInfC{$Γ ⊢ \fcnf~φ$}
       \RightLabel{thm-reorder$_{∧∨}$}
-      \UnaryInfC{$Γ ⊢ \freorder_{∧∨}(\fcnf(φ), \fcnf(ψ))$}
+      \UnaryInfC{$Γ ⊢ \freorder_{∧∨}(\fcnf~φ, \fcnf~ψ)$}
       \AxiomC{$γ$}
       \RightLabel{subst}
-      \BinaryInfC{$Γ ⊢ \fcnf(ψ)$}
+      \BinaryInfC{$Γ ⊢ \fcnf~ψ$}
       \RightLabel{thm-inv-cnf.}
       \UnaryInfC{$Γ ⊢ ψ$}
     \end{bprooftree}
@@ -1591,10 +1592,10 @@ fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
  \begin{align*}
    \begin{split}
       &\fclausify : \Prop → \Prop → \Prop\\
-      &\fclausify(φ,ψ) =
+      &\fclausify~φ~ψ =
       \begin{cases}
         ψ, &\text{ if }φ≡ψ\\
-        \freorder_{∧∨}(\fcnf(φ), ψ), &\text{ otherwise.}
+        \freorder_{∧∨}~(\fcnf~φ~ψ), &\text{ otherwise.}
       \end{cases}
       \end{split}
   \end{align*}
@@ -1602,7 +1603,7 @@ fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
 
 \begin{theorem}[thm-clausify]
 \label{thm:thm-clausify}
-  $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fclausify(φ, ψ)$.
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fclausify~φ~ψ$.
 \end{theorem}
 
 \begin{proof} If $φ ≡ ψ$, this lemmas follows after applying $\fsubst$
