@@ -42,12 +42,14 @@ our \Agda libraries: \texttt{agda-prop}, and \texttt{agda-metis}.
 
 Finally, we type-check the \Agda proof-term. If the type-checking
 success, the \TSTP derivation delivered by \Metis is correct
-module \Agda and the formalizations of \Metis inferences.
-
+module \Agda and the proposed formalizations for the
+propositional logic and the \Metis inferences.
 In that case \Agda outputs an interface file.
+
 Otherwise, when type-checking fails, the failure must be
-investigated by the user, checking for the error in \Metis, \Athena,
-or in \Agda.
+investigated by the user looking at the error in the \TSTP derivation by \Metis,
+in the translation by \Athena,in the \Agda formalisations mentioned above or
+even in the type-checker, \Agda..
 
 In the remainder part of this section, a formal description using
 type theory is presented to build definitions and theorems of
@@ -101,14 +103,14 @@ $\cdots$, with the decimal representation: $0$, $1$, $2$, $\cdots$
 as well.
 
 Therefore, for a general recursive function $\rm{f}: \Prop \to \Prop$
-with termination problems, we state a new function
+with termination problems, we formulate a new function
 $\rm{f}^{*} : \Prop \to \Nat \to \Prop$ where all recursive calls must be
 done by using induction on the \Nat type structure.
 
 \subsubsection*{An  example.}
 Let us consider the following example to exhibit the bounded technique
-mentioned above for the \fuh function presented in the version
-proposed of the \Metis \strip inference.
+mentioned above for the \fuh function presented in the proposed version
+for the \Metis \strip inference.
 
 \begin{align}
   \label{eq:uh-definition}
@@ -123,7 +125,7 @@ is not structurally smaller than the input formula, $φ₁ ⇒ (φ₂ ⇒ φ₃)
 since $(φ₁ ∧ φ₂) ⇒ φ₃$ is not a subformula of $φ₁ ⇒ (φ₂ ⇒ φ₃)$.
 
 Therefore, we define the function
-$uh_{1}$ by structural recursion in its second argument in
+$\fuh_{1}$ by structural recursion in its second argument in
 Eq.~(\ref{eq:uh-structured}).
 
 \begin{align}

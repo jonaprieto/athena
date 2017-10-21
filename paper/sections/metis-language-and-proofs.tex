@@ -12,9 +12,8 @@ for first-order logic with equality developed by John Hurd
 \cite{hurd2003first}. This prover is suitable for proof
 reconstruction since it provides well-documented proofs
 to justify its deduction steps from the basis of only six inference
-rules.
-In Fig.~\ref{fig:metis-inferences}, we show the three \Metis rules for
-propositional logic.
+rules. In Fig.~\ref{fig:metis-inferences}, we show the three \Metis
+rules for propositional logic.
 
 \begin{figure}
 \begin{equation*}
@@ -63,22 +62,9 @@ The \name{language} can be \name{fof} or \name{cnf}. The \name{name}
 serves to identify the formula within the problem. Each formula
 assumes a \name{role}, this could be an \name{axiom},
 \name{conjecture}, \name{definition}, or a \name{hypothesis}.
-%existen otros
-%----Keywords:    fof cnf thf tff include
-%----Punctuation: ( ) , . [ ] :
-%----Operators:   ! ? ~ & | <=> => <= <~> ~| ~& * +
-%----Predicates:  = != $true $false
-
-%----Top of Page---------------------------------------------------------------
-%----CNF formulae (variables implicitly universally quantified)
-% <cnf_formula>          ::= <disjunction> | (<disjunction>)
-% <disjunction>          ::= <literal> | <disjunction> <vline> <literal>
-% <literal>              ::= <fof_atomic_formula> | ~ <fof_atomic_formula> |
-%                            <fof_infix_unary>
-The formulas include the binary Boolean connectives
-(\verb!&!, \verb!|!, \verb!=>!, \verb!<=>!, \verb!~!) and logic constants \verb!$true!
-% the boolean type ($true and $false)
-and \verb!$false!, for the symbols (∧, ∨, ⇒, ⇔, ¬, ⊤, ⊥), respectively.
+The formulas include the binary connectives
+(\verb!&!, \verb!|!, \verb!=>!, \verb!<=>!, \verb!~!)
+and the constants \verb!$true!, and \verb!$false!.
 
 For instance, let us express the problem
 $p\, \vdash \neg (p \wedge \neg p) ∨ (q \wedge \neg q)$
@@ -91,20 +77,15 @@ fof(h, axiom, p).
 fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
 \end{verbatim}
 
-This study aimed to address proof-reconstruction for refutation
-proofs. Then, we annotated \abbre{CPL} problems using \verb!fof! formulas.
-\Metis converts \abbre{FOF} formulas to \abbre{CNF} clauses to look for a
-refutation.
-
 \subsection{Output language}
 \label{ssec:output-language}
 
-The \TSTP language is de facto output standard language
-for derivations of ATPs~\cite{Sutcliffe-Schulz-Claessen-VanGelder-2006,Sicard-Ramirez2016}.
+The \TSTP language is an output language for derivations of
+ATPs~\cite{Sutcliffe-Schulz-Claessen-VanGelder-2006,Sicard-Ramirez2016}.
 A \TSTP derivation is a directed acyclic graph, a proof tree,
 where each leaf is a formula from the \TPTP input. A node is a formula
 inferred from the parent formulas. The root is the final derived formula,
-such a derivation is a list of annotated formulas with the form.
+such a derivation is a list of annotated formulas with the following form.
 
 \begin{verbatim}
 language(name, role, formula, source [,useful info]).
@@ -117,17 +98,18 @@ pattern.
 inference(rule, useful info, parents).
 \end{verbatim}
 
-The \name{rule} stands for the inference name; the other fields are
-supporting arguments or useful information to apply the reasoning
-step, and the list of parents nodes.
+The \name{rule} in the line above stands for the inference name;
+the other fields are supporting arguments or useful information to
+apply the reasoning step, and list the parents nodes.
 
 \begin{verbatim}
 fof(subgoal_0, plain, p, inference(strip, [], [goal])).
 \end{verbatim}
 
 In the script above, \strip is for example the name of the inference.
-It has no arguments and derives from one parent node with goal name.
-\name{goal}.
+It has no arguments and derives from one parent node named goal. The
+result of this inference when it applies to the \verb!goal! formula is
+\verb!p!.
 
 
 % -------------------------------------------------------------------
@@ -152,12 +134,12 @@ It has no arguments and derives from one parent node with goal name.
 % derivation, the inference rule \negate introduces the negation of such
 % subgoals. The \negate rule is a specification of the \emph{assume} rule.
 
-Finally, \emph{axiom} rule appears in \TSTP derivations by using one of the following rules: \canonicalize, \clausify, \conjunct, or \simplify.
-Then, the last rule remains is \emph{resolve}, it
-appears by the binary rule, \resolve, the version in \Metis of the resolution
-theorem. For a more detailed description of this rules see Section~\ref{sec:proof-reconstruction}.
+% Finally, \emph{axiom} rule appears in \TSTP derivations by using one of the following rules: \canonicalize, \clausify, \conjunct, or \simplify.
+% Then, the last rule remains is \emph{resolve}, it
+% appears by the binary rule, \resolve, the version in \Metis of the resolution
+% theorem. For a more detailed description of this rules see Section~\ref{sec:proof-reconstruction}.
 
-\subsection{Proofs.}
+\subsection{Proofs}
 \label{ssec:metis-proofs}
 
 \begin{figure}
@@ -180,7 +162,25 @@ problem $p\vdash p$.}
 \label{fig:metis-proof-tstp}
 \end{figure}
 
-\begin{figure}
+The output of a proof delivered by \Metis encodes a natural
+deduction proof (see a complete proof in Fig.~\ref{fig:metis-proof-tstp}.
+The deduction system uses six inference rules \cite{hurd2003first}.
+With these inference rules as the only valid deduction steps, \Metis
+attempts to prove conjectures by refutation (e.g.,
+\emph{falsium} in the last conclusion in the \TSTP derivation
+Fig.~\ref{fig:metis-proof-tstp}).
+
+These proofs are directed acyclic graphs, trees of refutations
+(see the proof tree of the \TSTP derivation showed above in
+Fig.~\ref{fig:metis-proof-tstp}).
+Each node stands for an application of an inference rule and the leaves
+in the tree represent formulas in the given problem. Each node is
+labeled with a name of the inference rule (e.g., \canonicalize).
+Each edge links a premise with one conclusion.
+The proof graphs have at their root the conclusion
+$⊥$, since \Metis delivers proofs by refutation.
+
+\begin{figure}[!ht]
 \centering
   \begin{bprooftree}\tt
     \AxiomC{}
@@ -198,24 +198,10 @@ problem $p\vdash p$.}
     \RightLabel{canonicalize}
     \UnaryInfC{$⊥$}
   \end{bprooftree}
-  \caption{\Metis' proof tree for $p \vdash p$. Derivation in Fig.~\ref{fig:metis-proof-tstp}}
+  \caption{Proof tree for the \Metis derivation in
+  Fig.~\ref{fig:metis-proof-tstp}}.
   \label{fig:metis-example}
 \end{figure}
 
-The output of a proof delivered by \Metis encodes a natural
-deduction proof. The deduction system uses six inference rules
-\cite{hurd2003first} listed in Fig.~\ref{fig:metis-inferences}.
-With these inference rules as the only valid deduction steps, \Metis
-attempts to prove conjectures by refutation (e.g.,
-\emph{falsium} in the last conclusion of the \TSTP derivation in
-Fig.~\ref{fig:metis-example}).
-
-These proofs are directed acyclic graphs, trees of refutations. Each
-node stands for an application of an inference rule and the leaves
-in the tree represent formulas in the given problem. Each node is
-labeled with a name of the inference rule (e.g., \canonicalize in
-Fig.~\ref{fig:metis-example}). Each edge links a premise with one
-conclusion. The proof graphs have at their root the conclusion
-$⊥$, since \Metis delivers proofs by refutation.
 
 \end{document}
