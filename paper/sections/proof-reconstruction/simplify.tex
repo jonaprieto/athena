@@ -97,10 +97,10 @@ fof(norm4, ~ g,     inf(simplify, [norm2, norm3])).
 \begin{bprooftree}
 \AxiomC{$\Gamma \vdash g \vee (\neg a \wedge k)$}
 \AxiomC{$\Gamma \vdash\neg g$}
-\RightLabel{simplify}
+\RightLabel{Thm.~\ref{thm:simplify}}
 \BinaryInfC{$\Gamma \vdash \neg a \wedge k$}
 \AxiomC{$\Gamma \vdash \neg k$}
-\RightLabel{simplify}
+\RightLabel{Thm.~\ref{thm:simplify}}
 \BinaryInfC{$\bot$}
 \end{bprooftree}
 \end{equation*}

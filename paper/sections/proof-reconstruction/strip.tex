@@ -165,7 +165,7 @@ Case $φ ≡ ¬ ¬ φ₁$.
  \AxiomC{$Γ ⊢ \fstrip~(¬¬φ₁)~(\suc~n)$}
   \RightLabel{by def.}
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
-  \RightLabel{lemma~\ref{lem:inv-uh-lem}}
+  \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
   \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
   \RightLabel{by hip.}
   \UnaryInfC{$Γ ⊢ φ₁$}
@@ -183,7 +183,7 @@ introduction rule for conjunction connective, the expected result follows.
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
   \RightLabel{∧-proj₁}
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
-  \RightLabel{lemma~\ref{lem:inv-uh-lem}}
+  \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
   \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
   \RightLabel{by hip.}
   \UnaryInfC{$Γ ⊢ φ₁$}
@@ -199,7 +199,7 @@ introduction rule for conjunction connective, the expected result follows.
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
   \RightLabel{$∧$-proj$₂$}
   \UnaryInfC{$Γ ⊢ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
-  \RightLabel{lemma~\ref{lem:inv-uh-lem}}
+  \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
   \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
   \RightLabel{$⇒$-elim}
   \BinaryInfC{$Γ ⊢ \fstrip~φ₂~n$}
@@ -219,7 +219,7 @@ With the conjunction of $¬ φ₁$ and $¬ φ₂$ by applying De Morgan Law, the
 \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
 \RightLabel{∧-proj₁}
 \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n)$}
-\RightLabel{lemma~\ref{lem:inv-uh-lem}}
+\RightLabel{Lemma~\ref{lem:inv-uh-lem}}
 \UnaryInfC{$Γ ⊢ \fstrip~¬ φ₁~n$}
 \RightLabel{by hip.}
   \UnaryInfC{$Γ ⊢ ¬φ₁$}
@@ -234,7 +234,7 @@ With the conjunction of $¬ φ₁$ and $¬ φ₂$ by applying De Morgan Law, the
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
   \RightLabel{∧-proj₂}
   \UnaryInfC{$Γ ⊢ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
-  \RightLabel{lemma~\ref{lem:inv-uh-lem}}
+  \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
   \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \fstrip~¬ φ₂~n$}
   \RightLabel{⇒-elim}
   \BinaryInfC{$Γ ⊢ \fstrip~¬ φ₂~n$}
@@ -279,7 +279,7 @@ If $Γ ⊢ s_1$ and $Γ ⊢ s_2$ then $Γ ⊢ φ$.
   \AxiomC{$\fstrip~φ~n ≡ s_1\wedge s_2 $}
   \RightLabel{subst}
   \BinaryInfC{$Γ ⊢ \fstrip~φ~n$}
-  \RightLabel{lemma~\ref{lem:lem-inv-strip}}
+  \RightLabel{Lemma~\ref{lem:lem-inv-strip}}
   \UnaryInfC{$Γ ⊢ φ$}
 \end{bprooftree}
 \end{equation*}

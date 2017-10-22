@@ -1,7 +1,7 @@
 % @Author: Jonathan Prieto-Cubides
 % @Date:   2017-10-22 00:40:40
 % @Last Modified by:   Jonathan Prieto-Cubides
-% @Last Modified time: 2017-10-22 00:40:44
+% @Last Modified time: 2017-10-22 04:50:29
 
 
 Case $φ ≡ φ₁ ⇒ φ₂$.
@@ -13,13 +13,13 @@ Case $φ ≡ φ₁ ⇒ φ₂$.
   \AxiomC{$Γ ⊢ \fstrip~(φ₁ ⇒ φ₂)~(\suc~n)$}
   \RightLabel{by def.}
   \UnaryInfC{$Γ ⊢ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
-  \RightLabel{lemma~\ref{lem:inv-uh-lem}}
+  \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
   \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
   \RightLabel{weaken φ₁}
   \UnaryInfC{$Γ , φ₁ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
   \RightLabel{⇒-elim}
   \BinaryInfC{$Γ , φ₁ ⊢ \fstrip~φ₂~n$}
-  \RightLabel{by hip}
+  \RightLabel{by hip.}
   \UnaryInfC{$Γ , φ₁ ⊢ φ₂$}
   \RightLabel{⇒-intro}
   \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$}
