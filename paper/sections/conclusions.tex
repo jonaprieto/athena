@@ -7,14 +7,13 @@
 \section{Conclusions}
 \label{sec:conclusions}
 
-We presented a reliable proof-reconstruction in type theory of \Metis
-solutions for problems in classical propositional logic without
-equality. As a product of this research, we were able to build a
-proof-reconstruction tool written in \Haskell. This tool generates
-\Agda proof-terms of \Metis \TSTP derivations. \Agda files
-delivered by the aforementioned tool are supported by the
-formalization in \Agda~\cite{AgdaProp,AgdaMetis} of the \Metis rules
-described in Section~\ref{ssec:emulating-inferences}.
+We presented a reliable proof-reconstruction in type theory
+for the propositional fragment of the \Metis prover.
+
+We built a proof-reconstruction tool written in \Haskell
+to generate \Agda proof-terms of \Metis \TSTP derivations.
+\Agda files delivered by the translator contain call to theorems from the
+\Agda formalizations of \Metis reasoning~\cite{AgdaProp,AgdaMetis}.
 
 The reconstruction approach in this study was designed to use
 only syntactical aspects of the logic.
@@ -22,7 +21,7 @@ This decision was in the beginning a drawback
 since it demands more detailed proofs, a
 description of every transformation or deduction step performed by
 the prover, which is rarely included in the output of these programs,
-see Section~\ref{sssec:normalization} and Section~\ref{sssec:reordering}.
+see Section~\ref{ssec:emulating-inferences}.
 We chose that syntactical treatment as the opportunity
 to extend this work towards the support of first-order logic.
 Recall, satisfiability in first-order logic is undecidable.
@@ -30,24 +29,22 @@ Recall, satisfiability in first-order logic is undecidable.
 As an early future work, we propose to extend the
 proof-reconstruction presented in this paper to support the
 proposition fragment with equality of \Metis.
-Another option is to extend the proof-reconstruction to support other \ATPs
-for \CPL like \name{EProver} or \name{Z3}.
+Another option is to extend the proof-reconstruction to support other \ATPs for \CPL like \name{EProver} or \name{Z3}.
 This development can be carried out by following the \name{EProver}
 inference rules described on Kanso's Ph.D. Thesis~\cite{Kanso2012}.
 
-We are able to say that Kansos~\cite{Kanso2012} proof-reconstruction is 
-similar to the approach presented in Section~\ref{ssec:workflow}.
-Nevertheless, the authors aim to justify some of the inference
-rules by using propositional semantics. We instead perform only a syntactic
-analysis of the derivations.
-
+Besides the fact, Kansos~\cite{Kanso2012} proof-reconstruction is
+similar to the approach presented in Section~\ref{ssec:workflow},
+the authors aim to justify some of the inference
+rules by using propositional semantics. We instead perform only a syntactic analysis of the derivations as we mentioned above.
 
 Summarizing, we provided for each \Metis inference rule a theorem in
-type theory to emulate the rule reasoning. This approach, mainly
-exposed in Section~\ref{ssec:emulating-inferences},
-admits some improvements that we leave it for future work. 
-
-For instance, we can investigate the consequences of removing $clausify$ inference by strengthen $canonicalize$ rule in Thm.~\ref{thm:canonicalize}
+type theory to emulate the rule reasoning. Our approach is mainly
+exposed in Section~\ref{ssec:emulating-inferences}.
+We detect some improvements for our approach that we leave it for future
+work.
+For instance, we can investigate the consequences of removing \clausify
+inference by strengthen \canonicalize rule in Thm.~\ref{thm:canonicalize}
 The \simplify rule is still lacking of some coverage since it is fairly complex, many cases could be omitted.
 Other improvements are related with computational efficiency of
 rules strongly depend on reordering tasks,
@@ -55,9 +52,8 @@ Section~\ref{sssec:reordering}.
 We believe some rules like \canonicalize can get some help from an analysis done in the translator tool.
 
 One of the main contribution of this study was
-increasing the trustworthiness of the automatic provers,
-in our case, \Metis.
-Justifying a proof of a theorem prover
+increasing the trustworthiness of the automatic prover \Metis.
+Justifying a proof by a theorem prover
 has a real significant impact for these automatic tools.
 The reverse engineering task can reveal important issues or bugs
 in many parts of these systems (e.g., preprocessing, reasoning, or
