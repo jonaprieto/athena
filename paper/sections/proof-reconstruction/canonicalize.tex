@@ -80,7 +80,7 @@ There are redundancies in a formula when some of the following theorems can appl
 \begin{remark}
 Here and below, we assume all formulas to be in right-associative form in
 the input of the functions.  To perform such conversion, we can apply
-the $\rm{rdisj}$ and $\rm{rconj}$ functions depending on the main connective Eq.~(\ref{def:rdisj}).
+the $\rm{rdisj}$ and $\rm{rconj}$ functions depending on the main connective Eq.~(\ref{eq:rdisj}).
 \end{remark}
 
 In a disjunction, $φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
@@ -189,6 +189,7 @@ take into account the following cases.
 \end{bprooftree}
 \end{equation*}
 AGREGAR TEXTO
+
 \begin{equation}
   \label{eq:ndisj-or}
   \begin{aligned}
@@ -249,49 +250,46 @@ EJEMPLO Y AGREGAR TEXTO
 % -------------------------------------------------------------------
 
 We use the functions defined above to remove redundancies in conjunctions
-with $\fcanon_{∧}$ function, and $\fcanon_{∨}$ function to remove redundancies
-in disjunctions.
+with $\fcanon_{∧}$ function, and $\fcanon_{∨}$ function to remove redundancies in disjunctions.
 
-\begin{definition}[canon$_{∧}$]
-\label{def:canon-and}
-\begin{align*}
-    \begin{split}
-      &\fcanon_{∧} : \NProp \to \NProp\\
-      &\fcanon_{∧}(φ) =
-        \begin{cases}
-          φⱼ, &\text{ if } φ ≡ φ₁ ∧ φ₂,\ φᵢ ≡ ⊤,\text{ for } i,j = 1,2, i≠j\\
-          ⊥,  &\text{ if } φ ≡ φ₁ ∧ φ₂,\ φᵢ ≡ ⊥,\text{ for } i,j = 1,2\\
-          \frm_∧(\rm{ndisj}_∧(φ)), &\text{ if } φ ≡ φ₁ ∧ φ₂\\
-          φ,                &\text{ otherwise.}
-        \end{cases}
-    \end{split}
-\end{align*}
-\end{definition}
+\begin{equation}
+ \label{eq:canon-and}
+  \begin{aligned}
+   &\hspace{.495mm}\fcanon_{∧} : \NProp \to \NProp\\
+    &\begin{array}{lll}
+      \fcanon_{∧} &(⊤ ∧ φ₂)  &= φ₂ \\
+      \fcanon_{∧} &(φ₁ ∧ ⊤)  &= φ₁ \\
+      \fcanon_{∧} &(⊥ ∧ φ₂)  &= ⊥  \\
+      \fcanon_{∧} &(φ₁ ∧ ⊥)  &= ⊥  \\
+      \fcanon_{∧} &(φ₁ ∧ φ₂) &= \frm_∧(\rm{ndisj}_∧(φ₁ ∧ φ₂)) \\
+      \fcanon_{∧} &φ         &= φ
+     \end{array}
+    \end{aligned}
+\end{equation}
 
 \begin{mainlemma}
-  \label{lem:lem_canon-and}
-  If $Γ ⟝ φ$ then $Γ ⟝ \fcanon_{∧}(φ)$.
+  \label{lem:canon-and}
+  If $Γ ⟝ φ$ then $Γ ⟝ \fcanon_{∧}~φ$.
 \end{mainlemma}
-
-\begin{definition}[canon$_{∨}$]
-\label{def:canon-or}
-\begin{align*}
-    \begin{split}
-      &\fcanon_{∨} : \NProp \to \NProp\\
-      &\fcanon_{∨}(φ) =
-        \begin{cases}
-        φⱼ, &\text{ if } φ ≡ φ₁ ∨ φ₂,\ φᵢ ≡ ⊥,\text{ for } i,j = 1,2, i≠j\\
-        ⊤,  &\text{ if } φ ≡ φ₁ ∨ φ₂,\ φᵢ ≡ ⊤,\text{ for } i,j = 1,2\\
-        \frm_∨(\rm{ndisj}_∨(φ)), &\text{ if } φ ≡ φ₁ ∧ φ₂\\
-        φ, &\text{ otherwise.}
-        \end{cases}
-    \end{split}
-\end{align*}
-\end{definition}
+AGREGAR TEXTO
+\begin{equation}
+\label{eq:canon-or}
+\begin{aligned}
+ &\hspace{.495mm}\fcanon_{∨} : \NProp \to \NProp\\
+ &\begin{array}{llll}
+   \fcanon_{∨} &(φ ∨ ⊥)  &= φ \\
+   \fcanon_{∨} &(⊥ ∨ φ)  &= φ \\
+   \fcanon_{∨} &(⊤ ∨ φ)  &= ⊤  \\
+   \fcanon_{∨} &(φ ∨ ⊤)  &= ⊤  \\
+   \fcanon_{∨} &(φ₁ ∨ φ₂) &= \frm_∨~(\rm{ndisj}_∨~(φ₁ ∨ φ₂)) \\
+   \fcanon_{∨} &φ         &= φ
+  \end{array}
+\end{aligned}
+\end{equation}
 
 \begin{mainlemma}
-  \label{lem:lem_canon-or}
-  If $Γ ⟝ φ$ then $Γ ⟝ \fcanon_{∨}(φ)$.
+  \label{lem:canon-or}
+  If $Γ ⟝ φ$ then $Γ ⟝ \fcanon_{∨}~φ$.
 \end{mainlemma}
 
 % \begin{remark}
@@ -343,7 +341,7 @@ Eq.~(\ref{def:polarity}).
 \end{equation}
 AGREGAR TEXTO
 \begin{equation}
-\label{def:nnf-zero}
+\label{eq:nnf-zero}
   \begin{aligned}
   &\hspace{.495mm}\fnnf₀ : \abbre{Polarity} \to \Prop \to \NProp\\
     &\begin{array}{lll}
@@ -352,9 +350,9 @@ AGREGAR TEXTO
       \fnnf₀~⊕~(φ₁ ⇒ φ₂) &=\fcanon_{∨}~(\fnnf₀~⊖~φ₁ ∨ \fnnf₀~⊕~φ₂)\\
       \fnnf₀~⊕~(¬ φ₁)    &=\fnnf₀~⊖~φ₁                              \\
       \fnnf₀~⊕~φ         &=φ        \\
-      \fnnf₀~⊖~(φ₁ ∧ φ₂) &=\fcanon_{∨}(\fnnf₀~⊖,~φ₁ ∨ \fnnf₀~⊖~φ₂)\\
-      \fnnf₀~⊖~(φ₁ ∨ φ₂) &=\fcanon_{∧}(\fnnf₀~⊖,~φ₁ ∧ \fnnf₀~⊖~φ₂)\\
-      \fnnf₀~⊖~(φ₁ ⇒ φ₂) &=\fcanon_{∧}(\fnnf₀~⊖,~φ₂ ∧ \fnnf₀~⊖~φ₁)\\
+      \fnnf₀~⊖~(φ₁ ∧ φ₂) &=\fcanon_{∨}(\fnnf₀~⊖~φ₁ ∨ \fnnf₀~⊖~φ₂)\\
+      \fnnf₀~⊖~(φ₁ ∨ φ₂) &=\fcanon_{∧}(\fnnf₀~⊖~φ₁ ∧ \fnnf₀~⊖~φ₂)\\
+      \fnnf₀~⊖~(φ₁ ⇒ φ₂) &=\fcanon_{∧}(\fnnf₀~⊖~φ₂ ∧ \fnnf₀~⊖~φ₁)\\
       \fnnf₀~⊖~(¬ φ₁)    &=\fnnf₀~⊕~φ₁\\
       \fnnf₀~⊖~⊤         &=⊥\\
       \fnnf₀~⊖~⊥         &=⊤\\
@@ -369,43 +367,39 @@ AGREGAR TEXTO
   \begin{align*}
    \begin{split}
      &\fnnf : \NProp \to \NProp\\
-     &\fnnf~φ = \fnnf₀(⊕, φ).
+     &\fnnf~φ = \fnnf₀~⊕~φ.
    \end{split}
   \end{align*}
 \end{mainlemma}
 
 \begin{mainlemma}
-  \label{lem:lem-dist-or}
-  $Γ ⟝ φ$ then $Γ ⟝ \fdist_{∨}(φ)$, where,
-  \begin{align*}
-    \begin{split}
-    &\fdist_{∨} : \NProp \to \NProp\\
-    &\fdist_{∨}(φ) =
-      \begin{cases}
-        \fdist_{∨}(φ₁ ∨ φ₂) ∧ \fdist_{∨}(φ₂ ∨ φ₃), &\text{ if }φ ≡ (φ₁ ∧ φ₂) ∨ φ₃\\
-        \fdist_{∨}(φ₁ ∨ φ₃) ∧ \fdist_{∨}(φ₁ ∨ φ₃), &\text{ if }φ ≡ φ₁ ∨ (φ₂ ∧ φ₃)\\
-        φ,                                     &\text{ otherwise.}
-      \end{cases}
-    \end{split}
-  \end{align*}
+  \label{lem:dist-or}
+  $Γ ⟝ φ$ then $Γ ⟝ \fdist_{∨}~φ$, where,
+  \begin{equation*}
+  \begin{aligned}
+  &\hspace{.495mm}\fdist_{∨} : \NProp \to \NProp\\
+  &\begin{array}{lll}
+    \fdist_{∨}&((φ₁ ∧ φ₂) ∨ φ₃) &= \fdist_{∨}(φ₁ ∨ φ₂) ∧ \fdist_{∨}(φ₂ ∨ φ₃)\\
+    \fdist_{∨}&(φ₁ ∨ (φ₂ ∧ φ₃)) &= \fdist_{∨}(φ₁ ∨ φ₃) ∧ \fdist_{∨}(φ₁ ∨ φ₃)\\
+    \fdist_{∨}&φ &= φ
+    \end{array}
+  \end{aligned}
+  \end{equation*}
 \end{mainlemma}
 
 \begin{mainlemma}
   \label{lem:lem-dist}
-  $Γ ⟝ φ$ then $Γ ⟝ \fdist(φ)$, where,
-  \begin{align*}
-      \begin{split}
-      &\fdist : \NProp \to \NProp\\
-      &\fdist(φ) =
-        \begin{cases}
-          \fdist(φ₁) ∧ \fdist(φ₂),
-            &\text{ if }φ ≡ φ₁ ∧ φ₂\\
-          \fdist_{∨}(\fdist(φ₁) ∨ \fdist(φ₂)),
-            &\text{ if }φ ≡ φ₁ ∨ φ₂\\
-          φ, &\text{ otherwise.}
-        \end{cases}
-      \end{split}
-  \end{align*}
+  $Γ ⟝ φ$ then $Γ ⟝ \fdist~φ$, where,
+  \begin{equation*}
+  \begin{aligned}
+  &\hspace{.495mm}\fdist : \NProp \to \NProp\\
+  &\begin{array}{lll}
+    \fdist&(φ₁ ∧ φ₂) &= \fdist~φ₁ ∧ \fdist~φ₂\\
+    \fdist&(φ₁ ∨ φ₂) &= \fdist~φ₁ ∨ \fdist~φ₂\\
+    \fdist&φ &= φ
+   \end{array}
+   \end{aligned}
+  \end{equation*}
 \end{mainlemma}
 
 \begin{sketchproof} If $φ ≡ φ₁ ∨ φ₂$, we get for $i = 1, 2$,
@@ -414,15 +408,15 @@ AGREGAR TEXTO
     \RightLabel{assume}
     \AxiomC{$Γ, φ_{i} ⊢ φ_{i}$}
     \RightLabel{by hip.}
-    \UnaryInfC{$Γ ⊢ \fdist(φ_{i})$}
+    \UnaryInfC{$Γ ⊢ \fdist~φ_{i}$}
     \RightLabel{∨-intro$_{1,2}$}
-    \UnaryInfC{$Γ, φ_{i} ⊢ \fdist(φ₁) ∨ \fdist(φ₂)$}
-    \RightLabel{lemma~\ref{lem:lem-dist-or}}
-    \UnaryInfC{$Γ, φ_{i} ⊢ \fdist_{∨}(\fdist(φ₁) ∨ \fdist(φ₂))$}
+    \UnaryInfC{$Γ, φ_{i} ⊢ \fdist~φ₁ ∨ \fdist~φ₂$}
+    \RightLabel{lemma~\ref{lem:dist-or}}
+    \UnaryInfC{$Γ, φ_{i} ⊢ \fdist_{∨}(\fdist~φ₁ ∨ \fdist~φ₂)$}
     \end{bprooftree}
 \end{equation*}
 Then, by using the ∨-elim rule in the last derivation above, we
-derive $Γ, φ₁ ∨ φ₂ ⟝ \fdist_{∨}(\fdist(φ₁) ∨ \fdist(φ₂))$ and the lemma
+derive $Γ, φ₁ ∨ φ₂ ⟝ \fdist_{∨}(\fdist~φ₁ ∨ \fdist~φ₂)$ and the lemma
 follows.
 \end{sketchproof}
 
@@ -430,24 +424,23 @@ To convert normalized propositions to classical propositions, we
 make the following definition, completing the translation between
 these two types.
 
-\begin{definition}[form]
-\begin{align*}
-    \begin{split}
-      &\fform : \NProp \to \Prop\\
-      &\fform(φ) =
-      \begin{cases}
-        \fform(φ₁) ∧ \fform(φ₂), &\text{ if }φ ≡ φ₁ ∧ φ₂\\
-        \fform(φ₁) ∨ \fform(φ₂), &\text{ if }φ ≡ φ₁ ∨ φ₂\\
-        \fform_{⊻}(φ₂),        &\text{ if }φ ≡ φ₁ ⊻ φ₂\\
-        φ, &\text{ otherwise.}\\
-      \end{cases}
-    \end{split}
-\end{align*}
-\end{definition}
+\begin{equation}
+\label{eq:form}
+  \begin{aligned}
+  &\hspace{.495mm}\fform : \NProp \to \Prop\\
+  &\begin{array}{llll}
+    \fform&(φ₁ ∧ φ₂) &= \fform~φ₁ ∧ \fform~φ₂ &\\
+    \fform&(φ₁ ∨ φ₂) &= \fform~φ₁ ∨ \fform~φ₂ &\\
+    \fform&(φ₁ ⊻ φ₂) &= \fform_{⊻}(φ₂) &\\
+    \fform&φ &=    φ, &\text{ otherwise.}\\
+   \end{array}
+  \end{aligned}
+  \end{equation}
+
 
 \begin{mainlemma}
   \label{lem:lem-form}
-   If $Γ ⟝ φ$ then $Γ ⊢ \fform(φ)$.
+   If $Γ ⟝ φ$ then $Γ ⊢ \fform~φ$.
 \end{mainlemma}
 
 As a result, we can get a conjunctive normal form by applying the
@@ -455,11 +448,11 @@ following theorem.
 
 \begin{mainth}
 \label{thm:thm-cnf}
-  If $Γ ⊢ φ$ then $Γ ⊢ \rm{cnf}(φ)$, where,
+  If $Γ ⊢ φ$ then $Γ ⊢ \rm{cnf}~φ$, where,
   \begin{align*}
     \begin{split}
     &\rm{cnf} : \Prop \to \Prop\\
-    &\rm{cnf} \varphi = \fform (\fdist (\fnnf  \varphi))
+    &\rm{cnf}~φ = \fform (\fdist (\fnnf~φ))
     \end{split}
   \end{align*}
 \end{mainth}
@@ -475,7 +468,7 @@ in the next section.
 
 \begin{mainth}
 \label{thm:invCnfThm}
-  If $Γ ⊢ \rm{cnf}(φ)$ then $Γ ⊢ φ$.
+  If $Γ ⊢ \rm{cnf}~φ$ then $Γ ⊢ φ$.
 \end{mainth}
 
 The \canonicalize rule is an overloaded inference rule which performs

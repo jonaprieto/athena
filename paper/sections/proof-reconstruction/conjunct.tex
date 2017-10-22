@@ -27,8 +27,8 @@ fof(p3, (r | ~ p), inf(conjunct, [p1])).
   \fconjunct~φ~ψ &=
         \begin{cases}
             ψ, &\text{ if }φ ≡ ψ\\
-            ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ and }\fconjunct(φ₁, ψ) ≡ ψ  \\
-            ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ and }\fconjunct(φ₂, ψ) ≡ ψ  \\
+            ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ and }\fconjunct~φ₁~ψ ≡ ψ  \\
+            ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ and }\fconjunct~φ₂~ψ ≡ ψ  \\
             φ, &\text{ otherwise.}
           \end{cases}
   \end{array}
@@ -39,7 +39,7 @@ fof(p3, (r | ~ p), inf(conjunct, [p1])).
 \begin{proof}\hspace{2cm}\\
 Case $φ ≡ ψ$. $Γ ⊢ \fconjunct~φ~ψ$ normalizes to $Γ ⊢ ψ$.
 Then, we get the desire conclusion by applying the $\fsubst$ lemma.\\[2mm]
-Case $φ ≡ φ₁ ∧ φ₂$. If we can get $ψ ≡ \fconjunct(φ_{i}, ψ)$ for some $i = 1,\ 2$, then,
+Case $φ ≡ φ₁ ∧ φ₂$. If we can get $ψ ≡ \fconjunct~φ_{i}~ψ$ for some $i = 1,\ 2$, then,
 
 \begin{equation*}
   \begin{bprooftree}
@@ -47,8 +47,8 @@ Case $φ ≡ φ₁ ∧ φ₂$. If we can get $ψ ≡ \fconjunct(φ_{i}, ψ)$ for
   \RightLabel{∧-proj$_{i}$}
   \UnaryInfC{$Γ ⊢ φ_{i}$}
   \RightLabel{by hyp.}
-  \UnaryInfC{$Γ ⊢ \fconjunct(φ_{i}, ψ)$}
-  \AxiomC{$ψ ≡ \fconjunct(φ_{i}, ψ)$}
+  \UnaryInfC{$Γ ⊢ \fconjunct~φ_{i}~ψ$}
+  \AxiomC{$ψ ≡ \fconjunct~φ_{i}~ψ$}
   \RightLabel{subst}
   \BinaryInfC{$Γ ⊢ ψ$}
   \end{bprooftree}

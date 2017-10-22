@@ -52,23 +52,45 @@ the proof-reconstruction. We opted to work as far as possible with right-associa
 \end{remark}
 
 \begin{mainlemma}
-\label{lem:lem-rassoc}
+\label{lem:rassoc}
   If $Γ ⊢ φ$ then $Γ ⊢ \rm{rassoc}_{⬓}~φ$.
 \end{mainlemma}
 
 \begin{equation*}
-  \begin{split}
-  \label{eq:build-or}
-  &\rm{build}_{∨} : \Prop → \Prop → \Prop\\
-  &\rm{build}_{∨}(φ, ψ) =%\\
-  % &\hspace{3mm}
-  \begin{cases}
-  ψ, &\text{ if } φ ≡ ψ\\
-  ψ, &\text{ if } ψ ≡ ψ₁ ∨ ψ₂\text{, } \rm{build}_{∨}(φ, ψ_{i}) ≡ ψ_{i}\text{ for some }i=1, 2\\
-  φ, &\text{ otherwise.}
-  \end{cases}
-  \end{split}
+ \label{eq:build-or}
+  \begin{aligned}
+  &\hspace{.495mm}\rm{build}_{∨} : \Prop → \Prop → \Prop\\
+  &\begin{array}{llll}
+    \rm{build}_{∨}&ψ~ψ &= ψ\\
+    \rm{build}_{∨}&(φ~(ψ₁ ∨ ψ₂)&=ψ &\text{ if }\rm{build}_{∨}~φ~ψ_{1} ≡ ψ_{1}\\
+    \rm{build}_{∨}&(φ~(ψ₁ ∨ ψ₂)&=ψ &\text{ if }\rm{build}_{∨}~φ~ψ_{2} ≡ ψ_{2}\\
+    \rm{build}_{∨}&φ~ψ&=φ&\text{ otherwise.}
+   \end{array}
+  \end{aligned}
 \end{equation*}
+
+\begin{equation}
+  \label{eq:ndisj-or}
+  \begin{aligned}
+  &\hspace{.495mm}\rm{ndisj}_{∨} : \NProp \to \NProp\\
+  &\begin{array}{lll}
+    \rm{ndisj}_{∨} &(¬ φ₁ ∨ φ₂) &=
+        \begin{cases}
+         ⊤, &\text{ if } φ₁ ∈_{∨} φ₂\\
+         ⊤, &\text{ if } \rm{ndisj}_{∨}~φ₂≡ ⊤\\
+         ¬ φ₁ ∨ \rm{ndisj}_{∨}~φ₂, &\text{ otherwise.}
+        \end{cases}\\
+
+  \rm{ndisj}_{∨} &(φ₁ ∨ φ₂)&=
+        \begin{cases}
+         ⊤, &\,\,\,\,\,\,\text{ if } ¬φ₁ ∈_{∨} φ₂ \\
+         ⊤, &\,\,\,\,\,\,\text{ if } \rm{ndisj}_{∨}(φ₂) ≡ ⊤\\
+         φ₁ ∨ \rm{ndisj}_{∨}~φ₂, &\,\,\,\,\,\,\text{ otherwise.}
+        \end{cases}\\
+    \rm{ndisj}_{∨}&φ &=φ
+    \end{array}
+  \end{aligned}
+\end{equation}
 
 The $\rm{build}_{∨}$ function defined above intends to construct a
 disjunction from another disjunction, specifically, this functions will
@@ -76,7 +98,7 @@ try to rearrange the disjuncts in the source formula to match with the
 target disjunction formula, similar as we describe above.
 
 \begin{mainlemma}[lem-build$_{\boldsymbol{∨}}$]
-\label{lem:lem-build-or}
+\label{lem:build-or}
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \rm{build}_{∨}~φ~ψ$.
 \end{mainlemma}
 
@@ -100,7 +122,7 @@ Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $ψ ∨ φ$.
 \end{align}
 
 \begin{mainlemma}[lem-factor]
-\label{lem:lem-factor}
+\label{lem:factor}
   $Γ ⊢ φ$ then $Γ ⊢ \ffactor(φ)$.
 \end{mainlemma}
 
@@ -127,7 +149,7 @@ target disjunction $ψ$.
 \end{align}
 
 \begin{mainlemma}
-\label{lem:lem-sbuild-or}
+\label{lem:sbuild-or}
 If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \rm{sbuild}_{∨}(φ, ψ)$.
 \end{mainlemma}
 
@@ -176,8 +198,8 @@ Notice that using $\rm{sbuild}_{∨}$ we can build not only a disjunction
 with the same disjuncts of the source formula but also a complete different
 formula by adding new disjuncts to the source formula.
 
-\begin{mainth}[thm-reorder$_{\boldsymbol{∨}}$]
-  \label{thm-reorder-or}
+\begin{mainlemma}
+  \label{lem:reorder-or}
   If $Γ ⊢ φ$ and $ψ: \Prop$ then $Γ ⊢ \freorder_{∨}~φ~ψ~$, where,
   \begin{align*}
     \label{eq:reorder-or}
@@ -186,10 +208,10 @@ formula by adding new disjuncts to the source formula.
     &\freorder_{∨}~φ~ψ~= \rm{sbuild}_{∨}~(rassoc_{∨}~φ)~ψ.
     \end{split}
   \end{align*}
-\end{mainth}
+\end{mainlemma}
 
 \begin{proof}
-Use Lemma~\ref{lem:lem-rassoc} and Lemma~\ref{lem:lem-sbuild-or}.
+Use Lemma~\ref{lem:rassoc} and Lemma~\ref{lem:sbuild-or}.
 \end{proof}
 
 We define similar functions and state some theorems as we previously did
@@ -211,8 +233,8 @@ for disjunctions, but instead, we treat only with conjunctive normal forms.
   \end{align*}
 \end{definition}
 
-\begin{mainlemma}[lem-reorder$_{\boldsymbol{∧}}$]
-  \label{lem:lem-reorder-and}
+\begin{mainlemma}
+  \label{lem:reorder-and}
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧}(φ, ψ)$.
 \end{mainlemma}
 
@@ -235,31 +257,30 @@ for disjunctions, but instead, we treat only with conjunctive normal forms.
   \end{align*}
 \end{definition}
 
-\begin{mainlemma}[lem-conjunct$_{\boldsymbol{∨}}$]
-  \label{lem:lem-conjunct-or}
+\begin{mainlemma}
+  \label{lem:conjunct-or}
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fconjunct_{∨}(φ, ψ)$.
 \end{mainlemma}
 
-\begin{definition}[reorder$_{\boldsymbol{∧∨}}$]
- \begin{align*}
+
+
+\begin{mainlemma}
+  \label{lem:reorder-and-or}
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧∨}(φ, ψ)$, where
+   \begin{align*}
       \begin{split}
       &\freorder : \Prop \to \Prop \to \Prop\\
-      &\freorder_{∧∨}(φ, ψ)=
+      &\freorder_{∧∨}~φ~ψ~=
         \begin{cases}
           ψ, &\text{ if } φ≡ψ\\
-          ψ, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂,\ \freorder_{∧∨}(φ,ψ₁) ≡ ψ₁\\
-             &\text{and }\freorder_{∧∨}(φ, ψ₂) ≡ ψ₂\\
+          ψ, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂,\ ψ₁ ≡ \freorder_{∧∨}~φ~ψ₁~\\
+             &\text{and } ψ₂ ≡ \freorder_{∧∨}~φ~ψ₂~\\
           φ, &\text{ if }ψ ≡ ψ₁ ∧ ψ₂\\
-          \fconjunct_{∨}(φ, ψ) &\text{ otherwise.}
+          \fconjunct_{∨}~φ~ψ~ &\text{ otherwise.}
         \end{cases}
       \end{split}
   \end{align*}
-  \end{definition}
-
-\begin{mainth}[thm-reorder$_{\boldsymbol{∧∨}}$]
-  \label{thm:reorder-and-or}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧∨}(φ, ψ)$.
-\end{mainth}
+\end{mainlemma}
 
 The \resolve rule incorporates the resolution theorem showed in
 Fig.~\ref{fig:metis-inferences} for the \TSTP derivations.
@@ -286,26 +307,27 @@ cnf(refute_0_6, plain, (p | q),
 To emulate this rule, we perform a sequence of rearrangements inside the
 formulas involved to match with the pattern expected by the resolution theorem
 described above. We begin by defining a convenient version of
-the binary resolution in Def.~\ref{def:rsol}.
+the binary resolution in Def.~\ref{eq:rsol}.
 
-\begin{definition}[rsol]
-\label{def:rsol}
-\begin{align*}
-      \begin{split}
-        &\rm{rsol} : \Prop \to \Prop\\
-        &\rm{rsol}(φ) =
-        \begin{cases}
-          φ₂, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (φ₃ ∨ φ₄), φ₃ ≡ ¬ φ₁, φ₂ ≡ φ₄\\
-          φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (φ₃ ∨ φ₄), φ₃ ≡ ¬ φ₁\\
-          φ, &\text{ otherwise.}
-        \end{cases}
-      \end{split}
-  \end{align*}
-\end{definition}
+% \begin{equation}
+% \label{eq:rsol}
+% \begin{aligned}
+% &\rm{rsol} : \Prop \to \Prop\\
+%       \begin{split}
+%         &\rm{rsol} : \Prop \to \Prop\\
+%         &\rm{rsol}~φ =
+%         \begin{cases}
+%           φ₂, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (φ₃ ∨ φ₄), φ₃ ≡ ¬ φ₁, φ₂ ≡ φ₄\\
+%           φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (φ₃ ∨ φ₄), φ₃ ≡ ¬ φ₁\\
+%           φ, &\text{ otherwise.}
+%         \end{cases}
+%       \end{split}
+%   \end{align*}
+% \end{definition}
 
-\begin{mainlemma}[lem-rsol]
-  \label{lem:lem-rsol}
-  If $Γ ⊢ φ$ then $Γ ⊢ \rm{rsol}(φ)$.
+\begin{mainlemma}
+  \label{lem:rsol}
+  If $Γ ⊢ φ$ then $Γ ⊢ \rm{rsol}~φ$.
 \end{mainlemma}
 
 In Def.~\ref{def:resolve}, the proposed rule for $resolve$
@@ -313,67 +335,51 @@ has four arguments. The first three were described
 above, the last one, ψ, represents the expected conclusion in the \Metis
 derivation.
 
-\begin{definition}[resolve]
-\label{def:resolve}
- \begin{align*}
- \begin{split}
-    &\fresolve : \Prop \to \Prop \to \Prop \to \Prop \to \Prop\\
-    &\fresolve(φ₁, φ₂, l, ψ) =
-      \rm{rsol}(\freorder_{∨}(φ₁, l ∨ ψ) ∧ \freorder_{∨} (φ₂, ¬ l ∨ ψ)).
-  \end{split}
-  \end{align*}
-\end{definition}
-
-\begin{mainth}[thm-resolve]
+\begin{mainth}
   \label{thm:resolve}
-  If $Γ ⊢ φ₁$, $Γ ⊢ φ₂$, a literal $l$, and $ψ : \Prop$ then
-  $Γ ⊢ \fresolve(φ₁, φ₂, l, ψ)$.
+  If $Γ ⊢ φ₁$, $Γ ⊢ φ₂$, a literal $l : \Prop$, and $ψ : \Prop$ then
+  $Γ ⊢ \fresolve~φ₁~φ₂~l~ψ$, where,
+  \begin{equation}
+  \begin{split}
+  \label{eq:resolve}
+    &\fresolve : \Prop \to \Prop \to \Prop \to \Prop \to \Prop\\
+    &\fresolve~φ₁~φ₂~l~ψ =
+      \rm{rsol}~(\freorder_{∨}~φ₁~(l ∨ ψ) ∧ \freorder_{∨}~φ₂~(¬ l ∨ ψ)).
+  \end{split}
+  \end{equation}
 \end{mainth}
 
 \Needspace{3\baselineskip}
 \begin{proof}
- \begin{equation*}
-    \begin{bprooftree}
-      \AxiomC{$Γ ⊢ φ₁$}
-      \RightLabel{thm-reorder$_{∨}$,}
-      \UnaryInfC{$Γ ⊢ \freorder_{∨}(φ₁, l ∨ ψ)$}
-   \end{bprooftree}
-  \end{equation*}
-    \vskip 1.5mm
- \begin{equation*}
-    \begin{bprooftree}
-      \AxiomC{$Γ ⊢ φ₂$}
-      \RightLabel{thm-reorder$_{∨}$,}
-      \UnaryInfC{$Γ ⊢ \freorder_{∨}(φ₂, ¬ l ∨ ψ)$}
-   \end{bprooftree}
-  \end{equation*}
-  \vskip 1.5mm
   \begin{equation*}
   \begin{bprooftree}
-    \AxiomC{$Γ ⊢ \freorder_{∨}(φ₁, l ∨ ψ)$}
-    \AxiomC{$Γ ⊢ \freorder_{∨}(φ₂, ¬ l ∨ ψ)$}
+    \AxiomC{$Γ ⊢ φ₁$}
+    \RightLabel{Lemma~\ref{lem:reorder-and-or}}
+    \UnaryInfC{$Γ ⊢ \freorder_{∨}~φ₁~(l ∨ ψ)$}
+    \RightLabel{Lemma~\ref{lem:reorder-and-or}}
+    \AxiomC{$Γ ⊢ φ₂$}
+    \UnaryInfC{$Γ ⊢ \freorder_{∨}~φ₂~(¬ l ∨ ψ)$}
     \RightLabel{∧-intro}
-    \BinaryInfC{$Γ ⊢ \freorder_{∨}(φ₁, l ∨ ψ) ∧ \freorder_{∨}(φ₂, ¬ l ∨ ψ)$}
-    \RightLabel{lem-rsol.}
-    \UnaryInfC{$Γ ⊢ \rm{rsol}(\freorder_{∨}(φ₁, l ∨ ψ) ∧ \freorder_{∨}(φ₂, ¬ l ∨ ψ))$}
+    \BinaryInfC{$Γ ⊢ \freorder_{∨}~φ₁~(l ∨ ψ) ∧ \freorder_{∨}~φ₂~(¬ l ∨ ψ)$}
+    \RightLabel{Lemma~\ref{lem:rsol}}
+    \UnaryInfC{$Γ ⊢ \rm{rsol}~(\freorder_{∨}~φ₁~(l ∨ ψ) ∧
+     \freorder_{∨}~φ₂~(¬ l ∨ ψ))$}
+    \RightLabel{by (\ref{eq:resolve})}
+    \UnaryInfC{$Γ ⊢ \fresolve~φ₁~φ₂~l~ψ$}
   \end{bprooftree}
   \end{equation*}
 \end{proof}
 
-\begin{figure}
-\label{fig:resolve-example}
+\begin{example}COMPLETAR ESTE EJEMPLO AL FINAL
 \begin{equation*}
   \begin{bprooftree}
   \AxiomC{$Γ ⊢ ¬ r ∨ p ∨ q$}
   \AxiomC{$Γ ⊢ p ∨ q ∨ r $}
-  \RightLabel{thm-resolve}
-  \BinaryInfC{$Γ ⊢ \fresolve(¬ r ∨ p ∨ q, p ∨ q ∨ r, r, p ∨ q)$}
+  \RightLabel{Theorem \ref{thm:resolve}}
+  \BinaryInfC{$Γ ⊢ \fresolve~(¬ r ∨ p ∨ q)~(p ∨ q ∨ r)~r~(p ∨ q)$}
   \UnaryInfC{$Γ ⊢ p ∨ q$}
   \end{bprooftree}
 \end{equation*}
-\caption{Example of a resolution in \Metis using
-Thm.~\ref{thm:resolve}.}
-%Application of Thm.~\ref{thm:resolve} for the \TSTP excerpt Fig.~\ref{fig:resolve-tstp-example}.}
-\end{figure}
+\end{example}
 
 \end{document}
