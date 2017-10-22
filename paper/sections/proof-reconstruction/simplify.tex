@@ -85,7 +85,7 @@ fof(norm6, $false, inf(simplify, [norm1, norm4, norm5])).
 
 \begin{enumerate}
 \item When \simplify derives \verb!(~ g)! from \verb!norm2! and \verb!norm3! derivations, the fourth case in Eq.~(\ref{eq:simplify-2}) is applied.
-$$\fsimplify~(\neg g \vee q)~(\neg q) (~ g) = \neg g.$$
+$$\fsimplify~(\neg g \vee q)~(\neg q) (\neg g) = \neg g.$$
 \begin{verbatim}
 fof(norm2, ~ g | q, inf(conjunct, [norm0])).
 fof(norm3, ~ q,     inf(conjunct, [norm0])).
@@ -114,34 +114,6 @@ fof(norm6, $false, inf(simplify, [norm1, norm4, norm5])).
 \end{enumerate}
 \end{example}
 
-
-% \begin{sketchproof}
-% If $Γ ⊢ φᵢ$ for $i=1, \cdots, n$, we prove this theorem by induction on $n$.
-% Let us show one case.
-% \begin{itemize}
-%   \item If $n ==2$ and $(canonicalize(φ₁, ¬ φ₂) ≡ ¬ φ₂)$, we need to prove
-%   $Γ ⊢ simplify(φ₁, φ₂, ψ)$.
-% \begin{equation*}
-%   \begin{bprooftree}
-%     \AxiomC{$Γ ⊢ φ₁$}
-%     \RightLabel{thm-canonicalize}
-%     \UnaryInfC{$Γ ⊢ canonicalize(φ₁, ¬φ₂)$}
-%     \AxiomC{$¬ φ₂ ≡ canonicalize(φ₁, ¬ φ₂)$}
-%     \RightLabel{subst}
-%     \BinaryInfC{$Γ ⊢ ¬ φ₂ $}
-%   \end{bprooftree}
-%   \begin{bprooftree}
-%   \AxiomC{$Γ ⊢ ¬ φ₂ $}
-%   \AxiomC{$Γ ⊢ φ₂$}
-%   \RightLabel{¬-elim}
-%   \BinaryInfC{$Γ ⊢ ⊥$}
-%   \RightLabel{by def.}
-%   \UnaryInfC{$Γ ⊢ simplify(φ₁, φ₂, ψ)$}
-%   \end{bprooftree}
-% \end{equation*}
-
-% \end{itemize}
-% \end{sketchproof}
 
 % subsubsection simplify (end)
 % -------------------------------------------------------------------
