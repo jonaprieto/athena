@@ -53,29 +53,29 @@ subgoal₁ = (((¬ p) ∧ q) ⇒ r)
 proof₀ : Γ ⊢ subgoal₀
 proof₀ =
   (RAA
-    (atp-simplify ⊥
-      (atp-canonicalize ((¬ p) ∧ (¬ q))
+    (thm-simplify ⊥
+      (thm-canonicalize ((¬ p) ∧ (¬ q))
         (assume {Γ = Γ}
           (¬ subgoal₀)))
-      (atp-conjunct (p ∨ q)
-        (atp-canonicalize ((p ∨ q) ∧ (p ∨ r))
+      (thm-conjunct (p ∨ q)
+        (thm-canonicalize ((p ∨ q) ∧ (p ∨ r))
           (weaken (¬ subgoal₀)
             (assume {Γ = ∅} a₁))))))
 
 proof₁ : Γ ⊢ subgoal₁
 proof₁ =
   (RAA
-    (atp-simplify ⊥
-      (atp-canonicalize ((¬ p) ∧ ((¬ r) ∧ q))
+    (thm-simplify ⊥
+      (thm-canonicalize ((¬ p) ∧ ((¬ r) ∧ q))
         (assume {Γ = Γ}
           (¬ subgoal₁)))
-      (atp-conjunct (p ∨ r)
-        (atp-canonicalize ((p ∨ q) ∧ (p ∨ r))
+      (thm-conjunct (p ∨ r)
+        (thm-canonicalize ((p ∨ q) ∧ (p ∨ r))
           (weaken (¬ subgoal₁)
             (assume {Γ = ∅} a₁))))))
 
 proof : Γ ⊢ goal
 proof =
   ⇒-elim
-    atp-split
+    thm-strip
     (∧-intro proof₀ proof₁)

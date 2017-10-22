@@ -1,0 +1,65 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+
+\subsubsection{Clausification.}
+\label{sssec:clausification}
+
+The \clausify rule transforms a
+propositional formula into its clausal normal form, a conjunction
+of clauses. A \emph{clause} is the disjunction of zero or more
+literals and a \emph{literal} is an atom (positive literal) or a
+negation of an atom (negative literal).
+It is important to notice that this kind of conversion
+between one formula to its clausal normal form is not unique, and \Metis has a
+customized approach to perform that transformation. That is the reason we
+perform some reordering for the CNF of the source formula to fulfill this
+issue.
+
+In the following \Metis \TSTP derivation, we see an example where
+\clausify expands the formula \texttt{normalize\_0\_0} by using distributive
+laws presented in conjunctive normal form conversion.
+
+\begin{verbatim}
+fof(a1, axiom, (p => (q & r))).
+...
+fof(normalize_0_0, plain, (~ p | (q & r)),
+    inference(canonicalize, [], [a1])).
+fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
+    inference(clausify, [], [normalize_0_0])).
+\end{verbatim}
+
+\begin{definition}[clausify]
+  \label{def:clausify}
+ \begin{align*}
+   \begin{split}
+      &\fclausify : \Prop → \Prop → \Prop\\
+      &\fclausify~φ~ψ =
+      \begin{cases}
+        ψ, &\text{ if }φ≡ψ\\
+        \freorder_{∧∨}~(\fcnf~φ~ψ), &\text{ otherwise.}
+      \end{cases}
+      \end{split}
+  \end{align*}
+\end{definition}
+
+\begin{mainth}[thm-clausify]
+\label{thm:thm-clausify}
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fclausify~φ~ψ$.
+\end{mainth}
+
+\begin{proof} If $φ ≡ ψ$, this lemmas follows after applying $\fsubst$
+lemma. Otherwise, we use Theorem~\ref{thm:thm-reorder-and-or} and Theorem~\ref{thm:thm-cnf}.
+\end{proof}
+
+\begin{remark}
+The \clausify rule is often preceded by the \canonicalize rule.
+Both rules perform \emph{Clausification} that introduces
+into the problem axioms or definitions in the domain of the solution.
+The Clausification algorithms is mainly described on paper by
+\citeauthor{Sutcliffe1996}~\cite{Sutcliffe1996}. We left for future work
+investigate the consequences of removing $clausify$ inference by
+strengthen $canonicalize$ rule in Def.~\ref{def:canonicalize}
+\end{remark}
+
+\end{document}

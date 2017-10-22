@@ -7,66 +7,54 @@
 \section{Conclusions}
 \label{sec:conclusions}
 
-In this document, we reconstruct proofs
-of propositional logic without equality deliver by \Metis
-successfully.
+We presented a reliable proof-reconstruction in type theory of \Metis
+solutions for problems in classical propositional logic without
+equality. As a product of this research, we were able to build a proof-reconstruction tool written in \Haskell. This tool generates
+\Agda proof-terms of \Metis \TSTP derivations. \Agda files
+delivered by the aforementioned tool are supported by the
+formalization in \Agda~\cite{AgdaProp,AgdaMetis} of the \Metis rules
+described in Section~\ref{ssec:emulating-inferences}.
 
-Despite the fact, our logic domain is more straightforward than
-first-order or high-order logic where there are many
-proof-reconstruction tools (see a list of some of them in the
-related work, Section \ref{sec:related-work}), we found some issues
-around the reconstruction that show this task is far from trivial.
-Depending  on the systems involved in the translation, some
-difficulties can arise. We listed some of them in Section
-\ref{sec:metis-language-and-proofs} and in Section
-\ref{sec:proof-reconstruction}.
+The reconstruction approach in this study was designed to use
+only syntactical aspects of the logic.
+This decision was in the beginning a drawback
+since it demands more detailed proofs, a
+description of every transformation or deduction step performed by
+the prover, which is rarely included in the output of these programs,
+see Section~\ref{sssec:normalization} and Section~\ref{sssec:reordering}.
+We chose that syntactical treatment as the opportunity
+to extend this work towards the support of first-order logic.
+Recall, satisfiability in first-order logic is undecidable.
 
-For instance, just showing equality between Normal Forms for the
-same formula in the output of the \canonicalize inference and a
-common implementation for this kind of conversion; we observed that
-\Metis performs reordering for each inner expression mainly in the
-presence of negative literals. Another aspect to take into account
-is the \Metis' treatment for conjunctions and disjunction;
-these connectives were treated as right associative and binary
-operators in the \TSTP format but that assumptions is not a standard.
-We had to update the \TSTP parser module introduced in
-\cite{Gomez-Londono2015} to include features like these.
+As an early future work, we propose to extend the
+proof-reconstruction presented in this paper to support the
+proposition fragment with equality of \Metis.
+Another option is to extend the proof-reconstruction to support other \ATPs for \CPL like \name{EProver} or \name{Z3}.
+This development can be carried out by following the \name{EProver}
+inference rules described on Kanso's Ph.D. Thesis~\cite{Kanso2012}.
 
-An important matter was how dealing with
-the equality between formulas since, in our approach, we only work
-with the syntactic treatment of the logic without considering the
-semantics.
-One of the main reasons for such a restriction relay on our plans
-further to support first-order logic, where a semantic treatment is
-not viable since it computational complexity.\unsure{Please confirm this.}
+Summarizing, we provided for each \Metis inference rule a theorem in
+type theory to emulate the rule reasoning. This approach, mainly
+exposed in Section~\ref{ssec:emulating-inferences},
+admits some improvements, we leave it for future work. We concern
+mainly for a better coverage of the \simplify rule.
+Other improvements are related with computational efficiency of
+rules strongly depend on reordering tasks,
+Section~\ref{sssec:reordering}.
+We believe some rules like \canonicalize can get some help from an analysis done in the translator tool.
 
-Nevertheless, the proof-reconstruction is certainly possible, and
-the verification of solutions of \CPL problems can be carried out
-successful in \Agda. Our tool is able to translate \Metis
-derivations in \TSTP format to deliver \Agda code of the proof,
-\change{Better uses \emph{proof-terms}?}
-and this proof can be type-checked by \Agda.
-
-The source code of our tool can be extended to support
-other \ATPs for \CPL like \name{E}. This work can be carried out
-may following the description in Kanso' Ph.D. Thesis~\cite{Kanso2012}
-for the inference rules of \name{E} or \name{Z3}.
-
-Trying to justify a proof-object of a theorem prover has a
-significant impact, may increase the trustworthiness of the prover
-proving its correctness, or contrary, revealing important issues to
-improve the system. In both cases, there is a benefit for both
-sides, the user of this technology, and their developers.
-
-For instance, while writing this document, we found a soundness bug,
-a bug in the printing out of the \TSTP derivations, and a bug in the
-parsing for \TPTP problem in \Metis. Fortunately, all these bugs
-were fixed quickly by Hurd\footnote{Issues No. 4, No. 2, and the
-commit \name{8a3f11e} from the \Metis' official repository
-\url{https://github.com/gilith/metis}}, and a new version of \Metis
-was released (version 2.3, release 20170810).
-
-% \subsubsection*{Future Work.}
-% \label{ssec:future-work}
+One of the main contribution of this study was
+increasing the trustworthiness of the automatic provers,
+in our case, \Metis.
+Justifying a proof of a theorem prover
+has a real significant impact for these automatic tools.
+The reverse engineering task can reveal important issues or bugs
+in many parts of these systems (e.g., preprocessing, reasoning, or
+deduction modules). During this research, we had the opportunity
+to improve \Metis by reporting some bugs\footnote{Issues No.~2,
+No.~4. and commit \name{8a3f11e} in the \Metis' official repository
+\url{https://github.com/gilith/metis}}.
+Fortunately, all these problems were fixed quickly by Joe Hurd in
+20170810 release.
 
 \end{document}

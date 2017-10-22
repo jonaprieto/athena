@@ -1,32 +1,34 @@
+\documentclass[
+    envcountsect    %% In order to provide the usual behaviour expected
+                    %% from \newtheorem
+  , runningheads
+  ]{llncs}
 
-\documentclass[runningheads]{llncs}
+\spnewtheorem{mainth}[theorem]{Main Theorem}{\bfseries}{\rmfamily}
+
 \usepackage[numbers]{natbib}
-% \usepackage{geometry}
-% \geometry{
-%   a4paper,         % or letterpaper
-%   textwidth=15cm,  % llncs has 12.2cm
-%   textheight=24cm, % llncs has 19.3cm
-%   heightrounded,   % integer number of lines
-%   hratio=1:1,      % horizontally centered
-%   vratio=2:3,      % not vertically centered
-% }
 
 \usepackage{subfiles}
+
+\usepackage{needspace}  %% https://tex.stackexchange.com/questions/28203/
+                        %% thmtools-how-to-prevent-pagebreak-between-theorem-
+                        %% and-proof
 
 \setcounter{tocdepth}{5}
 \usepackage{graphicx}
 \usepackage{array}
+
 \usepackage{bussproofs}
 \newenvironment{bprooftree}
   {\leavevmode\hbox\bgroup}
   {\DisplayProof\egroup}
+
 \def\extraVskip{3pt}
 \def\labelSpacing{3pt}
 \def\defaultHypSeparation{\hskip.2in}
 \def\EnableBpAbbreviations{true}
 
 \usepackage[title]{appendix}
-
 
 \usepackage{hyphenat}
 \hyphenation{proof-re-cons-truc-tion proof-ob-ject}
@@ -59,6 +61,7 @@
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
 \usetikzlibrary{calc}
+\usetikzlibrary{shapes}
 \usepackage{rotating}
 
 \tikzset{
@@ -123,27 +126,39 @@
 \usepackage{autofe}
 \usepackage{afterpage}
 \usepackage{comment}
-\usepackage{url}
-\usepackage{amsmath}
-
-\newenvironment{sketchproof}{%
-  \renewcommand{\proofname}{Sketch of the Proof}\proof}{\endproof}
-
+\usepackage[hyphens]{url}
+\usepackage{bm}
 
 \usepackage{amssymb}
 \usepackage{amsmath}
+
+\let\proof\relax      %% https://tex.stackexchange.com/questions/43835/
+\let\endproof\relax   %% conflict-between-amsthm-and-some-other-package
+\usepackage{amsthm}
+
+\newenvironment{sketchproof}{%
+  \renewcommand{\proofname}{Sketch of the Proof}\proof}{\endproof}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+
 %\usepackage{stmaryrd} %new symbol font for tcs
 \usepackage{color}
 \usepackage{fancybox}
 
+% -------------------------------------------------------------------
+% Unicode Characters.
+% -------------------------------------------------------------------
+
 \usepackage{textcomp}
 \usepackage[verbose]{newunicodechar}
-\newunicodechar{∧}{\ensuremath{\wedge}}
-\newunicodechar{∨}{\ensuremath{\vee}}
-\newunicodechar{¬}{\ensuremath{\neg}}
-\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
-\newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
-\newunicodechar{∼}{\ensuremath{\sim}}
+
+\newunicodechar{¬}{\ensuremath{\neg}\;}
+\newunicodechar{Γ}{\ensuremath{\Gamma}}
+\newunicodechar{γ}{\ensuremath{\gamma}}
+\newunicodechar{φ}{\ensuremath{\varphi}}
+\newunicodechar{ψ}{\ensuremath{\psi}}
+\newunicodechar{ϕ}{\ensuremath{\varphi}}
+\newunicodechar{ᵢ}{\ensuremath{{}_{i}}}
 \newunicodechar{₀}{\ensuremath{{}_{0}}}
 \newunicodechar{₁}{\ensuremath{{}_{1}}}
 \newunicodechar{₂}{\ensuremath{{}_{2}}}
@@ -154,24 +169,30 @@
 \newunicodechar{₇}{\ensuremath{{}_{7}}}
 \newunicodechar{₈}{\ensuremath{{}_{8}}}
 \newunicodechar{₉}{\ensuremath{{}_{9}}}
-\newunicodechar{ᵢ}{\ensuremath{{}_{i}}}
-\newunicodechar{ⱼ}{\ensuremath{{}_{j}}}
 \newunicodechar{ₙ}{\ensuremath{{}_{n}}}
-\newunicodechar{∅}{\ensuremath{\emptyset}}
-\newunicodechar{⊢}{\ensuremath{\vdash}}
-\newunicodechar{⊥}{\ensuremath{\bot}}
-\newunicodechar{⊤}{\ensuremath{\top}}
-\newunicodechar{Γ}{\ensuremath{\Gamma}}
-\newunicodechar{φ}{\ensuremath{\varphi}}
-\newunicodechar{ϕ}{\ensuremath{\varphi}}
-\newunicodechar{ψ}{\ensuremath{\psi}}
-\newunicodechar{≡}{\ensuremath{\equiv}}
-\newunicodechar{≠}{\ensuremath{\neq}}
 \newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
+\newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
+\newunicodechar{∅}{\ensuremath{\emptyset}}
 \newunicodechar{∈}{\ensuremath{\in}}
 \newunicodechar{∘}{\ensuremath{\circ}}
+\newunicodechar{∧}{\ensuremath{\wedge}}
+\newunicodechar{∨}{\ensuremath{\vee}}
+\newunicodechar{∼}{\ensuremath{\sim}}
+\newunicodechar{≠}{\ensuremath{\neq}}
+\newunicodechar{≡}{\ensuremath{\equiv}}
+\newunicodechar{⊕}{\ensuremath{\oplus}}
+\newunicodechar{⊖}{\ensuremath{\ominus}}
+\newunicodechar{⊢}{\ensuremath{\vdash}}
+\newunicodechar{⊤}{\ensuremath{\top}}
+\newunicodechar{⊥}{\ensuremath{\bot}}
+\newunicodechar{⊻}{\ensuremath{\veebar}}
+\newunicodechar{⟝}{\ensuremath{\vdash_{2}}}
+\newunicodechar{ⱼ}{\ensuremath{{}_{j}}}
 
-%\DeclareUnicodeCharacter{00A0}{~}
+% -------------------------------------------------------------------
+% Verbatim.
+% -------------------------------------------------------------------
 
 \usepackage{verbatim}
 \usepackage{relsize}
@@ -197,15 +218,19 @@
 \usepackage{xspace}
 
 \newcommand{\abbre}[1]{\textsc{#1}\xspace}
-\newcommand{\ATP}{\abbre{ATP}}
 \newcommand{\ATPs}{\abbre{ATPs}}
+\newcommand{\ATP}{\abbre{ATP}}
+\newcommand{\Bool}{\abbre{Bool}}
+\newcommand{\CNF}{\abbre{CNF}}
+\newcommand{\CPL}{\abbre{CPL}}
+\newcommand{\ITP}{\abbre{ITP}}
+\newcommand{\ITPs}{\abbre{ITPs}}
+\newcommand{\List}{\abbre{List}}
+\newcommand{\NProp}{\abbre{NProp}}
+\newcommand{\Nat}{\abbre{Nat}}
+\newcommand{\Prop}{\abbre{Prop}}
 \newcommand{\SAT}{\abbre{SAT}}
 \newcommand{\SMT}{\abbre{SMT}}
-\newcommand{\ITP}{\abbre{ITP}}
-\newcommand{\CPL}{\abbre{CPL}}
-\newcommand{\CNF}{\abbre{CNF}}
-\newcommand{\Prop}{\abbre{Prop}}
-\newcommand{\Nat}{\abbre{Nat}}
 
 \newcommand{\name}[1]{\texttt{#1}\xspace}
 \newcommand{\canonicalize}{\name{canonicalize}}
@@ -218,21 +243,17 @@
 \newcommand{\tptpaxiom}{\name{axiom}}
 \newcommand{\tptpconjecture}{\name{conjecture}}
 
-\newcommand{\zero}{\name{zero}}
-\newcommand{\suc}{\name{suc}}
+\newcommand{\zero}{\rm{zero}\xspace}
+\newcommand{\suc}{\rm{succ}\xspace}
+
 \newcommand{\nnf}{\name{nnf}}
 
 
-\newcommand{\mysplit}{split}
-\newcommand{\thmsplit}{lem-split}
-
-\newcommand{\thmresolve}{thm-resolve}
-
 \newcommand{\prg}[1]{\texttt{#1}\xspace}
 \newcommand{\Agda}{\prg{Agda}}
-\newcommand{\Metis}{\prg{Metis}}
 \newcommand{\Athena}{\prg{Athena}}
 \newcommand{\IsabelleHOL}{\prg{IsabelleHOL}}
+\newcommand{\Metis}{\prg{Metis}}
 
 \newcommand{\len}[1]{\texttt{#1}\xspace}
 \newcommand{\Haskell}{\len{Haskell}}
@@ -240,6 +261,59 @@
 \newcommand{\TSTP}{\len{TSTP}}
 
 \newcommand{\NN}{\ensuremath{\mathbb{N}}}
+
+\newcommand{\fun}[1]{\rm{#1}\xspace}
+\newcommand{\fbuild}{\fun{build}}
+\newcommand{\fcanon}{\fun{canon}}
+\newcommand{\fcnf}{\fun{cnf}}
+\newcommand{\fdist}{\fun{dist}}
+\newcommand{\ffactor}{\fun{factor}}
+\newcommand{\fform}{\fun{form}}
+\newcommand{\fmax}{\fun{max}}
+\newcommand{\fndisj}{\fun{ndisj}}
+\newcommand{\fnnf}{\fun{nnf}}
+\newcommand{\frank}{\fun{rank}}
+\newcommand{\frconj}{\fun{rconj}}
+\newcommand{\frdisj}{\fun{rdisj}}
+\newcommand{\freorder}{\fun{reorder}}
+\newcommand{\frm}{\fun{rm}}
+\newcommand{\fsbuild}{\fun{sbuild}}
+\newcommand{\fsubst}{\fun{subst}}
+\newcommand{\fuh}{\fun{uh}}
+\newcommand{\tunshunt}{\fun{thm-uh}}
+
+\newcommand{\fstrip}{\fun{strip}}
+\newcommand{\tstrip}{\fun{thm-strip}}
+
+\newcommand{\fcanonicalize}{\fun{canonicalize}}
+\newcommand{\tcanonicalize}{\fun{thm-canonicalize}}
+
+\newcommand{\fconjunct}{\fun{conjunct}}
+\newcommand{\tconjunct}{\fun{thm-conjunct}}
+
+\newcommand{\fresolve}{\fun{resolve}}
+\newcommand{\tresolve}{\fun{thm-resolve}}
+
+\newcommand{\fclausify}{\fun{clausify}}
+\newcommand{\tclausify}{\fun{thm-clausify}}
+
+\newcommand{\fsimplify}{\fun{simplify}}
+\newcommand{\tsimplify}{\fun{thm-simplify}}
+
+\newcommand{\fnegate}{\fun{negate}}
+\newcommand{\tnegate}{\fun{thm-negate}}
+
+% latin etc. abbrev
+\newcommand{\abbrev}[1]{#1} % alternative: \emph{#1}
+\newcommand{\cf}{\abbrev{cf.}\ }
+\newcommand{\eg}{\abbrev{e.\,g.}}
+\newcommand{\Eg}{\abbrev{E.\,g.}}
+\newcommand{\ie}{\abbrev{i.\,e.}}
+\newcommand{\Ie}{\abbrev{I.\,e.}}
+\newcommand{\etal}{\abbrev{et.\,al.}}
+\newcommand{\wwlog}{w.\,l.\,o.\,g.} % \wlog is ``write into log file''
+\newcommand{\Wlog}{W.\,l.\,o.\,g.}
+\newcommand{\wrt}{w.\,r.\,t.}
 
 % -------------------------------------------------------------------
 % Rest.
@@ -260,25 +334,20 @@
 
 \mainmatter
 
-\title{Towards Proof-Reconstruction of Problems
-in Classical Propositional Logic}
-
-\titlerunning{Proof-Reconstruction in Classical
-Propositional Logic}
-
+\title{Proof-Reconstruction in Type Theory for Propositional Logic}
 \author{Jonathan Prieto-Cubides%
-\and Andr\'es Sicard-Ram\'irez}
+%\and Andr\'es Sicard-Ram\'irez
+}
 %
-\authorrunning{Proof-Reconstruction in Classical Propositional Logic}
 
 \institute{Logic and Computation Research Group,\\
 Universidad EAFIT, Medell\'in, Colombia\\
-\email{\{jprieto9,asr\}@eafit.edu.co}}
+\email{jprieto9@eafit.edu.co}}
 
 % \toctitle{Lecture Notes in Computer Science}
 % \tocauthor{Authors' Instructions}
 
-\listoftodos[Notes]
+% \listoftodos[Notes]
 
 % TODO commands!
 % \unsure
@@ -290,11 +359,12 @@ Universidad EAFIT, Medell\'in, Colombia\\
 \maketitle
 
 \subfile{sections/abstract.tex}
+% \tableofcontents
 \subfile{sections/introduction.tex}
-\subfile{sections/preliminaries.tex}
+% \subfile{sections/preliminaries.tex}
 \subfile{sections/metis-language-and-proofs.tex}
 \subfile{sections/proof-reconstruction.tex}
-\subfile{sections/implementation.tex}
+% \subfile{sections/implementation.tex}
 \subfile{sections/related-work.tex}
 \subfile{sections/conclusions.tex}
 \subfile{sections/acknowledgements.tex}

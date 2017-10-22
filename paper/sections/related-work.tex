@@ -7,6 +7,49 @@
 \section{Related Work}
 \label{sec:related-work}
 
+In this section, we present an extended version of the related work description made in the proposal for this research~\cite{Sicard-Ramirez2016}.
+
+
+
+% On the one hand, we have the
+% automatic theorem provers (henceforth \ATP) and their specification
+% logic. These tools are usually classified in at least one of the
+% following categories.
+% A \SAT solver (e.g., \name{zChaff}~\cite{Moskewicz2001} and
+% \name{MiniSat}~\cite{Een2004}) to prove unsatisfiability of \CNF
+% formulas, a \abbre{QBF} solver (e.g.,
+% \name{GhostQ}~\cite{Klieber2014} and
+% \name{DepQBF}~\cite{Lonsing2017}) to prove satisfiability and
+% invalidity of quantified Boolean formulas, a \SMT solver
+% (e.g \name{CVC4}~\cite{Barrett2011}, \name{veriT}~\cite{bouton2009},
+% and \name{Z3}~\cite{DeMoura2008}) to prove unsatisfiability of
+% formulas from first-order logic with theories, and a prover for
+% validity of formulas from first-order logic with equality
+% (e.g., \name{E}~\cite{Schulz:AICOM-2002},
+% \name{leanCoP}~\cite{Otten2008},
+% \Metis~\cite{hurd2003first},
+% \name{SPASS}~\cite{Weidenbach2009} and
+% \name{Vampire}~\cite{Riazanov1999}), high-order logic (e.g.,
+% \name{Leo-II}~\cite{Benzmuller2008} and
+% \name{Satallax}~\cite{Brown2012}) or intuitionistic logic (e.g.,
+% \name{ileanCoP}~\cite{Otten2008},
+% \name{JProver}~\cite{Schmitt2001}, and
+% \name{Gandalf}~\cite{Tammet1997}), among others. On the other hand,
+% we have the proof checkers, interactive theorem provers (henceforth
+% \ITP) or proof assistants (e.g., \Agda~\cite{agdateam},
+% \name{Coq}~\cite{coqteam},
+% \name{Isabelle}~\cite{paulson1994isabelle}, and
+% \name{HOL4}~\cite{norrish2007hol}).
+
+
+\name{Isabelle/HOL} incorporated \Metis as a macro-step
+reconstruction tool for explaining proof steps (usually \CNF goals)
+replied from other \ATPs like \name{CVC4}, \name{Vampire}, or
+\name{Z3} (more details in Ref.~\cite{paulson2007source}).
+\citeauthor{Farber2015} in \cite{Farber2015} present tactic based on \Metis for
+\name{HOL Light} capable to challenge others tactics like \emph{MESON}
+or the \emph{leanCoP} tactic~\cite{Farber2016}.
+
 \name{Sledgehammer} is a tool for \name{Isabelle} proof assistant
 \cite{paulson1994isabelle} that provides a full integration of
 automatic theorem provers including \ATPs (see, for example,
@@ -66,19 +109,21 @@ equational logic \cite{hillenbrand1997}.
 \citeauthor{foster2011integrating}~\cite{foster2011integrating}
 integrate \name{Waldmeister} into \Agda
 \cite{agdateam}. This integration requires a proof-reconstruction
-step, but authors' approach is restricted to pure equational logic
+step, but authors' approach is restricted to pure equation logic
 --also called identity theory~\cite{humberstone2011}-- that is,
 first-order logic with equality but no other predicate symbols and
 no functions symbols~\cite{appel1959}.
 
-% Kanso and Setzer~\cite{kanso2016light} integrate \name{Z3} in \Agda
-% but they also integrate the propositional fragment of the \name{E} prover in
-% \cite{Kanso2012}. They cataloged these two integration as
-% \emph{Oracle and Reflection} and \emph{Oracle and Justification}, respectively.
-% Their integration with the \name{E} prover is the most related work with our
-% approach found at the moment while we write this document. Besides the use
-% of the same \ITP, crucial differences easily arise like decidability of
-% propositional logic using semantics that we do not take into account for the
-% reason we describe later on in Section~\ref{sec:conclusions}.
+Kanso and Setzer~\cite{kanso2016light} integrate the propositional
+fragment of \name{EProver} in \Agda. In this work, the authors
+translate automatically propositional logic problems written in \Agda
+to \TPTP problems. By calling an external wrapper of the ATP, this
+tool gets a \TSTP derivation. The tool parses the \name{EProver}
+derivation and outputs \Agda code.
+We are able to say their proof-reconstruction is almost
+similar as the approach presented in Section~\ref{ssec:workflow}.
+Nevertheless, Kanso and Setzer aim to justify some of the inference
+rules by using propositional semantics instead of only syntactic
+treatment as shown above.
 
 \end{document}
