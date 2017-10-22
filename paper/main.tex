@@ -1,19 +1,28 @@
-\documentclass[runningheads]{llncs}
+\documentclass[
+    envcountsect    %% In order to provide the usual behaviour expected
+                    %% from \newtheorem
+  , runningheads
+  ]{llncs}
+
+\spnewtheorem{mainth}[theorem]{Main Theorem}{\bfseries}{\rmfamily}
+
 \usepackage[numbers]{natbib}
 
 \usepackage{subfiles}
 
-\usepackage{needspace}
-%https://tex.stackexchange.com/questions/28203/
-%thmtools-how-to-prevent-pagebreak-between-theorem-and-proof
+\usepackage{needspace}  %% https://tex.stackexchange.com/questions/28203/
+                        %% thmtools-how-to-prevent-pagebreak-between-theorem-
+                        %% and-proof
 
 \setcounter{tocdepth}{5}
 \usepackage{graphicx}
 \usepackage{array}
+
 \usepackage{bussproofs}
 \newenvironment{bprooftree}
   {\leavevmode\hbox\bgroup}
   {\DisplayProof\egroup}
+
 \def\extraVskip{3pt}
 \def\labelSpacing{3pt}
 \def\defaultHypSeparation{\hskip.2in}
@@ -120,11 +129,18 @@
 \usepackage[hyphens]{url}
 \usepackage{bm}
 
-\newenvironment{sketchproof}{%
-  \renewcommand{\proofname}{Sketch of the Proof}\proof}{\endproof}
-
 \usepackage{amssymb}
 \usepackage{amsmath}
+
+\let\proof\relax      %% https://tex.stackexchange.com/questions/43835/
+\let\endproof\relax   %% conflict-between-amsthm-and-some-other-package
+\usepackage{amsthm}
+
+\newenvironment{sketchproof}{%
+  \renewcommand{\proofname}{Sketch of the Proof}\proof}{\endproof}
+\renewcommand\qedsymbol{$\blacksquare$}
+
+
 %\usepackage{stmaryrd} %new symbol font for tcs
 \usepackage{color}
 \usepackage{fancybox}
@@ -132,7 +148,6 @@
 % -------------------------------------------------------------------
 % Unicode Characters.
 % -------------------------------------------------------------------
-
 
 \usepackage{textcomp}
 \usepackage[verbose]{newunicodechar}
@@ -267,7 +282,6 @@
 \newcommand{\fuh}{\fun{uh}}
 \newcommand{\tunshunt}{\fun{thm-uh}}
 
-
 \newcommand{\fstrip}{\fun{strip}}
 \newcommand{\tstrip}{\fun{thm-strip}}
 
@@ -282,7 +296,6 @@
 
 \newcommand{\fclausify}{\fun{clausify}}
 \newcommand{\tclausify}{\fun{thm-clausify}}
-
 
 \newcommand{\fsimplify}{\fun{simplify}}
 \newcommand{\tsimplify}{\fun{thm-simplify}}
@@ -322,14 +335,10 @@
 \mainmatter
 
 \title{Proof-Reconstruction in Type Theory for Propositional Logic}
-
-% \titlerunning{Proof-Reconstruction in Type Theory for Propositional Logic}
-
 \author{Jonathan Prieto-Cubides%
 %\and Andr\'es Sicard-Ram\'irez
 }
 %
-\authorrunning{Proof-Reconstruction in Classical Propositional Logic}
 
 \institute{Logic and Computation Research Group,\\
 Universidad EAFIT, Medell\'in, Colombia\\

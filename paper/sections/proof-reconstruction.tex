@@ -58,8 +58,9 @@ that $m$ has $\abbre{M}$ type.
 Types are written using small caps.
 We use \Prop type for propositions and the dependent type, $Γ ⊢ φ$ for
 theorems where $Γ$ has $\abbre{List}~\Prop$ type, and $φ$ has type $\Prop$.
-$\abbre{List}$ type is the usual inductive type for lists. For syntactical
-equivalence, we write $φ ≡ ψ$ for $φ : \Prop$ and $ψ : \Prop$.
+$\abbre{List}$ type is the usual inductive type for lists.
+For syntactical equivalence, we write the equality as $φ ≡ ψ$
+for $φ : \Prop$ and $ψ : \Prop$.
 
 % ...................................................................
 
@@ -67,15 +68,13 @@ equivalence, we write $φ ≡ ψ$ for $φ : \Prop$ and $ψ : \Prop$.
 \subsection{Structural recursion}
 \label{ssec:structural-recursion}
 
-To emulate \Metis' inference rules in type theory,
-we observed that transformations performed by some rules are given
-by \emph{general recursive} functions.
-Algorithms based on general recursions can not be translated
-directly in type theory since it is not a guarantee they terminate.
-For that reason, we follow the technique described
-in~\cite{Bertot2004} to avoid termination problems by modifying the
-recursive
-functions to be \emph{structural recursive}.
+To emulate \Metis' inference rules in type theory, we observed that
+transformations performed by some rules are given by \emph{general recursive}
+functions. Algorithms based on general recursions can not be translated
+directly in type theory since it is not a guarantee they terminate. For that
+reason, we follow the technique described in~\cite{Bertot2004} to avoid
+termination problems by modifying the recursive functions to be
+\emph{structural recursive}.
 % (see \cite{Coquand1992,Abel2002,Bove2005} for more details).
 
 This paper adopts the notion of \emph{structurally smaller} from

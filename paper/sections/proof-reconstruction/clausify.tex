@@ -43,10 +43,10 @@ fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
   \end{align*}
 \end{definition}
 
-\begin{theorem}[thm-clausify]
+\begin{mainth}[thm-clausify]
 \label{thm:thm-clausify}
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fclausify~φ~ψ$.
-\end{theorem}
+\end{mainth}
 
 \begin{proof} If $φ ≡ ψ$, this lemmas follows after applying $\fsubst$
 lemma. Otherwise, we use Theorem~\ref{thm:thm-reorder-and-or} and Theorem~\ref{thm:thm-cnf}.
