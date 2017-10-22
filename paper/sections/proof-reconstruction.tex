@@ -113,13 +113,18 @@ Let us consider the following example to exhibit the bounded technique
 mentioned above for the \fuh function presented in the proposed version
 for the \Metis \strip inference.
 
-\begin{align}
-  \label{eq:uh-definition}
-    &\fuh_{0} &&: \Prop → \Prop\\
-    &\fuh_{0}\ (φ₁ ⇒ (φ₂ ⇒ φ₃)) &&= \fuh_{0}((φ₁ ∧ φ₂) ⇒ φ₃)\\
-    &\fuh_{0}\ (φ₁ ⇒ (φ₂ ∧ φ₃)) &&= \fuh_{0}(φ₁ ⇒ φ₂) ∧ \fuh_{0}(φ₁ ⇒ φ₃)\\
-    &\fuh_{0}\ φ &&= φ
-\end{align}
+% \begin{functiondef}{$\fuh_{0}$ : \Prop → \Prop}
+%   \label{eq:uh-definition}
+
+% \begin{array}
+%     &\fuh_{0} &&: \Prop → \Prop\\
+%     &\fuh_{0}\ (φ₁ ⇒ (φ₂ ⇒ φ₃)) &&= \fuh_{0}((φ₁ ∧ φ₂) ⇒ φ₃)\\
+%     &\fuh_{0}\ (φ₁ ⇒ (φ₂ ∧ φ₃)) &&= \fuh_{0}(φ₁ ⇒ φ₂) ∧ \fuh_{0}(φ₁ ⇒ φ₃)\\
+%     &\fuh_{0}\ φ &&= φ
+% \end{array}
+
+% \end{functiondef}
+
 
 From the definition above, the size of the argument, $(φ₁ ∧ φ₂) ⇒ φ₃$,
 is not structurally smaller than the input formula, $φ₁ ⇒ (φ₂ ⇒ φ₃)$,
@@ -270,31 +275,31 @@ $\rm{rule}$ function.
     \textbf{\Metis rule} & \textbf{Purpose} &\textbf{Theorem}\\ \hline
     \texttt{canonicalize}
       &Normalization of the formula
-      &Thm.~\ref{thm:canonicalizeThm}
+      &Thm.~\ref{thm:canonicalize}
     \\
     \texttt{clausify}
       &Performs clausification
-      &Thm.~\ref{thm:clausifyThm}
+      &Thm.~\ref{thm:clausify}
     \\
     \hyperlink{atp-conjunct}{\texttt{conjunct}}
       &Takes a formula from a conjunction
-      &Thm.~\ref{thm:conjunctThm}
+      &Thm.~\ref{thm:conjunct}
     \\
     \texttt{negate}
       &Negate the formula
-      &Thm.~\ref{thm:negateThm}
+      &Thm.~\ref{thm:negate}
     \\
     \texttt{resolve}
       &A general form of the resolution theorem
-      &Thm.~\ref{thm:resolveThm}
+      &Thm.~\ref{thm:resolve}
     \\
     \texttt{simplify}
       &Simplify definitions and theorems
-      &Thm.~\ref{thm:simplifyThm}
+      &Thm.~\ref{thm:simplify}
     \\
     \texttt{strip}
       &Strip a goal into subgoals
-      &Thm.~\ref{thm:stripThm}
+      &Thm.~\ref{thm:strip}
     \\[1ex]
     \hline
     \end{tabular}}
