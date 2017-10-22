@@ -25,10 +25,11 @@ To prove the correctness of the process mentioned above,
 we need to establish some lemmas before introduce our main goal of this
 part, Theorem~\ref{thm:thm-strip}.
 
-\begin{lemma}[invUhLem]
+
+\begin{mainlemma}
   \label{lem:inv-uh-lem}
   If $Γ ⊢ \fuh\ φ$ then $Γ ⊢ φ$.
-\end{lemma}
+\end{mainlemma}
 
 \begin{sketchproof}
 Use induction on the cases defined by the outcome of the
@@ -157,7 +158,7 @@ We present some cases but for a complete proof, we refer the reader to~\cite{Agd
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
   \RightLabel{lem-inv-uh}
   \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
-  \RightLabel{lem-inv-strip}
+  \RightLabel{by hip.}
   \UnaryInfC{$Γ ⊢ φ₁$}
   \end{bprooftree}
 \end{equation*}
@@ -175,7 +176,7 @@ introduction rule for conjunction connective, the result follows.
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
   \RightLabel{lem-inv-uh}
   \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
-  \RightLabel{lem-inv-strip}
+  \RightLabel{by hip.}
   \UnaryInfC{$Γ ⊢ φ₁$}
     \end{bprooftree}
 \end{equation*}
@@ -193,7 +194,7 @@ introduction rule for conjunction connective, the result follows.
   \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
   \RightLabel{$⇒$-elim}
   \BinaryInfC{$Γ ⊢ \fstrip~φ₂~n$}
-  \RightLabel{lem-inv-strip.}
+  \RightLabel{by hip.}
   \UnaryInfC{$Γ ⊢ φ₂$}
   \end{bprooftree}
 \end{equation*}
@@ -213,7 +214,7 @@ introduction rule for conjunction connective, the result follows.
   \UnaryInfC{$Γ , φ₁ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
   \RightLabel{⇒-elim}
   \BinaryInfC{$Γ , φ₁ ⊢ \fstrip~φ₂~n$}
-  \RightLabel{lem-inv-strip}
+  \RightLabel{by hip}
   \UnaryInfC{$Γ , φ₁ ⊢ φ₂$}
   \RightLabel{⇒-intro.}
   \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$}
@@ -234,7 +235,7 @@ De Morgan Laws.
 \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n)$}
 \RightLabel{lem-inv-uh,}
 \UnaryInfC{$Γ ⊢ \fstrip~¬ φ₁~n$}
-\RightLabel{lem-inv-strip}
+\RightLabel{by hip.}
   \UnaryInfC{$Γ ⊢ ¬φ₁$}
 \end{bprooftree}
 \end{equation*}
@@ -254,7 +255,7 @@ De Morgan Laws.
   \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \fstrip~¬ φ₂~n$}
   \RightLabel{⇒-elim}
   \BinaryInfC{$Γ ⊢ \fstrip~¬ φ₂~n$}
-  \RightLabel{lem-inv-strip.}
+  \RightLabel{by hip.}
   \UnaryInfC{$Γ ⊢ ¬ φ₂$}
   \end{bprooftree}
 \end{equation*}
@@ -277,20 +278,18 @@ of \Metis to prove goals.
 
 \begin{mainth}[thm-strip]
 \label{thm:thm-strip}
- If $s_i$ are the subgoals of the goal $φ$ for $i=1,\cdots,n$ and
- $\{ Γ ⊢ s_i \}_{i =1}^n$, then $Γ ⊢ φ$.
+ If $s_1$ and $s_2$ are the subgoals of the goal $φ$, $Γ ⊢ s_1$, and $Γ ⊢ s_2$ then $Γ ⊢ φ$.
 \end{mainth}
 
 \begin{proof}
 \begin{equation*}
   \begin{bprooftree}
-  \AxiomC{$\left\{ Γ ⊢ s_i \right\}_{i=1}^n$}
+  \AxiomC{$ Γ ⊢ s_1 $}
   \RightLabel{∧-intro}
-  \UnaryInfC{$Γ ⊢ \bigwedge_{i=1}^n s_i$}
-
-  \AxiomC{$\fstrip~φ) ≡ \bigwedge_{i=1}^n s_i $}
+  \UnaryInfC{$Γ ⊢ s_1\wedge s_2$}
+  \AxiomC{$\fstrip~φ~n ≡ s_1\wedge s_2 $}
   \RightLabel{subst}
-  \BinaryInfC{$Γ ⊢ \fstrip~φ)$}
+  \BinaryInfC{$Γ ⊢ \fstrip~φ~n$}
   \RightLabel{lem-inv-strip.}
   \UnaryInfC{$Γ ⊢ φ$}
 \end{bprooftree}
