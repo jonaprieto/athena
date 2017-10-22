@@ -1,0 +1,61 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+\subsubsection{Splitting a conjunct.}
+\label{sssec:splitting-a-conjunct}
+
+The \conjunct rule extracts from a
+conjunction one of its conjuncts. This rule is a generalization of the
+projection rules for the conjunction connective as the
+following \TSTP excerpt shows.
+
+\begin{verbatim}
+fof(normalize_1, plain, p & q & (r | ~ p),
+  inference(canonicalize, [], [x])).
+fof(normalize_2, plain, q,
+  inference(conjunct, [], [normalize_1])).
+fof(normalize_2, plain, (r | ~ p),
+  inference(conjunct, [], [normalize_1])).
+\end{verbatim}
+
+\begin{definition}[conjunct]
+  \label{def:conjunct}
+  \begin{align*}
+    \begin{split}
+    &\fconjunct : \Prop \to \Prop \to \Prop\\
+    &\fconjunct(φ, ψ) =
+      \begin{cases}
+          ψ, &\text{ if }φ ≡ ψ\\
+          ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ , }ψ ≡ \fconjunct(φ₁, ψ)\\
+          ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ , }ψ ≡ \fconjunct(φ₂, ψ)\\
+          φ, &\text{ otherwise.}
+        \end{cases}
+    \end{split}
+  \end{align*}
+\end{definition}
+
+\begin{theorem}[thm-conjunct]
+  \label{thm:thm-conjunct}
+  If $Γ ⊢ φ$ and $ψ  : \Prop$ then $Γ ⊢ \fconjunct(φ, ψ)$.
+\end{theorem}
+\begin{proof}\hspace{2cm}
+\begin{itemize}
+  \item For the case $φ ≡ ψ$, $Γ ⊢ \fconjunct(φ, ψ)$ normalizes to $Γ ⊢ ψ$.
+Then, we get the desire conclusion by applying the $\fsubst$ theorem.
+  \item If the proposition $φ$ is a conjunction, and we can get $ψ ≡ \fconjunct(φ_{i}, ψ)$ for some $i = 1,\ 2$, then,
+
+\begin{equation*}
+  \begin{bprooftree}
+  \AxiomC{$Γ ⊢ φ₁ ∧ φ₂$}
+  \RightLabel{∧-proj$_{i}$}
+  \UnaryInfC{$Γ ⊢ φ_{i}$}
+  \UnaryInfC{$Γ ⊢ \fconjunct(φ_{i}, ψ)$}
+  \AxiomC{$ψ ≡ \fconjunct(φ_{i}, ψ)$}
+  \RightLabel{subst.}
+  \BinaryInfC{$Γ ⊢ ψ$}
+  \end{bprooftree}
+\end{equation*}
+\item The last case follows trivially by using the same hypothesis.
+\end{itemize}
+\end{proof}
+\end{document}

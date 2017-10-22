@@ -1,0 +1,110 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+\subsubsection{Simplification.}
+\label{sssec:simplify}
+
+The \simplify rule is an inference that performs simplification of
+definitions and tautologies. This rule
+transverses a list of previous derivations by applying different theorems
+(e.g., \emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive
+syllogism}) to get a contradiction in the first place, or a smaller
+convenient formula
+
+% To emulate this rule, we use theorems from Section~\ref{sssec:canonicalize},
+% Section~\ref{sssec:conjunct}.
+The following \TSTP excerpt is an example of the \simplify rule.
+
+% \begin{figure}
+\begin{verbatim}
+fof(normalize_0_1, plain, (g | (~ a & k)),
+    inference(conjunct, [], [normalize_0_0])).
+fof(normalize_0_2, plain, (~ g | q),
+    inference(conjunct, [], [normalize_0_0])).
+fof(normalize_0_3, plain, (~ q),
+  inference(conjunct, [], [normalize_0_0])).
+fof(normalize_0_4, plain, (~ g),
+    inference(simplify, [], [normalize_0_2, normalize_0_3])).
+fof(normalize_0_5, plain, (~ k),
+inference(conjunct, [], [normalize_0_0])).
+fof(normalize_0_6, plain, ($false),
+    inference(simplify, [],
+              [normalize_0_1, normalize_0_4, normalize_0_5])).
+\end{verbatim}
+% \caption{Example of \simplify rule in a \TSTP derivation of \Metis.}
+% \end{figure}
+
+%TODO check canonicalize can reduce a conjunction into one smaller.
+\begin{definition}[simplify]
+\label{def:simplify}
+For $i,\, j = 1, 2$, $i\neq j$ and $γ : \Prop$,
+\begin{align*}
+    \begin{split}
+      &\fsimplify : \Prop → \Prop → \Prop → \Prop\\
+      &\fsimplify(φ₁, φ₂, ψ) =%\\
+      % &\hspace{4mm}
+      \begin{cases}
+        ψ,          &\text{ if }φᵢ ≡ ψ\\
+        ⊥,          &\text{ if }φᵢ ≡ ⊥\\
+        φⱼ,         &\text{ if }φᵢ ≡ ⊤\\
+        γ,          &\text{ if }φᵢ ≡ φⱼ ⇒ γ\\
+        γ,          &\text{ if }φᵢ ≡ γ ⇒ \fnnf(¬ φⱼ)\\
+        γ,          &\text{ if }φᵢ ≡ \fnnf(¬ φⱼ) ∨ γ\\
+        ⊥,          &\text{ if } \fnnf(¬ φⱼ) ≡ \fconjunct(φᵢ, \fnnf(¬ φⱼ))\\
+      % φ          &\text{ if }\fconjunct(nnf(¬ φᵢ), φⱼ) ≡  φⱼ\\
+        ⊥,          &\text{ if } ¬ φⱼ ≡ \fcanonicalize(φᵢ, ¬ φⱼ) \\
+        φ₁,         &\text{ otherwise.}\\
+      \end{cases}%\hspace{10cm}
+    \end{split}
+\end{align*}
+\end{definition}
+
+\begin{remark}
+Besides the fact that $\List\ \Prop \to \Prop$ is the type that coincides
+with the \simplify rule in \TSTP derivations, we choose a different
+option. In the translation from \TSTP to \Agda, we take the list of
+derivations and use a classical left folding ($\rm{foldl}$) with
+$\fsimplify$ function over the list of $φ₁, φ₂, \cdots, φₙ$
+that avoids us to define a new sequent type to
+support \List \Prop type in the conclusion side.
+\end{remark}
+
+\begin{theorem}[thm-simplify] % (fold)
+  \label{thm:thm-simplify}
+For $i=1,\, 2, \cdots, n$, $Γ ⊢ φᵢ$ and $ψ : \Prop$ then
+if $n > 2$, $Γ ⊢ \fsimplify(γ_{n-2}, φ_{n}, ψ)$ where $γ_{i} = \fsimplify(φ_{i}, φ_{i+1}, ψ)$
+else $Γ ⊢ \fsimplify(φ₁, φ₂, ψ)$.
+\end{theorem}
+
+% \begin{sketchproof}
+% If $Γ ⊢ φᵢ$ for $i=1, \cdots, n$, we prove this theorem by induction on $n$.
+% Let us show one case.
+% \begin{itemize}
+%   \item If $n ==2$ and $(canonicalize(φ₁, ¬ φ₂) ≡ ¬ φ₂)$, we need to prove
+%   $Γ ⊢ simplify(φ₁, φ₂, ψ)$.
+% \begin{equation*}
+%   \begin{bprooftree}
+%     \AxiomC{$Γ ⊢ φ₁$}
+%     \RightLabel{thm-canonicalize}
+%     \UnaryInfC{$Γ ⊢ canonicalize(φ₁, ¬φ₂)$}
+%     \AxiomC{$¬ φ₂ ≡ canonicalize(φ₁, ¬ φ₂)$}
+%     \RightLabel{subst}
+%     \BinaryInfC{$Γ ⊢ ¬ φ₂ $}
+%   \end{bprooftree}
+%   \begin{bprooftree}
+%   \AxiomC{$Γ ⊢ ¬ φ₂ $}
+%   \AxiomC{$Γ ⊢ φ₂$}
+%   \RightLabel{¬-elim}
+%   \BinaryInfC{$Γ ⊢ ⊥$}
+%   \RightLabel{by def.}
+%   \UnaryInfC{$Γ ⊢ simplify(φ₁, φ₂, ψ)$}
+%   \end{bprooftree}
+% \end{equation*}
+
+% \end{itemize}
+% \end{sketchproof}
+
+% subsubsection simplify (end)
+% -------------------------------------------------------------------
+
+\end{document}

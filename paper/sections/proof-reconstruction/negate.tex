@@ -1,0 +1,24 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+\subsubsection{Negating subgoals.}
+\label{sssec:negate}
+
+Each proof of a subgoal is a refutation, thereby each proof assumes
+the negation of its subgoal. The \negate rule
+assumes the negation of such subgoals, and
+appears after applying the \strip inference to the goal.
+
+\begin{verbatim}
+fof(goal, conjecture, (p & q)).
+fof(subgoal_0, plain, (p), inference(strip, [], [goal])).
+fof(subgoal_1, plain, (p => q), inference(strip, [], [goal])).
+fof(negate_0_0, plain, (~ p), inference(negate, [], [subgoal_0])).
+\end{verbatim}
+
+To emulate this rule, we introduce the negation
+of the subgoal by using $assume$ rule from the inferences in
+Fig.~\ref{fig:CPL-inference-rules}.
+
+
+\end{document}

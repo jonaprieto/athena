@@ -1,0 +1,302 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+\subsubsection{Stripping a goal.}
+\label{sssec:strip-a-goal}
+
+To prove a goal, \Metis splits the goal into
+disjoint cases. This process produces a list of new subgoals, the
+conjunction of these subgoals implies the goal. Then, a proof of the
+goal becomes, in smaller proofs, one refutation for each subgoal.
+These subgoals are introduced in the \TSTP derivation with the \strip
+inference rule as we show in the following excerpt.
+
+\begin{verbatim}
+fof(goal, conjecture, ((p & r) & q)).
+fof(subgoal_0, plain, p,
+    inference(strip, [], [goal])).
+fof(subgoal_1, plain, p => r,
+    inference(strip, [], [goal])).
+fof(subgoal_2, plain, (p & r) => q,
+    inference(strip, [], [goal])).
+\end{verbatim}
+
+To prove the correctness of the process mentioned above,
+we need to establish some lemmas before introduce our main goal of this
+part, Theorem~\ref{thm:thm-strip}.
+
+\begin{lemma}[lem-inv-uh]
+  \label{lem:uh}
+  If $Γ ⊢ \fuh\ φ$ then $Γ ⊢ φ$.
+\end{lemma}
+
+\begin{sketchproof}
+Use induction on the cases defined by the outcome of the
+$\fuh$ function in Eq.~(\ref{eq:uh-structured}).
+\begin{itemize}
+  \item If $n = 0$, by definition we conclude $Γ ⊢ φ$.
+  \item If $n = 1$, we apply the following theorem proved in~\cite{AgdaProp},
+    \begin{equation*}
+    \texttt{∧⇒\rm{-to-}⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).
+    \end{equation*}
+  \item For $n > 1$, we use induction on the structure of the second
+        argument.
+\vskip 2mm
+\begin{itemize}
+
+\item Case $φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)$.
+\begin{equation*}
+  \begin{bprooftree}
+  \AxiomC{$Γ ⊢ \fuh(φ₁ ⇒ (φ₂ ⇒ φ₃), n)$}
+  \RightLabel{by def.}
+  \UnaryInfC{$Γ ⊢ \fuh(φ₁ ⇒ (φ₂ ⇒ φ₃), n-1)$}
+  \RightLabel{lem-inv-uh}
+  \UnaryInfC{Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃}
+  \RightLabel{∧⇒\rm{-to-}⇒⇒.}
+  \UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃)}
+  \end{bprooftree}
+\end{equation*}
+
+\item Case $φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)$.
+\begin{equation*}
+  \scalebox{0.95}{
+  ($\mathcal{D}_1$)
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ \fuh(φ₁ ⇒ φ₂, n) ∧ \fuh(φ₁ ⇒ φ₃, n)$}
+    \RightLabel{∧-proj₁}
+    \UnaryInfC{$Γ ⊢ \fuh(φ₁ ⇒ φ₂, n)$}
+    \RightLabel{by def.}
+    \UnaryInfC{$Γ ⊢ \fuh(φ₁ ⇒ φ₂, n-1)$}
+    \RightLabel{lem-inv-uh,}
+    \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$}
+  \end{bprooftree}
+  }
+\end{equation*}
+
+\begin{equation*}
+  (\mathcal{D}_2)
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ \fuh(φ₁ ⇒ φ₂) ∧ \fuh(φ₁ ⇒ φ₃)$}
+    \RightLabel{∧-proj₂}
+    \UnaryInfC{$Γ ⊢ \fuh(φ₁ ⇒ φ₃, n)$}
+    \RightLabel{by def.}
+    \UnaryInfC{$Γ ⊢ \fuh(φ₁ ⇒ φ₃, n-1)$}
+    \RightLabel{lem-inv-uh.}
+    \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₃$}
+    \end{bprooftree}
+\end{equation*}
+
+Finally, using the theorem \texttt{⇒∧⇒\rm{-to-}⇒∧} from~\cite{AgdaProp},
+\begin{equation*}
+  \texttt{⇒∧⇒\rm{-to-}⇒∧}\ :\ Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃) → Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃),
+\end{equation*}
+\begin{equation*}
+  \begin{bprooftree}
+  \AxiomC{$\mathcal{D}_1$}
+  \AxiomC{$\mathcal{D}_2$}
+  \RightLabel{∧-intro}
+  \BinaryInfC{$Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃)$}
+  \RightLabel{\tt ⇒∧⇒\rm{-to-}⇒∧.}
+  \UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃)}
+  \end{bprooftree}
+\end{equation*}
+\item Other cases are proved in a similar way.
+\end{itemize}
+\end{itemize}
+\end{sketchproof}
+
+We now define the $\fstrip$ function that yields the conjunction of
+subgoals that implies the goal of the problem in the \Metis \TSTP derivations.
+
+\begin{definition}[strip]
+\label{def:strip}
+\label{eq:strip}
+
+\begin{equation}
+\begin{aligned}
+&\hspace{.495mm}\fstrip : \Prop → \Nat → \Prop\\
+&\begin{array}{lll}
+\fstrip &(φ₁ ∧ φ₂)     ~(\suc~n) &= \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)\\
+\fstrip &(φ₁ ∨ φ₂)     ~(\suc~n) &= \fuh~(¬ φ₁ ⇒ \fstrip~φ₂~n)\\
+\fstrip &(φ₁ ⇒ φ₂)     ~(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip~φ₂~n)\\
+\fstrip &(¬ (φ₁ ∧ φ₂)) ~(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip~¬ φ₂~n)\\
+\fstrip &(¬ (φ₁ ∨ φ₂)) ~(\suc~n) &= \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)\\
+\fstrip &(¬ (φ₁ ⇒ φ₂)) ~(\suc~n) &= \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~¬ φ₂~n)\\
+\fstrip &(¬ ¬ φ₁)      ~(\suc~n) &= \fuh~(\fstrip~φ₁~n)\\
+\fstrip &(¬ ⊥)         ~(\suc~n) &= ⊤\\
+\fstrip &(¬ ⊤)         ~(\suc~n) &= ⊥\\
+\fstrip &φ             ~n &= φ
+\end{array}
+\end{aligned}
+\end{equation}
+\end{definition}
+
+% The definition above has termination problems since it is not
+% a structural recursion. Therefore, we have reformulated the equation
+% above to solve such an issue following the technique
+% described in Section~\ref{ssec:structural-recursion}.
+% We refer to $\fstrip$ as the function after applying the process mentioned
+% above here and below unless otherwise stated.
+
+\begin{lemma}[lem-inv-strip]
+If $Γ ⊢ \fstrip~φ$ then $Γ ⊢ φ$.
+\label{lem:lem-inv-strip}
+\end{lemma}
+
+\begin{sketchproof}
+The proof is by induction on the structure of the
+formula~$φ$ by following the cases in Eq.~(\ref{eq:strip}).
+We present some cases but for a complete proof, we refer the reader to~\cite{AgdaMetis}.
+
+\begin{itemize}
+\item Case $φ ≡ ¬ ¬ φ₁$.
+\begin{equation*}
+  \begin{bprooftree}
+ \AxiomC{$Γ ⊢ \fstrip~(¬¬φ₁)~(\suc~n)$}
+  \RightLabel{by def.}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
+  \RightLabel{lem-inv-uh}
+  \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
+  \RightLabel{lem-inv-strip}
+  \UnaryInfC{$Γ ⊢ φ₁$}
+  \end{bprooftree}
+\end{equation*}
+
+\item Case $φ ≡ φ₁ ∧ φ₂$. We get a proof for each conjunct and using the
+introduction rule for conjunction connective, the result follows.
+
+\begin{equation*}
+(\mathcal{D})\hspace{3mm}
+  \begin{bprooftree}
+  \AxiomC{$Γ ⊢ \fstrip~(φ₁ ∧ φ₂)~(\suc~n)$}
+  \RightLabel{by def.}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
+  \RightLabel{∧-proj₁}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
+  \RightLabel{lem-inv-uh}
+  \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
+  \RightLabel{lem-inv-strip}
+  \UnaryInfC{$Γ ⊢ φ₁$}
+    \end{bprooftree}
+\end{equation*}
+
+\begin{equation*}
+  \begin{bprooftree}
+  \AxiomC{$\mathcal{D}$}
+  \UnaryInfC{Γ ⊢ φ₁}
+  \AxiomC{$Γ ⊢ \fstrip~(φ)~(\suc~n)$}
+  \RightLabel{by def.}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
+  \RightLabel{$∧$-proj$₂$}
+  \UnaryInfC{$Γ ⊢ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
+  \RightLabel{lem-inv-uh}
+  \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
+  \RightLabel{$⇒$-elim}
+  \BinaryInfC{$Γ ⊢ \fstrip~φ₂~n$}
+  \RightLabel{lem-inv-strip.}
+  \UnaryInfC{$Γ ⊢ φ₂$}
+  \end{bprooftree}
+\end{equation*}
+
+\item Case $φ ≡ φ₁ ⇒ φ₂$.
+\begin{equation*}
+  \begin{bprooftree}
+  \AxiomC{}
+  \RightLabel{assume φ₁}
+  \UnaryInfC{$Γ , φ₁ ⊢ φ₁$}
+  \AxiomC{$Γ ⊢ \fstrip~(φ)~(\suc~n)$}
+  \RightLabel{by def.}
+  \UnaryInfC{$Γ ⊢ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
+  \RightLabel{lem-inv-uh}
+  \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
+  \RightLabel{weaken φ₁}
+  \UnaryInfC{$Γ , φ₁ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
+  \RightLabel{⇒-elim}
+  \BinaryInfC{$Γ , φ₁ ⊢ \fstrip~φ₂~n$}
+  \RightLabel{lem-inv-strip}
+  \UnaryInfC{$Γ , φ₁ ⊢ φ₂$}
+  \RightLabel{⇒-intro.}
+  \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$}
+  \end{bprooftree}
+\end{equation*}
+
+\item Case $φ ≡ ¬ (φ₁ ∨ φ₂)$. We show that $Γ ⊢ ¬ φ₁$ and $Γ ⊢ ¬ φ₂$.
+The result follows by introducing the conjunction and applying
+De Morgan Laws.
+
+\begin{equation*}
+(\mathcal{D})\hspace{3mm}
+\begin{bprooftree}
+\AxiomC{$Γ ⊢ \fstrip~(φ)~(\suc~n)$}
+\RightLabel{by def.}
+\UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
+\RightLabel{∧-proj₁}
+\UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n)$}
+\RightLabel{lem-inv-uh,}
+\UnaryInfC{$Γ ⊢ \fstrip~¬ φ₁~n$}
+\RightLabel{lem-inv-strip}
+  \UnaryInfC{$Γ ⊢ ¬φ₁$}
+\end{bprooftree}
+\end{equation*}
+\end{itemize}
+\end{sketchproof}
+
+\begin{equation*}
+  \begin{bprooftree}
+  \AxiomC{$\mathcal{D}$}
+  \UnaryInfC{$Γ ⊢ ¬ φ₁$}
+  \AxiomC{$Γ ⊢ \fstrip~(φ)~(\suc~n)$}
+  \RightLabel{by def.}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
+  \RightLabel{∧-proj₂}
+  \UnaryInfC{$Γ ⊢ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
+  \RightLabel{lem-inv-uh}
+  \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \fstrip~¬ φ₂~n$}
+  \RightLabel{⇒-elim}
+  \BinaryInfC{$Γ ⊢ \fstrip~¬ φ₂~n$}
+  \RightLabel{lem-inv-strip.}
+  \UnaryInfC{$Γ ⊢ ¬ φ₂$}
+  \end{bprooftree}
+\end{equation*}
+
+\begin{lemma}[subst]
+  \label{lem:subst}
+  Substitution theorem.
+\begin{equation*}
+  \label{eq:substitution-theorem}
+  \begin{bprooftree}
+  \AxiomC{$Γ ⊢ φ$}   \AxiomC{$ψ ≡ φ$}
+  \RightLabel{subst.}
+  \BinaryInfC{$Γ ⊢ ψ$}
+  \end{bprooftree}
+\end{equation*}
+\end{lemma}
+
+We can now formulate the result that justifies the stripping strategy
+of \Metis to prove goals.
+
+\begin{theorem}[thm-strip]
+\label{thm:thm-strip}
+ If $s_i$ are the subgoals of the goal $φ$ for $i=1,\cdots,n$ and
+ $\{ Γ ⊢ s_i \}_{i =1}^n$, then $Γ ⊢ φ$.
+\end{theorem}
+
+\begin{proof}
+\begin{equation*}
+  \begin{bprooftree}
+  \AxiomC{$\left\{ Γ ⊢ s_i \right\}_{i=1}^n$}
+  \RightLabel{∧-intro}
+  \UnaryInfC{$Γ ⊢ \bigwedge_{i=1}^n s_i$}
+
+  \AxiomC{$\fstrip~φ) ≡ \bigwedge_{i=1}^n s_i $}
+  \RightLabel{subst}
+  \BinaryInfC{$Γ ⊢ \fstrip~φ)$}
+  \RightLabel{lem-inv-strip.}
+  \UnaryInfC{$Γ ⊢ φ$}
+\end{bprooftree}
+\end{equation*}
+\end{proof}
+
+% -------------------------------------------------------------------
+
+\end{document}
