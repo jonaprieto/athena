@@ -140,7 +140,7 @@ Eq.~(\ref{eq:uh-structured}).
 &\begin{array}{llll}
 \fuh_{1} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &(\suc~n) &= \fuh_{1}~((φ₁ ∧ φ₂) ⇒ φ₃)~n\\
 \fuh_{1} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &(\suc~n) &= \fuh_{1}~(φ₁ ⇒ φ₂)~n ∧ \fuh_{1}~(φ₁ ⇒ φ₃)~n\\
-\fuh_{1} &φ &\xspace\emph{n} &= φ
+\fuh_{1} &φ &\xspace\text{n} &= φ
 \end{array}
 \end{aligned}
 \end{equation}
@@ -214,8 +214,6 @@ The same function name written in roman letters refers to the proposed
 version of the rule.
 Each rule proposed has a respective theorem also written in roman letters
 that proves its soundness.
-This theorem is named by using the prefix \emph{thm}
-and the name of the rule.
 
 For example, we know the \verb!conjunct! inference rule is a
 \Metis inference rule since it appears in \TSTP derivations like
@@ -227,8 +225,7 @@ fof(normalize_1_2, plain, (p | r),
 \end{verbatim}
 
 For this inference rule, we proposed the \rm{conjunct} function in
-Def.~\ref{def:conjunct} and we proved the theorem \rm{thm-conjunct}
-in Thm.~\ref{thm:thm-conjunct}. The pattern is the following for
+Def.~\ref{def:conjunct} and we proved Thm.~\ref{thm:thm-conjunct}. The pattern is the following for
 a binary rule and we extend it for $n$-ary rules in a natural way.
 
 \begin{itemize}
@@ -250,8 +247,8 @@ a binary rule and we extend it for $n$-ary rules in a natural way.
   \item $φᵢ$ are \emph{source} formulas from previous deducted derivations.
   \item $ψ$ is the \emph{target} formula. The expected result of \texttt{rule}.
 \end{itemize}
-\item \rm{thm-rule} is the theorem that proves the soundness of the
-$\rm{rule}$ function.
+\item The theorem that proves the soundness of the
+$\rm{rule}$ function looks like
 \begin{equation*}\text{If }Γ ⊢ φ\text{ then }Γ ⊢ \rm{rule}\ φ.\end{equation*}
 
 \end{itemize}
