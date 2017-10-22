@@ -183,17 +183,10 @@ formula by adding new disjuncts to the source formula.
   \end{align*}
 \end{definition}
 
-<<<<<<< HEAD
 \begin{mainth}[thm-reorder$_{\boldsymbol{∨}}$]
   \label{thm-reorder-or}
   If $Γ ⊢ φ$ and $ψ: \Prop$ then $Γ ⊢ \freorder_{∨}(φ, ψ)$.
 \end{mainth}
-=======
-\begin{theorem}[thm-reorder$_{\boldsymbol{∨}}$]
-  \label{thm-reorder-or}
-  If $Γ ⊢ φ$ and $ψ: \Prop$ then $Γ ⊢ \freorder_{∨}(φ, ψ)$.
-\end{theorem}
->>>>>>> dcdd07ddde6b67d3752d11337b7865d4e1484402
 
 \begin{proof}
 Use Lemma~\ref{lem:lem-rdisj} and Lemma~\ref{lem:lem-sbuild-or}.
@@ -263,19 +256,10 @@ for disjunctions, but instead, we treat only with conjunctive normal forms.
   \end{align*}
   \end{definition}
 
-<<<<<<< HEAD
 \begin{mainth}[thm-reorder$_{\boldsymbol{∧∨}}$]
   \label{thm:thm-reorder-and-or}
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧∨}(φ, ψ)$.
 \end{mainth}
-=======
-\begin{theorem}[thm-reorder$_{\boldsymbol{∧∨}}$]
-  \label{thm:thm-reorder-and-or}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧∨}(φ, ψ)$.
-\end{theorem}
->>>>>>> dcdd07ddde6b67d3752d11337b7865d4e1484402
-
-
 
 The \resolve rule incorporates the resolution theorem showed in
 Fig.~\ref{fig:metis-inferences} for the \TSTP derivations.
@@ -340,19 +324,12 @@ derivation.
   \end{align*}
 \end{definition}
 
-<<<<<<< HEAD
 \begin{mainth}[thm-resolve]
   \label{thm:thm-resolve}
   If $Γ ⊢ φ₁$, $Γ ⊢ φ₂$, a literal $l$, and $ψ : \Prop$ then
   $Γ ⊢ \fresolve(φ₁, φ₂, l, ψ)$.
 \end{mainth}
-=======
-\begin{theorem}[thm-resolve]
-  \label{thm:thm-resolve}
-  If $Γ ⊢ φ₁$, $Γ ⊢ φ₂$, a literal $l$, and $ψ : \Prop$ then
-  $Γ ⊢ \fresolve(φ₁, φ₂, l, ψ)$.
-\end{theorem}
->>>>>>> dcdd07ddde6b67d3752d11337b7865d4e1484402
+
 \Needspace{3\baselineskip}
 \begin{proof}
  \begin{equation*}
