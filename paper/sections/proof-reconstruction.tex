@@ -105,7 +105,9 @@ with termination problems, we formulate a new function
 $\rm{f}^{*} : \Prop \to \Nat \to \Prop$ where all recursive calls must be
 done by using induction on the \Nat type structure.
 
-\subsubsection*{An  example.}
+\begin{example}
+\label{ex:structural-recursion}
+
 Let us consider the following example to exhibit the bounded technique
 mentioned above for the \fuh function presented in the proposed version
 for the \Metis \strip inference.
@@ -197,6 +199,8 @@ $\fuh_{0}$ function presented in Eq.~(\ref{eq:uh}).
     \end{align}
 \end{definition}
 
+\end{example}
+
 For a more complete treatment of general recursion, and how to
 define well-founded and well-structural recursive functions, we refer
 the reader to \citeauthor{Bove2005}~\cite{Bove2005}.
@@ -257,6 +261,46 @@ $\rm{rule}$ function.
 
 \end{itemize}
 
+
+\begin{table}[!ht]
+  \begin{center}
+  {\renewcommand{\arraystretch}{1.6}%
+    \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}|}
+    \hline
+    \textbf{\Metis rule} & \textbf{Purpose} &\textbf{Theorem}\\ \hline
+    \texttt{canonicalize}
+      &Normalization of the formula
+      &Thm.~\ref{thm:canonicalizeThm}
+    \\
+    \texttt{clausify}
+      &Performs clausification
+      &Thm.~\ref{thm:clausifyThm}
+    \\
+    \hyperlink{atp-conjunct}{\texttt{conjunct}}
+      &Takes a formula from a conjunction
+      &Thm.~\ref{thm:conjunctThm}
+    \\
+    \texttt{negate}
+      &Negate the formula
+      &Thm.~\ref{thm:negateThm}
+    \\
+    \texttt{resolve}
+      &A general form of the resolution theorem
+      &Thm.~\ref{thm:resolveThm}
+    \\
+    \texttt{simplify}
+      &Simplify definitions and theorems
+      &Thm.~\ref{thm:simplifyThm}
+    \\
+    \texttt{strip}
+      &Strip a goal into subgoals
+      &Thm.~\ref{thm:stripThm}
+    \\[1ex]
+    \hline
+    \end{tabular}}
+  \end{center}
+\label{tab:agda-metis-table}
+\end{table}
 % ------------------------------------------------------------------------------
 
 \subfile{sections/proof-reconstruction/strip.tex}

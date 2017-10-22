@@ -43,7 +43,7 @@ fof(normalize_0_1, plain, ((~ p | q) & (~ p | r)),
   \end{align*}
 \end{definition}
 
-\begin{mainth}[thm-clausify]
+\begin{mainth}[clausifyThm]
 \label{thm:thm-clausify}
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fclausify~φ~ψ$.
 \end{mainth}
@@ -56,7 +56,7 @@ lemma. Otherwise, we use Theorem~\ref{thm:thm-reorder-and-or} and Theorem~\ref{t
 The \clausify rule is often preceded by the \canonicalize rule.
 Both rules perform \emph{Clausification} that introduces
 into the problem axioms or definitions in the domain of the solution.
-The Clausification algorithms is mainly described on paper by
+The clausification algorithms is mainly described on paper by
 \citeauthor{Sutcliffe1996}~\cite{Sutcliffe1996}. We left for future work
 investigate the consequences of removing $clausify$ inference by
 strengthen $canonicalize$ rule in Def.~\ref{def:canonicalize}

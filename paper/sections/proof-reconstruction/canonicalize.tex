@@ -435,7 +435,7 @@ these two types.
 As a result, we can get a conjunctive normal form by applying the
 following theorem.
 
-\begin{theorem}[thm-cnf]
+\begin{mainth}[thm-cnf]
 \label{thm:thm-cnf}
   If $Γ ⊢ φ$ then $Γ ⊢ \rm{cnf}(φ)$, where,
   \begin{align*}
@@ -444,7 +444,7 @@ following theorem.
     &\rm{cnf} = \rm{form} ∘ \fdist ∘ \fnnf.
     \end{split}
   \end{align*}
-\end{theorem}
+\end{mainth}
 
 \begin{proof}
   Composition of the Lemmas \ref{lem:lem-form}, \ref{lem:lem-dist}
@@ -455,10 +455,10 @@ Since all the previous transformations came from  equivalences in  the
 classical propositional logic, the following theorem plays an important role
 in the next section.
 
-\begin{theorem}[thm-inv-cnf]
+\begin{mainth}[thm-inv-cnf]
 \label{thm:thm-inv-cnf}
   If $Γ ⊢ \rm{cnf}(φ)$ then $Γ ⊢ φ$.
-\end{theorem}
+\end{mainth}
 
 
 
@@ -491,11 +491,11 @@ the conjunctive normal form of the target formula.
   \end{align*}
 \end{definition}
 
-\begin{theorem}[thm-canonicalize] % (fold)
+\begin{mainth}[thm-canonicalize] % (fold)
   \label{thm:thm-canonicalize}
   \hspace{4mm}\\
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fcanonicalize(φ, ψ)$.
-\end{theorem}
+\end{mainth}
 
 \begin{proof}\hspace{3mm}
 \begin{itemize}
