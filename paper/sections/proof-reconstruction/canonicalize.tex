@@ -435,7 +435,7 @@ these two types.
 As a result, we can get a conjunctive normal form by applying the
 following theorem.
 
-\begin{mainth}[thm-cnf]
+\begin{mainth}[cnfThm]
 \label{thm:thm-cnf}
   If $Γ ⊢ φ$ then $Γ ⊢ \rm{cnf}(φ)$, where,
   \begin{align*}
@@ -455,12 +455,10 @@ Since all the previous transformations came from  equivalences in  the
 classical propositional logic, the following theorem plays an important role
 in the next section.
 
-\begin{mainth}[thm-inv-cnf]
-\label{thm:thm-inv-cnf}
+\begin{mainth}[invCnfThm]
+\label{thm:invCnfThm}
   If $Γ ⊢ \rm{cnf}(φ)$ then $Γ ⊢ φ$.
 \end{mainth}
-
-
 
 The \canonicalize rule is an overloaded inference rule which performs
 normalization of the proposition input.
@@ -491,8 +489,8 @@ the conjunctive normal form of the target formula.
   \end{align*}
 \end{definition}
 
-\begin{mainth}[thm-canonicalize] % (fold)
-  \label{thm:thm-canonicalize}
+\begin{mainth}[canonicalizeThm] % (fold)
+  \label{thm:canonicalizeThm}
   \hspace{4mm}\\
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fcanonicalize(φ, ψ)$.
 \end{mainth}

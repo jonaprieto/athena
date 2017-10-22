@@ -34,6 +34,20 @@
   year      = {2011},
 }
 
+@article{Abel2002,
+  abstract     = {We introduce a language based upon lambda calculus with products, coproducts and strictly positive inductive types that allows the definition of recursive terms. We present the implementation (foetus) of a syntactical check that ensures that all such terms are structurally recursive, i.e. recursive calls appear only with arguments structurally smaller than the input parameters of terms considered. To ensure the correctness of the termination checker, we show that all structurally recursive terms are normalizing with respect to a given operational semantics. To this end, we define a semantics on all types and a structural ordering on the values in this semantics and prove that all values are accessible with regard to this ordering. Finally, we point out how to do this proof predicatively using set based operators.},
+  author       = {Abel, Andreas and Altenkirch, Thorsten},
+  doi          = {10.1017/S0956796801004191},
+  issn         = {0956-7968},
+  journal      = {Journal of Functional Programming},
+  number       = {01},
+  pages        = {1--41},
+  title        = {{A Predicative Analysis of Structural Recursion}},
+  url          = {http://www.journals.cambridge.org/abstract_S0956796801004191},
+  volume       = {12},
+  year         = {2002},
+}
+
 @incollection{Tammet1996,
   author    = {Tammet, Tanel},
   doi       = {10.1007/3-540-61511-3_65},
@@ -73,13 +87,13 @@
 @misc{AgdaMetis,
   author = {Prieto-Cubides, Jonathan and Sicard-Ramírez, Andrés},
   doi    = {10.5281/zenodo.398862},
-  title  = {{Agda-Metis Library}},
+  title  = {{Agda-Metis Library : Metis prover reasoning for propositional logic}},
   url    = {https://doi.org/10.5281/zenodo.398862},
   year   = {2017},
 }
 
 @misc{AgdaProp,
-  author = {Prieto-Cubides, Jonathan and Sicard-Ramírez, Andrés},
+  author = {Prieto-Cubides, Jonathan},
   doi    = {10.5281/zenodo.398852},
   title  = {{Agda-Prop Library for Classical Propositional Logic}},
   url    = {https://doi.org/10.5281/zenodo.398852},
@@ -94,6 +108,28 @@
   title     = {{An Extensible SAT-solver}},
   url       = {http://link.springer.com/10.1007/978-3-540-24605-3_37},
   year      = {2004},
+}
+
+@misc{Athena,
+  author = {Prieto-Cubides, Jonathan},
+  doi    = {10.5281/zenodo.437196},
+  title  = {{Athena translator tool for Metis proofs}},
+  url    = {https://doi.org/10.5281/zenodo.437196},
+  year   = {2017},
+}
+
+@article{Bezem2002,
+  author       = {Bezem, Marc and Hendriks, Dimitri and {De Nivelle}, Hans},
+  doi          = {10.1023/A:1021939521172},
+  isbn         = {3540676643},
+  issn         = {01687433},
+  journal      = {Journal of Automated Reasoning},
+  keywords     = {Proof construction,Resolution theorem proving,Type theory},
+  number       = {3-4},
+  pages        = {253--275},
+  title        = {{Automated proof construction in type theory using resolution}},
+  volume       = {29},
+  year         = {2002},
 }
 
 @article{meng2006automation,
@@ -246,13 +282,21 @@
   author    = {Böhme, Sascha and Weber, Tjark},
   booktitle = {Interactive Theorem Proving: First International Conference, ITP 2010, Edinburgh, UK, July 11-14, 2010. Proceedings},
   doi       = {10.1007/978-3-642-14052-5_14},
-  editor    = {Kaufmann, Matt and Paulson, Lawrence C},
+  editor    = {Kaufmann, Matt and Paulson, Lawrence C.},
   isbn      = {978-3-642-14052-5},
   location  = {Berlin, Heidelberg},
   pages     = {179--194},
   publisher = {Springer Berlin Heidelberg},
   title     = {{Fast LCF-Style Proof Reconstruction for Z3}},
   year      = {2010},
+}
+
+@incollection{Sicard-Ramirez2016,
+  author    = {Sicard-Ramírez, Andrés and Ospina-Giraldo, Juan-Fernando},
+  location  = {Medellín, Colombia},
+  publisher = {Universidad EAFIT},
+  title     = {{First-Order Proof Reconstruction (Research Proposal)}},
+  year      = {2016},
 }
 
 @article{hurd2003first,
@@ -505,16 +549,8 @@
   year      = {2013},
 }
 
-@misc{Athena,
-  author = {Prieto-Cubides, Jonathan and Sicard-Ramírez, Andrés},
-  doi    = {10.5281/zenodo.437196},
-  title  = {{Proof Reconstruction of Classical Propositional Logic with Athena}},
-  url    = {https://doi.org/10.5281/zenodo.437196},
-  year   = {2017},
-}
-
 @report{Gomez-Londono2015,
-  author      = {Gómez-Londoño, A},
+  author      = {Gómez-Londoño, Alejandro},
   institution = {EAFIT University},
   title       = {{Proof Reconstruction: Parsing Proofs}},
   type        = {techreport},
@@ -553,9 +589,20 @@
   author   = {Prieto-Cubides, Jonathan},
   doi      = {10.5281/ZENODO.817997},
   month    = {jun},
-  title    = {{Prop-Pack: Collection of TPTP problems of propositional logic}},
+  title    = {{Prop-Pack : collection of propositional logic problem in TPTP format}},
   url      = {https://zenodo.org/record/817997#.WYdjIbb5iAw},
   year     = {2017},
+}
+
+@thesis{Sicard2015,
+  abstract    = {We propose a new approach to computer-assisted verification of lazy functional programs where functions can be defined by general recursion. We work in first-order theories of functional programs which are obtained by translating Dybjer's programming logic (Dybjer, P. [1985]. Program Veri- fication in a Logical Theory of Constructions. In: Functional Programming Languages and Computer Architecture. Ed. by Jouannaud, J.-P. Vol. 201. Lecture Notes in Computer Science. Springer, pp. 334–349) into a first-order theory, and by extending this programming logic with new (co-)inductive predicates. Rather than building a special purpose system, we formalise our theories in Agda, a proof assistant for dependent type theory which can be used as a generic theorem prover. Agda provides support for interact- ive reasoning by representing first-order theories using the propositions-as- types principle. Further support is provided by off-the-shelf automatic the- orem provers for first-order-logic called by a Haskell program that translates our Agda representations of first-order formulae into the TPTP language understood by the provers. We show some examples where we combine interactive and automatic reasoning, covering both proofs by induction and co- induction. The examples include functions defined by structural recursion, simple general recursion, nested recursion, higher-order recursion, guarded and unguarded co-recursion. Keywords:},
+  author      = {Sicard-Ramírez, Andrés and Bove, Ana and Dybjer, Peter},
+  institution = {Universidad de la Rep{\{}ú{\}}blica},
+  keywords    = {automatic proofs,correctness,first-order theories,functional program,general recursion,interactive proofs,lazy evaluation,total lan- guages,type theory},
+  title       = {{Reasoning about Functional Programs by Combining Interactive and Automatic Proofs}},
+  type        = {phdthesis},
+  url         = {https://www.colibri.udelar.edu.uy/handle/123456789/4715},
+  year        = {2015},
 }
 
 @incollection{Bove2005,
@@ -817,52 +864,5 @@
   title     = {{Z3: An efficient SMT Solver}},
   volume    = {4963 LNCS},
   year      = {2008},
-}
-
-@article{Abel2002,
-  abstract     = {We introduce a language based upon lambda calculus with products, coproducts and strictly positive inductive types that allows the definition of recursive terms. We present the implementation (foetus) of a syntactical check that ensures that all such terms are structurally recursive, i.e. recursive calls appear only with arguments structurally smaller than the input parameters of terms considered. To ensure the correctness of the termination checker, we show that all structurally recursive terms are normalizing with respect to a given operational semantics. To this end, we define a semantics on all types and a structural ordering on the values in this semantics and prove that all values are accessible with regard to this ordering. Finally, we point out how to do this proof predicatively using set based operators.},
-  author       = {Abel, Andreas and Altenkirch, Thorsten},
-  doi          = {10.1017/S0956796801004191},
-  issn         = {0956-7968},
-  journal      = {Journal of Functional Programming},
-  number       = {01},
-  pages        = {1--41},
-  title        = {{A Predicative Analysis of Structural Recursion}},
-  url          = {http://www.journals.cambridge.org/abstract_S0956796801004191},
-  volume       = {12},
-  year         = {2002},
-}
-
-@article{Bezem2002,
-  author       = {Bezem, Marc and Hendriks, Dimitri and {De Nivelle}, Hans},
-  doi          = {10.1023/A:1021939521172},
-  isbn         = {3540676643},
-  issn         = {01687433},
-  journal      = {Journal of Automated Reasoning},
-  keywords     = {Proof construction,Resolution theorem proving,Type theory},
-  number       = {3-4},
-  pages        = {253--275},
-  title        = {{Automated proof construction in type theory using resolution}},
-  volume       = {29},
-  year         = {2002},
-}
-
-@incollection{Sicard-Ramirez2016,
-  author    = {Sicard-Ramírez, Andrés and Ospina-Giraldo, Juan-Fernando},
-  location  = {Medellín, Colombia},
-  publisher = {Universidad EAFIT},
-  title     = {{First-Order Proof Reconstruction (Research Proposal)}},
-  year      = {2016},
-}
-
-@thesis{Sicard2015,
-  abstract    = {We propose a new approach to computer-assisted verification of lazy functional programs where functions can be defined by general recursion. We work in first-order theories of functional programs which are obtained by translating Dybjer's programming logic (Dybjer, P. [1985]. Program Veri- fication in a Logical Theory of Constructions. In: Functional Programming Languages and Computer Architecture. Ed. by Jouannaud, J.-P. Vol. 201. Lecture Notes in Computer Science. Springer, pp. 334–349) into a first-order theory, and by extending this programming logic with new (co-)inductive predicates. Rather than building a special purpose system, we formalise our theories in Agda, a proof assistant for dependent type theory which can be used as a generic theorem prover. Agda provides support for interact- ive reasoning by representing first-order theories using the propositions-as- types principle. Further support is provided by off-the-shelf automatic the- orem provers for first-order-logic called by a Haskell program that translates our Agda representations of first-order formulae into the TPTP language understood by the provers. We show some examples where we combine interactive and automatic reasoning, covering both proofs by induction and co- induction. The examples include functions defined by structural recursion, simple general recursion, nested recursion, higher-order recursion, guarded and unguarded co-recursion. Keywords:},
-  author      = {Sicard-Ramírez, Andrés and Bove, Ana and Dybjer, Peter},
-  institution = {Universidad de la Rep{\{}ú{\}}blica},
-  keywords    = {automatic proofs,correctness,first-order theories,functional program,general recursion,interactive proofs,lazy evaluation,total lan- guages,type theory},
-  title       = {{Reasoning about Functional Programs by Combining Interactive and Automatic Proofs}},
-  type        = {phdthesis},
-  url         = {https://www.colibri.udelar.edu.uy/handle/123456789/4715},
-  year        = {2015},
 }
 

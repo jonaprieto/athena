@@ -4,8 +4,6 @@ pdf :
 	- latexmk -pdf main.tex
 # - pdflatex main.tex
 
-
-
 # references-mendeley:
 #
 # From now on, we maintain both references (ref.bib and
