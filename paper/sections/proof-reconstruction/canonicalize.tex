@@ -86,7 +86,7 @@ the $\rm{rdisj}$ and $\rm{rconj}$ functions depending on the main connective Eq.
 In a disjunction, $φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
 if there is some $i = 1, \cdots, n$ such that $ψ ≡ φᵢ$.
 Note that $ψ ∈_{∨} φ$ is another name for the equality
-$ψ ≡ \fconjunct_{∨}(φ, ψ)$.
+$ψ ≡ \fconjunct_{∨}~φ~ψ$.
 
   \begin{align*}
   \label{def:rm-or}
@@ -103,7 +103,7 @@ $ψ ≡ \fconjunct_{∨}(φ, ψ)$.
 
 \begin{mainlemma}
   \label{lem:rm-or}
-  If $Γ ⟝ φ$ then $Γ ⟝ \frm_{∨}(φ)$.
+  If $Γ ⟝ φ$ then $Γ ⟝ \frm_{∨}~φ$.
 \end{mainlemma}
 
 Now, we have removed redundancies in the disjunctions by applying
@@ -112,7 +112,7 @@ conjunctions, \ie, $\frm_{∧}$.
 
 In a conjunction, $φ = φ₁ ∧ φ₂ ∧ \cdots ∧ φₙ$, we say
 $ψ ∈_{∧} φ$, if there is some $i = 1, \cdots, n$ such that $ψ = φᵢ$.
-We define $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct(φ, ψ)$.
+We define $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct~φ~ψ$.
 
 \label{eq:rm-and}
   \begin{align*}
@@ -129,7 +129,7 @@ We define $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct(φ, ψ)$.
 
 \begin{mainlemma}
   \label{lem:rm-and}
-  If $Γ ⟝ φ$ then $Γ ⟝ \frm_{∧}(φ)$.
+  If $Γ ⟝ φ$ then $Γ ⟝ \frm_{∧}~φ$.
 \end{mainlemma}
 
 \begin{example}
@@ -156,17 +156,17 @@ take into account the following cases.
 \begin{equation*}
 \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∨ ¬~φ$}
-  \RightLabel{lem-ndisj$_{∨}$,}
+  \RightLabel{Lemma~\ref{lem:ndisj-or},}
   \UnaryInfC{$Γ ⟝ ⊤$}
 \end{bprooftree}
 \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∨ ⊤$}
-  \RightLabel{lem-ndisj$_{∨}$,}
+  \RightLabel{Lemma~\ref{lem:ndisj-or},}
   \UnaryInfC{$Γ ⟝ ⊤$}
 \end{bprooftree}
 \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∨ ⊥$}
-  \RightLabel{lem-ndisj$_{∨}$.}
+  \RightLabel{Lemma~\ref{lem:ndisj-or}.}
   \UnaryInfC{$Γ ⟝ φ$}
 \end{bprooftree}
 \end{equation*}
@@ -174,67 +174,75 @@ take into account the following cases.
 \begin{equation*}
 \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∧ ¬~φ$}
-  \RightLabel{lem-ndisj$_{∧}$,}
+  \RightLabel{Lemma~\ref{lem:ndisj-and},}
   \UnaryInfC{$Γ ⟝ ⊥$}
 \end{bprooftree}
 \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∧ ⊤$}
-  \RightLabel{lem-ndisj$_{∧}$,}
+  \RightLabel{Lemma~\ref{lem:ndisj-and},}
   \UnaryInfC{$Γ ⟝ φ$}
 \end{bprooftree}
 \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∧ ⊥$}
-  \RightLabel{lem-ndisj$_{∧}$.}
+  \RightLabel{Lemma~\ref{lem:ndisj-and}.}
   \UnaryInfC{$Γ ⟝ ⊥$}
 \end{bprooftree}
 \end{equation*}
+AGREGAR TEXTO
+\begin{equation}
+  \label{eq:ndisj-or}
+  \begin{aligned}
+  &\hspace{.495mm}\rm{ndisj}_{∨} : \NProp \to \NProp\\
+  &\begin{array}{lll}
+    \rm{ndisj}_{∨} &(¬ φ₁ ∨ φ₂) &=
+        \begin{cases}
+         ⊤, &\text{ if } φ₁ ∈_{∨} φ₂\\
+         ⊤, &\text{ if } \rm{ndisj}_{∨}~φ₂≡ ⊤\\
+         ¬ φ₁ ∨ \rm{ndisj}_{∨}~φ₂, &\text{ otherwise.}
+        \end{cases}\\
 
-\begin{definition}[ndisj$_{∨}$]
-  \label{def:ndisj-or}
-  \begin{align*}
-    \begin{split}
-    &\rm{ndisj}_{∨} : \NProp \to \NProp\\
-    &\rm{ndisj}_{∨}(φ) =
-      \begin{cases}
-        ⊤, &\text{ if }φ ≡ ¬ φ₁ ∨ φ₂,\ φ₁ ∈_{∨} φ₂\\
-        ⊤, &\text{ if }φ ≡ ¬ φ₁ ∨ φ₂,\ \rm{ndisj}_{∨}(φ₂) ≡ ⊤\\
-        ¬ φ₁ ∨ \rm{ndisj}_{∨}(φ₂), &\text{ if }φ ≡ ¬ φ₁ ∨ φ₂\\
-        ⊤, &\text{ if }φ ≡ φ₁ ∨ φ₂,\ ¬φ₁ ∈_{∨} φ₂ \\
-        ⊤, &\text{ if }φ ≡ φ₁ ∨ φ₂,\ \rm{ndisj}_{∨}(φ₂) ≡ ⊤\\
-        φ₁ ∨ \rm{ndisj}_{∨}(φ₂),  &\text{ if }φ ≡ φ₁ ∨ φ₂\\
-        φ, &\text{ otherwise.}
-      \end{cases}
-    \end{split}
-  \end{align*}
-\end{definition}
+  \rm{ndisj}_{∨} &(φ₁ ∨ φ₂)&=
+        \begin{cases}
+         ⊤, &\,\,\,\,\,\,\text{ if } ¬φ₁ ∈_{∨} φ₂ \\
+         ⊤, &\,\,\,\,\,\,\text{ if } \rm{ndisj}_{∨}(φ₂) ≡ ⊤\\
+         φ₁ ∨ \rm{ndisj}_{∨}~φ₂, &\,\,\,\,\,\,\text{ otherwise.}
+        \end{cases}\\
+    \rm{ndisj}_{∨}&φ &=φ
+    \end{array}
+  \end{aligned}
+\end{equation}
 
 \begin{mainlemma} % (fold)
-  \label{lem:lem_ndisj-or}
-  If $Γ ⟝ φ$ then $Γ ⟝ \rm{ndisj}_{∨}(φ)$.
+  \label{lem:ndisj-or}
+  If $Γ ⟝ φ$ then $Γ ⟝ \rm{ndisj}_{∨}~φ$.
 \end{mainlemma}
+EJEMPLO Y AGREGAR TEXTO
 
-\begin{definition}[ndisj$_{∧}$]
-  \label{def:ndisj-and}
-  \begin{align*}
-    \begin{split}
-    &\rm{ndisj}_{∧} : \NProp \to \NProp\\
-    &\rm{ndisj}_{∧}(φ) =
+\begin{equation}
+  \label{eq:ndisj-and}
+  \begin{aligned}
+  &\hspace{.495mm}\rm{ndisj}_{∧} : \NProp \to \NProp\\
+  &\begin{array}{lll}
+    \rm{ndisj}_{∧}&(¬ φ₁ ∧ φ₂) &=
       \begin{cases}
-        ⊥, &\text{ if }φ ≡ ¬ φ₁ ∧ φ₂,\ φ₁ ∈_{∧} φ₂\\
-        ⊥, &\text{ if }φ ≡ ¬ φ₁ ∧ φ₂,\ \rm{ndisj}_{∧}(φ₂) ≡ ⊥\\
-        ¬ φ₁ ∧ \rm{ndisj}_{∧}(φ₂), &\text{ if }φ ≡ ¬ φ₁ ∧ φ₂\\
-        ⊥, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ φ₁ ∈_{∧} φ₂\\
-        ⊥, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ \rm{ndisj}_{∧}(φ₂) ≡ ⊥\\
-        φ₁ ∧ \rm{ndisj}_{∧}(φ₂), &\text{ if }φ ≡ φ₁ ∧ φ₂\\
-        φ, &\text{ otherwise.}
-      \end{cases}
-    \end{split}
-  \end{align*}
-\end{definition}
+        ⊥, &\text{ if } φ₁ ∈_{∧} φ₂\\
+        ⊥, &\text{ if } \rm{ndisj}_{∧}(φ₂) ≡ ⊥\\
+        ¬ φ₁ ∧ \rm{ndisj}_{∧}(φ₂), &\text{ otherwise.}
+      \end{cases}\\
+    \rm{ndisj}_{∧}&(φ₁ ∧ φ₂) &=
+      \begin{cases}
+        ⊥, &\,\,\,\,\,\,\text{ if } φ₁ ∈_{∧} φ₂\\
+        ⊥, &\,\,\,\,\,\,\text{ if } \rm{ndisj}_{∧}(φ₂) ≡ ⊥\\
+        φ₁ ∧ \rm{ndisj}_{∧}(φ₂), &\,\,\,\,\,\,\text{ otherwise.}
+      \end{cases}\\
+    \rm{ndisj}_{∧}&φ&=φ
+   \end{array}
+  \end{aligned}
+\end{equation}
 
 \begin{mainlemma} % (fold)
-  \label{lem:lem_ndisj-and}
-  If $Γ ⟝ φ$ then $Γ ⟝ \rm{ndisj}_{∧}(φ)$.
+  \label{lem:ndisj-and}
+  If $Γ ⟝ φ$ then $Γ ⟝ \rm{ndisj}_{∧}~φ$.
 \end{mainlemma}
 
 % subsubsection redundancy (end)
@@ -333,7 +341,7 @@ Eq.~(\ref{def:polarity}).
     \end{array}
   \end{aligned}
 \end{equation}
-
+AGREGAR TEXTO
 \begin{equation}
 \label{def:nnf-zero}
   \begin{aligned}
