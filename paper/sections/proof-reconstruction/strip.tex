@@ -12,19 +12,15 @@ These subgoals are introduced in the \TSTP derivation with the \strip
 inference rule as we show in the following excerpt.
 
 \begin{verbatim}
-fof(goal, conjecture, ((p & r) & q)).
-fof(subgoal_0, plain, p,
-    inference(strip, [], [goal])).
-fof(subgoal_1, plain, p => r,
-    inference(strip, [], [goal])).
-fof(subgoal_2, plain, (p & r) => q,
-    inference(strip, [], [goal])).
+fof(goal, conjecture, (p & r) & q)).
+fof(sg0, p, inf(strip, [goal])).
+fof(sg1, p => r, inf(strip, [goal])).
+fof(sg2, (p & r) => q, inf(strip, [goal])).
 \end{verbatim}
 
 To prove the correctness of the process mentioned above,
 we need to establish some lemmas before introduce our main goal of this
 part, Theorem~\ref{thm:thm-strip}.
-
 
 \begin{mainlemma}
   \label{lem:inv-uh-lem}
@@ -152,17 +148,18 @@ the technique described in Section~\ref{ssec:structural-recursion}.
 \begin{mainlemma}
 \label{lem:lem-inv-strip}
 Let $n : \Nat$ the complexity measure of the strip function in
-Eq.~\ref{eq:strip-unfixed}.
+Eq.~(\ref{eq:strip-unfixed}).
 If $Γ ⊢ \fstrip~φ~n$ then $Γ ⊢ φ$.
 \end{mainlemma}
 
 \begin{sketchproof}
 The proof is by induction on the structure of the
-formula~$φ$ by following the cases in Eq.~(\ref{eq:strip}).
-We present some cases but for a complete proof, we refer the reader to~\cite{AgdaMetis}.
+formula~$φ$ by following the cases in Eq.~(\ref{eq:strip-fixed}).
+We present a straightforward case with double negation, a case with
+conjunction connective, and last, the case with a negated disjunction.
+We refer the reader to~\cite{AgdaMetis} for the complete proof in \Agda.
 
-\begin{itemize}
-\item Case $φ ≡ ¬ ¬ φ₁$.
+Case $φ ≡ ¬ ¬ φ₁$.
 \begin{equation*}
   \begin{bprooftree}
  \AxiomC{$Γ ⊢ \fstrip~(¬¬φ₁)~(\suc~n)$}
@@ -175,8 +172,8 @@ We present some cases but for a complete proof, we refer the reader to~\cite{Agd
   \end{bprooftree}
 \end{equation*}
 
-\item Case $φ ≡ φ₁ ∧ φ₂$. We get a proof for each conjunct and using the
-introduction rule for conjunction connective, the result follows.
+Case $φ ≡ φ₁ ∧ φ₂$. We get a proof for each conjunct and using the
+introduction rule for conjunction connective, the expected result follows.
 
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
@@ -211,31 +208,8 @@ introduction rule for conjunction connective, the result follows.
   \end{bprooftree}
 \end{equation*}
 
-\item Case $φ ≡ φ₁ ⇒ φ₂$.
-\begin{equation*}
-  \begin{bprooftree}
-  \AxiomC{}
-  \RightLabel{assume φ₁}
-  \UnaryInfC{$Γ , φ₁ ⊢ φ₁$}
-  \AxiomC{$Γ ⊢ \fstrip~(φ₁ ⇒ φ₂)~(\suc~n)$}
-  \RightLabel{by def.}
-  \UnaryInfC{$Γ ⊢ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
-  \RightLabel{lemma~\ref{lem:inv-uh-lem}}
-  \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
-  \RightLabel{weaken φ₁}
-  \UnaryInfC{$Γ , φ₁ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
-  \RightLabel{⇒-elim}
-  \BinaryInfC{$Γ , φ₁ ⊢ \fstrip~φ₂~n$}
-  \RightLabel{by hip}
-  \UnaryInfC{$Γ , φ₁ ⊢ φ₂$}
-  \RightLabel{⇒-intro}
-  \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$}
-  \end{bprooftree}
-\end{equation*}
-
-\item Case $φ ≡ ¬ (φ₁ ∨ φ₂)$. We show that $Γ ⊢ ¬ φ₁$ and $Γ ⊢ ¬ φ₂$.
-The result follows by introducing the conjunction and applying
-De Morgan Laws.
+Case $φ ≡ ¬ (φ₁ ∨ φ₂)$. We show the theorems $Γ ⊢ ¬ φ₁$ and $Γ ⊢ ¬ φ₂$.
+With the conjunction of $¬ φ₁$ and $¬ φ₂$ by applying De Morgan Law, the result follows.
 
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
@@ -251,9 +225,6 @@ De Morgan Laws.
   \UnaryInfC{$Γ ⊢ ¬φ₁$}
 \end{bprooftree}
 \end{equation*}
-\end{itemize}
-\end{sketchproof}
-
 \begin{equation*}
   \begin{bprooftree}
   \AxiomC{$\mathcal{D}$}
@@ -271,7 +242,7 @@ De Morgan Laws.
   \UnaryInfC{$Γ ⊢ ¬ φ₂$}
   \end{bprooftree}
 \end{equation*}
-\TheEnd
+\end{sketchproof} % the proof continue...
 
 \begin{mainlemma}[subst]
   \label{lem:subst}
@@ -289,12 +260,13 @@ De Morgan Laws.
 We can now formulate the result that justifies the stripping strategy
 of \Metis to prove goals.
 For the sake of brevity, we state the following theorem for the
-\strip function when the goal has only two subgoals. In other cases, we extend the theorem in the natural way.
+\strip function when the goal has only two subgoals. In other cases, we extend that theorem in the natural way.
 
 \begin{mainth}
-\label{thm:thm-strip}
- If $s_1$ and $s_2$ are the subgoals of the goal $φ$, $Γ ⊢ s_1$, and
-$Γ ⊢ s_2$ then $Γ ⊢ φ$.
+\label{thm:strip}
+If $s_1$ and $s_2$ are the subgoals of the goal $φ$, that is,
+$\fstrip~φ~n~≡~s_1\wedge~s_2$.
+If $Γ ⊢ s_1$ and $Γ ⊢ s_2$ then $Γ ⊢ φ$.
 \end{mainth}
 
 \begin{proof}
@@ -311,7 +283,6 @@ $Γ ⊢ s_2$ then $Γ ⊢ φ$.
   \UnaryInfC{$Γ ⊢ φ$}
 \end{bprooftree}
 \end{equation*}
-\TheEnd
 \end{proof}
 
 

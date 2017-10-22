@@ -61,7 +61,7 @@ language(name, role, formula).
 The \name{language} can be \name{fof} or \name{cnf}. The \name{name}
 serves to identify the formula within the problem. Each formula
 assumes a \name{role}, this could be an \name{axiom},
-\name{conjecture}, \name{definition}, or a \name{hypothesis}.
+\name{conjecture}, \name{definition}, \name{plain} or a \name{hypothesis}.
 The formulas include the binary connectives
 (\verb!&!, \verb!|!, \verb!=>!, \verb!<=>!, \verb!~!)
 and the constants \verb!$true!, and \verb!$false!.
@@ -69,8 +69,8 @@ and the constants \verb!$true!, and \verb!$false!.
 For instance, let us express the problem
 $p\, \vdash \neg (p \wedge \neg p) ∨ (q \wedge \neg q)$
 in \TPTP syntax. We begin by declaring the $p$ axiom using the \verb!axiom!
-keyword. Later, we include the expected conclusion using the \verb!conjecture!
-keyword.
+keyword. Later, we include the expected conclusion using the
+\verb!conjecture! keyword.
 
 \begin{verbatim}
 fof(h, axiom, p).
@@ -111,7 +111,6 @@ It has no arguments and derives from one parent node named goal. The
 result of this inference when it applies to the \verb!goal! formula is
 \verb!p!.
 
-
 % -------------------------------------------------------------------
 
 \subsection{Inference rules}
@@ -146,16 +145,16 @@ result of this inference when it applies to the \verb!goal! formula is
 \begin{verbatim}
 fof(premise, axiom, p).
 fof(goal, conjecture, p).
-fof(subgoal_0, plain, p, inference(strip, [], [goal])).
-fof(negate_0_0, plain, ~ p, inference(negate, [], [subgoal_0])).
+fof(subgoal_0, plain, p, inf(strip, [], [goal])).
+fof(negate_0_0, plain, ~ p, inf(negate, [], [subgoal_0])).
 fof(normalize_0_0, plain, ∼ p,
-  inference(canonicalize, [], [negate_0_0])).
+  inf(canonicalize, [], [negate_0_0])).
 fof(normalize_0_1, plain, p,
-  inference(canonicalize, [], [premise])).
+  inf(canonicalize, [], [premise])).
 fof(normalize_0_2, plain, $false,
-  inference(simplify, [], [normalize_0_0, normalize_0_1]))
+  inf(simplify, [], [normalize_0_0, normalize_0_1]))
 cnf(refute_0_0, plain, $false,
-  inference(canonicalize, [], [normalize_0_2])).
+  inf(canonicalize, [], [normalize_0_2])).
 \end{verbatim}
 \caption{\texttt{Metis}' \texttt{TSTP} derivation for the
 problem $p\vdash p$.}
@@ -203,5 +202,28 @@ $⊥$, since \Metis delivers proofs by refutation.
   \label{fig:metis-example}
 \end{figure}
 
+\begin{remark}
+In order to keep as short as possible the \Metis derivations 
+for increasing the readability, we have simplified the \TSTP
+syntax and \Metis derivations (see a simplification in Fig.~\ref{fig:simplified-tstp}).
+For instance in \TSTP derivations, we use \verb!inf! instead of \verb!inference!. If the role of the formula is \verb!plain!, we omit it.
+We shorten names generated automatically by \Metis, \eg,
+\verb!sg0! instead of \verb!subgoal_0! or \verb!norm0_0!
+insead of \verb!normalize_0_0!.
+Finally, if the inference rule does not need arguments except its parent nodes, we remove the field for useful information.
+A simplified version of the \texttt{TSTP} derivation of Fig.~\ref{fig:metis-proof-tstp} is the following.
+
+\begin{verbatim}
+fof(premise, axiom, p).
+fof(goal, conjecture, p).
+fof(sg0, p, inf(strip, [goal])).
+fof(neg0, ~ p, inf(negate, [sg0])).
+fof(norm0, ∼ p, inf(canonicalize, [neg0])).
+fof(norm1, p, inf(canonicalize, [premise])).
+fof(norm2, $false, inf(simplify, [norm0, norm1]))
+cnf(refute0, $false, inf(canonicalize, [norm2])).
+\end{verbatim}
+
+\end{remark}
 
 \end{document}

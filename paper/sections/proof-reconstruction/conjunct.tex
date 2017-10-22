@@ -10,53 +10,50 @@ projection rules for the conjunction connective as the
 following \TSTP excerpt shows.
 
 \begin{verbatim}
-fof(normalize_1, plain, p & q & (r | ~ p),
-  inference(canonicalize, [], [x])).
-fof(normalize_2, plain, q,
-  inference(conjunct, [], [normalize_1])).
-fof(normalize_2, plain, (r | ~ p),
-  inference(conjunct, [], [normalize_1])).
+fof(p1, p & q & (r | ~ p), inf(canonicalize, [x])).
+fof(p2, q, inf(conjunct, [p1])).
+fof(p3, (r | ~ p), inf(conjunct, [p1])).
 \end{verbatim}
 
-\begin{definition}[conjunct]
-  \label{def:conjunct}
-  \begin{align*}
-    \begin{split}
-    &\fconjunct : \Prop \to \Prop \to \Prop\\
-    &\fconjunct(φ, ψ) =
-      \begin{cases}
-          ψ, &\text{ if }φ ≡ ψ\\
-          ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ , }ψ ≡ \fconjunct(φ₁, ψ)\\
-          ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ , }ψ ≡ \fconjunct(φ₂, ψ)\\
-          φ, &\text{ otherwise.}
-        \end{cases}
-    \end{split}
-  \end{align*}
-\end{definition}
 
-\begin{mainth}[thm-conjunct]
-  \label{thm:thm-conjunct}
-  If $Γ ⊢ φ$ and $ψ  : \Prop$ then $Γ ⊢ \fconjunct(φ, ψ)$.
+\begin{mainth}
+  \label{thm:conjunct}
+  If $Γ ⊢ φ$ and $ψ  : \Prop$ then $Γ ⊢ \fconjunct~φ~ψ$, where,
+  \begin{equation*}
+  % \label{eq:rank-definition}
+  \begin{aligned}
+  &\hspace{.495mm}\fconjunct : \Prop \to \Prop \to \Prop\\
+  &\begin{array}{llll}
+  \fconjunct~φ~ψ &=
+        \begin{cases}
+            ψ, &\text{ if }φ ≡ ψ\\
+            ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ and }\fconjunct(φ₁, ψ) ≡ ψ  \\
+            ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ and }\fconjunct(φ₂, ψ) ≡ ψ  \\
+            φ, &\text{ otherwise.}
+          \end{cases}
+  \end{array}
+  \end{aligned}
+  \end{equation*}
 \end{mainth}
 
-\begin{proof}\hspace{2cm}
-\begin{itemize}
-  \item For the case $φ ≡ ψ$, $Γ ⊢ \fconjunct(φ, ψ)$ normalizes to $Γ ⊢ ψ$.
-Then, we get the desire conclusion by applying the $\fsubst$ theorem.
-  \item If the proposition $φ$ is a conjunction, and we can get $ψ ≡ \fconjunct(φ_{i}, ψ)$ for some $i = 1,\ 2$, then,
+\begin{proof}\hspace{2cm}\\
+Case $φ ≡ ψ$. $Γ ⊢ \fconjunct~φ~ψ$ normalizes to $Γ ⊢ ψ$.
+Then, we get the desire conclusion by applying the $\fsubst$ theorem.\\[2mm]
+Case $φ ≡ φ₁ ∧ φ₂$. If we can get $ψ ≡ \fconjunct(φ_{i}, ψ)$ for some $i = 1,\ 2$, then,
 
 \begin{equation*}
   \begin{bprooftree}
   \AxiomC{$Γ ⊢ φ₁ ∧ φ₂$}
   \RightLabel{∧-proj$_{i}$}
   \UnaryInfC{$Γ ⊢ φ_{i}$}
+  \RightLabel{by hyp.}
   \UnaryInfC{$Γ ⊢ \fconjunct(φ_{i}, ψ)$}
   \AxiomC{$ψ ≡ \fconjunct(φ_{i}, ψ)$}
-  \RightLabel{subst.}
+  \RightLabel{subst}
   \BinaryInfC{$Γ ⊢ ψ$}
   \end{bprooftree}
 \end{equation*}
-\item The last case follows trivially by using the same hypothesis.
-\end{itemize}
+Otherwise, the last case follows trivially.
 \end{proof}
+
 \end{document}

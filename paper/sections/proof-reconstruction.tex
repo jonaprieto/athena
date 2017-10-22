@@ -60,7 +60,8 @@ We use \Prop type for propositions and the dependent type, $Γ ⊢ φ$ for
 theorems where $Γ$ has $\abbre{List}~\Prop$ type, and $φ$ has type $\Prop$.
 $\abbre{List}$ type is the usual inductive type for lists.
 For syntactical equivalence, we write the equality as $φ ≡ ψ$
-for $φ : \Prop$ and $ψ : \Prop$.
+for $φ : \Prop$ and $ψ : \Prop$. For this equality, we assume the
+reflexivity, symmetry and transitivity property. 
 
 % ...................................................................
 
@@ -271,10 +272,10 @@ $\rm{rule}$ function looks like
       &Takes a formula from a conjunction
       &Thm.~\ref{thm:conjunct}
     \\
-    \texttt{negate}
-      &Negate the formula
-      &Thm.~\ref{thm:negate}
-    \\
+    % \texttt{negate}
+    %   &Negate the formula
+    %   &Thm.~\ref{thm:negate}
+    % \\
     \texttt{resolve}
       &A general form of the resolution theorem
       &Thm.~\ref{thm:resolve}
@@ -296,10 +297,10 @@ $\rm{rule}$ function looks like
 % -----------------------------------------------------------------------------
 
 \subfile{sections/proof-reconstruction/strip.tex}
-% \subfile{sections/proof-reconstruction/negate.tex}
+\subfile{sections/proof-reconstruction/negate.tex}
+\subfile{sections/proof-reconstruction/conjunct.tex}
 % \subfile{sections/proof-reconstruction/resolve.tex}
 % \subfile{sections/proof-reconstruction/canonicalize.tex}
-% \subfile{sections/proof-reconstruction/conjunct.tex}
 % \subfile{sections/proof-reconstruction/clausify.tex}
 % \subfile{sections/proof-reconstruction/simplify.tex}
 

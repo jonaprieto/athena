@@ -5,18 +5,17 @@
 \label{sssec:negate}
 
 Each proof of a subgoal is a refutation, thereby each proof assumes
-the negation of its subgoal. The \negate rule
-assumes the negation of such subgoals, and
-appears after applying the \strip inference to the goal.
+the negation of its subgoal.
+The \negate rule assumes the negation of such subgoals. Then, this rules
+is always derived from a strip inference application as we can see in 
+the following \TSTP excerpt.
 
 \begin{verbatim}
-fof(goal, conjecture, (p & q)).
-fof(subgoal_0, plain, (p), inference(strip, [], [goal])).
-fof(subgoal_1, plain, (p => q), inference(strip, [], [goal])).
-fof(negate_0_0, plain, (~ p), inference(negate, [], [subgoal_0])).
+fof(sg0, (~ p => q), inf(strip, [goal])).
+fof(neg0, ~ (~ p => q), inf(negate, [sg0])).
 \end{verbatim}
 
-To emulate this rule, we introduce the negation
+To emulate this rule, we only need to introduce the negation
 of the subgoal by using $assume$ rule from the inferences in
 Fig.~\ref{fig:CPL-inference-rules}.
 
