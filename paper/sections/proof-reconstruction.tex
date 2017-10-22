@@ -379,8 +379,8 @@ subgoals that implies the goal of the problem in the \Metis \TSTP derivations.
 \fstrip &(φ₁ ∨ φ₂)     ~(\suc~n) &= \fuh~(¬ φ₁ ⇒ \fstrip~φ₂~n)\\
 \fstrip &(φ₁ ⇒ φ₂)     ~(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip~φ₂~n)\\
 \fstrip &(¬ (φ₁ ∧ φ₂)) ~(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip~¬ φ₂~n)\\
-\fstrip &(¬ (φ₁ ∨ φ₂)) ~(\suc~n) &= \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh (¬ φ₁ ⇒ \fstrip~¬ φ₂~n)\\
-\fstrip &(¬ (φ₁ ⇒ φ₂)) ~(\suc~n) &= \fuh~(\fstrip~φ₁~n) ∧ \fuh (φ₁ ⇒ \fstrip~¬ φ₂~n)\\
+\fstrip &(¬ (φ₁ ∨ φ₂)) ~(\suc~n) &= \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)\\
+\fstrip &(¬ (φ₁ ⇒ φ₂)) ~(\suc~n) &= \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~¬ φ₂~n)\\
 \fstrip &(¬ ¬ φ₁)      ~(\suc~n) &= \fuh~(\fstrip~φ₁~n)\\
 \fstrip &(¬ ⊥)         ~(\suc~n) &= ⊤\\
 \fstrip &(¬ ⊤)         ~(\suc~n) &= ⊥\\
@@ -486,13 +486,15 @@ De Morgan Laws.
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
 \begin{bprooftree}
-\AxiomC{$Γ ⊢ \fstrip~φ, n)$}
+\AxiomC{$Γ ⊢ \fstrip~(φ)~(\suc~n)$}
 \RightLabel{by def.}
-\UnaryInfC{$Γ ⊢ \fuh(¬ φ₁) ∧ \fuh(¬ φ₁ ⇒ \fstrip~φ₂, n))$}
+\UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
 \RightLabel{∧-proj₁}
-\UnaryInfC{$Γ ⊢ \fuh(¬ φ₁)$}
+\UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n)$}
 \RightLabel{lem-inv-uh,}
-\UnaryInfC{$Γ ⊢ ¬ φ₁$}
+\UnaryInfC{$Γ ⊢ \fstrip~¬ φ₁~n$}
+\RightLabel{lem-inv-strip}
+  \UnaryInfC{$Γ ⊢ ¬φ₁$}
 \end{bprooftree}
 \end{equation*}
 \end{itemize}
@@ -502,15 +504,15 @@ De Morgan Laws.
   \begin{bprooftree}
   \AxiomC{$\mathcal{D}$}
   \UnaryInfC{$Γ ⊢ ¬ φ₁$}
-  \AxiomC{$Γ ⊢ \fstrip~φ,n-1)$}
+  \AxiomC{$Γ ⊢ \fstrip~(φ)~(\suc~n)$}
   \RightLabel{by def.}
-  \UnaryInfC{$Γ ⊢ \fuh(¬ φ₁) ∧ \fuh(¬ φ₁ ⇒ \fstrip~φ₂,n-1))$}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
   \RightLabel{∧-proj₂}
-  \UnaryInfC{$Γ ⊢ \fuh(¬ φ₁ ⇒ \fstrip~φ₂,n-1))$}
+  \UnaryInfC{$Γ ⊢ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
   \RightLabel{lem-inv-uh}
-  \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \fstrip~φ₂,n-1)$}
+  \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \fstrip~¬ φ₂~n$}
   \RightLabel{⇒-elim}
-  \BinaryInfC{$Γ ⊢ \fstrip~φ₂,n-1)$}
+  \BinaryInfC{$Γ ⊢ \fstrip~¬ φ₂~n$}
   \RightLabel{lem-inv-strip.}
   \UnaryInfC{$Γ ⊢ ¬ φ₂$}
   \end{bprooftree}
