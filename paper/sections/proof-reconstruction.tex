@@ -113,18 +113,17 @@ Let us consider the following example to exhibit the bounded technique
 mentioned above for the \fuh function presented in the proposed version
 for the \Metis \strip inference.
 
-% \begin{functiondef}{$\fuh_{0}$ : \Prop → \Prop}
-%   \label{eq:uh-definition}
-
-% \begin{array}
-%     &\fuh_{0} &&: \Prop → \Prop\\
-%     &\fuh_{0}\ (φ₁ ⇒ (φ₂ ⇒ φ₃)) &&= \fuh_{0}((φ₁ ∧ φ₂) ⇒ φ₃)\\
-%     &\fuh_{0}\ (φ₁ ⇒ (φ₂ ∧ φ₃)) &&= \fuh_{0}(φ₁ ⇒ φ₂) ∧ \fuh_{0}(φ₁ ⇒ φ₃)\\
-%     &\fuh_{0}\ φ &&= φ
-% \end{array}
-
-% \end{functiondef}
-
+\begin{equation*}
+\label{eq:uh-definition}
+\begin{aligned}
+&\hspace{.495mm}\fuh_{0} : \Prop → \Prop\\
+&\begin{array}{lll}
+  \fuh_{0} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{0}((φ₁ ∧ φ₂) ⇒ φ₃)\\
+  \fuh_{0} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &= \fuh_{0}(φ₁ ⇒ φ₂) ∧ \fuh_{0}(φ₁ ⇒ φ₃)\\
+  \fuh_{0} &φ                &= φ
+\end{array}
+\end{aligned}
+\end{equation*}
 
 From the definition above, the size of the argument, $(φ₁ ∧ φ₂) ⇒ φ₃$,
 is not structurally smaller than the input formula, $φ₁ ⇒ (φ₂ ⇒ φ₃)$,
@@ -134,21 +133,17 @@ Therefore, we define the function
 $\fuh_{1}$ by structural recursion in its second argument in
 Eq.~(\ref{eq:uh-structured}).
 
-\begin{align}
-  \label{eq:uh-structured}
-  \begin{split}
-    &\fuh_{1} : \Prop → \Nat \to \Prop\\
-    &\fuh_{1}(φ, \zero)\hspace{3mm}= φ\\%\hspace{10cm}\\
-    &\fuh_{1}(φ, \suc(n)) =\\
-    &\hspace{3mm}\begin{cases}
-    \fuh_{1}((φ₁ ∧ φ₂) ⇒ φ₃, n),
-      &\text{ if } φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\[2mm]
-    \fuh_{1}(φ₁ ⇒ φ₂, n)\\
-    ∧\ \fuh_{1}(φ₁ ⇒ φ₃, n),
-       &\text{ if } φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃).
-  \end{cases}
-  \end{split}
-\end{align}
+\begin{equation}
+\label{eq:uh-structured}
+\begin{aligned}
+&\hspace{.495mm} \fuh_{1} : \Prop → \Nat \to \Prop\\
+&\begin{array}{llll}
+\fuh_{1} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &(\suc~n) &= \fuh_{1}~((φ₁ ∧ φ₂) ⇒ φ₃)~n\\
+\fuh_{1} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &(\suc~n) &= \fuh_{1}~(φ₁ ⇒ φ₂)~n ∧ \fuh_{1}~(φ₁ ⇒ φ₃)~n\\
+\fuh_{1} &φ &\xspace\emph{n} &= φ
+\end{array}
+\end{aligned}
+\end{equation}
 
 As we mentioned above, the natural number in the second argument of
 the function stands for a complexity measure of it.
@@ -160,50 +155,44 @@ number for a proposition $φ$ like the following $\frank$ function.
 The symbols $c_{¬}$ and $c_{\square}$ are non-negative integer
 numbers called the complexity of the respective connective.
 
-\begin{align*}
-  \begin{split}
-  % \label{eq:rank-definition}
-    &\frank : \Prop → \Nat\\
-    &\frank(φ) =
-    \begin{cases}
-    \frank(φ₁) + c_{¬},  &\text{ if } φ ≡ \neg φ₁ \\
-    \fmax{(\frank(φ₁),\ \frank(φ₂))} + c_{\square},
-      &\text{ if } φ ≡ φ₁\,\square\, φ₂.\\
-    0, &\text{ otherwise}
-    \end{cases}
-  \end{split}
-\end{align*}
+
+\begin{equation}
+% \label{eq:rank-definition}
+\begin{aligned}
+&\hspace{.495mm}\frank : \Prop → \Nat\\
+&\begin{array}{llll}
+\frank~(¬~φ)           &= \frank~φ₁~+~c_{¬}\\
+\frank~(φ₁~\square~φ₂) &= \fmax~(\frank~φ₁)~(\frank~φ₂) + c_{\square}\\
+\frank~φ               &= 0
+\end{array}
+\end{aligned}
+\end{equation}
 
 We define the $\fuh_{cm}: \Prop → \Nat$ function as
 the complexity measure for the $\fuh_0$ function.
 
-\begin{align*}
-  \begin{split}
-      &\fuh_{cm} : \Prop → \Nat\\
-      &\fuh_{cm}(φ) =\\
-      &\hspace{3mm}
-        \begin{cases}
-        \fuh_{cm}(φ₃) + 2, &\text{ if }φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)\\
-        \fmax(\fuh_{cm}(φ₂),\ \fuh_{cm}(φ₃)) + 1,
-          &\text{ if }  φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)\\
-        0, &\text{ otherwise.}
-        \end{cases}
-  \end{split}
-\end{align*}
+\begin{equation*}
+% \label{eq:rank-definition}
+\begin{aligned}
+&\hspace{.495mm}\fuh_{cm} : \Prop → \Nat\\
+&\begin{array}{llll}
+\fuh_{cm}~(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{cm}(φ₃) + 2\\
+\fuh_{cm}~(φ₁ ⇒ (φ₂ ∧ φ₃)) &= \fmax~(\fuh_{cm}~φ₂)~(\fuh_{cm}~φ₃) + 1\\
+\fuh_{cm}~φ                &= 0
+\end{array}
+\end{aligned}
+\end{equation*}
 
 Finally, following the technique mentioned, we get a final version of
 $\fuh_{0}$ function presented in Eq.~(\ref{eq:uh}).
 
-\begin{definition}[uh]
-  \label{def:uh}
-    \begin{align}
-      \label{eq:uh}
-      \begin{split}
-      &\fuh : \Prop → \Prop\\
-      &\fuh(φ) = \fuh_{1}(φ, \fuh_{cm}(φ)).
-      \end{split}
-    \end{align}
-\end{definition}
+\begin{align}
+  \label{eq:uh}
+  \begin{split}
+  &\fuh : \Prop → \Prop\\
+  &\fuh(φ) = \fuh_{1}(φ, \fuh_{cm}(φ)).
+  \end{split}
+\end{align}
 
 \end{example}
 

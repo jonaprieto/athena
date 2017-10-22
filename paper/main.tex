@@ -2,7 +2,10 @@
     envcountsect    %% In order to provide the usual behaviour expected
                     %% from \newtheorem
   , runningheads
+  , fleqn           %% all equations in the document left aligned
   ]{llncs}
+
+\setlength{\mathindent}{1cm}
 
 \spnewtheorem{mainth}{Theorem}[section]{\bfseries}{\rmfamily}
 \spnewtheorem{mainlemma}{Lemma}[section]{\bfseries}{\rmfamily}
@@ -318,16 +321,7 @@
 % -------------------------------------------------------------------
 % Rest.
 % -------------------------------------------------------------------
-\newenvironment{functiondef}[1]
-  {\begin{equation}
-  \begin{aligned}
-  &\hspace{.495mm}#1\\
-  &
-  }
-  {
-  \end{aligned}
-  \end{equation}
-  }
+
 % -------------------------------------------------------------------
 % Rest.
 % -------------------------------------------------------------------
