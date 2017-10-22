@@ -8,7 +8,7 @@ Logic equivalence between propositions is a major issue to justify
 prover reasoning steps. Since we left out semantics to treat only the
 syntax aspects of the propositions, our approach shows equivalence
 by converting propositions to their conjunctive normal forms,
-and reordering those and the inner disjunctions  to match them
+and reordering those and the inner disjunctions to match them.
 In this section, we provide some theorems to perform such reordering tasks,
 the goals are the following.
 
@@ -24,7 +24,7 @@ such that $φᵢ ≡ ψⱼ$.
 First, we define the $\rm{rdisj}$ function to convert
 a disjunction in its right-associative form.
 The $\rm{rconj}$ function that converts conjunction to its right-associative form
-is not presented here, but is defined in a similar way (see its implementation
+is not presented here, but is defined in a similar way (see its definition
 in~\cite{AgdaMetis}).
 
 \begin{definition}[rdisj]
@@ -43,10 +43,10 @@ in~\cite{AgdaMetis}).
   \end{align*}
 \end{definition}
 
-\begin{lemma}[lem-rdisj]
+\begin{mainlemma}[lem-rdisj]
 \label{lem:lem-rdisj}
   If $Γ ⊢ φ$ then $Γ ⊢ \rm{rdisj}(φ)$.
-\end{lemma}
+\end{mainlemma}
 
 \begin{definition}[build$_{\boldsymbol{∨}}$]
 \begin{equation*}
@@ -69,10 +69,10 @@ disjunction from another disjunction, specifically, this functions will
 try to rearrange the disjuncts in the source formula to match with the
 target disjunction formula, similar as we describe above.
 
-\begin{lemma}[lem-build$_{\boldsymbol{∨}}$]
+\begin{mainlemma}[lem-build$_{\boldsymbol{∨}}$]
 \label{lem:lem-build-or}
 If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \rm{build}_{∨}(φ)$.
-\end{lemma}
+\end{mainlemma}
 
 From now, we assume all propositions to be right-associative unless
 otherwise stated.
@@ -95,10 +95,10 @@ Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $(ψ ∨ φ)$.
 \end{align}
 \end{definition}
 
-\begin{lemma}[lem-factor]
+\begin{mainlemma}[lem-factor]
 \label{lem:lem-factor}
   $Γ ⊢ φ$ then $Γ ⊢ \ffactor(φ)$.
-\end{lemma}
+\end{mainlemma}
 
 To construct a disjunction $ψ$ from a disjunction $φ$, we have used ideas
 from the description in \citeauthor{bohme2010}~\cite{bohme2010} to prove
@@ -123,10 +123,10 @@ target disjunction $ψ$.
 \end{align*}
 \end{definition}
 
-\begin{lemma}[lem-sbuild$_{\boldsymbol{∨}}$]
+\begin{mainlemma}[lem-sbuild$_{\boldsymbol{∨}}$]
 \label{lem:lem-sbuild-or}
 If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \rm{sbuild}_{∨}(φ, ψ)$.
-\end{lemma}
+\end{mainlemma}
 
 \begin{example}
 Let see the main idea behind the lem-sbuild$_{∨}$ lemma.
@@ -211,10 +211,10 @@ for disjunctions, but instead, we treat only with conjunctive normal forms.
   \end{align*}
 \end{definition}
 
-\begin{lemma}[lem-reorder$_{\boldsymbol{∧}}$]
+\begin{mainlemma}[lem-reorder$_{\boldsymbol{∧}}$]
   \label{lem:lem-reorder-and}
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧}(φ, ψ)$.
-\end{lemma}
+\end{mainlemma}
 
 \begin{definition}[conjunct$_{\boldsymbol{∨}}$]
   \label{eq:conjunct-or-definition}
@@ -235,10 +235,10 @@ for disjunctions, but instead, we treat only with conjunctive normal forms.
   \end{align*}
 \end{definition}
 
-\begin{lemma}[lem-conjunct$_{\boldsymbol{∨}}$]
+\begin{mainlemma}[lem-conjunct$_{\boldsymbol{∨}}$]
   \label{lem:lem-conjunct-or}
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fconjunct_{∨}(φ, ψ)$.
-\end{lemma}
+\end{mainlemma}
 
 \begin{definition}[reorder$_{\boldsymbol{∧∨}}$]
  \begin{align*}
@@ -303,10 +303,10 @@ the binary resolution in Def.~\ref{def:rsol}.
   \end{align*}
 \end{definition}
 
-\begin{lemma}[lem-rsol]
+\begin{mainlemma}[lem-rsol]
   \label{lem:lem-rsol}
   If $Γ ⊢ φ$ then $Γ ⊢ \rm{rsol}(φ)$.
-\end{lemma}
+\end{mainlemma}
 
 In Def.~\ref{def:resolve}, the proposed rule for $resolve$
 has four arguments. The first three were described

@@ -5,18 +5,17 @@
 \subsubsection{Canonicalize.}
 \label{sssec:canonicalize}
 
-The normalization module in \Metis is the responsible for
-\canonicalize, \clausify, \conjunct and \simplify.
+% The normalization module in \Metis is the responsible for
+% \canonicalize, \clausify, \conjunct and \simplify.
 
-One of the main purposes of the module consists of adding the axioms
-to the problem. In this process, some transformations are carried
+One of the main purposes of the \canonicalize rule consists of adding the axioms to the problem. In this process, some transformations are carried
 out by convert a \verb!fof! formula to their clausal normal form.
 The process mainly consists of removing redundancies (tautologies or
 definitions) and converting the proposition to its normalized
 negative normal form, conjunctive normal form, or
 definitional normal form.
 
-\begin{definition}[\abbre{NProp}]
+\begin{definition} %[\abbre{NProp}]
   \NProp is the type for a formula in normalized negative normal form
   in which negations appear only in the literals and the expression is
   in terms only of ($⊥$, $⊤$, $¬$, $∧$, $∨$) connectives.
@@ -25,11 +24,15 @@ definitional normal form.
 
 A sequent $Γ ⟝ φ$ represents a theorem where
 $Γ$ is a set of \Prop propositions premises, and $φ : \NProp$ is the
-conclusion of the theorem. These theorems have a subset of rules from
-the classical inference rules in Fig.~\ref{fig:CPL-inference-rules}
-that apply for the connectives that coincides with \NProp type.
+conclusion of the theorem. The $⟝$ theorems have the same subset of rules
+for the connectives of \NProp type in Fig.~\ref{fig:CPL-inference-rules}.
 
-\begin{figure}
+% -------------------------------------------------------------------
+\subsubsection{Redundancy.}
+\label{sssec:redundancy}
+
+There are redundancies in a formula when some of the following theorems can apply inside the formula.
+
   \[
     \begin{bprooftree}
       \AxiomC{$Γ ⊢ φ ∧ ⊥$}
@@ -73,91 +76,77 @@ that apply for the connectives that coincides with \NProp type.
       \UnaryInfC{$Γ ⊢ φ$}
     \end{bprooftree}
   \]
-\caption{Some definitions applied to translate a formula into its
-normalized normal form.}
-\label{fig:conjunctive-disjunctive-simpl}
-\end{figure}
-
-% -------------------------------------------------------------------
-\subsubsection{Redundancy.}
-\label{sssec:redundancy}
-
-In this section we provide functions and theorems to remove, inside
-a normalized formula, the definitions showed in
-Fig.~\ref{fig:conjunctive-disjunctive-simpl}.
 
 \begin{remark}
-We assume all formulas are in right-associative form in
-the input of the functions by applying a version of $\rm{rdisj}$ or $\rm{rconj}$
-functions for normalized propositions (see Def.~\ref{def:rdisj}).
+Here and below, we assume all formulas to be in right-associative form in
+the input of the functions.  To perform such conversion, we can apply
+the $\rm{rdisj}$ and $\rm{rconj}$ functions depending on the main connective Eq.~(\ref{def:rdisj}).
 \end{remark}
 
-In a disjunction, $φ = φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
-if there is some $i = 1, \cdots, n$ such that $ψ = φᵢ$.
-$ψ ∈_{∨} φ$ is another name for the equality
+In a disjunction, $φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
+if there is some $i = 1, \cdots, n$ such that $ψ ≡ φᵢ$.
+Note that $ψ ∈_{∨} φ$ is another name for the equality
 $ψ ≡ \fconjunct_{∨}(φ, ψ)$.
 
-\begin{definition}[rm$_∨$]
-  \label{def:rm-or}
   \begin{align*}
+  \label{def:rm-or}
     \begin{split}
       &\frm_{∨} :  \NProp \to \NProp\\
-      &\frm_{∨}(φ) =
+      &\frm_{∨}~φ =
       \begin{cases}
-        \frm_{∨}(φ₂), &\text{ if }φ ≡ φ₁ ∨ φ₂,\ φ₁ ∈_{∨} φ₂\\
-        φ₁ ∨ rm_{∨}(φ₂), &\text{ if }φ ≡ φ₁ ∨ φ₂\\
+        \frm_{∨}~φ₂,    &\text{ if }φ ≡ φ₁ ∨ φ₂\text{ and }φ₁ ∈_{∨} φ₂\\
+        φ₁~∨~rm_{∨}~φ₂, &\text{ if }φ ≡ φ₁ ∨ φ₂\\
         φ,  &\text{ otherwise.}
       \end{cases}
     \end{split}
   \end{align*}
-\end{definition}
 
-\begin{lemma}[lem-rm$_{∨}$]
-  \label{lem:lem_rm-or}
+\begin{mainlemma}
+  \label{lem:rm-or}
   If $Γ ⟝ φ$ then $Γ ⟝ \frm_{∨}(φ)$.
-\end{lemma}
+\end{mainlemma}
 
 Now, we have removed redundancies in the disjunctions by applying
 $\frm_{∨}$ function, we can define a similar function to work with
 conjunctions, \ie, $\frm_{∧}$.
 
+In a conjunction, $φ = φ₁ ∧ φ₂ ∧ \cdots ∧ φₙ$, we say
+$ψ ∈_{∧} φ$, if there is some $i = 1, \cdots, n$ such that $ψ = φᵢ$.
+We define $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct(φ, ψ)$.
+
+\label{eq:rm-and}
+  \begin{align*}
+    \begin{split}
+    &\frm_{∧} : \NProp \to \NProp\\
+    &\frm_{∧}~φ =
+    \begin{cases}
+      rm_{∧}~φ₂,      &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ and }φ₁ ∈_{∧} φ₂\\
+      φ₁ ∧ rm_{∧}~φ₂, &\text{ if }φ ≡ φ₁ ∧ φ₂\\
+      φ,               &\text{ otherwise.}
+    \end{cases}
+    \end{split}
+  \end{align*}
+
+\begin{mainlemma}
+  \label{lem:rm-and}
+  If $Γ ⟝ φ$ then $Γ ⟝ \frm_{∧}(φ)$.
+\end{mainlemma}
+
+\begin{example}
 \begin{equation*}
   \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∨ φ$}
-  \RightLabel{lem-rm$_∨$,}
+  \RightLabel{Lemma~\ref{lem:rm-or}}
   \UnaryInfC{$Γ ⟝ φ$}
   \end{bprooftree}
   \qquad
   \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∧ φ$}
-  \RightLabel{lem-rm$_∧$.}
+  \RightLabel{Lemma~\ref{lem:rm-and}}
   \UnaryInfC{$Γ ⟝ φ$}
   \end{bprooftree}
 \end{equation*}
-
-In a conjunction, $φ = φ₁ ∧ φ₂ ∧ \cdots ∧ φₙ$, we say
-$ψ ∈_{∧} φ$, if there is some $i = 1, \cdots, n$ such that $ψ = φᵢ$.
-We define $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct(φ, ψ)$.
-
-\begin{definition}[rm$_∧$]
-\label{eq:rm-and}
-  \begin{align*}
-    \begin{split}
-    &\frm_{∧} : \NProp \to \NProp\\
-    &\frm_{∧}(φ) =
-    \begin{cases}
-      rm_{∧}(φ₂),      &\text{ if }φ ≡ φ₁ ∧ φ₂, φ₁ ∈_{∧} φ₂\\
-      φ₁ ∧ rm_{∧}(φ₂), &\text{ if }φ ≡ φ₁ ∧ φ₂\\
-      φ,               &\text{ otherwise.}
-    \end{cases}
-    \end{split}
-  \end{align*}
-\end{definition}
-
-\begin{lemma}[lem-rm$_{∧}$] % (fold)
-  \label{lem:lem_rm-and}
-  If $Γ ⟝ φ$ then $Γ ⟝ \frm_{∧}(φ)$.
-\end{lemma}
+\end{example}
 
 Continuing with the rest of tautologies from
 Fig.~\ref{fig:conjunctive-disjunctive-simpl}, we define the
@@ -219,10 +208,10 @@ take into account the following cases.
   \end{align*}
 \end{definition}
 
-\begin{lemma}[lem-ndisj$_{∨}$] % (fold)
+\begin{mainlemma} % (fold)
   \label{lem:lem_ndisj-or}
   If $Γ ⟝ φ$ then $Γ ⟝ \rm{ndisj}_{∨}(φ)$.
-\end{lemma}
+\end{mainlemma}
 
 \begin{definition}[ndisj$_{∧}$]
   \label{def:ndisj-and}
@@ -243,10 +232,10 @@ take into account the following cases.
   \end{align*}
 \end{definition}
 
-\begin{lemma}[lem-ndisj$_{∧}$] % (fold)
+\begin{mainlemma} % (fold)
   \label{lem:lem_ndisj-and}
   If $Γ ⟝ φ$ then $Γ ⟝ \rm{ndisj}_{∧}(φ)$.
-\end{lemma}
+\end{mainlemma}
 
 % subsubsection redundancy (end)
 % -------------------------------------------------------------------
@@ -271,10 +260,10 @@ in disjunctions.
 \end{align*}
 \end{definition}
 
-\begin{lemma}[lem-canon$_{∧}$]
+\begin{mainlemma}
   \label{lem:lem_canon-and}
   If $Γ ⟝ φ$ then $Γ ⟝ \fcanon_{∧}(φ)$.
-\end{lemma}
+\end{mainlemma}
 
 \begin{definition}[canon$_{∨}$]
 \label{def:canon-or}
@@ -292,10 +281,10 @@ in disjunctions.
 \end{align*}
 \end{definition}
 
-\begin{lemma}[lem-canon$_{∨}$]
+\begin{mainlemma}
   \label{lem:lem_canon-or}
   If $Γ ⟝ φ$ then $Γ ⟝ \fcanon_{∨}(φ)$.
-\end{lemma}
+\end{mainlemma}
 
 % \begin{remark}
 % A similar treatment defines the $\fcanon_{⊻} : \NProp \to \NProp$.
@@ -307,45 +296,66 @@ in disjunctions.
 % more details.
 % \end{remark}
 
-Finally, we can translate formulas from \Prop to \NProp by defining
-the $\fnnf₀$ function. This function is based on the $\fnnf$ function described in
-\citeauthor{Bezem2002}~\cite{Bezem2002}. Their $\fnnf$ function
-translates formulas to their classical negative normal form. In the
+Now, we can translate formulas from \Prop to \NProp by defining
+the $\fnnf₀$ function. This function is based on the $\fnnf$ function
+described in \citeauthor{Bezem2002}~\cite{Bezem2002}. Their $\fnnf$ function
+translates formulas to their negative normal form. In the
 reference, the authors avoid a termination problem with a similar
 function by using, as an extra argument, the polarity of the formula.
-We follow the same idea in Def.~\ref{def:nnf-zero}.
-Therefore, we need the \abbre{Polarity} type with
+We follow the same idea in Eq.~(\ref{def:nnf-zero}).
+Therefore, we define the \abbre{Polarity} type with
 two constructors: $⊕$ to denote positive polarity, and $⊖$ to denote
-negative polarity of the formula.
+negative polarity of a formula. The polarity of a formula is defined in
+Eq.~(\ref{def:polarity}).
 
-\begin{definition}[nnf₀]
+% fun polarity True = true
+%   | polarity False = false
+%   | polarity (Literal (_,(pol,_))) = not pol
+%   | polarity (And _) = true
+%   | polarity (Or _) = false
+%   | polarity (Xor (_,_,pol,_)) = pol
+%   | polarity (Exists _) = true
+%   | polarity (Forall _) = false;
+\begin{equation}
+\label{def:polarity}
+  \begin{aligned}
+  &\hspace{.495mm}\fpolarity : \Prop \to \abbre{Polarity}\\
+    &\begin{array}{lll}
+      \fpolarity &(φ₁ ∧ φ₂) &= ⊕\\
+      \fpolarity &(φ₁ ∨ φ₂) &= ⊖\\
+      \fpolarity &(φ₁ ⇒ φ₂) &= ⊖\\
+      \fpolarity &(¬ φ)     &=
+        \begin{cases}
+        ⊕, &\text{ if }\fpolarity~φ=⊖\\
+        ⊖, &\text{ if }\fpolarity~φ=⊕
+        \end{cases}\\
+      \fpolarity &φ     &=⊕
+    \end{array}
+  \end{aligned}
+\end{equation}
+
+\begin{equation}
 \label{def:nnf-zero}
-  \begin{align*}
-    \begin{split}
-    &\fnnf₀ : \abbre{Polarity} \to \Prop \to \NProp\\
-    &\fnnf₀(⊕, φ) =
-      \begin{cases}
-      \fcanon_{∧}(\fnnf₀(⊕, φ₁) ∧ \fnnf₀(⊕, φ₂)), &\text{ if }φ ≡ φ₁ ∧ φ₂ \\
-      \fcanon_{∨}(\fnnf₀(⊕, φ₁) ∨ \fnnf₀(⊕, φ₂)), &\text{ if }φ ≡ φ₁ ∨ φ₂ \\
-      \fcanon_{∨}(\fnnf₀(⊖, φ₁) ∨ \fnnf₀(⊕, φ₂)), &\text{ if }φ ≡ φ₁ ⇒ φ₂ \\
-      \fnnf₀(⊖, φ₁),                              &\text{ if }φ ≡ ¬ φ₁ \\
-      φ,                                          &\text{ otherwise.} \\
-      \end{cases}\\
-    &\fnnf₀(⊖, φ) =
-      \begin{cases}
-      \fcanon_{∨}(\fnnf₀(⊖, φ₁) ∨ \fnnf₀(⊖, φ₂)),  &\text{ if }φ ≡ φ₁ ∧ φ₂ \\
-      \fcanon_{∧}(\fnnf₀(⊖, φ₁) ∧ \fnnf₀(⊖, φ₂)),  &\text{ if }φ ≡ φ₁ ∨ φ₂ \\
-      \fcanon_{∧}(\fnnf₀(⊖, φ₂) ∧ \fnnf₀(⊖, φ₁)),  &\text{ if }φ ≡ φ₁ ⇒ φ₂ \\
-      \fnnf₀(⊕, φ₁),                               &\text{ if }φ ≡ ¬ φ₁ \\
-      ⊥,                                           &\text{ if }φ ≡ ⊤ \\
-      ⊤,                                           &\text{ if }φ ≡ ⊥ \\
-      φ,                                           &\text{ otherwise.} \\
-      \end{cases}
-    \end{split}
-  \end{align*}
-\end{definition}
+  \begin{aligned}
+  &\hspace{.495mm}\fnnf₀ : \abbre{Polarity} \to \Prop \to \NProp\\
+    &\begin{array}{lll}
+      \fnnf₀~⊕~(φ₁ ∧ φ₂) &=\fcanon_{∧}~(\fnnf₀~⊕~φ₁ ∧ \fnnf₀~⊕~φ₂)\\
+      \fnnf₀~⊕~(φ₁ ∨ φ₂) &=\fcanon_{∨}~(\fnnf₀~⊕~φ₁ ∨ \fnnf₀~⊕~φ₂)\\
+      \fnnf₀~⊕~(φ₁ ⇒ φ₂) &=\fcanon_{∨}~(\fnnf₀~⊖~φ₁ ∨ \fnnf₀~⊕~φ₂)\\
+      \fnnf₀~⊕~(¬ φ₁)    &=\fnnf₀~⊖~φ₁                              \\
+      \fnnf₀~⊕~φ         &=φ        \\
+      \fnnf₀~⊖~(φ₁ ∧ φ₂) &=\fcanon_{∨}(\fnnf₀~⊖,~φ₁ ∨ \fnnf₀~⊖~φ₂)\\
+      \fnnf₀~⊖~(φ₁ ∨ φ₂) &=\fcanon_{∧}(\fnnf₀~⊖,~φ₁ ∧ \fnnf₀~⊖~φ₂)\\
+      \fnnf₀~⊖~(φ₁ ⇒ φ₂) &=\fcanon_{∧}(\fnnf₀~⊖,~φ₂ ∧ \fnnf₀~⊖~φ₁)\\
+      \fnnf₀~⊖~(¬ φ₁)    &=\fnnf₀~⊕~φ₁\\
+      \fnnf₀~⊖~⊤         &=⊥\\
+      \fnnf₀~⊖~⊥         &=⊤\\
+      \fnnf₀~⊖~φ         &=φ
+    \end{array}
+  \end{aligned}
+\end{equation}
 
-\begin{lemma}[lem-nnf]
+\begin{mainlemma}
   \label{lem:lem-nnf}
   If $Γ ⊢ φ$ then $Γ ⟝ \fnnf~φ$ where,
   \begin{align*}
@@ -354,14 +364,14 @@ negative polarity of the formula.
      &\fnnf~φ = \fnnf₀(⊕, φ).
    \end{split}
   \end{align*}
-\end{lemma}
+\end{mainlemma}
 
-\begin{lemma}[lem-dist$_{∨}$]
+\begin{mainlemma}
   \label{lem:lem-dist-or}
   $Γ ⟝ φ$ then $Γ ⟝ \fdist_{∨}(φ)$, where,
   \begin{align*}
     \begin{split}
-    &\fdist_{∨} : \Prop \to \Prop\\
+    &\fdist_{∨} : \NProp \to \NProp\\
     &\fdist_{∨}(φ) =
       \begin{cases}
         \fdist_{∨}(φ₁ ∨ φ₂) ∧ \fdist_{∨}(φ₂ ∨ φ₃), &\text{ if }φ ≡ (φ₁ ∧ φ₂) ∨ φ₃\\
@@ -370,14 +380,14 @@ negative polarity of the formula.
       \end{cases}
     \end{split}
   \end{align*}
-\end{lemma}
+\end{mainlemma}
 
-\begin{lemma}[lem-dist]
+\begin{mainlemma}
   \label{lem:lem-dist}
   $Γ ⟝ φ$ then $Γ ⟝ \fdist(φ)$, where,
   \begin{align*}
       \begin{split}
-      &\fdist : \Prop \to \Prop\\
+      &\fdist : \NProp \to \NProp\\
       &\fdist(φ) =
         \begin{cases}
           \fdist(φ₁) ∧ \fdist(φ₂),
@@ -388,18 +398,18 @@ negative polarity of the formula.
         \end{cases}
       \end{split}
   \end{align*}
-\end{lemma}
+\end{mainlemma}
 
 \begin{sketchproof} If $φ ≡ φ₁ ∨ φ₂$, we get for $i = 1, 2$,
 \begin{equation*}
   \begin{bprooftree}
     \RightLabel{assume}
     \AxiomC{$Γ, φ_{i} ⊢ φ_{i}$}
-    \RightLabel{lem-dist}
+    \RightLabel{by hip.}
     \UnaryInfC{$Γ ⊢ \fdist(φ_{i})$}
     \RightLabel{∨-intro$_{1,2}$}
     \UnaryInfC{$Γ, φ_{i} ⊢ \fdist(φ₁) ∨ \fdist(φ₂)$}
-    \RightLabel{lem-dist$_{∨}$.}
+    \RightLabel{lemma~\ref{lem:lem-dist-or}}
     \UnaryInfC{$Γ, φ_{i} ⊢ \fdist_{∨}(\fdist(φ₁) ∨ \fdist(φ₂))$}
     \end{bprooftree}
 \end{equation*}
@@ -415,33 +425,33 @@ these two types.
 \begin{definition}[form]
 \begin{align*}
     \begin{split}
-      &\rm{form} : \NProp \to \Prop\\
-      &\rm{form}(φ) =
+      &\fform : \NProp \to \Prop\\
+      &\fform(φ) =
       \begin{cases}
-        \rm{form}(φ₁) ∧ \rm{form}(φ₂), &\text{ if }φ ≡ φ₁ ∧ φ₂\\
-        \rm{form}(φ₁) ∨ \rm{form}(φ₂), &\text{ if }φ ≡ φ₁ ∨ φ₂\\
-        \rm{form}_{⊻}(φ₂),        &\text{ if }φ ≡ φ₁ ⊻ φ₂\\
+        \fform(φ₁) ∧ \fform(φ₂), &\text{ if }φ ≡ φ₁ ∧ φ₂\\
+        \fform(φ₁) ∨ \fform(φ₂), &\text{ if }φ ≡ φ₁ ∨ φ₂\\
+        \fform_{⊻}(φ₂),        &\text{ if }φ ≡ φ₁ ⊻ φ₂\\
         φ, &\text{ otherwise.}\\
       \end{cases}
     \end{split}
 \end{align*}
 \end{definition}
 
-\begin{lemma}[lem-form]
+\begin{mainlemma}
   \label{lem:lem-form}
-   If $Γ ⟝ φ$ then $Γ ⊢ \rm{form}(φ)$.
-\end{lemma}
+   If $Γ ⟝ φ$ then $Γ ⊢ \fform(φ)$.
+\end{mainlemma}
 
 As a result, we can get a conjunctive normal form by applying the
 following theorem.
 
-\begin{mainth}[cnfThm]
+\begin{mainth}
 \label{thm:thm-cnf}
   If $Γ ⊢ φ$ then $Γ ⊢ \rm{cnf}(φ)$, where,
   \begin{align*}
     \begin{split}
     &\rm{cnf} : \Prop \to \Prop\\
-    &\rm{cnf} = \rm{form} ∘ \fdist ∘ \fnnf.
+    &\rm{cnf} \varphi = \fform (\fdist (\fnnf  \varphi))
     \end{split}
   \end{align*}
 \end{mainth}
@@ -455,7 +465,7 @@ Since all the previous transformations came from  equivalences in  the
 classical propositional logic, the following theorem plays an important role
 in the next section.
 
-\begin{mainth}[invCnfThm]
+\begin{mainth}
 \label{thm:invCnfThm}
   If $Γ ⊢ \rm{cnf}(φ)$ then $Γ ⊢ φ$.
 \end{mainth}
@@ -474,22 +484,21 @@ normal form of the source formula to match with
 the conjunctive normal form of the target formula.
 
 \begin{definition}[canonicalize]
+\begin{equation}
   \label{def:canonicalize}
-  \begin{align*}
-    \begin{split}
-      &\fcanonicalize : \Prop \to \Prop \to \Prop\\
-      &\fcanonicalize(φ, ψ) =
-      \begin{cases}
-        ψ, &\text{ if }ψ ≡ φ\\
-        ψ, &\text{ if }ψ ≡ \fform(\fnnf~φ)\\
-        ψ, &\text{ if }\fcnf~ψ ≡ \freorder_{∧∨}(\fcnf~φ, \fcnf~ψ)\\
-        φ, &\text{ otherwise.}\\
-      \end{cases}
-    \end{split}
-  \end{align*}
+  \begin{aligned}
+  &\hspace{.495mm}\fcanonicalize : \Prop \to \Prop \to \Prop\\
+  &\begin{array}{lll}
+        \fcanonicalize~φ~φ &= ψ \\
+        \fcanonicalize~φ~\fform(\fnnf~φ) &= \fform(\fnnf~φ) \\
+        ψ, \text{ if }\fcnf~ψ ≡ \freorder_{∧∨}(\fcnf~φ, \fcnf~ψ)\\
+        \fcanonicalize~φ~ψ &= φ
+      \end{array}
+    \end{aligned}
+  \end{equation}
 \end{definition}
 
-\begin{mainth}[canonicalizeThm] % (fold)
+\begin{mainth} % (fold)
   \label{thm:canonicalizeThm}
   \hspace{4mm}\\
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fcanonicalize(φ, ψ)$.

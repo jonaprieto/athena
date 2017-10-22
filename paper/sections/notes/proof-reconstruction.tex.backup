@@ -10,8 +10,8 @@
 \end{split}
 \end{equation}
 
-\begin{lemma}[thm-rconj] $Γ ⊢ φ$ then $Γ ⊢ rconj(φ)$.
-\end{lemma}
+\begin{mainlemma}[thm-rconj] $Γ ⊢ φ$ then $Γ ⊢ rconj(φ)$.
+\end{mainlemma}
 
 % -------------------------------------------------------------------
 
