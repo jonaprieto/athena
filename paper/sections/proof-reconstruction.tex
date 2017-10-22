@@ -61,7 +61,7 @@ theorems where $Γ$ has $\abbre{List}~\Prop$ type, and $φ$ has type $\Prop$.
 $\abbre{List}$ type is the usual inductive type for lists.
 For syntactical equivalence, we write the equality as $φ ≡ ψ$
 for $φ : \Prop$ and $ψ : \Prop$. For this equality, we assume the
-reflexivity, symmetry and transitivity property. 
+reflexivity, symmetry and transitivity property.
 
 % ...................................................................
 
@@ -173,15 +173,14 @@ We define the $\fuh_{cm}: \Prop → \Nat$ function as
 the complexity measure for the $\fuh_0$ function.
 
 \begin{equation*}
-% \label{eq:rank-definition}
-\begin{aligned}
-&\hspace{.495mm}\fuh_{cm} : \Prop → \Nat\\
-&\begin{array}{llll}
-\fuh_{cm}~(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{cm}(φ₃) + 2\\
-\fuh_{cm}~(φ₁ ⇒ (φ₂ ∧ φ₃)) &= \fmax~(\fuh_{cm}~φ₂)~(\fuh_{cm}~φ₃) + 1\\
-\fuh_{cm}~φ                &= 0
-\end{array}
-\end{aligned}
+  \begin{aligned}
+    &\hspace{.495mm}\fuh_{cm} : \Prop → \Nat\\
+    &\begin{array}{llll}
+    \fuh_{cm}~(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{cm}(φ₃) + 2\\
+    \fuh_{cm}~(φ₁ ⇒ (φ₂ ∧ φ₃)) &= \fmax~(\fuh_{cm}~φ₂)~(\fuh_{cm}~φ₃) + 1\\
+    \fuh_{cm}~φ                &= 0
+    \end{array}
+  \end{aligned}
 \end{equation*}
 
 Finally, following the technique mentioned, we get a final version of
@@ -299,17 +298,17 @@ $\rm{rule}$ function looks like
 \subfile{sections/proof-reconstruction/strip.tex}
 \subfile{sections/proof-reconstruction/negate.tex}
 \subfile{sections/proof-reconstruction/conjunct.tex}
-% \subfile{sections/proof-reconstruction/resolve.tex}
+\subfile{sections/proof-reconstruction/resolve.tex}
 \subfile{sections/proof-reconstruction/canonicalize.tex}
 \subfile{sections/proof-reconstruction/clausify.tex}
 \subfile{sections/proof-reconstruction/simplify.tex}
 
 %------------------------------------------------------------------------------
 
-Now, we have finished the formalization of every inference rule in 
+Now, we have finished the formalization of every inference rule in
 a \Metis proof, we are able to justify step-by-step any proof
-for a problem in propositional logic. 
-For instance, we tested successfully the translation by \Athena jointly with 
+for a problem in propositional logic.
+For instance, we tested successfully the translation by \Athena jointly with
 the \Agda formalizations of the rules mentioned above with more than eighty representative theorems in propositional logic. An interested reader can test the problems~\cite{Prieto-Cubides2017} in the \Athena tool repository~\cite{Athena}.
 
 \end{document}

@@ -9,46 +9,53 @@ prover reasoning steps. Since we left out semantics to treat only the
 syntax aspects of the propositions, our approach shows equivalence
 by converting propositions to their conjunctive normal forms,
 and reordering those and the inner disjunctions to match them.
-In this section, we provide some theorems to perform such reordering tasks,
-the goals are the following.
+Below, we provide some lemmas to perform such reordering tasks,
+we omit the proofs but they can found in~\cite{AgdaMetis}.
 
-\begin{itemize}
-  \item Reorder a disjunction $φ = φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$ to match with
-$ψ = ψ₁ ∨ ψ₂ ∨ \cdots ∨ ψₙ$. For all $i$, there exists at least one $j$ such
-that $φᵢ ≡ ψⱼ$.
-  \item Reorder a CNF formula, $φ = φ₁ ∧ φ₂ ∧ \cdots$, to match with another
-CNF formula $ψ = ψ₁ ∧ ψ₂ ∧ \cdots$. For all $i$, there exists at least one $j$
-such that $φᵢ ≡ ψⱼ$.
-\end{itemize}
+% \begin{itemize}
+%   \item Reorder a disjunction $φ = φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$ to match with
+% $ψ = ψ₁ ∨ ψ₂ ∨ \cdots ∨ ψₙ$. For all $i$, there exists at least one $j$ such
+% that $φᵢ ≡ ψⱼ$.
+%   \item Reorder a CNF formula, $φ = φ₁ ∧ φ₂ ∧ \cdots$, to match with another
+% CNF formula $ψ = ψ₁ ∧ ψ₂ ∧ \cdots$. For all $i$, there exists at least one $j$
+% such that $φᵢ ≡ ψⱼ$.
+% \end{itemize}
 
-First, we define the $\rm{rdisj}$ function to convert
-a disjunction in its right-associative form.
-The $\rm{rconj}$ function that converts conjunction to its right-associative form
-is not presented here, but is defined in a similar way (see its definition
-in~\cite{AgdaMetis}).
+First, we define \rm{rassoc}$_{⬓}$ function in Eq.~(\ref{def:right-square})
+to convert a disjunctions or a conjunction into its right-associative form.
+We use $\rm{rassoc}_{∧}$ to convert conjunctions and $\rm{rassoc}_{∨}$ for
+disjunctions.
 
-\begin{definition}[rdisj]
-\label{def:rdisj}
-  \begin{align*}
-    \begin{split}
-    \label{eq:rdisj-def}
-      &\rm{rdisj}(φ) : \Prop \to \Prop\\
-      &\rm{rdisj}(φ) =
-      \begin{cases}
-      \rm{rdisj}(φ₁ ∨ (φ₂ ∨ φ₃)),  & \text{ if } φ ≡ (φ₁ ∨ φ₂) ∨ φ₃\\
-      φ₁ ∨ \rm{rdisj}(φ₂),         & \text{ if } φ ≡ φ₁ ∨ φ₂\\
-      φ,                      & \text{ otherwise.}
-      \end{cases}
-    \end{split}
-  \end{align*}
-\end{definition}
+\begin{equation}
+\label{def:right-square}
+  \begin{aligned}
+    &\hspace{.495mm}\rm{rassoc}_{⬓} : \Prop \to \Prop\\
+    &\begin{array}{lll}
+    \rm{rassoc}_{⬓} &((φ₁ ⬓ φ₂) ⬓ φ₃) &= \rm{rassoc}_{⬓}~(φ₁~⬓~(φ₂ ⬓ φ₃))\\
+    \rm{rassoc}_{⬓} &(φ₁ ⬓ φ₂)        &= φ₁~∨~\rm{rassoc}_{⬓}~φ₂\\
+    \rm{rassoc}_{⬓} &φ                &= φ
+    \end{array}
+  \end{aligned}
+\end{equation}
 
-\begin{mainlemma}[lem-rdisj]
-\label{lem:lem-rdisj}
-  If $Γ ⊢ φ$ then $Γ ⊢ \rm{rdisj}(φ)$.
+\begin{example}\hspace{5mm}\\
+\begin{enumerate}
+\item $\rm{rassoc}_{∨}~(((p ∨ ((q ∨ r) ∨ s)) ∨ t) = p ∨ (q ∨ (r ∨ (s ∨ t)))$.
+\item $\rm{rassoc}_{∧}~((((p ∧ q) ∧ r) ∧ s) ∧ t) = p ∧ (q ∧ (r ∧ (s ∧ t)))$.
+\end{enumerate}
+\end{example}
+
+\begin{remark}
+In \TPTP syntax, the formulas are in left-associative form by default.
+Despite of that convention, \Metis understands a formula to be in right-associative form by default. As we mentioned above, this is a matter to take into account for
+the proof-reconstruction. We opted to work as far as possible with right-associative formulas in~\cite{AgdaMetis}.
+\end{remark}
+
+\begin{mainlemma}
+\label{lem:lem-rassoc}
+  If $Γ ⊢ φ$ then $Γ ⊢ \rm{rassoc}_{⬓}~φ$.
 \end{mainlemma}
 
-\begin{definition}[build$_{\boldsymbol{∨}}$]
 \begin{equation*}
   \begin{split}
   \label{eq:build-or}
@@ -62,7 +69,6 @@ in~\cite{AgdaMetis}).
   \end{cases}
   \end{split}
 \end{equation*}
-\end{definition}
 
 The $\rm{build}_{∨}$ function defined above intends to construct a
 disjunction from another disjunction, specifically, this functions will
@@ -71,29 +77,27 @@ target disjunction formula, similar as we describe above.
 
 \begin{mainlemma}[lem-build$_{\boldsymbol{∨}}$]
 \label{lem:lem-build-or}
-If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \rm{build}_{∨}(φ)$.
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \rm{build}_{∨}~φ~ψ$.
 \end{mainlemma}
 
 From now, we assume all propositions to be right-associative unless
 otherwise stated.
-The $\ffactor$ function in Eq.~(\ref{eq:factor-definition}) intends to
-simplify a special case of disjunction, the repeated disjuncts
-(e.g., $\ffactor(φ ∨ φ) \mapsto\ φ$).
-Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $(ψ ∨ φ)$.
+The $\ffactor$ function in Eq.~(\ref{eq:factor-definition})
+simplifies a special case of disjunction, the repeated disjuncts
+(e.g., $\ffactor(φ ∨ φ) = φ$).
+Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $ψ ∨ φ$.
 
-\begin{definition}[factor]
 \begin{align}
 \begin{split}
   \label{eq:factor-definition}
   &\ffactor : \Prop → \Prop\\
   &\ffactor(φ) =
   \begin{cases}
-    φ₁,  &\text{ if }φ ≡ φ₁ ∨ φ₂ \text{, } φ₁ ≡ \ffactor(φ₂)\\
+    φ₁,  &\text{ if }φ ≡ φ₁ ∨ φ₂ \text{ and } φ₁ ≡ \ffactor(φ₂)\\
     φ,   &\text{ otherwise.}
   \end{cases}
 \end{split}
 \end{align}
-\end{definition}
 
 \begin{mainlemma}[lem-factor]
 \label{lem:lem-factor}
@@ -103,12 +107,12 @@ Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $(ψ ∨ φ)$.
 To construct a disjunction $ψ$ from a disjunction $φ$, we have used ideas
 from the description in \citeauthor{bohme2010}~\cite{bohme2010} to prove
 equality between nested disjunctions.
-The result is the $\rm{sbuild}_{∨}$ function
+We define the $\rm{sbuild}_{∨}$ function in
+Eq.~(\ref{eq:strong-build-or-definition}).
 that uses every disjunct from the source formula, $φ$, to build up the
 target disjunction $ψ$.
 
-\begin{definition}[sbuild$_{\boldsymbol{∨}}$]
-\begin{align*}
+\begin{align}
   \begin{split}
   \label{eq:strong-build-or-definition}
     &\rm{sbuild}_{∨} : \Prop → \Prop → \Prop\\
@@ -120,10 +124,9 @@ target disjunction $ψ$.
       \rm{build}_{∨}(φ, ψ),  & \text{ otherwise.}
     \end{cases}
   \end{split}
-\end{align*}
-\end{definition}
+\end{align}
 
-\begin{mainlemma}[lem-sbuild$_{\boldsymbol{∨}}$]
+\begin{mainlemma}
 \label{lem:lem-sbuild-or}
 If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \rm{sbuild}_{∨}(φ, ψ)$.
 \end{mainlemma}
@@ -173,23 +176,20 @@ Notice that using $\rm{sbuild}_{∨}$ we can build not only a disjunction
 with the same disjuncts of the source formula but also a complete different
 formula by adding new disjuncts to the source formula.
 
-\begin{definition}[reorder$_{\boldsymbol{∨}}$]
-\begin{align*}
+\begin{mainth}[thm-reorder$_{\boldsymbol{∨}}$]
+  \label{thm-reorder-or}
+  If $Γ ⊢ φ$ and $ψ: \Prop$ then $Γ ⊢ \freorder_{∨}~φ~ψ~$, where,
+  \begin{align*}
     \label{eq:reorder-or}
     \begin{split}
     &\freorder_{∨} : \Prop \to \Prop \to \Prop\\
-    &\freorder_{∨} (φ, ψ) = \rm{sbuild}_{∨}(rdisj(φ), ψ).
+    &\freorder_{∨}~φ~ψ~= \rm{sbuild}_{∨}~(rassoc_{∨}~φ)~ψ.
     \end{split}
   \end{align*}
-\end{definition}
-
-\begin{mainth}[thm-reorder$_{\boldsymbol{∨}}$]
-  \label{thm-reorder-or}
-  If $Γ ⊢ φ$ and $ψ: \Prop$ then $Γ ⊢ \freorder_{∨}(φ, ψ)$.
 \end{mainth}
 
 \begin{proof}
-Use Lemma~\ref{lem:lem-rdisj} and Lemma~\ref{lem:lem-sbuild-or}.
+Use Lemma~\ref{lem:lem-rassoc} and Lemma~\ref{lem:lem-sbuild-or}.
 \end{proof}
 
 We define similar functions and state some theorems as we previously did
@@ -257,7 +257,7 @@ for disjunctions, but instead, we treat only with conjunctive normal forms.
   \end{definition}
 
 \begin{mainth}[thm-reorder$_{\boldsymbol{∧∨}}$]
-  \label{thm:thm-reorder-and-or}
+  \label{thm:reorder-and-or}
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧∨}(φ, ψ)$.
 \end{mainth}
 
@@ -325,7 +325,7 @@ derivation.
 \end{definition}
 
 \begin{mainth}[thm-resolve]
-  \label{thm:thm-resolve}
+  \label{thm:resolve}
   If $Γ ⊢ φ₁$, $Γ ⊢ φ₂$, a literal $l$, and $ψ : \Prop$ then
   $Γ ⊢ \fresolve(φ₁, φ₂, l, ψ)$.
 \end{mainth}
@@ -372,8 +372,8 @@ derivation.
   \end{bprooftree}
 \end{equation*}
 \caption{Example of a resolution in \Metis using
-Thm.~\ref{thm:thm-resolve}.}
-%Application of Thm.~\ref{thm:thm-resolve} for the \TSTP excerpt Fig.~\ref{fig:resolve-tstp-example}.}
+Thm.~\ref{thm:resolve}.}
+%Application of Thm.~\ref{thm:resolve} for the \TSTP excerpt Fig.~\ref{fig:resolve-tstp-example}.}
 \end{figure}
 
 \end{document}
