@@ -38,12 +38,18 @@ inference rules described on Kanso's Ph.D. Thesis~\cite{Kanso2012}.
 Summarizing, we provided for each \Metis inference rule a theorem in
 type theory to emulate the rule reasoning. This approach, mainly
 exposed in Section~\ref{ssec:emulating-inferences},
-admits some improvements, we leave it for future work. We concern
-mainly for a better coverage of the \simplify rule.
+admits some improvements that we leave it for future work. 
+
+For instance, we can investigate the consequences of removing $clausify$ inference by strengthen $canonicalize$ rule in Thm.~\ref{thm:canonicalize}
+The \simplify rule is still lacking of some coverage since it is fairly complex, many cases could be omitted.
 Other improvements are related with computational efficiency of
 rules strongly depend on reordering tasks,
 Section~\ref{sssec:reordering}.
 We believe some rules like \canonicalize can get some help from an analysis done in the translator tool.
+
+
+
+
 
 One of the main contribution of this study was
 increasing the trustworthiness of the automatic provers,
