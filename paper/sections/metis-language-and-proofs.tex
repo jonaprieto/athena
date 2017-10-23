@@ -61,9 +61,9 @@ language(name, role, formula).
 The \name{language} can be \name{fof} or \name{cnf}. The \name{name}
 serves to identify the formula within the problem. Each formula
 assumes a \name{role}, this could be an \name{axiom},
-\name{conjecture}, \name{definition}, \name{plain} or a \name{hypothesis}.
+\name{conjecture}, \name{definition}, \name{plain} or an \name{hypothesis}.
 The formulas include the binary connectives
-(\verb!&!, \verb!|!, \verb!=>!, \verb!<=>!, \verb!~!)
+(\verb!&!, \verb!|!, \verb!=>!, \verb!<=>!), negation (\verb!~!),
 and the constants \verb!$true!, and \verb!$false!.
 
 For instance, let us express the problem
@@ -203,7 +203,7 @@ $⊥$, since \Metis delivers proofs by refutation.
 \end{figure}
 
 \begin{remark}
-In order to keep as short as possible the \Metis derivations 
+In order to keep as short as possible the \Metis derivations
 for increasing the readability, we have simplified the \TSTP
 syntax and \Metis derivations (see a simplification in Fig.~\ref{fig:simplified-tstp}).
 For instance in \TSTP derivations, we use \verb!inf! instead of \verb!inference!. If the role of the formula is \verb!plain!, we omit it.

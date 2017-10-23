@@ -7,8 +7,8 @@
 \section{Related Work}
 \label{sec:related-work}
 
-There are many proof-reconstruction tools nowadays.
-Let us mention a list of some representative tools mainly based on the description by \citeauthor{Sicard-Ramirez2016}~\cite{Sicard-Ramirez2016}.
+Let us mention a list of some representative of such tools mainly based on the
+description by \citeauthor{Sicard-Ramirez2016}~\cite{Sicard-Ramirez2016}.
 
 The \name{Isabelle} proof assistant has the \name{Sledgehammer} tool.
 This program provides a full integration between
@@ -16,8 +16,8 @@ automatic theorem provers~\cite{meng2006automation,blanchette2013extending,Fleur
 \name{Isabelle/HOL}~\cite{nipkow2002isabelle}, the specialization of
 \name{Isabelle} for higher-order logic.
 A modular proof-reconstruction workflow is presented jointly with
-the full integration of \name{Leo-II} and \name{Satallax} provers with \name{
-Isabelle/HOL} in \citeauthor{Een2004}~\cite{Een2004}.
+the full integration of \name{Leo-II} and \name{Satallax} provers with
+\name{Isabelle/HOL} in \citeauthor{Een2004}~\cite{Een2004}.
 
 \name{SMTCoq}~\cite{armand2011,Ekici2017} is a tool for the
 \name{Coq} proof assistant \cite{coqteam} which provides a certified
@@ -32,23 +32,25 @@ term.
 
 Hurd~\cite{Hurd1999} integrates the first-order resolution prover
 \name{Gandalf} with the high-order
-theorem prover \name{HOL}~\cite{norrish2007hol}. Hurd implements the
-tactic \verb!GANDALF_TAC! following an \abbre{LCF} model to reconstruct
-\name{Gandalf} proofs. For \name{HOL Light}, a version of
+theorem prover \name{HOL}~\cite{norrish2007hol}.
+Its \verb!GANDALF_TAC! tactic is able to reconstruct \name{Gandalf} proofs
+by using a \abbre{LCF} model. For \name{HOL Light}, a version of
 \name{HOL} but with a simpler logic core, the \SMT solver \name{CVC4}
 was integrated. \citeauthor{kaliszyk2013}~\cite{kaliszyk2013}
-reconstruct proofs from different ATPs with the \name{PRocH} tool by
-replaying detailed inference steps from the ATPs with internal
+reconstruct proofs from different \ATPs with the \name{PRocH} tool by
+replaying detailed inference steps from the \ATPs with internal
 inference methods implemented in \name{HOL Light}.
 
 For the proof assistant \Agda, we found two proof-reconstruction tools.
-First, the integration with the \name{Waldmeister}~\cite{hillenbrand1997} prover by \citeauthor{foster2011integrating}~\cite{foster2011integrating}.
+First, the integration with the \name{Waldmeister}~\cite{hillenbrand1997}
+prover by \citeauthor{foster2011integrating}~\cite{foster2011integrating}.
 A prover for pure equational logic, i.e.
-first-order logic with equality but no other predicate symbols and no functions symbols.
+first-order logic with equality but no other predicate symbols and no
+functions symbols.
 Second, Kanso and Setzer in~\cite{kanso2016light} integrate the propositional
 fragment of the \name{EProver}. The tool presented by the authors
 translate automatically propositional logic problems written in \Agda
-to \TPTP problems. By calling an external wrapper of the ATP, this
+to \TPTP problems. By calling an external wrapper of the \ATP, this
 tool gets a \TSTP derivation. The tool parses the \name{EProver}
 derivation and outputs \Agda code.
 
