@@ -125,7 +125,8 @@ Now, using the theorem \texttt{⇒∧⇒\rm{-to-}⇒∧} from~\cite{AgdaProp},
 
 We now define the $\fstripp$ function in~(\ref{eq:strip-unfixed}) that
 yields the conjunction of subgoals that implies the goal of the problem in
-the \Metis \TSTP derivations.
+the \Metis \TSTP derivations. Its definition is based on the source code
+of \Metis for the strip goal functions.
 
 \begin{equation}
 \label{eq:strip-unfixed}
@@ -146,12 +147,14 @@ the \Metis \TSTP derivations.
 \end{aligned}
 \end{equation}
 
-The function defined above is not a structural recursion function. Therefore, we have reformulated it in~(\ref{eq:strip-fixed}) in order to solve such an issue following the technique described in Section~\ref{ssec:structural-recursion}.
+The function defined above is not a structural recursion function. Therefore, we have reformulated it in~(\ref{eq:strip-fixed}) in order to solve such an issue following the technique described in
+Section~\ref{ssec:structural-recursion}.
 
 %  1137  git add .
 %  1138  git commit -am "[ paper ] strip proof."
 %  1139  git pull origin paper
 %  1140  git push origin paper
+
 \begin{equation}
 \label{eq:strip-fixed}
 \begin{aligned}

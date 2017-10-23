@@ -34,45 +34,45 @@ We say there are redundancies in a formula when some of the following theorems c
 
   \[
     \begin{bprooftree}
-      \AxiomC{$Γ ⊢ φ ∧ ⊥$}
-      \UnaryInfC{$Γ ⊢ ⊥$}
+      \AxiomC{$Γ ⟝ φ ∧ ⊥$}
+      \UnaryInfC{$Γ ⟝ ⊥$}
     \end{bprooftree}
     \qquad
     \begin{bprooftree}
-      \AxiomC{$Γ ⊢ φ ∧ ⊤$}
-      \UnaryInfC{$Γ ⊢ φ$}
+      \AxiomC{$Γ ⟝ φ ∧ ⊤$}
+      \UnaryInfC{$Γ ⟝ φ$}
     \end{bprooftree}
     \qquad
     \begin{bprooftree}
-      \AxiomC{$Γ ⊢ φ ∧ ¬ φ$}
-      \UnaryInfC{$Γ ⊢ ⊥$}
+      \AxiomC{$Γ ⟝ φ ∧ ¬ φ$}
+      \UnaryInfC{$Γ ⟝ ⊥$}
     \end{bprooftree}
     \qquad
     \begin{bprooftree}
-      \AxiomC{$Γ ⊢ φ ∧ φ$}
-      \UnaryInfC{$Γ ⊢ φ$}
+      \AxiomC{$Γ ⟝ φ ∧ φ$}
+      \UnaryInfC{$Γ ⟝ φ$}
     \end{bprooftree}
   \]
 
   \[
     \begin{bprooftree}
-      \AxiomC{$Γ ⊢ φ ∨ ⊥$}
-      \UnaryInfC{$Γ ⊢ φ$}
+      \AxiomC{$Γ ⟝ φ ∨ ⊥$}
+      \UnaryInfC{$Γ ⟝ φ$}
     \end{bprooftree}
     \qquad
     \begin{bprooftree}
-      \AxiomC{$Γ ⊢ φ ∨ ⊤$}
-      \UnaryInfC{$Γ ⊢ ⊤$}
+      \AxiomC{$Γ ⟝ φ ∨ ⊤$}
+      \UnaryInfC{$Γ ⟝ ⊤$}
     \end{bprooftree}
     \qquad
     \begin{bprooftree}
-      \AxiomC{$Γ ⊢ φ ∨ ¬ φ$}
-      \UnaryInfC{$Γ ⊢ ⊤$}
+      \AxiomC{$Γ ⟝ φ ∨ ¬ φ$}
+      \UnaryInfC{$Γ ⟝ ⊤$}
     \end{bprooftree}
     \qquad
     \begin{bprooftree}
-      \AxiomC{$Γ ⊢ φ ∨ φ$}
-      \UnaryInfC{$Γ ⊢ φ$}
+      \AxiomC{$Γ ⟝ φ ∨ φ$}
+      \UnaryInfC{$Γ ⟝ φ$}
     \end{bprooftree}
   \]
 
@@ -82,6 +82,7 @@ We say there are redundancies in a formula when some of the following theorems c
 % the $\rm{rdisj}$ and $\rm{rconj}$ functions depending on the main connective
 % in~(\ref{eq:rdisj}).
 % \end{myremark}
+
 \begin{notation}
 In a disjunction, $φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
 if there is some $i = 1, \cdots, n$ such that $ψ ≡ φᵢ$.
@@ -89,33 +90,55 @@ Note that $ψ ∈_{∨} φ$ is another name for the equality
 $ψ ≡ \fconjunct_{∨}~φ~ψ$.
 \end{notation}
 
-\begin{align*}
-\label{def:rm-or}
-  \begin{split}
-    &\frm_{∨} :  \NProp \to \NProp\\
-    &\frm_{∨}~φ =
-    \begin{cases}
-      \frm_{∨}~φ₂,    &\text{ if }φ ≡ φ₁ ∨ φ₂\text{ and }φ₁ ∈_{∨} φ₂\\
-      φ₁~∨~rm_{∨}~φ₂, &\text{ if }φ ≡ φ₁ ∨ φ₂\\
-      φ,  &\text{ otherwise.}
-    \end{cases}
-  \end{split}
-\end{align*}
+The following lemma serves to remove repeated disjuncts in disjunctions.
+We make sure that the formula is to be right-associative to apply it.
+
+\begin{myexample}
+\begin{equation}
+\label{eq:lemma-rm-or-example}
+  \begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ $}
+  \RightLabel{Lemma~\ref{lem:rassoc}}
+  \UnaryInfC{$Γ ⟝ \fassoc_{∨}~(φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ) $}
+  \RightLabel{by (\ref{eq:fassoc}).}
+  \UnaryInfC{$Γ ⟝ φ ∨ (ψ ∨ (φ ∨ (φ ∨ φ)))$}
+  \RightLabel{Lemma~\ref{lem:rm-or}}
+  \UnaryInfC{$Γ ⟝ ψ ∨ φ$}
+  \end{bprooftree}
+  \end{equation}
+\end{myexample}
 
 \begin{mainlemma}
   \label{lem:rm-or}
-  If $Γ ⟝ φ$ then $Γ ⟝ \frm_{∨}~φ$.
+  If $Γ ⟝ φ$ then $Γ ⟝ \frm_{∨}~φ$, where,
+  \begin{align*}
+  \label{def:rm-or}
+    \begin{split}
+      &\frm_{∨} :  \NProp \to \NProp\\
+      &\frm_{∨}~φ =
+      \begin{cases}
+        \frm_{∨}~φ₂,    &\text{ if }φ ≡ φ₁ ∨ φ₂\text{ and }φ₁ ∈_{∨} φ₂\\
+        φ₁~∨~rm_{∨}~φ₂, &\text{ if }φ ≡ φ₁ ∨ φ₂\\
+        φ,  &\text{ otherwise.}
+      \end{cases}
+    \end{split}
+  \end{align*}
 \end{mainlemma}
 
 Now, we have removed redundancies in the disjunctions by applying
 $\frm_{∨}$ function, we can define a similar function to work with
 conjunctions, \ie, $\frm_{∧}$.
 
+\begin{notation}
 In a conjunction, $φ = φ₁ ∧ φ₂ ∧ \cdots ∧ φₙ$, we say
 $ψ ∈_{∧} φ$, if there is some $i = 1, \cdots, n$ such that $ψ = φᵢ$.
 We define $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct~φ~ψ$.
+\end{notation}
 
-\label{eq:rm-and}
+\begin{mainlemma}
+  \label{lem:rm-and}
+  If $Γ ⟝ φ$ then $Γ ⟝ \frm_{∧}~φ$, where,
+
   \begin{align*}
     \begin{split}
     &\frm_{∧} : \NProp \to \NProp\\
@@ -128,26 +151,7 @@ We define $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct~φ~ψ$.
     \end{split}
   \end{align*}
 
-\begin{mainlemma}
-  \label{lem:rm-and}
-  If $Γ ⟝ φ$ then $Γ ⟝ \frm_{∧}~φ$.
 \end{mainlemma}
-
-\begin{myexample}
-\begin{equation*}
-  \begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∨ φ$}
-  \RightLabel{Lemma~\ref{lem:rm-or}}
-  \UnaryInfC{$Γ ⟝ φ$}
-  \end{bprooftree}
-  \qquad
-  \begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∧ φ$}
-  \RightLabel{Lemma~\ref{lem:rm-and}}
-  \UnaryInfC{$Γ ⟝ φ$}
-  \end{bprooftree}
-\end{equation*}
-\end{myexample}
 
 Continuing with the rest of tautologies from
 Fig.~\ref{fig:conjunctive-disjunctive-simpl}, we define the
@@ -304,25 +308,18 @@ AGREGAR TEXTO
 % \end{myremark}
 
 Now, we can translate formulas from \Prop to \NProp by defining
-the $\fnnfp$ function. This function is based on the $\fnnf$ function
-described in \citeauthor{Bezem2002}~\cite{Bezem2002}. Their $\fnnf$ function
-translates formulas to their negative normal form. In the
-reference, the authors avoid a termination problem with a similar
-function by using, as an extra argument, the polarity of the formula.
-We follow the same idea in~(\ref{def:nnf-zero}).
-Therefore, we define the \abbre{Polarity} type with
+the $\fnnfp$ function. Its definition is based on the \Metis source code
+to normalize formulas. Nevertheless, we follow the same idea to
+the $\fnnf$ function described in \citeauthor{Bezem2002}~\cite{Bezem2002}.
+Their $\fnnf$ function translates formulas to their negative normal form.
+In the reference, the authors avoid a termination problem with a similar
+function by using the polarity of the formula as an additional argument of
+the function. Therefore, we define the \abbre{Polarity} type with
 two constructors: $⊕$ to denote positive polarity, and $⊖$ to denote
-negative polarity of a formula. The polarity of a formula is defined
-in~(\ref{def:polarity}).
+negative polarity of a formula. The formula polarity of a formula was not
+relevant since as we see later, we found using the $⊕$ polarity to call
+\fpolarity function is enough for propositions.
 
-% fun polarity True = true
-%   | polarity False = false
-%   | polarity (Literal (_,(pol,_))) = not pol
-%   | polarity (And _) = true
-%   | polarity (Or _) = false
-%   | polarity (Xor (_,_,pol,_)) = pol
-%   | polarity (Exists _) = true
-%   | polarity (Forall _) = false;
 \begin{equation}
 \label{def:polarity}
   \begin{aligned}
@@ -381,7 +378,7 @@ AGREGAR TEXTO
   &\hspace{.495mm}\fdist_{∨} : \NProp \to \NProp\\
   &\begin{array}{lll}
     \fdist_{∨}&((φ₁ ∧ φ₂) ∨ φ₃) &= \fdist_{∨}(φ₁ ∨ φ₂) ∧ \fdist_{∨}(φ₂ ∨ φ₃)\\
-    \fdist_{∨}&(φ₁ ∨ (φ₂ ∧ φ₃)) &= \fdist_{∨}(φ₁ ∨ φ₃) ∧ \fdist_{∨}(φ₁ ∨ φ₃)\\
+    \fdist_{∨}&(φ₁ ∨ (φ₂ ∧ φ₃)) &= \fdist_{∨}(φ₁ ∨ φ₂) ∧ \fdist_{∨}(φ₁ ∨ φ₃)\\
     \fdist_{∨}&φ &= φ
     \end{array}
   \end{aligned}
@@ -398,7 +395,7 @@ AGREGAR TEXTO
   &\hspace{.495mm}\fdist : \NProp \to \NProp\\
   &\begin{array}{lll}
     \fdist &(φ₁ ∧ φ₂) &= \fdist~φ₁ ∧ \fdist~φ₂\\
-    \fdist &(φ₁ ∨ φ₂) &= \fdist~φ₁ ∨ \fdist~φ₂\\
+    \fdist &(φ₁ ∨ φ₂) &= \fdist_{∨}~(\fdist~φ₁ ∨ \fdist~φ₂)\\
     \fdist &φ         &= φ
    \end{array}
    \end{aligned}

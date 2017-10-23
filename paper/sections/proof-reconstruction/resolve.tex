@@ -7,28 +7,19 @@
 Logic equivalence between propositions is a major issue to justify
 prover reasoning steps. Since we left out semantics to treat only the
 syntax aspects of the propositions, our approach shows equivalence
-by converting propositions to their conjunctive normal forms,
+by converting propositions to their conjunctive normal form,
 and reordering those and the inner disjunctions to match them.
 Below, we provide some lemmas to perform such reordering tasks,
 we omit the proofs but they can found in~\cite{AgdaMetis}.
 
-% \begin{itemize}
-%   \item Reorder a disjunction $φ = φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$ to match with
-% $ψ = ψ₁ ∨ ψ₂ ∨ \cdots ∨ ψₙ$. For all $i$, there exists at least one $j$ such
-% that $φᵢ ≡ ψⱼ$.
-%   \item Reorder a CNF formula, $φ = φ₁ ∧ φ₂ ∧ \cdots$, to match with another
-% CNF formula $ψ = ψ₁ ∧ ψ₂ ∧ \cdots$. For all $i$, there exists at least one $j$
-% such that $φᵢ ≡ ψⱼ$.
-% \end{itemize}
-
-First, we define \fassoc$_{⬓}$ function in~(\ref{def:right-square})
+First, we define \fassoc$_{⬓}$ function in~(\ref{eq:fassoc})
 to convert a disjunction or a conjunction into its right-associative form.
 The square symbol can be the conjunction symbol or the disjunction symbol.
 We use $\fassoc_{∧}$ to convert conjunctions and $\fassoc_{∨}$ for
 disjunctions.
 
 \begin{equation}
-\label{def:right-square}
+\label{eq:fassoc}
   \begin{aligned}
     &\hspace{.495mm}\fassoc_{⬓} : \Prop \to \Prop\\
     &\begin{array}{lll}
@@ -64,7 +55,7 @@ match with the target disjunction formula.
 \begin{mainlemma}
 \label{lem:build-or}
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fbuild_{∨}~φ~ψ$, where,
-\begin{equation*}
+\begin{equation}
   \begin{split}
   \label{eq:build-or}
   &\fbuild_{∨} : \Prop → \Prop → \Prop\\
@@ -76,15 +67,15 @@ match with the target disjunction formula.
   φ, &\text{ otherwise.}
   \end{cases}
   \end{split}
-\end{equation*}
+\end{equation}
 \end{mainlemma}
 
 From now, we assume all propositions to be right-associative unless
 otherwise stated.
 The $\ffactor$ function in~(\ref{eq:factor-definition})
 simplifies a special case of disjunction, the repeated disjuncts
-(\eg, $\ffactor(φ ∨ φ) = φ$).
-Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $ψ ∨ φ$.
+(\eg, $\ffactor~(φ ∨ φ)~=~φ$).
+Notice that other cases like $φ~∨~(ψ~∨~φ)$ do no reduce to $ψ~∨~φ$.
 
 \begin{mainlemma}
 \label{lem:factor}
