@@ -210,25 +210,22 @@ Use Lemma~\ref{lem:rassoc} and Lemma~\ref{lem:sbuild-or}.
 We define similar functions and state some theorems as we previously did
 for disjunctions, but instead, we treat only with conjunctive normal forms.
 
-\begin{definition}[reorder$_{\boldsymbol{∧}}$]
-  \begin{align*}
+\begin{mainlemma}
+  \label{lem:reorder-and}
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧}~φ~ψ$, where, 
+    \begin{align*}
       \begin{split}
         &\freorder_{∧} : \Prop → \Prop \to \Prop\\
         &\freorder_{∧}~φ~ψ =
         \begin{cases}
           φ, &\text{ if }φ ≡ ψ\\
-          ψ₁ ∧ ψ₂, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\text{, }\freorder_{∧}~φ~ψ₁ ≡ ψ₁\\
-                  &\text{and }\freorder_{∧}~φ~ψ₂≡ ψ₂\\
+          ψ₁ ∧ ψ₂, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\text{, }ψ₁ ≡ \freorder_{∧}~φ~ψ₁ \\
+                  &\text{and }ψ₂ ≡ \freorder_{∧}~φ~ψ₂\\
           φ,       &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\\
           \fconjunct~φ~ψ, &\text{ otherwise.}
         \end{cases}
       \end{split}
   \end{align*}
-\end{definition}
-
-\begin{mainlemma}
-  \label{lem:reorder-and}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧}~φ~ψ$.
 \end{mainlemma}
 
 \begin{definition}[conjunct$_{\boldsymbol{∨}}$]
