@@ -28,8 +28,11 @@ tree subgoals: $p$, $p ⇒ r$ and $(p ∧ r) ⇒ q$.
 (p ∧ (p ⇒ r) ∧ ((p ∧ r) ⇒ q)) ⇒ ((p ∧ r) ∧ q)
 \end{equation}
 
-In (\ref{eq:strip-example}), by proving each subgoal from left to right in the right conjunction,
-we get a proof for the conjecture by using the elimination of the implication .
+\Metis proves each subgoal in the same order above from left to right
+in (\ref{eq:strip-example}).
+Besides the fact \Metis does not explicit in \TSTP derivation
+how it uses the proofs of subgoals, we know using the elimination
+of the implication, we get the proof of the conjecture.
 \end{myexample}
 
 We prove the correctness of the process mentioned above in
@@ -39,13 +42,14 @@ Lemma~\ref{lem:inv-uh-lem} and Lemma~\ref{lem:lem-inv-strip}.
 \begin{mainlemma}
   \label{lem:inv-uh-lem}
 Let $\text{n} : \Nat$ be the complexity measure of the $\fuh_0$ function
-in~(\ref{eq:uh-structured}).
-If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$.
+in~(\ref{eq:uh-definition}).
+If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$, where $\fuh₁$ is the function defined
+in (\ref{eq:uh-structured}).
 \end{mainlemma}
 
 \begin{proof}
 The proof is by induction on the cases defined by the outcome of the
-$\fuh_{1}$ function in~(\ref{eq:uh-structured}).
+$\fuh_{1}$ function.
 \begin{itemize}
   \item If $n = 0$, by definition in~(\ref{eq:uh-structured})
         we conclude $Γ ⊢ φ$.
