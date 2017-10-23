@@ -325,7 +325,7 @@ the normalized normal form for propositions.
 \end{myremark}
 
 \begin{mainlemma}
-  \label{lem:lem-nnf}
+  \label{lem:nnf}
   If $Γ ⊢ φ$ then $Γ ⟝ \fnnf~φ$ where,
   \begin{align*}
    \begin{split}
@@ -335,10 +335,10 @@ the normalized normal form for propositions.
   \end{align*}
 \end{mainlemma}
 
-Now, to convert a formula to its conjunctive normal form, in Lemma~\ref{lem:lem-dist} we apply the appropriate distribution functions to the normalized negative formula given by $\fnnf$ function.
+Now, to convert a formula to its conjunctive normal form, in Lemma~\ref{lem:dist} we apply the appropriate distribution functions to the normalized negative formula given by $\fnnf$ function.
 
 \begin{mainlemma}
-  \label{lem:lem-dist}
+  \label{lem:dist}
   $Γ ⟝ φ$ then $Γ ⟝ \fdist~φ$, where,
   \begin{equation*}
   \begin{aligned}
@@ -395,12 +395,13 @@ its normalized proposition.
   \end{equation}
 
 \begin{mainlemma}
-  \label{lem:lem-form}
+  \label{lem:form}
    If $Γ ⟝ φ$ then $Γ ⊢ \fform~φ$.
 \end{mainlemma}
 
-As a result, we can get a conjunctive normal form by applying the
-following theorem.
+As expected, we get the conjunctive normal form by applying
+$\fnnf$ function follow by $\fdist$ function and to get the proposition
+we use the $\fform$ function.
 
 \begin{mainlemma}
 \label{lem:cnf}
@@ -414,18 +415,18 @@ following theorem.
 \end{mainlemma}
 
 \begin{proof}
-  Composition of Lemma~\ref{lem:lem-form} and Lemma~\ref{lem:lem-dist}
-  and \ref{lem:lem-nnf}.
+  Composition of Lemma~\ref{lem:form} and Lemma~\ref{lem:dist}
+  and \ref{lem:nnf}.
 \end{proof}
 
 Since all the previous transformations came from  equivalences in  the
-classical propositional logic, the following theorem plays an important role
-in the next section.
+propositional logic, we states the following lemma to reconstruct a
+case of \canonicalize in Theorem~\ref{thm:canonicalize}.
 
-\begin{mainth}
-\label{thm:invCnfThm}
+\begin{mainlemma}
+\label{lem:cnf-inv}
   If $Γ ⊢ \rm{cnf}~φ$ then $Γ ⊢ φ$.
-\end{mainth}
+\end{mainlemma}
 
 The \canonicalize rule is an overloaded inference rule which performs
 normalization of the proposition input.
@@ -449,9 +450,9 @@ the conjunctive normal form of the target formula.
   &\hspace{.495mm}\fcanonicalize : \Prop \to \Prop \to \Prop\\
   &\fcanonicalize~φ~ψ = \begin{cases}
         ψ, &\text{ if  } ψ≡φ\\
-        ψ, &\text{ if  } ψ≡\fform(\fnnf~φ)\\
+        ψ, &\text{ if  } ψ≡\fform~(\fnnf~φ)\\
         ψ, &\text{ if  } \fcnf~ψ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)\\
-        φ, &\text{ otherwise }
+        φ, &\text{ otherwise. }
         \end{cases}
    \end{aligned}
   \end{equation}
@@ -464,12 +465,12 @@ the conjunctive normal form of the target formula.
 \begin{equation*}
   \begin{bprooftree}
     \AxiomC{$Γ ⊢ φ$}
-    \RightLabel{lem-nnf}
+    \RightLabel{Lemma~\ref{lem:nnf}}
     \UnaryInfC{$Γ ⊢₂~\fnnf~φ$}
-    \RightLabel{lem-form}
+    \RightLabel{Lemma~\ref{lem:form}}
     \UnaryInfC{$Γ ⊢ \fform~(\fnnf~φ)$}
     \AxiomC{$ψ ≡ \fform~(\fnnf~φ)$}
-    \RightLabel{subst.}
+    \RightLabel{subst}
     \BinaryInfC{$Γ ⊢ ψ$}
   \end{bprooftree}
 \end{equation*}
@@ -478,14 +479,14 @@ the conjunctive normal form of the target formula.
   \begin{equation*}
     \begin{bprooftree}
       \AxiomC{$Γ ⊢ φ$}
-      \RightLabel{thm-cnf}
+      \RightLabel{Lemma~\ref{lem:cnf}}
       \UnaryInfC{$Γ ⊢ \fcnf~φ$}
-      \RightLabel{thm-reorder$_{∧∨}$}
+      \RightLabel{Lemma~\ref{lem:reorder-and-or}}
       \UnaryInfC{$Γ ⊢ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$}
       \AxiomC{$γ$}
       \RightLabel{subst}
       \BinaryInfC{$Γ ⊢ \fcnf~ψ$}
-      \RightLabel{thm-inv-cnf.}
+      \RightLabel{Lemma~\ref{lem:cnf-inv}}
       \UnaryInfC{$Γ ⊢ ψ$}
     \end{bprooftree}
   \end{equation*}
