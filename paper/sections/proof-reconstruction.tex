@@ -236,8 +236,8 @@ a binary rule and we extend it for $n$-ary rules in a natural way.
 \item $\rm{conjunct}$ is the type theory function for the \texttt{rule} inference.
 \begin{align*}
   \begin{split}
-    &\rm{conjunct} : \Prop → \Prop → \Prop\\
-    &\rm{conjunct}\ φ₁\ φ₂\ ψ\ =
+    &\rm{conjunct} : \Prop → \Prop → \Prop → \Prop\\
+    &\rm{conjunct}~φ₁~φ₂~ψ\ =
       \begin{cases}
       ψ, &\text{if }\rm{conjunct}\text{ built }ψ\text{ by applying valid transformations}\\
          &\text{or other rules to }φ₁\text{ and }φ₂\\

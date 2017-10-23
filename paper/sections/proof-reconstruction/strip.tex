@@ -24,10 +24,12 @@ part, Theorem~\ref{thm:strip}.
 
 \begin{mainlemma}
   \label{lem:inv-uh-lem}
-  If $Γ ⊢ \fuh\ φ$ then $Γ ⊢ φ$.
+Let $\text{n} : \Nat$ be the complexity measure of the \rm{\fuh₀} function
+in~(\ref{eq:strip-unfixed}).
+If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$.
 \end{mainlemma}
 
-\begin{sketchproof}
+\begin{proof}
 Use induction on the cases defined by the outcome of the
 $\fuh$ function in~(\ref{eq:uh-structured}).
 \begin{itemize}
@@ -96,7 +98,7 @@ Finally, using the theorem \texttt{⇒∧⇒\rm{-to-}⇒∧} from~\cite{AgdaProp
 \item Other cases are proved in a similar way.
 \end{itemize}
 \end{itemize}
-\end{sketchproof}
+\end{proof}
 
 We now define the $\fstripp$ function in~(\ref{eq:strip-unfixed}) that
 yields the conjunction of subgoals that implies the goal of the problem in
@@ -134,40 +136,40 @@ the technique described in Section~\ref{ssec:structural-recursion}.
 \label{eq:strip-fixed}
 \begin{aligned}
 &\hspace{.495mm}\fstrip : \Prop → \Nat → \Prop\\
-&\begin{array}{lll}
-\fstrip &(φ₁ ∧ φ₂)     ~(\suc~n) &= \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)\\
-\fstrip &(φ₁ ∨ φ₂)     ~(\suc~n) &= \fuh~(¬ φ₁ ⇒ \fstrip~φ₂~n)\\
-\fstrip &(φ₁ ⇒ φ₂)     ~(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip~φ₂~n)\\
-\fstrip &(¬ (φ₁ ∧ φ₂)) ~(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip~¬ φ₂~n)\\
-\fstrip &(¬ (φ₁ ∨ φ₂)) ~(\suc~n) &= \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)\\
-\fstrip &(¬ (φ₁ ⇒ φ₂)) ~(\suc~n) &= \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~¬ φ₂~n)\\
-\fstrip &(¬ ¬ φ₁)      ~(\suc~n) &= \fuh~(\fstrip~φ₁~n)\\
-\fstrip &(¬ ⊥)         ~(\suc~n) &= ⊤\\
-\fstrip &(¬ ⊤)         ~(\suc~n) &= ⊥\\
-\fstrip &φ             ~\text{n} &= φ
+&\begin{array}{llll}
+\fstrip &(φ₁ ∧ φ₂)     &(\suc~n) &= \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)\\
+\fstrip &(φ₁ ∨ φ₂)     &(\suc~n) &= \fuh~(¬ φ₁ ⇒ \fstrip~φ₂~n)\\
+\fstrip &(φ₁ ⇒ φ₂)     &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip~φ₂~n)\\
+\fstrip &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip~¬ φ₂~n)\\
+\fstrip &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)\\
+\fstrip &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~¬ φ₂~n)\\
+\fstrip &(¬ ¬ φ₁)      &(\suc~n) &= \fuh~(\fstrip~φ₁~n)\\
+\fstrip &(¬ ⊥)         &(\suc~n) &= ⊤\\
+\fstrip &(¬ ⊤)         &(\suc~n) &= ⊥\\
+\fstrip &φ             &\text{n} &= φ
 \end{array}
 \end{aligned}
 \end{equation}
 
 \begin{mainlemma}
 \label{lem:lem-inv-strip}
-Let $\text{n} : \Nat$ the complexity measure of the strip function
+Let $\text{n} : \Nat$ be the complexity measure of the strip function
 in~(\ref{eq:strip-unfixed}).
 If $Γ ⊢ \fstrip~φ~n$ then $Γ ⊢ φ$.
 \end{mainlemma}
 
-\begin{sketchproof}
+\begin{proof}
 The proof is by induction on the structure of the
 formula~$φ$ by following the cases in~(\ref{eq:strip-fixed}).
 We present a straightforward case with double negation, a case with
 conjunction connective, and last, the case with a negated disjunction.
 We refer the reader to~\cite{AgdaMetis} for the complete proof in \Agda.
 
-Case $φ ≡ ¬ ¬ φ₁$.
+$\bullet$~Case $φ ≡ ¬ ¬ φ₁$.
 \begin{equation*}
   \begin{bprooftree}
  \AxiomC{$Γ ⊢ \fstrip~(¬¬φ₁)~(\suc~n)$}
-  \RightLabel{by def.}
+  \RightLabel{by~(\ref{eq:uh-fixed})}
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
   \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
   \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
@@ -176,14 +178,14 @@ Case $φ ≡ ¬ ¬ φ₁$.
   \end{bprooftree}
 \end{equation*}
 
-Case $φ ≡ φ₁ ∧ φ₂$. We get a proof for each conjunct and using the
+$\bullet$~Case $φ ≡ φ₁ ∧ φ₂$. We get a proof for each conjunct and using the
 introduction rule for conjunction connective, the expected result follows.
 
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
   \begin{bprooftree}
   \AxiomC{$Γ ⊢ \fstrip~(φ₁ ∧ φ₂)~(\suc~n)$}
-  \RightLabel{by def.}
+  \RightLabel{by~(\ref{eq:strip-fixed})}
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
   \RightLabel{∧-proj₁}
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
@@ -199,7 +201,7 @@ introduction rule for conjunction connective, the expected result follows.
   \AxiomC{$\mathcal{D}$}
   \UnaryInfC{Γ ⊢ φ₁}
   \AxiomC{$Γ ⊢ \fstrip~(φ₁ ∧ φ₂)~(\suc~n)$}
-  \RightLabel{by def.}
+  \RightLabel{by~(\ref{eq:strip-fixed})}
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
   \RightLabel{$∧$-proj$₂$}
   \UnaryInfC{$Γ ⊢ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
@@ -212,14 +214,16 @@ introduction rule for conjunction connective, the expected result follows.
   \end{bprooftree}
 \end{equation*}
 
-Case $φ ≡ ¬ (φ₁ ∨ φ₂)$. We show the theorems $Γ ⊢ ¬ φ₁$ and $Γ ⊢ ¬ φ₂$.
-With the conjunction of $¬ φ₁$ and $¬ φ₂$ by applying De Morgan Law, the result follows.
+$\bullet$~Case $φ ≡ ¬ (φ₁ ∨ φ₂)$.
+We show the theorems $Γ ⊢ ¬ φ₁$ and $Γ ⊢ ¬ φ₂$.
+With the conjunction of $¬ φ₁$ and $¬ φ₂$ by applying De Morgan Law, the
+result follows.
 
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ \fstrip~(¬ (φ₁ ∨ φ₂))~(\suc~n)$}
-\RightLabel{by def.}
+\RightLabel{by~(\ref{eq:strip-fixed})}
 \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
 \RightLabel{∧-proj₁}
 \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n)$}
@@ -234,7 +238,7 @@ With the conjunction of $¬ φ₁$ and $¬ φ₂$ by applying De Morgan Law, the
   \AxiomC{$\mathcal{D}$}
   \UnaryInfC{$Γ ⊢ ¬ φ₁$}
   \AxiomC{$Γ ⊢ \fstrip~(¬ (φ₁ ∨ φ₂))~(\suc~n)$}
-  \RightLabel{by def.}
+  \RightLabel{by~(\ref{eq:strip-fixed})}
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
   \RightLabel{∧-proj₂}
   \UnaryInfC{$Γ ⊢ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
@@ -246,7 +250,9 @@ With the conjunction of $¬ φ₁$ and $¬ φ₂$ by applying De Morgan Law, the
   \UnaryInfC{$Γ ⊢ ¬ φ₂$}
   \end{bprooftree}
 \end{equation*}
-\end{sketchproof} % the proof continue...
+\end{proof} % the proof continue...
+
+MISSING TEXT
 
 \begin{mainlemma}[subst]
   \label{lem:subst}
@@ -264,13 +270,13 @@ With the conjunction of $¬ φ₁$ and $¬ φ₂$ by applying De Morgan Law, the
 We can now formulate the result that justifies the stripping strategy
 of \Metis to prove goals.
 For the sake of brevity, we state the following theorem for the
-\strip function when the goal has only two subgoals. In other cases, we extend that theorem in the natural way.
+\strip function when the goal has only two subgoals. In other cases,
+we extend that theorem in the natural way.
 
 \begin{mainth}
 \label{thm:strip}
 If $s_1$ and $s_2$ are the subgoals of the goal $φ$, that is,
-$\fstrip~φ~n~≡~s_1\wedge~s_2$.
-If $Γ ⊢ s_1$ and $Γ ⊢ s_2$ then $Γ ⊢ φ$.
+$\fstrip~φ~n~≡~s_1\wedge~s_2$, if $Γ ⊢ s_1$ and $Γ ⊢ s_2$ then $Γ ⊢ φ$.
 \end{mainth}
 
 \begin{proof}
