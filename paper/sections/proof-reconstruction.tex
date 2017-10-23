@@ -7,6 +7,8 @@
 \section{Proof-Reconstruction}
 \label{sec:proof-reconstruction}
 
+MISSING TEXT
+
 \subsection{Workflow}
 \label{ssec:workflow}
 
@@ -24,7 +26,7 @@ same support of type theory and inductive types could be used.
 The overview of the proof-reconstruction is presented in
 Fig.~\ref{fig:proof-reconstruction-workflow}. The process begin with
 a \TPTP file that encodes a problem in \CPL. We use this file as the
-input of the \Metis prover and if the problem is a theorem, \Metis can
+input of the \Metis prover. If the problem is a theorem, \Metis
 reply a derivation of the proof in \TSTP format.
 
 With the \TSTP derivation from Step~2, we process the derivation with the
@@ -48,30 +50,33 @@ In that case \Agda outputs an interface file.
 Otherwise, when type-checking fails, the failure must be
 investigated by the user looking at the error in the \TSTP derivation
 by \Metis, in the translation by \Athena, in the \Agda formalizations
-mentioned above or even in the type-checker~\Agda.
+mentioned above or in the type-checker~\Agda.
 
 In the remainder part of this section, a formal description using
 type theory is presented to build definitions and theorems of
 functions necessary to emulate \Metis' inference rules.
-As a convention, we write the type judgments as ``$m : M$'' to denote
+
+\begin{notation}
+We write the type judgments as $m : \abbre{M}$ to denote
 that $m$ has $\abbre{M}$ type.
 Types are written using small caps.
-We use \Prop type for propositions and the dependent type, $Γ ⊢ φ$ for
-theorems where $Γ$ has $\abbre{List}~\Prop$ type, and $φ$ has type $\Prop$.
+We use \Prop for the type of propositions and the dependent type, $Γ ⊢ φ$ for
+theorems where $Γ : \List~\Prop$ and $φ : \Prop$.
 $\abbre{List}$ type is the usual inductive type for lists.
 For syntactical equivalence, we write the equality as $φ ≡ ψ$
-for $φ : \Prop$ and $ψ : \Prop$. For this equality, we assume the
-reflexivity, symmetry and transitivity property.
-
+for $φ,~ψ : \Prop$. For this equality, we assume the
+reflexivity, symmetry and transitivity properties.
+\end{notation}
 % ...................................................................
 
 % section section_name (end)
 \subsection{Structural recursion}
 \label{ssec:structural-recursion}
 
-To emulate \Metis' inference rules in type theory, we observed that
-transformations performed by some rules are given by \emph{general recursive}
-functions. Algorithms based on general recursions can not be translated
+To reconstruct \Metis' inference rules in type theory, we observed that
+transformations performed by some rules are implemented by \emph{general
+recursive} functions.
+Algorithms based on general recursions can not be translated
 directly in type theory since it is not a guarantee they terminate. For that
 reason, we follow the technique described in~\cite{Bertot2004} to avoid
 termination problems by modifying the recursive functions to be
@@ -83,57 +88,55 @@ This paper adopts the notion of \emph{structurally smaller} from
 structurally recursive if it calls itself with only
 structurally smaller arguments.
 
-General recursive calls can be translated into structurally recursive
-calls by using for instance, the \emph{Bounded Recursion} technique
-presented in~\cite{Bertot2004}. For a yet another method, we refer
+General recursive functions can be translated into structurally recursive
+functions by using for instance, the \emph{Bounded Recursion} technique
+presented in~\cite{Bertot2004}. For a yet another methods, we refer
 the reader to \cite{Coquand1992,Abel2002,Bove2005}.
-The former technique defines a new function based on the original
-recursive function by adding an argument to the function.
+The bounded technique defines a new structural recursive function based on
+the general recursive function by adding an argument to the function.
 The new argument is the \emph{bound}, a natural number given by the
 function complexity. In other words, the added argument will represent
 the number of times the function needs to call itself to get the
 expected outcome~\cite{Bertot2004}.
 
-The type of natural numbers is called \Nat type, and it is defined as
-usual, \ie \zero and \suc are the data constructors. We use names
+\begin{notation}
+The type of natural numbers is called \Nat, and it is defined as
+usual, where \zero and \suc are its data constructors. We use names
 and symbols of the arithmetic operations as usual.
 We include syntax sugar for $\zero$, $\suc$, $\suc(\zero)$,
 $\cdots$, with the decimal representation: $0$, $1$, $2$, $\cdots$
 as well.
+\end{notation}
 
-Therefore, for a general recursive function $\rm{f}: \Prop \to \Prop$
-with termination problems, we formulate a new function
-$\rm{f}^{*} : \Prop \to \Nat \to \Prop$ where all recursive calls must be
-done by using induction on the \Nat type structure.
-
+Therefore, one approach to guarantee a structural recursive function based on
+a general recursive function $\rm{f}: \Prop \to \Prop$ is to formulate a new function $\rm{f}^{*} : \Prop \to \Nat \to \Prop$ where all recursive calls are done on smaller arguments.
 
 \begin{example}
 \label{ex:structural-recursion}
 
 Let us consider the following example to exhibit the bounded technique
-mentioned above for the \fuh function presented in the proposed version
-for the \Metis \strip inference.
+mentioned above for the \fuh function. this function is used for reconstructing
+the \Metis \strip inference rule in Section~\ref{sssec:strip-a-goal}.
 
-\begin{equation*}
+\begin{equation}
 \label{eq:uh-definition}
 \begin{aligned}
 &\hspace{.495mm}\fuh_{0} : \Prop → \Prop\\
 &\begin{array}{lll}
-  \fuh_{0} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{0}((φ₁ ∧ φ₂) ⇒ φ₃)\\
-  \fuh_{0} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &= \fuh_{0}(φ₁ ⇒ φ₂) ∧ \fuh_{0}(φ₁ ⇒ φ₃)\\
+  \fuh_{0} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{0}~((φ₁ ∧ φ₂) ⇒ φ₃)\\
+  \fuh_{0} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &= \fuh_{0}~(φ₁ ⇒ φ₂) ∧ \fuh_{0}~(φ₁ ⇒ φ₃)\\
   \fuh_{0} &φ                &= φ
 \end{array}
 \end{aligned}
-\end{equation*}
+\end{equation}
 
-From the definition above, the size of the argument, $(φ₁ ∧ φ₂) ⇒ φ₃$,
-is not structurally smaller than the input formula, $φ₁ ⇒ (φ₂ ⇒ φ₃)$,
-since $(φ₁ ∧ φ₂) ⇒ φ₃$ is not a subformula of $φ₁ ⇒ (φ₂ ⇒ φ₃)$.
-
-Therefore, we define the function
-$\fuh_{1}$ by structural recursion in its second argument in
-Eq.~(\ref{eq:uh-structured}).
-
+In (\ref{eq:uh-definition}), the first two equation show
+call on arguments no structurally smaller.
+For instance, on the first call, $φ ≡ (φ₁ ∧ φ₂) ⇒ φ₃$, the recursion
+calls on the  $φ₁ ⇒ (φ₂ ⇒ φ₃)$ argument.
+But this argument is not a subformula for φ.
+Therefore, one way to translate $\fuh_{0}$ in (\ref{eq:uh-definition}) to type
+theory is to define the a new function using the bounded technique.
 \begin{equation}
 \label{eq:uh-structured}
 \begin{aligned}
@@ -176,21 +179,20 @@ the complexity measure for the $\fuh_0$ function.
   \begin{aligned}
     &\hspace{.495mm}\fuh_{cm} : \Prop → \Nat\\
     &\begin{array}{llll}
-    \fuh_{cm}~(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{cm}(φ₃) + 2\\
+    \fuh_{cm}~(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{cm}~φ₃ + 2\\
     \fuh_{cm}~(φ₁ ⇒ (φ₂ ∧ φ₃)) &= \fmax~(\fuh_{cm}~φ₂)~(\fuh_{cm}~φ₃) + 1\\
     \fuh_{cm}~φ                &= 0
     \end{array}
   \end{aligned}
 \end{equation*}
 
-Finally, following the technique mentioned, we get a final version of
-$\fuh_{0}$ function presented in Eq.~(\ref{eq:uh}).
+Following the technique mentioned above, we get the structural recursive definition of $\fuh_{0}$ function presented in ~(\ref{eq:uh}).
 
 \begin{align}
   \label{eq:uh}
   \begin{split}
   &\fuh : \Prop → \Prop\\
-  &\fuh(φ) = \fuh_{1}(φ, \fuh_{cm}(φ)).
+  &\fuh~φ~ = \fuh_{1}~φ~(\fuh_{cm}~φ).
   \end{split}
 \end{align}
 
@@ -202,41 +204,42 @@ the reader to \citeauthor{Bove2005}~\cite{Bove2005}.
 
 % % ................................................
 
-\subsection{Emulating \Metis' inference rules}
+\subsection{Reconstructing \Metis' inference rules}
 \label{ssec:emulating-inferences}
 
-In this section, we emulate each \Metis inference rule with a
-function and its respective theorem.
-The following pattern is used to present the formalization.
-The function name written in bold font
-is a \Metis inference rule in \TSTP derivations.
+In this section, we reconstruct each \Metis inference rule.
+We present a function and a theorem for each rule.
+
+\begin{notation}
+The function name written in bold font is a \Metis inference rule.
 The same function name written in roman letters refers to the proposed
 version of the rule.
 Each rule proposed has a respective theorem also written in roman letters
 that proves its soundness.
+\end{notation}
+
+The following pattern is used to present the reconstruction.
 
 For example, we know the \verb!conjunct! inference rule is a
 \Metis inference rule since it appears in \TSTP derivations like
 the following excerpt.
 
 \begin{verbatim}
-fof(normalize_1_2, plain, (p | r),
-    inference(conjunct, [], [normalize_1_1])).
+fof(norm1, (p | r), inf(conjunct, [norma1])).
 \end{verbatim}
 
-For this inference rule, we proposed the \rm{conjunct} function in
-Def.~\ref{def:conjunct} and we proved Thm.~\ref{thm:thm-conjunct}. The pattern is the following for
+For this inference rule, we the \rm{conjunct} function in~(\ref{def:conjunct}) and we proved Theorem~\ref{thm:thm-conjunct}. The pattern is the following for
 a binary rule and we extend it for $n$-ary rules in a natural way.
 
 \begin{itemize}
-\item \texttt{rule} is a binary \Metis inference rule.
-\item $\rm{rule}$ is the proposed function for the \texttt{rule} inference.
+\item \conjunct is a binary \Metis inference rule.
+\item $\rm{conjunct}$ is the type theory function for the \texttt{rule} inference.
 \begin{align*}
   \begin{split}
-    &\rm{rule} : \Prop → \Prop → \Prop\\
-    &\rm{rule}\ φ₁\ φ₂\ ψ\ =
+    &\rm{conjunct} : \Prop → \Prop → \Prop\\
+    &\rm{conjunct}\ φ₁\ φ₂\ ψ\ =
       \begin{cases}
-      ψ, &\text{if }\rm{rule}\text{ built }ψ\text{ by applying valid transformations}\\
+      ψ, &\text{if }\rm{conjunct}\text{ built }ψ\text{ by applying valid transformations}\\
          &\text{or other rules to }φ₁\text{ and }φ₂\\
       φ, &\text{otherwise.}
       \end{cases}
@@ -248,12 +251,13 @@ a binary rule and we extend it for $n$-ary rules in a natural way.
   \item $ψ$ is the \emph{target} formula. The expected result of \texttt{rule}.
 \end{itemize}
 \item The theorem that proves the soundness of the
-$\rm{rule}$ function looks like
-\begin{equation*}\text{If }Γ ⊢ φ\text{ then }Γ ⊢ \rm{rule}\ φ.\end{equation*}
-
+$\rm{conjunct}$ function would be
+\begin{equation*}\text{If }Γ ⊢ φ\text{ then }Γ ⊢ \rm{conjunct}\ φ.\end{equation*}
 \end{itemize}
 
 \begin{table}[!ht]
+\label{tab:agda-metis-table}
+\caption{Presentation of \Metis inference rules in type theory.}
   \begin{center}
   {\renewcommand{\arraystretch}{1.6}%
     \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}|}
@@ -261,37 +265,38 @@ $\rm{rule}$ function looks like
     \textbf{\Metis rule} & \textbf{Purpose} &\textbf{Theorem}\\ \hline
     \texttt{canonicalize}
       &Normalization of the formula
-      &Thm.~\ref{thm:canonicalize}
+      &Theorem~\ref{thm:canonicalize}
     \\
     \texttt{clausify}
       &Performs clausification
-      &Thm.~\ref{thm:clausify}
+      &Theorem~\ref{thm:clausify}
     \\
     \hyperlink{atp-conjunct}{\texttt{conjunct}}
       &Takes a formula from a conjunction
-      &Thm.~\ref{thm:conjunct}
+      &Theorem~\ref{thm:conjunct}
     \\
     % \texttt{negate}
     %   &Negate the formula
-    %   &Thm.~\ref{thm:negate}
+    %   &Theorem~\ref{thm:negate}
     % \\
     \texttt{resolve}
       &A general form of the resolution theorem
-      &Thm.~\ref{thm:resolve}
+      &Theorem~\ref{thm:resolve}
     \\
     \texttt{simplify}
       &Simplify definitions and theorems
-      &Thm.~\ref{thm:simplify}
+      &Theorem~\ref{thm:simplify}
     \\
     \texttt{strip}
       &Strip a goal into subgoals
-      &Thm.~\ref{thm:strip}
+      &Theorem~\ref{thm:strip}
     \\[1ex]
     \hline
     \end{tabular}}
   \end{center}
-\label{tab:agda-metis-table}
 \end{table}
+
+MISSING TEXT
 
 % -----------------------------------------------------------------------------
 
@@ -309,6 +314,9 @@ Now, we have finished the formalization of every inference rule in
 a \Metis proof, we are able to justify step-by-step any proof
 for a problem in propositional logic.
 For instance, we tested successfully the translation by \Athena jointly with
-the \Agda formalizations of the rules mentioned above with more than eighty representative theorems in propositional logic. An interested reader can test the problems~\cite{Prieto-Cubides2017} in the \Athena tool repository~\cite{Athena}.
+the \Agda formalizations of the rules mentioned above with more than eighty
+representative theorems in propositional logic. An interested reader can test
+the problems~\cite{Prieto-Cubides2017} in the \Athena tool
+repository~\cite{Athena}.
 
 \end{document}

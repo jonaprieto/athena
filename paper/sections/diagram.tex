@@ -3,8 +3,7 @@
 \tikzstyle{line} = [draw, -latex']
 
 \begin{tikzpicture}[
-   node distance = 1.4cm
- , auto
+   auto
  , scale=0.9
  , base/.style =
       { font=\small
@@ -53,18 +52,26 @@
 \node[file]
 (tptp){1.~\TPTP file \\ (CPL problem)};
 
-\node[ program
+\node[ Rhoumbus
      , below of=tptp
+     , node distance=1.75cm
      ]
 (metis) {\Metis \\ (prover) };
 
+\node[ right of= metis
+     , node distance=4cm
+     ]
+(nothm) {};
+
 \node[ file
      , below of=metis
+     , node distance=2cm
      ]
 (tstp) {2.~\TSTP file\\(derivation)};
 
 \node[ program
      , below of=tstp
+     , node distance=1.5cm
      ]
 (athena) {\Athena tool\\(translator)
 };
@@ -89,6 +96,7 @@
 
 \node[ file
      , below of =athena
+     , node distance=1.5cm
      ]
 (agdaproof) {3.~\Agda File\\(proof-term)};
 
@@ -105,7 +113,7 @@
 (agda) {\Agda\\(type-checker)};
 
 \node[ library
-     , align=left
+     , align=center
      , left of=agda
      , node distance=4cm
      ]
@@ -130,7 +138,10 @@
 (invalid) {4.2. Invalid\\ \Agda File};
 
 \path [line, thick] (tptp)      -- (metis);
-\path [line, thick] (metis)     -- (tstp);
+\path [line, thick] (metis)     -- node {theorem} (tstp);
+
+\draw [-o, thick] (metis)     -- node {no theorem} (nothm);
+
 \path [line, thick] (tstp)      -- (athena);
 \path [line, thick] (athena)    -- (agdaproof);
 \path [line, thick] (agdaprop)    -- (athena);
@@ -143,10 +154,9 @@
 \end{tikzpicture}
 
 \caption{Proof-reconstruction overview.
-The rectangles nodes represent text files.
-The direct edges in the diagram represent calls to
-programs where the input file is pointed by the edge entering and the out edge points to the reply file. The rhombus node stands for the
-type-checking process.}
+The rectangles nodes represent text files. The direct edges in the diagram represent calls to programs where the input file is pointed by the edge entering and the out edge points to the reply file.
+The rhombus nodes represent a process with two possible outcomes.
+}
 
 \label{fig:proof-reconstruction-workflow}
 \end{figure}
