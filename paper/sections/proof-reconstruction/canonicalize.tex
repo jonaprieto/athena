@@ -5,12 +5,14 @@
 \subsubsection{Canonicalize. (REVISANDO)}
 \label{sssec:canonicalize}
 
-One of the main purposes of the \canonicalize rule consists of adding the axioms to the problem. In this process, some transformations are carried
+One of the main purposes of the \canonicalize rule consists of adding the
+axioms to the problem. In this process, some transformations are carried
 out by convert a \verb!fof! formula to their clausal normal form.
 The process mainly consists of removing redundancies (tautologies or
-definitions) and converting the proposition to its normalized
-negative normal form, or conjunctive normal form.
-%, or definitional normal form.
+definitions) that we know as converting the proposition to its normalized
+form, that is the reason why we define the following type definition.
+The motivation for this definitions was mainly guided by a
+reading of the \Metis source code.
 
 \begin{definition}
   \NProp is the type for a formula in normalized negative normal form
@@ -19,40 +21,29 @@ negative normal form, or conjunctive normal form.
   We define the \NProp type in a similar way as we did for \Prop type.
 \end{definition}
 
+\begin{notation}
 A sequent $Γ ⟝ φ$ represents a theorem where
 $Γ$ is a set of \Prop propositions premises, and $φ : \NProp$ is the
-conclusion of the theorem. The $⟝$ theorems have the same subset of rules
+conclusion of the theorem.
+\end{notation}
+
+\begin{myremark}
+The $⟝$ theorems have the same subset of rules
 for the connectives of \NProp type in Fig.~\ref{fig:CPL-inference-rules}.
+We can refer in the latter to some functions defined on previous sections
+for \Prop type but in this section they may act for \NProp proposition.
+In that case, we do not mention but we redefine the function in order
+to work with \NProp propositions.
+\end{myremark}
 
 % -------------------------------------------------------------------
 
 To reconstruct \canonicalize we need to perform some transformations
-that involve translating the formula to its normalized form and remove
-form it any redundancy as long as possible.
+that involve translating the formula to its normalized form and
+converting the formula to its negative normal form or conjunctive normal form.
 
-We say there are redundancies in a formula when some of the following theorems can apply inside the formula.
-
-  \[
-    \begin{bprooftree}
-      \AxiomC{$Γ ⟝ φ ∧ ⊥$}
-      \UnaryInfC{$Γ ⟝ ⊥$}
-    \end{bprooftree}
-    \qquad
-    \begin{bprooftree}
-      \AxiomC{$Γ ⟝ φ ∧ ⊤$}
-      \UnaryInfC{$Γ ⟝ φ$}
-    \end{bprooftree}
-    \qquad
-    \begin{bprooftree}
-      \AxiomC{$Γ ⟝ φ ∧ ¬ φ$}
-      \UnaryInfC{$Γ ⟝ ⊥$}
-    \end{bprooftree}
-    \qquad
-    \begin{bprooftree}
-      \AxiomC{$Γ ⟝ φ ∧ φ$}
-      \UnaryInfC{$Γ ⟝ φ$}
-    \end{bprooftree}
-  \]
+At the first stage, we remove redundancies of the formula. We say that
+there are redundancies in a formula when some of the following theorems can apply inside the formula.
 
   \[
     \begin{bprooftree}
@@ -72,6 +63,28 @@ We say there are redundancies in a formula when some of the following theorems c
     \qquad
     \begin{bprooftree}
       \AxiomC{$Γ ⟝ φ ∨ φ$}
+      \UnaryInfC{$Γ ⟝ φ$}
+    \end{bprooftree}
+  \]
+
+  \[
+    \begin{bprooftree}
+      \AxiomC{$Γ ⟝ φ ∧ ⊥$}
+      \UnaryInfC{$Γ ⟝ ⊥$}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+      \AxiomC{$Γ ⟝ φ ∧ ⊤$}
+      \UnaryInfC{$Γ ⟝ φ$}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+      \AxiomC{$Γ ⟝ φ ∧ ¬ φ$}
+      \UnaryInfC{$Γ ⟝ ⊥$}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+      \AxiomC{$Γ ⟝ φ ∧ φ$}
       \UnaryInfC{$Γ ⟝ φ$}
     \end{bprooftree}
   \]
@@ -125,13 +138,72 @@ We make sure that the formula is to be right-associative to apply it.
   \end{align*}
 \end{mainlemma}
 
+Now, we can remove the following kind of redundancies
+using the Lemma.~\ref{lem:canon-or}.
+
+\begin{equation*}
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∨ ¬~φ$}
+  \UnaryInfC{$Γ ⟝ ⊤$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∨ ⊤$}
+  \UnaryInfC{$Γ ⟝ ⊤$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∨ ⊥$}
+  \UnaryInfC{$Γ ⟝ φ$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∨ φ$}
+  \UnaryInfC{$Γ ⟝ φ$}
+\end{bprooftree}
+\end{equation*}
+
+\begin{mainlemma}
+  \label{lem:canon-or}
+  If $Γ ⟝ φ$ then $Γ ⟝ \fcanon_{∨}~φ$, where,
+
+\begin{equation*}
+\label{eq:canon-or}
+\begin{aligned}
+ &\hspace{.495mm}\fcanon_{∨} : \NProp \to \NProp\\
+ &\begin{array}{llll}
+   \fcanon_{∨} &(φ ∨ ⊥)  &= φ \\
+   \fcanon_{∨} &(⊥ ∨ φ)  &= φ \\
+   \fcanon_{∨} &(⊤ ∨ φ)  &= ⊤  \\
+   \fcanon_{∨} &(φ ∨ ⊤)  &= ⊤  \\
+   \fcanon_{∨} &(φ₁ ∨ φ₂) &= \frm_∨~(\rm{ndisj}_∨~(φ₁ ∨ φ₂)) \\
+   \fcanon_{∨} &φ         &= φ.
+  \end{array}\\[2mm]
+  \text{and }\\[2mm]
+  &\hspace{.495mm}\rm{ndisj}_{∨} : \NProp \to \NProp\\
+  &\begin{array}{lll}
+    \rm{ndisj}_{∨} &(¬ φ₁ ∨ φ₂) &=
+        \begin{cases}
+         ⊤, &\text{ if } φ₁ ∈_{∨} φ₂\\
+         ⊤, &\text{ if } \rm{ndisj}_{∨}~φ₂≡ ⊤\\
+         ¬ φ₁ ∨ \rm{ndisj}_{∨}~φ₂, &\text{ otherwise.}
+        \end{cases}\\
+
+  \rm{ndisj}_{∨} &(φ₁ ∨ φ₂)&=
+        \begin{cases}
+         ⊤, &\,\,\,\,\,\,\text{ if } ¬φ₁ ∈_{∨} φ₂ \\
+         ⊤, &\,\,\,\,\,\,\text{ if } \rm{ndisj}_{∨}(φ₂) ≡ ⊤\\
+         φ₁ ∨ \rm{ndisj}_{∨}~φ₂, &\,\,\,\,\,\,\text{ otherwise.}
+        \end{cases}\\
+    \rm{ndisj}_{∨}&φ &=φ.
+    \end{array}
+\end{aligned}
+\end{equation*}
+\end{mainlemma}
+
 Now, we have removed redundancies in the disjunctions by applying
-$\frm_{∨}$ function, we can define a similar function to work with
-conjunctions, \ie, $\frm_{∧}$.
+$\fcanon_{∨}$ function, in a similar way, we define the $\fcanon_{∧}$ function to work with conjunctions.
 
 \begin{notation}
 In a conjunction, $φ = φ₁ ∧ φ₂ ∧ \cdots ∧ φₙ$, we say
-$ψ ∈_{∧} φ$, if there is some $i = 1, \cdots, n$ such that $ψ = φᵢ$.
+$ψ ∈_{∧} φ$, if there is some $i = 1, \cdots, n$ such that $ψ ≡ φᵢ$.
 We define $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct~φ~ψ$.
 \end{notation}
 
@@ -150,194 +222,88 @@ We define $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct~φ~ψ$.
     \end{cases}
     \end{split}
   \end{align*}
-
 \end{mainlemma}
 
-Continuing with the rest of tautologies from
-Fig.~\ref{fig:conjunctive-disjunctive-simpl}, we define the
-$\rm{ndisj}_{∨}$ function and $\rm{ndisj}_{∨}$ function that
-take into account the following cases.
-
-\begin{equation*}
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∨ ¬~φ$}
-  \RightLabel{Lemma~\ref{lem:ndisj-or},}
-  \UnaryInfC{$Γ ⟝ ⊤$}
-\end{bprooftree}
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∨ ⊤$}
-  \RightLabel{Lemma~\ref{lem:ndisj-or},}
-  \UnaryInfC{$Γ ⟝ ⊤$}
-\end{bprooftree}
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∨ ⊥$}
-  \RightLabel{Lemma~\ref{lem:ndisj-or}.}
-  \UnaryInfC{$Γ ⟝ φ$}
-\end{bprooftree}
-\end{equation*}
+In conjunctions we remove the following three tautologies using
+the $\rm{ndisj}_{∧}$ function defined in~(\ref{eq:ndisj-a}).
 
 \begin{equation*}
 \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∧ ¬~φ$}
-  \RightLabel{Lemma~\ref{lem:ndisj-and},}
   \UnaryInfC{$Γ ⟝ ⊥$}
-\end{bprooftree}
+\end{bprooftree}\qquad
 \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∧ ⊤$}
-  \RightLabel{Lemma~\ref{lem:ndisj-and},}
   \UnaryInfC{$Γ ⟝ φ$}
-\end{bprooftree}
+\end{bprooftree}\qquad
 \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∧ ⊥$}
-  \RightLabel{Lemma~\ref{lem:ndisj-and}.}
   \UnaryInfC{$Γ ⟝ ⊥$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∧ φ$}
+  \UnaryInfC{$Γ ⟝ φ$}
 \end{bprooftree}
 \end{equation*}
-AGREGAR TEXTO
 
-\begin{equation}
-  \label{eq:ndisj-or}
-  \begin{aligned}
-  &\hspace{.495mm}\rm{ndisj}_{∨} : \NProp \to \NProp\\
-  &\begin{array}{lll}
-    \rm{ndisj}_{∨} &(¬ φ₁ ∨ φ₂) &=
-        \begin{cases}
-         ⊤, &\text{ if } φ₁ ∈_{∨} φ₂\\
-         ⊤, &\text{ if } \rm{ndisj}_{∨}~φ₂≡ ⊤\\
-         ¬ φ₁ ∨ \rm{ndisj}_{∨}~φ₂, &\text{ otherwise.}
-        \end{cases}\\
-
-  \rm{ndisj}_{∨} &(φ₁ ∨ φ₂)&=
-        \begin{cases}
-         ⊤, &\,\,\,\,\,\,\text{ if } ¬φ₁ ∈_{∨} φ₂ \\
-         ⊤, &\,\,\,\,\,\,\text{ if } \rm{ndisj}_{∨}(φ₂) ≡ ⊤\\
-         φ₁ ∨ \rm{ndisj}_{∨}~φ₂, &\,\,\,\,\,\,\text{ otherwise.}
-        \end{cases}\\
-    \rm{ndisj}_{∨}&φ &=φ
-    \end{array}
-  \end{aligned}
-\end{equation}
-
-\begin{mainlemma} % (fold)
-  \label{lem:ndisj-or}
-  If $Γ ⟝ φ$ then $Γ ⟝ \rm{ndisj}_{∨}~φ$.
-\end{mainlemma}
-EJEMPLO Y AGREGAR TEXTO
-
-\begin{equation}
-  \label{eq:ndisj-and}
-  \begin{aligned}
-  &\hspace{.495mm}\rm{ndisj}_{∧} : \NProp \to \NProp\\
-  &\begin{array}{lll}
-    \rm{ndisj}_{∧}&(¬ φ₁ ∧ φ₂) &=
-      \begin{cases}
-        ⊥, &\text{ if } φ₁ ∈_{∧} φ₂\\
-        ⊥, &\text{ if } \rm{ndisj}_{∧}(φ₂) ≡ ⊥\\
-        ¬ φ₁ ∧ \rm{ndisj}_{∧}(φ₂), &\text{ otherwise.}
-      \end{cases}\\
-    \rm{ndisj}_{∧}&(φ₁ ∧ φ₂) &=
-      \begin{cases}
-        ⊥, &\,\,\,\,\,\,\text{ if } φ₁ ∈_{∧} φ₂\\
-        ⊥, &\,\,\,\,\,\,\text{ if } \rm{ndisj}_{∧}(φ₂) ≡ ⊥\\
-        φ₁ ∧ \rm{ndisj}_{∧}(φ₂), &\,\,\,\,\,\,\text{ otherwise.}
-      \end{cases}\\
-    \rm{ndisj}_{∧}&φ&=φ
-   \end{array}
-  \end{aligned}
-\end{equation}
-
-\begin{mainlemma} % (fold)
-  \label{lem:ndisj-and}
-  If $Γ ⟝ φ$ then $Γ ⟝ \rm{ndisj}_{∧}~φ$.
-\end{mainlemma}
-
-% subsubsection redundancy (end)
-% -------------------------------------------------------------------
-
-We use the functions defined above to remove redundancies in conjunctions
-with $\fcanon_{∧}$ function, and $\fcanon_{∨}$ function to remove redundancies in disjunctions.
-
-\begin{equation}
- \label{eq:canon-and}
-  \begin{aligned}
-   &\hspace{.495mm}\fcanon_{∧} : \NProp \to \NProp\\
-    &\begin{array}{lll}
-      \fcanon_{∧} &(⊤ ∧ φ₂)  &= φ₂ \\
-      \fcanon_{∧} &(φ₁ ∧ ⊤)  &= φ₁ \\
-      \fcanon_{∧} &(⊥ ∧ φ₂)  &= ⊥  \\
-      \fcanon_{∧} &(φ₁ ∧ ⊥)  &= ⊥  \\
-      \fcanon_{∧} &(φ₁ ∧ φ₂) &= \frm_∧(\rm{ndisj}_∧(φ₁ ∧ φ₂)) \\
-      \fcanon_{∧} &φ         &= φ
-     \end{array}
-    \end{aligned}
-\end{equation}
+% The functions defined above remove all kind of redundancies but they were
+% defined to act in a certain kind of formula, \ie a disjunction or a
+% conjunction. To remove all kind of redundancies listed above we defined
 
 \begin{mainlemma}
   \label{lem:canon-and}
-  If $Γ ⟝ φ$ then $Γ ⟝ \fcanon_{∧}~φ$.
-\end{mainlemma}
-AGREGAR TEXTO
-\begin{equation}
-\label{eq:canon-or}
-\begin{aligned}
- &\hspace{.495mm}\fcanon_{∨} : \NProp \to \NProp\\
- &\begin{array}{llll}
-   \fcanon_{∨} &(φ ∨ ⊥)  &= φ \\
-   \fcanon_{∨} &(⊥ ∨ φ)  &= φ \\
-   \fcanon_{∨} &(⊤ ∨ φ)  &= ⊤  \\
-   \fcanon_{∨} &(φ ∨ ⊤)  &= ⊤  \\
-   \fcanon_{∨} &(φ₁ ∨ φ₂) &= \frm_∨~(\rm{ndisj}_∨~(φ₁ ∨ φ₂)) \\
-   \fcanon_{∨} &φ         &= φ
-  \end{array}
-\end{aligned}
-\end{equation}
+  If $Γ ⟝ φ$ then $Γ ⟝ \fcanon_{∧}~φ$, where,
+  \begin{equation*}
+   \label{eq:canon-and}
+    \begin{aligned}
+     &\hspace{.495mm}\fcanon_{∧} : \NProp \to \NProp\\
+      &\begin{array}{lll}
+        \fcanon_{∧} &(⊤ ∧ φ₂)  &= φ₂ \\
+        \fcanon_{∧} &(φ₁ ∧ ⊤)  &= φ₁ \\
+        \fcanon_{∧} &(⊥ ∧ φ₂)  &= ⊥  \\
+        \fcanon_{∧} &(φ₁ ∧ ⊥)  &= ⊥  \\
+        \fcanon_{∧} &(φ₁ ∧ φ₂) &= \frm_∧(\rm{ndisj}_∧(φ₁ ∧ φ₂)) \\
+        \fcanon_{∧} &φ         &= φ.
+       \end{array}\\[2mm]
+  \text{and }\\[2mm]
+    &\hspace{.495mm}\rm{ndisj}_{∧} : \NProp \to \NProp\\
+    &\begin{array}{lll}
+      \rm{ndisj}_{∧}&(¬ φ₁ ∧ φ₂) &=
+        \begin{cases}
+          ⊥, &\text{ if } φ₁ ∈_{∧} φ₂\\
+          ⊥, &\text{ if } \rm{ndisj}_{∧}(φ₂) ≡ ⊥\\
+          ¬ φ₁ ∧ \rm{ndisj}_{∧}(φ₂), &\text{ otherwise.}
+        \end{cases}\\
+      \rm{ndisj}_{∧}&(φ₁ ∧ φ₂) &=
+        \begin{cases}
+          ⊥,  &\,\,\,\,\,\,\text{ if } φ₁ ∈_{∧} φ₂\\
+          ⊥,  &\,\,\,\,\,\,\text{ if } \rm{ndisj}_{∧}(φ₂) ≡ ⊥\\
+          φ₁ ∧ \rm{ndisj}_{∧}(φ₂), &\,\,\,\,\,\,\text{ otherwise.}
+        \end{cases}\\
+      \rm{ndisj}_{∧} &φ &=φ.
+     \end{array}
+    \end{aligned}
+  \end{equation*}
 
-\begin{mainlemma}
-  \label{lem:canon-or}
-  If $Γ ⟝ φ$ then $Γ ⟝ \fcanon_{∨}~φ$.
 \end{mainlemma}
-
-% \begin{myremark}
-% A similar treatment defines the $\fcanon_{⊻} : \NProp \to \NProp$.
-% This function removes redundancies related with the exclusive
-% disjunction connective.
-% % Its theorem, thm-canon$_{⊻}$ is presented in~\cite{AgdaMetis}.
-% We left out this description for the brevity of this
-% document and refer the interested reader to \cite{AgdaMetis} for
-% more details.
-% \end{myremark}
 
 Now, we can translate formulas from \Prop to \NProp by defining
-the $\fnnfp$ function. Its definition is based on the \Metis source code
-to normalize formulas. Nevertheless, we follow the same idea to
+a negative normal form function. Its definition is based on the
+\Metis source code to normalize formulas.
+To define such a function we follow the same idea to
 the $\fnnf$ function described in \citeauthor{Bezem2002}~\cite{Bezem2002}.
 Their $\fnnf$ function translates formulas to their negative normal form.
 In the reference, the authors avoid a termination problem with a similar
 function by using the polarity of the formula as an additional argument of
-the function. Therefore, we define the \abbre{Polarity} type with
-two constructors: $⊕$ to denote positive polarity, and $⊖$ to denote
-negative polarity of a formula. The formula polarity of a formula was not
-relevant since as we see later, we found using the $⊕$ polarity to call
-\fpolarity function is enough for propositions.
+the function.
 
-\begin{equation}
-\label{def:polarity}
-  \begin{aligned}
-  &\hspace{.495mm}\fpolarity : \Prop \to \abbre{Polarity}\\
-    &\begin{array}{lll}
-      \fpolarity &(φ₁ ∧ φ₂) &= ⊕\\
-      \fpolarity &(φ₁ ∨ φ₂) &= ⊖\\
-      \fpolarity &(φ₁ ⇒ φ₂) &= ⊖\\
-      \fpolarity &(¬ φ)     &=
-        \begin{cases}
-        ⊕, &\text{ if }\fpolarity~φ=⊖\\
-        ⊖, &\text{ if }\fpolarity~φ=⊕
-        \end{cases}\\
-      \fpolarity &φ     &=⊕
-    \end{array}
-  \end{aligned}
-\end{equation}
-AGREGAR TEXTO
+Therefore, we define the \abbre{Polarity} type with
+two constructors: $⊕$ to denote positive polarity, and $⊖$ to denote
+negative polarity of a formula. The formula polarity was not
+relevant in the following description since we found using the $⊕$ polarity to
+call \fpolarity function for the first time was enough to get
+the normalized normal form for propositions.
+
 \begin{equation}
 \label{eq:nnf-zero}
   \begin{aligned}
@@ -456,7 +422,7 @@ following theorem.
 \end{mainlemma}
 
 \begin{proof}
-  Composition of the Lemmas \ref{lem:lem-form}, \ref{lem:lem-dist}
+  Composition of Lemma~\ref{lem:lem-form} and Lemma~\ref{lem:lem-dist}
   and \ref{lem:lem-nnf}.
 \end{proof}
 

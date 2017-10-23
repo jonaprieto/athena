@@ -38,6 +38,27 @@ A simplified version of the \texttt{TSTP} derivation of Fig.~\ref{fig:metis-proo
 \end{myremark}
 
 
+\subsection{Polarity for propositions}
+
+\begin{equation}
+\label{def:polarity}
+  \begin{aligned}
+  &\hspace{.495mm}\fpolarity : \Prop \to \abbre{Polarity}\\
+    &\begin{array}{lll}
+      \fpolarity &(φ₁ ∧ φ₂) &= ⊕\\
+      \fpolarity &(φ₁ ∨ φ₂) &= ⊖\\
+      \fpolarity &(φ₁ ⇒ φ₂) &= ⊖\\
+      \fpolarity &(¬ φ)     &=
+        \begin{cases}
+        ⊕, &\text{ if }\fpolarity~φ=⊖\\
+        ⊖, &\text{ if }\fpolarity~φ=⊕
+        \end{cases}\\
+      \fpolarity &φ     &=⊕
+    \end{array}
+  \end{aligned}
+\end{equation}
+
+
 \section{A Small Example}
 \label{appendix}
 
