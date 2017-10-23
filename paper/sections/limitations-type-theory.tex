@@ -4,7 +4,7 @@
 \section{Limitations of Type Theory}
 \label{sec:limitations-type-theory}
 
-MISSING TEXT
+AGREGAR TEXTO INTRODUCTORIO
 
 \begin{notation}
 We write the type judgments as $m : \abbre{M}$ to denote
@@ -59,13 +59,13 @@ as well.
 \end{notation}
 
 Therefore, one approach to guarantee a structural recursive function based on
-a general recursive function $\rm{f}: \Prop \to \Prop$ is to formulate a new function $\rm{f}^{*} : \Prop \to \Nat \to \Prop$ where all recursive calls are done on smaller arguments.
+a general recursive function $\rm{f}:~\Prop~\to~\Prop$ is to formulate a new function $\rm{f}^{*}~:~\Prop~\to~\Nat~\to~\Prop$ where all of its recursive calls are done on smaller arguments.
 
 \begin{myexample}
 \label{ex:structural-recursion}
 
 Let us consider the following example to exhibit the bounded technique
-mentioned above for the \fuh function. this function is used for reconstructing
+mentioned above for the \fuh function. This function is used for reconstructing
 the \Metis \strip inference rule in Section~\ref{sssec:strip-a-goal}.
 
 \begin{equation}
@@ -80,13 +80,12 @@ the \Metis \strip inference rule in Section~\ref{sssec:strip-a-goal}.
 \end{aligned}
 \end{equation}
 
-In (\ref{eq:uh-definition}), the first two equation show
+In (\ref{eq:uh-definition}), the first two equation
 call on arguments no structurally smaller.
 For instance, on the first call, $φ ≡ (φ₁ ∧ φ₂) ⇒ φ₃$, the recursion
-calls on the  $φ₁ ⇒ (φ₂ ⇒ φ₃)$ argument.
-But this argument is not a subformula for φ.
-Therefore, one way to translate $\fuh_{0}$ in (\ref{eq:uh-definition}) to type
-theory is to define the a new function using the bounded technique.
+calls on the  $φ₁ ⇒ (φ₂ ⇒ φ₃)$ argument that is not a subformula of φ.
+Therefore, one way to translate $\fuh_{0}$ to type
+theory is to define a new function using a bounded recursion.
 
 \begin{equation}
 \label{eq:uh-structured}
@@ -100,8 +99,8 @@ theory is to define the a new function using the bounded technique.
 \end{aligned}
 \end{equation}
 
-As we mentioned above, the natural number in the second argument of
-the function stands for a complexity measure of it.
+We bounded the recursion calls in~(\ref{eq:uh-structured}) with \Nat type argument. This natural number represents the complexity measure of $\fuh_{0}$
+function.
 
 Recall the \emph{complexity measure} defined in \cite{Agudelo-Agudelo2017}
 and presented in \cite{VanDalen1994} as \emph{the rank for a
@@ -156,8 +155,7 @@ the reader to \citeauthor{Bove2005}~\cite{Bove2005}.
 \subsection{Intuitionistic logic}
 \label{ssec:intuitionistic-logc}
 
-
-...
+AGREGAR TEXTO
 
 
 \end{document}

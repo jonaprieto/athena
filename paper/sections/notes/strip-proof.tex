@@ -25,3 +25,27 @@ Case $φ ≡ φ₁ ⇒ φ₂$.
   \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$}
   \end{bprooftree}
 \end{equation*}
+
+
+\begin{equation}
+  \label{eq:ndisj-or}
+  \begin{aligned}
+  &\hspace{.495mm}\rm{ndisj}_{∨} : \NProp \to \NProp\\
+  &\begin{array}{lll}
+    \rm{ndisj}_{∨} &(¬ φ₁ ∨ φ₂) &=
+        \begin{cases}
+         ⊤, &\text{ if } φ₁ ∈_{∨} φ₂\\
+         ⊤, &\text{ if } \rm{ndisj}_{∨}~φ₂≡ ⊤\\
+         ¬ φ₁ ∨ \rm{ndisj}_{∨}~φ₂, &\text{ otherwise.}
+        \end{cases}\\
+
+  \rm{ndisj}_{∨} &(φ₁ ∨ φ₂)&=
+        \begin{cases}
+         ⊤, &\,\,\,\,\,\,\text{ if } ¬φ₁ ∈_{∨} φ₂ \\
+         ⊤, &\,\,\,\,\,\,\text{ if } \rm{ndisj}_{∨}(φ₂) ≡ ⊤\\
+         φ₁ ∨ \rm{ndisj}_{∨}~φ₂, &\,\,\,\,\,\,\text{ otherwise.}
+        \end{cases}\\
+    \rm{ndisj}_{∨}&φ &=φ
+    \end{array}
+  \end{aligned}
+\end{equation}

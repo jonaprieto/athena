@@ -2,20 +2,20 @@
 \begin{document}
 
 
-\subsubsection{Canonicalize.}
+\subsubsection{Canonicalize. (REVISANDO)}
 \label{sssec:canonicalize}
 
 One of the main purposes of the \canonicalize rule consists of adding the axioms to the problem. In this process, some transformations are carried
 out by convert a \verb!fof! formula to their clausal normal form.
 The process mainly consists of removing redundancies (tautologies or
 definitions) and converting the proposition to its normalized
-negative normal form, conjunctive normal form, or
-definitional normal form.
+negative normal form, or conjunctive normal form.
+%, or definitional normal form.
 
 \begin{definition}
   \NProp is the type for a formula in normalized negative normal form
-  in which negations appear only in the literals and the expression is
-  in terms only of ($⊥$, $⊤$, $¬$, $∧$, $∨$) connectives.
+  in which negations appear only in the literals and the formula only uses
+  ($⊥$, $⊤$, $¬$, $∧$, $∨$) logical constants.
   We define the \NProp type in a similar way as we did for \Prop type.
 \end{definition}
 
@@ -25,10 +25,12 @@ conclusion of the theorem. The $⟝$ theorems have the same subset of rules
 for the connectives of \NProp type in Fig.~\ref{fig:CPL-inference-rules}.
 
 % -------------------------------------------------------------------
-\subsubsection{Redundancy.}
-\label{sssec:redundancy}
 
-There are redundancies in a formula when some of the following theorems can apply inside the formula.
+To reconstruct \canonicalize we need to perform some transformations
+that involve translating the formula to its normalized form and remove
+form it any redundancy as long as possible.
+
+We say there are redundancies in a formula when some of the following theorems can apply inside the formula.
 
   \[
     \begin{bprooftree}
@@ -386,6 +388,8 @@ AGREGAR TEXTO
   \end{equation*}
 \end{mainlemma}
 
+AGREGAR TEXTO
+
 \begin{mainlemma}
   \label{lem:lem-dist}
   $Γ ⟝ φ$ then $Γ ⟝ \fdist~φ$, where,
@@ -401,7 +405,7 @@ AGREGAR TEXTO
   \end{equation*}
 \end{mainlemma}
 
-\begin{sketchproof} If $φ ≡ φ₁ ∨ φ₂$, we get for $i = 1, 2$,
+\begin{proof} If $φ ≡ φ₁ ∨ φ₂$, we get for $i = 1, 2$,
 \begin{equation*}
   \begin{bprooftree}
     \RightLabel{assume}
@@ -417,7 +421,7 @@ AGREGAR TEXTO
 Then, by using the ∨-elim rule in the last derivation above, we
 derive $Γ, φ₁ ∨ φ₂ ⟝ \fdist_{∨}(\fdist~φ₁ ∨ \fdist~φ₂)$ and the lemma
 follows.
-\end{sketchproof}
+\end{proof}
 
 To convert normalized propositions to classical propositions, we
 make the following definition, completing the translation between
@@ -483,8 +487,7 @@ the conjunctive normal form of the target formula.
 
 \begin{mainth} % (fold)
   \label{thm:canonicalize}
-  \hspace{4mm}\\
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fcanonicalize~φ~ψ$, where,
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ~⊢~\fcanonicalize~φ~ψ$, where,
   \begin{equation}
   \label{eq:canonicalize}
   \begin{aligned}
@@ -501,8 +504,8 @@ the conjunctive normal form of the target formula.
 
 \begin{proof}\hspace{3mm}
 \begin{itemize}
-\item If $φ ≡ ψ$ by substitution theorem we conclude $Γ ⊢ ψ$.
-\item If $ψ ≡ \fform~(\fnnf~φ)$,
+\item[$\bullet$] If $φ ≡ ψ$ by substitution theorem we conclude $Γ ⊢ ψ$.
+\item[$\bullet$] If $ψ ≡ \fform~(\fnnf~φ)$,
 \begin{equation*}
   \begin{bprooftree}
     \AxiomC{$Γ ⊢ φ$}
@@ -516,7 +519,7 @@ the conjunctive normal form of the target formula.
   \end{bprooftree}
 \end{equation*}
 
-\item If $γ ≡ \fcnf~ψ ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$,
+\item[$\bullet$] If $γ ≡ \fcnf~ψ ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$,
   \begin{equation*}
     \begin{bprooftree}
       \AxiomC{$Γ ⊢ φ$}

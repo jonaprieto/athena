@@ -119,9 +119,9 @@ We adopt a customized \TSTP syntax to keep as short as possible the \Metis deriv
 \begin{myexample}
 
 Let us consider the following \TSTP derivation using
-the customized \TSTP syntax. Note that we remove for example
-empty fields in the inference information, the \verb!role! field if it is
-\verb!plain! and shorten names as long as possible.
+the customized \TSTP syntax. Note that we remove
+empty fields in the inference information, we shorten names as long as possible, and we delete the \verb!role! field when the role is
+\verb!plain!.
 
 \begin{verbatim}
 fof(premise, axiom, p).
@@ -141,7 +141,7 @@ cnf(refute0, $false, inf(canonicalize, [norm2])).
 \subsection{Inference rules}
 \label{ssec:metis-inferences-rules}
 
-
+AGREGAR EL TEXTO
 
 % \TSTP derivations replied by \Metis use the following rules:
 % \canonicalize, \clausify, \conjunct, \simplify, \negate, and \strip.
@@ -168,7 +168,7 @@ cnf(refute0, $false, inf(canonicalize, [norm2])).
 
 \begin{table}[!ht]
 \label{tab:agda-metis-table}
-\caption{Presentation of \Metis inference rules in type theory.}
+\caption{\Metis inference rules in type theory.}
   \begin{center}
   {\renewcommand{\arraystretch}{1.6}%
     \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}|}

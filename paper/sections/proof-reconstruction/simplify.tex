@@ -83,8 +83,9 @@ fof(norm6, $false, inf(simplify, [norm1, norm4, norm5])).
 \end{verbatim}
 
 \begin{enumerate}
-\item \simplify derives \verb!(~ g)! in \verb!norm2!
-from \verb!norm2! and \verb!norm3! derivations using the fourth case in~(\ref{eq:simplify-2}).
+\item The \simplify rule derives \verb!(~ g)! in \verb!norm2!
+from \verb!norm2! and \verb!norm3! derivations using the fourth case
+in~(\ref{eq:simplify-2}).
 $$\fsimplify~(\neg g \vee q)~(\neg q) (\neg g) = \neg g.$$
 \begin{verbatim}
 fof(norm2, ~ g | q, inf(conjunct, [norm0])).
