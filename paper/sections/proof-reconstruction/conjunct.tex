@@ -9,7 +9,7 @@ conjunction one of its conjuncts. This rule is a generalization of the
 projection rules for the conjunction connective as the
 following \TSTP excerpt shows.
 
-\begin{example}
+\begin{myexample}\hspace{10cm}
 
 \begin{verbatim}
 fof(p1, p & q & (r | ~ p), inf(canonicalize, [x])).
@@ -17,12 +17,13 @@ fof(p2, q, inf(conjunct, [p1])).
 fof(p3, (r | ~ p), inf(conjunct, [p1])).
 \end{verbatim}
 
-In the first formula \verb!p1!, we find the left-associative conjunction
-\verb!p & q & (r | ~ p)!.
+In the first formula, \verb!p & q & (r | ~ p)!, we find a left-associative
+conjunction named \verb!p1!.
 \conjunct extracts \verb!q! from the \verb!p1! using a left
-projection (∧-proj₁) follow by a right projection ∧-proj₂.
-\conjunct extracts \verb!r | ~ p! by using ∧-proj₁ to \verb!p1!.
-\end{example}
+projection (∧-proj₁) follow by a right projection (∧-proj₂).
+\conjunct extracts \verb!r | ~ p! by using right projection
+on \verb!p1!.
+\end{myexample}
 
 \begin{mainth}
   \label{thm:conjunct}

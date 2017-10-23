@@ -15,9 +15,10 @@ to its clausal normal form is not unique, and \Metis has a customized
 approach to perform that transformation. That is the reason we perform some
 reordering for the \CNF of the source formula to fulfill this issue.
 
-In the following \Metis \TSTP derivation, we see an example where
-\clausify expands the formula \texttt{norm0} by using distributive
-laws included in the conjunctive normal form conversion.
+\begin{myexample}
+In the following \Metis \TSTP derivation, we see how
+\clausify expands the\texttt{norm0} formula to get \texttt{norm1} formula
+by using distributive laws included in the conjunctive normal form conversion.
 
 \begin{verbatim}
 fof(a1, axiom, p => (q & r)).
@@ -26,6 +27,8 @@ fof(norm0, ~ p | (q & r), inf(canonicalize, [a1])).
 fof(norm1, (~ p | q) & (~ p | r), inf(clausify, [norm0])).
 ...
 \end{verbatim}
+
+\end{myexample}
 
 \begin{mainth}
 \label{thm:clausify}
