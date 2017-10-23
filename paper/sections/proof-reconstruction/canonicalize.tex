@@ -224,8 +224,8 @@ We define $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct~φ~ψ$.
   \end{align*}
 \end{mainlemma}
 
-In conjunctions we remove the following three tautologies using
-the $\rm{ndisj}_{∧}$ function defined in~(\ref{eq:ndisj-a}).
+In conjunctions we remove the following redundancies
+using Lemma~\ref{lem:canon-and}.
 
 \begin{equation*}
 \begin{bprooftree}
@@ -287,8 +287,8 @@ the $\rm{ndisj}_{∧}$ function defined in~(\ref{eq:ndisj-a}).
 
 \end{mainlemma}
 
-Now, we can translate formulas from \Prop to \NProp by defining
-a negative normal form function. Its definition is based on the
+Now, we can translate formulas from \Prop to \NProp by defining \fnnfp,
+the negative normal form function. Its definition is based on the
 \Metis source code to normalize formulas.
 To define such a function we follow the same idea to
 the $\fnnf$ function described in \citeauthor{Bezem2002}~\cite{Bezem2002}.
