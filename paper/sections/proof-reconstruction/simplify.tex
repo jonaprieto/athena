@@ -38,11 +38,11 @@ For $i,\, j = 1, 2$, $i\neq j$ and $γ : \Prop$,
       \begin{cases}
         ψ,          &\text{ if }φᵢ ≡ ψ\\
         γ,          &\text{ if }φᵢ ≡ φⱼ ⇒ γ\\
-        γ,          &\text{ if }φᵢ ≡ γ ⇒ \fnnf(¬ φⱼ)\\
+        γ,          &\text{ if }φᵢ ≡ γ ⇒ \fnnf~¬ φⱼ\\
         γ,          &\text{ if }φᵢ ≡ \fnnf(¬ φⱼ) ∨ γ\\
-        ⊥,          &\text{ if } \fnnf(¬ φⱼ) ≡ \fconjunct(φᵢ, \fnnf(¬ φⱼ))\\
+        ⊥,          &\text{ if } \fnnf~¬ φⱼ ≡ \fconjunct~(φᵢ)~(\fnnf~¬ φⱼ)\\
       % φ          &\text{ if }\fconjunct(nnf(¬ φᵢ), φⱼ) ≡  φⱼ\\
-        ⊥,          &\text{ if } ¬ φⱼ ≡ \fcanonicalize(φᵢ, ¬ φⱼ) \\
+        ⊥,          &\text{ if } ¬ φⱼ ≡ \fcanonicalize~φᵢ~¬φⱼ \\
         φ₁,         &\text{ otherwise.}
       \end{cases}
   \end{array}
@@ -53,8 +53,8 @@ For $i,\, j = 1, 2$, $i\neq j$ and $γ : \Prop$,
 \begin{mainth}[thm-simplify] % (fold)
   \label{thm:simplify}
 For $i=1,\, 2, \cdots, n$, $Γ ⊢ φᵢ$ and $ψ : \Prop$ then
-if $n > 2$, $Γ ⊢ \fsimplify(γ_{n-2}, φ_{n}, ψ)$ where $γ_{i} = \fsimplify(φ_{i}, φ_{i+1}, ψ)$
-else $Γ ⊢ \fsimplify(φ₁, φ₂, ψ)$.
+if $n > 2$, $Γ ⊢ \fsimplify~γ_{n-2}~φ_{n}~ψ$ where $γ_{i} = \fsimplify~φ_{i}~φ_{i+1}~ψ$
+else $Γ ⊢ \fsimplify~φ₁~φ₂~ψ$.
 \end{mainth}
 
 

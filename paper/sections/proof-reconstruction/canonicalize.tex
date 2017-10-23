@@ -431,7 +431,7 @@ these two types.
   &\begin{array}{llll}
     \fform&(φ₁ ∧ φ₂) &= \fform~φ₁ ∧ \fform~φ₂ &\\
     \fform&(φ₁ ∨ φ₂) &= \fform~φ₁ ∨ \fform~φ₂ &\\
-    \fform&(φ₁ ⊻ φ₂) &= \fform_{⊻}(φ₂) &\\
+    \fform&(φ₁ ⊻ φ₂) &= \fform_{⊻}~φ₂ &\\
     \fform&φ &=    φ, &\text{ otherwise.}\\
    \end{array}
   \end{aligned}
@@ -484,25 +484,22 @@ target formula. If it fails, we try to reorder the conjunctive
 normal form of the source formula to match with
 the conjunctive normal form of the target formula.
 
-\begin{definition}[canonicalize]
-\begin{equation}
-  \label{def:canonicalize}
-  \begin{aligned}
-  &\hspace{.495mm}\fcanonicalize : \Prop \to \Prop \to \Prop\\
-  &\begin{array}{lll}
-        \fcanonicalize~φ~φ &= ψ \\
-        \fcanonicalize~φ~\fform(\fnnf~φ) &= \fform(\fnnf~φ) \\
-        ψ, \text{ if }\fcnf~ψ ≡ \freorder_{∧∨}(\fcnf~φ, \fcnf~ψ)\\
-        \fcanonicalize~φ~ψ &= φ
-      \end{array}
-    \end{aligned}
-  \end{equation}
-\end{definition}
-
 \begin{mainth} % (fold)
   \label{thm:canonicalizeThm}
   \hspace{4mm}\\
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fcanonicalize(φ, ψ)$.
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fcanonicalize~φ~ψ$, where,
+  \begin{equation}
+  \label{eq:canonicalize}
+  \begin{aligned}
+  &\hspace{.495mm}\fcanonicalize : \Prop \to \Prop \to \Prop\\
+  &\fcanonicalize~φ~ψ = \begin{cases}
+        ψ, &\text{  if  } ψ≡φ\\
+        ψ, &\text{  if  } ψ≡\fform(\fnnf~φ)\\
+        ψ, &\text{  if  } \fcnf~ψ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)\\
+        φ, &\text{  otherwise   }
+        \end{cases}
+   \end{aligned}
+  \end{equation}
 \end{mainth}
 
 \begin{proof}\hspace{3mm}
@@ -522,14 +519,14 @@ the conjunctive normal form of the target formula.
   \end{bprooftree}
 \end{equation*}
 
-\item If $γ = \fcnf~ψ ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$,
+\item If $γ ≡ \fcnf~ψ ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$,
   \begin{equation*}
     \begin{bprooftree}
       \AxiomC{$Γ ⊢ φ$}
       \RightLabel{thm-cnf}
       \UnaryInfC{$Γ ⊢ \fcnf~φ$}
       \RightLabel{thm-reorder$_{∧∨}$}
-      \UnaryInfC{$Γ ⊢ \freorder_{∧∨}(\fcnf~φ, \fcnf~ψ)$}
+      \UnaryInfC{$Γ ⊢ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$}
       \AxiomC{$γ$}
       \RightLabel{subst}
       \BinaryInfC{$Γ ⊢ \fcnf~ψ$}

@@ -62,8 +62,8 @@ the proof-reconstruction. We opted to work as far as possible with right-associa
   &\hspace{.495mm}\rm{build}_{∨} : \Prop → \Prop → \Prop\\
   &\begin{array}{llll}
     \rm{build}_{∨}&ψ~ψ &= ψ\\
-    \rm{build}_{∨}&(φ~(ψ₁ ∨ ψ₂)&=ψ &\text{ if }\rm{build}_{∨}~φ~ψ_{1} ≡ ψ_{1}\\
-    \rm{build}_{∨}&(φ~(ψ₁ ∨ ψ₂)&=ψ &\text{ if }\rm{build}_{∨}~φ~ψ_{2} ≡ ψ_{2}\\
+    \rm{build}_{∨}&φ~(ψ₁ ∨ ψ₂)&=ψ &\text{ if }\rm{build}_{∨}~φ~ψ_{1} ≡ ψ_{1}\\
+    \rm{build}_{∨}&φ~(ψ₁ ∨ ψ₂)&=ψ &\text{ if }\rm{build}_{∨}~φ~ψ_{2} ≡ ψ_{2}\\
     \rm{build}_{∨}&φ~ψ&=φ&\text{ otherwise.}
    \end{array}
   \end{aligned}
@@ -97,7 +97,7 @@ disjunction from another disjunction, specifically, this functions will
 try to rearrange the disjuncts in the source formula to match with the
 target disjunction formula, similar as we describe above.
 
-\begin{mainlemma}[lem-build$_{\boldsymbol{∨}}$]
+\begin{mainlemma}
 \label{lem:build-or}
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \rm{build}_{∨}~φ~ψ$.
 \end{mainlemma}
@@ -109,48 +109,42 @@ simplifies a special case of disjunction, the repeated disjuncts
 (e.g., $\ffactor(φ ∨ φ) = φ$).
 Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $ψ ∨ φ$.
 
-\begin{align}
-\begin{split}
-  \label{eq:factor-definition}
-  &\ffactor : \Prop → \Prop\\
-  &\ffactor(φ) =
-  \begin{cases}
-    φ₁,  &\text{ if }φ ≡ φ₁ ∨ φ₂ \text{ and } φ₁ ≡ \ffactor(φ₂)\\
-    φ,   &\text{ otherwise.}
-  \end{cases}
-\end{split}
-\end{align}
-
-\begin{mainlemma}[lem-factor]
+\begin{mainlemma}
 \label{lem:factor}
-  $Γ ⊢ φ$ then $Γ ⊢ \ffactor(φ)$.
+  $Γ ⊢ φ$ then $Γ ⊢ \ffactor~φ$, where, 
+  \begin{equation}
+  \label{eq:factor-definition}
+   \begin{aligned}
+   &\hspace{.495mm}\ffactor : \Prop → \Prop\\
+    &\begin{array}{llll}
+     \ffactor&(φ₁ ∨ φ₂) &=φ₁,  &\text{ if } φ₁ ≡ \ffactor~φ₂\\
+     \ffactor&φ &= φ, &\text{ otherwise.}
+  \end{array}
+\end{aligned}
+\end{equation}
 \end{mainlemma}
 
 To construct a disjunction $ψ$ from a disjunction $φ$, we have used ideas
 from the description in \citeauthor{bohme2010}~\cite{bohme2010} to prove
 equality between nested disjunctions.
 We define the $\rm{sbuild}_{∨}$ function in
-Eq.~(\ref{eq:strong-build-or-definition}).
+Eq.~(\ref{eq:strong-build-or}).
 that uses every disjunct from the source formula, $φ$, to build up the
 target disjunction $ψ$.
 
-\begin{align}
-  \begin{split}
-  \label{eq:strong-build-or-definition}
-    &\rm{sbuild}_{∨} : \Prop → \Prop → \Prop\\
-    &\rm{sbuild}_{∨}(φ, ψ) =%\\
-    % &\hspace{3mm}
-    \begin{cases}
-      \ffactor(\rm{build}_{∨}(φ₁, ψ) ∨ \rm{build}_{∨}(φ₂,ψ)),
-      &\text{ if }φ≡ φ₁ ∨ φ₂\\
-      \rm{build}_{∨}(φ, ψ),  & \text{ otherwise.}
-    \end{cases}
-  \end{split}
-\end{align}
-
 \begin{mainlemma}
 \label{lem:sbuild-or}
-If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \rm{sbuild}_{∨}(φ, ψ)$.
+If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \rm{sbuild}_{∨}~φ~ψ$, where, 
+\begin{equation}
+\label{eq:strong-build-or}
+ \begin{aligned}
+     &\hspace{.495mm}\rm{sbuild}_{∨} : \Prop → \Prop → \Prop\\
+    &\begin{array}{llll}
+    \rm{sbuild}_{∨}&(φ₁ ∨ φ₂)~ψ &=\ffactor(\rm{build}_{∨}~φ₁~ψ ∨ \rm{build}_{∨}~φ₂~ψ)&\\
+    \rm{build}_{∨}&φ~ψ &= \rm{build}_{∨}~φ~ψ& \text{ otherwise.}
+     \end{array}
+\end{aligned}
+\end{equation}
 \end{mainlemma}
 
 \begin{example}
@@ -221,13 +215,13 @@ for disjunctions, but instead, we treat only with conjunctive normal forms.
   \begin{align*}
       \begin{split}
         &\freorder_{∧} : \Prop → \Prop \to \Prop\\
-        &\freorder_{∧}(φ, ψ) =
+        &\freorder_{∧}~φ~ψ =
         \begin{cases}
           φ, &\text{ if }φ ≡ ψ\\
-          ψ₁ ∧ ψ₂, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\text{, }\freorder_{∧}(φ, ψ₁) ≡ ψ₁\\
-                  &\text{and }\freorder_{∧}(φ, ψ₂)≡ ψ₂\\
+          ψ₁ ∧ ψ₂, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\text{, }\freorder_{∧}~φ~ψ₁ ≡ ψ₁\\
+                  &\text{and }\freorder_{∧}~φ~ψ₂≡ ψ₂\\
           φ,       &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\\
-          \fconjunct(φ, ψ), &\text{ otherwise.}
+          \fconjunct~φ~ψ, &\text{ otherwise.}
         \end{cases}
       \end{split}
   \end{align*}
@@ -235,7 +229,7 @@ for disjunctions, but instead, we treat only with conjunctive normal forms.
 
 \begin{mainlemma}
   \label{lem:reorder-and}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧}(φ, ψ)$.
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧}~φ~ψ$.
 \end{mainlemma}
 
 \begin{definition}[conjunct$_{\boldsymbol{∨}}$]
@@ -243,14 +237,14 @@ for disjunctions, but instead, we treat only with conjunctive normal forms.
 \begin{align*}
   \begin{split}
     &\fconjunct_{∨} : \Prop → \Prop \to \Prop\\
-    &\fconjunct_{∨}(φ, ψ) =
+    &\fconjunct_{∨}~φ~ψ =
     \begin{cases}
       ψ, &\text{ if }φ ≡ ψ\\
-      ψ, &\text{ if }\freorder_{∨}(φ, ψ) ≡ ψ\\
-      ψ, &\text{ if }ψ ≡ ψ₁ ∧ ψ₂,\ \fconjunct_{∨}(φ, ψ₁) ≡ ψ₁,\\
-        &\text{and } \freorder_{∨}(φ, ψ₂) ≡ ψ₂\\
-      ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ \fconjunct_{∨}(φ₁, ψ) ≡ ψ\\
-      ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ \fconjunct_{∨}(φ₂, ψ) ≡ ψ\\
+      ψ, &\text{ if }\freorder_{∨}~φ~ψ ≡ ψ\\
+      ψ, &\text{ if }ψ ≡ ψ₁ ∧ ψ₂,\ \fconjunct_{∨}~φ~ψ₁ ≡ ψ₁,\\
+        &\text{and } \freorder_{∨}~φ~ψ₂ ≡ ψ₂\\
+      ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ \fconjunct_{∨}~φ₁~ψ ≡ ψ\\
+      ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ \fconjunct_{∨}~φ₂~ψ ≡ ψ\\
       φ, &\text{ otherwise.}
     \end{cases}
   \end{split}
@@ -259,17 +253,17 @@ for disjunctions, but instead, we treat only with conjunctive normal forms.
 
 \begin{mainlemma}
   \label{lem:conjunct-or}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fconjunct_{∨}(φ, ψ)$.
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fconjunct_{∨}~φ~ψ$.
 \end{mainlemma}
 
 
 
 \begin{mainlemma}
   \label{lem:reorder-and-or}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧∨}(φ, ψ)$, where
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧∨}~φ~ψ$, where
    \begin{align*}
       \begin{split}
-      &\freorder : \Prop \to \Prop \to \Prop\\
+      &\freorder_{∧∨} : \Prop \to \Prop \to \Prop\\
       &\freorder_{∧∨}~φ~ψ~=
         \begin{cases}
           ψ, &\text{ if } φ≡ψ\\
