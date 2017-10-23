@@ -10,9 +10,9 @@ propositional formula into its clausal normal form, a conjunction
 of clauses. A \emph{clause} is the disjunction of zero or more
 literals and a \emph{literal} is an atom (positive literal) or a
 negation of an atom (negative literal).
-It is important to notice that this kind of conversion between one formula 
-to its clausal normal form is not unique, and \Metis has a customized 
-approach to perform that transformation. That is the reason we perform some 
+It is important to notice that this kind of conversion between one formula
+to its clausal normal form is not unique, and \Metis has a customized
+approach to perform that transformation. That is the reason we perform some
 reordering for the \CNF of the source formula to fulfill this issue.
 
 In the following \Metis \TSTP derivation, we see an example where
@@ -47,7 +47,7 @@ fof(norm1, ((~ p | q) & (~ p | r)), inf(clausify, [norm0])).
 
 \begin{proof}
 If $φ ≡ ψ$, $Γ ⊢ \fclausify~φ~ψ$ normalizes to $Γ ⊢ ψ$. The conclusion follows by applying the $\fsubst$ lemma.\\[2mm]
-Otherwise, we use Theorem~\ref{thm:thm-reorder-and-or} and Theorem~\ref{thm:thm-cnf}.
+Otherwise, we use Theorem~\ref{lem:reorder-and-or} and Theorem~\ref{lem:cnf}.
 \end{proof}
 
 \begin{remark}

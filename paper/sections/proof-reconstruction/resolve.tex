@@ -21,7 +21,7 @@ we omit the proofs but they can found in~\cite{AgdaMetis}.
 % such that $φᵢ ≡ ψⱼ$.
 % \end{itemize}
 
-First, we define \rm{rassoc}$_{⬓}$ function in Eq.~(\ref{def:right-square})
+First, we define \rm{rassoc}$_{⬓}$ function in~(\ref{def:right-square})
 to convert a disjunctions or a conjunction into its right-associative form.
 We use $\rm{rassoc}_{∧}$ to convert conjunctions and $\rm{rassoc}_{∨}$ for
 disjunctions.
@@ -104,14 +104,14 @@ target disjunction formula, similar as we describe above.
 
 From now, we assume all propositions to be right-associative unless
 otherwise stated.
-The $\ffactor$ function in Eq.~(\ref{eq:factor-definition})
+The $\ffactor$ function in~(\ref{eq:factor-definition})
 simplifies a special case of disjunction, the repeated disjuncts
-(e.g., $\ffactor(φ ∨ φ) = φ$).
+(\eg, $\ffactor(φ ∨ φ) = φ$).
 Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $ψ ∨ φ$.
 
 \begin{mainlemma}
 \label{lem:factor}
-  $Γ ⊢ φ$ then $Γ ⊢ \ffactor~φ$, where, 
+  $Γ ⊢ φ$ then $Γ ⊢ \ffactor~φ$, where,
   \begin{equation}
   \label{eq:factor-definition}
    \begin{aligned}
@@ -127,14 +127,13 @@ Notice that other cases like $φ ∨ (ψ ∨ φ)$ do no reduce to $ψ ∨ φ$.
 To construct a disjunction $ψ$ from a disjunction $φ$, we have used ideas
 from the description in \citeauthor{bohme2010}~\cite{bohme2010} to prove
 equality between nested disjunctions.
-We define the $\rm{sbuild}_{∨}$ function in
-Eq.~(\ref{eq:strong-build-or}).
+We define the $\rm{sbuild}_{∨}$ function in~(\ref{eq:strong-build-or}).
 that uses every disjunct from the source formula, $φ$, to build up the
 target disjunction $ψ$.
 
 \begin{mainlemma}
 \label{lem:sbuild-or}
-If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \rm{sbuild}_{∨}~φ~ψ$, where, 
+If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \rm{sbuild}_{∨}~φ~ψ$, where,
 \begin{equation}
 \label{eq:strong-build-or}
  \begin{aligned}

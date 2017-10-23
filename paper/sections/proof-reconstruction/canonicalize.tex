@@ -5,9 +5,6 @@
 \subsubsection{Canonicalize.}
 \label{sssec:canonicalize}
 
-% The normalization module in \Metis is the responsible for
-% \canonicalize, \clausify, \conjunct and \simplify.
-
 One of the main purposes of the \canonicalize rule consists of adding the axioms to the problem. In this process, some transformations are carried
 out by convert a \verb!fof! formula to their clausal normal form.
 The process mainly consists of removing redundancies (tautologies or
@@ -15,7 +12,7 @@ definitions) and converting the proposition to its normalized
 negative normal form, conjunctive normal form, or
 definitional normal form.
 
-\begin{definition} %[\abbre{NProp}]
+\begin{definition}
   \NProp is the type for a formula in normalized negative normal form
   in which negations appear only in the literals and the expression is
   in terms only of ($⊥$, $⊤$, $¬$, $∧$, $∨$) connectives.
@@ -77,29 +74,31 @@ There are redundancies in a formula when some of the following theorems can appl
     \end{bprooftree}
   \]
 
-\begin{remark}
-Here and below, we assume all formulas to be in right-associative form in
-the input of the functions.  To perform such conversion, we can apply
-the $\rm{rdisj}$ and $\rm{rconj}$ functions depending on the main connective Eq.~(\ref{eq:rdisj}).
-\end{remark}
-
+% \begin{remark}
+% Here and below, we assume all formulas to be in right-associative form in
+% the input of the functions. To perform such conversion, we can apply
+% the $\rm{rdisj}$ and $\rm{rconj}$ functions depending on the main connective
+% in~(\ref{eq:rdisj}).
+% \end{remark}
+\begin{notation}
 In a disjunction, $φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
 if there is some $i = 1, \cdots, n$ such that $ψ ≡ φᵢ$.
 Note that $ψ ∈_{∨} φ$ is another name for the equality
 $ψ ≡ \fconjunct_{∨}~φ~ψ$.
+\end{notation}
 
-  \begin{align*}
-  \label{def:rm-or}
-    \begin{split}
-      &\frm_{∨} :  \NProp \to \NProp\\
-      &\frm_{∨}~φ =
-      \begin{cases}
-        \frm_{∨}~φ₂,    &\text{ if }φ ≡ φ₁ ∨ φ₂\text{ and }φ₁ ∈_{∨} φ₂\\
-        φ₁~∨~rm_{∨}~φ₂, &\text{ if }φ ≡ φ₁ ∨ φ₂\\
-        φ,  &\text{ otherwise.}
-      \end{cases}
-    \end{split}
-  \end{align*}
+\begin{align*}
+\label{def:rm-or}
+  \begin{split}
+    &\frm_{∨} :  \NProp \to \NProp\\
+    &\frm_{∨}~φ =
+    \begin{cases}
+      \frm_{∨}~φ₂,    &\text{ if }φ ≡ φ₁ ∨ φ₂\text{ and }φ₁ ∈_{∨} φ₂\\
+      φ₁~∨~rm_{∨}~φ₂, &\text{ if }φ ≡ φ₁ ∨ φ₂\\
+      φ,  &\text{ otherwise.}
+    \end{cases}
+  \end{split}
+\end{align*}
 
 \begin{mainlemma}
   \label{lem:rm-or}
@@ -303,16 +302,16 @@ AGREGAR TEXTO
 % \end{remark}
 
 Now, we can translate formulas from \Prop to \NProp by defining
-the $\fnnf₀$ function. This function is based on the $\fnnf$ function
+the $\fnnfp$ function. This function is based on the $\fnnf$ function
 described in \citeauthor{Bezem2002}~\cite{Bezem2002}. Their $\fnnf$ function
 translates formulas to their negative normal form. In the
 reference, the authors avoid a termination problem with a similar
 function by using, as an extra argument, the polarity of the formula.
-We follow the same idea in Eq.~(\ref{def:nnf-zero}).
+We follow the same idea in~(\ref{def:nnf-zero}).
 Therefore, we define the \abbre{Polarity} type with
 two constructors: $⊕$ to denote positive polarity, and $⊖$ to denote
-negative polarity of a formula. The polarity of a formula is defined in
-Eq.~(\ref{def:polarity}).
+negative polarity of a formula. The polarity of a formula is defined
+in~(\ref{def:polarity}).
 
 % fun polarity True = true
 %   | polarity False = false
@@ -343,20 +342,20 @@ AGREGAR TEXTO
 \begin{equation}
 \label{eq:nnf-zero}
   \begin{aligned}
-  &\hspace{.495mm}\fnnf₀ : \abbre{Polarity} \to \Prop \to \NProp\\
+  &\hspace{.495mm}\fnnfp : \abbre{Polarity} \to \Prop \to \NProp\\
     &\begin{array}{lll}
-      \fnnf₀~⊕~(φ₁ ∧ φ₂) &=\fcanon_{∧}~(\fnnf₀~⊕~φ₁ ∧ \fnnf₀~⊕~φ₂)\\
-      \fnnf₀~⊕~(φ₁ ∨ φ₂) &=\fcanon_{∨}~(\fnnf₀~⊕~φ₁ ∨ \fnnf₀~⊕~φ₂)\\
-      \fnnf₀~⊕~(φ₁ ⇒ φ₂) &=\fcanon_{∨}~(\fnnf₀~⊖~φ₁ ∨ \fnnf₀~⊕~φ₂)\\
-      \fnnf₀~⊕~(¬ φ₁)    &=\fnnf₀~⊖~φ₁                              \\
-      \fnnf₀~⊕~φ         &=φ        \\
-      \fnnf₀~⊖~(φ₁ ∧ φ₂) &=\fcanon_{∨}(\fnnf₀~⊖~φ₁ ∨ \fnnf₀~⊖~φ₂)\\
-      \fnnf₀~⊖~(φ₁ ∨ φ₂) &=\fcanon_{∧}(\fnnf₀~⊖~φ₁ ∧ \fnnf₀~⊖~φ₂)\\
-      \fnnf₀~⊖~(φ₁ ⇒ φ₂) &=\fcanon_{∧}(\fnnf₀~⊖~φ₂ ∧ \fnnf₀~⊖~φ₁)\\
-      \fnnf₀~⊖~(¬ φ₁)    &=\fnnf₀~⊕~φ₁\\
-      \fnnf₀~⊖~⊤         &=⊥\\
-      \fnnf₀~⊖~⊥         &=⊤\\
-      \fnnf₀~⊖~φ         &=φ
+      \fnnfp~⊕~(φ₁ ∧ φ₂) &=\fcanon_{∧}~(\fnnfp~⊕~φ₁ ∧ \fnnfp~⊕~φ₂)\\
+      \fnnfp~⊕~(φ₁ ∨ φ₂) &=\fcanon_{∨}~(\fnnfp~⊕~φ₁ ∨ \fnnfp~⊕~φ₂)\\
+      \fnnfp~⊕~(φ₁ ⇒ φ₂) &=\fcanon_{∨}~(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊕~φ₂)\\
+      \fnnfp~⊕~(¬ φ₁)    &=\fnnfp~⊖~φ₁                              \\
+      \fnnfp~⊕~φ         &=φ        \\
+      \fnnfp~⊖~(φ₁ ∧ φ₂) &=\fcanon_{∨}(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊖~φ₂)\\
+      \fnnfp~⊖~(φ₁ ∨ φ₂) &=\fcanon_{∧}(\fnnfp~⊖~φ₁ ∧ \fnnfp~⊖~φ₂)\\
+      \fnnfp~⊖~(φ₁ ⇒ φ₂) &=\fcanon_{∧}(\fnnfp~⊖~φ₂ ∧ \fnnfp~⊖~φ₁)\\
+      \fnnfp~⊖~(¬ φ₁)    &=\fnnfp~⊕~φ₁\\
+      \fnnfp~⊖~⊤         &=⊥\\
+      \fnnfp~⊖~⊥         &=⊤\\
+      \fnnfp~⊖~φ         &=φ
     \end{array}
   \end{aligned}
 \end{equation}
@@ -367,7 +366,7 @@ AGREGAR TEXTO
   \begin{align*}
    \begin{split}
      &\fnnf : \NProp \to \NProp\\
-     &\fnnf~φ = \fnnf₀~⊕~φ.
+     &\fnnf~φ = \fnnfp~⊕~φ.
    \end{split}
   \end{align*}
 \end{mainlemma}
@@ -394,9 +393,9 @@ AGREGAR TEXTO
   \begin{aligned}
   &\hspace{.495mm}\fdist : \NProp \to \NProp\\
   &\begin{array}{lll}
-    \fdist&(φ₁ ∧ φ₂) &= \fdist~φ₁ ∧ \fdist~φ₂\\
-    \fdist&(φ₁ ∨ φ₂) &= \fdist~φ₁ ∨ \fdist~φ₂\\
-    \fdist&φ &= φ
+    \fdist &(φ₁ ∧ φ₂) &= \fdist~φ₁ ∧ \fdist~φ₂\\
+    \fdist &(φ₁ ∨ φ₂) &= \fdist~φ₁ ∨ \fdist~φ₂\\
+    \fdist &φ         &= φ
    \end{array}
    \end{aligned}
   \end{equation*}
@@ -411,7 +410,7 @@ AGREGAR TEXTO
     \UnaryInfC{$Γ ⊢ \fdist~φ_{i}$}
     \RightLabel{∨-intro$_{1,2}$}
     \UnaryInfC{$Γ, φ_{i} ⊢ \fdist~φ₁ ∨ \fdist~φ₂$}
-    \RightLabel{lemma~\ref{lem:dist-or}}
+    \RightLabel{Lemma~\ref{lem:dist-or}}
     \UnaryInfC{$Γ, φ_{i} ⊢ \fdist_{∨}(\fdist~φ₁ ∨ \fdist~φ₂)$}
     \end{bprooftree}
 \end{equation*}
@@ -429,14 +428,12 @@ these two types.
   \begin{aligned}
   &\hspace{.495mm}\fform : \NProp \to \Prop\\
   &\begin{array}{llll}
-    \fform&(φ₁ ∧ φ₂) &= \fform~φ₁ ∧ \fform~φ₂ &\\
-    \fform&(φ₁ ∨ φ₂) &= \fform~φ₁ ∨ \fform~φ₂ &\\
-    \fform&(φ₁ ⊻ φ₂) &= \fform_{⊻}~φ₂ &\\
-    \fform&φ &=    φ, &\text{ otherwise.}\\
+    \fform &(φ₁ ∧ φ₂) &= \fform~φ₁ ∧ \fform~φ₂ &\\
+    \fform &(φ₁ ∨ φ₂) &= \fform~φ₁ ∨ \fform~φ₂ &\\
+    \fform &φ         &= φ
    \end{array}
   \end{aligned}
   \end{equation}
-
 
 \begin{mainlemma}
   \label{lem:lem-form}
@@ -446,8 +443,8 @@ these two types.
 As a result, we can get a conjunctive normal form by applying the
 following theorem.
 
-\begin{mainth}
-\label{thm:thm-cnf}
+\begin{mainlemma}
+\label{lem:cnf}
   If $Γ ⊢ φ$ then $Γ ⊢ \rm{cnf}~φ$, where,
   \begin{align*}
     \begin{split}
@@ -455,7 +452,7 @@ following theorem.
     &\rm{cnf}~φ = \fform (\fdist (\fnnf~φ))
     \end{split}
   \end{align*}
-\end{mainth}
+\end{mainlemma}
 
 \begin{proof}
   Composition of the Lemmas \ref{lem:lem-form}, \ref{lem:lem-dist}
@@ -485,7 +482,7 @@ normal form of the source formula to match with
 the conjunctive normal form of the target formula.
 
 \begin{mainth} % (fold)
-  \label{thm:canonicalizeThm}
+  \label{thm:canonicalize}
   \hspace{4mm}\\
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fcanonicalize~φ~ψ$, where,
   \begin{equation}
@@ -493,10 +490,10 @@ the conjunctive normal form of the target formula.
   \begin{aligned}
   &\hspace{.495mm}\fcanonicalize : \Prop \to \Prop \to \Prop\\
   &\fcanonicalize~φ~ψ = \begin{cases}
-        ψ, &\text{  if  } ψ≡φ\\
-        ψ, &\text{  if  } ψ≡\fform(\fnnf~φ)\\
-        ψ, &\text{  if  } \fcnf~ψ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)\\
-        φ, &\text{  otherwise   }
+        ψ, &\text{ if  } ψ≡φ\\
+        ψ, &\text{ if  } ψ≡\fform(\fnnf~φ)\\
+        ψ, &\text{ if  } \fcnf~ψ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)\\
+        φ, &\text{ otherwise }
         \end{cases}
    \end{aligned}
   \end{equation}
@@ -505,15 +502,15 @@ the conjunctive normal form of the target formula.
 \begin{proof}\hspace{3mm}
 \begin{itemize}
 \item If $φ ≡ ψ$ by substitution theorem we conclude $Γ ⊢ ψ$.
-\item If $ψ ≡ \fform(\fnnf~φ)$,
+\item If $ψ ≡ \fform~(\fnnf~φ)$,
 \begin{equation*}
   \begin{bprooftree}
     \AxiomC{$Γ ⊢ φ$}
     \RightLabel{lem-nnf}
     \UnaryInfC{$Γ ⊢₂~\fnnf~φ$}
     \RightLabel{lem-form}
-    \UnaryInfC{$Γ ⊢ \fform(\fnnf~φ)$}
-    \AxiomC{$ψ ≡ \fform(\fnnf~φ)$}
+    \UnaryInfC{$Γ ⊢ \fform~(\fnnf~φ)$}
+    \AxiomC{$ψ ≡ \fform~(\fnnf~φ)$}
     \RightLabel{subst.}
     \BinaryInfC{$Γ ⊢ ψ$}
   \end{bprooftree}
