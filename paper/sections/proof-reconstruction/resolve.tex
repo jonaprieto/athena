@@ -62,8 +62,8 @@ the proof-reconstruction. We opted to work as far as possible with right-associa
   &\hspace{.495mm}\rm{build}_{∨} : \Prop → \Prop → \Prop\\
   &\begin{array}{llll}
     \rm{build}_{∨}&ψ~ψ &= ψ\\
-    \rm{build}_{∨}&φ~(ψ₁ ∨ ψ₂)&=ψ &\text{ if }\rm{build}_{∨}~φ~ψ_{1} ≡ ψ_{1}\\
-    \rm{build}_{∨}&φ~(ψ₁ ∨ ψ₂)&=ψ &\text{ if }\rm{build}_{∨}~φ~ψ_{2} ≡ ψ_{2}\\
+    \rm{build}_{∨}&φ~(ψ₁ ∨ ψ₂)&=ψ &\text{ if } ψ_{1} ≡ \rm{build}_{∨}~φ~ψ_{1}\\
+    \rm{build}_{∨}&φ~(ψ₁ ∨ ψ₂)&=ψ &\text{ if } ψ_{2} ≡\rm{build}_{∨}~φ~ψ_{2}\\
     \rm{build}_{∨}&φ~ψ&=φ&\text{ otherwise.}
    \end{array}
   \end{aligned}
@@ -138,9 +138,9 @@ If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \rm{sbuild}_{∨}~φ~ψ$, where,
 \label{eq:strong-build-or}
  \begin{aligned}
      &\hspace{.495mm}\rm{sbuild}_{∨} : \Prop → \Prop → \Prop\\
-    &\begin{array}{llll}
-    \rm{sbuild}_{∨}&(φ₁ ∨ φ₂)~ψ &=\ffactor(\rm{build}_{∨}~φ₁~ψ ∨ \rm{build}_{∨}~φ₂~ψ)&\\
-    \rm{build}_{∨}&φ~ψ &= \rm{build}_{∨}~φ~ψ& \text{ otherwise.}
+    &\begin{array}{lll}
+    \rm{sbuild}_{∨}&(φ₁ ∨ φ₂)~ψ &=\ffactor(\rm{build}_{∨}~φ₁~ψ ∨ \rm{build}_{∨}~φ₂~ψ)\\
+    \rm{build}_{∨}&φ~ψ &= \rm{build}_{∨}~φ~ψ
      \end{array}
 \end{aligned}
 \end{equation}
@@ -220,7 +220,7 @@ for disjunctions, but instead, we treat only with conjunctive normal forms.
         \begin{cases}
           φ, &\text{ if }φ ≡ ψ\\
           ψ₁ ∧ ψ₂, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\text{, }ψ₁ ≡ \freorder_{∧}~φ~ψ₁ \\
-                  &\text{and }ψ₂ ≡ \freorder_{∧}~φ~ψ₂\\
+                  &\text{and } ψ₂ ≡ \freorder_{∧}~φ~ψ₂\\
           φ,       &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\\
           \fconjunct~φ~ψ, &\text{ otherwise.}
         \end{cases}
@@ -228,45 +228,42 @@ for disjunctions, but instead, we treat only with conjunctive normal forms.
   \end{align*}
 \end{mainlemma}
 
-\begin{definition}[conjunct$_{\boldsymbol{∨}}$]
-  \label{eq:conjunct-or-definition}
-\begin{align*}
+\begin{mainlemma}
+  \label{lem:conjunct-or}
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fconjunct_{∨}~φ~ψ$, where, 
+  \begin{equation*}
+\label{eq:conjunct-or-definition}
   \begin{split}
     &\fconjunct_{∨} : \Prop → \Prop \to \Prop\\
     &\fconjunct_{∨}~φ~ψ =
     \begin{cases}
       ψ, &\text{ if }φ ≡ ψ\\
-      ψ, &\text{ if }\freorder_{∨}~φ~ψ ≡ ψ\\
-      ψ, &\text{ if }ψ ≡ ψ₁ ∧ ψ₂,\ \fconjunct_{∨}~φ~ψ₁ ≡ ψ₁,\\
-        &\text{and } \freorder_{∨}~φ~ψ₂ ≡ ψ₂\\
-      ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ \fconjunct_{∨}~φ₁~ψ ≡ ψ\\
-      ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ \fconjunct_{∨}~φ₂~ψ ≡ ψ\\
+      ψ, &\text{ if } ψ ≡ \freorder_{∨}~φ~ψ\\
+      ψ, &\text{ if }ψ ≡ ψ₁ ∧ ψ₂,\ ψ₁ ≡ \fconjunct_{∨}~φ~ψ₁,\\
+        &\text{and } ψ₂ ≡ \freorder_{∨}~φ~ψ₂\\
+      ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ ψ ≡ \fconjunct_{∨}~φ₁~ψ \\
+      ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ ψ ≡ \fconjunct_{∨}~φ₂~ψ \\
       φ, &\text{ otherwise.}
     \end{cases}
   \end{split}
-  \end{align*}
-\end{definition}
-
-\begin{mainlemma}
-  \label{lem:conjunct-or}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fconjunct_{∨}~φ~ψ$.
+  \end{equation*}
 \end{mainlemma}
 
 
 
 \begin{mainlemma}
   \label{lem:reorder-and-or}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧∨}~φ~ψ$, where
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧∨}~φ~ψ$, where,
    \begin{align*}
       \begin{split}
       &\freorder_{∧∨} : \Prop \to \Prop \to \Prop\\
-      &\freorder_{∧∨}~φ~ψ~=
+      &\freorder_{∧∨}~φ~ψ=
         \begin{cases}
-          ψ, &\text{ if } φ≡ψ\\
-          ψ, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂,\ ψ₁ ≡ \freorder_{∧∨}~φ~ψ₁~\\
-             &\text{and } ψ₂ ≡ \freorder_{∧∨}~φ~ψ₂~\\
-          φ, &\text{ if }ψ ≡ ψ₁ ∧ ψ₂\\
-          \fconjunct_{∨}~φ~ψ~ &\text{ otherwise.}
+          ψ, &\text{ if } φ ≡ ψ\\
+          ψ, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂,\ ψ₁ ≡ \freorder_{∧∨}~φ~ψ₁\\
+             &\text{and } ψ₂ ≡ \freorder_{∧∨}~φ~ψ₂\\
+          φ, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\\
+          \fconjunct_{∨}~φ~ψ &\text{ otherwise.}
         \end{cases}
       \end{split}
   \end{align*}
