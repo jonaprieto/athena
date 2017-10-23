@@ -246,10 +246,6 @@ using Lemma~\ref{lem:canon-and}.
 \end{bprooftree}
 \end{equation*}
 
-% The functions defined above remove all kind of redundancies but they were
-% defined to act in a certain kind of formula, \ie a disjunction or a
-% conjunction. To remove all kind of redundancies listed above we defined
-
 \begin{mainlemma}
   \label{lem:canon-and}
   If $Γ ⟝ φ$ then $Γ ⟝ \fcanon_{∧}~φ$, where,
@@ -263,9 +259,9 @@ using Lemma~\ref{lem:canon-and}.
         \fcanon_{∧} &(⊥ ∧ φ₂)  &= ⊥  \\
         \fcanon_{∧} &(φ₁ ∧ ⊥)  &= ⊥  \\
         \fcanon_{∧} &(φ₁ ∧ φ₂) &= \frm_∧(\rm{ndisj}_∧(φ₁ ∧ φ₂)) \\
-        \fcanon_{∧} &φ         &= φ.
-       \end{array}\\[2mm]
-  \text{and }\\[2mm]
+        \fcanon_{∧} &φ         &= φ
+       \end{array}\\
+  \text{and }\\
     &\hspace{.495mm}\rm{ndisj}_{∧} : \NProp \to \NProp\\
     &\begin{array}{lll}
       \rm{ndisj}_{∧}&(¬ φ₁ ∧ φ₂) &=
@@ -284,10 +280,9 @@ using Lemma~\ref{lem:canon-and}.
      \end{array}
     \end{aligned}
   \end{equation*}
-
 \end{mainlemma}
 
-Now, we can translate formulas from \Prop to \NProp by defining \fnnfp,
+Now, we can translate formulas from \Prop to \NProp by defining $\fnnfp$,
 the negative normal form function. Its definition is based on the
 \Metis source code to normalize formulas.
 To define such a function we follow the same idea to
@@ -296,13 +291,6 @@ Their $\fnnf$ function translates formulas to their negative normal form.
 In the reference, the authors avoid a termination problem with a similar
 function by using the polarity of the formula as an additional argument of
 the function.
-
-Therefore, we define the \abbre{Polarity} type with
-two constructors: $⊕$ to denote positive polarity, and $⊖$ to denote
-negative polarity of a formula. The formula polarity was not
-relevant in the following description since we found using the $⊕$ polarity to
-call \fpolarity function for the first time was enough to get
-the normalized normal form for propositions.
 
 \begin{equation}
 \label{eq:nnf-zero}
@@ -325,6 +313,17 @@ the normalized normal form for propositions.
   \end{aligned}
 \end{equation}
 
+We define the \abbre{Polarity} type with
+two constructors: $⊕$ to denote positive polarity, and $⊖$ to denote
+negative polarity of a formula.
+
+\begin{myremark}
+The formula polarity was not
+relevant in the following description since we found using the $⊕$ polarity to
+call \fpolarity function for the first time was enough to get
+the normalized normal form for propositions.
+\end{myremark}
+
 \begin{mainlemma}
   \label{lem:lem-nnf}
   If $Γ ⊢ φ$ then $Γ ⟝ \fnnf~φ$ where,
@@ -336,22 +335,7 @@ the normalized normal form for propositions.
   \end{align*}
 \end{mainlemma}
 
-\begin{mainlemma}
-  \label{lem:dist-or}
-  $Γ ⟝ φ$ then $Γ ⟝ \fdist_{∨}~φ$, where,
-  \begin{equation*}
-  \begin{aligned}
-  &\hspace{.495mm}\fdist_{∨} : \NProp \to \NProp\\
-  &\begin{array}{lll}
-    \fdist_{∨}&((φ₁ ∧ φ₂) ∨ φ₃) &= \fdist_{∨}(φ₁ ∨ φ₂) ∧ \fdist_{∨}(φ₂ ∨ φ₃)\\
-    \fdist_{∨}&(φ₁ ∨ (φ₂ ∧ φ₃)) &= \fdist_{∨}(φ₁ ∨ φ₂) ∧ \fdist_{∨}(φ₁ ∨ φ₃)\\
-    \fdist_{∨}&φ &= φ
-    \end{array}
-  \end{aligned}
-  \end{equation*}
-\end{mainlemma}
-
-AGREGAR TEXTO
+Now, to convert a formula to its conjunctive normal form, in Lemma~\ref{lem:lem-dist} we apply the appropriate distribution functions to the normalized negative formula given by $\fnnf$ function.
 
 \begin{mainlemma}
   \label{lem:lem-dist}
@@ -363,7 +347,14 @@ AGREGAR TEXTO
     \fdist &(φ₁ ∧ φ₂) &= \fdist~φ₁ ∧ \fdist~φ₂\\
     \fdist &(φ₁ ∨ φ₂) &= \fdist_{∨}~(\fdist~φ₁ ∨ \fdist~φ₂)\\
     \fdist &φ         &= φ
-   \end{array}
+   \end{array}\\
+  \text{and}\\
+  &\hspace{.495mm}\fdist_{∨} : \NProp \to \NProp\\
+  &\begin{array}{lll}
+    \fdist_{∨}&((φ₁ ∧ φ₂) ∨ φ₃) &= \fdist_{∨}(φ₁ ∨ φ₂) ∧ \fdist_{∨}(φ₂ ∨ φ₃)\\
+    \fdist_{∨}&(φ₁ ∨ (φ₂ ∧ φ₃)) &= \fdist_{∨}(φ₁ ∨ φ₂) ∧ \fdist_{∨}(φ₁ ∨ φ₃)\\
+    \fdist_{∨}&φ &= φ.
+    \end{array}
    \end{aligned}
   \end{equation*}
 \end{mainlemma}
@@ -381,14 +372,15 @@ AGREGAR TEXTO
     \UnaryInfC{$Γ, φ_{i} ⊢ \fdist_{∨}(\fdist~φ₁ ∨ \fdist~φ₂)$}
     \end{bprooftree}
 \end{equation*}
+
 Then, by using the ∨-elim rule in the last derivation above, we
 derive $Γ, φ₁ ∨ φ₂ ⟝ \fdist_{∨}(\fdist~φ₁ ∨ \fdist~φ₂)$ and the lemma
 follows.
 \end{proof}
 
-To convert normalized propositions to classical propositions, we
-make the following definition, completing the translation between
-these two types.
+We complete the translation between \Prop and \NProp types by
+defining the $\fform$ function in (\ref{eq:form}) to get a proposition from
+its normalized proposition.
 
 \begin{equation}
 \label{eq:form}
