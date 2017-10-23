@@ -11,10 +11,12 @@ transverses a list of previous derivations by applying different theorems
 syllogism}) to get a contradiction in the first place, or a smaller
 convenient formula.
 
-To emulate this rule, we observe based on the analysis of different
-cases in \TSTP derivation that simplify can be modeled by a binary function.
-As we see in~(\ref{eq:simplify-1}), if \fsimplify can get a falsium
-from the input derivations, it derives such derivation. If the expected conclusion is $\top$, it derives $\top$. Otherwise, \fsimplify performs an analysis by cases in~(\ref{eq:simplify-2}).
+We observe based on the analysis of different
+cases in \TSTP derivation that \simplify can be modeled by a binary function.
+As we see in~(\ref{eq:simplify-1}), if \fsimplify gets ⊥
+from its input derivations, it derives ⊥, and the same occurs with ⊤.
+Otherwise, in~(\ref{eq:simplify-2}) \fsimplify performs an analysis by cases
+to determine which theorem applies.
 
  \begin{equation}
   \label{eq:simplify-1}
@@ -58,7 +60,7 @@ else $Γ ⊢ \fsimplify~φ₁~φ₂~ψ$.
 \end{mainth}
 
 
-\begin{remark}
+\begin{myremark}
 Besides the fact that $\List\ \Prop \to \Prop$ is the type that coincides
 with the \simplify rule in \TSTP derivations, we choose a different
 option. In the translation from \TSTP to \Agda, we take the list of
@@ -66,12 +68,9 @@ derivations and use a classical left folding ($\rm{foldl}$) with
 $\fsimplify$ function over the list of $φ₁, φ₂, \cdots, φₙ$
 that avoids us to define a new sequent type to
 support \List \Prop type in the conclusion side.
-\end{remark}
+\end{myremark}
 
-
-
-
-\begin{example}
+\begin{myexample}
 Let us review the following \TSTP excerpt where \simplify was used two times.
 
 \begin{verbatim}
@@ -84,14 +83,16 @@ fof(norm6, $false, inf(simplify, [norm1, norm4, norm5])).
 \end{verbatim}
 
 \begin{enumerate}
-\item When \simplify derives \verb!(~ g)! from \verb!norm2! and \verb!norm3! derivations, the fourth case in~(\ref{eq:simplify-2}) is applied.
+\item \simplify derives \verb!(~ g)! in \verb!norm2!
+from \verb!norm2! and \verb!norm3! derivations using the fourth case in~(\ref{eq:simplify-2}).
 $$\fsimplify~(\neg g \vee q)~(\neg q) (\neg g) = \neg g.$$
 \begin{verbatim}
 fof(norm2, ~ g | q, inf(conjunct, [norm0])).
 fof(norm3, ~ q,     inf(conjunct, [norm0])).
 fof(norm4, ~ g,     inf(simplify, [norm2, norm3])).
 \end{verbatim}
-\item The other case of \simplify implemented by the binary \fsimplify function can be seen in the following tree.
+\item To derive \verb!$false! in \verb!norm6! using
+Theorem~\ref{thm:simplify} we get the following proof.
 
 \begin{equation*}
 \begin{bprooftree}
@@ -112,7 +113,7 @@ fof(norm5, ~ k, inf(conjunct, [norm0])).
 fof(norm6, $false, inf(simplify, [norm1, norm4, norm5])).
 \end{verbatim}
 \end{enumerate}
-\end{example}
+\end{myexample}
 
 
 % subsubsection simplify (end)

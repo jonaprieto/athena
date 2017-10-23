@@ -48,11 +48,11 @@ data PropFormula : Set where
   ¬_ : (φ : PropFormula) → PropFormula
 \end{verbatim}
 
-\begin{remark}
+\begin{myremark}
 The underscores in the above definition denote holes for a function of arity equivalent to the number of such holes.
-\end{remark}
+\end{myremark}
 
-\begin{remark}
+\begin{myremark}
 The type notation
 \begin{verbatim}
 _⇔_ : (φ ψ : PropFormula) → PropFormula
@@ -61,9 +61,9 @@ is a syntax sugar for the type
 \begin{verbatim}
 PropFormula → PropFormula → PropFormula.
 \end{verbatim}
-\end{remark}
+\end{myremark}
 
-\begin{example}
+\begin{myexample}
 \hspace*{5cm}\\[3mm]
 \begin{verbatim}
 r : PropFormula
@@ -74,6 +74,6 @@ r = Var (# 2)
 φ : PropFormula
 φ = (¬ r ∨ p) ∧ (¬ r ∨ q)
 \end{verbatim}
-\end{example}
+\end{myexample}
 
 \end{document}

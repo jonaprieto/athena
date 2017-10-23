@@ -47,35 +47,34 @@ rules for propositional logic.
 \subsection{Input language}
 \label{ssec:input-language}
 
-The \TPTP language --which includes the first-order
-form (denoted by \name{fof}) and clause normal form (denoted by
-\name{cnf}) formats~\cite{sutcliffe2009,Sicard-Ramirez2016} -- is the
-input language to encode problems used by \Metis.
+The \TPTP language is the input language to encode problems used by \Metis.
+It includes the first-order form (denoted by \name{fof}) and clause normal form (denoted by \name{cnf}) formats~\cite{sutcliffe2009,Sicard-Ramirez2016}.
 The \TPTP syntax describes a well-defined grammar to handle annotated
-formulas with the following form.
+formulas with the following form:
 
 \begin{verbatim}
 language(name, role, formula).
 \end{verbatim}
 
-The \name{language} can be \name{fof} or \name{cnf}. The \name{name}
+Where the \name{language} can be \name{fof} or \name{cnf}. The \name{name}
 serves to identify the formula within the problem. Each formula
 assumes a \name{role}, this could be an \name{axiom},
 \name{conjecture}, \name{definition}, \name{plain} or an \name{hypothesis}.
-The formulas include the binary connectives
-(\verb!&!, \verb!|!, \verb!=>!, \verb!<=>!), negation (\verb!~!),
-and the constants \verb!$true!, and \verb!$false!.
+The formulas include the constants \verb!$true!, negation unary operator (\verb!~!), and the binary connectives (\verb!&!, \verb!|!, \verb!=>!, \verb!<=>!),
 
+\begin{myexample}
 For instance, let us express the problem
 $p\, \vdash \neg (p \wedge \neg p) ∨ (q \wedge \neg q)$
 in \TPTP syntax. We begin by declaring the $p$ axiom using the \verb!axiom!
 keyword. Later, we include the expected conclusion using the
 \verb!conjecture! keyword.
 
-\begin{verbatim}
-fof(h, axiom, p).
-fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
-\end{verbatim}
+  \begin{verbatim}
+  fof(h, axiom, p).
+  fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
+  \end{verbatim}
+
+\end{myexample}
 
 \subsection{Output language}
 \label{ssec:output-language}
@@ -91,8 +90,8 @@ such a derivation is a list of annotated formulas with the following form.
 language(name, role, formula, source [,useful info]).
 \end{verbatim}
 
-The \name{source} field is an inference record with the following
-pattern.
+Where the \name{source} field is an inference record with the following
+pattern:
 
 \begin{verbatim}
 inference(rule, useful info, parents).
@@ -102,21 +101,49 @@ The \name{rule} in the line above stands for the inference name;
 the other fields are supporting arguments or useful information to
 apply the reasoning step, and list the parents nodes.
 
+\begin{myexample}
+
 \begin{verbatim}
 fof(subgoal_0, plain, p, inference(strip, [], [goal])).
 \end{verbatim}
 
 In the script above, \strip is for example the name of the inference.
-It has no arguments and derives from one parent node named goal. The
+It has no arguments and derives from one parent node named  \verb!goal!. The
 result of this inference when it applies to the \verb!goal! formula is
 \verb!p!.
+
+\end{myexample}
+
+We adopt a customized \TSTP syntax to keep as short as possible the \Metis derivations for increasing the readability in this paper.
+
+\begin{myexample}
+
+Let us consider the following \TSTP derivation using
+the customized \TSTP syntax. Note that we remove for example
+empty fields in the inference information, the \verb!role! field if it is
+\verb!plain! and shorten names as long as possible.
+
+\begin{verbatim}
+fof(premise, axiom, p).
+fof(goal, conjecture, p).
+fof(sg0, p, inf(strip, [goal])).
+fof(neg0, ~ p, inf(negate, [sg0])).
+fof(norm0, ∼ p, inf(canonicalize, [neg0])).
+fof(norm1, p, inf(canonicalize, [premise])).
+fof(norm2, $false, inf(simplify, [norm0, norm1]))
+cnf(refute0, $false, inf(canonicalize, [norm2])).
+\end{verbatim}
+
+\end{myexample}
 
 % -------------------------------------------------------------------
 
 \subsection{Inference rules}
 \label{ssec:metis-inferences-rules}
 
-% \TSTP derivations replied by \Metis use other rules. They are
+
+
+% \TSTP derivations replied by \Metis use the following rules:
 % \canonicalize, \clausify, \conjunct, \simplify, \negate, and \strip.
 
 % \Metis looks for a refutation to prove \verb!fof! problems.
@@ -138,36 +165,57 @@ result of this inference when it applies to the \verb!goal! formula is
 % appears by the binary rule, \resolve, the version in \Metis of the resolution
 % theorem. For a more detailed description of this rules see Section~\ref{sec:proof-reconstruction}.
 
+
+\begin{table}[!ht]
+\label{tab:agda-metis-table}
+\caption{Presentation of \Metis inference rules in type theory.}
+  \begin{center}
+  {\renewcommand{\arraystretch}{1.6}%
+    \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}|}
+    \hline
+    \textbf{\Metis rule} & \textbf{Purpose} &\textbf{Theorem}\\ \hline
+    \texttt{canonicalize}
+      &Normalization of the formula
+      &Theorem~\ref{thm:canonicalize}
+    \\
+    \texttt{clausify}
+      &Performs clausification
+      &Theorem~\ref{thm:clausify}
+    \\
+    \hyperlink{atp-conjunct}{\texttt{conjunct}}
+      &Takes a formula from a conjunction
+      &Theorem~\ref{thm:conjunct}
+    \\
+    % \texttt{negate}
+    %   &Negate the formula
+    %   &Theorem~\ref{thm:negate}
+    % \\
+    \texttt{resolve}
+      &A general form of the resolution theorem
+      &Theorem~\ref{thm:resolve}
+    \\
+    \texttt{simplify}
+      &Simplify definitions and theorems
+      &Theorem~\ref{thm:simplify}
+    \\
+    \texttt{strip}
+      &Strip a goal into subgoals
+      &Theorem~\ref{thm:strip}
+    \\[1ex]
+    \hline
+    \end{tabular}}
+  \end{center}
+\end{table}
+
 \subsection{Proofs}
 \label{ssec:metis-proofs}
 
-\begin{figure}
-\begin{verbatim}
-fof(premise, axiom, p).
-fof(goal, conjecture, p).
-fof(subgoal_0, plain, p, inf(strip, [], [goal])).
-fof(negate_0_0, plain, ~ p, inf(negate, [], [subgoal_0])).
-fof(normalize_0_0, plain, ∼ p,
-  inf(canonicalize, [], [negate_0_0])).
-fof(normalize_0_1, plain, p,
-  inf(canonicalize, [], [premise])).
-fof(normalize_0_2, plain, $false,
-  inf(simplify, [], [normalize_0_0, normalize_0_1]))
-cnf(refute_0_0, plain, $false,
-  inf(canonicalize, [], [normalize_0_2])).
-\end{verbatim}
-\caption{\texttt{Metis}' \texttt{TSTP} derivation for the
-problem $p\vdash p$.}
-\label{fig:metis-proof-tstp}
-\end{figure}
-
-The output of a proof delivered by \Metis encodes a natural
-deduction proof (see a complete proof in Fig.~\ref{fig:metis-proof-tstp}.
-The deduction system uses six inference rules \cite{hurd2003first}.
+A proof delivered by \Metis encodes a natural
+deduction proof (see a complete proof in Fig.~\ref{fig:metis-proof-tstp}).
 With these inference rules as the only valid deduction steps, \Metis
-attempts to prove conjectures by refutation (e.g.,
-\emph{falsium} in the last conclusion in the \TSTP derivation
-Fig.~\ref{fig:metis-proof-tstp}).
+attempts to prove conjectures by refutation (\eg,
+\emph{falsium} in the root of the \TSTP derivation
+in Fig.~\ref{fig:metis-proof-tstp}).
 
 These proofs are directed acyclic graphs, trees of refutations
 (see the proof tree of the \TSTP derivation showed above in
@@ -197,33 +245,8 @@ $⊥$, since \Metis delivers proofs by refutation.
     \RightLabel{canonicalize}
     \UnaryInfC{$⊥$}
   \end{bprooftree}
-  \caption{Proof tree for the \Metis derivation in
-  Fig.~\ref{fig:metis-proof-tstp}}.
+  \caption{A \Metis proof tree.}
   \label{fig:metis-example}
 \end{figure}
-
-\begin{remark}
-In order to keep as short as possible the \Metis derivations
-for increasing the readability, we have simplified the \TSTP
-syntax and \Metis derivations (see a simplification in Fig.~\ref{fig:simplified-tstp}).
-For instance in \TSTP derivations, we use \verb!inf! instead of \verb!inference!. If the role of the formula is \verb!plain!, we omit it.
-We shorten names generated automatically by \Metis, \eg,
-\verb!sg0! instead of \verb!subgoal_0! or \verb!norm0_0!
-insead of \verb!normalize_0_0!.
-Finally, if the inference rule does not need arguments except its parent nodes, we remove the field for useful information.
-A simplified version of the \texttt{TSTP} derivation of Fig.~\ref{fig:metis-proof-tstp} is the following.
-
-\begin{verbatim}
-fof(premise, axiom, p).
-fof(goal, conjecture, p).
-fof(sg0, p, inf(strip, [goal])).
-fof(neg0, ~ p, inf(negate, [sg0])).
-fof(norm0, ∼ p, inf(canonicalize, [neg0])).
-fof(norm1, p, inf(canonicalize, [premise])).
-fof(norm2, $false, inf(simplify, [norm0, norm1]))
-cnf(refute0, $false, inf(canonicalize, [norm2])).
-\end{verbatim}
-
-\end{remark}
 
 \end{document}

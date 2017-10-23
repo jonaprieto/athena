@@ -49,12 +49,12 @@ fof(norm1, (~ p | q) & (~ p | r), inf(clausify, [norm0])).
 If $φ ≡ ψ$, $Γ ⊢ \fclausify~φ~ψ$ normalizes to $Γ ⊢ ψ$. The conclusion follows by applying the $\fsubst$ lemma. Otherwise, we use Theorem~\ref{lem:reorder-and-or} and Theorem~\ref{lem:cnf}.
 \end{proof}
 
-\begin{remark}
+\begin{myremark}
 The \clausify rule is often preceded by \canonicalize.
 Both rules perform \emph{Clausification} that introduces
 into the problem axioms and definitions in the domain of the solution.
 The clausification algorithms is mainly described on paper by
 \citeauthor{Sutcliffe1996}~\cite{Sutcliffe1996}.
-\end{remark}
+\end{myremark}
 
 \end{document}

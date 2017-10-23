@@ -7,8 +7,9 @@
 The \conjunct rule extracts from a
 conjunction one of its conjuncts. This rule is a generalization of the
 projection rules for the conjunction connective as the
-following \TSTP excerpt shows. In the first formula \verb!p1!, \verb!p & q & (r | ~ p)!, is a left-associative conjunction. \conjunct extracts \verb!q! from the \verb!p1! conjunction by using twice left projection (∧-proj₁).
+following \TSTP excerpt shows.
 
+\begin{example}
 
 \begin{verbatim}
 fof(p1, p & q & (r | ~ p), inf(canonicalize, [x])).
@@ -16,6 +17,12 @@ fof(p2, q, inf(conjunct, [p1])).
 fof(p3, (r | ~ p), inf(conjunct, [p1])).
 \end{verbatim}
 
+In the first formula \verb!p1!, we find the left-associative conjunction
+\verb!p & q & (r | ~ p)!.
+\conjunct extracts \verb!q! from the \verb!p1! using a left
+projection (∧-proj₁) follow by a right projection ∧-proj₂.
+\conjunct extracts \verb!r | ~ p! by using ∧-proj₁ to \verb!p1!.
+\end{example}
 
 \begin{mainth}
   \label{thm:conjunct}
@@ -37,7 +44,7 @@ fof(p3, (r | ~ p), inf(conjunct, [p1])).
   \end{equation*}
 \end{mainth}
 
-\begin{proof}\hspace{2cm}\\
+\begin{proof}\hspace{10cm}
 \begin{itemize}
 \item[$\bullet$] Case $φ ≡ ψ$. $Γ ⊢ \fconjunct~φ~ψ$ normalizes to $Γ ⊢ ψ$.
 Then, we get the desire conclusion by applying the $\fsubst$ lemma.

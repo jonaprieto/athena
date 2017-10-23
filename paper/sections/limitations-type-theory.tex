@@ -1,0 +1,163 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+\section{Limitations of Type Theory}
+\label{sec:limitations-type-theory}
+
+MISSING TEXT
+
+\begin{notation}
+We write the type judgments as $m : \abbre{M}$ to denote
+that $m$ has $\abbre{M}$ type.
+Types are written using small caps.
+We use \Prop for the type of propositions and the dependent type, $Γ ⊢ φ$ for
+theorems where $Γ : \List~\Prop$ and $φ : \Prop$.
+$\abbre{List}$ type is the usual inductive type for lists.
+For syntactical equivalence, we write the equality as $φ ≡ ψ$
+for $φ,~ψ : \Prop$. For this equality, we assume the
+reflexivity, symmetry and transitivity properties.
+\end{notation}
+% ...................................................................
+
+% section section_name (end)
+\subsection{Terminating functions}
+\label{ssec:structural-recursion}
+
+To reconstruct \Metis' inference rules in type theory, we observed that
+transformations performed by some rules are implemented by \emph{general
+recursive} functions.
+Algorithms based on general recursions can not be translated
+directly in type theory since it is not a guarantee they terminate. For that
+reason, we follow the technique described in~\cite{Bertot2004} to avoid
+termination problems by modifying the recursive functions to be
+\emph{structural recursive}.
+% (see \cite{Coquand1992,Abel2002,Bove2005} for more details).
+
+This paper adopts the notion of \emph{structurally smaller} from
+\citeauthor{Abel2002}~\cite{Abel2002} to say, a recursive function is
+structurally recursive if it calls itself with only
+structurally smaller arguments.
+
+General recursive functions can be translated into structurally recursive
+functions by using for instance, the \emph{Bounded Recursion} technique
+presented in~\cite{Bertot2004}. For a yet another methods, we refer
+the reader to \cite{Coquand1992,Abel2002,Bove2005}.
+The bounded technique defines a new structural recursive function based on
+the general recursive function by adding an argument to the function.
+The new argument is the \emph{bound}, a natural number given by the
+function complexity. In other words, the added argument will represent
+the number of times the function needs to call itself to get the
+expected outcome~\cite{Bertot2004}.
+
+\begin{notation}
+The type of natural numbers is called \Nat, and it is defined as
+usual, where \zero and \suc are its data constructors. We use names
+and symbols of the arithmetic operations as usual.
+We include syntax sugar for $\zero$, $\suc$, $\suc(\zero)$,
+$\cdots$, with the decimal representation: $0$, $1$, $2$, $\cdots$
+as well.
+\end{notation}
+
+Therefore, one approach to guarantee a structural recursive function based on
+a general recursive function $\rm{f}: \Prop \to \Prop$ is to formulate a new function $\rm{f}^{*} : \Prop \to \Nat \to \Prop$ where all recursive calls are done on smaller arguments.
+
+\begin{myexample}
+\label{ex:structural-recursion}
+
+Let us consider the following example to exhibit the bounded technique
+mentioned above for the \fuh function. this function is used for reconstructing
+the \Metis \strip inference rule in Section~\ref{sssec:strip-a-goal}.
+
+\begin{equation}
+\label{eq:uh-definition}
+\begin{aligned}
+&\hspace{.495mm}\fuh_{0} : \Prop → \Prop\\
+&\begin{array}{lll}
+  \fuh_{0} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{0}~((φ₁ ∧ φ₂) ⇒ φ₃)\\
+  \fuh_{0} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &= \fuh_{0}~(φ₁ ⇒ φ₂) ∧ \fuh_{0}~(φ₁ ⇒ φ₃)\\
+  \fuh_{0} &φ                &= φ
+\end{array}
+\end{aligned}
+\end{equation}
+
+In (\ref{eq:uh-definition}), the first two equation show
+call on arguments no structurally smaller.
+For instance, on the first call, $φ ≡ (φ₁ ∧ φ₂) ⇒ φ₃$, the recursion
+calls on the  $φ₁ ⇒ (φ₂ ⇒ φ₃)$ argument.
+But this argument is not a subformula for φ.
+Therefore, one way to translate $\fuh_{0}$ in (\ref{eq:uh-definition}) to type
+theory is to define the a new function using the bounded technique.
+
+\begin{equation}
+\label{eq:uh-structured}
+\begin{aligned}
+&\hspace{.495mm} \fuh_{1} : \Prop → \Nat \to \Prop\\
+&\begin{array}{llll}
+\fuh_{1} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &(\suc~n) &= \fuh_{1}~((φ₁ ∧ φ₂) ⇒ φ₃)~n\\
+\fuh_{1} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &(\suc~n) &= \fuh_{1}~(φ₁ ⇒ φ₂)~n ∧ \fuh_{1}~(φ₁ ⇒ φ₃)~n\\
+\fuh_{1} &φ &\xspace\text{n} &= φ
+\end{array}
+\end{aligned}
+\end{equation}
+
+As we mentioned above, the natural number in the second argument of
+the function stands for a complexity measure of it.
+
+Recall the \emph{complexity measure} defined in \cite{Agudelo-Agudelo2017}
+and presented in \cite{VanDalen1994} as \emph{the rank for a
+proposition}, is a function $\Prop \to \Nat$ that assigns a natural
+number for a proposition $φ$ like the following $\frank$ function.
+The symbols $c_{¬}$ and $c_{\square}$ are non-negative integer
+numbers called the complexity of the respective connective.
+
+
+\begin{equation}
+% \label{eq:rank-definition}
+\begin{aligned}
+&\hspace{.495mm}\frank : \Prop → \Nat\\
+&\begin{array}{llll}
+\frank~(¬~φ)           &= \frank~φ₁~+~c_{¬}\\
+\frank~(φ₁~\square~φ₂) &= \fmax~(\frank~φ₁)~(\frank~φ₂) + c_{\square}\\
+\frank~φ               &= 0
+\end{array}
+\end{aligned}
+\end{equation}
+
+We define the $\fuh_{cm}: \Prop → \Nat$ function as
+the complexity measure for the $\fuh_0$ function.
+
+\begin{equation*}
+  \begin{aligned}
+    &\hspace{.495mm}\fuh_{cm} : \Prop → \Nat\\
+    &\begin{array}{llll}
+    \fuh_{cm}~(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{cm}~φ₃ + 2\\
+    \fuh_{cm}~(φ₁ ⇒ (φ₂ ∧ φ₃)) &= \fmax~(\fuh_{cm}~φ₂)~(\fuh_{cm}~φ₃) + 1\\
+    \fuh_{cm}~φ                &= 0
+    \end{array}
+  \end{aligned}
+\end{equation*}
+
+Following the technique mentioned above, we get the structural recursive definition of $\fuh_{0}$ function presented in ~(\ref{eq:uh}).
+
+\begin{align}
+  \label{eq:uh}
+  \begin{split}
+  &\fuh : \Prop → \Prop\\
+  &\fuh~φ~ = \fuh_{1}~φ~(\fuh_{cm}~φ).
+  \end{split}
+\end{align}
+
+\end{myexample}
+
+For a more complete treatment of general recursion, and how to
+define well-founded and well-structural recursive functions, we refer
+the reader to \citeauthor{Bove2005}~\cite{Bove2005}.
+
+\subsection{Intuitionistic logic}
+\label{ssec:intuitionistic-logc}
+
+
+...
+
+
+\end{document}

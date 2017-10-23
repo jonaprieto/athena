@@ -8,8 +8,10 @@ To prove a goal, \Metis splits the goal into
 disjoint cases. This process produces a list of new subgoals, the
 conjunction of these subgoals implies the goal. Then, a proof of the
 goal becomes, in smaller proofs, one refutation for each subgoal.
-These subgoals are introduced in the \TSTP derivation with the \strip
-inference rule as we show in the following excerpt.
+
+\begin{myexample}
+The subgoals mentioned above are introduced in the \TSTP derivation
+with the \strip inference rule.
 
 \begin{verbatim}
 fof(goal, conjecture, (p & r) & q)).
@@ -18,9 +20,21 @@ fof(sg1, p => r, inf(strip, [goal])).
 fof(sg2, (p & r) => q, inf(strip, [goal])).
 \end{verbatim}
 
-To prove the correctness of the process mentioned above,
-we need to establish some lemmas before introduce our main goal of this
-part, Theorem~\ref{thm:strip}.
+In the script above, the conjecture $(p ∧ r) ∧ q$ is stripped in
+tree subgoals: $p$, $p ⇒ r$ and $(p ∧ r) ⇒ q$.
+
+\begin{equation}
+\label{eq:strip-example}
+(p ∧ (p ⇒ r) ∧ ((p ∧ r) ⇒ q)) ⇒ ((p ∧ r) ∧ q)
+\end{equation}
+
+In (\ref{eq:strip-example}), by proving each subgoal from left to right in the right conjunction,
+we get a proof for the conjecture by using the elimination of the implication .
+\end{myexample}
+
+We prove the correctness of the process mentioned above in
+Theorem~\ref{thm:strip}. To show that theorem, we need to prove
+Lemma~\ref{lem:inv-uh-lem} and Lemma~\ref{lem:lem-inv-strip}.
 
 \begin{mainlemma}
   \label{lem:inv-uh-lem}
@@ -33,7 +47,8 @@ If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$.
 The proof is by induction on the cases defined by the outcome of the
 $\fuh_{1}$ function in~(\ref{eq:uh-structured}).
 \begin{itemize}
-  \item If $n = 0$, by definition we conclude $Γ ⊢ φ$.
+  \item If $n = 0$, by definition in~(\ref{eq:uh-structured})
+        we conclude $Γ ⊢ φ$.
   \item If $n = 1$, we apply the following theorem proved in~\cite{AgdaProp},
     \begin{equation*}
     \texttt{∧⇒\rm{-to-}⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).
@@ -49,7 +64,7 @@ $\fuh_{1}$ function in~(\ref{eq:uh-structured}).
   \AxiomC{$Γ ⊢ \fuh_1~(φ₁ ⇒ (φ₂ ⇒ φ₃))~(\suc~n)$}
   \RightLabel{by~(\ref{eq:uh-structured})}
   \UnaryInfC{$Γ ⊢ \fuh_1~((φ₁ ∧ φ₂) ⇒ φ₃)~n$}
-  \RightLabel{by hip.}
+  \RightLabel{by hyp.}
   \UnaryInfC{Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃}
   \RightLabel{∧⇒\rm{-to-}⇒⇒}
   \UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃)}
@@ -66,7 +81,7 @@ $\fuh_{1}$ function in~(\ref{eq:uh-structured}).
     \UnaryInfC{$Γ ⊢ \fuh_1~(φ₁ ⇒ φ₂)~n ∧ \fuh_1~(φ₁ ⇒ φ₃)~n$}
     \RightLabel{∧-proj₁}
     \UnaryInfC{$Γ ⊢ \fuh_1~(φ₁ ⇒ φ₂)~n$}
-    \RightLabel{by hip.}
+    \RightLabel{by hyp.}
     \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$}
   \end{bprooftree}
   }
@@ -80,7 +95,7 @@ $\fuh_{1}$ function in~(\ref{eq:uh-structured}).
     \UnaryInfC{$Γ ⊢ \fuh_1~(φ₁ ⇒ φ₂)~n ∧ \fuh_1~(φ₁ ⇒ φ₃)~n$}
     \RightLabel{∧-proj₂}
     \UnaryInfC{$Γ ⊢ \fuh_1~(φ₁ ⇒ φ₃)~n$}
-    \RightLabel{by hip.}
+    \RightLabel{by hyp.}
     \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₃$}
     \end{bprooftree}
 \end{equation*}
@@ -154,8 +169,8 @@ The function defined above is not a structural recursion function. Therefore, we
 
 \begin{mainlemma}
 \label{lem:lem-inv-strip}
-Let $\text{n} : \Nat$ be the complexity measure of the strip function
-in~(\ref{eq:strip-unfixed}).
+Let $\text{n} : \Nat$ be the complexity measure of the strip function defined
+in~(\ref{eq:strip-fixed}).
 If $Γ ⊢ \fstrip~φ~n$ then $Γ ⊢ φ$.
 \end{mainlemma}
 
@@ -174,7 +189,7 @@ $\bullet$~Case $φ ≡ ¬ ¬ φ₁$.
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
   \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
   \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
-  \RightLabel{by hip.}
+  \RightLabel{by hyp.}
   \UnaryInfC{$Γ ⊢ φ₁$}
   \end{bprooftree}
 \end{equation*}
@@ -192,7 +207,7 @@ introduction rule for conjunction connective, the expected result follows.
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
   \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
   \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
-  \RightLabel{by hip.}
+  \RightLabel{by hyp.}
   \UnaryInfC{$Γ ⊢ φ₁$}
     \end{bprooftree}
 \end{equation*}
@@ -210,7 +225,7 @@ introduction rule for conjunction connective, the expected result follows.
   \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
   \RightLabel{$⇒$-elim}
   \BinaryInfC{$Γ ⊢ \fstrip~φ₂~n$}
-  \RightLabel{by hip.}
+  \RightLabel{by hyp.}
   \UnaryInfC{$Γ ⊢ φ₂$}
   \end{bprooftree}
 \end{equation*}
@@ -230,7 +245,7 @@ result follows.
 \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n)$}
 \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
 \UnaryInfC{$Γ ⊢ \fstrip~¬ φ₁~n$}
-\RightLabel{by hip.}
+\RightLabel{by hyp.}
   \UnaryInfC{$Γ ⊢ ¬φ₁$}
 \end{bprooftree}
 \end{equation*}
@@ -247,13 +262,15 @@ result follows.
   \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \fstrip~¬ φ₂~n$}
   \RightLabel{⇒-elim}
   \BinaryInfC{$Γ ⊢ \fstrip~¬ φ₂~n$}
-  \RightLabel{by hip.}
+  \RightLabel{by hyp.}
   \UnaryInfC{$Γ ⊢ ¬ φ₂$}
   \end{bprooftree}
 \end{equation*}
 \end{proof} % the proof continue...
 
-MISSING TEXT
+The following theorem is convenient to substitute equals by equals in
+a theorem. Recall the equality is symmetric and transitive as well.
+We use such properties without any mention.
 
 \begin{mainlemma}[subst]
   \label{lem:subst}

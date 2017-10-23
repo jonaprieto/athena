@@ -74,12 +74,12 @@ There are redundancies in a formula when some of the following theorems can appl
     \end{bprooftree}
   \]
 
-% \begin{remark}
+% \begin{myremark}
 % Here and below, we assume all formulas to be in right-associative form in
 % the input of the functions. To perform such conversion, we can apply
 % the $\rm{rdisj}$ and $\rm{rconj}$ functions depending on the main connective
 % in~(\ref{eq:rdisj}).
-% \end{remark}
+% \end{myremark}
 \begin{notation}
 In a disjunction, $φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
 if there is some $i = 1, \cdots, n$ such that $ψ ≡ φᵢ$.
@@ -131,7 +131,7 @@ We define $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct~φ~ψ$.
   If $Γ ⟝ φ$ then $Γ ⟝ \frm_{∧}~φ$.
 \end{mainlemma}
 
-\begin{example}
+\begin{myexample}
 \begin{equation*}
   \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∨ φ$}
@@ -145,7 +145,7 @@ We define $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct~φ~ψ$.
   \UnaryInfC{$Γ ⟝ φ$}
   \end{bprooftree}
 \end{equation*}
-\end{example}
+\end{myexample}
 
 Continuing with the rest of tautologies from
 Fig.~\ref{fig:conjunctive-disjunctive-simpl}, we define the
@@ -291,7 +291,7 @@ AGREGAR TEXTO
   If $Γ ⟝ φ$ then $Γ ⟝ \fcanon_{∨}~φ$.
 \end{mainlemma}
 
-% \begin{remark}
+% \begin{myremark}
 % A similar treatment defines the $\fcanon_{⊻} : \NProp \to \NProp$.
 % This function removes redundancies related with the exclusive
 % disjunction connective.
@@ -299,7 +299,7 @@ AGREGAR TEXTO
 % We left out this description for the brevity of this
 % document and refer the interested reader to \cite{AgdaMetis} for
 % more details.
-% \end{remark}
+% \end{myremark}
 
 Now, we can translate formulas from \Prop to \NProp by defining
 the $\fnnfp$ function. This function is based on the $\fnnf$ function
@@ -406,7 +406,7 @@ AGREGAR TEXTO
   \begin{bprooftree}
     \RightLabel{assume}
     \AxiomC{$Γ, φ_{i} ⊢ φ_{i}$}
-    \RightLabel{by hip.}
+    \RightLabel{by hyp.}
     \UnaryInfC{$Γ ⊢ \fdist~φ_{i}$}
     \RightLabel{∨-intro$_{1,2}$}
     \UnaryInfC{$Γ, φ_{i} ⊢ \fdist~φ₁ ∨ \fdist~φ₂$}

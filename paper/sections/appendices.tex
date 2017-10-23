@@ -7,6 +7,37 @@
 \renewcommand{\thesection}{\Alph{section}}%
 % or try \arabic{section}
 
+\begin{figure}
+\begin{verbatim}
+fof(premise, axiom, p).
+fof(goal, conjecture, p).
+fof(subgoal_0, plain, p, inference(strip, [], [goal])).
+fof(negate_0_0, plain, ~ p, inference(negate, [], [subgoal_0])).
+fof(normalize_0_0, plain, ∼ p,
+  inference(canonicalize, [], [negate_0_0])).
+fof(normalize_0_1, plain, p,
+  inference(canonicalize, [], [premise])).
+fof(normalize_0_2, plain, $false,
+  inference(simplify, [], [normalize_0_0, normalize_0_1]))
+cnf(refute_0_0, plain, $false,
+  inference(canonicalize, [], [normalize_0_2])).
+\end{verbatim}
+\caption{\texttt{Metis}' \texttt{TSTP} derivation for the
+problem $p\vdash p$.}
+\label{fig:metis-proof-tstp}
+\end{figure}
+
+\begin{myremark}
+We simplified the \TSTP syntax and \Metis derivations (see a simplification in Fig.~\ref{fig:simplified-tstp}).
+For instance in \TSTP derivations, we use \verb!inf! instead of \verb!inference!. If the role of the formula is \verb!plain!, we omit it.
+We shorten names generated automatically by \Metis, \eg,
+\verb!sg0! instead of \verb!subgoal_0! or \verb!norm0_0!
+insead of \verb!normalize_0_0!.
+Finally, if the inference rule does not need arguments except its parent nodes, we remove the field for useful information.
+A simplified version of the \texttt{TSTP} derivation of Fig.~\ref{fig:metis-proof-tstp} is the following.
+\end{myremark}
+
+
 \section{A Small Example}
 \label{appendix}
 
