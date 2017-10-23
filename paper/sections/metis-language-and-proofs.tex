@@ -76,6 +76,12 @@ keyword. Later, we include the expected conclusion using the
 
 \end{myexample}
 
+\begin{remark}
+We address proof-reconstruction in this paper for refutation proofs.
+We annotate \abbre{CPL} problems using \verb!fof! formulas that
+\Metis converts to \abbre{CNF} clauses to look for a refutation.
+\end{remark}
+
 \subsection{Output language}
 \label{ssec:output-language}
 
@@ -138,13 +144,50 @@ cnf(refute0, $false, inf(canonicalize, [norm2])).
 
 % -------------------------------------------------------------------
 
+\subsection{Proofs}
+\label{ssec:metis-proofs}
+
+A proof delivered by \Metis encodes a natural
+deduction proof.
+With these inference rules as the only valid deduction steps, \Metis
+attempts to prove conjectures by refutation (\eg,
+\emph{falsium} in the root of the \TSTP derivation).
+
+These proofs are directed acyclic graphs, trees of refutations
+Each node stands for an application of an inference rule and the leaves
+in the tree represent formulas in the given problem. Each node is
+labeled with a name of the inference rule (\eg, \canonicalize).
+Each edge links a premise with one conclusion.
+The proof graphs have at their root the conclusion
+$⊥$, since \Metis delivers proofs by refutation.
+
+\begin{figure}[!ht]
+\centering
+  \begin{bprooftree}\tt
+    \AxiomC{}
+    \RightLabel{negate}
+    \UnaryInfC{$\neg p$}
+    \RightLabel{strip}
+    \UnaryInfC{$\neg p$}
+    \AxiomC{}
+    \RightLabel{axiom}
+    \UnaryInfC{$p$}
+    \RightLabel{canonicalize}
+    \UnaryInfC{$p$}
+    \RightLabel{simplify}
+    \BinaryInfC{$⊥$}
+    \RightLabel{canonicalize}
+    \UnaryInfC{$⊥$}
+  \end{bprooftree}
+  \caption{A \Metis proof tree.}
+  \label{fig:metis-example}
+\end{figure}
+
 \subsection{Inference rules}
 \label{ssec:metis-inferences-rules}
 
-AGREGAR EL TEXTO
-
-% \TSTP derivations replied by \Metis use the following rules:
-% \canonicalize, \clausify, \conjunct, \simplify, \negate, and \strip.
+In the following table we present the list of inference rules used
+by \Metis in its \TSTP derivations for propositional logic.
 
 % \Metis looks for a refutation to prove \verb!fof! problems.
 % A \verb!fof! problem contains the conjecture, the \emph{goal}, in the
@@ -206,47 +249,5 @@ AGREGAR EL TEXTO
     \end{tabular}}
   \end{center}
 \end{table}
-
-\subsection{Proofs}
-\label{ssec:metis-proofs}
-
-A proof delivered by \Metis encodes a natural
-deduction proof (see a complete proof in Fig.~\ref{fig:metis-proof-tstp}).
-With these inference rules as the only valid deduction steps, \Metis
-attempts to prove conjectures by refutation (\eg,
-\emph{falsium} in the root of the \TSTP derivation
-in Fig.~\ref{fig:metis-proof-tstp}).
-
-These proofs are directed acyclic graphs, trees of refutations
-(see the proof tree of the \TSTP derivation showed above in
-Fig.~\ref{fig:metis-proof-tstp}).
-Each node stands for an application of an inference rule and the leaves
-in the tree represent formulas in the given problem. Each node is
-labeled with a name of the inference rule (e.g., \canonicalize).
-Each edge links a premise with one conclusion.
-The proof graphs have at their root the conclusion
-$⊥$, since \Metis delivers proofs by refutation.
-
-\begin{figure}[!ht]
-\centering
-  \begin{bprooftree}\tt
-    \AxiomC{}
-    \RightLabel{negate}
-    \UnaryInfC{$\neg p$}
-    \RightLabel{strip}
-    \UnaryInfC{$\neg p$}
-    \AxiomC{}
-    \RightLabel{axiom}
-    \UnaryInfC{$p$}
-    \RightLabel{canonicalize}
-    \UnaryInfC{$p$}
-    \RightLabel{simplify}
-    \BinaryInfC{$⊥$}
-    \RightLabel{canonicalize}
-    \UnaryInfC{$⊥$}
-  \end{bprooftree}
-  \caption{A \Metis proof tree.}
-  \label{fig:metis-example}
-\end{figure}
 
 \end{document}

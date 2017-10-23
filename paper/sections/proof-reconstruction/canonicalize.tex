@@ -359,25 +359,6 @@ Now, to convert a formula to its conjunctive normal form, in Lemma~\ref{lem:dist
   \end{equation*}
 \end{mainlemma}
 
-\begin{proof} If $φ ≡ φ₁ ∨ φ₂$, we get for $i = 1, 2$,
-\begin{equation*}
-  \begin{bprooftree}
-    \RightLabel{assume}
-    \AxiomC{$Γ, φ_{i} ⊢ φ_{i}$}
-    \RightLabel{by hyp.}
-    \UnaryInfC{$Γ ⊢ \fdist~φ_{i}$}
-    \RightLabel{∨-intro$_{1,2}$}
-    \UnaryInfC{$Γ, φ_{i} ⊢ \fdist~φ₁ ∨ \fdist~φ₂$}
-    \RightLabel{Lemma~\ref{lem:dist-or}}
-    \UnaryInfC{$Γ, φ_{i} ⊢ \fdist_{∨}(\fdist~φ₁ ∨ \fdist~φ₂)$}
-    \end{bprooftree}
-\end{equation*}
-
-Then, by using the ∨-elim rule in the last derivation above, we
-derive $Γ, φ₁ ∨ φ₂ ⟝ \fdist_{∨}(\fdist~φ₁ ∨ \fdist~φ₂)$ and the lemma
-follows.
-\end{proof}
-
 We complete the translation between \Prop and \NProp types by
 defining the $\fform$ function in (\ref{eq:form}) to get a proposition from
 its normalized proposition.
@@ -409,7 +390,7 @@ we use the $\fform$ function.
   \begin{align*}
     \begin{split}
     &\rm{cnf} : \Prop \to \Prop\\
-    &\rm{cnf}~φ = \fform (\fdist (\fnnf~φ))
+    &\rm{cnf}~φ = \fform~(\fdist~(\fnnf~φ))
     \end{split}
   \end{align*}
 \end{mainlemma}
