@@ -4,51 +4,58 @@
 
 % ===================================================================
 
-\section{Related Work (REVISANDO)}
+\section{Related Work}
 \label{sec:related-work}
 
-EJEMPLOS DE RECONSTRUCTION DE PRUEBAS USANDO IPTS EN TEORIA DE TIPOS PARA
-ATPS.
+% EJEMPLOS DE RECONSTRUCTION DE PRUEBAS USANDO IPTS EN TEORIA DE TIPOS PARA
+% ATPS.
 
-AGDA
-COQ
+% AGDA
+% COQ
 
-Otros: HOL
+% Otros: HOL
 
+Many approaches have been proposed for proof-reconstruction and some tools have been
+implemented in the last decades.
 
-% Proof-reconstruction has been studied by many research using proof assistants.
-% Many approaches have been proposed and some tools have been
-% implemented for proof-reconstruction in the last decades.
-
-
-In \Agda, we found the proof-reconstruction proposed by \citeauthor{Kanso2012}
+In type theory, for \Agda and  for the same propositional fragmented used in this paper,
+we found the proof-reconstruction proposed by \citeauthor{Kanso2012}
 in~\cite{Kanso2012,kanso2016light}. The author present an approach similar to
 the reasoning presented in Section~\ref{ssec:workflow}.
 Nonetheless, his approach includes semantics reasoning that as we mentioned
-above differs completely from our proof-reconstructing propose.
+in the introduction differs completely from our proof-reconstruction approach.
 
-Let us mention a list of some representative of such tools mainly based on the
-description by \citeauthor{Sicard-Ramirez2016}~\cite{Sicard-Ramirez2016}.
+In \Agda but with another logic, \citeauthor{foster2011integrating}~\cite{foster2011integrating}
+describe the proof-reconstruction for \name{Waldmeister}~\cite{hillenbrand1997}
+prover to pure equational logic, \ie,
+first-order logic with equality but no other predicate symbols and no
+functions symbols.
+
+In \name{Coq}~\cite{coqteam}, and proof assistant for type theory like \Agda, 
+we found the \name{SMTCoq}~\cite{armand2011,Ekici2017} tool which provides a
+certified checker for proof witness coming from the \SMT solver
+\name{veriT}~\cite{bouton2009} and adds a new tactic named verit,
+that calls \name{veriT} on any \name{Coq} goal.
+Also for \name{Coq}, 
+given a fixed but arbitrary first-order signature,
+\citeauthor{Bezem2002} in \cite{Bezem2002}
+transform a proof produced by the first-order automatic theorem
+prover \name{Bliksem}~\cite{deNivelle2003} in a \name{Coq} proof
+term.
+
+We found many successful attemps using proof assistant for classical logic
+instead of type theory.
+Let us mention some representative of such tools. This descriptions is
+mainly based on~\citeauthor{Sicard-Ramirez2016}~\cite{Sicard-Ramirez2016}.
 
 The \name{Isabelle} proof assistant has the \name{Sledgehammer} tool.
 This program provides a full integration between
-automatic theorem provers~\cite{meng2006automation,blanchette2013extending,Fleury2014,hurlin07practical,bohme2010,blanchette2013extending} and
+automatic theorem provers~\cite{blanchette2013extending,Fleury2014,bohme2010} and
 \name{Isabelle/HOL}~\cite{nipkow2002isabelle}, the specialization of
 \name{Isabelle} for higher-order logic.
 A modular proof-reconstruction workflow is presented jointly with
 the full integration of \name{Leo-II} and \name{Satallax} provers with
 \name{Isabelle/HOL} in \citeauthor{Een2004}~\cite{Een2004}.
-
-\name{SMTCoq}~\cite{armand2011,Ekici2017} is a tool for the
-\name{Coq} proof assistant \cite{coqteam} which provides a certified
-checker for proof witness coming from the \SMT solver
-\name{veriT}~\cite{bouton2009} and adds a new tactic named verit,
-that calls \name{veriT} on any \name{Coq} goal.
-In \cite{Bezem2002},
-given a fixed but arbitrary first-order signature, the authors
-transform a proof produced by the first-order automatic theorem
-prover \name{Bliksem} \cite{deNivelle2003} in a \name{Coq} proof
-term.
 
 Hurd~\cite{Hurd1999} integrates the first-order resolution prover
 \name{Gandalf} with the high-order
@@ -61,18 +68,9 @@ reconstruct proofs from different \ATPs with the \name{PRocH} tool by
 replaying detailed inference steps from the \ATPs with internal
 inference methods implemented in \name{HOL Light}.
 
-For the proof assistant \Agda, we found two proof-reconstruction tools.
-First, the integration with the \name{Waldmeister}~\cite{hillenbrand1997}
-prover by \citeauthor{foster2011integrating}~\cite{foster2011integrating}.
-A prover for pure equational logic, i.e.
-first-order logic with equality but no other predicate symbols and no
-functions symbols.
-Second, Kanso and Setzer in~\cite{kanso2016light} integrate the propositional
-fragment of the \name{EProver}. The tool presented by the authors
-translate automatically propositional logic problems written in \Agda
-to \TPTP problems. By calling an external wrapper of the \ATP, this
-tool gets a \TSTP derivation. The tool parses the \name{EProver}
-derivation and outputs \Agda code.
+
+
+
 
 
 
