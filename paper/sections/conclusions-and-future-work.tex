@@ -29,10 +29,11 @@ description of every transformation or deduction step performed by
 the prover, which is rarely included in the output of these programs,
 see Section~\ref{ssec:emulating-inferences}.
 Nevertheless, we chose that syntactical treatment instead of using
-semantics to extend this work towards the support of first-order logic.
-Recall satisfiability in first-order logic is undecidable.
+semantics to extend this work towards the support of first-order logic
+or other non-classical logics.
+For predicative logic, recall satisfiability is undecidable and
+its syntactical aspect plays a important role to reconstruct proofs.
 
-Summarizing,
 One of the main contribution of this study was
 increasing the trustworthiness of the automatic prover \Metis.
 Justifying a proof by a theorem prover
@@ -49,24 +50,34 @@ the \Metis 20170810 release.
 
 \subsection*{Future work}
 
-As an early future work, we propose to extend the
-proof-reconstruction presented in this paper to support the
-proposition fragment with equality of \Metis.
-Another option is to extend the proof-reconstruction to support other \ATPs for \CPL like \name{EProver} or \name{Z3}.
+Further research  directions include, but are not limited to:
+
+\begin{itemize}
+\item extend the proof-reconstruction presented in this paper to
+  \begin{itemize}
+    \item support the proposition fragment with equality of \Metis.
+    \item support other \ATPs for \CPL like \name{EProver} or \name{Z3}.
+    \item support \Metis first order proofs.
 This development can be carried out by following the \name{EProver}
 inference rules described on Kanso's Ph.D. thesis~\cite{Kanso2012}.
-
-We identify some improvements for our approach in
-Section~\ref{ssec:emulating-inferences}.
-For instance, we can investigate the consequences of removing \clausify
+  \end{itemize}
+\item contrasts the use of a shallow embedding instead
+of the deep embedding implemented in~\cite{AgdaProp}.
+\item improve some functions in Section~\ref{ssec:emulating-inferences}
+\begin{itemize}
+  \item by investigating the consequences of removing \clausify
 inference by strengthen \canonicalize rule in Theorem~\ref{thm:canonicalize}
-The \simplify rule is still lacking of some coverage since it is fairly
-complex in its implementation in the \Metis source code,
-and many cases could be omitted.
-Other improvements are related with computational efficiency of
-rules that strongly depend on reordering tasks,
-Section~\ref{sssec:resolve}.
-We believe some rules like \canonicalize can get some help by
-performing an analysis with \Athena.
+  \item by increasing the coverage of the \simplify rule. Since is fairly
+complex its implementation in the \Metis source code, some cases could be omitted in Section~\ref{sssec:simplify}.
+\end{itemize}
 
+% For instance, we can
+
+% and many cases could be omitted.
+% Other improvements are related with computational efficiency of
+% rules that strongly depend on reordering tasks,
+% Section~\ref{sssec:resolve}.
+% We believe some rules like \canonicalize can get some help by
+% performing an analysis with \Athena.
+\end{itemize}
 \end{document}
