@@ -23,6 +23,6 @@ ref-mendeley : ref-mendeley.bib
 
 .PHONY : clean
 clean:
-	cat .gitignore | xargs echo rm -f | sh
+	cat .gitignore | xargs echo rm -r -f | sh
 
 default: pdf
