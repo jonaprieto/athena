@@ -101,6 +101,7 @@
   title     = {{Interactive Theorem Proving and Program Development: Coq'Art: The Calculus of Inductive Constructions}},
   url       = {http://books.google.nl/books/about/Interactive_Theorem_Proving_and_Program.html?id=m5w5PRj5Nj4C&pgis=1},
   year      = {2004},
+  publisher = {Springer},
 }
 
 @article{Bezem2002,
@@ -195,14 +196,13 @@
   year         = {2002},
 }
 
-@incollection{Bove2005,
+@InProceedings{Bove2005,
   author    = {Bove, Ana and Capretta, Venanzio},
   doi       = {10.1007/11417170_10},
+  crossref  = {zzzTLCA-2005},
   pages     = {116--130},
-  publisher = {Springer, Berlin, Heidelberg},
   title     = {{Recursive Functions with Higher Order Domains}},
   url       = {http://link.springer.com/10.1007/11417170_10},
-  year      = {2005},
 }
 
 @inproceedings{Bove2012,
@@ -245,7 +245,7 @@
   year          = {2013},
 }
 
-@article{Altenkirch2015,
+@misc{Altenkirch2015,
   abstract = {A computer formalisation of the completeness of the boolean model of classical propositional logic is presented. The work follows Huth and Ryan's proof [9]. The proof is constructed for a classical logic system in natural deduction style with all logical connectives. The formalisation is constructive and uses the interactive theorem prover Agda which is an implementation of intensional Martin-Löf type theory [11]. Functions have to be defined in a structurally recursive way to pass the termination checker of Agda. The basic definitions of the formal system must be carefully chosen in order to provide a convenient environment to build correct proofs and meanwhile prevent from getting warnings from the type checker. The formalisation is written in an accessible way so that it can be used for educational purposes. The full source code is available online1. Keywords:},
   author   = {Cai, Leran and Kaposi, Ambrus and Altenkirch, Thorsten},
   title    = {{Formalising the Completeness Theorem of Classical Propositional Logic in Agda}},
@@ -283,16 +283,16 @@
   author = {de Nivelle, Hans},
   title  = {{Bliksem 1.10 User Manual}},
   url    = {http://www.ii.uni.wroc.pl/~nivelle/software/bliksem.},
+  year   = 2003,
 }
 
-@incollection{Een2004,
+@InProceedings{Een2004,
   author    = {Eén, Niklas and Sörensson, Niklas},
   doi       = {10.1007/978-3-540-24605-3_37},
-  pages     = {502--518},
-  publisher = {Springer, Berlin, Heidelberg},
+  crossref  = {zzzSAT-2003},
+  pages     = {116--130},
   title     = {{An Extensible SAT-solver}},
   url       = {http://link.springer.com/10.1007/978-3-540-24605-3_37},
-  year      = {2004},
 }
 
 @article{Ekici2017,
@@ -866,3 +866,22 @@
   year      = {2009},
 }
 
+@Proceedings{zzzTLCA-2005,
+  title =        {Typed Lambda Calculi and Applications (TLCA 2005)},
+  booktitle =    {Typed Lambda Calculi and Applications (TLCA 2005)},
+  year =         2005,
+  editor =       {Urzyczyn, Pawe{\l}},
+  volume =       3461,
+  series =       {Lecture Notes in Computer Science},
+  publisher =    {Springer}
+}
+
+@Proceedings{zzzSAT-2003,
+  title =        {Theory and Applications of Satisfiability Testing (SAT 2003)},
+  booktitle =    {Theory and Applications of Satisfiability Testing (SAT 2003)},
+  year =         2004,
+  editor =       {Giunchiglia, Enrico and Tacchella. Armando},
+  volume =       2919,
+  series =       {Lecture Notes in Computer Science},
+  publisher =    {Springer}
+}
