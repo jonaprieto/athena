@@ -7,22 +7,69 @@
 \section{Introduction (ESCRIBIENDO)}
 \label{sec:introduction}
 
-% During the last decades, the research field of automated reasoning has been experimenting a growth in the development of new methods, tools, and systems. One of the major achievements of this field are the automatic
-% theorem provers (henceforth ATPs).
+Reconstructing and verifying proofs delivered by automatic theorem provers
+(henceforth ATP) are non-trivial tasks.
+In the last decades, \ATPs is fast becoming a key instrument in 
+different disciplines (\eg verifying cryptographic protocols for information security) and researchers have shown an increased interest to prove the validity of the deduction algorithms.
+One reason to say that are the bugs found in many ATPs.
+For that reason, in order to give confidence to the user of these systems,
+many ATPs has started to include in their outputs, the proofs of the
+conclusion. However, existing research recognizes that in many cases these proofs encode non-trivial reasoning
+hard to reconstruct them and therefore to verify them.
+
+Hence proof-reconstructing becomes a reverse engineering task
+in which the source, the proof, and its quality play an important role.
+To begin with the proof-reconstruction, it is necessary to have
+the proof of the \ATP in a consistent format, that is, a full script 
+describing step-by-step with exhaustive details and without ambiguities, the 
+derivation to get the actual proof.  
+For classical propositional logic (henceforth \CPL), from a list of at least forty\footnote{\ATPs 
+available from the web
+service \name{SystemOnTPTP} of the TPTP World.} \ATPs, just a few
+provers were able to deliver proofs and fewer like \name{EProver} or \Metis 
+replied the proof in an admissible file format.
+
+-----
+
+% One approach to address the problem mentioned above
+% consists of use a proof assistant as the proof checker.
+% In this direction, we describe the usage of a proof assistant in type theory
+% to reconstruct proofs delivered by \Metis prover.
+
+
+
+
+
+% To guarantee the validity of their methods,
+% many ATPs has been opted to include proofs in their output.
+
+% The problem address in this paper concern about justifying such proofs.
+
+% One approach to address  these tasks could be use a proof assistant
+% to verify the reply of the ATP.
+
+
+
+% % During the last decades, the research field of automated reasoning has been experimenting a growth in the development of new methods, tools, and systems. One of the major achievements of this field are the automatic
+% % theorem provers (henceforth ATPs).
 
 % At the beginning in its development, the main goal was prove automatically
 % problems in different logics (\eg, first-order logic, high-order logic).
 % Nowadays, they continuing extending its support, performance and precision
-% in their deductive methods. To guarantee the validity of their methods,
-% many ATPs has been opted to include proofs in their output.
+% in their deductive methods. 
+
+
 % Nevertheless, it has been argued that some of their deductions are not
-% valid even in delivering a proof. One of the reason to say that is
-% the discover of bugs in ATPs that outputs unsound proofs.
+% valid even in delivering a proof. 
 
 % This problem to verify proofs delivered by ATPs is a non-trivial task
 % and involves an in-depth understanding of the algorithms in the \ATP.
+% The proof-reconstruction is a non-trivial problem.
 
-% The proof-reconstruction problem aim to solve this issue.
+% The proof-reconstruction is a non-trivial task since it depends on the
+% integration between two complex systems.
+
+% The proof-reconstruction problem aims to solve this issue.
 % One way to address this problem is using another major system in this field, the proof assistants.
 
 % A proof-reconstruction tool using this approach will try to verify the proof delivered by the ATP using the proof assistant.
@@ -32,13 +79,7 @@
 % proofs of the \Metis prover into a proof assistant for type theory like
 % \Agda. We use type theory to guarantee that proofs of the \ATP are valid.
 
-% To begin with the proof-reconstruction, it is
-% necessary to have a proof from the \ATP in a consistent
-% format, that is, a full script describing step-by-step
-% with exhaustive details and without ambiguities, the derivation to
-% get the that proof. But this is a strong requirement and its the main obstacle we found with \Metis proofs.
-% The reader should bear in mind that the study is based on
-% reverse engineering about \Metis.
+
 
 % The main disadvantage of X
 
@@ -83,19 +124,17 @@
 % One way to reconstruct proofs of \ATPs consists of using an \ITP.
 % An \ITP system provide us the logic framework to check and validate
 % the reply of the \ATPs since they allow us to define the formal language
- % for the problems \ie, operators, logic variables, axioms, and theorems.
+%  for the problems \ie, operators, logic variables, axioms, and theorems.
 
-% This task is non-trivial since it depends on the
-% integration between two complex systems.
 
 % A proof-reconstruction tool provides such an integration, translating
 % the reply generated by the prover into the formalism of the proof
 % assistant.
 
-% % Since the formalism of the source (the evidence
-% % generated by the \ATP) is not necessarily the same logic in the
-% % target, the reconstruction turns out to be a ``reverse engineering''
-% % task.
+% Since the formalism of the source (the evidence
+% generated by the \ATP) is not necessarily the same logic in the
+% target, the reconstruction turns out to be a ``reverse engineering''
+% task.
 
 % Then, reconstructing a proof involves an in-depth
 % understanding of the algorithms in the \ATP and the logic specification
@@ -116,7 +155,7 @@
 % (e.g., \name{E}, \Metis, \name{Vampire}, and \name{Z3}),
 % \len{LFSC}~\cite{Stump2008}, or the \len{SMT-LIB}~\cite{Bohme2011} format.
 
- These
+%  These
 % programs are relevant not only because it helps to spread their
 % usage but they also increase the confidence of their users about
 % their algorithms and their correctness (see, for example, bugs in
