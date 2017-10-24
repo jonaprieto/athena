@@ -10,7 +10,7 @@ conjunction of these subgoals implies the goal. Then, a proof of the
 goal becomes, in smaller proofs, one refutation for each subgoal.
 
 \begin{myexample}
-The subgoals mentioned above are introduced in the \TSTP derivation
+The subgoals associated to a goal are introduced in the \TSTP derivation
 with the \strip inference rule.
 
 \begin{verbatim}
@@ -20,7 +20,7 @@ fof(sg1, p => r, inf(strip, [goal])).
 fof(sg2, (p & r) => q, inf(strip, [goal])).
 \end{verbatim}
 
-In the script above, the conjecture $(p ∧ r) ∧ q$ is stripped in
+In this example, the conjecture \verb!(p & r) & q! is stripped into
 tree subgoals: $p$, $p ⇒ r$ and $(p ∧ r) ⇒ q$.
 
 \begin{equation}
@@ -35,7 +35,7 @@ how it uses the proofs of subgoals, we know using the elimination
 of the implication, we get the proof of the conjecture.
 \end{myexample}
 
-We prove the correctness of the process mentioned above in
+We prove the correctness of the \strip inference rule in
 Theorem~\ref{thm:strip}. To show that theorem, we need to prove
 Lemma~\ref{lem:inv-uh-lem} and Lemma~\ref{lem:lem-inv-strip}.
 
@@ -68,7 +68,7 @@ $\fuh_{1}$ function.
   \AxiomC{$Γ ⊢ \fuh_1~(φ₁ ⇒ (φ₂ ⇒ φ₃))~(\suc~n)$}
   \RightLabel{by~(\ref{eq:uh-structured})}
   \UnaryInfC{$Γ ⊢ \fuh_1~((φ₁ ∧ φ₂) ⇒ φ₃)~n$}
-  \RightLabel{by hyp.}
+  \RightLabel{by~ind.~hyp.}
   \UnaryInfC{Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃}
   \RightLabel{∧⇒\rm{-to-}⇒⇒}
   \UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃)}
@@ -85,7 +85,7 @@ $\fuh_{1}$ function.
     \UnaryInfC{$Γ ⊢ \fuh_1~(φ₁ ⇒ φ₂)~n ∧ \fuh_1~(φ₁ ⇒ φ₃)~n$}
     \RightLabel{∧-proj₁}
     \UnaryInfC{$Γ ⊢ \fuh_1~(φ₁ ⇒ φ₂)~n$}
-    \RightLabel{by hyp.}
+    \RightLabel{by~ind.~hyp.}
     \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$}
   \end{bprooftree}
   }
@@ -99,7 +99,7 @@ $\fuh_{1}$ function.
     \UnaryInfC{$Γ ⊢ \fuh_1~(φ₁ ⇒ φ₂)~n ∧ \fuh_1~(φ₁ ⇒ φ₃)~n$}
     \RightLabel{∧-proj₂}
     \UnaryInfC{$Γ ⊢ \fuh_1~(φ₁ ⇒ φ₃)~n$}
-    \RightLabel{by hyp.}
+    \RightLabel{by~ind.~hyp.}
     \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₃$}
     \end{bprooftree}
 \end{equation*}
@@ -123,10 +123,11 @@ Now, using the theorem \texttt{⇒∧⇒\rm{-to-}⇒∧} from~\cite{AgdaProp},
 \end{itemize}
 \end{proof}
 
-We now define the $\fstripp$ function in~(\ref{eq:strip-unfixed}) that
-yields the conjunction of subgoals that implies the goal of the problem in
-the \Metis \TSTP derivations. Its definition is based on the source code
-of \Metis for the strip goal functions.
+The function that yields the conjunction of subgoals that implies the goal of
+the problem in the \Metis \TSTP derivations is not a structurally recursive
+function.  We present that function in (\ref{eq:strip-fixed}) after applying
+the bounded technique described in Section~\ref{ssec:structural-recursion}.
+We based the definition of this function based on the \Metis source code.
 
 \begin{equation}
 \label{eq:strip-unfixed}
@@ -196,7 +197,7 @@ $\bullet$~Case $φ ≡ ¬ ¬ φ₁$.
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
   \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
   \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
-  \RightLabel{by hyp.}
+  \RightLabel{by~ind.~hyp.}
   \UnaryInfC{$Γ ⊢ φ₁$}
   \end{bprooftree}
 \end{equation*}
@@ -214,7 +215,7 @@ introduction rule for conjunction connective, the expected result follows.
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
   \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
   \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
-  \RightLabel{by hyp.}
+  \RightLabel{by~ind.~hyp.}
   \UnaryInfC{$Γ ⊢ φ₁$}
     \end{bprooftree}
 \end{equation*}
@@ -232,7 +233,7 @@ introduction rule for conjunction connective, the expected result follows.
   \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
   \RightLabel{$⇒$-elim}
   \BinaryInfC{$Γ ⊢ \fstrip~φ₂~n$}
-  \RightLabel{by hyp.}
+  \RightLabel{by~ind.~hyp.}
   \UnaryInfC{$Γ ⊢ φ₂$}
   \end{bprooftree}
 \end{equation*}
@@ -252,7 +253,7 @@ result follows.
 \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n)$}
 \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
 \UnaryInfC{$Γ ⊢ \fstrip~¬ φ₁~n$}
-\RightLabel{by hyp.}
+\RightLabel{by~ind.~hyp.}
   \UnaryInfC{$Γ ⊢ ¬φ₁$}
 \end{bprooftree}
 \end{equation*}
@@ -269,14 +270,14 @@ result follows.
   \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \fstrip~¬ φ₂~n$}
   \RightLabel{⇒-elim}
   \BinaryInfC{$Γ ⊢ \fstrip~¬ φ₂~n$}
-  \RightLabel{by hyp.}
+  \RightLabel{by~ind.~hyp.}
   \UnaryInfC{$Γ ⊢ ¬ φ₂$}
   \end{bprooftree}
 \end{equation*}
 \end{proof} % the proof continue...
 
 The following theorem is convenient to substitute equals by equals in
-a theorem. Recall the equality is symmetric and transitive as well.
+a theorem. Recall the equality ≡ is symmetric and transitive as well.
 We use such properties without any mention.
 
 \begin{mainlemma}[subst]
@@ -295,16 +296,16 @@ We use such properties without any mention.
 We can now formulate the result that justifies the stripping strategy
 of \Metis to prove goals.
 For the sake of brevity, we state the following theorem for the
-\strip function when the goal has only two subgoals. In other cases,
-we extend that theorem in the natural way.
+\strip function when the goal has two subgoals. In other cases,
+we extend the theorem in the natural way.
 
 \begin{mainth}
 \label{thm:strip}
 Let $\text{n} : \Nat$ be the complexity measure of the strip function defined
 in~(\ref{eq:strip-fixed}).
-If $s_1$ and $s_2$ are the subgoals of the goal $φ$, that is,
-$$\fstrip~φ~n~≡~s_1∧~s_2,$$
-if $Γ ⊢ s_1$ and $Γ ⊢ s_2$ then $Γ ⊢ φ$.
+Let $s₁$ and $s₂$ be the subgoals of the goal $φ$, that is,
+$$\fstrip~φ~n~≡~s₁∧~s₂.$$
+If $Γ ⊢ s₁$ and $Γ ⊢ s₂$ then $Γ ⊢ φ$.
 \end{mainth}
 
 \begin{proof}
@@ -323,7 +324,23 @@ if $Γ ⊢ s_1$ and $Γ ⊢ s_2$ then $Γ ⊢ φ$.
 \end{equation*}
 \end{proof}
 
-
 % -------------------------------------------------------------------
+
+Since \Metis proves by refutation,
+to prove each subgoal, \Metis assumes the negation of it
+using the \negate rule. Then, this rule is always derived from a \strip
+inference application as we can see in the following \TSTP excerpt.
+
+\begin{verbatim}
+fof(goal, conjecture, (p & r & q)).
+fof(subgoal_0, p, inf(strip,[goal])).
+fof(subgoal_1, p => r, inf(strip,[goal])).
+fof(subgoal_2, (p & r) => q, inf(strip,[goal])).
+fof(negate_0_0, ~ p, inf(negate,[subgoal_0])).
+...
+fof(negate_1_0, ~ (p => r), inf(negate,[subgoal_1])).
+...
+fof(negate_2_0, ~ ((p & r) => q), inf(negate,[subgoal_2])).
+\end{verbatim}
 
 \end{document}

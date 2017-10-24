@@ -274,7 +274,8 @@ the formula from the first derivation and the
 negative literal $¬ l$ must occur in the formula from the second derivation,
 see the pattern of \emph{resolve} rule in Fig.~\ref{fig:metis-inferences}.
 
-\begin{myexample}\hspace{10cm}
+\begin{example}\hspace{10cm}
+\label{ex:resolve-tstp}
 \begin{verbatim}
 cnf(ref4, (~ r | p | q), inf(canonicalize, [norm5])).
 cnf(ref5, (p | q | r), inf(canonicalize, [norm6])).
@@ -290,7 +291,7 @@ If the scenario would have other like replacing \verb!ref5! by
 cnf(ref5, (r | p | q), inf(canonicalize, [norm6])).
 \end{verbatim}
 We have could derive $(p ∨ q) ∨ (p ∨ q)$ but again, that is not the expected result.
-\end{myexample}
+\end{example}
 
 Therefore, we perform a sequence of rearrangements inside the
 formulas involved to match with the pattern expected by the resolution theorem
@@ -353,7 +354,7 @@ in~(\ref{eq:rsol}) we get the expect result.
 \end{proof}
 
 \begin{myexample}
-Continuing with the problem presented in the example above,
+Continuing with the problem presented in the Example~\ref{ex:resolve-tstp},
 we can use Theorem \ref{thm:resolve} to derive $Γ ⊢ p ∨ q$.
 Let be $φ₁ ≡ p ∨ q ∨ r$ and $φ₂ ≡ ¬ r ∨ p ∨ q$.
 
