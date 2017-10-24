@@ -1,0 +1,72 @@
+
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+% ===================================================================
+
+\section{Conclusions and Future Work}
+\label{sec:conclusions}
+
+We presented a reliable proof-reconstruction in type theory
+for the propositional fragment of the \Metis prover. We provided for
+each \Metis inference rule a formal description in type theory.
+This formalizations is mainly exposed in
+Section~\ref{ssec:emulating-inferences}.
+
+We built the \Athena translator tool written in \Haskell
+that generates \Agda proof-terms of \Metis derivations.
+\Agda files delivered by this translator imports
+\Agda formalizations of the \Metis reasoning~\cite{AgdaProp,AgdaMetis}.
+We tested successful using this tool and \Agda as we
+described in Section~\ref{sec:proof-reconstruction} over a subset of
+propositional problems from~\cite{Prieto-Cubides2017}.
+
+The reconstruction approach in this study was designed to use
+only syntactical aspects of the logic.
+This decision was in the beginning a drawback
+since it demands more detailed proofs, a
+description of every transformation or deduction step performed by
+the prover, which is rarely included in the output of these programs,
+see Section~\ref{ssec:emulating-inferences}.
+Nevertheless, we chose that syntactical treatment instead of using
+semantics to extend this work towards the support of first-order logic.
+Recall satisfiability in first-order logic is undecidable.
+
+Summarizing,
+One of the main contribution of this study was
+increasing the trustworthiness of the automatic prover \Metis.
+Justifying a proof by a theorem prover
+has a real significant impact for these automatic tools.
+The reverse engineering task to understand the prover reasoning
+can reveal important issues or bugs
+in many parts of these systems (e.g., preprocessing, reasoning, or
+deduction modules). During this research, we had the opportunity
+to contribute to \Metis by reporting some bugs\footnote{Issues No.~2,
+No.~4. and commit \name{8a3f11e} in the \Metis' official repository
+\url{https://github.com/gilith/metis}}.
+Fortunately, all these problems were fixed quickly by Joe Hurd in
+the \Metis 20170810 release.
+
+\subsection*{Future work}
+
+As an early future work, we propose to extend the
+proof-reconstruction presented in this paper to support the
+proposition fragment with equality of \Metis.
+Another option is to extend the proof-reconstruction to support other \ATPs for \CPL like \name{EProver} or \name{Z3}.
+This development can be carried out by following the \name{EProver}
+inference rules described on Kanso's Ph.D. thesis~\cite{Kanso2012}.
+
+We identify some improvements for our approach in
+Section~\ref{ssec:emulating-inferences}.
+For instance, we can investigate the consequences of removing \clausify
+inference by strengthen \canonicalize rule in Theorem~\ref{thm:canonicalize}
+The \simplify rule is still lacking of some coverage since it is fairly
+complex in its implementation in the \Metis source code,
+and many cases could be omitted.
+Other improvements are related with computational efficiency of
+rules that strongly depend on reordering tasks,
+Section~\ref{sssec:resolve}.
+We believe some rules like \canonicalize can get some help by
+performing an analysis with \Athena.
+
+\end{document}
