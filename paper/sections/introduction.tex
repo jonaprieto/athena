@@ -29,14 +29,13 @@ service \name{SystemOnTPTP} of the TPTP World.} \ATPs, just a few
 provers were able to deliver proofs and fewer like \name{EProver} or \Metis 
 replied the proof in an admissible file format.
 
------
-
-% One approach to address the problem mentioned above
-% consists of use a proof assistant as the proof checker.
-% In this direction, we describe the usage of a proof assistant in type theory
-% to reconstruct proofs delivered by \Metis prover.
-
-
+One approach to address the proof-reconstruction 
+is integrating the \ATP, the \emph{source} system, with a proof assistant, the \emph{target} system.
+The target system becomes in the proof checker.   
+Previous studies have reported proof-reconstruction using proof assistant for classical logic where the development is at a mature stage.
+In contrast, we choose a proof assistant for type theory
+where proof verification becomes a type-checking task of the
+proof-term following the Curry-Howard isomorphism.
 
 
 
@@ -95,7 +94,7 @@ replied the proof in an admissible file format.
 
 % synopsys
 
-% Previous studies have reported proof-reconstruction for
+%
 
 % Existing research recognizes the critical role by ...
 
