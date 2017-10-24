@@ -2,7 +2,7 @@
 \begin{document}
 
 
-\subsubsection{Canonicalize. (REVISANDO)}
+\subsubsection{Canonicalize.}
 \label{sssec:canonicalize}
 
 One of the main purposes of the \canonicalize rule consists of adding the
@@ -88,13 +88,6 @@ there are redundancies in a formula when some of the following theorems can appl
       \UnaryInfC{$Γ ⟝ φ$}
     \end{bprooftree}
   \]
-
-% \begin{myremark}
-% Here and below, we assume all formulas to be in right-associative form in
-% the input of the functions. To perform such conversion, we can apply
-% the $\rm{rdisj}$ and $\rm{rconj}$ functions depending on the main connective
-% in~(\ref{eq:rdisj}).
-% \end{myremark}
 
 \begin{notation}
 In a disjunction, $φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
@@ -361,7 +354,7 @@ Now, to convert a formula to its conjunctive normal form, in Lemma~\ref{lem:dist
 
 We complete the translation between \Prop and \NProp types by
 defining the $\fform$ function in (\ref{eq:form}) to get a proposition from
-its normalized proposition.
+a normalized proposition.
 
 \begin{equation}
 \label{eq:form}

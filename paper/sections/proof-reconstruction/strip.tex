@@ -125,61 +125,47 @@ Now, using the theorem \texttt{⇒∧⇒\rm{-to-}⇒∧} from~\cite{AgdaProp},
 
 The function that yields the conjunction of subgoals that implies the goal of
 the problem in the \Metis \TSTP derivations is not a structurally recursive
-function.  We present that function in (\ref{eq:strip-fixed}) after applying
+function.  We present its structural recursive function
+in~(\ref{eq:strip-fixed}) after applying
 the bounded technique described in Section~\ref{ssec:structural-recursion}.
 We based the definition of this function based on the \Metis source code.
 
 \begin{equation}
-\label{eq:strip-unfixed}
-\begin{aligned}
-&\hspace{.495mm}\fstripp : \Prop → \Prop\\
-&\begin{array}{lll}
-\fstripp &(φ₁ ∧ φ₂)     &= \fuh~(\fstripp~φ₁) ∧ \fuh~(φ₁ ⇒ \fstripp~φ₂)\\
-\fstripp &(φ₁ ∨ φ₂)     &= \fuh~(¬ φ₁ ⇒ \fstripp~φ₂)\\
-\fstripp &(φ₁ ⇒ φ₂)     &= \fuh~(φ₁ ⇒ \fstripp~φ₂)\\
-\fstripp &(¬ (φ₁ ∧ φ₂)) &= \fuh~(φ₁ ⇒ \fstripp~¬ φ₂)\\
-\fstripp &(¬ (φ₁ ∨ φ₂)) &= \fuh~(\fstripp~¬ φ₁) ∧ \fuh~(¬ φ₁ ⇒ \fstripp~¬ φ₂)\\
-\fstripp &(¬ (φ₁ ⇒ φ₂)) &= \fuh~(\fstripp~φ₁) ∧ \fuh~(φ₁ ⇒ \fstripp~¬ φ₂)\\
-\fstripp &(¬ ¬ φ₁)      &= \fuh~(\fstripp~φ₁)\\
-\fstripp &(¬ ⊥)         &= ⊤\\
-\fstripp &(¬ ⊤)         &= ⊥\\
-\fstripp &φ             &= φ
-\end{array}
-\end{aligned}
-\end{equation}
-
-The function defined above is not a structural recursion function. Therefore, we have reformulated it in~(\ref{eq:strip-fixed}) in order to solve such an issue following the technique described in
-Section~\ref{ssec:structural-recursion}.
-
-%  1137  git add .
-%  1138  git commit -am "[ paper ] strip proof."
-%  1139  git pull origin paper
-%  1140  git push origin paper
-
-\begin{equation}
 \label{eq:strip-fixed}
 \begin{aligned}
-&\hspace{.495mm}\fstrip : \Prop → \Nat → \Prop\\
+&\hspace{.495mm}\fstrip₁ : \Prop → \Nat → \Prop\\
 &\begin{array}{llll}
-\fstrip &(φ₁ ∧ φ₂)     &(\suc~n) &= \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)\\
-\fstrip &(φ₁ ∨ φ₂)     &(\suc~n) &= \fuh~(¬ φ₁ ⇒ \fstrip~φ₂~n)\\
-\fstrip &(φ₁ ⇒ φ₂)     &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip~φ₂~n)\\
-\fstrip &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip~¬ φ₂~n)\\
-\fstrip &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)\\
-\fstrip &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~¬ φ₂~n)\\
-\fstrip &(¬ ¬ φ₁)      &(\suc~n) &= \fuh~(\fstrip~φ₁~n)\\
-\fstrip &(¬ ⊥)         &(\suc~n) &= ⊤\\
-\fstrip &(¬ ⊤)         &(\suc~n) &= ⊥\\
-\fstrip &φ             &\text{n} &= φ
+\fstrip₁ &(φ₁ ∧ φ₂)     &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
+\fstrip₁ &(φ₁ ∨ φ₂)     &(\suc~n) &= \fuh~(¬ φ₁ ⇒ \fstrip₁~φ₂~n)\\
+\fstrip₁ &(φ₁ ⇒ φ₂)     &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
+\fstrip₁ &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~¬ φ₂~n)\\
+\fstrip₁ &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip₁~¬ φ₂~n)\\
+\fstrip₁ &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~¬ φ₂~n)\\
+\fstrip₁ &(¬ ¬ φ₁)      &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n)\\
+\fstrip₁ &(¬ ⊥)         &(\suc~n) &= ⊤\\
+\fstrip₁ &(¬ ⊤)         &(\suc~n) &= ⊥\\
+\fstrip₁ &φ             &\text{n} &= φ
 \end{array}
 \end{aligned}
 \end{equation}
+
+In a similar way as we define $\fuh_{cm}$ in (\ref{eq:uh-complexity}) we define
+$\fstrip_{cm}$ as the complexity measure for $\fstrip₀$ function. As excepted,
+the \fstrip function is defined as follows.
+
+\begin{align}
+  \label{eq:strip}
+  \begin{split}
+  &\fstrip : \Prop → \Prop\\
+  &\fstrip~φ~ = \fstrip_{1}~φ~(\fstrip_{cm}~φ).
+  \end{split}
+\end{align}
 
 \begin{mainlemma}
 \label{lem:lem-inv-strip}
-Let $\text{n} : \Nat$ be the complexity measure of the strip function defined
+Let $\text{n} : \Nat$ be the complexity measure of the \fstrip function defined
 in~(\ref{eq:strip-fixed}).
-If $Γ ⊢ \fstrip~φ~n$ then $Γ ⊢ φ$.
+If $Γ ⊢ \fstrip₁~φ~n$ then $Γ ⊢ φ$.
 \end{mainlemma}
 
 \begin{proof}
@@ -192,11 +178,11 @@ We refer the reader to~\cite{AgdaMetis} for the complete proof in \Agda.
 $\bullet$~Case $φ ≡ ¬ ¬ φ₁$.
 \begin{equation*}
   \begin{bprooftree}
- \AxiomC{$Γ ⊢ \fstrip~(¬¬φ₁)~(\suc~n)$}
+ \AxiomC{$Γ ⊢ \fstrip₁~(¬¬φ₁)~(\suc~n)$}
   \RightLabel{by~(\ref{eq:strip-fixed})}
-  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~φ₁~n)$}
   \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
-  \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
+  \UnaryInfC{$Γ ⊢ \fstrip₁~φ₁~n$}
   \RightLabel{by~ind.~hyp.}
   \UnaryInfC{$Γ ⊢ φ₁$}
   \end{bprooftree}
@@ -208,13 +194,13 @@ introduction rule for conjunction connective, the expected result follows.
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
   \begin{bprooftree}
-  \AxiomC{$Γ ⊢ \fstrip~(φ₁ ∧ φ₂)~(\suc~n)$}
+  \AxiomC{$Γ ⊢ \fstrip₁~(φ₁ ∧ φ₂)~(\suc~n)$}
   \RightLabel{by~(\ref{eq:strip-fixed})}
-  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)$}
   \RightLabel{∧-proj₁}
-  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n)$}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~φ₁~n)$}
   \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
-  \UnaryInfC{$Γ ⊢ \fstrip~φ₁~n$}
+  \UnaryInfC{$Γ ⊢ \fstrip₁~φ₁~n$}
   \RightLabel{by~ind.~hyp.}
   \UnaryInfC{$Γ ⊢ φ₁$}
     \end{bprooftree}
@@ -224,15 +210,15 @@ introduction rule for conjunction connective, the expected result follows.
   \begin{bprooftree}
   \AxiomC{$\mathcal{D}$}
   \UnaryInfC{Γ ⊢ φ₁}
-  \AxiomC{$Γ ⊢ \fstrip~(φ₁ ∧ φ₂)~(\suc~n)$}
+  \AxiomC{$Γ ⊢ \fstrip₁~(φ₁ ∧ φ₂)~(\suc~n)$}
   \RightLabel{by~(\ref{eq:strip-fixed})}
-  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)$}
   \RightLabel{$∧$-proj$₂$}
-  \UnaryInfC{$Γ ⊢ \fuh~(φ₁ ⇒ \fstrip~φ₂~n)$}
+  \UnaryInfC{$Γ ⊢ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)$}
   \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
-  \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip~φ₂~n$}
+  \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip₁~φ₂~n$}
   \RightLabel{$⇒$-elim}
-  \BinaryInfC{$Γ ⊢ \fstrip~φ₂~n$}
+  \BinaryInfC{$Γ ⊢ \fstrip₁~φ₂~n$}
   \RightLabel{by~ind.~hyp.}
   \UnaryInfC{$Γ ⊢ φ₂$}
   \end{bprooftree}
@@ -246,13 +232,13 @@ result follows.
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
 \begin{bprooftree}
-\AxiomC{$Γ ⊢ \fstrip~(¬ (φ₁ ∨ φ₂))~(\suc~n)$}
+\AxiomC{$Γ ⊢ \fstrip₁~(¬ (φ₁ ∨ φ₂))~(\suc~n)$}
 \RightLabel{by~(\ref{eq:strip-fixed})}
-\UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
+\UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip₁~¬ φ₂~n)$}
 \RightLabel{∧-proj₁}
-\UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n)$}
+\UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~¬ φ₁~n)$}
 \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
-\UnaryInfC{$Γ ⊢ \fstrip~¬ φ₁~n$}
+\UnaryInfC{$Γ ⊢ \fstrip₁~¬ φ₁~n$}
 \RightLabel{by~ind.~hyp.}
   \UnaryInfC{$Γ ⊢ ¬φ₁$}
 \end{bprooftree}
@@ -261,15 +247,15 @@ result follows.
   \begin{bprooftree}
   \AxiomC{$\mathcal{D}$}
   \UnaryInfC{$Γ ⊢ ¬ φ₁$}
-  \AxiomC{$Γ ⊢ \fstrip~(¬ (φ₁ ∨ φ₂))~(\suc~n)$}
+  \AxiomC{$Γ ⊢ \fstrip₁~(¬ (φ₁ ∨ φ₂))~(\suc~n)$}
   \RightLabel{by~(\ref{eq:strip-fixed})}
-  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip₁~¬ φ₂~n)$}
   \RightLabel{∧-proj₂}
-  \UnaryInfC{$Γ ⊢ \fuh~(¬ φ₁ ⇒ \fstrip~¬ φ₂~n)$}
+  \UnaryInfC{$Γ ⊢ \fuh~(¬ φ₁ ⇒ \fstrip₁~¬ φ₂~n)$}
   \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
-  \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \fstrip~¬ φ₂~n$}
+  \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \fstrip₁~¬ φ₂~n$}
   \RightLabel{⇒-elim}
-  \BinaryInfC{$Γ ⊢ \fstrip~¬ φ₂~n$}
+  \BinaryInfC{$Γ ⊢ \fstrip₁~¬ φ₂~n$}
   \RightLabel{by~ind.~hyp.}
   \UnaryInfC{$Γ ⊢ ¬ φ₂$}
   \end{bprooftree}
@@ -326,21 +312,26 @@ If $Γ ⊢ s₁$ and $Γ ⊢ s₂$ then $Γ ⊢ φ$.
 
 % -------------------------------------------------------------------
 
-Since \Metis proves by refutation,
+Since \Metis proves a conjecture by refutation,
 to prove each subgoal, \Metis assumes the negation of it
-using the \negate rule. Then, this rule is always derived from a \strip
-inference application as we can see in the following \TSTP excerpt.
+using the \negate rule. Then, the \negate rule is
+always derived from a \strip inference application.
+
+\begin{myexample}
+In the following \TSTP derivation, the three subgoal are
+introduced by the \negate rule.
 
 \begin{verbatim}
 fof(goal, conjecture, (p & r & q)).
-fof(subgoal_0, p, inf(strip,[goal])).
-fof(subgoal_1, p => r, inf(strip,[goal])).
-fof(subgoal_2, (p & r) => q, inf(strip,[goal])).
-fof(negate_0_0, ~ p, inf(negate,[subgoal_0])).
+fof(sg0, p, inf(strip,[goal])).
+fof(sg1, p => r, inf(strip,[goal])).
+fof(sg2, (p & r) => q, inf(strip,[goal])).
+fof(neg0, ~ p, inf(negate,[sg0])).
 ...
-fof(negate_1_0, ~ (p => r), inf(negate,[subgoal_1])).
+fof(neg1, ~ (p => r), inf(negate,[sg1])).
 ...
-fof(negate_2_0, ~ ((p & r) => q), inf(negate,[subgoal_2])).
+fof(neg2, ~ ((p & r) => q), inf(negate,[sg2])).
 \end{verbatim}
+\end{myexample}
 
 \end{document}
