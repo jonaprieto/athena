@@ -4,7 +4,14 @@
 \section{Limitations of Type Theory (ESCRIBIENDO)}
 \label{sec:limitations-type-theory}
 
-AGREGAR TEXTO INTRODUCTORIO
+To reconstruct \Metis' inference rules in type theory, we observed that
+transformations performed by some rules are implemented by \emph{general
+recursive} functions.
+
+% In Section~\label{ssec:structural-recursion},
+% we describe how this observation is an issue from the type theory point of
+% view. In Section~\ref{ssec:intuitionistic-logic} we mention
+% the use intuitionistic-logic and its limitation.
 
 \begin{notation}
 We write the type judgments as $m : \abbre{M}$ to denote
@@ -17,15 +24,13 @@ For syntactical equivalence, we write the equality as $φ ≡ ψ$
 for $φ,~ψ : \Prop$. For this equality, we assume the
 reflexivity, symmetry and transitivity properties.
 \end{notation}
+
 % ...................................................................
 
 % section section_name (end)
 \subsection{Terminating functions}
 \label{ssec:structural-recursion}
 
-To reconstruct \Metis' inference rules in type theory, we observed that
-transformations performed by some rules are implemented by \emph{general
-recursive} functions.
 Algorithms based on general recursions can not be translated
 directly in type theory since it is not a guarantee they terminate. For that
 reason, we follow the technique described in~\cite{Bertot2004} to avoid
@@ -154,9 +159,13 @@ define well-founded and well-structural recursive functions, we refer
 the reader to \citeauthor{Bove2005}~\cite{Bove2005}.
 
 \subsection{Intuitionistic logic}
-\label{ssec:intuitionistic-logc}
+\label{ssec:intuitionistic-logic}
 
 AGREGAR TEXTO
+MENCIONAR WE INCLUIMOS PEM POR QUE ESTAMOS RECONSTRUYENDO PRUEBAS
+DE METIS Y ESTE ES UN ATP PARA LOGICA CLASICA.
 
+SE OPTO POR USAR LAS MISMAS REGLAS DE LA LOGICA INTUISNOSITCA
+EN .\cite{Altenkirch2015}.
 
 \end{document}

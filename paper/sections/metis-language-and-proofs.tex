@@ -189,6 +189,12 @@ $⊥$, since \Metis delivers proofs by refutation.
 In the following table we present the list of inference rules used
 by \Metis in its \TSTP derivations for propositional logic.
 
+We note a lack of clarity in defining the differences between the rules used in \TSTP derivations and the rules described on the documentation in
+the Metis description~\cite{hurd2003first}.
+These rules are not the same as we expected from the Fig.~\ref{fig:metis-inferences}.
+
+AGREGAR el sitio de metis official.!!
+
 % \Metis looks for a refutation to prove \verb!fof! problems.
 % A \verb!fof! problem contains the conjecture, the \emph{goal}, in the
 % problem. This goal is stripped into subgoals by using the \strip rule. The
@@ -214,6 +220,7 @@ by \Metis in its \TSTP derivations for propositional logic.
 \caption{\Metis inference rules.}
   \begin{center}
   {\renewcommand{\arraystretch}{1.6}%
+    \label{tab:agda-metis-table}
     \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}|}
     \hline
     \textbf{\Metis rule} & \textbf{Purpose} &\textbf{Theorem}\\ \hline
@@ -246,7 +253,6 @@ by \Metis in its \TSTP derivations for propositional logic.
       &\ref{thm:strip}
     \\[1ex]
     \hline
-    \label{tab:agda-metis-table}
     \end{tabular}}
   \end{center}
 \end{table}
