@@ -38,18 +38,31 @@
   year         = {1959},
 }
 
-@incollection{armand2011,
-  abstract  = {We present a way to enjoy the power of SAT and SMT provers in Coq without compromising soundness. This requires these provers to return not only a yes/no answer, but also a proof witness that can be independently rechecked. We present such a checker, written and fully certified in Coq. It is conceived in a modular way, in order to tame the proofs' complexity and to be extendable. It can currently check witnesses from the SAT solver ZChaff and from the SMT solver veriT. Experiments highlight the efficiency of this checker. On top of it, new reflexive Coq tactics have been built that can decide a subset of Coq's logic by calling external provers and carefully checking their answers.},
-  author    = {Armand, Michael and Faure, Germain and Grégoire, Benjamin and Keller, Chantal and Théry, Laurent and Werner, Benjamin},
-  booktitle = {Certified Programs and Proofs: First International Conference, CPP 2011, Kenting, Taiwan, December 7-9, 2011. Proceedings},
-  doi       = {10.1007/978-3-642-25379-9_12},
-  isbn      = {978-3-642-25379-9},
-  location  = {Berlin, Heidelberg},
-  pages     = {135--150},
-  publisher = {Springer Berlin Heidelberg},
-  title     = {{A Modular Integration of SAT/SMT Solvers to Coq through Proof Witnesses}},
-  url       = {https://doi.org/10.1007/978-3-642-25379-9_12},
-  year      = {2011},
+@InProceedings{armand2011,
+  abstract =     {We present a way to enjoy the power of SAT and SMT
+                  provers in Coq without compromising soundness. This
+                  requires these provers to return not only a yes/no
+                  answer, but also a proof witness that can be
+                  independently rechecked. We present such a checker,
+                  written and fully certified in Coq. It is conceived
+                  in a modular way, in order to tame the proofs'
+                  complexity and to be extendable. It can currently
+                  check witnesses from the SAT solver ZChaff and from
+                  the SMT solver veriT. Experiments highlight the
+                  efficiency of this checker. On top of it, new
+                  reflexive Coq tactics have been built that can
+                  decide a subset of Coq's logic by calling external
+                  provers and carefully checking their answers.},
+  author =       {Armand, Michael and Faure, Germain and Grégoire,
+                  Benjamin and Keller, Chantal and Théry, Laurent and
+                  Werner, Benjamin},
+  doi =          {10.1007/978-3-642-25379-9_12},
+  isbn =         {978-3-642-25379-9},
+  title =        {{A Modular Integration of SAT/SMT Solvers to Coq
+                  through Proof Witnesses}},
+  url =          {https://doi.org/10.1007/978-3-642-25379-9_12},
+  crossref =     {zzzCPP-2011},
+  pages =        {135--150},
 }
 
 @inproceedings{Armand2010,
@@ -884,6 +897,16 @@
   year =         2004,
   editor =       {Giunchiglia, Enrico and Tacchella. Armando},
   volume =       2919,
+  series =       {Lecture Notes in Computer Science},
+  publisher =    {Springer}
+}
+
+@Proceedings{zzzCPP-2011,
+  title =        {Certified Programs and Proofs (CPP 2011)},
+  booktitle =    {Certified Programs and Proofs (CPP 2011)},
+  year =         2011,
+  editor =       {Jouannaud, Jean-Pierre and Shao, Zhong},
+  volume =       7080,
   series =       {Lecture Notes in Computer Science},
   publisher =    {Springer}
 }
