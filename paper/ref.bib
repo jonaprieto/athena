@@ -345,6 +345,18 @@
   pages =        {311-321},
 }
 
+@Proceedings{IJCAR-2006,
+  title =        {International Joint Conference on Automated
+                  Reasoning (IJCAR 2006)},
+  year =         2006,
+  booktitle =    {International Joint Conference on Automated
+                  Reasoning (IJCAR 2006)},
+  editor =       {Furbach, Ulrich and Shankar, Natarajan},
+  volume =       4130,
+  series =       {Lecture Notes in Artifical Intellingence},
+  publisher =    {Springer},
+}
+
 @Proceedings{ITP-2010,
   title =        {Interactive Theorem Proving (ITP 2010)},
   booktitle =    {Interactive Theorem Proving (ITP 2010)},
@@ -462,17 +474,6 @@
   year      = {2001},
 }
 
-@article{Schulz:AICOM-2002,
-  annotation   = {StS},
-  author       = {Schulz, Stephan},
-  journal      = {Journal of AI Communications},
-  number       = {2/3},
-  pages        = {111--126},
-  title        = {{E -- A Brainiac Theorem Prover}},
-  volume       = {15},
-  year         = {2002},
-}
-
 @thesis{Klieber2014,
   author        = {Klieber, William},
   institution   = {Carnegie Mellon University},
@@ -482,6 +483,17 @@
   type          = {phdthesis},
   url           = {http://www.cs.cmu.edu/~wklieber/thesis.pdf},
   year          = {2014},
+}
+
+@article{Schulz:AICOM-2002,
+  annotation   = {StS},
+  author       = {Schulz, Stephan},
+  journal      = {Journal of AI Communications},
+  number       = {2/3},
+  pages        = {111--126},
+  title        = {{E -- A Brainiac Theorem Prover}},
+  volume       = {15},
+  year         = {2002},
 }
 
 @Misc{Sicard-Ramirez2016,
@@ -531,15 +543,13 @@
   year      = {2007},
 }
 
-@inproceedings{Sutcliffe-Schulz-Claessen-VanGelder-2006,
-  author    = {Sutcliffe, Geoff and Schulz, Stephan and Claessen, Koen and {Van Gelder}, Allen},
-  booktitle = {International Joint Conference on Automated Reasoning (IJCAR 2006)},
-  editor    = {Furbach, Ulrich and Shankar, Natarajan},
-  pages     = {67--81},
-  publisher = {Springer},
-  title     = {{Using the TPTP Language for Writing Derivations and Finite Interpretations}},
-  volume    = {4130},
-  year      = {2006},
+@InProceedings{Sutcliffe-Schulz-Claessen-VanGelder-2006,
+  author =       {Sutcliffe, Geoff and Schulz, Stephan and Claessen,
+                  Koen and {Van Gelder}, Allen},
+  title =        {Using the {TPTP} Language for Writing Derivations
+                  and Finite Interpretations},
+  crossref =     {IJCAR-2006},
+  pages =        {67--81},
 }
 
 @article{Sutcliffe1996,
@@ -660,6 +670,17 @@
   year    = {2015},
 }
 
+@thesis{Sicard2015,
+  abstract    = {We propose a new approach to computer-assisted verification of lazy functional programs where functions can be defined by general recursion. We work in first-order theories of functional programs which are obtained by translating Dybjer's programming logic (Dybjer, P. [1985]. Program Veri- fication in a Logical Theory of Constructions. In: Functional Programming Languages and Computer Architecture. Ed. by Jouannaud, J.-P. Vol. 201. Lecture Notes in Computer Science. Springer, pp. 334–349) into a first-order theory, and by extending this programming logic with new (co-)inductive predicates. Rather than building a special purpose system, we formalise our theories in Agda, a proof assistant for dependent type theory which can be used as a generic theorem prover. Agda provides support for interact- ive reasoning by representing first-order theories using the propositions-as- types principle. Further support is provided by off-the-shelf automatic the- orem provers for first-order-logic called by a Haskell program that translates our Agda representations of first-order formulae into the TPTP language understood by the provers. We show some examples where we combine interactive and automatic reasoning, covering both proofs by induction and co- induction. The examples include functions defined by structural recursion, simple general recursion, nested recursion, higher-order recursion, guarded and unguarded co-recursion. Keywords:},
+  author      = {Sicard-Ramírez, Andrés and Bove, Ana and Dybjer, Peter},
+  institution = {Universidad de la Rep{\{}ú{\}}blica},
+  keywords    = {automatic proofs,correctness,first-order theories,functional program,general recursion,interactive proofs,lazy evaluation,total lan- guages,type theory},
+  title       = {{Reasoning about Functional Programs by Combining Interactive and Automatic Proofs}},
+  type        = {phdthesis},
+  url         = {https://www.colibri.udelar.edu.uy/handle/123456789/4715},
+  year        = {2015},
+}
+
 @article{appel1959,
   author       = {Appel, K. I.},
   issn         = {00224812},
@@ -671,17 +692,6 @@
   url          = {http://www.jstor.org/stable/2963901},
   volume       = {24},
   year         = {1959},
-}
-
-@thesis{Sicard2015,
-  abstract    = {We propose a new approach to computer-assisted verification of lazy functional programs where functions can be defined by general recursion. We work in first-order theories of functional programs which are obtained by translating Dybjer's programming logic (Dybjer, P. [1985]. Program Veri- fication in a Logical Theory of Constructions. In: Functional Programming Languages and Computer Architecture. Ed. by Jouannaud, J.-P. Vol. 201. Lecture Notes in Computer Science. Springer, pp. 334–349) into a first-order theory, and by extending this programming logic with new (co-)inductive predicates. Rather than building a special purpose system, we formalise our theories in Agda, a proof assistant for dependent type theory which can be used as a generic theorem prover. Agda provides support for interact- ive reasoning by representing first-order theories using the propositions-as- types principle. Further support is provided by off-the-shelf automatic the- orem provers for first-order-logic called by a Haskell program that translates our Agda representations of first-order formulae into the TPTP language understood by the provers. We show some examples where we combine interactive and automatic reasoning, covering both proofs by induction and co- induction. The examples include functions defined by structural recursion, simple general recursion, nested recursion, higher-order recursion, guarded and unguarded co-recursion. Keywords:},
-  author      = {Sicard-Ramírez, Andrés and Bove, Ana and Dybjer, Peter},
-  institution = {Universidad de la Rep{\{}ú{\}}blica},
-  keywords    = {automatic proofs,correctness,first-order theories,functional program,general recursion,interactive proofs,lazy evaluation,total lan- guages,type theory},
-  title       = {{Reasoning about Functional Programs by Combining Interactive and Automatic Proofs}},
-  type        = {phdthesis},
-  url         = {https://www.colibri.udelar.edu.uy/handle/123456789/4715},
-  year        = {2015},
 }
 
 @InProceedings{armand2011,
