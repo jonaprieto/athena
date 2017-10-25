@@ -134,10 +134,10 @@ We based on the definition of this function from the \Metis source code.
 &\hspace{.495mm}\fstrip₁ : \Prop → \Nat → \Prop\\
 &\begin{array}{llll}
 \fstrip₁ &(φ₁ ∧ φ₂)     &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
-\fstrip₁ &(φ₁ ∨ φ₂)     &(\suc~n) &= \fuh~(¬ φ₁ ⇒ \fstrip₁~φ₂~n)\\
+\fstrip₁ &(φ₁ ∨ φ₂)     &(\suc~n) &= \fuh~((¬ φ₁) ⇒ \fstrip₁~φ₂~n)\\
 \fstrip₁ &(φ₁ ⇒ φ₂)     &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
 \fstrip₁ &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
-\fstrip₁ &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
+\fstrip₁ &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~((¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n)\\
 \fstrip₁ &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
 \fstrip₁ &(¬ ¬ φ₁)      &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n)\\
 \fstrip₁ &(¬ ⊥)         &(\suc~n) &= ⊤\\
@@ -147,7 +147,7 @@ We based on the definition of this function from the \Metis source code.
 \end{aligned}
 \end{equation}
 
-In a similar way as we define $\fuh_{cm}$ in (\ref{eq:uh-complexity}) we define
+In a similar way as we define $\fuh_{cm}$ in (\ref{eq:uh-complexity}), we define
 $\fstrip_{cm}$ as the complexity measure for $\fstrip₀$ function. As expected,
 the \fstrip function is defined as follows.
 
@@ -232,7 +232,7 @@ and the result follows.
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ \fstrip₁~(¬ (φ₁ ∨ φ₂))~(\suc~n)$}
 \RightLabel{by~(\ref{eq:strip-fixed})}
-\UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)$}
+\UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~((¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n)$}
 \RightLabel{∧-proj₁}
 \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~(¬ φ₁)~n)$}
 \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
@@ -247,11 +247,11 @@ and the result follows.
   \UnaryInfC{$Γ ⊢ ¬ φ₁$}
   \AxiomC{$Γ ⊢ \fstrip₁~(¬ (φ₁ ∨ φ₂))~(\suc~n)$}
   \RightLabel{by~(\ref{eq:strip-fixed})}
-  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)$}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~((¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n)$}
   \RightLabel{∧-proj₂}
-  \UnaryInfC{$Γ ⊢ \fuh~(¬ φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)$}
+  \UnaryInfC{$Γ ⊢ \fuh~((¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n)$}
   \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
-  \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \fstrip₁~(¬ φ₂)~n$}
+  \UnaryInfC{$Γ ⊢ (¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n$}
   \RightLabel{⇒-elim}
   \BinaryInfC{$Γ ⊢ \fstrip₁~(¬ φ₂)~n$}
   \RightLabel{by~ind.~hyp.}

@@ -20,10 +20,10 @@ In the following \Metis \TSTP derivation, we see how
 by using distributive laws included in the conjunctive normal form conversion.
 
 \begin{verbatim}
-fof(a1, axiom, p => (q & r)).
+fof(a1, axiom, p ⇒ (q ∧ r)).
 ...
-fof(norm0, ~ p | (q & r), inf(canonicalize, [a1])).
-fof(norm1, (~ p | q) & (~ p | r), inf(clausify, [norm0])).
+fof(norm0, ¬ p ∨ (q ∧ r), inf(canonicalize, [a1])).
+fof(norm1, (¬ p ∨ q) ∧ (¬ p ∨ r), inf(clausify, [norm0])).
 ...
 \end{verbatim}
 
@@ -48,7 +48,7 @@ fof(norm1, (~ p | q) & (~ p | r), inf(clausify, [norm0])).
 \end{mainth}
 
 \begin{proof}
-If $φ ≡ ψ$, $Γ ⊢ \fclausify~φ~ψ$ normalizes to $Γ ⊢ ψ$. The conclusion follows by applying the $\fsubst$ lemma. Otherwise, we use Theorem~\ref{lem:reorder-and-or} and Theorem~\ref{lem:cnf}.
+If $φ ≡ ψ$, $Γ ⊢ \fclausify~φ~ψ$ normalizes to $Γ ⊢ ψ$. The conclusion follows by applying the $\fsubst$ lemma. Otherwise, we use Lemma~\ref{lem:reorder-and-or} and Lemma~\ref{lem:cnf}.
 \end{proof}
 
 \begin{myremark}
