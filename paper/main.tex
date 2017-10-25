@@ -350,6 +350,15 @@ backend=biber,
 
 \addbibresource{ref.bib}
 
+% Remove the quotes from the title.
+\DeclareFieldFormat
+  [article,%
+  incollection,%
+  inproceedings,%
+  thesis,% works for mastersthesis and phdthesis
+  unpublished,%
+  ]{title}{#1}
+
 % -------------------------------------------------------------------
 % Hyperef.
 % -------------------------------------------------------------------
