@@ -359,6 +359,13 @@ backend=biber,
   unpublished,%
   ]{title}{#1}
 
+% Remove "In:" before journal names.
+%
+% From
+% http://tex.stackexchange.com/questions/10682/suppress-in-biblatex
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+
 % -------------------------------------------------------------------
 % Hyperef.
 % -------------------------------------------------------------------
