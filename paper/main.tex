@@ -13,8 +13,6 @@
 \spnewtheorem*{myremark}{Remark}{\it}{\rmfamily}
 \spnewtheorem*{myexample}{Example}{\it}{\rmfamily}
 
-\usepackage[numbers]{natbib}
-
 \usepackage{subfiles}
 
 \usepackage{needspace}  %% https://tex.stackexchange.com/questions/28203/
@@ -129,7 +127,6 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{ucs}
 \usepackage{autofe}
 \usepackage{afterpage}
 \usepackage{comment}
@@ -339,6 +336,21 @@
 \noindent\keywordname\enspace\ignorespaces#1}
 
 % -------------------------------------------------------------------
+% biblatex.
+% -------------------------------------------------------------------
+
+\usepackage[%
+backend=biber,
+% bibstyle=authoryear,%
+% citestyle=authoryear-comp,%
+% giveninits=false,%%
+% maxcitenames=4,%
+]{biblatex}
+\usepackage{csquotes}
+
+\addbibresource{ref.bib}
+
+% -------------------------------------------------------------------
 % Hyperef.
 % -------------------------------------------------------------------
 
@@ -385,8 +397,7 @@ Universidad EAFIT, Medell\'in, Colombia\\
 \subfile{sections/conclusions-and-future-work.tex}
 \subfile{sections/acknowledgements.tex}
 
-\bibliographystyle{plainnat}
-\bibliography{ref}
+\printbibliography
 \addcontentsline{toc}{section}{References}
 
 % \newpage
