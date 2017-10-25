@@ -367,6 +367,23 @@ isbn=false,%
 \renewbibmacro{in:}{%
   \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
 
+% Remove italics from journal names.
+\DeclareFieldFormat{journaltitle}{#1}
+
+% Remove italics from proceedings names in articles in proceedings.
+\DeclareFieldFormat%
+  [incollection,%
+  inproceedings,%
+  ]{booktitle}{#1}
+
+  % Remove italics from the title names.
+\DeclareFieldFormat%
+ [book,%
+ misc,%
+ online,%
+ report,%
+ ]{title}{#1}
+
 % -------------------------------------------------------------------
 % Hyperef.
 % -------------------------------------------------------------------
