@@ -413,6 +413,19 @@ maxbibnames=6,%
 
 \usepackage{hyperref}
 
+% -------------------------------------------------------------------
+% Include the current time.
+% -------------------------------------------------------------------
+
+\usepackage{fancyhdr}
+\usepackage[us,12hr]{datetime} % `us' makes \today behave as usual in TeX/LaTeX
+\fancypagestyle{plain}{
+\fancyhf{}
+\rfoot{Compiled on {\ddmmyyyydate\today} at \currenttime}
+\lfoot{Page \thepage}
+\renewcommand{\headrulewidth}{0pt}}
+\pagestyle{plain}
+
 \begin{document}
 
 \mainmatter
