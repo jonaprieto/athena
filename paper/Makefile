@@ -1,7 +1,7 @@
 .PHONY : pdf
 pdf :
-	- latexmk -pdf main.tex
-# - pdflatex main.tex
+	# - latexmk -pdf main.tex
+	- pdflatex main.tex
 
 # references-mendeley:
 #

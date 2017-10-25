@@ -14,10 +14,10 @@ The subgoals associated to a goal are introduced in the \TSTP derivation
 with the \strip inference rule.
 
 \begin{verbatim}
-fof(goal, conjecture, (p & r) & q)).
+fof(goal, conjecture, (p ∧ r) ∧ q)).
 fof(sg0, p, inf(strip, [goal])).
-fof(sg1, p => r, inf(strip, [goal])).
-fof(sg2, (p & r) => q, inf(strip, [goal])).
+fof(sg1, p ⇒ r, inf(strip, [goal])).
+fof(sg2, (p ∧ r) ⇒ q, inf(strip, [goal])).
 \end{verbatim}
 
 In this example, the conjecture \verb!(p & r) & q! is stripped into
@@ -53,15 +53,10 @@ $\fuh_{1}$ function.
 \begin{itemize}
   \item If $n = 0$, by definition in~(\ref{eq:uh-structured})
         we conclude $Γ ⊢ φ$.
-  \item If $n = 1$, we apply the following theorem proved in~\cite{AgdaProp},
-    \begin{equation*}
-    \texttt{∧⇒\rm{-to-}⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).
-    \end{equation*}
-  \item For $n > 1$, we use induction on the structure of the second
+  \item For $n \geq 1$, we use induction on the structure of the second
         argument.
 \vskip 2mm
 \begin{itemize}
-
 \item Case $φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)$.
 \begin{equation*}
   \begin{bprooftree}
@@ -74,6 +69,10 @@ $\fuh_{1}$ function.
   \UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃)}
   \end{bprooftree}
 \end{equation*}
+using the following theorem proved in~\cite{AgdaProp},
+  \begin{equation*}
+  \texttt{∧⇒\rm{-to-}⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).
+  \end{equation*}
 
 \item Case $φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)$.
 \begin{equation*}
@@ -123,12 +122,11 @@ Now, using the theorem \texttt{⇒∧⇒\rm{-to-}⇒∧} from~\cite{AgdaProp},
 \end{itemize}
 \end{proof}
 
-The function that yields the conjunction of subgoals that implies the goal of
-the problem in the \Metis \TSTP derivations is not a structurally recursive
-function.  We present its structural recursive function
+The \fstrip₀ function yields the conjunction of subgoals that implies the goal of the problem in the \Metis \TSTP derivations but is not a structurally recursive
+function.  Instead, we present its structural recursive version
 in~(\ref{eq:strip-fixed}) after applying
 the bounded technique described in Section~\ref{ssec:structural-recursion}.
-We based the definition of this function based on the \Metis source code.
+We based on the definition of this function from the \Metis source code.
 
 \begin{equation}
 \label{eq:strip-fixed}
@@ -150,7 +148,7 @@ We based the definition of this function based on the \Metis source code.
 \end{equation}
 
 In a similar way as we define $\fuh_{cm}$ in (\ref{eq:uh-complexity}) we define
-$\fstrip_{cm}$ as the complexity measure for $\fstrip₀$ function. As excepted,
+$\fstrip_{cm}$ as the complexity measure for $\fstrip₀$ function. As expected,
 the \fstrip function is defined as follows.
 
 \begin{align}
@@ -170,7 +168,7 @@ If $Γ ⊢ \fstrip₁~φ~n$ then $Γ ⊢ φ$.
 
 \begin{proof}
 The proof is by induction on the structure of the
-formula~$φ$ by following the cases in~(\ref{eq:strip-fixed}).
+formula~$φ$ by following the equations in~(\ref{eq:strip-fixed}).
 We present a straightforward case with double negation, a case with
 conjunction connective, and last, the case with a negated disjunction.
 We refer the reader to~\cite{AgdaMetis} for the complete proof in \Agda.
@@ -188,8 +186,8 @@ $\bullet$~Case $φ ≡ ¬ ¬ φ₁$.
   \end{bprooftree}
 \end{equation*}
 
-$\bullet$~Case $φ ≡ φ₁ ∧ φ₂$. We get a proof for each conjunct and using the
-introduction rule for conjunction connective, the expected result follows.
+$\bullet$~Case $φ ≡ φ₁ ∧ φ₂$. We prove $Γ ⊢ φ₁$ and $Γ ⊢ φ₂$. Using the
+introduction rule for conjunction, the expected result follows.
 
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
@@ -314,23 +312,24 @@ If $Γ ⊢ s₁$ and $Γ ⊢ s₂$ then $Γ ⊢ φ$.
 
 Since \Metis proves a conjecture by refutation,
 to prove each subgoal, \Metis assumes the negation of it
-using the \negate rule. Then, the \negate rule is
-always derived from a \strip inference application.
+by using the \negate rule after the \strip inference application
+that introduce such a subgoal.
 
 \begin{myexample}
-In the following \TSTP derivation, the three subgoal are
-introduced by the \negate rule.
+In the following \TSTP derivation, note that the three subgoals
+\verb!sg0!, \verb!sg1! and \verb!sg2! are assumed by the \negate
+rule in \verb!neg0!, \verb!neg1! and  \verb!neg2! respectively.
 
 \begin{verbatim}
-fof(goal, conjecture, (p & r & q)).
+fof(goal, conjecture, (p ∧ r ∧ q)).
 fof(sg0, p, inf(strip,[goal])).
-fof(sg1, p => r, inf(strip,[goal])).
-fof(sg2, (p & r) => q, inf(strip,[goal])).
-fof(neg0, ~ p, inf(negate,[sg0])).
+fof(sg1, p ⇒ r, inf(strip,[goal])).
+fof(sg2, (p ∧ r) ⇒ q, inf(strip,[goal])).
+fof(neg0, ¬ p, inf(negate,[sg0])).
 ...
-fof(neg1, ~ (p => r), inf(negate,[sg1])).
+fof(neg1, ¬ (p ⇒ r), inf(negate,[sg1])).
 ...
-fof(neg2, ~ ((p & r) => q), inf(negate,[sg2])).
+fof(neg2, ¬ ((p ∧ r) ⇒ q), inf(negate,[sg2])).
 \end{verbatim}
 \end{myexample}
 

@@ -6,15 +6,15 @@
 
 Logic equivalence between propositions is a major issue to justify
 prover reasoning steps. Since we left out semantics to treat only the
-syntax aspects of the propositions, our approach shows equivalence
+syntax aspects of propositional logic, our approach shows logic equivalence
 by converting propositions to their conjunctive normal form,
 and reordering those and the inner disjunctions to match them.
-Below, we provide some lemmas to perform such reordering tasks,
-we omit the proofs but they can found in~\cite{AgdaMetis}.
+Below, we provide Lemma~\ref{lem:reorder-or}, Lemma~\ref{lem:reorder-and}, Lemma~\ref{lem:reorder-and-or} to perform such reordering tasks,
+the omitted proofs can be found in~\cite{AgdaMetis}.
 
 First, we define \fassoc$_{⬓}$ function in~(\ref{eq:fassoc})
 to convert a disjunction or a conjunction into its right-associative form.
-The square symbol can be the conjunction symbol or the disjunction symbol.
+The square symbol (⬓) can be the conjunction symbol or the disjunction symbol.
 We use $\fassoc_{∧}$ to convert conjunctions and $\fassoc_{∨}$ for
 disjunctions.
 
@@ -30,12 +30,6 @@ disjunctions.
   \end{aligned}
 \end{equation}
 
-\begin{myexample}\hspace{10cm}
-\begin{enumerate}
-\item $\fassoc_{∨}~(((p ∨ ((q ∨ r) ∨ s)) ∨ t) = p ∨ (q ∨ (r ∨ (s ∨ t)))$.
-\item $\fassoc_{∧}~((((p ∧ q) ∧ r) ∧ s) ∧ t) = p ∧ (q ∧ (r ∧ (s ∧ t)))$.
-\end{enumerate}
-\end{myexample}
 
 \begin{mainlemma}
 \label{lem:rassoc}
@@ -274,7 +268,7 @@ the formula from the first derivation and the
 negative literal $¬ l$ must occur in the formula from the second derivation,
 see the pattern of \emph{resolve} rule in Fig.~\ref{fig:metis-inferences}.
 
-\begin{example}\hspace{10cm}
+\begin{myexamplenum}\hspace{10cm}
 \label{ex:resolve-tstp}
 \begin{verbatim}
 cnf(ref4, (~ r | p | q), inf(canonicalize, [norm5])).
@@ -291,7 +285,7 @@ If the scenario would have other like replacing \verb!ref5! by
 cnf(ref5, (r | p | q), inf(canonicalize, [norm6])).
 \end{verbatim}
 We have could derive $(p ∨ q) ∨ (p ∨ q)$ but again, that is not the expected result.
-\end{example}
+\end{myexamplenum}
 
 Therefore, we perform a sequence of rearrangements inside the
 formulas involved to match with the pattern expected by the resolution theorem

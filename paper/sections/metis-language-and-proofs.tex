@@ -60,11 +60,11 @@ Where the \name{language} can be \name{fof} or \name{cnf}. The \name{name}
 serves to identify the formula within the problem. Each formula
 assumes a \name{role}, this could be an \name{axiom},
 \name{conjecture}, \name{definition}, \name{plain} or an \name{hypothesis}.
-The formulas include the constants \verb!$true!, negation unary operator (\verb!~!), and the binary connectives (\verb!&!, \verb!|!, \verb!=>!, \verb!<=>!),
+The formulas include the constants \verb!$true! and \verb!$false!, negation unary operator (\verb!~!), and the binary connectives (\verb!&!, \verb!|!, \verb!=>!, \verb!<=>!) to represent $⊤, ⊥, ¬, ∧, ∨, ⇒, ⇔$ respectively.
 
 \begin{myexample}
 For instance, let us express the problem
-$p\, \vdash \neg (p \wedge \neg p) ∨ (q \wedge \neg q)$
+$p\, ⊢ ¬  (p ∧ ¬ p) ∨ (q ∧ ¬ q)$
 in \TPTP syntax. We begin by declaring the $p$ axiom using the \verb!axiom!
 keyword. Later, we include the expected conclusion using the
 \verb!conjecture! keyword.
@@ -126,18 +126,18 @@ We adopt a customized \TSTP syntax to keep as short as possible the \Metis deriv
 
 Let us consider the following \TSTP derivation using
 the customized \TSTP syntax. Note that we remove
-empty fields in the inference information, we shorten names as long as possible, and we delete the \verb!role! field when the role is
-\verb!plain!.
+empty fields in the inference information, we shorten names as long as possible, we delete the \verb!role! field when the role is
+\verb!plain! and we use the math symbols to express the formulas.
 
 \begin{verbatim}
 fof(premise, axiom, p).
 fof(goal, conjecture, p).
 fof(sg0, p, inf(strip, [goal])).
-fof(neg0, ~ p, inf(negate, [sg0])).
-fof(norm0, ∼ p, inf(canonicalize, [neg0])).
+fof(neg0, ¬ p, inf(negate, [sg0])).
+fof(norm0, ¬ p, inf(canonicalize, [neg0])).
 fof(norm1, p, inf(canonicalize, [premise])).
-fof(norm2, $false, inf(simplify, [norm0, norm1]))
-cnf(refute0, $false, inf(canonicalize, [norm2])).
+fof(norm2, ⊥, inf(simplify, [norm0, norm1]))
+cnf(refute0, ⊥, inf(canonicalize, [norm2])).
 \end{verbatim}
 
 \end{myexample}
@@ -221,37 +221,34 @@ AGREGAR el sitio de metis official.!!
   \begin{center}
   {\renewcommand{\arraystretch}{1.6}%
     \label{tab:agda-metis-table}
-    \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}|}
+    \begin{tabular}{|@{\hspace{2mm}}c@{\hspace{2mm}}l@{\hspace{3mm}}l@{\hspace{3mm}}|}
     \hline
-    \textbf{\Metis rule} & \textbf{Purpose} &\textbf{Theorem}\\ \hline
-    \texttt{canonicalize}
-      &Normalization of the formula
-      &\ref{thm:canonicalize}
-    \\
-    \texttt{clausify}
-      &Performs clausification
-      &\ref{thm:clausify}
-    \\
-    \hyperlink{atp-conjunct}{\texttt{conjunct}}
-      &Takes a formula from a conjunction
-      &\ref{thm:conjunct}
-    \\
-    % \texttt{negate}
-    %   &Negate the formula
-    %   &\ref{thm:negate}
-    % \\
-    \texttt{resolve}
-      &A general form of the resolution theorem
-      &\ref{thm:resolve}
-    \\
-    \texttt{simplify}
-      &Simplify definitions and theorems
-      &\ref{thm:simplify}
-    \\
-    \texttt{strip}
+    \textbf{Theorem} & \textbf{Purpose} &\textbf{\Metis rule}\\ \hline
+
+       \ref{thm:strip}
       &Strip a goal into subgoals
-      &\ref{thm:strip}
-    \\[1ex]
+      &\texttt{strip}    \\[1ex]
+
+       \ref{thm:conjunct}
+      &Takes a formula from a conjunction
+      &\texttt{conjunct}    \\
+
+       \ref{thm:resolve}
+      &A general form of the resolution theorem
+      &\texttt{resolve}    \\
+
+       \ref{thm:clausify}
+      &Performs clausification
+      &\texttt{clausify}    \\
+
+       \ref{thm:canonicalize}
+      &Normalization of the formula
+      &\texttt{canonicalize}    \\
+
+       \ref{thm:simplify}
+      &Simplify definitions and theorems
+      &\texttt{simplify}    \\
+
     \hline
     \end{tabular}}
   \end{center}

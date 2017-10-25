@@ -19,9 +19,9 @@ fof(p3, (r | ~ p), inf(conjunct, [p1])).
 
 In the first formula, \verb!p & q & (r | ~ p)!, we find a left-associative
 conjunction named \verb!p1!.
-The \conjunct extracts \verb!q! from the \verb!p1! using a left
+The \conjunct rule extracts \verb!q! from the \verb!p1! using a left
 projection (∧-proj₁) follow by a right projection (∧-proj₂).
-The \conjunct extracts \verb!r | ~ p! by using a right projection
+After, the \conjunct rule extracts \verb!r | ~ p! by using a right projection
 on \verb!p1!.
 \end{myexample}
 
@@ -63,7 +63,7 @@ Then, we get the desire conclusion by applying the $\fsubst$ lemma.
   \BinaryInfC{$Γ ⊢ ψ$}
   \end{bprooftree}
 \end{equation*}
-\item[$\bullet$] Otherwise, the last case follows trivially.
+\item[$\bullet$] Otherwise, the last case follows from the hypothesis.
 \end{itemize}
 \end{proof}
 
