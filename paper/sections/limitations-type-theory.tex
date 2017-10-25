@@ -59,7 +59,7 @@ expected outcome~\cite{Bertot2004}.
 The type of natural numbers is called \Nat, and it is defined as
 usual, where \zero and \suc are its data constructors. We use names
 and symbols of the arithmetic operations as usual.
-We include syntax sugar for $\zero$, $\suc$, $\suc(\zero)$,
+We include syntax sugar for $\zero$, $\suc$, $\suc~\zero$,
 $\cdots$, with the decimal representation: $0$, $1$, $2$, $\cdots$
 as well.
 \end{notation}
@@ -100,7 +100,7 @@ theory is to define a new function using a bounded recursion.
 &\begin{array}{llll}
 \fuh_{1} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &(\suc~n) &= \fuh_{1}~((φ₁ ∧ φ₂) ⇒ φ₃)~n\\
 \fuh_{1} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &(\suc~n) &= \fuh_{1}~(φ₁ ⇒ φ₂)~n ∧ \fuh_{1}~(φ₁ ⇒ φ₃)~n\\
-\fuh_{1} &φ &\xspace\text{n} &= φ
+\fuh_{1} &φ &n &= φ
 \end{array}
 \end{aligned}
 \end{equation}

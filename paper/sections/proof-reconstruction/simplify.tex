@@ -52,7 +52,7 @@ For $i,\, j = 1, 2$, $i\neq j$ and $γ : \Prop$,
   \end{equation}
 
 
-\begin{mainth}[thm-simplify] % (fold)
+\begin{mainth}
   \label{thm:simplify}
 For $i=1,\, 2, \cdots, n$, $Γ ⊢ φᵢ$ and $ψ : \Prop$ then
 if $n > 2$, $Γ ⊢ \fsimplify~γ_{n-2}~φ_{n}~ψ$ where $γ_{i} = \fsimplify~φ_{i}~φ_{i+1}~ψ$
@@ -86,24 +86,24 @@ fof(norm6, ⊥, inf(simplify, [norm1, norm4, norm5])).
 \item The \simplify rule derives \verb!(¬ g)! in \verb!norm2!
 from \verb!norm2! and \verb!norm3! derivations using the fourth case
 in~(\ref{eq:simplify-2}).
-$$\fsimplify~(\neg g \vee q)~(\neg q) (\neg g) = \neg g.$$
+$$\fsimplify~(¬ g ∨ q)~(¬ q) (¬ g) = ¬ g.$$
 \begin{verbatim}
 fof(norm2, ¬ g ∨ q, inf(conjunct, [norm0])).
-fof(norm3, ¬ q,     inf(conjunct, [norm0])).
-fof(norm4, ¬ g,     inf(simplify, [norm2, norm3])).
+fof(norm3, ¬ q, inf(conjunct, [norm0])).
+fof(norm4, ¬ g, inf(simplify, [norm2, norm3])).
 \end{verbatim}
 \item To derive \verb!⊥! in \verb!norm6! using
 Theorem~\ref{thm:simplify} we get the following proof.
 
 \begin{equation*}
 \begin{bprooftree}
-\AxiomC{$\Gamma \vdash g \vee (\neg a \wedge k)$}
-\AxiomC{$\Gamma \vdash\neg g$}
-\RightLabel{Thm.~\ref{thm:simplify}}
-\BinaryInfC{$\Gamma \vdash \neg a \wedge k$}
-\AxiomC{$\Gamma \vdash \neg k$}
-\RightLabel{Thm.~\ref{thm:simplify}}
-\BinaryInfC{$\bot$}
+\AxiomC{$Γ ⊢ g ∨ (¬ a ∧ k)$}
+\AxiomC{$Γ ⊢ ¬ g$}
+\RightLabel{Theorem~\ref{thm:simplify}}
+\BinaryInfC{$Γ ⊢ ¬ a ∧ k$}
+\AxiomC{$Γ ⊢ ¬ k$}
+\RightLabel{Theorem~\ref{thm:simplify}}
+\BinaryInfC{$⊥$}
 \end{bprooftree}
 \end{equation*}
 

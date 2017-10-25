@@ -166,26 +166,26 @@ using Lemma.~\ref{lem:canon-or}.
    \fcanon_{∨} &(⊥ ∨ φ)  &= φ \\
    \fcanon_{∨} &(⊤ ∨ φ)  &= ⊤  \\
    \fcanon_{∨} &(φ ∨ ⊤)  &= ⊤  \\
-   \fcanon_{∨} &(φ₁ ∨ φ₂) &= \frm_∨~(\rm{ndisj}_∨~(φ₁ ∨ φ₂)) \\
+   \fcanon_{∨} &(φ₁ ∨ φ₂) &= \frm_∨~(\fndisj_∨~(φ₁ ∨ φ₂)) \\
    \fcanon_{∨} &φ         &= φ.
   \end{array}\\[2mm]
   \text{and }\\[2mm]
-  &\hspace{.495mm}\rm{ndisj}_{∨} : \NProp \to \NProp\\
+  &\hspace{.495mm}\fndisj_{∨} : \NProp \to \NProp\\
   &\begin{array}{lll}
-    \rm{ndisj}_{∨} &(¬ φ₁ ∨ φ₂) &=
+    \fndisj_{∨} &(¬ φ₁ ∨ φ₂) &=
         \begin{cases}
          ⊤, &\text{ if } φ₁ ∈_{∨} φ₂\\
-         ⊤, &\text{ if } \rm{ndisj}_{∨}~φ₂≡ ⊤\\
-         ¬ φ₁ ∨ \rm{ndisj}_{∨}~φ₂, &\text{ otherwise.}
+         ⊤, &\text{ if } \fndisj_{∨}~φ₂≡ ⊤\\
+         ¬ φ₁ ∨ \fndisj_{∨}~φ₂, &\text{ otherwise.}
         \end{cases}\\
 
-  \rm{ndisj}_{∨} &(φ₁ ∨ φ₂)&=
+  \fndisj_{∨} &(φ₁ ∨ φ₂)&=
         \begin{cases}
          ⊤, &\,\,\,\,\,\,\text{ if } ¬φ₁ ∈_{∨} φ₂ \\
-         ⊤, &\,\,\,\,\,\,\text{ if } \rm{ndisj}_{∨}(φ₂) ≡ ⊤\\
-         φ₁ ∨ \rm{ndisj}_{∨}~φ₂, &\,\,\,\,\,\,\text{ otherwise.}
+         ⊤, &\,\,\,\,\,\,\text{ if } \fndisj_{∨}(φ₂) ≡ ⊤\\
+         φ₁ ∨ \fndisj_{∨}~φ₂, &\,\,\,\,\,\,\text{ otherwise.}
         \end{cases}\\
-    \rm{ndisj}_{∨}&φ &=φ.
+    \fndisj_{∨}&φ &=φ.
     \end{array}
 \end{aligned}
 \end{equation*}
@@ -251,25 +251,25 @@ using Lemma~\ref{lem:canon-and}.
         \fcanon_{∧} &(φ₁ ∧ ⊤)  &= φ₁ \\
         \fcanon_{∧} &(⊥ ∧ φ₂)  &= ⊥  \\
         \fcanon_{∧} &(φ₁ ∧ ⊥)  &= ⊥  \\
-        \fcanon_{∧} &(φ₁ ∧ φ₂) &= \frm_∧(\rm{ndisj}_∧(φ₁ ∧ φ₂)) \\
+        \fcanon_{∧} &(φ₁ ∧ φ₂) &= \frm_∧(\fndisj_∧(φ₁ ∧ φ₂)) \\
         \fcanon_{∧} &φ         &= φ
        \end{array}\\
   \text{and }\\
-    &\hspace{.495mm}\rm{ndisj}_{∧} : \NProp \to \NProp\\
+    &\hspace{.495mm}\fndisj_{∧} : \NProp \to \NProp\\
     &\begin{array}{lll}
-      \rm{ndisj}_{∧}&(¬ φ₁ ∧ φ₂) &=
+      \fndisj_{∧}&(¬ φ₁ ∧ φ₂) &=
         \begin{cases}
           ⊥, &\text{ if } φ₁ ∈_{∧} φ₂\\
-          ⊥, &\text{ if } \rm{ndisj}_{∧}(φ₂) ≡ ⊥\\
-          ¬ φ₁ ∧ \rm{ndisj}_{∧}(φ₂), &\text{ otherwise.}
+          ⊥, &\text{ if } \fndisj_{∧}(φ₂) ≡ ⊥\\
+          ¬ φ₁ ∧ \fndisj_{∧}(φ₂), &\text{ otherwise.}
         \end{cases}\\
-      \rm{ndisj}_{∧}&(φ₁ ∧ φ₂) &=
+      \fndisj_{∧}&(φ₁ ∧ φ₂) &=
         \begin{cases}
           ⊥,  &\,\,\,\,\,\,\text{ if } φ₁ ∈_{∧} φ₂\\
-          ⊥,  &\,\,\,\,\,\,\text{ if } \rm{ndisj}_{∧}(φ₂) ≡ ⊥\\
-          φ₁ ∧ \rm{ndisj}_{∧}(φ₂), &\,\,\,\,\,\,\text{ otherwise.}
+          ⊥,  &\,\,\,\,\,\,\text{ if } \fndisj_{∧}(φ₂) ≡ ⊥\\
+          φ₁ ∧ \fndisj_{∧}(φ₂), &\,\,\,\,\,\,\text{ otherwise.}
         \end{cases}\\
-      \rm{ndisj}_{∧} &φ &=φ.
+      \fndisj_{∧} &φ &=φ.
      \end{array}
     \end{aligned}
   \end{equation*}
@@ -379,11 +379,11 @@ we use the $\fform$ function.
 
 \begin{mainlemma}
 \label{lem:cnf}
-  If $Γ ⊢ φ$ then $Γ ⊢ \rm{cnf}~φ$ where,
+  If $Γ ⊢ φ$ then $Γ ⊢ \fcnf~φ$ where,
   \begin{align*}
     \begin{split}
-    &\rm{cnf} : \Prop \to \Prop\\
-    &\rm{cnf}~φ = \fform~(\fdist~(\fnnf~φ))
+    &\fcnf : \Prop \to \Prop\\
+    &\fcnf~φ = \fform~(\fdist~(\fnnf~φ))
     \end{split}
   \end{align*}
 \end{mainlemma}
@@ -399,7 +399,7 @@ case of \canonicalize in Theorem~\ref{thm:canonicalize}.
 
 \begin{mainlemma}
 \label{lem:cnf-inv}
-  If $Γ ⊢ \rm{cnf}~φ$ then $Γ ⊢ φ$.
+  If $Γ ⊢ \fcnf~φ$ then $Γ ⊢ φ$.
 \end{mainlemma}
 
 The \canonicalize rule is an overloaded inference rule which performs
@@ -444,7 +444,7 @@ the conjunctive normal form of the target formula.
     \RightLabel{Lemma~\ref{lem:form}}
     \UnaryInfC{$Γ ⊢ \fform~(\fnnf~φ)$}
     \AxiomC{$ψ ≡ \fform~(\fnnf~φ)$}
-    \RightLabel{subst}
+    \RightLabel{\fsubst}
     \BinaryInfC{$Γ ⊢ ψ$}
   \end{bprooftree}
 \end{equation*}
@@ -458,7 +458,7 @@ the conjunctive normal form of the target formula.
       \RightLabel{Lemma~\ref{lem:reorder-and-or}}
       \UnaryInfC{$Γ ⊢ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$}
       \AxiomC{$γ$}
-      \RightLabel{subst}
+      \RightLabel{\fsubst}
       \BinaryInfC{$Γ ⊢ \fcnf~ψ$}
       \RightLabel{Lemma~\ref{lem:cnf-inv}}
       \UnaryInfC{$Γ ⊢ ψ$}

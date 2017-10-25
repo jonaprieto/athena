@@ -65,13 +65,13 @@ $\fuh_{1}$ function.
   \UnaryInfC{$Γ ⊢ \fuh_1~((φ₁ ∧ φ₂) ⇒ φ₃)~n$}
   \RightLabel{by~ind.~hyp.}
   \UnaryInfC{Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃}
-  \RightLabel{∧⇒\rm{-to-}⇒⇒}
+  \RightLabel{∧⇒\textsf{-to-}⇒⇒}
   \UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃)}
   \end{bprooftree}
 \end{equation*}
 using the following theorem proved in~\cite{AgdaProp},
   \begin{equation*}
-  \texttt{∧⇒\rm{-to-}⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).
+  \texttt{∧⇒\textsf{-to-}⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).
   \end{equation*}
 
 \item Case $φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)$.
@@ -103,9 +103,9 @@ using the following theorem proved in~\cite{AgdaProp},
     \end{bprooftree}
 \end{equation*}
 
-Now, using \texttt{⇒∧⇒\rm{-to-}⇒∧} theorem from~\cite{AgdaProp},
+Now, using \texttt{⇒∧⇒\textsf{-to-}⇒∧} theorem from~\cite{AgdaProp},
 \begin{equation*}
-  \texttt{⇒∧⇒\rm{-to-}⇒∧}\ :\ Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃) → Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃),
+  \texttt{⇒∧⇒\textsf{-to-}⇒∧}\ :\ Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃) → Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃),
 \end{equation*}
 \begin{equation*}
   \begin{bprooftree}
@@ -113,7 +113,7 @@ Now, using \texttt{⇒∧⇒\rm{-to-}⇒∧} theorem from~\cite{AgdaProp},
   \AxiomC{$\mathcal{D}_2$}
   \RightLabel{∧-intro}
   \BinaryInfC{$Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃)$}
-  \RightLabel{\tt ⇒∧⇒\rm{-to-}⇒∧}
+  \RightLabel{\tt ⇒∧⇒\textsf{-to-}⇒∧}
   \UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃)}
   \end{bprooftree}
 \end{equation*}
@@ -142,7 +142,7 @@ We based on the definition of this function from the \Metis source code.
 \fstrip₁ &(¬ ¬ φ₁)      &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n)\\
 \fstrip₁ &(¬ ⊥)         &(\suc~n) &= ⊤\\
 \fstrip₁ &(¬ ⊤)         &(\suc~n) &= ⊥\\
-\fstrip₁ &φ             &\text{n} &= φ
+\fstrip₁ &φ             &n        &= φ
 \end{array}
 \end{aligned}
 \end{equation}
@@ -192,7 +192,7 @@ From the conjunction of φ₁ and φ₂, the expected result follows.
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
   \begin{bprooftree}
-  \AxiomC{$Γ ⊢ \fstrip₁~(φ₁ ∧ φ₂)~(\suc~n)$}
+  \AxiomC{$Γ ⊢ \fstrip₁~(φ₁ ∧ φ₂)~(\suc\,\textit{n})$}
   \RightLabel{by~(\ref{eq:strip-fixed})}
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)$}
   \RightLabel{∧-proj₁}
@@ -264,14 +264,14 @@ The following theorem is convenient to substitute equals by equals in
 a theorem. Recall the equality (≡) is symmetric and transitive as well.
 We use these properties without any mention.
 
-\begin{mainlemma}[subst]
+\begin{mainlemma}
   \label{lem:subst}
   Substitution theorem.
 \begin{equation*}
   \label{eq:substitution-theorem}
   \begin{bprooftree}
   \AxiomC{$Γ ⊢ φ$}   \AxiomC{$ψ ≡ φ$}
-  \RightLabel{subst}
+  \RightLabel{\fsubst}
   \BinaryInfC{$Γ ⊢ ψ$}
   \end{bprooftree}
 \end{equation*}
@@ -288,7 +288,7 @@ we extend the theorem in the natural way.
 Let $\text{n} : \Nat$ be the complexity measure of the strip function defined
 in~(\ref{eq:strip-fixed}).
 Let $s₁$ and $s₂$ be the subgoals of the goal $φ$, that is,
-$$\fstrip~φ~n~≡~s₁∧~s₂.$$
+$$\fstrip₁~φ~n~≡~s₁∧~s₂.$$
 If $Γ ⊢ s₁$ and $Γ ⊢ s₂$ then $Γ ⊢ φ$.
 \end{mainth}
 
@@ -299,9 +299,9 @@ If $Γ ⊢ s₁$ and $Γ ⊢ s₂$ then $Γ ⊢ φ$.
   \AxiomC{$ Γ ⊢ s_2 $}
   \RightLabel{∧-intro}
   \BinaryInfC{$Γ ⊢ s_1\wedge s_2$}
-  \AxiomC{$\fstrip~φ~n ≡ s_1\wedge s_2 $}
-  \RightLabel{subst}
-  \BinaryInfC{$Γ ⊢ \fstrip~φ~n$}
+  \AxiomC{$\fstrip₁~φ~n ≡ s_1\wedge s_2 $}
+  \RightLabel{\fsubst}
+  \BinaryInfC{$Γ ⊢ \fstrip₁~φ~n$}
   \RightLabel{Lemma~\ref{lem:lem-inv-strip}}
   \UnaryInfC{$Γ ⊢ φ$}
 \end{bprooftree}

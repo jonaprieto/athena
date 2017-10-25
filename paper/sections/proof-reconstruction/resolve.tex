@@ -272,7 +272,7 @@ first application of Lemma \ref{lem:reorder-and-or}.
 The \resolve rule is a generalization of the resolution theorem.
 This rule has three arguments: a positive literal $ℓ$to apply the
 resolution theorem and two derivations.
-Recall a\emph{literal} is an atom (positive literal) or a negation
+Recall a \emph{literal} is an atom (positive literal) or a negation
 of an atom (negative literal).
 The positive literal $ℓ$ must occur in
 the formula from the first derivation and the
@@ -306,13 +306,13 @@ in~(\ref{eq:rsol}) we get the expect result.
 
 \begin{mainlemma}
   \label{lem:rsol}
-  If $Γ ⊢ φ$ then $Γ ⊢ \rm{rsol}~φ$ where,
+  If $Γ ⊢ φ$ then $Γ ⊢ \frsol~φ$ where,
   \begin{equation}
     \label{eq:rsol}
     \begin{aligned}
-    &\rm{rsol} : \Prop \to \Prop\\
+    &\frsol : \Prop \to \Prop\\
     &\begin{array}{ll}
-      \rm{rsol}~φ &=
+      \frsol~φ &=
         \begin{cases}
           φ₂,      &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (¬φ₁ ∨ φ₂)\\
           φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (¬φ₁ ∨ φ₄)\\\
@@ -332,7 +332,7 @@ in~(\ref{eq:rsol}) we get the expect result.
   \label{eq:resolve}
     &\fresolve : \Prop \to \Prop \to \Prop \to \Prop \to \Prop\\
     &\fresolve~φ₁~φ₂~ℓ~ψ =
-      \rm{rsol}~(\freorder_{∨}~φ₁~(ℓ ∨ ψ) ∧ \freorder_{∨}~φ₂~(¬ ℓ ∨ ψ)).
+      \frsol~(\freorder_{∨}~φ₁~(ℓ ∨ ψ) ∧ \freorder_{∨}~φ₂~(¬ ℓ ∨ ψ)).
   \end{split}
   \end{equation}
 \end{mainth}
@@ -350,7 +350,7 @@ in~(\ref{eq:rsol}) we get the expect result.
     \RightLabel{∧-intro}
     \BinaryInfC{$Γ ⊢ \freorder_{∨}~φ₁~(ℓ ∨ ψ) ∧ \freorder_{∨}~φ₂~(¬ ℓ ∨ ψ)$}
     \RightLabel{Lemma~\ref{lem:rsol}}
-    \UnaryInfC{$Γ ⊢ \rm{rsol}~(\freorder_{∨}~φ₁~(ℓ ∨ ψ) ∧
+    \UnaryInfC{$Γ ⊢ \frsol~(\freorder_{∨}~φ₁~(ℓ ∨ ψ) ∧
      \freorder_{∨}~φ₂~(¬ ℓ ∨ ψ))$}
     \RightLabel{by (\ref{eq:resolve})}
     \UnaryInfC{$Γ ⊢ \fresolve~φ₁~φ₂~ℓ~ψ$}
@@ -370,9 +370,9 @@ Let be $φ₁ ≡ p ∨ q ∨ r$ and $φ₂ ≡ ¬ r ∨ p ∨ q$.
   \RightLabel{Theorem \ref{thm:resolve}}
   \BinaryInfC{$Γ ⊢ \fresolve~(p ∨ q ∨ r)~(¬ r ∨ p ∨ q)~r~(p ∨ q)$}
   \RightLabel{by (\ref{eq:resolve})}
-  \UnaryInfC{$Γ ⊢ \rm{rsol}~(\freorder_{∨}~φ₁~(r ∨ (p ∨ q))~∧~\freorder_{∨}~φ₂~(¬ r ∨ (p ∨ q))$}
+  \UnaryInfC{$Γ ⊢ \frsol~(\freorder_{∨}~φ₁~(r ∨ (p ∨ q))~∧~\freorder_{∨}~φ₂~(¬ r ∨ (p ∨ q))$}
   \RightLabel{by (\ref{eq:reorder-or})}
-  \UnaryInfC{$Γ ⊢ \rm{rsol}~((r ∨ (p ∨ q)) ∧ (¬ r ∨ (p ∨ q)))$}
+  \UnaryInfC{$Γ ⊢ \frsol~((r ∨ (p ∨ q)) ∧ (¬ r ∨ (p ∨ q)))$}
   \RightLabel{by (\ref{eq:rsol})}
   \UnaryInfC{$Γ ⊢ p ∨ q$}
   \end{bprooftree}
