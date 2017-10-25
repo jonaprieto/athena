@@ -74,16 +74,16 @@ support \List \Prop type in the conclusion side.
 Let us review the following \TSTP excerpt where \simplify was used two times.
 
 \begin{verbatim}
-fof(norm1, g ∨ (~ a \ k), inf(conjunct, [norm0])).
+fof(norm1, g ∨ (¬ a ∨ k), inf(conjunct, [norm0])).
 fof(norm2, ¬ g ∨ q, inf(conjunct, [norm0])).
 fof(norm3, ¬ q, inf(conjunct, [norm0])).
 fof(norm4, ¬ g, inf(simplify, [norm2, norm3])).
 fof(norm5, ¬ k, inf(conjunct, [norm0])).
-fof(norm6, $false, inf(simplify, [norm1, norm4, norm5])).
+fof(norm6, ⊥, inf(simplify, [norm1, norm4, norm5])).
 \end{verbatim}
 
 \begin{enumerate}
-\item The \simplify rule derives \verb!(~ g)! in \verb!norm2!
+\item The \simplify rule derives \verb!(¬ g)! in \verb!norm2!
 from \verb!norm2! and \verb!norm3! derivations using the fourth case
 in~(\ref{eq:simplify-2}).
 $$\fsimplify~(\neg g \vee q)~(\neg q) (\neg g) = \neg g.$$
@@ -92,7 +92,7 @@ fof(norm2, ¬ g ∨ q, inf(conjunct, [norm0])).
 fof(norm3, ¬ q,     inf(conjunct, [norm0])).
 fof(norm4, ¬ g,     inf(simplify, [norm2, norm3])).
 \end{verbatim}
-\item To derive \verb!$false! in \verb!norm6! using
+\item To derive \verb!⊥! in \verb!norm6! using
 Theorem~\ref{thm:simplify} we get the following proof.
 
 \begin{equation*}
@@ -108,10 +108,10 @@ Theorem~\ref{thm:simplify} we get the following proof.
 \end{equation*}
 
 \begin{verbatim}
-fof(norm1, g ∨ (¬ a \ k), inf(conjunct, [norm0])).
+fof(norm1, g ∨ (¬ a ∧ k), inf(conjunct, [norm0])).
 fof(norm4, ¬ g, inf(simplify, [norm2, norm3])).
 fof(norm5, ¬ k, inf(conjunct, [norm0])).
-fof(norm6, $false, inf(simplify, [norm1, norm4, norm5])).
+fof(norm6, ⊥, inf(simplify, [norm1, norm4, norm5])).
 \end{verbatim}
 \end{enumerate}
 \end{myexample}

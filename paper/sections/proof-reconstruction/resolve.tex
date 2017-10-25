@@ -38,7 +38,9 @@ disjunctions.
 
 \begin{myremark}
 In \TPTP syntax, the formulas are in left-associative form by default.
-Despite of that convention, \Metis understands a formula to be in right-associative form by default. This is a matter to take into account for the proof-reconstruction.
+Despite of that convention, \Metis assumes the formulas to be in
+right-associative form by default. This is a matter to take into account for
+the proof-reconstruction.
 \end{myremark}
 
 The $\fbuild_{∨}$ function defined in~(\ref{eq:build-or})
@@ -48,7 +50,7 @@ match with the target disjunction formula.
 
 \begin{mainlemma}
 \label{lem:build-or}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fbuild_{∨}~φ~ψ$, where,
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fbuild_{∨}~φ~ψ$ where,
 \begin{equation}
   \begin{split}
   \label{eq:build-or}
@@ -57,7 +59,7 @@ match with the target disjunction formula.
   % &\hspace{3mm}
   \begin{cases}
   ψ, &\text{ if } φ ≡ ψ\\
-  ψ, &\text{ if } ψ ≡ ψ₁ ∨ ψ₂\text{, } ψᵢ ≡ \fbuild_{∨}~φ~ψᵢ\text{ for some }i=1, 2\\
+  ψ, &\text{ if } ψ ≡ ψ₁ ∨ ψ₂\text{ and } ψᵢ ≡ \fbuild_{∨}~φ~ψᵢ\text{ for some }i=1, 2\\
   φ, &\text{ otherwise.}
   \end{cases}
   \end{split}
@@ -66,6 +68,7 @@ match with the target disjunction formula.
 
 From now, we assume all propositions to be right-associative unless
 otherwise stated.
+
 The $\ffactor$ function in~(\ref{eq:factor-definition})
 simplifies a special case of disjunction, the repeated disjuncts
 (\eg, $\ffactor~(φ ∨ φ)~=~φ$).
@@ -73,7 +76,7 @@ Notice that other cases like $φ~∨~(ψ~∨~φ)$ do no reduce to $ψ~∨~φ$.
 
 \begin{mainlemma}
 \label{lem:factor}
- If $Γ ⊢ φ$ then $Γ ⊢ \ffactor~φ$, where,
+ If $Γ ⊢ φ$ then $Γ ⊢ \ffactor~φ$ where,
 \begin{align}
 \begin{split}
   \label{eq:factor-definition}
@@ -90,13 +93,13 @@ Notice that other cases like $φ~∨~(ψ~∨~φ)$ do no reduce to $ψ~∨~φ$.
 To construct a disjunction $ψ$ from a disjunction $φ$, we have used ideas
 from the description in \citeauthor{bohme2010}~\cite{bohme2010} to prove
 equality between nested disjunctions.
-We define the $\fsbuild_{∨}$ function in~(\ref{eq:strong-build-or}).
+We define the $\fsbuild_{∨}$ function in~(\ref{eq:strong-build-or})
 that uses every disjunct from the source formula, $φ$, to build up the
 target disjunction $ψ$.
 
 \begin{mainlemma}
 \label{lem:sbuild-or}
-If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fsbuild_{∨}~φ~ψ$, where,
+If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fsbuild_{∨}~φ~ψ$ where,
 \begin{equation}
 \label{eq:strong-build-or}
  \begin{aligned}
@@ -111,8 +114,9 @@ If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fsbuild_{∨}~φ~ψ$, where,
 
 \begin{myexample}
 We build the disjunction $(p ∨ q) ∨ r$ from the disjunction
-$r ∨ (q ∨ p)$ based on the idea of the Lemma~\ref{lem:sbuild-or}.
+$r ∨ (q ∨ p)$ using Lemma~\ref{lem:sbuild-or}.
 \begin{equation*}
+(\mathcal{D})\hspace{3mm}
   \begin{bprooftree}
   \AxiomC{$Γ ⊢ q$}
   \RightLabel{∨-intro₂}
@@ -137,7 +141,8 @@ $r ∨ (q ∨ p)$ based on the idea of the Lemma~\ref{lem:sbuild-or}.
   \RightLabel{∨-intro₂}
   \UnaryInfC{$Γ ⊢ (p ∨ q) ∨ r$}
 
-  \AxiomC{$Γ, q ∨ p ⊢ (p ∨ q) ∨ r$}
+  \AxiomC{$\mathcal{D}$}
+  \UnaryInfC{$Γ, q ∨ p ⊢ (p ∨ q) ∨ r$}
 
   \RightLabel{∨-elim}
   \BinaryInfC{$Γ, r ∨ (q ∨ p) ⊢ (p ∨ q) ∨ r$}
@@ -161,7 +166,7 @@ apply Lemma~\ref{lem:sbuild-or}.
 
 \begin{mainlemma}
   \label{lem:reorder-or}
-  If $Γ ⊢ φ$ and $ψ: \Prop$ then $Γ ⊢ \freorder_{∨}~φ~ψ~$, where,
+  If $Γ ⊢ φ$ and $ψ: \Prop$ then $Γ ⊢ \freorder_{∨}~φ~ψ~$ where,
   \begin{align}
     \begin{split}
     \label{eq:reorder-or}
@@ -182,7 +187,7 @@ reorders nested conjunctions.
 
 \begin{mainlemma}
   \label{lem:reorder-and}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧}~φ~ψ$, where,
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧}~φ~ψ$ where,
     \begin{align}
       \begin{split}
       \label{eq:reorder-and}
@@ -199,23 +204,28 @@ reorders nested conjunctions.
   \end{align}
 \end{mainlemma}
 
-\begin{myexample}\hspace{10cm}
-\begin{enumerate}
-  \item $\freorder_{∧}~(p ∧ q ∧ r)~(r ∧ q ∧ p)~=~(r ∧ q ∧ p).$
-  \item $\freorder_{∧}~(p ∧ q ∧ r)~(r ∧ r ∧ p)~=~(r ∧ q ∧ p).$
-  \item $\freorder_{∧}~(p ∧ q ∧ r)~(k ∧ q ∧ p)~=~(p ∧ q ∧ r).$
-  \item $\freorder_{∧}~((p ∨ q) ∧ r)~(r ∧ (q ∨ p))~=~((p ∨ q) ∧ r).$
-\end{enumerate}
+\begin{myexample}
+\begin{equation}
+\label{ex:reorder-example}
+\begin{aligned}
+\begin{array}{llll}
+  \freorder_{∧} &(p ∧ q ∧ r)   &(r ∧ q ∧ p)     ~&=~(r ∧ q ∧ p),\\
+  \freorder_{∧} &(p ∧ q ∧ r)   &(r ∧ r ∧ p)     ~&=~(r ∧ q ∧ p),\\
+  \freorder_{∧} &(p ∧ q ∧ r)   &(k ∧ q ∧ p)     ~&=~(p ∧ q ∧ r),\\
+  \freorder_{∧} &((p ∨ q) ∧ r) &((r ∧ (q ∨ p)) ~&=~((p ∨ q) ∧ r).
+\end{array}
+\end{aligned}
+\end{equation}
 \end{myexample}
 
-In the last example, Item~4, we could not build the conjunction
+In the last example in (\ref{ex:reorder-example}), we could not build the conjunction
 $r ∧ (q ∨ p)$ since $p ∨ q$ is not syntactical equal to $q ∨ p$.
 We solve this issue in the Lemma~\ref{lem:reorder-and-or} by
 using the $\fconjunct_{∨}$ function defined in~(\ref{eq:conjunct-or}).
 
 \begin{mainlemma}
   \label{lem:conjunct-or}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fconjunct_{∨}~φ~ψ$, where,
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fconjunct_{∨}~φ~ψ$ where,
   \begin{equation*}
     \begin{split}
     \label{eq:conjunct-or}
@@ -234,13 +244,13 @@ using the $\fconjunct_{∨}$ function defined in~(\ref{eq:conjunct-or}).
   \end{equation*}
 \end{mainlemma}
 
-Now, we are able to reorder conjunctive normal forms using
+We are able now to reorder conjunctive normal forms using the
 $\freorder_{∧∨}$ function defined in (\ref{eq:reorder-and-or})
-that unifies the previous lemma showed above.
+by using the previous lemma.
 
 \begin{mainlemma}
   \label{lem:reorder-and-or}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧∨}~φ~ψ$, where,
+  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧∨}~φ~ψ$ where,
    \begin{align}
       \begin{split}
       \label{eq:reorder-and-or}
@@ -257,45 +267,46 @@ that unifies the previous lemma showed above.
   \end{align}
 \end{mainlemma}
 
-Now, we are in a position to reconstruct \resolve rule. This is the
+Now, we are ready to reconstruct the \resolve rule. This is the
 first application of the Lemma \ref{lem:reorder-and-or}.
-The \resolve rule is a generalization of the resolution theorem showed in
-Fig.~\ref{fig:metis-inferences} in the \TSTP derivations.
-This rule has three arguments: a positive literal $l$ to apply the
+The \resolve rule is a generalization of the resolution theorem.
+This rule has three arguments: a positive literal $ℓ$to apply the
 resolution theorem and two derivations.
-The positive literal $l$ must occur in
+Recall a\emph{literal} is an atom (positive literal) or a negation
+of an atom (negative literal).
+The positive literal $ℓ$ must occur in
 the formula from the first derivation and the
-negative literal $¬ l$ must occur in the formula from the second derivation,
+negative literal $¬ ℓ$ must occur in the formula from the second derivation,
 see the pattern of \emph{resolve} rule in Fig.~\ref{fig:metis-inferences}.
 
 \begin{myexamplenum}\hspace{10cm}
 \label{ex:resolve-tstp}
 \begin{verbatim}
-cnf(ref4, (~ r | p | q), inf(canonicalize, [norm5])).
-cnf(ref5, (p | q | r), inf(canonicalize, [norm6])).
-cnf(ref6, (p | q), inf(resolve, [$cnf(r)], [ref5, ref4])).
+cnf(ref4, (¬ r ∨ p ∨ q), inf(canonicalize, [norm5])).
+cnf(ref5, (p ∨ q ∨ r), inf(canonicalize, [norm6])).
+cnf(ref6, (p ∨ q), inf(resolve, r, [ref5, ref4])).
 \end{verbatim}
-In the excerpt above, we apply resolution for the first two formulas,
-$¬ r ∨ p ∨ q$ and $p ∨ q ∨ r$. The last line tells us the literal mentioned
+In the excerpt above, we apply resolution to the first two formulas,
+$¬ r ∨ p ∨ q$ and $p ∨ q ∨ r$. The last line tells us the literal used
 for resolution is $r$. Syntactically speaking,
-we can not derive neither the conclusion $p ∨ q$ in \verb!ref6! nor apply the resolution theorem with \verb!ref4! and \verb!ref5! since the formulas does not fit the pattern required.
+we can not derive neither the conclusion $p ∨ q$ in \verb!ref6! nor apply the resolution theorem with \verb!ref4! and \verb!ref5! since the formulas do not fit the pattern required.
 
 If the scenario would have other like replacing \verb!ref5! by
 \begin{verbatim}
-cnf(ref5, (r | p | q), inf(canonicalize, [norm6])).
+cnf(ref5, (r ∨ p ∨ q), inf(canonicalize, [norm6])).
 \end{verbatim}
-We have could derive $(p ∨ q) ∨ (p ∨ q)$ but again, that is not the expected result.
+The \resolve rule have could derive $(p ∨ q) ∨ (p ∨ q)$, but again, that is not the expected result.
 \end{myexamplenum}
 
 Therefore, we perform a sequence of rearrangements inside the
 formulas involved to match with the pattern expected by the resolution theorem
 described in Fig.~\ref{fig:metis-inferences}. Using reordering after
-applying a convenient version of the resolution theorem defined
+applying a customized version of the resolution theorem defined
 in~(\ref{eq:rsol}) we get the expect result.
 
 \begin{mainlemma}
   \label{lem:rsol}
-  If $Γ ⊢ φ$ then $Γ ⊢ \rm{rsol}~φ$, where,
+  If $Γ ⊢ φ$ then $Γ ⊢ \rm{rsol}~φ$ where,
   \begin{equation}
     \label{eq:rsol}
     \begin{aligned}
@@ -314,14 +325,14 @@ in~(\ref{eq:rsol}) we get the expect result.
 
 \begin{mainth}
   \label{thm:resolve}
-  If $Γ ⊢ φ₁$, $Γ ⊢ φ₂$, a literal $l : \Prop$, and $ψ : \Prop$ then
-  $Γ ⊢ \fresolve~φ₁~φ₂~l~ψ$, where,
+  If $Γ ⊢ φ₁$, $Γ ⊢ φ₂$, let $ℓ$ be a literal $ℓ : \Prop$, and $ψ : \Prop$ then
+  $Γ ⊢ \fresolve~φ₁~φ₂~ℓ~ψ$ where,
   \begin{equation}
   \begin{split}
   \label{eq:resolve}
     &\fresolve : \Prop \to \Prop \to \Prop \to \Prop \to \Prop\\
-    &\fresolve~φ₁~φ₂~l~ψ =
-      \rm{rsol}~(\freorder_{∨}~φ₁~(l ∨ ψ) ∧ \freorder_{∨}~φ₂~(¬ l ∨ ψ)).
+    &\fresolve~φ₁~φ₂~ℓ~ψ =
+      \rm{rsol}~(\freorder_{∨}~φ₁~(ℓ ∨ ψ) ∧ \freorder_{∨}~φ₂~(¬ ℓ ∨ ψ)).
   \end{split}
   \end{equation}
 \end{mainth}
@@ -332,23 +343,23 @@ in~(\ref{eq:rsol}) we get the expect result.
   \begin{bprooftree}
     \AxiomC{$Γ ⊢ φ₁$}
     \RightLabel{Lemma~\ref{lem:reorder-and-or}}
-    \UnaryInfC{$Γ ⊢ \freorder_{∨}~φ₁~(l ∨ ψ)$}
+    \UnaryInfC{$Γ ⊢ \freorder_{∨}~φ₁~(ℓ ∨ ψ)$}
     \RightLabel{Lemma~\ref{lem:reorder-and-or}}
     \AxiomC{$Γ ⊢ φ₂$}
-    \UnaryInfC{$Γ ⊢ \freorder_{∨}~φ₂~(¬ l ∨ ψ)$}
+    \UnaryInfC{$Γ ⊢ \freorder_{∨}~φ₂~(¬ ℓ ∨ ψ)$}
     \RightLabel{∧-intro}
-    \BinaryInfC{$Γ ⊢ \freorder_{∨}~φ₁~(l ∨ ψ) ∧ \freorder_{∨}~φ₂~(¬ l ∨ ψ)$}
+    \BinaryInfC{$Γ ⊢ \freorder_{∨}~φ₁~(ℓ ∨ ψ) ∧ \freorder_{∨}~φ₂~(¬ ℓ ∨ ψ)$}
     \RightLabel{Lemma~\ref{lem:rsol}}
-    \UnaryInfC{$Γ ⊢ \rm{rsol}~(\freorder_{∨}~φ₁~(l ∨ ψ) ∧
-     \freorder_{∨}~φ₂~(¬ l ∨ ψ))$}
+    \UnaryInfC{$Γ ⊢ \rm{rsol}~(\freorder_{∨}~φ₁~(ℓ ∨ ψ) ∧
+     \freorder_{∨}~φ₂~(¬ ℓ ∨ ψ))$}
     \RightLabel{by (\ref{eq:resolve})}
-    \UnaryInfC{$Γ ⊢ \fresolve~φ₁~φ₂~l~ψ$}
+    \UnaryInfC{$Γ ⊢ \fresolve~φ₁~φ₂~ℓ~ψ$}
   \end{bprooftree}
   \end{equation*}
 \end{proof}
 
 \begin{myexample}
-Continuing with the problem presented in the Example~\ref{ex:resolve-tstp},
+Continuing with the problem presented in Example~\ref{ex:resolve-tstp},
 we can use Theorem \ref{thm:resolve} to derive $Γ ⊢ p ∨ q$.
 Let be $φ₁ ≡ p ∨ q ∨ r$ and $φ₂ ≡ ¬ r ∨ p ∨ q$.
 

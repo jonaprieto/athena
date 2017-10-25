@@ -20,8 +20,8 @@ fof(sg1, p ⇒ r, inf(strip, [goal])).
 fof(sg2, (p ∧ r) ⇒ q, inf(strip, [goal])).
 \end{verbatim}
 
-In this example, the conjecture \verb!(p & r) & q! is stripped into
-tree subgoals: $p$, $p ⇒ r$ and $(p ∧ r) ⇒ q$.
+In this example, the conjecture \$(p ∧ r) ∧ q$ is stripped into
+tree subgoals: \$p$, \$p ⇒ r$ and \$(p ∧ r) ⇒ q$.
 
 \begin{equation}
 \label{eq:strip-example}
