@@ -218,6 +218,16 @@
   publisher =    {Springer}
 }
 
+@Proceedings{CADE-24,
+  title =        {Automated Deduction (CADE-24)},
+  booktitle =    {Automated Deduction (CADE-24)},
+  year =         2013,
+  editor =       {Bonacina, Maria Paola},
+  volume =       7898,
+  series =       {Lecture Notes in Artifical Intellingence},
+  publisher =    {Springer}
+}
+
 @Proceedings{CPP-2011,
   title =        {Certified Programs and Proofs (CPP 2011)},
   booktitle =    {Certified Programs and Proofs (CPP 2011)},
@@ -463,13 +473,6 @@
   year         = {2002},
 }
 
-@Misc{Sicard-Ramirez2016,
-  author    = {Sicard-Ramírez, Andrés and Ospina-Giraldo, Juan-Fernando},
-  title     = {{First-Order Proof Reconstruction (Research Proposal)}},
-  year =      2016,
-  note =      {Universidad EAFIT}
-  }
-
 @thesis{Klieber2014,
   author        = {Klieber, William},
   institution   = {Carnegie Mellon University},
@@ -480,6 +483,13 @@
   url           = {http://www.cs.cmu.edu/~wklieber/thesis.pdf},
   year          = {2014},
 }
+
+@Misc{Sicard-Ramirez2016,
+  author    = {Sicard-Ramírez, Andrés and Ospina-Giraldo, Juan-Fernando},
+  title     = {{First-Order Proof Reconstruction (Research Proposal)}},
+  year =      2016,
+  note =      {Universidad EAFIT}
+  }
 
 @inproceedings{Stump2008,
   author    = {Stump, Aaron and Oe, Duckki},
@@ -663,6 +673,17 @@
   year         = {1959},
 }
 
+@thesis{Sicard2015,
+  abstract    = {We propose a new approach to computer-assisted verification of lazy functional programs where functions can be defined by general recursion. We work in first-order theories of functional programs which are obtained by translating Dybjer's programming logic (Dybjer, P. [1985]. Program Veri- fication in a Logical Theory of Constructions. In: Functional Programming Languages and Computer Architecture. Ed. by Jouannaud, J.-P. Vol. 201. Lecture Notes in Computer Science. Springer, pp. 334–349) into a first-order theory, and by extending this programming logic with new (co-)inductive predicates. Rather than building a special purpose system, we formalise our theories in Agda, a proof assistant for dependent type theory which can be used as a generic theorem prover. Agda provides support for interact- ive reasoning by representing first-order theories using the propositions-as- types principle. Further support is provided by off-the-shelf automatic the- orem provers for first-order-logic called by a Haskell program that translates our Agda representations of first-order formulae into the TPTP language understood by the provers. We show some examples where we combine interactive and automatic reasoning, covering both proofs by induction and co- induction. The examples include functions defined by structural recursion, simple general recursion, nested recursion, higher-order recursion, guarded and unguarded co-recursion. Keywords:},
+  author      = {Sicard-Ramírez, Andrés and Bove, Ana and Dybjer, Peter},
+  institution = {Universidad de la Rep{\{}ú{\}}blica},
+  keywords    = {automatic proofs,correctness,first-order theories,functional program,general recursion,interactive proofs,lazy evaluation,total lan- guages,type theory},
+  title       = {{Reasoning about Functional Programs by Combining Interactive and Automatic Proofs}},
+  type        = {phdthesis},
+  url         = {https://www.colibri.udelar.edu.uy/handle/123456789/4715},
+  year        = {2015},
+}
+
 @InProceedings{armand2011,
   abstract =     {We present a way to enjoy the power of SAT and SMT
                   provers in Coq without compromising soundness. This
@@ -688,17 +709,6 @@
   url =          {https://doi.org/10.1007/978-3-642-25379-9_12},
   crossref =     {CPP-2011},
   pages =        {135--150},
-}
-
-@thesis{Sicard2015,
-  abstract    = {We propose a new approach to computer-assisted verification of lazy functional programs where functions can be defined by general recursion. We work in first-order theories of functional programs which are obtained by translating Dybjer's programming logic (Dybjer, P. [1985]. Program Veri- fication in a Logical Theory of Constructions. In: Functional Programming Languages and Computer Architecture. Ed. by Jouannaud, J.-P. Vol. 201. Lecture Notes in Computer Science. Springer, pp. 334–349) into a first-order theory, and by extending this programming logic with new (co-)inductive predicates. Rather than building a special purpose system, we formalise our theories in Agda, a proof assistant for dependent type theory which can be used as a generic theorem prover. Agda provides support for interact- ive reasoning by representing first-order theories using the propositions-as- types principle. Further support is provided by off-the-shelf automatic the- orem provers for first-order-logic called by a Haskell program that translates our Agda representations of first-order formulae into the TPTP language understood by the provers. We show some examples where we combine interactive and automatic reasoning, covering both proofs by induction and co- induction. The examples include functions defined by structural recursion, simple general recursion, nested recursion, higher-order recursion, guarded and unguarded co-recursion. Keywords:},
-  author      = {Sicard-Ramírez, Andrés and Bove, Ana and Dybjer, Peter},
-  institution = {Universidad de la Rep{\{}ú{\}}blica},
-  keywords    = {automatic proofs,correctness,first-order theories,functional program,general recursion,interactive proofs,lazy evaluation,total lan- guages,type theory},
-  title       = {{Reasoning about Functional Programs by Combining Interactive and Automatic Proofs}},
-  type        = {phdthesis},
-  url         = {https://www.colibri.udelar.edu.uy/handle/123456789/4715},
-  year        = {2015},
 }
 
 @article{blanchette2013extending,
@@ -838,19 +848,27 @@
   year      = {2007},
 }
 
-@incollection{kaliszyk2013,
-  abstract  = {PRocH is a proof reconstruction tool that imports in HOL Light proofs produced by ATPs on the recently developed translation of HOL Light and Flyspeck problems to ATP formats. PRocH combines several reconstruction methods in parallel, but the core improvement over previous methods is obtained by re-playing in the HOL logic the detailed inference steps recorded in the ATP (TPTP) proofs, using several internal HOL Light inference methods. These methods range from fast variable matching and more involved rewriting, to full first-order theorem proving using the MESON tactic. The system is described and its performance is evaluated here on a large set of Flyspeck problems.},
-  author    = {Kaliszyk, Cezary and Urban, Josef},
-  booktitle = {Automated Deduction -- CADE-24: 24th International Conference on Automated Deduction, Lake Placid, NY, USA, June 9-14, 2013. Proceedings},
-  doi       = {10.1007/978-3-642-38574-2_18},
-  editor    = {Bonacina, Maria Paola},
-  isbn      = {978-3-642-38574-2},
-  location  = {Berlin, Heidelberg},
-  pages     = {267--274},
-  publisher = {Springer Berlin Heidelberg},
-  title     = {{PRocH: Proof Reconstruction for HOL Light}},
-  url       = {https://doi.org/10.1007/978-3-642-38574-2_18},
-  year      = {2013},
+@InProceedings{kaliszyk2013,
+  abstract =     {PRocH is a proof reconstruction tool that imports in
+                  HOL Light proofs produced by ATPs on the recently
+                  developed translation of HOL Light and Flyspeck
+                  problems to ATP formats. PRocH combines several
+                  reconstruction methods in parallel, but the core
+                  improvement over previous methods is obtained by
+                  re-playing in the HOL logic the detailed inference
+                  steps recorded in the ATP (TPTP) proofs, using
+                  several internal HOL Light inference methods. These
+                  methods range from fast variable matching and more
+                  involved rewriting, to full first-order theorem
+                  proving using the MESON tactic. The system is
+                  described and its performance is evaluated here on a
+                  large set of Flyspeck problems.},
+  author =       {Kaliszyk, Cezary and Urban, Josef},
+  doi =          {10.1007/978-3-642-38574-2_18},
+  isbn =         {978-3-642-38574-2},
+  title =        {{PRocH}: Proof Reconstruction for {HOL Light}},
+  crossref =     {CADE-24},
+  pages =        {267--274},
 }
 
 @article{kanso2016light,
