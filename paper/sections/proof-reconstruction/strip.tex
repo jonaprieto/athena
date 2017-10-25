@@ -20,8 +20,8 @@ fof(sg1, p ⇒ r, inf(strip, [goal])).
 fof(sg2, (p ∧ r) ⇒ q, inf(strip, [goal])).
 \end{verbatim}
 
-In this example, the conjecture \$(p ∧ r) ∧ q$ is stripped into
-tree subgoals: \$p$, \$p ⇒ r$ and \$(p ∧ r) ⇒ q$.
+In this example, the conjecture $(p ∧ r) ∧ q$ is stripped into
+tree subgoals: $p$, $p ⇒ r$ and $(p ∧ r) ⇒ q$.
 
 \begin{equation}
 \label{eq:strip-example}
@@ -103,7 +103,7 @@ using the following theorem proved in~\cite{AgdaProp},
     \end{bprooftree}
 \end{equation*}
 
-Now, using the theorem \texttt{⇒∧⇒\rm{-to-}⇒∧} from~\cite{AgdaProp},
+Now, using \texttt{⇒∧⇒\rm{-to-}⇒∧} theorem from~\cite{AgdaProp},
 \begin{equation*}
   \texttt{⇒∧⇒\rm{-to-}⇒∧}\ :\ Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃) → Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃),
 \end{equation*}
