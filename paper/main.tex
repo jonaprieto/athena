@@ -348,6 +348,7 @@ isbn=false,%
 % maxcitenames=4,%
 ]{biblatex}
 \usepackage{csquotes}
+\usepackage{xpatch}
 
 \addbibresource{ref.bib}
 
@@ -376,13 +377,31 @@ isbn=false,%
   inproceedings,%
   ]{booktitle}{#1}
 
-  % Remove italics from the title names.
+% Remove italics from the title names.
 \DeclareFieldFormat%
  [book,%
  misc,%
  online,%
  report,%
  ]{title}{#1}
+
+% Remove URL if there is DOI.
+%
+% From:
+% https://tex.stackexchange.com/questions/154864/biblatex-use-doi-only-if-there-is-no-url
+
+\renewbibmacro*{doi+eprint+url}{%
+  \iftoggle{bbx:url}
+    {\iffieldundef{doi}{\usebibmacro{url+urldate}}{}}
+    {}%
+  \newunit\newblock
+  \iftoggle{bbx:eprint}
+    {\usebibmacro{eprint}}
+    {}%
+  \newunit\newblock
+    \iftoggle{bbx:doi}
+    {\printfield{doi}}
+    {}}
 
 % -------------------------------------------------------------------
 % Hyperef.
