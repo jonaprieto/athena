@@ -220,13 +220,13 @@ reorders nested conjunctions.
 
 In the last example in (\ref{ex:reorder-example}), we could not build the conjunction
 $r ∧ (q ∨ p)$ since $p ∨ q$ is not syntactical equal to $q ∨ p$.
-We solve this issue in the Lemma~\ref{lem:reorder-and-or} by
+We solve this issue in Lemma~\ref{lem:reorder-and-or} by
 using the $\fconjunct_{∨}$ function defined in~(\ref{eq:conjunct-or}).
 
 \begin{mainlemma}
   \label{lem:conjunct-or}
   If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fconjunct_{∨}~φ~ψ$ where,
-  \begin{equation*}
+  \begin{equation}
     \begin{split}
     \label{eq:conjunct-or}
       &\fconjunct_{∨} : \Prop → \Prop \to \Prop\\
@@ -241,7 +241,7 @@ using the $\fconjunct_{∨}$ function defined in~(\ref{eq:conjunct-or}).
         φ, &\text{ otherwise.}
       \end{cases}
     \end{split}
-  \end{equation*}
+  \end{equation}
 \end{mainlemma}
 
 We are able now to reorder conjunctive normal forms using the
@@ -268,7 +268,7 @@ by using the previous lemma.
 \end{mainlemma}
 
 Now, we are ready to reconstruct the \resolve rule. This is the
-first application of the Lemma \ref{lem:reorder-and-or}.
+first application of Lemma \ref{lem:reorder-and-or}.
 The \resolve rule is a generalization of the resolution theorem.
 This rule has three arguments: a positive literal $ℓ$to apply the
 resolution theorem and two derivations.

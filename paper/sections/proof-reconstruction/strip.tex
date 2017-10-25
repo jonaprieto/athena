@@ -136,9 +136,9 @@ We based on the definition of this function from the \Metis source code.
 \fstrip₁ &(φ₁ ∧ φ₂)     &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
 \fstrip₁ &(φ₁ ∨ φ₂)     &(\suc~n) &= \fuh~(¬ φ₁ ⇒ \fstrip₁~φ₂~n)\\
 \fstrip₁ &(φ₁ ⇒ φ₂)     &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
-\fstrip₁ &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~¬ φ₂~n)\\
-\fstrip₁ &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip₁~¬ φ₂~n)\\
-\fstrip₁ &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~¬ φ₂~n)\\
+\fstrip₁ &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
+\fstrip₁ &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
+\fstrip₁ &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
 \fstrip₁ &(¬ ¬ φ₁)      &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n)\\
 \fstrip₁ &(¬ ⊥)         &(\suc~n) &= ⊤\\
 \fstrip₁ &(¬ ⊤)         &(\suc~n) &= ⊥\\
@@ -186,8 +186,8 @@ $\bullet$~Case $φ ≡ ¬ ¬ φ₁$.
   \end{bprooftree}
 \end{equation*}
 
-$\bullet$~Case $φ ≡ φ₁ ∧ φ₂$. We prove $Γ ⊢ φ₁$ and $Γ ⊢ φ₂$. Using the
-introduction rule for conjunction, the expected result follows.
+$\bullet$~Case $φ ≡ φ₁ ∧ φ₂$. We prove $Γ ⊢ φ₁$ and $Γ ⊢ φ₂$.
+From the conjunction of φ₁ and φ₂, the expected result follows.
 
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
@@ -223,20 +223,20 @@ introduction rule for conjunction, the expected result follows.
 \end{equation*}
 
 $\bullet$~Case $φ ≡ ¬ (φ₁ ∨ φ₂)$.
-We show the theorems $Γ ⊢ ¬ φ₁$ and $Γ ⊢ ¬ φ₂$.
-With the conjunction of $¬ φ₁$ and $¬ φ₂$ by applying De Morgan Law, the
-result follows.
+We prove $Γ ⊢ ¬ φ₁$ and $Γ ⊢ ¬ φ₂$.
+From the conjunction of $¬ φ₁$ and $¬ φ₂$ by applying De Morgan Law
+and the result follows.
 
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
 \begin{bprooftree}
 \AxiomC{$Γ ⊢ \fstrip₁~(¬ (φ₁ ∨ φ₂))~(\suc~n)$}
 \RightLabel{by~(\ref{eq:strip-fixed})}
-\UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip₁~¬ φ₂~n)$}
+\UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)$}
 \RightLabel{∧-proj₁}
-\UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~¬ φ₁~n)$}
+\UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~(¬ φ₁)~n)$}
 \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
-\UnaryInfC{$Γ ⊢ \fstrip₁~¬ φ₁~n$}
+\UnaryInfC{$Γ ⊢ \fstrip₁~(¬ φ₁)~n$}
 \RightLabel{by~ind.~hyp.}
   \UnaryInfC{$Γ ⊢ ¬φ₁$}
 \end{bprooftree}
@@ -247,13 +247,13 @@ result follows.
   \UnaryInfC{$Γ ⊢ ¬ φ₁$}
   \AxiomC{$Γ ⊢ \fstrip₁~(¬ (φ₁ ∨ φ₂))~(\suc~n)$}
   \RightLabel{by~(\ref{eq:strip-fixed})}
-  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~¬ φ₁~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip₁~¬ φ₂~n)$}
+  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~(¬ φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)$}
   \RightLabel{∧-proj₂}
-  \UnaryInfC{$Γ ⊢ \fuh~(¬ φ₁ ⇒ \fstrip₁~¬ φ₂~n)$}
+  \UnaryInfC{$Γ ⊢ \fuh~(¬ φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)$}
   \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
-  \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \fstrip₁~¬ φ₂~n$}
+  \UnaryInfC{$Γ ⊢ ¬ φ₁ ⇒ \fstrip₁~(¬ φ₂)~n$}
   \RightLabel{⇒-elim}
-  \BinaryInfC{$Γ ⊢ \fstrip₁~¬ φ₂~n$}
+  \BinaryInfC{$Γ ⊢ \fstrip₁~(¬ φ₂)~n$}
   \RightLabel{by~ind.~hyp.}
   \UnaryInfC{$Γ ⊢ ¬ φ₂$}
   \end{bprooftree}
@@ -261,8 +261,8 @@ result follows.
 \end{proof} % the proof continue...
 
 The following theorem is convenient to substitute equals by equals in
-a theorem. Recall the equality ≡ is symmetric and transitive as well.
-We use such properties without any mention.
+a theorem. Recall the equality (≡) is symmetric and transitive as well.
+We use these properties without any mention.
 
 \begin{mainlemma}[subst]
   \label{lem:subst}
