@@ -13,7 +13,7 @@
       { base
       , minimum height=3em
       , shape=rectangle
-      , rounded corners
+      % , rounded corners
 %      , fill=blue!2
       , inner sep=3pt
       , outer sep=1pt
@@ -22,14 +22,14 @@
   , program/.style =
       { base
       %% , fill=gray!1
-      , rounded corners
+      % , rounded corners
       , inner sep=3pt
       , outer sep=1pt
       }
   , library/.style =
       { shape=rectangle
       , font=\small
-      , rounded corners
+      % , rounded corners
 %      , fill=blue!2
       , draw%=blue!20
       , inner sep=3pt
@@ -139,15 +139,13 @@
 
 \path [line, thick] (tptp)      -- (metis);
 \path [line, thick] (metis)     -- node {theorem} (tstp);
-
-\draw [-o, thick] (metis)     -- node {no theorem} (nothm);
-
+\draw [-o,   thick] (metis)     -- node {no theorem} (nothm);
 \path [line, thick] (tstp)      -- (athena);
 \path [line, thick] (athena)    -- (agdaproof);
-\path [line, thick] (agdaprop)    -- (athena);
-\path [line, thick] (agdametis)   -- (athena);
-\path [line, thick] (agdaproof)    -- (agda);
-\path [line, thick] (libraries)    -- (agda);
+\path [line, thick] (agdaprop)  -- (athena);
+\path [line, thick] (agdametis) -- (athena);
+\path [line, thick] (agdaproof) -- (agda);
+\path [line, thick] (libraries) -- (agda);
 \path [line, thick] (agda)      -- node {success} (agdai);
 \path [line, thick] (agda)      -- node {failure} (invalid);
 
