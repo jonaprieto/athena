@@ -1,19 +1,25 @@
 \documentclass[
-    envcountsect    %% In order to provide the usual behaviour expected
+  envcountsame
+  % envcountchap
+    % envcountsect    %% In order to provide the usual behaviour expected
                     %% from \newtheorem
   , runningheads
-  % , fleqn           %% all equations in the document left aligned
   ]{llncs}
 
 % \setlength{\mathindent}{1cm}
+% \let\remark\relax
+% \let\theorem\relax
+% \let\lemma\relax
+% \let\definition\relax
 
 \spnewtheorem{mainth}{Theorem}{\bfseries}{\rmfamily}
-\spnewtheorem{mainlemma}{Lemma}{\bfseries}{\rmfamily}
+\spnewtheorem{mainlemma}[mainth]{Lemma}{\bfseries}{\rmfamily}
+\spnewtheorem{mydefinition}[mainth]{Definition}{\bfseries}{\rmfamily}
+\spnewtheorem{myexamplenum}[mainth]{Example}{\bfseries}{\rmfamily}
+
 \spnewtheorem*{notation}{Notation}{\it}{\rmfamily}
 \spnewtheorem*{myremark}{Remark}{\bfseries}{\rmfamily}
 \spnewtheorem*{myexample}{Example}{\bfseries}{\rmfamily}
-\spnewtheorem{mydefinition}{Definition}{\bfseries}{\rmfamily}
-\spnewtheorem{myexamplenum}{Example}{\bfseries}{\rmfamily}
 
 \usepackage{geometry}   %% helps with the text overflow
 \usepackage{subfiles}

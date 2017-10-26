@@ -122,7 +122,8 @@ result of this inference when it applies to the \verb!goal! formula is
 
 We adopt a customized \TSTP syntax to keep as short as possible the \Metis derivations for increasing the readability in this paper.
 
-\begin{myexample}
+\begin{myexamplenum}
+\label{fig:metis-example-tree}
 
 Let us consider the following \TSTP derivation using
 the customized \TSTP syntax. Note that we remove
@@ -140,7 +141,7 @@ fof(norm2, ⊥, inf(simplify, [norm0, norm1]))
 cnf(refute0, ⊥, inf(canonicalize, [norm2])).
 \end{verbatim}
 
-\end{myexample}
+\end{myexamplenum}
 
 % -------------------------------------------------------------------
 
@@ -179,7 +180,7 @@ $⊥$, since \Metis delivers proofs by refutation.
     \RightLabel{canonicalize}
     \UnaryInfC{$⊥$}
   \end{bprooftree}
-  \caption{A \Metis proof tree.}
+  \caption{\Metis proof tree of derivation in Example~\ref{fig:metis-example-tree}.}
   \label{fig:metis-example}
 \end{figure}
 
@@ -219,40 +220,39 @@ These rules are not the same as we expected from the Fig.~\ref{fig:metis-inferen
   \begin{center}
   {\renewcommand{\arraystretch}{1.6}%
     \label{tab:agda-metis-table}
-    \begin{tabular}{|@{\hspace{2mm}}c@{\hspace{2mm}}l@{\hspace{3mm}}l@{\hspace{3mm}}|}
+    \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}c@{\hspace{2mm}}|}
     \hline
-    \textbf{Theorem} & \textbf{Purpose} &\textbf{\Metis rule}\\ \hline
+    \textbf{\Metis rule name} & \textbf{Purpose} &\textbf{Theorem}\\ \hline
 
-       \ref{thm:strip}
-      &Strip a goal into subgoals
+      Strip a goal into subgoals
       &\texttt{strip}
+      &\ref{thm:strip}
       \\
 
-       \ref{thm:conjunct}
-      &Takes a formula from a conjunction
+      Takes a formula from a conjunction
       &\texttt{conjunct}
+      &\ref{thm:conjunct}
       \\
 
-       \ref{thm:resolve}
-      &A general form of the resolution theorem
+      A general form of the resolution theorem
       &\texttt{resolve}
+      &\ref{thm:resolve}
       \\
 
-       \ref{thm:clausify}
-      &Performs clausification
+      Performs clausification
       &\texttt{clausify}
+      &\ref{thm:clausify}
       \\
 
-       \ref{thm:canonicalize}
-      &Normalization of the formula
+      Normalization of the formula
       &\texttt{canonicalize}
+      &\ref{thm:canonicalize}
       \\
 
-       \ref{thm:simplify}
-      &Simplify definitions and theorems
+      Simplify definitions and theorems
       &\texttt{simplify}
+      &\ref{thm:simplify}
       \\[1ex]
-
     \hline
     \end{tabular}}
   \end{center}

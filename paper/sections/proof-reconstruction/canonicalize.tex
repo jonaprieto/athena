@@ -251,7 +251,7 @@ using Lemma~\ref{lem:canon-and}.
         \fcanon_{∧} &(φ₁ ∧ ⊤)  &= φ₁ \\
         \fcanon_{∧} &(⊥ ∧ φ₂)  &= ⊥  \\
         \fcanon_{∧} &(φ₁ ∧ ⊥)  &= ⊥  \\
-        \fcanon_{∧} &(φ₁ ∧ φ₂) &= \frm_∧(\fndisj_∧(φ₁ ∧ φ₂)) \\
+        \fcanon_{∧} &(φ₁ ∧ φ₂) &= \frm_∧~(\fndisj_∧~(φ₁ ∧ φ₂)) \\
         \fcanon_{∧} &φ         &= φ
        \end{array}\\
   \text{and }\\
@@ -328,7 +328,9 @@ the normalized normal form for propositions.
   \end{align*}
 \end{mainlemma}
 
-Now, to convert a formula to its conjunctive normal form, in Lemma~\ref{lem:dist} we apply the appropriate distribution functions to the normalized negative formula given by $\fnnf$ function.
+Now, to convert a formula to its conjunctive normal form, in
+Lemma~\ref{lem:dist} we apply the appropriate distribution functions to the
+normalized negative formula given by $\fnnf$ function.
 
 \begin{mainlemma}
   \label{lem:dist}
@@ -449,7 +451,7 @@ the conjunctive normal form of the target formula.
   \end{bprooftree}
 \end{equation*}
 
-\item[$\bullet$] If $γ ≡ \fcnf~ψ ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$,
+\item[$\bullet$] If $\fcnf~ψ ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$,
   \begin{equation*}
     \begin{bprooftree}
       \AxiomC{$Γ ⊢ φ$}
@@ -457,7 +459,7 @@ the conjunctive normal form of the target formula.
       \UnaryInfC{$Γ ⊢ \fcnf~φ$}
       \RightLabel{Lemma~\ref{lem:reorder-and-or}}
       \UnaryInfC{$Γ ⊢ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$}
-      \AxiomC{$γ$}
+      \AxiomC{$\fcnf~\freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$}
       \RightLabel{\fsubst}
       \BinaryInfC{$Γ ⊢ \fcnf~ψ$}
       \RightLabel{Lemma~\ref{lem:cnf-inv}}

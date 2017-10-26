@@ -22,19 +22,19 @@ prover to pure equational logic, \ie,
 first-order logic with equality but no other predicate symbols and no
 functions symbols.
 
-In \name{Coq}~\cite{coqteam}, and proof assistant for type theory like \Agda, 
+In \name{Coq}~\cite{coqteam}, and proof assistant for type theory like \Agda,
 we found the \name{SMTCoq}~\cite{armand2011,Ekici2017} tool which provides a
 certified checker for proof witness coming from the \SMT solver
 \name{veriT}~\cite{bouton2009} and adds a new tactic named verit,
 that calls \name{veriT} on any \name{Coq} goal.
-Also for \name{Coq}, 
+Also for \name{Coq},
 given a fixed but arbitrary first-order signature,
 \citeauthor{Bezem2002} in \cite{Bezem2002}
 transform a proof produced by the first-order automatic theorem
 prover \name{Bliksem}~\cite{deNivelle2003} in a \name{Coq} proof
 term.
 
-We found many successful attemps using proof assistant for classical logic
+There are some successful attempts using proof assistants for classical logic
 instead of type theory.
 Let us mention some representative of such tools. This descriptions is
 mainly based on~\citeauthor{Sicard-Ramirez2016}~\cite{Sicard-Ramirez2016}.
@@ -48,9 +48,9 @@ A modular proof-reconstruction workflow is presented jointly with
 the full integration of \name{Leo-II} and \name{Satallax} provers with
 \name{Isabelle/HOL} in \citeauthor{Een2004}~\cite{Een2004}.
 
-\citeauthor{Hurd1999}~\cite{Hurd1999} integrates the first-order resolution prover
-\name{Gandalf} with the high-order
-theorem prover \name{HOL}~\cite{norrish2007hol}.
+\citeauthor{Hurd1999}~\cite{Hurd1999} integrates the first-order resolution
+prover \name{Gandalf} with the high-order theorem prover
+\name{HOL}~\cite{norrish2007hol}.
 Its \verb!GANDALF_TAC! tactic is able to reconstruct \name{Gandalf} proofs
 by using a \abbre{LCF} model. For \name{HOL Light}, a version of
 \name{HOL} but with a simpler logic core, the \SMT solver \name{CVC4}

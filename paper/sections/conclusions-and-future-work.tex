@@ -40,13 +40,13 @@ Justifying a proof by a theorem prover
 has a real significant impact for these automatic tools.
 The reverse engineering task to understand the prover reasoning
 can reveal important issues or bugs
-in many parts of these systems (e.g., preprocessing, reasoning, or
+in many parts of these systems (\eg, preprocessing, reasoning, or
 deduction modules). During this research, we had the opportunity
 to contribute to \Metis by reporting some bugs\footnote{Issues No.~2,
 No.~4. and commit \name{8a3f11e} in the \Metis' official repository
 \url{https://github.com/gilith/metis}}.
-Fortunately, all these problems were fixed quickly by Joe Hurd in
-the \Metis 20170810 release.
+Fortunately, all these problems were fixed quickly by
+\citeauthor{hurd2003first} in the \Metis 20170810 release.
 
 \subsection*{Future work}
 
@@ -59,9 +59,10 @@ Further research directions include, but are not limited to:
     \item support other \ATPs for propositional logic like \name{EProver} or \name{Z3}. This development can be carried out by following the \name{EProver}
 description on Kanso's Ph.D. thesis~\cite{Kanso2012}.
     \item support \Metis first-order proofs.
-
   \end{itemize}
-\item use a shallow embedding instead the deep embedding implemented in~\cite{AgdaProp} to reconstruct proofs.
+
+\item use a shallow embedding instead the deep embedding
+implemented in~\cite{AgdaProp} to reconstruct proofs.
 \item improve some functions in Section~\ref{ssec:emulating-inferences}
 \begin{itemize}
   \item by investigating the consequences of removing \clausify
