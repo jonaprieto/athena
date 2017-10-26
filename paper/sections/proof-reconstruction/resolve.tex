@@ -221,23 +221,25 @@ reorders nested conjunctions.
 In the last example in~\eqref{ex:reorder-example}, we could not build the conjunction
 $r ∧ (q ∨ p)$ since $p ∨ q$ is not syntactical equal to $q ∨ p$.
 We solve this issue in Lemma~\ref{lem:reorder-and-or} by
-using the $\fconjunct_{∨}$ function defined in~\eqref{eq:conjunct-or}.
+using the $\fconjunctor$ function defined in~\eqref{eq:conjunct-or}.
+This purpose of this function consists of extract a disjunction from
+a conjunction, but without matter the order atoms in the disjunction.
 
 \begin{mainlemma}
   \label{lem:conjunct-or}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fconjunct_{∨}~φ~ψ$ where,
+  If $Γ ⊢ φ$ and $ψ : \Target$ then $Γ ⊢ \fconjunctor~φ~ψ$ where,
   \begin{equation}
     \begin{split}
     \label{eq:conjunct-or}
-      &\fconjunct_{∨} : \Prop → \Prop \to \Prop\\
-      &\fconjunct_{∨}~φ~ψ =
+      &\fconjunctor : \Source → \Target \to \Prop\\
+      &\fconjunctor~φ~ψ =
       \begin{cases}
         ψ, &\text{ if }φ ≡ ψ\\
         ψ, &\text{ if } ψ ≡ \freorder_{∨}~φ~ψ\\
-        ψ, &\text{ if }ψ ≡ ψ₁ ∧ ψ₂,\ ψ₁ ≡ \fconjunct_{∨}~φ~ψ₁,\\
+        ψ, &\text{ if }ψ ≡ ψ₁ ∧ ψ₂,\ ψ₁ ≡ \fconjunctor~φ~ψ₁,\\
            &\text{ and } ψ₂ ≡ \freorder_{∨}~φ~ψ₂\\
-        ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ ψ ≡ \fconjunct_{∨}~φ₁~ψ \\
-        ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ ψ ≡ \fconjunct_{∨}~φ₂~ψ \\
+        ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ ψ ≡ \fconjunctor~φ₁~ψ \\
+        ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ ψ ≡ \fconjunctor~φ₂~ψ \\
         φ, &\text{ otherwise.}
       \end{cases}
     \end{split}
@@ -250,18 +252,18 @@ by using the previous lemma.
 
 \begin{mainlemma}
   \label{lem:reorder-and-or}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧∨}~φ~ψ$ where,
+  If $Γ ⊢ φ$ and $ψ : \Target$ then $Γ ⊢ \freorder_{∧∨}~φ~ψ$ where,
    \begin{align}
       \begin{split}
       \label{eq:reorder-and-or}
-      &\freorder_{∧∨} : \Prop \to \Prop \to \Prop\\
+      &\freorder_{∧∨} : \Source \to \Target \to \Prop\\
       &\freorder_{∧∨}~φ~ψ=
         \begin{cases}
           ψ, &\text{ if } φ ≡ ψ\\
           ψ, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂,\ ψ₁ ≡ \freorder_{∧∨}~φ~ψ₁\\
              &\text{ and } ψ₂ ≡ \freorder_{∧∨}~φ~ψ₂\\
           φ, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\\
-          \fconjunct_{∨}~φ~ψ &\text{ otherwise.}
+          \fconjunctor~φ~ψ &\text{ otherwise.}
         \end{cases}
       \end{split}
   \end{align}
@@ -274,10 +276,18 @@ This rule has three arguments: a positive literal $ℓ$ to apply the
 resolution theorem and two derivations.
 Recall a \emph{literal} is an atom (positive literal) or a negation
 of an atom (negative literal).
+
+\begin{myremark}
+We use \Lit as synonym of \Prop type to refer literals.
+\end{myremark}
+
+
 The positive literal $ℓ$ must occur in
 the formula from the first derivation and the
 negative literal $¬ ℓ$ must occur in the formula from the second derivation,
 see the pattern of \emph{resolve} rule in Fig.~\ref{fig:metis-inferences}.
+
+
 
 \begin{myexamplenum}\hspace{10cm}
 \label{ex:resolve-tstp}
@@ -325,12 +335,12 @@ in~\eqref{eq:rsol} we get the expect result.
 
 \begin{mainth}
   \label{thm:resolve}
-  If $Γ ⊢ φ₁$, $Γ ⊢ φ₂$, let $ℓ$ be a literal $ℓ : \Prop$, and $ψ : \Prop$ then
+  If $Γ ⊢ φ₁$, $Γ ⊢ φ₂$, let $ℓ$ be a literal $ℓ : \Lit$, and $ψ : \Target$ then
   $Γ ⊢ \fresolve~φ₁~φ₂~ℓ~ψ$ where,
   \begin{equation}
   \begin{split}
   \label{eq:resolve}
-    &\fresolve : \Prop \to \Prop \to \Prop \to \Prop \to \Prop\\
+    &\fresolve : \Source \to \Source \to \Lit \to \Target \to \Prop\\
     &\fresolve~φ₁~φ₂~ℓ~ψ =
       \frsol~(\freorder_{∨}~φ₁~(ℓ ∨ ψ) ∧ \freorder_{∨}~φ₂~(¬ ℓ ∨ ψ)).
   \end{split}

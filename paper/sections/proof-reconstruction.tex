@@ -70,6 +70,10 @@ The function name written in \texttt{typewriter} font refers to
 a \Metis inference rule.
 The same function name written using \textsf{sans serif} refers to the proposed
 version of the rule implemented in \cite{AgdaProp,AgdaMetis}.
+We use \Source and \Target as synonyms of \Prop type in the
+function type to refer that \Source is the type of the input formula in
+the function also called the \emph{source} formula in the inference rule and
+\Target is the type of the expected formula also called \emph{target} formula after using the rule with the source formula.
 \end{notation}
 
 \begin{myexample}
@@ -87,7 +91,7 @@ The \fconjunct function has the following pattern:
 
  \begin{equation*}
   \begin{aligned}
-  &\hspace{.495mm}\fconjunct : \Prop → \Prop → \Prop\\
+  &\hspace{.495mm}\fconjunct : \Source → \Target → \Prop\\
   &\begin{array}{ll}
   \fconjunct~φ~ψ\ &=
       \begin{cases}
@@ -100,8 +104,8 @@ The \fconjunct function has the following pattern:
   \end{equation*}
 
 \begin{itemize}
-  \item[∙] $φ$ is the \emph{source} formula from a previous deducted derivation.
-  \item[∙] $ψ$ is the \emph{target} formula. The expected result of \texttt{rule}.
+  \item[∙] $φ$ is the source formula from a previous deducted derivation.
+  \item[∙] $ψ$ is the target formula. The expected result of \texttt{rule}.
 \end{itemize}
 
 To justify all transformations done by \fconjunct, we prove its soundness

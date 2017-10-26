@@ -25,11 +25,11 @@ fof(norm1, (¬ p ∨ q) ∧ (¬ p ∨ r), inf(clausify, [norm0])).
 
 \begin{mainth}
 \label{thm:clausify}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fclausify~φ~ψ$, where,
+  If $Γ ⊢ φ$ and $ψ : \Target$ then $Γ ⊢ \fclausify~φ~ψ$, where,
 
   \begin{equation*}
   \begin{aligned}
-  &\hspace{.495mm}\fclausify : \Prop → \Prop → \Prop\\
+  &\hspace{.495mm}\fclausify : \Source → \Target → \Prop\\
   &\begin{array}{llll}
   \fclausify~φ~ψ &=
          \begin{cases}
