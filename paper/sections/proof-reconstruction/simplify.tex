@@ -13,9 +13,9 @@ convenient formula.
 
 We observe based on the analysis of different
 cases in \TSTP derivation that \simplify can be modeled by a binary function.
-As we see in~(\ref{eq:simplify-1}), if \fsimplify gets ⊥
+As we see in~\eqref{eq:simplify-1}, if \fsimplify gets ⊥
 from its input derivations, it derives ⊥, and the same occurs with ⊤.
-Otherwise, in~(\ref{eq:simplify-2}) \fsimplify performs an analysis by cases
+Otherwise, in~\eqref{eq:simplify-2} \fsimplify performs an analysis by cases
 to determine which theorem applies.
 
  \begin{equation}
@@ -85,7 +85,7 @@ fof(norm6, ⊥, inf(simplify, [norm1, norm4, norm5])).
 \begin{enumerate}
 \item The \simplify rule derives \verb!(¬ g)! in \verb!norm2!
 from \verb!norm2! and \verb!norm3! derivations using the fourth case
-in~(\ref{eq:simplify-2}).
+in~\eqref{eq:simplify-2}.
 $$\fsimplify~(¬ g ∨ q)~(¬ q) (¬ g) = ¬ g.$$
 \begin{verbatim}
 fof(norm2, ¬ g ∨ q, inf(conjunct, [norm0])).

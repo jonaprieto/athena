@@ -29,7 +29,7 @@ tree subgoals: $p$, $p ⇒ r$ and $(p ∧ r) ⇒ q$.
 \end{equation}
 
 \Metis proves each subgoal in the same order above from left to right
-in (\ref{eq:strip-example}).
+in~\ref{eq:strip-example}.
 So far, very little attention has been paid to the role of \strip rule.
 in \TSTP derivation since \Metis does not make explicit the way
 it uses the subgoals to prove the conjecture.
@@ -42,16 +42,16 @@ Lemma~\ref{lem:inv-uh-lem} and Lemma~\ref{lem:lem-inv-strip}.
 \begin{mainlemma}
   \label{lem:inv-uh-lem}
 Let $\text{n} : \Nat$ be the complexity measure of the $\fuh_0$ function
-in~(\ref{eq:uh-definition}).
+in~\eqref{eq:uh-definition}.
 If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$, where $\fuh₁$ is the function defined
-in (\ref{eq:uh-structured}).
+in~\eqref{eq:uh-structured}.
 \end{mainlemma}
 
 \begin{proof}
 The proof is by induction on the cases defined by the outcome of the
 $\fuh_{1}$ function.
 \begin{itemize}
-  \item If $n = 0$, by definition in~(\ref{eq:uh-structured})
+  \item If $n = 0$, by definition in~\eqref{eq:uh-structured}
         we conclude $Γ ⊢ φ$.
   \item For $n \geq 1$, we use induction on the structure of the second
         argument.
@@ -124,7 +124,7 @@ Now, using \texttt{⇒∧⇒\textsf{-to-}⇒∧} theorem from~\cite{AgdaProp},
 
 The \fstrip₀ function yields the conjunction of subgoals that implies the goal of the problem in the \Metis \TSTP derivations but is not a structurally recursive
 function.  Instead, we present its structural recursive version
-in~(\ref{eq:strip-fixed}) after applying
+in~\eqref{eq:strip-fixed} after applying
 the bounded technique described in Section~\ref{ssec:structural-recursion}.
 We based on the definition of this function from the \Metis source code.
 
@@ -147,7 +147,7 @@ We based on the definition of this function from the \Metis source code.
 \end{aligned}
 \end{equation}
 
-In a similar way as we define $\fuh_{cm}$ in (\ref{eq:uh-complexity}), we define
+In a similar way as we define $\fuh_{cm}$ in~\eqref{eq:uh-complexity}, we define
 $\fstrip_{cm}$ as the complexity measure for $\fstrip₀$ function. As expected,
 the \fstrip function is defined as follows.
 
@@ -162,13 +162,13 @@ the \fstrip function is defined as follows.
 \begin{mainlemma}
 \label{lem:lem-inv-strip}
 Let $\text{n} : \Nat$ be the complexity measure of the \fstrip function defined
-in~(\ref{eq:strip-fixed}).
+in~\eqref{eq:strip-fixed}.
 If $Γ ⊢ \fstrip₁~φ~n$ then $Γ ⊢ φ$.
 \end{mainlemma}
 
 \begin{proof}
 The proof is by induction on the structure of the
-formula~$φ$ by following the equations in~(\ref{eq:strip-fixed}).
+formula~$φ$ by following the equations in~\eqref{eq:strip-fixed}.
 We present a straightforward case with double negation, a case with
 conjunction connective, and last, the case with a negated disjunction.
 We refer the reader to~\cite{AgdaMetis} for the complete proof in \Agda.
@@ -286,7 +286,7 @@ we extend the theorem in the natural way.
 \begin{mainth}
 \label{thm:strip}
 Let $\text{n} : \Nat$ be the complexity measure of the strip function defined
-in~(\ref{eq:strip-fixed}).
+in~\eqref{eq:strip-fixed}.
 Let $s₁$ and $s₂$ be the subgoals of the goal $φ$, that is,
 $$\fstrip₁~φ~n~≡~s₁∧~s₂.$$
 If $Γ ⊢ s₁$ and $Γ ⊢ s₂$ then $Γ ⊢ φ$.

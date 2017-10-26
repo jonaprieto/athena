@@ -12,7 +12,7 @@ and reordering those and the inner disjunctions to match them.
 Below, we provide Lemma~\ref{lem:reorder-or}, Lemma~\ref{lem:reorder-and}, Lemma~\ref{lem:reorder-and-or} to perform such reordering tasks,
 the omitted proofs can be found in~\cite{AgdaMetis}.
 
-First, we define \fassoc$_{⬓}$ function in~(\ref{eq:fassoc})
+First, we define \fassoc$_{⬓}$ function in~\eqref{eq:fassoc}
 to convert a disjunction or a conjunction into its right-associative form.
 The square symbol (⬓) can be the conjunction symbol or the disjunction symbol.
 We use $\fassoc_{∧}$ to convert conjunctions and $\fassoc_{∨}$ for
@@ -43,7 +43,7 @@ right-associative form by default. This is a matter to take into account for
 the proof-reconstruction.
 \end{myremark}
 
-The $\fbuild_{∨}$ function defined in~(\ref{eq:build-or})
+The $\fbuild_{∨}$ function defined in~\eqref{eq:build-or}
 intends to construct a disjunction from another disjunction, specifically,
 this functions will try to rearrange the disjuncts in the source formula to
 match with the target disjunction formula.
@@ -69,7 +69,7 @@ match with the target disjunction formula.
 From now, we assume all propositions to be right-associative unless
 otherwise stated.
 
-The $\ffactor$ function in~(\ref{eq:factor-definition})
+The $\ffactor$ function in~\eqref{eq:factor-definition}
 simplifies a special case of disjunction, the repeated disjuncts
 (\eg, $\ffactor~(φ ∨ φ)~=~φ$).
 Notice that other cases like $φ~∨~(ψ~∨~φ)$ do no reduce to $ψ~∨~φ$.
@@ -93,7 +93,7 @@ Notice that other cases like $φ~∨~(ψ~∨~φ)$ do no reduce to $ψ~∨~φ$.
 To construct a disjunction $ψ$ from a disjunction $φ$, we have used ideas
 from the description in \citeauthor{bohme2010}~\cite{bohme2010} to prove
 equality between nested disjunctions.
-We define the $\fsbuild_{∨}$ function in~(\ref{eq:strong-build-or})
+We define the $\fsbuild_{∨}$ function in~\eqref{eq:strong-build-or}
 that uses every disjunct from the source formula, $φ$, to build up the
 target disjunction $ψ$.
 
@@ -182,7 +182,7 @@ Use Lemma~\ref{lem:rassoc} and Lemma~\ref{lem:sbuild-or}.
 
 Now, we define function to work with nested conjunctions. This will
 help us in the end of this section to reorder conjunctive normal forms.
-For instance, the $\freorder_{∧}$ function in~(\ref{eq:reorder-and}),
+For instance, the $\freorder_{∧}$ function in~\eqref{eq:reorder-and},
 reorders nested conjunctions.
 
 \begin{mainlemma}
@@ -218,10 +218,10 @@ reorders nested conjunctions.
 \end{equation}
 \end{myexample}
 
-In the last example in (\ref{ex:reorder-example}), we could not build the conjunction
+In the last example in~\eqref{ex:reorder-example}, we could not build the conjunction
 $r ∧ (q ∨ p)$ since $p ∨ q$ is not syntactical equal to $q ∨ p$.
 We solve this issue in Lemma~\ref{lem:reorder-and-or} by
-using the $\fconjunct_{∨}$ function defined in~(\ref{eq:conjunct-or}).
+using the $\fconjunct_{∨}$ function defined in~\eqref{eq:conjunct-or}.
 
 \begin{mainlemma}
   \label{lem:conjunct-or}
@@ -245,7 +245,7 @@ using the $\fconjunct_{∨}$ function defined in~(\ref{eq:conjunct-or}).
 \end{mainlemma}
 
 We are able now to reorder conjunctive normal forms using the
-$\freorder_{∧∨}$ function defined in (\ref{eq:reorder-and-or})
+$\freorder_{∧∨}$ function defined in~\eqref{eq:reorder-and-or}
 by using the previous lemma.
 
 \begin{mainlemma}
@@ -302,7 +302,7 @@ Therefore, we perform a sequence of rearrangements inside the
 formulas involved to match with the pattern expected by the resolution theorem
 described in Fig.~\ref{fig:metis-inferences}. Using reordering after
 applying a customized version of the resolution theorem defined
-in~(\ref{eq:rsol}) we get the expect result.
+in~\eqref{eq:rsol} we get the expect result.
 
 \begin{mainlemma}
   \label{lem:rsol}
