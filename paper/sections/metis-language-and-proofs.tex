@@ -7,13 +7,9 @@
 \section{Metis: Language and Proofs}
 \label{sec:metis-language-and-proofs}
 
-\Metis is an automatic theorem prover written in \len{ML} for
-first-order logic with equality developed by
-\citeauthor{hurd2003first}~\cite{hurd2003first}. This prover is
-suitable for proof reconstruction since it provides well-documented
-proofs to justify its deduction steps from the basis of only six
-inference rules. In Fig.~\ref{fig:metis-inferences}, we show the three
-\Metis rules for propositional logic.
+\Metis is an automatic theorem prover for first-order logic with equality developed by
+ \citeauthor{hurd2003first}~\cite{hurd2003first}.
+This prover is suitable for proof reconstruction since it provides well-documented proofs to justify its deduction steps from the basis of only six inference rules. In Fig.~\ref{fig:metis-inferences}, we show the three \Metis rules for propositional logic.
 
 \begin{figure}
 \begin{equation*}
@@ -222,7 +218,7 @@ These rules are not the same as we expected from the Fig.~\ref{fig:metis-inferen
     \label{tab:agda-metis-table}
     \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}c@{\hspace{2mm}}|}
     \hline
-    \textbf{\Metis rule name} & \textbf{Purpose} &\textbf{Theorem}\\ \hline
+    \textbf{\Metis Rule} & \textbf{Purpose} &\textbf{Theorem}\\ \hline
 
       \texttt{strip}
       &Strip a goal into subgoals

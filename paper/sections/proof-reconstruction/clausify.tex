@@ -6,25 +6,19 @@
 \label{sssec:clausification}
 
 The \clausify rule transforms a
-propositional formula into its clausal normal form, a conjunction
-of clauses. A \emph{clause} is the disjunction of zero or more
-literals.
+propositional formula into its clausal normal form.
 It is important to notice that this kind of conversion between one formula
 to its clausal normal form is not unique, and \Metis has a customized
 approach to perform that transformation. That is the reason we perform some
 reordering for the \CNF of the source formula to fulfill this issue.
 
 \begin{myexample}
-In the following \Metis \TSTP derivation, we see how
-\clausify expands the\texttt{norm0} formula to get \texttt{norm1} formula
-by using distributive laws included in the conjunctive normal form conversion.
+In the following \TSTP derivation by \Metis, we see how
+\clausify transform the \texttt{norm0} formula to get \texttt{norm1} formula.
 
 \begin{verbatim}
-fof(a1, axiom, p ⇒ (q ∧ r)).
-...
-fof(norm0, ¬ p ∨ (q ∧ r), inf(canonicalize, [a1])).
+fof(norm0, ¬ p ∨ (q ∧ r) ...
 fof(norm1, (¬ p ∨ q) ∧ (¬ p ∨ r), inf(clausify, [norm0])).
-...
 \end{verbatim}
 
 \end{myexample}
@@ -55,7 +49,7 @@ If $φ ≡ ψ$, $Γ ⊢ \fclausify~φ~ψ$ normalizes to $Γ ⊢ ψ$. The conclus
 The \clausify rule is often preceded by the \canonicalize rule.
 Both rules perform \emph{Clausification} that introduces
 into the problem axioms and definitions in the domain of the solution.
-The clausification algorithms is mainly described on paper by
+The clausification is widely described by
 \citeauthor{Sutcliffe1996}~\cite{Sutcliffe1996}.
 \end{myremark}
 

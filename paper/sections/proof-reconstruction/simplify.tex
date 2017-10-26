@@ -8,11 +8,12 @@ The \simplify rule is an inference that performs simplification of
 definitions and tautologies. This rule
 transverses a list of previous derivations by applying different theorems
 (e.g., \emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive
-syllogism}) to get a contradiction in the first place, or a smaller
-convenient formula.
+syllogism}) to get a contradiction in the first place, or a
+a new formula to use later.
 
 We observe based on the analysis of different
-cases in \TSTP derivation that \simplify can be modeled by a binary function.
+cases in the \TSTP derivations that \simplify can be modeled by
+function with three arguments: two source formulas and the target formula.
 As we see in~\eqref{eq:simplify-1}, if \fsimplify gets ⊥
 from its input derivations, it derives ⊥, and the same occurs with ⊤.
 Otherwise, in~\eqref{eq:simplify-2} \fsimplify performs an analysis by cases
@@ -23,8 +24,8 @@ to determine which theorem applies.
   \begin{aligned}
   &\hspace{.495mm}\fsimplify : \Prop → \Prop → \Prop → \Prop\hspace*{3.5cm}\\
   &\begin{array}{ll}
-   \fsimplify~⊥~φ₂~ψ  &=⊥\\
-   \fsimplify~φ₁~⊥~ψ  &=⊥\\
+   \fsimplify~⊥~φ~ψ  &=⊥\\
+   \fsimplify~φ~⊥~ψ  &=⊥\\
    \fsimplify~φ₁~φ₂~ψ &=⊥\\
    \fsimplify~φ₁~φ₂~⊤ &=⊤
   \end{array}
@@ -74,45 +75,47 @@ support \List \Prop type in the conclusion side.
 Let us review the following \TSTP excerpt where \simplify was used two times.
 
 \begin{verbatim}
-fof(norm1, g ∨ (¬ a ∨ k), inf(conjunct, [norm0])).
-fof(norm2, ¬ g ∨ q, inf(conjunct, [norm0])).
-fof(norm3, ¬ q, inf(conjunct, [norm0])).
-fof(norm4, ¬ g, inf(simplify, [norm2, norm3])).
-fof(norm5, ¬ k, inf(conjunct, [norm0])).
-fof(norm6, ⊥, inf(simplify, [norm1, norm4, norm5])).
+fof(n0, (¬ p ∨ q) ∧ ¬ r ∧ ¬ q ∧ (p ∨ (¬ s ∨ r)), ...
+fof(n1, p ∨ (¬ s ∨ r), inf(conjunct, [n0])).
+fof(n2, ¬ p ∨ q, inf(conjunct, [n0])).
+fof(n3, ¬ q, inf(conjunct, [n0])).
+fof(n4, ¬ p, inf(simplify, [n2, n3])).
+fof(n5, ¬ r, inf(conjunct, [n0])).
+fof(n6, ⊥, inf(simplify, [n1, n4, n5])).
 \end{verbatim}
 
 \begin{enumerate}
-\item The \simplify rule derives \verb!(¬ g)! in \verb!norm2!
+\item The \simplify rule derives \verb!¬ p! in \verb!norm4!
 from \verb!norm2! and \verb!norm3! derivations using the fourth case
-in~\eqref{eq:simplify-2}.
-$$\fsimplify~(¬ g ∨ q)~(¬ q) (¬ g) = ¬ g.$$
-\begin{verbatim}
-fof(norm2, ¬ g ∨ q, inf(conjunct, [norm0])).
-fof(norm3, ¬ q, inf(conjunct, [norm0])).
-fof(norm4, ¬ g, inf(simplify, [norm2, norm3])).
-\end{verbatim}
+in~\eqref{eq:simplify-2}, that is,
+
+$$\fsimplify~(¬ p ∨ q)~(¬ q) (¬ p) = ¬ p.$$
+% \begin{verbatim}
+% fof(norm2, ¬ p ∨ q, inf(conjunct, [norm0])).
+% fof(norm3, ¬ q, inf(conjunct, [norm0])).
+% fof(norm4, ¬ p, inf(simplify, [norm2, norm3])).
+% \end{verbatim}
 \item To derive \verb!⊥! in \verb!norm6! using
 Theorem~\ref{thm:simplify} we get the following proof.
 
 \begin{equation*}
 \begin{bprooftree}
-\AxiomC{$Γ ⊢ g ∨ (¬ a ∧ k)$}
-\AxiomC{$Γ ⊢ ¬ g$}
+\AxiomC{$Γ ⊢ p ∨ (¬ s ∧ r)$}
+\AxiomC{$Γ ⊢ ¬ p$}
 \RightLabel{Theorem~\ref{thm:simplify}}
-\BinaryInfC{$Γ ⊢ ¬ a ∧ k$}
-\AxiomC{$Γ ⊢ ¬ k$}
+\BinaryInfC{$Γ ⊢ ¬ s ∧ r$}
+\AxiomC{$Γ ⊢ ¬ r$}
 \RightLabel{Theorem~\ref{thm:simplify}}
 \BinaryInfC{$Γ ⊢ ⊥$}
 \end{bprooftree}
 \end{equation*}
 
-\begin{verbatim}
-fof(norm1, g ∨ (¬ a ∧ k), inf(conjunct, [norm0])).
-fof(norm4, ¬ g, inf(simplify, [norm2, norm3])).
-fof(norm5, ¬ k, inf(conjunct, [norm0])).
-fof(norm6, ⊥, inf(simplify, [norm1, norm4, norm5])).
-\end{verbatim}
+% \begin{verbatim}
+% fof(n1, g ∨ (¬ s ∧ r), inf(conjunct, [n0])).
+% fof(n4, ¬ p, inf(simplify, [n2, n3])).
+% fof(n5, ¬ r, inf(conjunct, [n0])).
+% fof(n6, ⊥, inf(simplify, [n1, n4, n5])).
+% \end{verbatim}
 \end{enumerate}
 \end{myexample}
 
