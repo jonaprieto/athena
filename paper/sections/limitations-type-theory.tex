@@ -11,9 +11,9 @@ Therefore the proof-reconstruction tool generates proof-terms by reconstructing 
 the prover in type theory. However, this approach suffers from some limitations of type theory as we describe in Section~\ref{sec:limitations-type-theory}.
 
 \begin{notation}
+Types are written using small caps.
 We write the type judgments as $m : \abbre{M}$ to denote
 that $m$ has $\abbre{M}$ type.
-Types are written using small caps.
 We use \Prop for the type of propositions and the dependent type, $Γ ⊢ φ$ for
 theorems where $Γ : \List~\Prop$ and $φ : \Prop$.
 $\abbre{List}$ type is the usual inductive type for lists.
@@ -33,7 +33,7 @@ To reconstruct \Metis' inference rules in type theory, we observed that
 transformations performed by some rules are implemented by \emph{general
 recursive} functions.
 
-Algorithms based on general recursions can not be translated
+Algorithms based on general recursion can not be translated
 directly in type theory since it is not a guarantee they terminate. For that
 reason, we follow the technique described in~\cite{Bertot2004} to avoid
 termination problems by modifying the recursive functions to be
@@ -45,9 +45,9 @@ This paper adopts the notion of \emph{structurally smaller} from
 structurally recursive if it calls itself with only
 structurally smaller arguments.
 
-General recursive functions can be translated into structurally recursive
-functions by using for instance, the \emph{Bounded Recursion} technique
-presented in~\cite{Bertot2004}. For a yet another methods, we refer
+General recursive functions can be rewrote into structurally recursive
+functions by using for instance, the \emph{bounded recursion} technique.
+For a yet another methods, we refer
 the reader to \cite{Coquand1992,Abel2002,Bove2005}.
 The bounded technique defines a new structural recursive function based on
 the general recursive function by adding an argument to the function.
@@ -87,7 +87,7 @@ the \Metis \strip inference rule in Section~\ref{sssec:strip-a-goal}.
 \end{aligned}
 \end{equation}
 
-In~\eqref{eq:uh-definition}, the first two equation
+In~\eqref{eq:uh-definition}, the first two equations
 call on arguments no structurally smaller.
 For instance, on the first call, $φ ≡ (φ₁ ∧ φ₂) ⇒ φ₃$, the recursion
 calls on the  $φ₁ ⇒ (φ₂ ⇒ φ₃)$ argument that is not a subformula of φ.
@@ -106,13 +106,13 @@ theory is to define a new function using a bounded recursion.
 \end{aligned}
 \end{equation}
 
-We bounded the recursion calls in~\eqref{eq:uh-structured} with \Nat type argument. This natural number represents the complexity measure of $\fuh_{0}$
+We bounded the recursion calls in~\eqref{eq:uh-structured} with a \Nat argument. This natural number represents the complexity measure of $\fuh_{0}$
 function.
 
-Recall the \emph{complexity measure} defined in \cite{Agudelo-Agudelo2017}
+The \emph{complexity measure} defined in \cite{Agudelo-Agudelo2017}
 and presented in \cite{VanDalen1994} as \emph{the rank for a
 proposition}, is a function $\Prop \to \Nat$ that assigns a natural
-number for a proposition $φ$ like the following $\frank$ function.
+number to a formula like we do with the following $\frank$ function.
 The symbols $c_{¬}$ and $c_{\square}$ are non-negative integer
 numbers called the complexity of the respective connective.
 
