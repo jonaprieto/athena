@@ -52,8 +52,13 @@
 % -------------------------------------------------------------------
 
 \usepackage{xargs}
-\usepackage[dvipsnames]{xcolor}
-% \usepackage[pdftex,dvipsnames]{xcolor}
+
+% If we are using the tikz package we must declare the color package
+% before it.
+% \usepackage[svgnames,dvipsnames]{xcolor}
+
+\usepackage[pdftex,svgnames,dvipsnames]{xcolor}
+
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 \newcommandx{\unsure}[2][1=]
   {\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
@@ -408,6 +413,13 @@ maxbibnames=6,%
 % -------------------------------------------------------------------
 
 \usepackage{hyperref}
+
+\hypersetup{citecolor=DarkGreen}
+
+% Colors the text instead of their the anchors.
+\hypersetup{colorlinks=true}
+
+\hypersetup{urlcolor=blue}
 
 % -------------------------------------------------------------------
 % Include the current time.
