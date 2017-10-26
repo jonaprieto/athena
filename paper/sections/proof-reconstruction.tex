@@ -52,11 +52,11 @@ mentioned above or in the type-checker~\Agda.
 
 In the remainder part of this section, a formal description using
 type theory is presented to build definitions and theorems of
-functions necessary to reconstruct \Metis' inference rules.
+functions necessary to reconstruct \Metis inference rules.
 
 % % ................................................
 
-\subsection{Reconstructing \Metis' inference rules}
+\subsection{Reconstructing \Metis inference rules}
 \label{ssec:emulating-inferences}
 
 In this section, we reconstruct each \Metis inference rule
@@ -65,11 +65,10 @@ function and its respective theorem. We present a pattern of the
 formal description for these rules.
 
 \begin{notation}
-The function name written in bold font is a \Metis inference rule.
-The same function name written in roman letters refers to the proposed
-version of the rule.
-Each rule proposed has a respective theorem also written in roman letters
-that proves its soundness.
+The function name written in \texttt{typewriter} font refers to
+a \Metis inference rule.
+The same function name written using \textsf{sans serif} refers to the proposed
+version of the rule implemented in \cite{AgdaProp,AgdaMetis}.
 \end{notation}
 
 \begin{myexample}
@@ -100,8 +99,8 @@ The \fconjunct function has the following pattern:
   \end{equation*}
 
 \begin{itemize}
-  \item[$\bullet$] $φ$ is the \emph{source} formula from a previous deducted derivation.
-  \item[$\bullet$] $ψ$ is the \emph{target} formula. The expected result of \texttt{rule}.
+  \item[∙] $φ$ is the \emph{source} formula from a previous deducted derivation.
+  \item[∙] $ψ$ is the \emph{target} formula. The expected result of \texttt{rule}.
 \end{itemize}
 
 To justify all transformations done by \fconjunct, we prove its soundness
