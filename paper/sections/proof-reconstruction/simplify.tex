@@ -4,20 +4,18 @@
 \subsubsection{Simplification.}
 \label{sssec:simplify}
 
-The \simplify rule is an inference that performs simplification of
-definitions and tautologies. This rule
-transverses a list of previous derivations by applying different theorems
-(e.g., \emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive
-syllogism}) to get a contradiction in the first place, or a
-a new formula to use later.
+The \simplify rule is an inference that performs simplification of definitions
+and tautologies. This rule transverses a list of previous derivations by
+applying different theorems (e.g., \emph{modus pones}, \emph{modus tollens}, or
+\emph{disjunctive syllogism}) to get a contradiction in the first place, or a a
+new formula to use later.
 
 We observe based on the analysis of different
-cases in the \TSTP derivations that \simplify can be modeled by
+cases in the \TSTP derivations that \simplify can be modeled by a
 function with three arguments: two source formulas and the target formula.
 As we see in~\eqref{eq:simplify-1}, if \fsimplify gets ⊥
-from its input derivations, it derives ⊥, and the same occurs with ⊤.
-Otherwise, in~\eqref{eq:simplify-2} \fsimplify performs an analysis by cases
-to determine which theorem applies.
+from its input derivations, it derives ⊥. When the target formula, the expected conclusion is ⊤, we derive immediately ⊤.
+Otherwise, the \fsimplify rule performs  in~\eqref{eq:simplify-2} an analysis by following the cases to determine which theorem should it applies.
 
  \begin{equation}
   \label{eq:simplify-1}
