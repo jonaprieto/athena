@@ -44,19 +44,22 @@ This prover is suitable for proof reconstruction since it provides well-document
 \label{ssec:input-language}
 
 The \TPTP language is the input language to encode problems used by \Metis.
-It includes the first-order form (denoted by \name{fof}) and clause normal form (denoted by \name{cnf}) formats~\cite{sutcliffe2009,Sicard-Ramirez2016}.
+It includes the first-order form (denoted by \name{fof}) and clause normal form (denoted by \name{cnf}) formats~\cite{sutcliffe2009}.
 The \TPTP syntax describes a well-defined grammar to handle annotated
 formulas with the following form:
 
 \begin{verbatim}
-  language(name, role, formula).
+  language(name, role, formula).,
 \end{verbatim}
 
-Where the \name{language} can be \name{fof} or \name{cnf}. The \name{name}
+where the \name{language} can be \name{fof} or \name{cnf}. The \name{name}
 serves to identify the formula within the problem. Each formula
 assumes a \name{role}, this could be an \name{axiom},
 \name{conjecture}, \name{definition}, \name{plain} or an \name{hypothesis}.
-The formulas include the constants \verb!$true! and \verb!$false!, negation unary operator (\verb!~!), and the binary connectives (\verb!&!, \verb!|!, \verb!=>!, \verb!<=>!) to represent $⊤, ⊥, ¬, ∧, ∨, ⇒, ⇔$ respectively.
+The formulas include the constants \verb!$true! and \verb!$false!, negation
+unary operator (\verb!~!), and the binary connectives (\verb!&!, \verb!|!,
+\verb!=>!, \verb!<=>!) to represent $⊤$, $⊥$, $¬$, $∧$, $∨$, $⇒$,
+and $⇔$ respectively.
 
 \begin{myexample}
 For instance, let us express the problem
@@ -82,17 +85,17 @@ We annotate \abbre{CPL} problems using \verb!fof! formulas that
 \label{ssec:output-language}
 
 The \TSTP language is an output language for derivations of
-ATPs~\cite{Sutcliffe-Schulz-Claessen-VanGelder-2006,Sicard-Ramirez2016}.
+ATPs~\cite{Sutcliffe-Schulz-Claessen-VanGelder-2006}.
 A \TSTP derivation is a directed acyclic graph, a proof tree,
 where each leaf is a formula from the \TPTP input. A node is a formula
 inferred from the parent formulas. The root is the final derived formula,
-such a derivation is a list of annotated formulas with the following form.
+such a derivation is a list of annotated formulas with the following form:
 
 \begin{verbatim}
   language(name, role, formula, source [,useful info]).
 \end{verbatim}
 
-Where the \name{source} field is an inference record with the following
+where the \name{source} field is an inference record with the following
 pattern:
 
 \begin{verbatim}
@@ -103,17 +106,16 @@ The \name{rule} in the line above stands for the inference name;
 the other fields are supporting arguments or useful information to
 apply the reasoning step, and list the parents nodes.
 
-\begin{myexample}\hspace{10cmm}\\
+\begin{myexample}
 
-\begin{verbatim}
-  fof(subgoal_0, plain, p, inference(strip, [], [goal])).
-\end{verbatim}
-
-In the script above, \strip is the name of the inference.
+In the script below, \strip is the name of the inference.
 It has no arguments and derives from one parent node named  \verb!goal!. The
 result of this inference when it applies to the \verb!goal! formula is
 \verb!p!.
 
+\begin{verbatim}
+  fof(subgoal_0, plain, p, inference(strip, [], [goal])).
+\end{verbatim}
 \end{myexample}
 
 \begin{notation}

@@ -1,14 +1,16 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 
-\section{Limitations of Type Theory}
-\label{sec:limitations-type-theory}
+\section{Type Theory}
+\label{sec:type-theory}
+
+Type theory is a formalism [TODO]
 
 Even though we choose a proof-assistant for type theory
 where proof verification becomes a type-checking task of the proof-term following the Curry-Howard isomorphism.
 
 Therefore the proof-reconstruction tool generates proof-terms by reconstructing the proof using the formalization
-the prover in type theory. However, this approach suffers from some limitations of type theory as we describe in Section~\ref{sec:limitations-type-theory}.
+the prover in type theory. However, this approach suffers from some limitations of type theory as we describe in Section~\ref{sec:type-theory}.
 
 \begin{notation}
 Types are written using small caps.
@@ -50,30 +52,32 @@ functions by using for instance, the \emph{bounded recursion} technique.
 For a yet another methods, we refer
 the reader to \cite{Coquand1992,Abel2002,Bove2005}.
 The bounded technique defines a new structural recursive function based on
-the general recursive function by adding an argument to the function.
+the general recursive function by adding an argument.
 The new argument is the \emph{bound}, a natural number given by the
 function complexity. In other words, the added argument will represent
 the number of times the function needs to call itself to get the
-expected outcome~\cite{Bertot2004}.
+expected outcome.
 
 \begin{notation}
 The type of natural numbers is called \Nat, and it is defined as
-usual, where \zero and \suc are its data constructors. We use names
-and symbols of the arithmetic operations as usual.
+usual, where $\zero$ and $\suc$ are its data constructors. We use names
+and symbols for the arithmetic operations as usual ($+$, $-$, $*$).
 We include syntax sugar for $\zero$, $\suc$, $\suc~\zero$,
 $\cdots$, with the decimal representation: $0$, $1$, $2$, $\cdots$
 as well.
 \end{notation}
 
-Therefore, one approach to guarantee a structural recursive function based on
-a general recursive function $\rm{f}:~\Prop~\to~\Prop$ is to formulate a new function $\rm{f}^{*}~:~\Prop~\to~\Nat~\to~\Prop$ where all of its recursive calls are done on smaller arguments.
+Hence, one approach to define a structural recursive function based on
+a general recursive function $\rm{f}:~\Prop~\to~\Prop$ is to formulate a new
+function $\rm{f}^{*}~:~\Prop~\to~\Nat~\to~\Prop$ where all of its recursive
+calls are done on smaller arguments.
 
 \begin{myexample}
 \label{ex:structural-recursion}
 
-Let us consider the following example to exhibit the bounded technique
-mentioned above for the \fuh function. This function is used for reconstructing
-the \Metis \strip inference rule in Section~\ref{sssec:strip-a-goal}.
+Let us consider the following example to show the bounded recursion technique
+for the \fuh function. This function is used for reconstructing
+a \Metis inference rule in Section~\ref{sssec:strip-a-goal}.
 
 \begin{equation}
 \label{eq:uh-definition}
@@ -184,7 +188,7 @@ derivation of $φ$.
 \begin{figure}
 \begin{equation*}
   \begin{bprooftree}
-    \AxiomC{}
+    \AxiomC{\,}
     \RightLabel{assume}
     \UnaryInfC{$Γ , φ ⊢ φ$}
   \end{bprooftree}\quad
@@ -194,7 +198,7 @@ derivation of $φ$.
     \UnaryInfC{$Γ , ψ ⊢ φ$}
   \end{bprooftree}\quad
   \begin{bprooftree}
-    \AxiomC{}
+    \AxiomC{\,}
     \RightLabel{$⊤$-intro}
     \UnaryInfC{$Γ ⊢ ⊤$}
   \end{bprooftree}\quad
@@ -271,7 +275,7 @@ derivation of $φ$.
 \BinaryInfC{$Γ ⊢ ψ$}
 \end{bprooftree}\qquad
 \begin{bprooftree}
-\AxiomC{}
+\AxiomC{\,}
 \RightLabel{PEM}
 \UnaryInfC{$Γ ⊢ φ ∨ ¬ φ$}
 \end{bprooftree}

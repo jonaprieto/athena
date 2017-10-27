@@ -5,23 +5,31 @@
 \subsubsection{Canonicalize.}
 \label{sssec:canonicalize}
 
-The purpose of the \canonicalize rule consists of adding axioms to the problem.
-In this process, some transformations are carried
-out by converting a \verb!fof! formula to its clausal normal form, a
-conjunction of clauses, and a \emph{clause} is the disjunction of zero or more
-literals. In that conversion redundancies (tautologies or definitions) are
-removed.
+The \canonicalize rule stands for adding an axiom to the problem.
+As far as we know this rule is always used to introduce the subgoals
+in their refutations proofs. We also observed how this rule is used to
+assume in the refutations, axioms, definitions or hypothesis.
 
-% The following description for the \canonicalize rule was mainly guided by a
-% reading of the \Metis source code.
+To achieve this , some transformations are carried out by converting a
+\verb!fof! formula to its clausal normal form, a conjunction of clauses, and a
+\emph{clause} is the disjunction of zero or more literals. We use clausal normal
+form as another synonym of conjunctive normal form. The \canonicalize rule
+remove inside the formula redundancies (tautologies or definitions) as well. The
+\canonicalize jointly with the \clausify rule perform \emph{clausification}. The
+clausification process is widely described by
+\citeauthor{Sutcliffe1996}~\cite{Sutcliffe1996}.
 
-We firstly describe functions to remove
-the redundancies inside the formula.
-We say that there are redundancies in a formula when some of the theorems
+To reconstruct the \canonicalize rule, we adapted some ideas from the \Metis
+source code. The presentation of this reconstruction is as follows. We firstly
+describe functions to remove redundancies inside the formula. After, we present
+the negative normal form conversion in~Lemma~\ref{lem:nnf} and the conjunctive
+normal form in Lemma~\ref{lem:cnf}. At the end of this section, we state
+Theorem~\ref{thm:canonicalize} to reconstruct the \canonicalize rule.
+
+Now, we say that there are redundancies in a formula when some of the theorems
 in~Fig.~\ref{fig:redundancies} can be applied inside the formula.
 
 \begin{figure}
-\label{fig:redundancies}
   \[
     \begin{bprooftree}
       \AxiomC{$Γ ⟝ φ ∨ ⊥$}
@@ -65,13 +73,10 @@ in~Fig.~\ref{fig:redundancies} can be applied inside the formula.
       \UnaryInfC{$Γ ⟝ φ$}
     \end{bprooftree}
   \]
-  \caption{Redundancies cases in a formula.}
+  \caption{Theorems to use inside a formula to remove redundancies.}
+\label{fig:redundancies}
 \end{figure}
 
-After that, we present the negative normal form conversion
-in~Lemma~\ref{lem:nnf} to introduce the conjunctive normal form~\ref{lem:cnf}.
-At the end of this section, we provide the \fcanonicalize function
-to reconstruct the \canonicalize rule using Theorem~\ref{thm:canonicalize}.
 
 \begin{notation}
 In a disjunction, $φ ≡ φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
@@ -102,11 +107,10 @@ We assume the formulas to be right-associative unless otherwise stated.
 
 \begin{myexample}
 
-The  formula $φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ$ has redundancies.
-To remove such redundancies with Lemma~\ref{lem:rm-or},
-we first use Lemma~\ref{lem:rassoc} to get the right-associative
-version of the formula. Now, using the $\frm_{∨}$ function,
-we get the formula $ψ ∨ φ$ logical equivalent to
+The formula $φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ$ has redundancies. To remove such
+redundancies with Lemma~\ref{lem:rm-or}, we first use Lemma~\ref{lem:rassoc} to
+get the right-associative version of the formula. Now, using the $\frm_{∨}$
+function, we get the formula $ψ ∨ φ$ logical equivalent to
 $φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ$.
 
 \begin{equation}
@@ -196,7 +200,8 @@ we use the $\fndisj_{∨}$ function.
 \end{mainlemma}
 
 Now, we have removed redundancies in the disjunctions by applying the
-$\fcanon_{∨}$ function. In a similar way, we define the $\fcanon_{∧}$ function to work with conjunctions.
+$\fcanon_{∨}$ function. In a similar way, we define the $\fcanon_{∧}$ function
+to work with conjunctions.
 
 \begin{notation}
 In a conjunction, $φ ≡ φ₁ ∧ φ₂ ∧ \cdots ∧ φₙ$, we say
@@ -396,24 +401,22 @@ came from logical equivalences in propositional logic, we state the following le
   If $Γ ⊢ \fcnf~φ$ then $Γ ⊢ φ$.
 \end{mainlemma}
 
-The \fcanonicalize rule is a inference rule
-defined in \eqref{eq:canonicalize} which performs
-normalization for a proposition. That is,
-depending on the role of the formula in the problem,
-it converts the formula to its negated normal form or its
-conjunctive normal form but in both cases, \canonicalize simplifies
+The \fcanonicalize rule is a inference rule defined in \eqref{eq:canonicalize}
+which performs normalization for a proposition. That is, depending on the role
+of the formula in the problem, it converts the formula to its negated normal
+form or its conjunctive normal form but in both cases, \canonicalize simplifies
 the formula by removing redundancies inside it as we widely described above
-Fig.~\ref{fig:redundancies}.
-When the formula plays the axiom or definition role,
-the \canonicalize rule transforms the source formula to its negated normal
-form. Otherwise, this rule converts the formula to its conjunctive normal form.
+Fig.~\ref{fig:redundancies}. When the formula plays the axiom or definition
+role, the \canonicalize rule transforms the source formula to its negated
+normal form. Otherwise, this rule converts the formula to its conjunctive
+normal form.
 
-Since this rule mostly consists of dealing with clauses, to
-to reconstruct this rule, our strategy mainly consists of checking the
-equality of normalized negative form between the source and the
-target formula. If it fails, we try to reorder the conjunctive
-normal form of the source formula to match with
-the conjunctive normal form of the target formula.
+Since this rule mostly consists of dealing with clauses, to to reconstruct this
+rule, our strategy mainly consists of checking the equality of normalized
+negative form between the source and the target formula. If it fails, we try to
+reorder the conjunctive normal form of the source formula to match with the
+conjunctive normal form of the target formula.
+
 
 \begin{mainth} % (fold)
   \label{thm:canonicalize}
@@ -423,8 +426,8 @@ the conjunctive normal form of the target formula.
   \begin{aligned}
   &\hspace{.495mm}\fcanonicalize : \Source \to \Target \to \Prop\\
   &\fcanonicalize~φ~ψ = \begin{cases}
-        ψ, &\text{ if  } ψ≡φ\\
-        ψ, &\text{ if  } \fcnf~ψ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)\\
+        ψ, &\text{ if } ψ≡φ\\
+        ψ, &\text{ if } \fcnf~ψ≡\freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)\\
         φ, &\text{ otherwise. }
         \end{cases}
    \end{aligned}

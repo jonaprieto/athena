@@ -176,7 +176,6 @@
 \newunicodechar{φ}{\ensuremath{\varphi}}
 \newunicodechar{ψ}{\ensuremath{\psi}}
 \newunicodechar{ϕ}{\ensuremath{\varphi}}
-\newunicodechar{ℓ}{\ensuremath{\ell}}
 \newunicodechar{ᵢ}{\ensuremath{{}_{i}}}
 \newunicodechar{₀}{\ensuremath{{}_{0}}}
 \newunicodechar{₁}{\ensuremath{{}_{1}}}
@@ -189,12 +188,14 @@
 \newunicodechar{₈}{\ensuremath{{}_{8}}}
 \newunicodechar{₉}{\ensuremath{{}_{9}}}
 \newunicodechar{ₙ}{\ensuremath{{}_{n}}}
+\newunicodechar{ℓ}{\ensuremath{\ell}}
 \newunicodechar{→}{\ensuremath{\rightarrow}}
 \newunicodechar{⇒}{\ensuremath{\Rightarrow}}
 \newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
 \newunicodechar{∅}{\ensuremath{\emptyset}}
 \newunicodechar{∈}{\ensuremath{\in}}
 \newunicodechar{∘}{\ensuremath{\circ}}
+\newunicodechar{∙}{\ensuremath{\bullet}}
 \newunicodechar{∧}{\ensuremath{\wedge}}
 \newunicodechar{∨}{\ensuremath{\vee}}
 \newunicodechar{∼}{\ensuremath{\sim}}
@@ -205,10 +206,9 @@
 \newunicodechar{⊢}{\ensuremath{\vdash}}
 \newunicodechar{⊤}{\ensuremath{\top}}
 \newunicodechar{⊥}{\ensuremath{\bot}}
-\newunicodechar{⬓}{\ensuremath{\square}}
-\newunicodechar{∙}{\ensuremath{\bullet}}
 \newunicodechar{⊻}{\ensuremath{\veebar}}
 \newunicodechar{⟝}{\ensuremath{\vdash}}
+\newunicodechar{⬓}{\ensuremath{\square}}
 \newunicodechar{ⱼ}{\ensuremath{{}_{j}}}
 
 % -------------------------------------------------------------------
@@ -286,15 +286,21 @@
 \newcommand{\NN}{\ensuremath{\mathbb{N}}}
 
 \newcommand{\fun}[1]{\textsf{#1}\xspace}
+
 \newcommand{\fassoc}{\fun{assoc}}
 \newcommand{\fbuild}{\fun{build}}
+\newcommand{\fcanonicalize}{\fun{canonicalize}}
 \newcommand{\fcanon}{\fun{simplify}}
+\newcommand{\fclausify}{\fun{clausify}}
 \newcommand{\fcnf}{\fun{cnf}}
+\newcommand{\fconjunctor}{\fun{disj}}
+\newcommand{\fconjunct}{\fun{conjunct}}
 \newcommand{\fdist}{\fun{dist}}
 \newcommand{\ffactor}{\fun{factor}}
 \newcommand{\fform}{\fun{form}}
 \newcommand{\fmax}{\fun{max}}
 \newcommand{\fndisj}{\fun{ndisj}}
+\newcommand{\fnegate}{\fun{negate}}
 \newcommand{\fnnfp}{\fun{nnf}₀}
 \newcommand{\fnnf}{\fun{nnf}}
 \newcommand{\fpolarity}{\fun{polarity}}
@@ -302,21 +308,15 @@
 \newcommand{\frconj}{\fun{rconj}}
 \newcommand{\frdisj}{\fun{rdisj}}
 \newcommand{\freorder}{\fun{reorder}}
+\newcommand{\fresolve}{\fun{resolve}}
 \newcommand{\frm}{\fun{rm}}
 \newcommand{\frsol}{\fun{rsol}}
 \newcommand{\fsbuild}{\fun{sbuild}}
+\newcommand{\fsimplify}{\fun{simplify}}
 \newcommand{\fstripp}{\fun{strip}\prime}
 \newcommand{\fstrip}{\fun{strip}}
 \newcommand{\fsubst}{\fun{subst}}
 \newcommand{\fuh}{\fun{uh}}
-
-\newcommand{\fcanonicalize}{\fun{canonicalize}}
-\newcommand{\fconjunct}{\fun{conjunct}}
-\newcommand{\fconjunctor}{\fun{disj}}
-\newcommand{\fresolve}{\fun{resolve}}
-\newcommand{\fclausify}{\fun{clausify}}
-\newcommand{\fsimplify}{\fun{simplify}}
-\newcommand{\fnegate}{\fun{negate}}
 
 % latin etc. abbrev
 \newcommand{\abbrev}[1]{#1} % alternative: \emph{#1}
@@ -330,10 +330,6 @@
 \newcommand{\Wlog}{W.\,l.\,o.\,g.}
 \newcommand{\wrt}{w.\,r.\,t.}
 \newcommand{\TheEnd}{\\\hspace*{0.975\textwidth}$\blacksquare$}
-
-% -------------------------------------------------------------------
-% Rest.
-% -------------------------------------------------------------------
 
 % -------------------------------------------------------------------
 % Rest.
@@ -427,7 +423,7 @@ maxbibnames=6,%
 \hypersetup{urlcolor=blue}
 
 % -------------------------------------------------------------------
-% Include the current time.
+% Include a footer with date and hour of the compilation
 % -------------------------------------------------------------------
 
 \usepackage{fancyhdr}
@@ -438,6 +434,8 @@ maxbibnames=6,%
 \lfoot{Page \thepage}
 \renewcommand{\headrulewidth}{0pt}}
 \pagestyle{plain}
+
+% -------------------------------------------------------------------
 
 \begin{document}
 
@@ -472,7 +470,7 @@ Universidad EAFIT, Medell\'in, Colombia\\
 \subfile{sections/abstract.tex}
 % \tableofcontents
 \subfile{sections/introduction.tex}
-\subfile{sections/limitations-type-theory.tex}
+\subfile{sections/type-theory.tex}
 \subfile{sections/metis-language-and-proofs.tex}
 \subfile{sections/proof-reconstruction.tex}
 % \subfile{sections/implementation.tex}

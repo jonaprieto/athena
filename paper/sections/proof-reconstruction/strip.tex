@@ -122,7 +122,7 @@ Now, using \texttt{⇒∧⇒\textsf{-to-}⇒∧} theorem from~\cite{AgdaProp},
 \end{itemize}
 \end{proof}
 
-The \fstrip₀ function yields the conjunction of subgoals that implies the goal of the problem in the \Metis \TSTP derivations but is not a structurally recursive
+The $\fstrip₀$ function yields the conjunction of subgoals that implies the goal of the problem in the \Metis \TSTP derivations but is not a structurally recursive
 function.  Instead, we present its structural recursive version
 in~\eqref{eq:strip-fixed} after applying
 the bounded technique described in Section~\ref{ssec:structural-recursion}.
@@ -139,7 +139,7 @@ We based on the definition of this function from the \Metis source code.
 \fstrip₁ &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
 \fstrip₁ &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~((¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n)\\
 \fstrip₁ &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
-\fstrip₁ &(¬ ¬ φ₁)      &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n)\\
+\fstrip₁ &(¬ (¬ φ₁))      &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n)\\
 \fstrip₁ &(¬ ⊥)         &(\suc~n) &= ⊤\\
 \fstrip₁ &(¬ ⊤)         &(\suc~n) &= ⊥\\
 \fstrip₁ &φ             &n        &= φ
@@ -148,8 +148,8 @@ We based on the definition of this function from the \Metis source code.
 \end{equation}
 
 In a similar way as we define $\fuh_{cm}$ in~\eqref{eq:uh-complexity}, we define
-$\fstrip_{cm}$ as the complexity measure for $\fstrip₀$ function. As expected,
-the \fstrip function is defined as follows.
+$\fstrip_{cm}$ as the complexity measure for the $\fstrip₀$ function.
+Then we define the \fstrip function is defined as follows.
 
 \begin{align}
   \label{eq:strip}
@@ -163,7 +163,7 @@ the \fstrip function is defined as follows.
 \label{lem:lem-inv-strip}
 Let $\text{n} : \Nat$ be the complexity measure of the \fstrip function defined
 in~\eqref{eq:strip-fixed}.
-If $Γ ⊢ \fstrip₁~φ~n$ then $Γ ⊢ φ$.
+If $Γ~⊢~\fstrip₁~φ~n$ then $Γ~⊢~φ$.
 \end{mainlemma}
 
 \begin{proof}
@@ -173,10 +173,10 @@ We present a straightforward case with double negation, a case with
 conjunction connective, and last, the case with a negated disjunction.
 We refer the reader to~\cite{AgdaMetis} for the complete proof in \Agda.
 
-∙~Case $φ ≡ ¬ ¬ φ₁$.
+∙~Case $φ ≡ ¬ (¬ φ₁) $.
 \begin{equation*}
   \begin{bprooftree}
- \AxiomC{$Γ ⊢ \fstrip₁~(¬¬φ₁)~(\suc~n)$}
+ \AxiomC{$Γ ⊢ \fstrip₁~(¬(¬φ₁))~(\suc~n)$}
   \RightLabel{by~(\ref{eq:strip-fixed})}
   \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~φ₁~n)$}
   \RightLabel{Lemma~\ref{lem:inv-uh-lem}}

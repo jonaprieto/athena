@@ -222,8 +222,8 @@ In the last example in~\eqref{ex:reorder-example}, we could not build the conjun
 $r ∧ (q ∨ p)$ since $p ∨ q$ is not syntactical equal to $q ∨ p$.
 We solve this issue in Lemma~\ref{lem:reorder-and-or} by
 using the $\fconjunctor$ function defined in~\eqref{eq:conjunct-or}.
-This purpose of this function consists of extract a disjunction from
-a conjunction, but without matter the order atoms in the disjunction.
+The purpose of this function consists of extracting a disjunction from
+a conjunction, but without matter the order of inner disjunction.
 
 \begin{mainlemma}
   \label{lem:conjunct-or}
@@ -277,17 +277,14 @@ resolution theorem and two derivations.
 Recall a \emph{literal} is an atom (positive literal) or a negation
 of an atom (negative literal).
 
-\begin{myremark}
+\begin{notation}
 We use \Lit as synonym of \Prop type to refer literals.
-\end{myremark}
-
+\end{notation}
 
 The positive literal $ℓ$ must occur in
 the formula from the first derivation and the
 negative literal $¬ ℓ$ must occur in the formula from the second derivation,
 see the pattern of \emph{resolve} rule in Fig.~\ref{fig:metis-inferences}.
-
-
 
 \begin{myexamplenum}\hspace{10cm}
 \label{ex:resolve-tstp}
@@ -371,7 +368,7 @@ in~\eqref{eq:rsol} we get the expect result.
 \begin{myexample}
 Continuing with the problem presented in Example~\ref{ex:resolve-tstp},
 we can use Theorem \ref{thm:resolve} to derive $Γ ⊢ p ∨ q$.
-Let be $φ₁ ≡ p ∨ q ∨ r$ and $φ₂ ≡ ¬ r ∨ p ∨ q$.
+% Let be $φ₁ ≡ p ∨ q ∨ r$ and $φ₂ ≡ ¬ r ∨ p ∨ q$.
 
 \begin{equation*}
   \begin{bprooftree}
@@ -380,7 +377,7 @@ Let be $φ₁ ≡ p ∨ q ∨ r$ and $φ₂ ≡ ¬ r ∨ p ∨ q$.
   \RightLabel{Theorem \ref{thm:resolve}}
   \BinaryInfC{$Γ ⊢ \fresolve~(p ∨ q ∨ r)~(¬ r ∨ p ∨ q)~r~(p ∨ q)$}
   \RightLabel{by (\ref{eq:resolve})}
-  \UnaryInfC{$Γ ⊢ \frsol~(\freorder_{∨}~φ₁~(r ∨ (p ∨ q))~∧~\freorder_{∨}~φ₂~(¬ r ∨ (p ∨ q))$}
+  \UnaryInfC{$Γ ⊢ \frsol~(\freorder_{∨}~(p ∨ q ∨ r)~(r ∨ (p ∨ q))~∧~\freorder_{∨}~(¬ r ∨ p ∨ q)~(¬ r ∨ (p ∨ q))$}
   \RightLabel{by (\ref{eq:reorder-or})}
   \UnaryInfC{$Γ ⊢ \frsol~((r ∨ (p ∨ q)) ∧ (¬ r ∨ (p ∨ q)))$}
   \RightLabel{by (\ref{eq:rsol})}
