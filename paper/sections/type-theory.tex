@@ -9,7 +9,7 @@ It was proposed in 1902 to avoid the Russell's paradox and it follows
 the same philosophy of constructive mathematics where the witness of
 a statement is \emph{everything}. In that direction, we could say
 the main actors in type theory are the statements and their proofs.
-By following the Curry-Howard correspondence, we say
+By following the Curry-Howard correspondence (see, for example,~\cite{Wadler-2015}), we say
 \emph{types} are theorems and their \emph{terms} are their proofs.
 
 Since type theory is a formal system, we have a syntax and a set of
@@ -17,9 +17,9 @@ derivation rules. These rules enables us to derive a kind of conclusions called
 \emph{judgments}. A judgment is another way to say a term has certain type.
 
 \begin{notation}
-Types are written using small caps.
-We write the type judgments as $m : \abbre{M}$ to denote
-that $m$ has $\abbre{M}$ type.
+  Types are written using \abbre{small caps}.  We write the type
+  judgments as $m : \abbre{m}$ to denote that~$m$ is of
+  type~$\abbre{m}$.
 \end{notation}
 
 We produce derivation trees inside the judgments using the derivation rules.
