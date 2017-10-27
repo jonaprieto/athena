@@ -4,18 +4,45 @@
 \section{Type Theory}
 \label{sec:type-theory}
 
-% Type theory is a formalism [TODO]
 
-% Even though we choose a proof-assistant for type theory
-% where proof verification becomes a type-checking task of the proof-term following the Curry-Howard isomorphism.
+Type theory is another formalism for the foundation of mathematics, and it has become in a key instrument to study logic and proof theory.
+It was proposed in 1902 to avoid the Russell's paradox and it follows
+the same philosophy of constructive mathematics where the witness of
+a statement is \emph{everything}. In that direction, we could say
+the main actors in type theory are the statements and their proofs.
+The \emph{types} are theorems and their \emph{terms} are the proofs.
 
-% Therefore the proof-reconstruction tool generates proof-terms by reconstructing the proof using the formalization
-% the prover in type theory. However, this approach suffers from some limitations of type theory as we describe in Section~\ref{sec:type-theory}.
+Since it is a formal system, in type theory, we have a syntax and a set of derivation rules. These rules enables us to get certain kind of conclusions that we call \emph{judgments}. A judgment is a statement that says a
+term has certain type.
 
 \begin{notation}
 Types are written using small caps.
 We write the type judgments as $m : \abbre{M}$ to denote
 that $m$ has $\abbre{M}$ type.
+\end{notation}
+
+With the derivation rules we produce derivation trees inside
+the judgments. These trees represent proofs of theorems.
+We use such level of expressiveness for the reconstructed proofs
+from the \ATPs.
+
+% Since type theory can be seen as typed lambda calculus with dependent products,
+% compute terms is basically $\beta$-reductions.
+% And we
+
+
+
+We choose a proof-assistant for type theory
+because of the verification of proofs is type-checking, that is,
+given a type of the theorem and the proof-term, verify that term
+effectively has the type of the theorem.
+Therefore, by following the Curry-Howard correspondence,
+
+% Therefore the proof-reconstruction tool generates proof-terms by reconstructing the proof using the formalization
+% the prover in type theory. However, this approach suffers from some limitations of type theory as we describe in Section~\ref{sec:type-theory}.
+
+
+\begin{notation}
 We use \Prop for the type of propositions and the dependent type, $Γ ⊢ φ$ for
 theorems where $Γ : \List~\Prop$ and $φ : \Prop$.
 $\abbre{List}$ type is the usual inductive type for lists.
