@@ -223,7 +223,7 @@ $r ∧ (q ∨ p)$ since $p ∨ q$ is not syntactical equal to $q ∨ p$.
 We solve this issue in Lemma~\ref{lem:reorder-and-or} by
 using the $\fconjunctor$ function defined in~\eqref{eq:conjunct-or}.
 The purpose of this function consists of extracting a disjunction from
-a conjunction, but without matter the order of inner disjunction.
+a conjunction, but without matter the order of the inner disjunctions.
 
 \begin{mainlemma}
   \label{lem:conjunct-or}
@@ -269,8 +269,8 @@ by using the previous lemma.
   \end{align}
 \end{mainlemma}
 
-Now, we are ready to reconstruct the \resolve rule. This is the
-first application of Lemma \ref{lem:reorder-and-or}.
+Now, we are ready to reconstruct the \resolve rule using
+Lemma~\ref{lem:reorder-and-or}.
 The \resolve rule is a generalization of the resolution theorem.
 This rule has three arguments: a positive literal $ℓ$ to apply the
 resolution theorem and two derivations.
