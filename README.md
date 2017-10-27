@@ -16,7 +16,8 @@ Clone this repository:
 ```
 $ git clone https://github.com/jonaprieto/athena.git
 $ cd athena
-$ make check
+$ make install
+$ make install-libraries
 ```
 
 Athena was tested with:
