@@ -94,12 +94,16 @@ all necessary canceled.
 \section{Customized \TSTP syntax}
 \label{app:tstp-syntax}
 
+We adopted a special \TSTP syntax to improve the readability of the \TSTP
+examples shown in this document. Some of the modifications to the original
+presentation of \TSTP syntax in Section~\ref{ssec:output-language} are the
+following.
 
 \begin{itemize}
   \item We use \verb!inf! instead of \verb!inference!
   \item We shorten names generated automatically by \Metis, \eg,
 \verb!sg0! instead of \verb!subgoal_0! or \verb!norm0_0!
-insead of \verb!normalize_0_0!.
+instead of \verb!normalize_0_0!.
   \item We remove the \verb!plain! role everywhere.
   \item We remove empty fields in the inference information
   \item If the inference rule does not need arguments except its parent nodes, we remove the field of useful information.
@@ -108,8 +112,9 @@ insead of \verb!normalize_0_0!.
   some parts of the derivation we use instead the ellipsis (\verb!...!).
 \end{itemize}
 
+We see in Fig.~\ref{fig:metis-proof-tstp} a  \TSTP derivation by \Metis.
 
-\begin{figure}
+\begin{figure}[!h]
 \begin{verbatim}
   fof(premise, axiom, p).
   fof(goal, conjecture, p).
@@ -129,7 +134,10 @@ problem $p\vdash p$.}
 \label{fig:metis-proof-tstp}
 \end{figure}
 
-\begin{figure}
+For the same derivation, we have its customized version
+in Fig.~\ref{fig:metis-proof-tstp-customized}.
+
+\begin{figure}[!h]
 \begin{verbatim}
   fof(premise, axiom, p).
   fof(goal, conjecture, p).
@@ -146,6 +154,9 @@ problem $p\vdash p$.}
 
 \section{Polarity for propositions}
 \label{app:polarity-for-propositions}
+
+Since the polarity function is not standard, we use
+the following definition in~\eqref{def:polarity}.
 
 \begin{equation}
 \label{def:polarity}
@@ -166,7 +177,7 @@ problem $p\vdash p$.}
 \end{equation}
 
 
-\section{Another proof case for the \strip inference rule}
+\section{A case in the proof of the \strip inference rule}
 \label{app:strip-proof-case}
 
 \begin{itemize}
