@@ -9,7 +9,7 @@ conjunction one of its conjuncts. This rule is a generalization of the
 projection rules for the conjunction connective as the
 following \TSTP excerpt shows.
 
-\begin{myexample}\hspace{10cm}
+\begin{myexamplenum}\hspace{10cm}
 
 \begin{verbatim}
   fof(p1, p ∧ q ∧ (r ∨ ¬ p), inf(canonicalize, [x])).
@@ -23,7 +23,7 @@ The \conjunct rule extracts $q$ from the \verb!p1! using a left
 projection (∧-proj₁) follow by a right projection (∧-proj₂).
 After, the \conjunct rule extracts $r ∨ ¬ p$ by using a right projection
 on \verb!p1!.
-\end{myexample}
+\end{myexamplenum}
 
 \begin{mainth}
   \label{thm:conjunct}

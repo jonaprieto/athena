@@ -9,7 +9,7 @@ disjoint cases. This process produces a list of new subgoals, the
 conjunction of these subgoals implies the goal. Then, a proof of the
 goal becomes, in smaller proofs, one refutation for each subgoal.
 
-\begin{myexample}
+\begin{myexamplenum}
 The subgoals associated to a goal are introduced in the \TSTP derivation
 with the \strip inference rule.
 
@@ -33,7 +33,7 @@ in~\eqref{eq:strip-example}.
 So far, very little attention has been paid to the role of \strip rule.
 in \TSTP derivation since \Metis does not make explicit the way
 it uses the subgoals to prove the conjecture.
-\end{myexample}
+\end{myexamplenum}
 
 We prove the correctness of the \strip inference rule in
 Theorem~\ref{thm:strip}. To show that theorem, we need to prove
@@ -315,7 +315,7 @@ to prove each subgoal, \Metis assumes the negation of it
 by using the \negate rule after the \strip inference application
 that introduce such a subgoal.
 
-\begin{myexample}
+\begin{myexamplenum}
 In the following \TSTP derivation, note that the three subgoals
 \verb!sg0!, \verb!sg1! and \verb!sg2! are assumed by the \negate
 rule in \verb!neg0!, \verb!neg1! and  \verb!neg2! respectively.
@@ -331,6 +331,6 @@ rule in \verb!neg0!, \verb!neg1! and  \verb!neg2! respectively.
   ...
   fof(neg2, ¬ ((p ∧ r) ⇒ q), inf(negate,[sg2])).
 \end{verbatim}
-\end{myexample}
+\end{myexamplenum}
 
 \end{document}

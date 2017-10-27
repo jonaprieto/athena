@@ -68,7 +68,7 @@ unary operator (\verb!~!), and the binary connectives (\verb!&!, \verb!|!,
 \verb!=>!, \verb!<=>!) to represent $⊤$, $⊥$, $¬$, $∧$, $∨$, $⇒$,
 and $⇔$ respectively.
 
-\begin{myexample}
+\begin{myexamplenum}
 For instance, let us express the problem
 $p\, ⊢ ¬  (p ∧ ¬ p) ∨ (q ∧ ¬ q)$
 in \TPTP syntax. We begin by declaring the $p$ axiom using the \verb!axiom!
@@ -80,7 +80,7 @@ keyword. Later, we include the expected conclusion using the
   fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
 \end{verbatim}
 
-\end{myexample}
+\end{myexamplenum}
 
 
 \subsection{Output language}
@@ -108,7 +108,7 @@ The \name{rule} in the line above stands for the inference name;
 the other fields are supporting arguments or useful information to
 apply the reasoning step, and list the parents nodes.
 
-\begin{myexample}
+\begin{myexamplenum}
 
 In the script below, \strip is the name of the inference.
 It has no arguments and derives from one parent node named  \verb!goal!. The
@@ -118,7 +118,7 @@ result of this inference when it applies to the \verb!goal! formula is
 \begin{verbatim}
   fof(subgoal_0, plain, p, inference(strip, [], [goal])).
 \end{verbatim}
-\end{myexample}
+\end{myexamplenum}
 
 \begin{notation}
 
