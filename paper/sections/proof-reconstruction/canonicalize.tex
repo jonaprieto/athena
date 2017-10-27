@@ -5,18 +5,36 @@
 \subsubsection{Canonicalize.}
 \label{sssec:canonicalize}
 
-The \canonicalize rule stands for adding an axiom to the problem.
-As far as we know this rule is always used to introduce the subgoals
-in their refutations proofs. We also observed how this rule is used to
-assume in the refutations, axioms, definitions or hypothesis.
+The \canonicalize rule is an inference that transforms a formula to a its
+negative normal form or its conjunctive normal form depending on
+the role that the formula plays in the problem as we explain in a moment.
+However, in both cases, this rule removes inside the formula as long as it
+possible any redundancy (\ie, tautologies or definitions).
 
-To achieve this , some transformations are carried out by converting a
-\verb!fof! formula to its clausal normal form, a conjunction of clauses, and a
-\emph{clause} is the disjunction of zero or more literals. We use clausal normal
-form as another synonym of conjunctive normal form. The \canonicalize rule
-remove inside the formula redundancies (tautologies or definitions) as well. The
-\canonicalize jointly with the \clausify rule perform \emph{clausification}. The
-clausification process is widely described by
+\begin{mydefinition}
+The \emph{negative normal form} of a formula is the logical equivalent version of it
+in which negations appear only in the literals and the formula does not
+contain any implications.
+
+\end{mydefinition}
+
+\begin{mydefinition}
+
+The \emph{conjunctive normal form} of a formula also called clausal normal form
+is the logical equivalent version expressed as a conjunction of clauses, where
+a \emph{clause} is the disjunction of zero or more literals.
+
+\end{mydefinition}
+
+This rule is used by \Metis to introduce the subgoals in their refutation proofs
+but also helps to simplify formulas in intermediate steps in the derivation. As
+far as we know, the \canonicalize rule in these cases uses the conjunctive
+normal form with simplifications. Otherwise, when an axiom, definition or
+hypothesis is needed to prove some goal, this rule is used with the negative
+normal form of the formula.
+
+The \canonicalize rule jointly with the \clausify rule perform the so-called
+\emph{clausification} mainly described by
 \citeauthor{Sutcliffe1996}~\cite{Sutcliffe1996}.
 
 To reconstruct the \canonicalize rule, we adapted some ideas from the \Metis
@@ -27,7 +45,7 @@ normal form in Lemma~\ref{lem:cnf}. At the end of this section, we state
 Theorem~\ref{thm:canonicalize} to reconstruct the \canonicalize rule.
 
 Now, we say that there are redundancies in a formula when some of the theorems
-in~Fig.~\ref{fig:redundancies} can be applied inside the formula.
+in~Fig.~\ref{fig:redundancies} can be applied inside of it.
 
 \begin{figure}
   \[
@@ -64,16 +82,16 @@ in~Fig.~\ref{fig:redundancies} can be applied inside the formula.
     \end{bprooftree}
     \qquad
     \begin{bprooftree}
-      \AxiomC{$Γ ⟝ φ ∧ ¬ φ$}
-      \UnaryInfC{$Γ ⟝ ⊥$}
-    \end{bprooftree}
-    \qquad
-    \begin{bprooftree}
       \AxiomC{$Γ ⟝ φ ∧ φ$}
       \UnaryInfC{$Γ ⟝ φ$}
     \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+      \AxiomC{$Γ ⟝ φ ∧ ¬ φ$}
+      \UnaryInfC{$Γ ⟝ ⊥$}
+    \end{bprooftree}
   \]
-  \caption{Theorems to use inside a formula to remove redundancies.}
+  \caption{Theorems to remove redundancies inside of a formula.}
 \label{fig:redundancies}
 \end{figure}
 
@@ -85,33 +103,82 @@ Note that $ψ ∈_{∨} φ$ is another name for the equality
 $ψ ≡ \fconjunctor~φ~ψ$.
 \end{notation}
 
-Lemma~\ref{lem:rm-or} serves to remove repeated disjuncts in disjunctions.
+Lemma~\ref{lem:canon-or} serves to remove redundancies in the disjunctions.
 We assume the formulas to be right-associative unless otherwise stated.
 
+
+
+The other redundancies in Fig.~\ref{fig:or-redundancies} are removed by
+applying Lemma~\ref{lem:canon-or}.
+This lemma incorporates the $\frm_{∨}$ function.
+
+\begin{figure}
+\begin{equation*}
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∨ ⊥$}
+  \UnaryInfC{$Γ ⟝ φ$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∨ ⊤$}
+  \UnaryInfC{$Γ ⟝ ⊤$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∨ φ$}
+  \UnaryInfC{$Γ ⟝ φ$}
+\end{bprooftree}
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∨ ¬~φ$}
+  \UnaryInfC{$Γ ⟝ ⊤$}
+\end{bprooftree}\qquad
+\end{equation*}
+\caption{Theorems to remove redundancies inside of a disjunction.}
+\label{fig:or-redundancies}
+\end{figure}
+
 \begin{mainlemma}
-  \label{lem:rm-or}
-  If $Γ ⟝ φ$ then $Γ ⟝ \frm_{∨}~φ$ where,
-  \begin{align*}
-  \label{def:rm-or}
-    \begin{split}
-      &\frm_{∨} :  \NProp \to \NProp\\
-      &\frm_{∨}~φ =
-      \begin{cases}
-        \frm_{∨}~φ₂,    &\text{ if }φ ≡ φ₁ ∨ φ₂\text{ and }φ₁ ∈_{∨} φ₂;\\
-        φ₁~∨~rm_{∨}~φ₂, &\text{ if }φ ≡ φ₁ ∨ φ₂;\\
-        φ,  &\text{ otherwise.}
-      \end{cases}
-    \end{split}
-  \end{align*}
+  \label{lem:canon-or}
+
+  If $Γ ⟝ φ$ and let $φ : \Prop$ be a right-associative formula in negative
+  normal form then $Γ ⟝ \fcanon_{∨}~φ$ where,
+
+\begin{equation*}
+\label{eq:canon-or}
+\begin{aligned}
+ &\hspace{.495mm}\fcanon_{∨} : \NProp \to \NProp\\
+ &\begin{array}{lll}
+   \fcanon_{∨} &(φ ∨ ⊥)     &= \fcanon_{∨}~φ \\
+   \fcanon_{∨} &(⊥ ∨ φ)     &= \fcanon_{∨}~φ \\
+   \fcanon_{∨} &(⊤ ∨ φ)     &= ⊤  \\
+   \fcanon_{∨} &(φ ∨ ⊤)     &= ⊤  \\
+   % \fcanon_{∨} &(¬ φ₁ ∨ φ₂) &=
+   %      \begin{cases}
+   %       \fcanon_{∨}~φ₂,        &\text{ if } ¬ φ₁ ∈_{∨} φ₂;\\
+   %       ⊤,                     &\text{ if } φ₁ ∈_{∨} φ₂;\\
+   %       ⊤,                     &\text{ if } \fcanon_{∨}~φ₂≡ ⊤;\\
+   %       ¬ φ₁,                  &\text{ if } \fcanon_{∨}~φ₂≡ ⊥;\\
+   %       ¬ φ₁ ∨ \fcanon_{∨}~φ₂, &\text{ otherwise.}
+   %      \end{cases}\\
+   \fcanon_{∨} &(φ₁ ∨ φ₂)   &=
+        \begin{cases}
+         ⊤,                     & \text{ if } φ₁ ≡ ¬ ψ \text{ for some }ψ : \Prop \text{ and } ψ ∈_{∨} φ₂;\\
+         ⊤,                     & \text{ if } (¬ φ₁) ∈_{∨} φ₂;\\
+         \fcanon_{∨}~φ₂,        & \text{ if } φ₁ ∈_{∨} φ₂;\\
+         ⊤,                     & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊤;\\
+         ¬ φ₁,                  & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊥;\\
+         φ₁ ∨ \fcanon_{∨}~φ₂,   & \text{ otherwise.}
+        \end{cases}\\
+   \fcanon_{∨} &φ         &= φ.
+  \end{array}
+\end{aligned}
+\end{equation*}
 \end{mainlemma}
 
 \begin{myexample}
 
-The formula $φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ$ has redundancies. To remove such
-redundancies with Lemma~\ref{lem:rm-or}, we first use Lemma~\ref{lem:rassoc} to
-get the right-associative version of the formula. Now, using the $\frm_{∨}$
-function, we get the formula $ψ ∨ φ$ logical equivalent to
-$φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ$.
+The formula $φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ$ in \eqref{eq:lemma-rm-or-example} has
+redundancies. To remove such redundancies we first use Lemma~\ref{lem:rassoc}
+to get the right-associative version of the formula. Then, we can use the
+$\fcanon_{∨}$ function to get the logical equivalent formula $ψ ∨ φ$.
 
 \begin{equation}
 \label{eq:lemma-rm-or-example}
@@ -121,83 +188,13 @@ $φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ$.
   \UnaryInfC{$Γ ⟝ \fassoc_{∨}~(φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ) $}
   \RightLabel{by (\ref{eq:fassoc})}
   \UnaryInfC{$Γ ⟝ φ ∨ (ψ ∨ (φ ∨ (φ ∨ φ)))$}
-  \RightLabel{Lemma~\ref{lem:rm-or}}
+  \RightLabel{Lemma~\ref{lem:canon-or}}
+  \UnaryInfC{$Γ ⟝ \fcanon_{∨}~(φ ∨ (ψ ∨ (φ ∨ (φ ∨ φ))))$}
+  \RightLabel{\eqref{eq:canon-or}}
   \UnaryInfC{$Γ ⟝ ψ ∨ φ$}
   \end{bprooftree}
   \end{equation}
 \end{myexample}
-
-Now, we can remove  redundancies associated with disjunction in
-Fig.~\ref{fig:or-redundancies} by applying Lemma~\ref{lem:canon-or}.
-
-\begin{figure}
-\label{fig:or-redundancies}
-\begin{equation*}
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∨ ¬~φ$}
-  \UnaryInfC{$Γ ⟝ ⊤$}
-\end{bprooftree}\qquad
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∨ ⊤$}
-  \UnaryInfC{$Γ ⟝ ⊤$}
-\end{bprooftree}\qquad
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∨ ⊥$}
-  \UnaryInfC{$Γ ⟝ φ$}
-\end{bprooftree}\qquad
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∨ φ$}
-  \UnaryInfC{$Γ ⟝ φ$}
-\end{bprooftree}
-\end{equation*}
-\caption{Redundancies in disjunctions.}
-\end{figure}
-
-\begin{mainlemma}
-  \label{lem:canon-or}
-  If $Γ ⟝ φ$ then $Γ ⟝ \fcanon_{∨}~φ$ where,
-
-\begin{equation*}
-\label{eq:canon-or}
-\begin{aligned}
- &\hspace{.495mm}\fcanon_{∨} : \NProp \to \NProp\\
- &\begin{array}{llll}
-   \fcanon_{∨} &(φ ∨ ⊥)   &= φ \\
-   \fcanon_{∨} &(⊥ ∨ φ)   &= φ \\
-   \fcanon_{∨} &(⊤ ∨ φ)   &= ⊤  \\
-   \fcanon_{∨} &(φ ∨ ⊤)   &= ⊤  \\
-   \fcanon_{∨} &(φ₁ ∨ φ₂) &= \frm_∨~(\fndisj_∨~(φ₁ ∨ φ₂)) \\
-   \fcanon_{∨} &φ         &= φ.
-  \end{array}
-\end{aligned}
-\end{equation*}
-
-To remove inside the formula the first case in Fig.~\ref{fig:or-redundancies},
-we use the $\fndisj_{∨}$ function.
-
-\begin{equation*}
-\label{eq:ndisj-or}
-\begin{aligned}
-  &\hspace{.495mm}\fndisj_{∨} : \NProp \to \NProp\\
-  &\begin{array}{lll}
-    \fndisj_{∨} &(¬ φ₁ ∨ φ₂) &=
-        \begin{cases}
-         ⊤, &\text{ if } φ₁ ∈_{∨} φ₂;\\
-         ⊤, &\text{ if } \fndisj_{∨}~φ₂≡ ⊤;\\
-         ¬ φ₁ ∨ \fndisj_{∨}~φ₂, &\text{ otherwise.}
-        \end{cases}\\
-
-  \fndisj_{∨} &(φ₁ ∨ φ₂)&=
-        \begin{cases}
-         ⊤, &\,\,\,\,\,\,\text{ if } ¬φ₁ ∈_{∨} φ₂:\\
-         ⊤, &\,\,\,\,\,\,\text{ if } \fndisj_{∨}~φ₂~ ≡ ⊤;\\
-         φ₁ ∨ \fndisj_{∨}~φ₂, &\,\,\,\,\,\,\text{ otherwise.}
-        \end{cases}\\
-    \fndisj_{∨}&φ &=φ.
-    \end{array}
-\end{aligned}
-\end{equation*}
-\end{mainlemma}
 
 Now, we have removed redundancies in the disjunctions by applying the
 $\fcanon_{∨}$ function. In a similar way, we define the $\fcanon_{∧}$ function
@@ -209,28 +206,10 @@ $ψ ∈_{∧} φ$, if there is some $i = 1, \cdots, n$ such that $ψ ≡ φᵢ$.
 Note that $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct~φ~ψ$.
 \end{notation}
 
-\begin{mainlemma}
-  \label{lem:rm-and}
-  If $Γ ⟝ φ$ then $Γ ⟝ \frm_{∧}~φ$ where,
-
-  \begin{align*}
-    \begin{split}
-    &\frm_{∧} : \NProp \to \NProp\\
-    &\frm_{∧}~φ =
-    \begin{cases}
-      rm_{∧}~φ₂,      &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ and }φ₁ ∈_{∧} φ₂;\\
-      φ₁ ∧ rm_{∧}~φ₂, &\text{ if }φ ≡ φ₁ ∧ φ₂;\\
-      φ,               &\text{ otherwise.}
-    \end{cases}
-    \end{split}
-  \end{align*}
-\end{mainlemma}
-
 In right-associative conjunctions we remove the redundancies
 in \ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
 
 \begin{figure}
-\label{fig:and-redundancies}
 \begin{equation*}
 \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∧ ¬~φ$}
@@ -249,61 +228,54 @@ in \ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
   \UnaryInfC{$Γ ⟝ φ$}
 \end{bprooftree}
 \end{equation*}
-\caption{Redundancies in conjunctions.}
+\caption{Theorems to remove redundancies inside of a conjunction.}
+\label{fig:and-redundancies}
 \end{figure}
 
 \begin{mainlemma}
   \label{lem:canon-and}
-  If $Γ ⟝ φ$ then $Γ ⟝ \fcanon_{∧}~φ$ where,
+  If $Γ ⟝ φ$ and let $φ : \Prop$ be a right-associative formula in
+  negative normal form
+   then $Γ ⟝ \fcanon_{∧}~φ$ where,
   \begin{equation*}
    \label{eq:canon-and}
     \begin{aligned}
      &\hspace{.495mm}\fcanon_{∧} : \NProp \to \NProp\\
       &\begin{array}{lll}
-        \fcanon_{∧} &(⊤ ∧ φ)  &= φ \\
-        \fcanon_{∧} &(φ ∧ ⊤)  &= φ \\
-        \fcanon_{∧} &(⊥ ∧ φ)  &= ⊥  \\
-        \fcanon_{∧} &(φ ∧ ⊥)  &= ⊥  \\
-        \fcanon_{∧} &(φ₁ ∧ φ₂) &= \frm_∧~(\fndisj_∧~(φ₁ ∧ φ₂)) \\
+        \fcanon_{∧} &(⊤ ∧ φ)     &= \fcanon_{∧}~φ \\
+        \fcanon_{∧} &(φ ∧ ⊤)     &= \fcanon_{∧}~φ \\
+        \fcanon_{∧} &(⊥ ∧ φ)     &= ⊥  \\
+        \fcanon_{∧} &(φ ∧ ⊥)     &= ⊥  \\
+        % \fcanon_{∧} &(¬ φ₁ ∧ φ₂) &=
+        %   \begin{cases}
+        %     ⊥,                     &\text{ if } φ₁ ∈_{∧} φ₂;\\
+        %     \fcanon_{∧}~φ₂,        &\text{ if } ¬ φ₁ ∈_{∧} φ₂;\\
+        %     ⊥,                     &\text{ if } \fcanon_{∧}~φ₂~≡ ⊥;\\
+        %      \fcanon_{∧}~φ₂,       &\text{ if } \fcanon_{∧}~φ₂~≡ ⊤;\\
+        %     ¬ φ₁ ∧ \fcanon_{∧}~φ₂, &\text{ otherwise.}
+        %   \end{cases}\\
+        \fcanon_{∧} &(φ₁ ∧ φ₂) &=
+          \begin{cases}
+            ⊥,                   & \text{ if } φ₁ ≡ ¬ ψ \text{ for some }ψ : \Prop \text{ and } ψ ∈_{∧} φ₂;\\
+            ⊥,                   & \text{ if } ¬ φ₁ ∈_{∧} φ₂;\\
+            \fcanon_{∧}~φ₂,      & \text{ if } φ₁ ∈_{∧} φ₂;\\
+            ⊥,                   & \text{ if } \fcanon_{∧}~φ₂~≡ ⊥;\\
+            φ₁ ∧ \fcanon_{∧}~φ₂, &\text{ otherwise.}
+          \end{cases}\\
         \fcanon_{∧} &φ         &= φ.
        \end{array}
     \end{aligned}
     \end{equation*}
-
-To remove inside the formula the first case in
-Fig.~\ref{fig:and-redundancies}, we use the $\fndisj_{∧}$ function.
-
-  \begin{equation*}
-   \label{eq:ndisj-and}
-    \begin{aligned}
-    &\hspace{.495mm}\fndisj_{∧} : \NProp \to \NProp\\
-    &\begin{array}{lll}
-      \fndisj_{∧}&(¬ φ₁ ∧ φ₂) &=
-        \begin{cases}
-          ⊥, &\text{ if } φ₁ ∈_{∧} φ₂;\\
-          ⊥, &\text{ if } \fndisj_{∧}~φ₂~≡ ⊥;\\
-          ¬ φ₁ ∧ \fndisj_{∧}~φ₂, &\text{ otherwise.}
-        \end{cases}\\
-      \fndisj_{∧}&(φ₁ ∧ φ₂) &=
-        \begin{cases}
-          ⊥,  &\,\,\,\,\,\,\text{ if } φ₁ ∈_{∧} φ₂;\\
-          ⊥,  &\,\,\,\,\,\,\text{ if } \fndisj_{∧}~φ₂~≡ ⊥;\\
-          φ₁ ∧ \fndisj_{∧}~φ₂, &\,\,\,\,\,\,\text{ otherwise.}
-        \end{cases}\\
-      \fndisj_{∧} &φ &=φ.
-     \end{array}
-    \end{aligned}
-  \end{equation*}
 \end{mainlemma}
 
-Now, we get the negative normal form of a formula by applying to it
-the $\fnnfp$ function defined in~\eqref{eq:nnf-zero}.
-Its definition is mainly based on the \Metis source code to normalize
-formulas. To define such a function in type theory we follow the
-same approach described in \citeauthor{Bezem2002}~\cite{Bezem2002}.
-The authors avoid a termination problem with a similar
-function by using the polarity of the formula as an additional argument of
-the function.
+Now, we are ready to define the negative normal form of a formula after
+simplifications by applying to it the $\fnnfp$ function defined and after
+simplifications functions (\ie, $\fcanon_{∨}$ and $\fcanon_{∧}$).
+in~\eqref{eq:nnf-zero}. Its definition is mainly based on the \Metis source code to
+normalize formulas. To define such a function in type theory we follow the same
+approach described in \citeauthor{Bezem2002}~\cite{Bezem2002}. The authors avoid
+a termination problem with a similar function by using the polarity of the
+formula as an additional argument of the function.
 
 \begin{equation}
 \label{eq:nnf-zero}
@@ -315,9 +287,9 @@ the function.
       \fnnfp~⊕~(φ₁ ⇒ φ₂) &=\fcanon_{∨}~(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊕~φ₂)\\
       \fnnfp~⊕~(¬ φ₁)    &=\fnnfp~⊖~φ₁                              \\
       \fnnfp~⊕~φ         &=φ        \\
-      \fnnfp~⊖~(φ₁ ∧ φ₂) &=\fcanon_{∨}(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊖~φ₂)\\
-      \fnnfp~⊖~(φ₁ ∨ φ₂) &=\fcanon_{∧}(\fnnfp~⊖~φ₁ ∧ \fnnfp~⊖~φ₂)\\
-      \fnnfp~⊖~(φ₁ ⇒ φ₂) &=\fcanon_{∧}(\fnnfp~⊖~φ₂ ∧ \fnnfp~⊖~φ₁)\\
+      \fnnfp~⊖~(φ₁ ∧ φ₂) &=\fcanon_{∨}~(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊖~φ₂)\\
+      \fnnfp~⊖~(φ₁ ∨ φ₂) &=\fcanon_{∧}~(\fnnfp~⊖~φ₁ ∧ \fnnfp~⊖~φ₂)\\
+      \fnnfp~⊖~(φ₁ ⇒ φ₂) &=\fcanon_{∧}~(\fnnfp~⊖~φ₂ ∧ \fnnfp~⊖~φ₁)\\
       \fnnfp~⊖~(¬ φ₁)    &=\fnnfp~⊕~φ₁\\
       \fnnfp~⊖~⊤         &=⊥\\
       \fnnfp~⊖~⊥         &=⊤\\
