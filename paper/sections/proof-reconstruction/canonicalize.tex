@@ -26,16 +26,14 @@ a \emph{clause} is the disjunction of zero or more literals.
 
 \end{mydefinition}
 
-The \canonicalize rule is used by \Metis to introduce the subgoals in their refutation proofs
-but also helps to simplify formulas at intermediate steps in the derivations. As
-far as we know, the \canonicalize rule in these cases uses the conjunctive
-normal form with simplifications. Otherwise, when an axiom, definition or
-hypothesis is needed to prove some goal, this rule gets the negative
-normal form of the formula.
-
-The \canonicalize rule jointly with the \clausify rule perform the
-so-called \emph{clausification} mainly described
-in~\cite{Sutcliffe1996}.
+The \canonicalize rule is used by \Metis to introduce the subgoals in their
+refutation proofs but also helps to simplify formulas at intermediate steps in
+the derivations. As far as we know, the \canonicalize rule in these cases uses
+the conjunctive normal form with simplifications. Otherwise, when an axiom,
+definition or hypothesis is needed to prove some goal, this rule gets the
+negative normal form of the formula. The \canonicalize rule jointly with the
+\clausify rule perform the so-called \emph{clausification} process mainly
+described in~\cite{Sutcliffe1996}.
 
 To reconstruct the \canonicalize rule, we adapted some ideas from the \Metis
 source code. The presentation of this reconstruction is as follows. We firstly
