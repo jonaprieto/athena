@@ -21,16 +21,16 @@ contain any implications.
 \begin{mydefinition}
 
 The \emph{conjunctive normal form} of a formula also called clausal normal form
-is the logical equivalent version expressed as a conjunction of clauses, where
+is the logical equivalent version expressed as a conjunction of clauses where
 a \emph{clause} is the disjunction of zero or more literals.
 
 \end{mydefinition}
 
-This rule is used by \Metis to introduce the subgoals in their refutation proofs
-but also helps to simplify formulas in intermediate steps in the derivation. As
+The \canonicalize rule is used by \Metis to introduce the subgoals in their refutation proofs
+but also helps to simplify formulas at intermediate steps in the derivations. As
 far as we know, the \canonicalize rule in these cases uses the conjunctive
 normal form with simplifications. Otherwise, when an axiom, definition or
-hypothesis is needed to prove some goal, this rule is used with the negative
+hypothesis is needed to prove some goal, this rule gets the negative
 normal form of the formula.
 
 The \canonicalize rule jointly with the \clausify rule perform the
