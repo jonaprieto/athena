@@ -9,6 +9,7 @@ main.synctex.gz*
 *_bibertool.bib
 *.aux
 *.bbl
+*.bcf
 *.dvi
 *.fdb_latexmk
 *.log
