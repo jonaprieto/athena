@@ -27,7 +27,7 @@ to determine which theorem applies.
    \fsimplify~⊥~φ~ψ  &=⊥\\
    \fsimplify~φ~⊥~ψ  &=⊥\\
    \fsimplify~φ₁~φ₂~ψ &=⊥\\
-   \fsimplify~φ₁~φ₂~⊤ &=⊤
+   \fsimplify~φ₁~φ₂~⊤ &=⊤.
   \end{array}
   \end{aligned}
   \end{equation}
@@ -39,13 +39,13 @@ For $i,\, j = 1, 2$, $i\neq j$ and $γ : \Prop$,
   \begin{array}{ll}
    \fsimplify~φ₁~φ₂~ψ &=
       \begin{cases}
-        ψ,          &\text{ if }φᵢ ≡ ψ\\
-        γ,          &\text{ if }φᵢ ≡ φⱼ ⇒ γ\\
-        γ,          &\text{ if }φᵢ ≡ γ ⇒ \fnnf~(¬ φⱼ)\\
-        γ,          &\text{ if }φᵢ ≡ (\fnnf¬ φⱼ) ∨ γ\\
-        ⊥,          &\text{ if } \fnnf~(¬ φⱼ) ≡ \fconjunct~φᵢ~(\fnnf~(¬ φⱼ))\\
-      % φ          &\text{ if }\fconjunct(nnf(¬ φᵢ), φⱼ) ≡  φⱼ\\
-        ⊥,          &\text{ if } (¬ φⱼ) ≡ \fcanonicalize~φᵢ~(¬φⱼ) \\
+        ψ,          &\text{ if }φᵢ ≡ ψ;\\
+        γ,          &\text{ if }φᵢ ≡ φⱼ ⇒ γ;\\
+        γ,          &\text{ if }φᵢ ≡ γ ⇒ \fnnf~(¬ φⱼ);\\
+        γ,          &\text{ if }φᵢ ≡ (\fnnf¬ φⱼ) ∨ γ;\\
+        ⊥,          &\text{ if } \fnnf~(¬ φⱼ) ≡ \fconjunct~φᵢ~(\fnnf~(¬ φⱼ));\\
+      % φ          &\text{ if }\fconjunct(nnf(¬ φᵢ), φⱼ) ≡  φⱼ;\\
+        ⊥,          &\text{ if } (¬ φⱼ) ≡ \fcanonicalize~φᵢ~(¬φⱼ);\\
         φ₁,         &\text{ otherwise.}
       \end{cases}
   \end{array}

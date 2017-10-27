@@ -25,7 +25,7 @@ disjunctions.
     &\begin{array}{lll}
     \fassoc_{⬓} &((φ₁~⬓~φ₂)~⬓~φ₃) &= \fassoc_{⬓}~(φ₁~⬓~(φ₂~⬓~φ₃))\\
     \fassoc_{⬓} &(φ₁~⬓~φ₂)        &= φ₁~∨~\fassoc_{⬓}~φ₂\\
-    \fassoc_{⬓} &φ                &= φ
+    \fassoc_{⬓} &φ                &= φ.
     \end{array}
   \end{aligned}
 \end{equation}
@@ -58,8 +58,8 @@ match with the target disjunction formula.
   &\fbuild_{∨}~φ~ψ~ =%\\
   % &\hspace{3mm}
   \begin{cases}
-  ψ, &\text{ if } φ ≡ ψ\\
-  ψ, &\text{ if } ψ ≡ ψ₁ ∨ ψ₂\text{ and } ψᵢ ≡ \fbuild_{∨}~φ~ψᵢ\text{ for some }i=1, 2\\
+  ψ, &\text{ if } φ ≡ ψ;\\
+  ψ, &\text{ if } ψ ≡ ψ₁ ∨ ψ₂\text{ and } ψᵢ ≡ \fbuild_{∨}~φ~ψᵢ\text{ for some }i=1, 2;\\
   φ, &\text{ otherwise.}
   \end{cases}
   \end{split}
@@ -83,7 +83,7 @@ Notice that other cases like $φ~∨~(ψ~∨~φ)$ do no reduce to $ψ~∨~φ$.
   &\ffactor : \Prop → \Prop\\
   &\ffactor~φ~ =
   \begin{cases}
-    φ₁,  &\text{ if }φ ≡ φ₁ ∨ φ₂ \text{ and } φ₁ ≡ \ffactor~φ₂\\
+    φ₁,  &\text{ if }φ ≡ φ₁ ∨ φ₂ \text{ and } φ₁ ≡ \ffactor~φ₂;\\
     φ,   &\text{ otherwise.}
   \end{cases}
 \end{split}
@@ -106,7 +106,7 @@ If $Γ ⊢ φ$ and $ψ : \Target$ then $Γ ⊢ \fsbuild_{∨}~φ~ψ$ where,
      &\hspace{.495mm}\fsbuild_{∨} : \Source → \Target → \Prop\\
     &\begin{array}{lll}
     \fsbuild_{∨}&(φ₁ ∨ φ₂)~ψ &=\ffactor~(\fbuild_{∨}~φ₁~ψ ∨ \fbuild_{∨}~φ₂~ψ)\\
-    \fsbuild_{∨}&φ~ψ &= \fbuild_{∨}~φ~ψ
+    \fsbuild_{∨}&φ~ψ &= \fbuild_{∨}~φ~ψ.
      \end{array}
 \end{aligned}
 \end{equation}
@@ -194,9 +194,9 @@ reorders nested conjunctions.
         &\freorder_{∧} : \Source \to \Target \to \Prop\\
         &\freorder_{∧}~φ~ψ =
         \begin{cases}
-          φ, &\text{ if }φ ≡ ψ\\
-          ψ₁ ∧ ψ₂, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\text{, }ψ₁ ≡ \freorder_{∧}~φ~ψ₁ \\
-                   &\text{ and } ψ₂ ≡ \freorder_{∧}~φ~ψ₂\\
+          φ, &\text{ if }φ ≡ ψ;\\
+          ψ₁ ∧ ψ₂, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\text{, }ψ₁ ≡ \freorder_{∧}~φ~ψ₁;\\
+                   &\text{ and } ψ₂ ≡ \freorder_{∧}~φ~ψ₂;\\
           φ,       &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\\
           \fconjunct~φ~ψ, &\text{ otherwise.}
         \end{cases}
@@ -234,12 +234,12 @@ a conjunction, but without matter the order atoms in the disjunction.
       &\fconjunctor : \Source → \Target \to \Prop\\
       &\fconjunctor~φ~ψ =
       \begin{cases}
-        ψ, &\text{ if }φ ≡ ψ\\
-        ψ, &\text{ if } ψ ≡ \freorder_{∨}~φ~ψ\\
+        ψ, &\text{ if }φ ≡ ψ;\\
+        ψ, &\text{ if } ψ ≡ \freorder_{∨}~φ~ψ;\\
         ψ, &\text{ if }ψ ≡ ψ₁ ∧ ψ₂,\ ψ₁ ≡ \fconjunctor~φ~ψ₁,\\
-           &\text{ and } ψ₂ ≡ \freorder_{∨}~φ~ψ₂\\
-        ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ ψ ≡ \fconjunctor~φ₁~ψ \\
-        ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ ψ ≡ \fconjunctor~φ₂~ψ \\
+           &\text{ and } ψ₂ ≡ \freorder_{∨}~φ~ψ₂;\\
+        ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ ψ ≡ \fconjunctor~φ₁~ψ;\\
+        ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂,\ ψ ≡ \fconjunctor~φ₂~ψ;\\
         φ, &\text{ otherwise.}
       \end{cases}
     \end{split}
@@ -259,11 +259,11 @@ by using the previous lemma.
       &\freorder_{∧∨} : \Source \to \Target \to \Prop\\
       &\freorder_{∧∨}~φ~ψ=
         \begin{cases}
-          ψ, &\text{ if } φ ≡ ψ\\
+          ψ, &\text{ if } φ ≡ ψ;\\
           ψ, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂,\ ψ₁ ≡ \freorder_{∧∨}~φ~ψ₁\\
-             &\text{ and } ψ₂ ≡ \freorder_{∧∨}~φ~ψ₂\\
-          φ, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\\
-          \fconjunctor~φ~ψ &\text{ otherwise.}
+             &\text{ and } ψ₂ ≡ \freorder_{∧∨}~φ~ψ₂;\\
+          φ, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂;\\
+          \fconjunctor~φ~ψ, &\text{ otherwise.}
         \end{cases}
       \end{split}
   \end{align}
@@ -324,8 +324,8 @@ in~\eqref{eq:rsol} we get the expect result.
     &\begin{array}{ll}
       \frsol~φ &=
         \begin{cases}
-          φ₂,      &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (¬φ₁ ∨ φ₂)\\
-          φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (¬φ₁ ∨ φ₄)\\\
+          φ₂,      &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (¬φ₁ ∨ φ₂);\\
+          φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (¬φ₁ ∨ φ₄);\\\
           φ, &\text{ otherwise.}
         \end{cases}
       \end{array}

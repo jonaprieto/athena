@@ -82,7 +82,7 @@ the \Metis \strip inference rule in Section~\ref{sssec:strip-a-goal}.
 &\begin{array}{lll}
   \fuh_{0} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{0}~((φ₁ ∧ φ₂) ⇒ φ₃)\\
   \fuh_{0} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &= \fuh_{0}~(φ₁ ⇒ φ₂) ∧ \fuh_{0}~(φ₁ ⇒ φ₃)\\
-  \fuh_{0} &φ                &= φ
+  \fuh_{0} &φ                &= φ.
 \end{array}
 \end{aligned}
 \end{equation}
@@ -101,7 +101,7 @@ theory is to define a new function using a bounded recursion.
 &\begin{array}{llll}
 \fuh_{1} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &(\suc~n) &= \fuh_{1}~((φ₁ ∧ φ₂) ⇒ φ₃)~n\\
 \fuh_{1} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &(\suc~n) &= \fuh_{1}~(φ₁ ⇒ φ₂)~n ∧ \fuh_{1}~(φ₁ ⇒ φ₃)~n\\
-\fuh_{1} &φ &n &= φ
+\fuh_{1} &φ &n &= φ.
 \end{array}
 \end{aligned}
 \end{equation}
@@ -124,7 +124,7 @@ numbers called the complexity of the respective connective.
 &\begin{array}{llll}
 \frank~(¬~φ)           &= \frank~φ₁~+~c_{¬}\\
 \frank~(φ₁~\square~φ₂) &= \fmax~(\frank~φ₁)~(\frank~φ₂) + c_{\square}\\
-\frank~φ               &= 0
+\frank~φ               &= 0.
 \end{array}
 \end{aligned}
 \end{equation}
@@ -139,7 +139,7 @@ the complexity measure for the $\fuh_0$ function.
     &\begin{array}{llll}
     \fuh_{cm}~(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{cm}~φ₃ + 2\\
     \fuh_{cm}~(φ₁ ⇒ (φ₂ ∧ φ₃)) &= \fmax~(\fuh_{cm}~φ₂)~(\fuh_{cm}~φ₃) + 1\\
-    \fuh_{cm}~φ                &= 0
+    \fuh_{cm}~φ                &= 0.
     \end{array}
   \end{aligned}
 \end{equation}

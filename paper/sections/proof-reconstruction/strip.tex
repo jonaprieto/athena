@@ -25,11 +25,11 @@ tree subgoals: $p$, $p ⇒ r$ and $(p ∧ r) ⇒ q$.
 
 \begin{equation}
 \label{eq:strip-example}
-(p ∧ (p ⇒ r) ∧ ((p ∧ r) ⇒ q)) ⇒ ((p ∧ r) ∧ q)
+(p ∧ (p ⇒ r) ∧ ((p ∧ r) ⇒ q)) ⇒ ((p ∧ r) ∧ q).
 \end{equation}
 
 \Metis proves each subgoal in the same order above from left to right
-in~\ref{eq:strip-example}.
+in~\eqref{eq:strip-example}.
 So far, very little attention has been paid to the role of \strip rule.
 in \TSTP derivation since \Metis does not make explicit the way
 it uses the subgoals to prove the conjecture.
@@ -142,7 +142,7 @@ We based on the definition of this function from the \Metis source code.
 \fstrip₁ &(¬ ¬ φ₁)      &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n)\\
 \fstrip₁ &(¬ ⊥)         &(\suc~n) &= ⊤\\
 \fstrip₁ &(¬ ⊤)         &(\suc~n) &= ⊥\\
-\fstrip₁ &φ             &n        &= φ
+\fstrip₁ &φ             &n        &= φ.
 \end{array}
 \end{aligned}
 \end{equation}
