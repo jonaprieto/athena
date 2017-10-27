@@ -190,25 +190,25 @@ $⊥$, since \Metis proofs are refutations.
 \subsection{Inference rules}
 \label{ssec:metis-inferences-rules}
 
-In the following table we present the list of inference rules used by \Metis in
-the \TSTP derivations for propositional logic and reconstructed in
-Section~\ref{sec:proof-reconstruction} . The reader may notice that the
+We present the list of inference rules used by \Metis in
+the \TSTP derivations for propositional logic
+in Table~\ref{tab:agda-metis-table}.
+We reconstruct these rules in Section~\ref{sec:proof-reconstruction}.
+The reader may notice that the
 inference rules presented in Fig~\ref{fig:metis-inferences} diverge from the
-rules in Table~\ref{tab:agda-metis-table}. However, the former rules are
-implemented by the rules in the latter. For instance, as far as we know, in
+rules in aforementioned table. However, the former rules are
+implemented by the latter rules. For instance, as far as we know, in
 \TSTP derivations, \canonicalize, \clausify, \conjunct, and \simplify, are all
-rules that represent the \emph{axiom} rule in the \Metis rules.
+rules that represent the \emph{axiom} rule by \Metis.
 
-In the aforementioned table, we first present
-the \strip inference rule since it is the rule that appears first after each
-conjecture. The other rules are sorted mainly follow their level of complexity
-of their definitions and the formalization presented in
+We first present the \strip inference rule since it is the rule that appears
+first after each conjecture. The other rules are sorted mainly follow their
+level of complexity of their definitions and the formalization presented in
 Section~\ref{ssec:emulating-inferences}. Some inference rules depends the
 formalizations of other rules. For instance, the \simplify rule and the
-\clausify rule  need functions
-developed for the \canonicalize rule. The \canonicalize rule needs functions
-developed in the \resolve section. But the \resolve rule depends on the
-\conjunct rule.
+\clausify rule  need functions developed for the \canonicalize rule. The
+\canonicalize rule needs functions developed in the \resolve section. But the
+\resolve rule depends on the \conjunct rule.
 
 % We note a lack of clarity in defining the differences between the rules used in \TSTP derivations and the rules described on the documentation in
 % the Metis description~\cite{hurd2003first}.
