@@ -317,9 +317,10 @@ is defined in Appendix~\ref{app:polarity-for-propositions}.
   \end{align*}
 \end{mainlemma}
 
-Now, to convert a formula to its conjunctive normal form, in
-Lemma~\ref{lem:dist} we apply the appropriate distribution functions to the
-normalized negative formula given by the $\fnnf$ function.
+
+To get the conjunctive normal form, it only left to make sure the formula is a
+conjunction of disjunctions. For such a purpose, we use distributive laws in
+Lemma~\ref{lem:dist} to get that form after applying the $\fnnf$ function.
 
 \begin{mainlemma}
   \label{lem:dist}
@@ -359,7 +360,6 @@ the $\fnnf$ function follow by the $\fdist$ function.
 
 \begin{proof}
   Composition of Lemma~\ref{lem:dist} and Lemma~\ref{lem:nnf}.
-  and \ref{lem:nnf}.
 \end{proof}
 
 Since all the transformations in Lemma~\ref{lem:nnf} and Lemma~\ref{lem:dist}
