@@ -167,6 +167,7 @@ problem $p\vdash p$.}
 
 
 \section{Another proof case for the \strip inference rule}
+\label{app:strip-proof-case}
 
 \begin{itemize}
 \item[∙] Case $φ ≡ φ₁ ⇒ φ₂$.
@@ -176,7 +177,7 @@ problem $p\vdash p$.}
   \RightLabel{assume}
   \UnaryInfC{$Γ , φ₁ ⊢ φ₁$}
   \AxiomC{$Γ ⊢ \fstrip₁~(φ₁ ⇒ φ₂)~(\suc~n)$}
-  \RightLabel{by~\eqref{eq:uh-structured}}
+  \RightLabel{by~\eqref{eq:strip-fixed}}
   \UnaryInfC{$Γ ⊢ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)$}
   \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
   \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip₁~φ₂~n$}
