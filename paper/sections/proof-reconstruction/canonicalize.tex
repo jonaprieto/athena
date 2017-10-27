@@ -97,8 +97,8 @@ We assume the formulas to be right-associative unless otherwise stated.
       &\frm_{∨} :  \NProp \to \NProp\\
       &\frm_{∨}~φ =
       \begin{cases}
-        \frm_{∨}~φ₂,    &\text{ if }φ ≡ φ₁ ∨ φ₂\text{ and }φ₁ ∈_{∨} φ₂\\
-        φ₁~∨~rm_{∨}~φ₂, &\text{ if }φ ≡ φ₁ ∨ φ₂\\
+        \frm_{∨}~φ₂,    &\text{ if }φ ≡ φ₁ ∨ φ₂\text{ and }φ₁ ∈_{∨} φ₂;\\
+        φ₁~∨~rm_{∨}~φ₂, &\text{ if }φ ≡ φ₁ ∨ φ₂;\\
         φ,  &\text{ otherwise.}
       \end{cases}
     \end{split}
@@ -182,15 +182,15 @@ we use the $\fndisj_{∨}$ function.
   &\begin{array}{lll}
     \fndisj_{∨} &(¬ φ₁ ∨ φ₂) &=
         \begin{cases}
-         ⊤, &\text{ if } φ₁ ∈_{∨} φ₂\\
-         ⊤, &\text{ if } \fndisj_{∨}~φ₂≡ ⊤\\
+         ⊤, &\text{ if } φ₁ ∈_{∨} φ₂;\\
+         ⊤, &\text{ if } \fndisj_{∨}~φ₂≡ ⊤;\\
          ¬ φ₁ ∨ \fndisj_{∨}~φ₂, &\text{ otherwise.}
         \end{cases}\\
 
   \fndisj_{∨} &(φ₁ ∨ φ₂)&=
         \begin{cases}
-         ⊤, &\,\,\,\,\,\,\text{ if } ¬φ₁ ∈_{∨} φ₂ \\
-         ⊤, &\,\,\,\,\,\,\text{ if } \fndisj_{∨}~φ₂~ ≡ ⊤\\
+         ⊤, &\,\,\,\,\,\,\text{ if } ¬φ₁ ∈_{∨} φ₂:\\
+         ⊤, &\,\,\,\,\,\,\text{ if } \fndisj_{∨}~φ₂~ ≡ ⊤;\\
          φ₁ ∨ \fndisj_{∨}~φ₂, &\,\,\,\,\,\,\text{ otherwise.}
         \end{cases}\\
     \fndisj_{∨}&φ &=φ.
@@ -218,8 +218,8 @@ Note that $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct~φ~ψ$.
     &\frm_{∧} : \NProp \to \NProp\\
     &\frm_{∧}~φ =
     \begin{cases}
-      rm_{∧}~φ₂,      &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ and }φ₁ ∈_{∧} φ₂\\
-      φ₁ ∧ rm_{∧}~φ₂, &\text{ if }φ ≡ φ₁ ∧ φ₂\\
+      rm_{∧}~φ₂,      &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ and }φ₁ ∈_{∧} φ₂;\\
+      φ₁ ∧ rm_{∧}~φ₂, &\text{ if }φ ≡ φ₁ ∧ φ₂;\\
       φ,               &\text{ otherwise.}
     \end{cases}
     \end{split}
@@ -265,7 +265,7 @@ in \ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
         \fcanon_{∧} &(⊥ ∧ φ)  &= ⊥  \\
         \fcanon_{∧} &(φ ∧ ⊥)  &= ⊥  \\
         \fcanon_{∧} &(φ₁ ∧ φ₂) &= \frm_∧~(\fndisj_∧~(φ₁ ∧ φ₂)) \\
-        \fcanon_{∧} &φ         &= φ
+        \fcanon_{∧} &φ         &= φ.
        \end{array}
     \end{aligned}
     \end{equation*}
@@ -280,14 +280,14 @@ Fig.~\ref{fig:and-redundancies}, we use the $\fndisj_{∧}$ function.
     &\begin{array}{lll}
       \fndisj_{∧}&(¬ φ₁ ∧ φ₂) &=
         \begin{cases}
-          ⊥, &\text{ if } φ₁ ∈_{∧} φ₂\\
-          ⊥, &\text{ if } \fndisj_{∧}~φ₂~≡ ⊥\\
+          ⊥, &\text{ if } φ₁ ∈_{∧} φ₂;\\
+          ⊥, &\text{ if } \fndisj_{∧}~φ₂~≡ ⊥;\\
           ¬ φ₁ ∧ \fndisj_{∧}~φ₂, &\text{ otherwise.}
         \end{cases}\\
       \fndisj_{∧}&(φ₁ ∧ φ₂) &=
         \begin{cases}
-          ⊥,  &\,\,\,\,\,\,\text{ if } φ₁ ∈_{∧} φ₂\\
-          ⊥,  &\,\,\,\,\,\,\text{ if } \fndisj_{∧}~φ₂~≡ ⊥\\
+          ⊥,  &\,\,\,\,\,\,\text{ if } φ₁ ∈_{∧} φ₂;\\
+          ⊥,  &\,\,\,\,\,\,\text{ if } \fndisj_{∧}~φ₂~≡ ⊥;\\
           φ₁ ∧ \fndisj_{∧}~φ₂, &\,\,\,\,\,\,\text{ otherwise.}
         \end{cases}\\
       \fndisj_{∧} &φ &=φ.
@@ -321,7 +321,7 @@ the function.
       \fnnfp~⊖~(¬ φ₁)    &=\fnnfp~⊕~φ₁\\
       \fnnfp~⊖~⊤         &=⊥\\
       \fnnfp~⊖~⊥         &=⊤\\
-      \fnnfp~⊖~φ         &=φ
+      \fnnfp~⊖~φ         &=φ.
     \end{array}
   \end{aligned}
 \end{equation}
@@ -383,7 +383,7 @@ the $\fnnf$ function follow by the $\fdist$ function.
   \begin{align*}
     \begin{split}
     &\fcnf : \Prop \to \Prop\\
-    &\fcnf~φ = \fdist~(\fnnf~φ)
+    &\fcnf~φ = \fdist~(\fnnf~φ).
     \end{split}
   \end{align*}
 \end{mainlemma}
@@ -426,8 +426,8 @@ conjunctive normal form of the target formula.
   \begin{aligned}
   &\hspace{.495mm}\fcanonicalize : \Source \to \Target \to \Prop\\
   &\fcanonicalize~φ~ψ = \begin{cases}
-        ψ, &\text{ if } ψ≡φ\\
-        ψ, &\text{ if } \fcnf~ψ≡\freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)\\
+        ψ, &\text{ if  } ψ≡φ;\\
+        ψ, &\text{ if  } \fcnf~ψ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ);\\
         φ, &\text{ otherwise. }
         \end{cases}
    \end{aligned}
