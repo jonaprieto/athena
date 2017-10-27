@@ -282,26 +282,27 @@ formula as an additional argument of the function.
 \label{eq:nnf-zero}
   \begin{aligned}
   &\hspace{.495mm}\fnnfp : \abbre{Polarity} \to \Prop \to \NProp\\
-    &\begin{array}{lll}
-      \fnnfp~⊕~(φ₁ ∧ φ₂) &=\fcanon_{∧}~(\fnnfp~⊕~φ₁ ∧ \fnnfp~⊕~φ₂)\\
-      \fnnfp~⊕~(φ₁ ∨ φ₂) &=\fcanon_{∨}~(\fnnfp~⊕~φ₁ ∨ \fnnfp~⊕~φ₂)\\
-      \fnnfp~⊕~(φ₁ ⇒ φ₂) &=\fcanon_{∨}~(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊕~φ₂)\\
-      \fnnfp~⊕~(¬ φ₁)    &=\fnnfp~⊖~φ₁                              \\
-      \fnnfp~⊕~φ         &=φ        \\
-      \fnnfp~⊖~(φ₁ ∧ φ₂) &=\fcanon_{∨}~(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊖~φ₂)\\
-      \fnnfp~⊖~(φ₁ ∨ φ₂) &=\fcanon_{∧}~(\fnnfp~⊖~φ₁ ∧ \fnnfp~⊖~φ₂)\\
-      \fnnfp~⊖~(φ₁ ⇒ φ₂) &=\fcanon_{∧}~(\fnnfp~⊖~φ₂ ∧ \fnnfp~⊖~φ₁)\\
-      \fnnfp~⊖~(¬ φ₁)    &=\fnnfp~⊕~φ₁\\
-      \fnnfp~⊖~⊤         &=⊥\\
-      \fnnfp~⊖~⊥         &=⊤\\
-      \fnnfp~⊖~φ         &=φ.
-    \end{array}
+&\begin{array}{lll}
+  \fnnfp~⊕~(φ₁ ∧ φ₂) &=\fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~⊕~φ₁ ∧ \fnnfp~⊕~φ₂))\\
+  \fnnfp~⊕~(φ₁ ∨ φ₂) &=\fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~⊕~φ₁ ∨ \fnnfp~⊕~φ₂))\\
+  \fnnfp~⊕~(φ₁ ⇒ φ₂) &=\fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊕~φ₂))\\
+  \fnnfp~⊕~(¬ φ₁)    &=\fnnfp~⊖~φ₁                              \\
+  \fnnfp~⊕~φ         &=φ        \\
+  \fnnfp~⊖~(φ₁ ∧ φ₂) &=\fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊖~φ₂))\\
+  \fnnfp~⊖~(φ₁ ∨ φ₂) &=\fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~⊖~φ₁ ∧ \fnnfp~⊖~φ₂))\\
+  \fnnfp~⊖~(φ₁ ⇒ φ₂) &=\fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~⊖~φ₂ ∧ \fnnfp~⊖~φ₁))\\
+  \fnnfp~⊖~(¬ φ₁)    &=\fnnfp~⊕~φ₁\\
+  \fnnfp~⊖~⊤         &=⊥\\
+  \fnnfp~⊖~⊥         &=⊤\\
+  \fnnfp~⊖~φ         &=φ.
+\end{array}
   \end{aligned}
 \end{equation}
 
 We define the \abbre{Polarity} type which has
 two constructors: $⊕$ to denote positive polarity, and $⊖$ to denote
-negative polarity of a formula.
+negative polarity of a formula. A function to get the polarity of a function
+is defined in Appendix~\ref{app:polarity-for-propositions}.
 
 % \begin{myremark}
 % The formula polarity was not
