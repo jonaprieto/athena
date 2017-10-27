@@ -204,15 +204,11 @@ rules that represent the \emph{axiom} rule by \Metis.
 We first present the \strip inference rule since it is the rule that appears
 first after each conjecture. The other rules are sorted mainly follow their
 level of complexity of their definitions and the formalization presented in
-Section~\ref{ssec:emulating-inferences}. Some inference rules depends the
+Section~\ref{ssec:emulating-inferences}. Some inference rules depend on the
 formalizations of other rules. For instance, the \simplify rule and the
-\clausify rule  need functions developed for the \canonicalize rule. The
-\canonicalize rule needs functions developed in the \resolve section. But the
+\clausify rule need theorems developed for the \canonicalize rule. The
+\canonicalize rule needs theorems developed in the \resolve section. But the
 \resolve rule depends on the \conjunct rule.
-
-% We note a lack of clarity in defining the differences between the rules used in \TSTP derivations and the rules described on the documentation in
-% the Metis description~\cite{hurd2003first}.
-% These rules are not the same as we expected from the Fig.~\ref{fig:metis-inferences}.
 
 % \Metis looks for a refutation to prove \verb!fof! problems.
 % A \verb!fof! problem contains the conjecture, the \emph{goal}, in the
@@ -227,12 +223,6 @@ formalizations of other rules. For instance, the \simplify rule and the
 % Since \Metis replies refutation proofs, to prove each subgoal, in the \TSTP
 % derivation, the inference rule \negate introduces the negation of such
 % subgoals. The \negate rule is a specification of the \emph{assume} rule.
-
-% Finally, \emph{axiom} rule appears in \TSTP derivations by using one of the following rules: \canonicalize, \clausify, \conjunct, or \simplify.
-% Then, the last rule remains is \emph{resolve}, it
-% appears by the binary rule, \resolve, the version in \Metis of the resolution
-% theorem. For a more detailed description of this rules see Section~\ref{sec:proof-reconstruction}.
-
 
 \begin{table}[!ht]
 
