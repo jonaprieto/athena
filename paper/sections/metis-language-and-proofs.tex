@@ -58,17 +58,19 @@ The \TPTP language is the input language to encode problems used by \Metis.
 It includes the first-order form (denoted by \name{fof}) and clause normal form (denoted by \name{cnf}) formats~\cite{sutcliffe2009}.
 The \TPTP syntax describes a well-defined grammar to handle annotated
 formulas with the following form:
+
 \begin{verbatim}
   language(name, role, formula).,
 \end{verbatim}
+
 where the \name{language} can be \name{fof} or \name{cnf}. The
 \name{name} serves to identify the formula within the problem. Each
 formula assumes a \name{role}, this could be an \name{axiom},
 \name{conjecture}, \name{definition}, \name{plain} or an
 \name{hypothesis}.  The formulas include the constants
-\verb!$true! and \verb!$false!, the negation unary operator~\verb!~!,
+\verb!$true! and \verb!$false!, the negation unary operator~(\verb!~!),
 and the binary connectives \verb!&!, \verb!|!, \verb!=>!, and
-\verb!<=>! to represent $⊤$, $⊥$, $¬$, $∧$, $∨$, $⇒$, and $⇔$
+(\verb!<=>!) to represent ($⊤$, $⊥$, $¬$, $∧$, $∨$, $⇒$), and ($⇔$)
 respectively.
 
 \begin{myexamplenum}
@@ -76,10 +78,12 @@ respectively.
   $p\, ⊢ ¬ (p ∧ ¬ p) ∨ (q ∧ ¬ q)$ in \TPTP syntax. We begin by
   declaring the $p$ axiom using the \verb!axiom!  keyword. Next, we
   include the expected conclusion using the \verb!conjecture! keyword.
+
 \begin{verbatim}
   fof(h, axiom, p).
   fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
 \end{verbatim}
+
 \end{myexamplenum}
 
 
@@ -94,7 +98,7 @@ inferred from the parent formulas. The root is the final derived formula,
 such a derivation is a list of annotated formulas with the following form:
 
 \begin{verbatim}
-  language(name, role, formula, source [,useful info]).
+  language(name, role, formula, source [,useful info]).,
 \end{verbatim}
 
 where the \name{source} field is an inference record with the following
@@ -123,7 +127,7 @@ result of this inference when it applies to the \verb!goal! formula is
 \begin{notation}
 
 We adopt a customized \TSTP syntax to keep as short as possible the \Metis
-derivations for increasing the readability in this paper.
+derivations for increasing the readability of this paper.
 
 \begin{myexamplenum}
 \label{fig:metis-example-tree}
