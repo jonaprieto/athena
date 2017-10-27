@@ -12,7 +12,7 @@ and reordering those and the inner disjunctions to match them.
 Below, we provide Lemma~\ref{lem:reorder-or}, Lemma~\ref{lem:reorder-and}, Lemma~\ref{lem:reorder-and-or} to perform such reordering tasks,
 the omitted proofs can be found in~\cite{AgdaMetis}.
 
-First, we define \fassoc$_{⬓}$ function in~\eqref{eq:fassoc}
+First, we define the \fassoc$_{⬓}$ function in~\eqref{eq:fassoc}
 to convert a disjunction or a conjunction into its right-associative form.
 The square symbol (⬓) can be the conjunction symbol or the disjunction symbol.
 We use $\fassoc_{∧}$ to convert conjunctions and $\fassoc_{∨}$ for
@@ -45,7 +45,7 @@ the proof-reconstruction.
 
 The $\fbuild_{∨}$ function defined in~\eqref{eq:build-or}
 intends to construct a disjunction from another disjunction, specifically,
-this functions will try to rearrange the disjuncts in the source formula to
+this function will try to rearrange the disjuncts in the source formula to
 match with the target disjunction formula.
 
 \begin{mainlemma}
