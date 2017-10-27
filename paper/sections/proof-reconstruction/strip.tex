@@ -146,9 +146,10 @@ $\fstrip₁$ function based on the definition from the \Metis source code.
 \end{aligned}
 \end{equation}
 
-In a similar way as we define $\fuh_{cm}$ in~\eqref{eq:uh-complexity}, we define
-$\fstrip_{cm}$ as the complexity measure for the $\fstrip₀$ function.
-Then we define the \fstrip function as follows.
+In a similar way as we define $\fuh_{cm}$ in~\eqref{eq:uh-complexity}, we
+define $\fstrip_{cm}$ as the complexity measure for the $\fstrip₀$ function.
+Then we define the \fstrip function as follows in~\ref{eq:strip}.
+
 \begin{align}
   \label{eq:strip}
   \begin{split}
@@ -167,8 +168,8 @@ If $Γ~⊢~\fstrip₁~φ~n$ then $Γ~⊢~φ$.
 \begin{proof}
 The proof is by induction on the structure of the
 formula~$φ$ by following the equations in~\eqref{eq:strip-fixed}.
-We present a straightforward case with double negation, a case with
-conjunction connective, and last, the case with a negated disjunction.
+We present a straightforward case with double negation, the case for
+conjunctions, and last, the case for a negated disjunction.
 We refer the reader to~\cite{AgdaMetis} for the complete proof in \Agda.
 
 ∙~Case $φ ≡ ¬ (¬ φ₁) $.
