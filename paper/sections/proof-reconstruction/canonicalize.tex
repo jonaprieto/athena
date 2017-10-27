@@ -225,7 +225,7 @@ In right-associative conjunctions we remove the redundancies
 in \ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
 
 \begin{figure}
-\label{fig:and-redundacies}
+\label{fig:and-redundancies}
 \begin{equation*}
 \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∧ ¬~φ$}
@@ -388,20 +388,25 @@ the $\fnnf$ function follow by the $\fdist$ function.
   and \ref{lem:nnf}.
 \end{proof}
 
-Since all the previous transformations came from equivalences in the
-propositional logic, we states the following lemma to reconstruct the
-\canonicalize rule in Theorem~\ref{thm:canonicalize}.
+Since all the transformations in Lemma~\ref{lem:nnf} and Lemma~\ref{lem:dist}
+came from logical equivalences in propositional logic, we state the following lemma to reconstruct the \canonicalize rule in Theorem~\ref{thm:canonicalize}.
 
 \begin{mainlemma}
 \label{lem:cnf-inv}
   If $Γ ⊢ \fcnf~φ$ then $Γ ⊢ φ$.
 \end{mainlemma}
 
-The \canonicalize rule is an overloaded inference rule which performs
-normalization of the proposition input.
-This rule converts a \texttt{fof}
-formula in clausal form to a \CNF clause but also it performs some
-simplifications in the process (e.g., removing ⊤ and ⊥ in the formula).
+The \fcanonicalize rule is a inference rule
+defined in \eqref{eq:canonicalize} which performs
+normalization for a proposition. That is,
+depending on the role of the formula in the problem,
+it converts the formula to its negated normal form or its
+conjunctive normal form but in both cases, \canonicalize simplifies
+the formula by removing redundancies inside it as we widely described above
+Fig.~\ref{fig:redundancies}.
+When the formula plays the axiom or definition role,
+the \canonicalize rule transforms the source formula to its negated normal
+form. Otherwise, this rule converts the formula to its conjunctive normal form.
 
 Since this rule mostly consists of dealing with clauses, to
 to reconstruct this rule, our strategy mainly consists of checking the
@@ -419,7 +424,6 @@ the conjunctive normal form of the target formula.
   &\hspace{.495mm}\fcanonicalize : \Source \to \Target \to \Prop\\
   &\fcanonicalize~φ~ψ = \begin{cases}
         ψ, &\text{ if  } ψ≡φ\\
-        ψ, &\text{ if  } ψ≡\fform~(\fnnf~φ)\\
         ψ, &\text{ if  } \fcnf~ψ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)\\
         φ, &\text{ otherwise. }
         \end{cases}
@@ -430,13 +434,13 @@ the conjunctive normal form of the target formula.
 \begin{proof}\hspace{3mm}
 \begin{itemize}
 \item[∙] Case $φ ≡ ψ$. By substitution theorem we conclude $Γ ⊢ ψ$.
-\item[∙] Case $ψ ≡ \fform~(\fnnf~φ)$.
+\item[∙] Case $ψ ≡ \fnnf~φ$.
 \begin{equation*}
   \begin{bprooftree}
     \AxiomC{$Γ ⊢ φ$}
     \RightLabel{Lemma~\ref{lem:nnf}}
     \UnaryInfC{$Γ ⊢₂~\fnnf~φ$}
-    \AxiomC{$ψ ≡ \fform~(\fnnf~φ)$}
+    \AxiomC{$ψ ≡ \fnnf~φ$}
     \RightLabel{\fsubst}
     \BinaryInfC{$Γ ⊢ ψ$}
   \end{bprooftree}

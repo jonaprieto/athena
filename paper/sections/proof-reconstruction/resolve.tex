@@ -50,11 +50,11 @@ match with the target disjunction formula.
 
 \begin{mainlemma}
 \label{lem:build-or}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fbuild_{∨}~φ~ψ$ where,
+  If $Γ ⊢ φ$ and $ψ : \Target$ then $Γ ⊢ \fbuild_{∨}~φ~ψ$ where,
 \begin{equation}
   \begin{split}
   \label{eq:build-or}
-  &\fbuild_{∨} : \Prop → \Prop → \Prop\\
+  &\fbuild_{∨} : \Source → \Target → \Prop\\
   &\fbuild_{∨}~φ~ψ~ =%\\
   % &\hspace{3mm}
   \begin{cases}
@@ -99,11 +99,11 @@ target disjunction $ψ$.
 
 \begin{mainlemma}
 \label{lem:sbuild-or}
-If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \fsbuild_{∨}~φ~ψ$ where,
+If $Γ ⊢ φ$ and $ψ : \Target$ then $Γ ⊢ \fsbuild_{∨}~φ~ψ$ where,
 \begin{equation}
 \label{eq:strong-build-or}
  \begin{aligned}
-     &\hspace{.495mm}\fsbuild_{∨} : \Prop → \Prop → \Prop\\
+     &\hspace{.495mm}\fsbuild_{∨} : \Source → \Target → \Prop\\
     &\begin{array}{lll}
     \fsbuild_{∨}&(φ₁ ∨ φ₂)~ψ &=\ffactor~(\fbuild_{∨}~φ₁~ψ ∨ \fbuild_{∨}~φ₂~ψ)\\
     \fsbuild_{∨}&φ~ψ &= \fbuild_{∨}~φ~ψ
@@ -166,11 +166,11 @@ apply Lemma~\ref{lem:sbuild-or}.
 
 \begin{mainlemma}
   \label{lem:reorder-or}
-  If $Γ ⊢ φ$ and $ψ: \Prop$ then $Γ ⊢ \freorder_{∨}~φ~ψ~$ where,
+  If $Γ ⊢ φ$ and $ψ: \Target$ then $Γ ⊢ \freorder_{∨}~φ~ψ~$ where,
   \begin{align}
     \begin{split}
     \label{eq:reorder-or}
-    &\freorder_{∨} : \Prop \to \Prop \to \Prop\\
+    &\freorder_{∨} : \Source \to \Target \to \Prop\\
     &\freorder_{∨}~φ~ψ~= \fsbuild_{∨}~(\fassoc_{∨}~φ)~ψ.
     \end{split}
   \end{align}
@@ -187,11 +187,11 @@ reorders nested conjunctions.
 
 \begin{mainlemma}
   \label{lem:reorder-and}
-  If $Γ ⊢ φ$ and $ψ : \Prop$ then $Γ ⊢ \freorder_{∧}~φ~ψ$ where,
+  If $Γ ⊢ φ$ and $ψ : \Target$ then $Γ ⊢ \freorder_{∧}~φ~ψ$ where,
     \begin{align}
       \begin{split}
       \label{eq:reorder-and}
-        &\freorder_{∧} : \Prop → \Prop \to \Prop\\
+        &\freorder_{∧} : \Source \to \Target \to \Prop\\
         &\freorder_{∧}~φ~ψ =
         \begin{cases}
           φ, &\text{ if }φ ≡ ψ\\
