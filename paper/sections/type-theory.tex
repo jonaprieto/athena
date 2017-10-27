@@ -68,10 +68,9 @@ termination problems by modifying the recursive functions to be
 \emph{structural recursive}.
 % (see \cite{Coquand1992,Abel2002,Bove2005} for more details).
 
-This paper adopts the notion of \emph{structurally smaller} from
-\citeauthor{Abel2002}~\cite{Abel2002} to say, a recursive function is
-structurally recursive if it calls itself with only
-structurally smaller arguments.
+This paper adopts the notion of \emph{structurally smaller}
+from~\cite{Abel2002}, that is, a recursive function is structurally
+recursive if it calls itself with only structurally smaller arguments.
 
 General recursive functions can be rewrote into structurally recursive
 functions by using for instance, the \emph{bounded recursion} technique.
@@ -174,23 +173,22 @@ the complexity measure for the $\fuh_0$ function.
   \end{aligned}
 \end{equation}
 
-Following the technique mentioned above, we get the structural
-recursive definition of the $\fuh_{0}$ function presented
-in~\eqref{eq:uh}.
-
-\begin{align}
+Following the technique mentioned above, we define the
+function~$\fuh$, the structural
+recursive definition of the function~$\fuh_{0}$.
+\begin{align*}
   \label{eq:uh}
   \begin{split}
   &\fuh : \Prop → \Prop\\
   &\fuh~φ~ = \fuh_{1}~φ~(\fuh_{cm}~φ).
   \end{split}
-\end{align}
+\end{align*}
 
 \end{myexamplenum}
 
-For a more complete treatment of general recursion, and how to
-define well-founded and well-structural recursive functions, we refer
-the reader to \citeauthor{Bove2005}~\cite{Bove2005}.
+For a more complete treatment of general recursion, and how to define
+well-founded and well-structural recursive functions, we refer the
+reader to~\cite{Bove2005}.
 
 \subsection{Intuitionistic logic}
 \label{ssec:intuitionistic-logic}
