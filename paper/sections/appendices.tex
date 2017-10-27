@@ -12,14 +12,14 @@
 \section{Classical Propositional Logic}
 \label{ssec:CPL}
 
-\textit{Propositions.}
-We define the propositional logic as usual.
-A proposition is an expression of indivisible propositional atoms
-(e.g., symbols $φ₀, φ₁, \cdots$), the logic constants:
-$⊥$, $⊤$, the binary connectives ($∧, ∨, ⇒, ⇔)$, and the negation
-$(¬)$. We use the inductive definition of the set \Prop
-presented in \cite{VanDalen1994} as the mechanism to produce any
-propositional formula.
+\paragraph*{Propositions.}
+We define the propositional logic as usual.  A proposition is an
+expression formed by indivisible propositional atoms (e.g., symbols
+$φ₀, φ₁, \dots$) and the logic constants: \emph{falsum} $(⊥)$,
+\emph{verum} ($⊤$), the binary connectives ($∧, ∨, ⇒, ⇔)$, and the
+negation $(¬)$. We use an inductive definition of the set of
+propositions, denoted \Prop, as the mechanism to produce any
+propositional formula~\cite{VanDalen1994}.
 
 \begin{itemize}
 \item $⊥, ⊤ \in \Prop$.
@@ -29,10 +29,10 @@ where the symbol ($\square$) is one of the binary connectives mentioned above.
 \item If $φ \in \Prop$, then $(¬ φ) \in \Prop$.
 \end{itemize}
 
-\emph{Inference Rule.}
-An inference rule is a deduction step of the form of a set of propositional
-\emph{premises} that produces propositions as the conclusion.
-A derivation is a
+\paragraph*{Inference rules.}
+An inference rule is a deduction step of the form of a set of
+propositional \emph{premises} that produces propositions as the
+conclusion.  A derivation is a
 
 is a mechanism to obtain the conclusion $φ$ from
 the application of some deduction steps. Such deduction step has
@@ -60,7 +60,7 @@ on the left or on the right of the line.
 \label{fig:derivation}
 \end{figure}
 
-\emph{Theorems.}
+\paragraph*{Theorems.}
 A sequent $Γ ⊢ φ$ represents a theorem, but we
 define it as a relation between a set of propositions premises $Γ$,
 and $φ$ as the conclusion of the sequent.
@@ -69,7 +69,7 @@ If $Γ = ∅$, we write $⊢ φ$, and we say that $φ$ is a theorem.
 A theorem, $Γ ⊢ φ$ , means that there is a derivation with
 conclusion $φ$ and with all (uncanceled) hypotheses in $Γ$.
 
-\emph{Natural Deductions.}
+\paragraph*{Natural deductions.}
 The natural deduction introduced by Gentzen in 1930s defines a formal system
 for derivations that uses a set of inference rules as the only way to obtain a
 conclusion. We use this system to refer to formal proofs as natural deduction
@@ -81,14 +81,14 @@ paper~\cite{Altenkirch2015} to include inferences rules for the biconditional
 connective, $PEM$ and $RAA$ postulates, among others.
 
 
-\emph{Proof Trees.} We use trees to represent derivations and
-natural deduction proofs (see for instance, the proof tree in a
-\Metis' derivation in Fig.~\ref{fig:metis-example}).
-In a proof tree, the root is the conclusion of the entire
-derivation. The nodes labeled with the name of the inference rule
-contains the result of applying that rule to their parents. Lastly,
-the leaves in the tree become the premises, not all necessary
-canceled.
+\paragraph*{Proof trees.}
+We use trees to represent derivations and natural deduction proofs
+(see for instance, the proof tree in a \Metis' derivation in
+Fig.~\ref{fig:metis-example}).  In a proof tree, the root is the
+conclusion of the entire derivation. The nodes labeled with the name
+of the inference rule contains the result of applying that rule to
+their parents. Lastly, the leaves in the tree become the premises, not
+all necessary canceled.
 
 
 \section{Customized \TSTP syntax}
