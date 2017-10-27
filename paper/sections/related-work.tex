@@ -7,33 +7,31 @@
 \section{Related Work}
 \label{sec:related-work}
 
-Many approaches have been proposed for proof-reconstruction and some tools have been implemented in the last decades.
+Many approaches have been proposed for proof-reconstruction and some tools have
+been implemented in the last decades. We first mention some tools in type
+theory and later we listed some proof-reconstruction tools for classical logic.
 
-For type theory using \Agda and for the same propositional fragmented used in this paper, we found the proof-reconstruction proposed by \citeauthor{Kanso2012} in~\cite{Kanso2012,kanso2016light}.
-The author present an approach similar to
-the reasoning presented in Section~\ref{ssec:workflow}.
-Nonetheless, his approach includes semantics reasoning. We have avoided the
-use of propositions meanings towards a future work to support other logics but
-also contrast the usage of a deep embedding of the logic with a shallow
-embedding.
+\citeauthor{Kanso2012} in~\cite{Kanso2012,kanso2016light} presents a proof-
+reconstruction in \Agda for propositional logic. Its tool support proof-
+reconstruction for \name{EProver} and \name{Z3} ATPs following a similar work-
+flow as we presented in Section~\ref{ssec:workflow}. Nonetheless, his approach
+employs semantics for logic equivalences. We have avoided the use of
+propositions meanings towards a future work to support other logics where a
+syntactical approach plays an important role~(for an example of such logics, we
+refer the reader to \cite{Agudelo-Agudelo2017}).
+\citeauthor{foster2011integrating}~\cite{foster2011integrating} describe  the
+proof-reconstruction in \Agda for \name{Waldmeister}~\cite{hillenbrand1997}, a
+prover for pure equational logic. As far as we know, no other proof-
+reconstruction has been carried out in \Agda and with \Metis prover.
 
-In \Agda but with another logic, \citeauthor{foster2011integrating}~\cite{foster2011integrating}
-describe the proof-reconstruction for \name{Waldmeister}~\cite{hillenbrand1997}
-prover to pure equational logic, \ie,
-first-order logic with equality but no other predicate symbols and no
-functions symbols.
-
-In \name{Coq}~\cite{coqteam}, and proof assistant for type theory like \Agda,
+Another important proof-assistant in type theory is \name{Coq}~\cite{coqteam}.
 we found the \name{SMTCoq}~\cite{armand2011,Ekici2017} tool which provides a
 certified checker for proof witness coming from the \SMT solver
-\name{veriT}~\cite{bouton2009} and adds a new tactic named verit,
-that calls \name{veriT} on any \name{Coq} goal.
-Also for \name{Coq},
-given a fixed but arbitrary first-order signature,
-\citeauthor{Bezem2002} in \cite{Bezem2002}
-transform a proof produced by the first-order automatic theorem
-prover \name{Bliksem}~\cite{deNivelle2003} in a \name{Coq} proof
-term.
+\name{veriT}~\cite{bouton2009} and adds a new tactic named verit, that calls
+\name{veriT} on any \name{Coq} goal. Also for \name{Coq}, given a fixed but
+arbitrary first-order signature, \citeauthor{Bezem2002} in \cite{Bezem2002}
+transform a proof produced by the first-order automatic theorem prover
+\name{Bliksem}~\cite{deNivelle2003} in a \name{Coq} proof term.
 
 There are some successful attempts using proof assistants for classical logic
 instead of type theory.
