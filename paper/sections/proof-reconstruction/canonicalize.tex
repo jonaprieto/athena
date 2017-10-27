@@ -138,10 +138,9 @@ This lemma incorporates the $\frm_{∨}$ function.
 \begin{mainlemma}
   \label{lem:canon-or}
 
-  If $Γ ⟝ φ$ and let $φ : \Prop$ be a right-associative formula in negative
-  normal form then $Γ ⟝ \fcanon_{∨}~φ$ where,
+  If $Γ ⟝ φ$ and let $φ : \Prop$ be a right-associative formula then $Γ ⟝ \fcanon_{∨}~φ$ where,
 
-\begin{equation*}
+\begin{equation}
 \label{eq:canon-or}
 \begin{aligned}
  &\hspace{.495mm}\fcanon_{∨} : \NProp \to \NProp\\
@@ -164,13 +163,13 @@ This lemma incorporates the $\frm_{∨}$ function.
          ⊤,                     & \text{ if } (¬ φ₁) ∈_{∨} φ₂;\\
          \fcanon_{∨}~φ₂,        & \text{ if } φ₁ ∈_{∨} φ₂;\\
          ⊤,                     & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊤;\\
-         ¬ φ₁,                  & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊥;\\
+         φ₁,                    & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊥;\\
          φ₁ ∨ \fcanon_{∨}~φ₂,   & \text{ otherwise.}
         \end{cases}\\
    \fcanon_{∨} &φ         &= φ.
   \end{array}
 \end{aligned}
-\end{equation*}
+\end{equation}
 \end{mainlemma}
 
 \begin{myexample}
@@ -234,10 +233,11 @@ in \ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
 
 \begin{mainlemma}
   \label{lem:canon-and}
-  If $Γ ⟝ φ$ and let $φ : \Prop$ be a right-associative formula in
-  negative normal form
-   then $Γ ⟝ \fcanon_{∧}~φ$ where,
-  \begin{equation*}
+
+  If $Γ ⟝ φ$ and let $φ : \Prop$ be a right-associative formula
+  then $Γ ⟝ \fcanon_{∧}~φ$ where,
+
+  \begin{equation}
    \label{eq:canon-and}
     \begin{aligned}
      &\hspace{.495mm}\fcanon_{∧} : \NProp \to \NProp\\
@@ -260,12 +260,13 @@ in \ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
             ⊥,                   & \text{ if } ¬ φ₁ ∈_{∧} φ₂;\\
             \fcanon_{∧}~φ₂,      & \text{ if } φ₁ ∈_{∧} φ₂;\\
             ⊥,                   & \text{ if } \fcanon_{∧}~φ₂~≡ ⊥;\\
+            φ₁,                  & \text{ if } \fcanon_{∧}~φ₂~≡ ⊤;\\
             φ₁ ∧ \fcanon_{∧}~φ₂, &\text{ otherwise.}
           \end{cases}\\
         \fcanon_{∧} &φ         &= φ.
        \end{array}
     \end{aligned}
-    \end{equation*}
+    \end{equation}
 \end{mainlemma}
 
 Now, we are ready to define the negative normal form of a formula after
