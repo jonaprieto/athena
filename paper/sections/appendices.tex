@@ -9,86 +9,86 @@
 \renewcommand{\thesection}{\Alph{section}}%
 % or try \arabic{section}
 
-\section{Classical Propositional Logic}
-\label{app:CPL}
+% \section{Classical Propositional Logic}
+% \label{app:CPL}
 
-\paragraph*{Propositions.}
-We define the propositional logic as usual.  A proposition is an
-expression formed by indivisible propositional atoms (e.g., symbols
-$φ₀, φ₁, \dots$) and the logic constants: \emph{falsum} $(⊥)$,
-\emph{verum} ($⊤$), the binary connectives ($∧, ∨, ⇒, ⇔)$, and the
-negation $(¬)$. We use an inductive definition of the set of
-propositions, denoted \Prop, as the mechanism to produce any
-propositional formula~\cite{VanDalen1994}.
+% \paragraph*{Propositions.}
+% We define the propositional logic as usual.  A proposition is an
+% expression formed by indivisible propositional atoms (e.g., symbols
+% $φ₀, φ₁, \dots$) and the logic constants: \emph{falsum} $(⊥)$,
+% \emph{verum} ($⊤$), the binary connectives ($∧, ∨, ⇒, ⇔)$, and the
+% negation $(¬)$. We use an inductive definition of the set of
+% propositions, denoted \Prop, as the mechanism to produce any
+% propositional formula~\cite{VanDalen1994}.
 
-\begin{itemize}
-\item $⊥, ⊤ \in \Prop$.
-\item $ϕ_i \in \Prop$ for all $i \in \mathbb{N}$.
-\item If $φ, ψ\in \Prop$, then $(φ\ \square\ ψ) \in \Prop$,
-where the symbol ($\square$) is one of the binary connectives mentioned above.
-\item If $φ \in \Prop$, then $(¬ φ) \in \Prop$.
-\end{itemize}
+% \begin{itemize}
+% \item $⊥, ⊤ \in \Prop$.
+% \item $ϕ_i \in \Prop$ for all $i \in \mathbb{N}$.
+% \item If $φ, ψ\in \Prop$, then $(φ\ \square\ ψ) \in \Prop$,
+% where the symbol ($\square$) is one of the binary connectives mentioned above.
+% \item If $φ \in \Prop$, then $(¬ φ) \in \Prop$.
+% \end{itemize}
 
-\paragraph*{Inference rules.}
-An inference rule is a deduction step of the form of a set of
-propositional \emph{premises} that produces propositions as the
-conclusion.  A derivation is a
+% \paragraph*{Inference rules.}
+% An inference rule is a deduction step of the form of a set of
+% propositional \emph{premises} that produces propositions as the
+% conclusion.  A derivation is a
 
-is a mechanism to obtain the conclusion $φ$ from
-the application of some deduction steps. Such deduction step has
+% is a mechanism to obtain the conclusion $φ$ from
+% the application of some deduction steps. Such deduction step has
 
-As we show in Fig.~\ref{fig:derivation}, the premises are always above the line, the conclusion
-is below it, and the name of the inference or the theorem used is
-on the left or on the right of the line.
-% As a notation convention, if the name of a rule used in the derivation step is typed using verbatim font face, for example, \verb!resolve!, it means the inference rule belongs to our implementation~\cite{AgdaProp, AgdaMetis} in the Proof Assistant of a inference rule presented
-% with a similar name.
+% As we show in Fig.~\ref{fig:derivation}, the premises are always above the line, the conclusion
+% is below it, and the name of the inference or the theorem used is
+% on the left or on the right of the line.
+% % As a notation convention, if the name of a rule used in the derivation step is typed using verbatim font face, for example, \verb!resolve!, it means the inference rule belongs to our implementation~\cite{AgdaProp, AgdaMetis} in the Proof Assistant of a inference rule presented
+% % with a similar name.
 
-\begin{figure}
-\begin{equation*}
-\begin{bprooftree}
-  \AxiomC{$φ ∧ ψ$}
-  \RightLabel{∧-proj₂}
-  \UnaryInfC{$ψ$}
-  \AxiomC{$φ ∧ ψ$}
-  \RightLabel{∧-proj₁}
-  \UnaryInfC{$φ$}
-  \RightLabel{∧-intro}
-  \BinaryInfC{$ψ ∧ φ$}
-\end{bprooftree}
-\end{equation*}
-\caption{Derivation example.}
-\label{fig:derivation}
-\end{figure}
+% \begin{figure}
+% \begin{equation*}
+% \begin{bprooftree}
+%   \AxiomC{$φ ∧ ψ$}
+%   \RightLabel{∧-proj₂}
+%   \UnaryInfC{$ψ$}
+%   \AxiomC{$φ ∧ ψ$}
+%   \RightLabel{∧-proj₁}
+%   \UnaryInfC{$φ$}
+%   \RightLabel{∧-intro}
+%   \BinaryInfC{$ψ ∧ φ$}
+% \end{bprooftree}
+% \end{equation*}
+% \caption{Derivation example.}
+% \label{fig:derivation}
+% \end{figure}
 
-\paragraph*{Theorems.}
-A sequent $Γ ⊢ φ$ represents a theorem, but we
-define it as a relation between a set of propositions premises $Γ$,
-and $φ$ as the conclusion of the sequent.
-The symbol $⊢$ is called turnstile.
-If $Γ = ∅$, we write $⊢ φ$, and we say that $φ$ is a theorem.
-A theorem, $Γ ⊢ φ$ , means that there is a derivation with
-conclusion $φ$ and with all (uncanceled) hypotheses in $Γ$.
+% \paragraph*{Theorems.}
+% A sequent $Γ ⊢ φ$ represents a theorem, but we
+% define it as a relation between a set of propositions premises $Γ$,
+% and $φ$ as the conclusion of the sequent.
+% The symbol $⊢$ is called turnstile.
+% If $Γ = ∅$, we write $⊢ φ$, and we say that $φ$ is a theorem.
+% A theorem, $Γ ⊢ φ$ , means that there is a derivation with
+% conclusion $φ$ and with all (uncanceled) hypotheses in $Γ$.
 
-\paragraph*{Natural deductions.}
-The natural deduction introduced by Gentzen in 1930s defines a formal system
-for derivations that uses a set of inference rules as the only way to obtain a
-conclusion. We use this system to refer to formal proofs as natural deduction
-proofs and conversely.
+% \paragraph*{Natural deductions.}
+% The natural deduction introduced by Gentzen in 1930s defines a formal system
+% for derivations that uses a set of inference rules as the only way to obtain a
+% conclusion. We use this system to refer to formal proofs as natural deduction
+% proofs and conversely.
 
-In this document, we extend the \CPL formal system
-Fig.~\ref{fig:CPL-inference-rules} described on
-paper~\cite{Altenkirch2015} to include inferences rules for the biconditional
-connective, $PEM$ and $RAA$ postulates, among others.
+% In this document, we extend the \CPL formal system
+% Fig.~\ref{fig:CPL-inference-rules} described on
+% paper~\cite{Altenkirch2015} to include inferences rules for the biconditional
+% connective, $PEM$ and $RAA$ postulates, among others.
 
 
-\paragraph*{Proof trees.}
-We use trees to represent derivations and natural deduction proofs
-(see for instance, the proof tree in a \Metis' derivation in
-Fig.~\ref{fig:metis-example}).  In a proof tree, the root is the
-conclusion of the entire derivation. The nodes labeled with the name
-of the inference rule contains the result of applying that rule to
-their parents. Lastly, the leaves in the tree become the premises, not
-all necessary canceled.
+% \paragraph*{Proof trees.}
+% We use trees to represent derivations and natural deduction proofs
+% (see for instance, the proof tree in a \Metis' derivation in
+% Fig.~\ref{fig:metis-example}).  In a proof tree, the root is the
+% conclusion of the entire derivation. The nodes labeled with the name
+% of the inference rule contains the result of applying that rule to
+% their parents. Lastly, the leaves in the tree become the premises, not
+% all necessary canceled.
 
 
 \section{Customized \TSTP syntax}
