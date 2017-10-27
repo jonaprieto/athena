@@ -75,13 +75,13 @@ support \List \Prop type in the conclusion side.
 Let us review the following \TSTP excerpt where \simplify was used two times.
 
 \begin{verbatim}
-fof(n0, (¬ p ∨ q) ∧ ¬ r ∧ ¬ q ∧ (p ∨ (¬ s ∨ r)), ...
-fof(n1, p ∨ (¬ s ∨ r), inf(conjunct, [n0])).
-fof(n2, ¬ p ∨ q, inf(conjunct, [n0])).
-fof(n3, ¬ q, inf(conjunct, [n0])).
-fof(n4, ¬ p, inf(simplify, [n2, n3])).
-fof(n5, ¬ r, inf(conjunct, [n0])).
-fof(n6, ⊥, inf(simplify, [n1, n4, n5])).
+  fof(n0, (¬ p ∨ q) ∧ ¬ r ∧ ¬ q ∧ (p ∨ (¬ s ∨ r)), ...
+  fof(n1, p ∨ (¬ s ∨ r), inf(conjunct, [n0])).
+  fof(n2, ¬ p ∨ q, inf(conjunct, [n0])).
+  fof(n3, ¬ q, inf(conjunct, [n0])).
+  fof(n4, ¬ p, inf(simplify, [n2, n3])).
+  fof(n5, ¬ r, inf(conjunct, [n0])).
+  fof(n6, ⊥, inf(simplify, [n1, n4, n5])).
 \end{verbatim}
 
 \begin{enumerate}

@@ -67,10 +67,10 @@ These subgoals are introduced in the \TSTP derivation with the \strip
 inference rule. We refer the reader to see Section~\ref{sssec:strip-a-goal} for the formalization of \strip rule.
 
 \begin{verbatim}
-fof(goal, conjecture, p & r & q).
-fof(subgoal_0, plain, p, inference(strip, [], [goal])).
-fof(subgoal_1, plain, p => r, inference(strip, [], [goal])).
-fof(subgoal_2, plain, (p & r) => q, inference(strip, [], [goal])).
+  fof(goal, conjecture, p & r & q).
+  fof(subgoal_0, plain, p, inference(strip, [], [goal])).
+  fof(subgoal_1, plain, p => r, inference(strip, [], [goal])).
+  fof(subgoal_2, plain, (p & r) => q, inference(strip, [], [goal])).
 \end{verbatim}
 
 % ...................................................................

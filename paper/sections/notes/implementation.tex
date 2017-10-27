@@ -40,12 +40,12 @@ propositions (in \Agda, we use the data type \verb!Fin! from the
 standard  library for such a purpose).
 
 \begin{verbatim}
-data PropFormula : Set where
-  Var : Fin n → PropFormula
-  ⊤ : PropFormula
-  ⊥ : PropFormula
-  _∧_ _∨_ _⇒_ _⇔_ : (φ ψ : PropFormula) → PropFormula
-  ¬_ : (φ : PropFormula) → PropFormula
+  data PropFormula : Set where
+    Var : Fin n → PropFormula
+    ⊤ : PropFormula
+    ⊥ : PropFormula
+    _∧_ _∨_ _⇒_ _⇔_ : (φ ψ : PropFormula) → PropFormula
+    ¬_ : (φ : PropFormula) → PropFormula
 \end{verbatim}
 
 \begin{myremark}
@@ -55,24 +55,24 @@ The underscores in the above definition denote holes for a function of arity equ
 \begin{myremark}
 The type notation
 \begin{verbatim}
-_⇔_ : (φ ψ : PropFormula) → PropFormula
+  _⇔_ : (φ ψ : PropFormula) → PropFormula
 \end{verbatim}
 is a syntax sugar for the type
 \begin{verbatim}
-PropFormula → PropFormula → PropFormula.
+  PropFormula → PropFormula → PropFormula.
 \end{verbatim}
 \end{myremark}
 
 \begin{myexample}
 \hspace*{5cm}\\[3mm]
 \begin{verbatim}
-r : PropFormula
-p = Var (# 0)
-q = Var (# 1)
-r = Var (# 2)
+  r : PropFormula
+  p = Var (# 0)
+  q = Var (# 1)
+  r = Var (# 2)
 
-φ : PropFormula
-φ = (¬ r ∨ p) ∧ (¬ r ∨ q)
+  φ : PropFormula
+  φ = (¬ r ∨ p) ∧ (¬ r ∨ q)
 \end{verbatim}
 \end{myexample}
 

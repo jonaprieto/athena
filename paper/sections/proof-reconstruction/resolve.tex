@@ -292,9 +292,9 @@ see the pattern of \emph{resolve} rule in Fig.~\ref{fig:metis-inferences}.
 \begin{myexamplenum}\hspace{10cm}
 \label{ex:resolve-tstp}
 \begin{verbatim}
-cnf(ref4, (¬ r ∨ p ∨ q), inf(canonicalize, [norm5])).
-cnf(ref5, (p ∨ q ∨ r), inf(canonicalize, [norm6])).
-cnf(ref6, (p ∨ q), inf(resolve, r, [ref5, ref4])).
+  cnf(ref4, (¬ r ∨ p ∨ q), inf(canonicalize, [norm5])).
+  cnf(ref5, (p ∨ q ∨ r), inf(canonicalize, [norm6])).
+  cnf(ref6, (p ∨ q), inf(resolve, r, [ref5, ref4])).
 \end{verbatim}
 In the excerpt above, we apply resolution to the first two formulas,
 $¬ r ∨ p ∨ q$ and $p ∨ q ∨ r$. The last line tells us the literal used
@@ -303,7 +303,7 @@ we can not derive neither the conclusion $p ∨ q$ in \verb!ref6! nor apply the 
 
 If the scenario would have other like replacing \verb!ref5! by
 \begin{verbatim}
-cnf(ref5, (r ∨ p ∨ q), inf(canonicalize, [norm6])).
+  cnf(ref5, (r ∨ p ∨ q), inf(canonicalize, [norm6])).
 \end{verbatim}
 The \resolve rule have could derive $(p ∨ q) ∨ (p ∨ q)$, but again, that is not the expected result.
 \end{myexamplenum}

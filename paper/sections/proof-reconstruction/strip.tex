@@ -14,10 +14,10 @@ The subgoals associated to a goal are introduced in the \TSTP derivation
 with the \strip inference rule.
 
 \begin{verbatim}
-fof(goal, conjecture, (p ∧ r) ∧ q)).
-fof(sg0, p, inf(strip, [goal])).
-fof(sg1, p ⇒ r, inf(strip, [goal])).
-fof(sg2, (p ∧ r) ⇒ q, inf(strip, [goal])).
+  fof(goal, conjecture, (p ∧ r) ∧ q)).
+  fof(sg0, p, inf(strip, [goal])).
+  fof(sg1, p ⇒ r, inf(strip, [goal])).
+  fof(sg2, (p ∧ r) ⇒ q, inf(strip, [goal])).
 \end{verbatim}
 
 In this example, the conjecture $(p ∧ r) ∧ q$ is stripped into
@@ -321,15 +321,15 @@ In the following \TSTP derivation, note that the three subgoals
 rule in \verb!neg0!, \verb!neg1! and  \verb!neg2! respectively.
 
 \begin{verbatim}
-fof(goal, conjecture, (p ∧ r ∧ q)).
-fof(sg0, p, inf(strip,[goal])).
-fof(sg1, p ⇒ r, inf(strip,[goal])).
-fof(sg2, (p ∧ r) ⇒ q, inf(strip,[goal])).
-fof(neg0, ¬ p, inf(negate,[sg0])).
-...
-fof(neg1, ¬ (p ⇒ r), inf(negate,[sg1])).
-...
-fof(neg2, ¬ ((p ∧ r) ⇒ q), inf(negate,[sg2])).
+  fof(goal, conjecture, (p ∧ r ∧ q)).
+  fof(sg0, p, inf(strip,[goal])).
+  fof(sg1, p ⇒ r, inf(strip,[goal])).
+  fof(sg2, (p ∧ r) ⇒ q, inf(strip,[goal])).
+  fof(neg0, ¬ p, inf(negate,[sg0])).
+  ...
+  fof(neg1, ¬ (p ⇒ r), inf(negate,[sg1])).
+  ...
+  fof(neg2, ¬ ((p ∧ r) ⇒ q), inf(negate,[sg2])).
 \end{verbatim}
 \end{myexample}
 

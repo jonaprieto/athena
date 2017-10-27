@@ -49,7 +49,7 @@ The \TPTP syntax describes a well-defined grammar to handle annotated
 formulas with the following form:
 
 \begin{verbatim}
-language(name, role, formula).
+  language(name, role, formula).
 \end{verbatim}
 
 Where the \name{language} can be \name{fof} or \name{cnf}. The \name{name}
@@ -65,10 +65,10 @@ in \TPTP syntax. We begin by declaring the $p$ axiom using the \verb!axiom!
 keyword. Later, we include the expected conclusion using the
 \verb!conjecture! keyword.
 
-  \begin{verbatim}
+\begin{verbatim}
   fof(h, axiom, p).
   fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
-  \end{verbatim}
+\end{verbatim}
 
 \end{myexample}
 
@@ -89,14 +89,14 @@ inferred from the parent formulas. The root is the final derived formula,
 such a derivation is a list of annotated formulas with the following form.
 
 \begin{verbatim}
-language(name, role, formula, source [,useful info]).
+  language(name, role, formula, source [,useful info]).
 \end{verbatim}
 
 Where the \name{source} field is an inference record with the following
 pattern:
 
 \begin{verbatim}
-inference(rule, useful info, parents).
+  inference(rule, useful info, parents).
 \end{verbatim}
 
 The \name{rule} in the line above stands for the inference name;
@@ -106,7 +106,7 @@ apply the reasoning step, and list the parents nodes.
 \begin{myexample}\hspace{10cmm}\\
 
 \begin{verbatim}
-fof(subgoal_0, plain, p, inference(strip, [], [goal])).
+  fof(subgoal_0, plain, p, inference(strip, [], [goal])).
 \end{verbatim}
 
 In the script above, \strip is the name of the inference.
@@ -130,14 +130,14 @@ empty fields in the inference information, we shorten names as long as possible,
 \verb!plain! and we use the ⊤, ⊥, ¬, ∧, ∨, ⇒, ⇔ symbols to express the formulas.
 
 \begin{verbatim}
-fof(premise, axiom, p).
-fof(goal, conjecture, p).
-fof(sg0, p, inf(strip, [goal])).
-fof(neg0, ¬ p, inf(negate, [sg0])).
-fof(norm0, ¬ p, inf(canonicalize, [neg0])).
-fof(norm1, p, inf(canonicalize, [premise])).
-fof(norm2, ⊥, inf(simplify, [norm0, norm1]))
-cnf(refute0, ⊥, inf(canonicalize, [norm2])).
+  fof(premise, axiom, p).
+  fof(goal, conjecture, p).
+  fof(sg0, p, inf(strip, [goal])).
+  fof(neg0, ¬ p, inf(negate, [sg0])).
+  fof(norm0, ¬ p, inf(canonicalize, [neg0])).
+  fof(norm1, p, inf(canonicalize, [premise])).
+  fof(norm2, ⊥, inf(simplify, [norm0, norm1]))
+  cnf(refute0, ⊥, inf(canonicalize, [norm2])).
 \end{verbatim}
 
 \end{myexamplenum}
