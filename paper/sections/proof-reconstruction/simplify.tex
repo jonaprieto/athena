@@ -16,7 +16,6 @@ function with three arguments: two source formulas and the target formula.
 As we see in~\eqref{eq:simplify-1}, if \fsimplify gets ⊥
 from its input derivations, it derives ⊥. When the target formula, the expected conclusion is ⊤, we derive immediately ⊤.
 Otherwise, the \fsimplify rule performs  in~\eqref{eq:simplify-2} an analysis by following the cases to determine which theorem should it applies.
-
  \begin{equation}
   \label{eq:simplify-1}
   \begin{aligned}
@@ -29,7 +28,6 @@ Otherwise, the \fsimplify rule performs  in~\eqref{eq:simplify-2} an analysis by
   \end{array}
   \end{aligned}
   \end{equation}
-
 For $i,\, j = 1, 2$, $i\neq j$ and $γ : \Prop$,
 \begin{equation}
   \label{eq:simplify-2}
@@ -50,12 +48,11 @@ For $i,\, j = 1, 2$, $i\neq j$ and $γ : \Prop$,
   \end{aligned}
   \end{equation}
 
-
 \begin{mainth}
   \label{thm:simplify}
-For $i=1,\, 2, \cdots, n$, $Γ ⊢ φᵢ$ and $ψ : \Target$ then
-if $n > 2$, $Γ ⊢ \fsimplify~γ_{n-2}~φ_{n}~ψ$ where $γ_{i} = \fsimplify~φ_{i}~φ_{i+1}~ψ$
-else $Γ ⊢ \fsimplify~φ₁~φ₂~ψ$.
+  Let $ψ : \Target$ and $Γ ⊢ φᵢ$, for $i=1,\, 2, \dots, n$. If $n > 2$
+  then $Γ ⊢ \fsimplify~γ_{n-2}~φ_{n}~ψ$, where
+  $γ_{i} = \fsimplify~φ_{i}~φ_{i+1}~ψ$, else $Γ ⊢ \fsimplify~φ₁~φ₂~ψ$.
 \end{mainth}
 
 \begin{myremark}
