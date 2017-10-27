@@ -204,10 +204,6 @@ in Fig.~\ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
 \begin{figure}
 \begin{equation*}
 \begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∧ ¬~φ$}
-  \UnaryInfC{$Γ ⟝ ⊥$}
-\end{bprooftree}\qquad
-\begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∧ ⊤$}
   \UnaryInfC{$Γ ⟝ φ$}
 \end{bprooftree}\qquad
@@ -218,6 +214,10 @@ in Fig.~\ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
 \begin{bprooftree}
   \AxiomC{$Γ ⟝ φ ∧ φ$}
   \UnaryInfC{$Γ ⟝ φ$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∧ ¬~φ$}
+  \UnaryInfC{$Γ ⟝ ⊥$}
 \end{bprooftree}
 \end{equation*}
 \caption{Theorems to remove redundancies inside of a conjunction.}
@@ -262,14 +262,12 @@ in Fig.~\ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
     \end{equation}
 \end{mainlemma}
 
-Now, we are ready to define the negative normal form of a formula
-after simplifications by applying to it the $\fnnfp$ function defined
-and after simplifications functions (\ie, $\fcanon_{∨}$ and
-$\fcanon_{∧}$) in~\eqref{eq:nnf-zero}.  Its definition is mainly based
-on the \Metis source code to normalize formulas. To define such a
-function in type theory we follow the same approach described
-in~\cite{Bezem2002}. The authors avoid a termination problem by using
-the polarity of the formula as an additional argument of the function.
+Now, we are ready to define the negative normal form of a formula after
+simplifications by applying to it the $\fnnfp$ function defined
+in~\eqref{eq:nnf-zero} and the $\fcanon_{∨}$ and $\fcanon_{∧}$) functions.  Its definition is mainly based on the \Metis source code to normalize formulas.
+To define such a function in type theory we follow the same approach described
+in~\cite{Bezem2002}. The authors avoid a termination problem by using the
+polarity of the formula as an additional argument of the function.
 
 \begin{equation}
 \label{eq:nnf-zero}
@@ -316,7 +314,7 @@ is defined in Appendix~\ref{app:polarity-for-propositions}.
 \end{mainlemma}
 
 
-To get the conjunctive normal form, it only left to make sure the formula is a
+To get the conjunctive normal form, we make sure the formula is a
 conjunction of disjunctions. For such a purpose, we use distributive laws in
 Lemma~\ref{lem:dist} to get that form after applying the $\fnnf$ function.
 
