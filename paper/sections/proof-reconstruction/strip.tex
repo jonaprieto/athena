@@ -120,11 +120,13 @@ Now, using \texttt{⇒∧⇒\textsf{-to-}⇒∧} theorem from~\cite{AgdaProp},
 \end{itemize}
 \end{proof}
 
-The $\fstrip₀$ function yields the conjunction of subgoals that implies the goal of the problem in the \Metis \TSTP derivations but is not a structurally recursive
-function.  Instead, we present its structural recursive version
-in~\eqref{eq:strip-fixed} after applying
-the bounded technique described in Section~\ref{ssec:structural-recursion}.
-We based on the definition of this function from the \Metis source code.
+The $\fstrip₀$ function yields the conjunction of subgoals that implies the
+goal of the problem in the \Metis \TSTP derivations but is not a structurally
+recursive function.  Instead, we present its structural recursive version
+in~\eqref{eq:strip-fixed}, the $\fstrip₁$ function after applying the bounded
+technique described in Section~\ref{ssec:structural-recursion}. We define the
+$\fstrip₁$ function based on the definition from the \Metis source code.
+
 \begin{equation}
 \label{eq:strip-fixed}
 \begin{aligned}
