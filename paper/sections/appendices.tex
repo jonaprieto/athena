@@ -2,10 +2,111 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 
+\newpage
+
 \begin{subappendices}
 
 \renewcommand{\thesection}{\Alph{section}}%
 % or try \arabic{section}
+
+\section{Classical Propositional Logic}
+\label{ssec:CPL}
+
+\textit{Propositions.}
+We define the propositional logic as usual.
+A proposition is an expression of indivisible propositional atoms
+(e.g., symbols $φ₀, φ₁, \cdots$), the logic constants:
+$⊥$, $⊤$, the binary connectives ($∧, ∨, ⇒, ⇔)$, and the negation
+$(¬)$. We use the inductive definition of the set \Prop
+presented in \cite{VanDalen1994} as the mechanism to produce any
+propositional formula.
+
+\begin{itemize}
+\item $⊥, ⊤ \in \Prop$.
+\item $ϕ_i \in \Prop$ for all $i \in \mathbb{N}$.
+\item If $φ, ψ\in \Prop$, then $(φ\ \square\ ψ) \in \Prop$,
+where the symbol ($\square$) is one of the binary connectives mentioned above.
+\item If $φ \in \Prop$, then $(¬ φ) \in \Prop$.
+\end{itemize}
+
+\emph{Inference Rule.}
+An inference rule is a deduction step of the form of a set of propositional
+\emph{premises} that produces propositions as the conclusion.
+A derivation is a
+
+is a mechanism to obtain the conclusion $φ$ from
+the application of some deduction steps. Such deduction step has
+
+As we show in Fig.~\ref{fig:derivation}, the premises are always above the line, the conclusion
+is below it, and the name of the inference or the theorem used is
+on the left or on the right of the line.
+% As a notation convention, if the name of a rule used in the derivation step is typed using verbatim font face, for example, \verb!resolve!, it means the inference rule belongs to our implementation~\cite{AgdaProp, AgdaMetis} in the Proof Assistant of a inference rule presented
+% with a similar name.
+
+\begin{figure}
+\begin{equation*}
+\begin{bprooftree}
+  \AxiomC{$φ ∧ ψ$}
+  \RightLabel{∧-proj₂}
+  \UnaryInfC{$ψ$}
+  \AxiomC{$φ ∧ ψ$}
+  \RightLabel{∧-proj₁}
+  \UnaryInfC{$φ$}
+  \RightLabel{∧-intro}
+  \BinaryInfC{$ψ ∧ φ$}
+\end{bprooftree}
+\end{equation*}
+\caption{Derivation example.}
+\label{fig:derivation}
+\end{figure}
+
+\emph{Theorems.}
+A sequent $Γ ⊢ φ$ represents a theorem, but we
+define it as a relation between a set of propositions premises $Γ$,
+and $φ$ as the conclusion of the sequent.
+The symbol $⊢$ is called turnstile.
+If $Γ = ∅$, we write $⊢ φ$, and we say that $φ$ is a theorem.
+A theorem, $Γ ⊢ φ$ , means that there is a derivation with
+conclusion $φ$ and with all (uncanceled) hypotheses in $Γ$.
+
+\emph{Natural Deductions.}
+The natural deduction introduced by Gentzen in 1930s defines a formal system
+for derivations that uses a set of inference rules as the only way to obtain a
+conclusion. We use this system to refer to formal proofs as natural deduction
+proofs and conversely.
+
+In this document, we extend the \CPL formal system
+Fig.~\ref{fig:CPL-inference-rules} described on
+paper~\cite{Altenkirch2015} to include inferences rules for the biconditional
+connective, $PEM$ and $RAA$ postulates, among others.
+
+
+\emph{Proof Trees.} We use trees to represent derivations and
+natural deduction proofs (see for instance, the proof tree in a
+\Metis' derivation in Fig.~\ref{fig:metis-example}).
+In a proof tree, the root is the conclusion of the entire
+derivation. The nodes labeled with the name of the inference rule
+contains the result of applying that rule to their parents. Lastly,
+the leaves in the tree become the premises, not all necessary
+canceled.
+
+
+\section{Customized \TSTP syntax}
+\label{app:tstp-syntax}
+
+
+\begin{itemize}
+  \item We use \verb!inf! instead of \verb!inference!
+  \item We shorten names generated automatically by \Metis, \eg,
+\verb!sg0! instead of \verb!subgoal_0! or \verb!norm0_0!
+insead of \verb!normalize_0_0!.
+  \item We remove the \verb!plain! role everywhere.
+  \item We remove empty fields in the inference information
+  \item If the inference rule does not need arguments except its parent nodes, we remove the field of useful information.
+  \item Use ⊤, ⊥, ¬, ∧, ∨, ⇒, ⇔ symbols to express the formulas.
+  \item When the purpose to show a \TSTP derivation does not include
+  some parts of the derivation we use instead the ellipsis (\verb!...!).
+\end{itemize}
 
 
 \begin{figure}
@@ -28,18 +129,23 @@ problem $p\vdash p$.}
 \label{fig:metis-proof-tstp}
 \end{figure}
 
-\begin{myremark}
-We simplified the \TSTP syntax and \Metis derivations (see a simplification in Fig.~\ref{fig:simplified-tstp}).
-For instance in \TSTP derivations, we use \verb!inf! instead of \verb!inference!. If the role of the formula is \verb!plain!, we omit it.
-We shorten names generated automatically by \Metis, \eg,
-\verb!sg0! instead of \verb!subgoal_0! or \verb!norm0_0!
-insead of \verb!normalize_0_0!.
-Finally, if the inference rule does not need arguments except its parent nodes, we remove the field for useful information.
-A simplified version of the \texttt{TSTP} derivation of Fig.~\ref{fig:metis-proof-tstp} is the following.
-\end{myremark}
+\begin{figure}
+\begin{verbatim}
+  fof(premise, axiom, p).
+  fof(goal, conjecture, p).
+  fof(sg0, p, inf(strip, [goal])).
+  fof(neg0, ¬ p, inf(negate, [sg0])).
+  fof(norm0, ¬ p, inf(canonicalize, [neg0])).
+  fof(norm1, p, inf(canonicalize, [premise])).
+  fof(norm2, ⊥, inf(simplify, [norm0, norm1]))
+  cnf(refute0, ⊥, inf(canonicalize, [norm2])).
+\end{verbatim}
+\caption{\texttt{Metis}' \texttt{TSTP} derivation using a customized syntax}
+\label{fig:metis-proof-tstp-customized}
+\end{figure}
 
-
-\subsection{Polarity for propositions}
+\section{Polarity for propositions}
+\label{app:polarity-for-propositions}
 
 \begin{equation}
 \label{def:polarity}
@@ -60,27 +166,55 @@ A simplified version of the \texttt{TSTP} derivation of Fig.~\ref{fig:metis-proo
 \end{equation}
 
 
-\section{A Small Example}
-\label{appendix}
+\section{Another proof case for the \strip inference rule}
 
-\subsection{\CPL Problem}
-
+\begin{itemize}
+\item[∙] Case $φ ≡ φ₁ ⇒ φ₂$.
 \begin{equation*}
-\{\ (p ∨ q) ∧ (p ∨ r)\ \} \vdash p ∨ (q ∧ r)
+  \begin{bprooftree}
+  \AxiomC{}
+  \RightLabel{assume}
+  \UnaryInfC{$Γ , φ₁ ⊢ φ₁$}
+  \AxiomC{$Γ ⊢ \fstrip₁~(φ₁ ⇒ φ₂)~(\suc~n)$}
+  \RightLabel{by~\eqref{eq:uh-structured}}
+  \UnaryInfC{$Γ ⊢ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)$}
+  \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
+  \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip₁~φ₂~n$}
+  \RightLabel{weaken}
+  \UnaryInfC{$Γ , φ₁ ⊢ φ₁ ⇒ \fstrip₁~φ₂~n$}
+  \RightLabel{⇒-elim}
+  \BinaryInfC{$Γ , φ₁ ⊢ \fstrip₁~φ₂~n$}
+  \RightLabel{by~ind.~hyp.}
+  \UnaryInfC{$Γ , φ₁ ⊢ φ₂$}
+  \RightLabel{⇒-intro}
+  \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$}
+  \end{bprooftree}
 \end{equation*}
+\end{itemize}
 
-\subsection{\TPTP Problem}
+% \section{A Small Example}
+% \label{appendix}
 
-\begin{verbatim}
-  fof(a1, axiom, ((p | q) & (p | r))).
-  fof(goal, conjecture, (p | (q & r))).
-\end{verbatim}
+% \subsection{\CPL Problem}
 
-\subsection{\Metis \TSTP Derivation}
-\verbatiminput{sections/data/problem.tstp}
+% \begin{equation*}
+% \{\ (p ∨ q) ∧ (p ∨ r)\ \} \vdash p ∨ (q ∧ r)
+% \end{equation*}
 
-\subsection{\Agda Proof-term}
-\verbatiminput{sections/data/problem.agda}
+% \subsection{\TPTP Problem}
+
+% \begin{verbatim}
+%   fof(a1, axiom, ((p | q) & (p | r))).
+%   fof(goal, conjecture, (p | (q & r))).
+% \end{verbatim}
+
+% \subsection{\Metis \TSTP Derivation}
+% \verbatiminput{sections/data/problem.tstp}
+
+% \subsection{\Agda Proof-term}
+% \verbatiminput{sections/data/problem.agda}
+
+
 \end{subappendices}
 
 \end{document}
