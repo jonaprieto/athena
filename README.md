@@ -21,7 +21,7 @@ $ make install-libraries
 <li><a href="http://github.com/gilith/metis">Metis</a> v2.3 (release 20170810)</li>
 <li>[optional]: benefit of at least forty provers including Metis: <a href="http://github.com/jonaprieto/online-atps">OnlineATPs</a>.</li>
 </ul>
-<h3>Testing</h3>
+<h3>Testing a small problem</h3>
 <p>In order to test the installation of Athena, you can try to reconstruct a simple proof.</p>
 <p>First, let us write the problem <img src="https://tex.s2cms.ru/svg/%5Cinline%5C%7B%20p%20%2C%20q%5C%7D%20%5Cvdash%20p%20%5Cwedge%20q" alt="\inline\{ p , q\} \vdash p \wedge q" /> in TPTP to generate the solution using <a href="http://github.com/gilith/metis">metis</a>.</p>
 <pre><code>$ cat problem.tptp
@@ -30,8 +30,7 @@ fof(a2, axiom, q).
 fof(goal, conjecture, p &amp; q).
 </code></pre>
 <p>To get the TSTP proof run the following command:</p>
-<pre>
-<code>$ metis --show proof problem.tptp &gt; problem.tstp
+<pre><code>$ metis --show proof problem.tptp &gt; problem.tstp
 $ cat problem.tstp
 ...
 fof(a1, axiom, (p)).
@@ -113,8 +112,9 @@ proof : Γ ⊢ goal
 proof =
   ⇒-elim
     thm-strip
-    (∧-intro proof₀ proof₁)
+    (∧-intro proof₀ proof₁)
 ```
+
 <p>Finally, we type-check the proof. At this stage, we will assume you’ve already
 installed successfully the libraries <a href="http://github.com/jonaprieto/agda-prop">agda-prop</a>, and <a href="http://github.com/jonaprieto/agda-metis">agda-metis</a> and
 <a href="http://github.com/agda/agda-stdlib">agda-stdlib</a> libraries.</p>
@@ -130,3 +130,13 @@ problem, the TSTP solution, the Agda proof-term, and the Agda interface file.</p
 ├── problem.tptp
 └── problem.tstp
 </code></pre>
+<h3>Testing more example</h3>
+<p>We have including a test-suite of at least eighty <a href="http://github.com/jonaprieto/prop-pack">problems</a>.
+To reconstruct all these proofs run the following command:</p>
+<pre><code>$ make reconstruct
+</code></pre>
+<p>To type-check the proofs:</p>
+<pre><code>$ make check
+</code></pre>
+<p>If anything didn’t work as you expected, please report it
+opening an <a href="http://github.com/jonaprieto/athena/issues/new">issue</a>.</p>

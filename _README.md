@@ -28,7 +28,7 @@ Athena was tested with:
 * [Metis][metis] v2.3 (release 20170810)
 * \[optional\]: benefit of at least forty provers including Metis: [OnlineATPs][online-atps].
 
-### Testing
+### Testing a small problem
 
 In order to test the installation of Athena, you can try to reconstruct a simple proof.
 
@@ -157,13 +157,33 @@ $ tree .
 └── problem.tstp
 ```
 
+### Testing more example
+
+We have including a test-suite of at least eighty [problems].
+To reconstruct all these proofs run the following command:
+
+```
+$ make reconstruct
+```
+
+To type-check the proofs:
+
+```
+$ make check
+```
+
+If anything didn't work as you expected, please report it
+opening an [issue].
+
 
 [diagram]: https://raw.githubusercontent.com/jonaprieto/athena/master/slides/diagram.png
 [haskell]: http://www.haskell.org
+[issue]: http://github.com/jonaprieto/athena/issues/new
 [tstp]:    http://www.cs.miami.edu/~tptp/TPTP/QuickGuide/
 [metis]:   http://github.com/gilith/metis
 [agda]:    http://github.com/agda/agda
 [agda-prop]: http://github.com/jonaprieto/agda-prop
 [agda-metis]: http://github.com/jonaprieto/agda-metis
 [agda-stdlib]: http://github.com/agda/agda-stdlib
+[problems]: http://github.com/jonaprieto/prop-pack
 [online-atps]: http://github.com/jonaprieto/online-atps
