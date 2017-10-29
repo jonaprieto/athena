@@ -30,7 +30,8 @@ fof(a2, axiom, q).
 fof(goal, conjecture, p &amp; q).
 </code></pre>
 <p>To get the TSTP proof run the following command:</p>
-<pre><code>$ metis --show proof problem.tptp &gt; problem.tstp
+<pre>
+<code>$ metis --show proof problem.tptp &gt; problem.tstp
 $ cat problem.tstp
 ...
 fof(a1, axiom, (p)).
@@ -51,7 +52,9 @@ cnf(refute_1_0, plain, ($false),
 <pre><code>$ athena problem.tstp
 </code></pre>
 <p>Remember that Athena named the Agda file with the same name of the TSTP solution:</p>
-<pre><code class="language-agda">$ cat problem.agda
+
+```agda
+$ cat problem.agda
 ...
 -- Axioms.
 
@@ -110,8 +113,8 @@ proof : Γ ⊢ goal
 proof =
   ⇒-elim
     thm-strip
-    (∧-intro proof₀ proof₁)
-</code></pre>
+    (∧-intro proof₀ proof₁)
+```
 <p>Finally, we type-check the proof. At this stage, we will assume you’ve already
 installed successfully the libraries <a href="http://github.com/jonaprieto/agda-prop">agda-prop</a>, and <a href="http://github.com/jonaprieto/agda-metis">agda-metis</a> and
 <a href="http://github.com/agda/agda-stdlib">agda-stdlib</a> libraries.</p>
