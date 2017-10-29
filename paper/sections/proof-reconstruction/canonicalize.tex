@@ -393,7 +393,8 @@ normal form of the target formula. It definition is as follows.
   \begin{aligned}
   &\hspace{.495mm}\fcanonicalize : \Source \to \Target \to \Prop\\
   &\fcanonicalize~φ~ψ = \begin{cases}
-        ψ, &\text{ if  } ψ≡φ;\\
+        ψ, &\text{ if  } ψ ≡ φ;\\
+        ψ, &\text{ if  } ψ ≡ \fnnf~φ;\\
         ψ, &\text{ if  } \fcnf~ψ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ);\\
         φ, &\text{ otherwise. }
         \end{cases}
