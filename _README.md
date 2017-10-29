@@ -32,7 +32,7 @@ Athena was tested with:
 
 In order to test the installation of Athena, you can try to reconstruct a simple proof.
 
-First, let us write the problem $$\{ p , q\} \vdash p \wedge q$$ in TPTP to generate the solution using [metis].
+First, let us write the problem $$\inline\{ p , q\} \vdash p \wedge q$$ in TPTP to generate the solution using [metis].
 
 ```
 $ cat problem.tptp
@@ -138,15 +138,17 @@ proof =
     (∧-intro proof₀ proof₁)
 ```
 
-Finally, we type-check the proof. At this stage, we will assume
-you've already installed successfully the libraries [agda-prop], and [agda-metis] and [agda-stdlib] libraries.
+Finally, we type-check the proof. At this stage, we will assume you've already
+installed successfully the libraries [agda-prop], and [agda-metis] and
+[agda-stdlib] libraries.
 
 ```agda
 $ agda problem.agda
 ```
 
-If everything works as we expected, Agda will generate
-an interface file as result of the type-checking. At the end, we should have four files: the TPTP problem, the TSTP solution, the Agda proof-term, and the Agda interface file.
+If everything works as we expected, Agda will generate an interface file as
+result of the type-checking. At the end, we should have four files: the TPTP
+problem, the TSTP solution, the Agda proof-term, and the Agda interface file.
 
 ```
 $ tree .

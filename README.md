@@ -23,7 +23,7 @@ $ make install-libraries
 </ul>
 <h3>Testing</h3>
 <p>In order to test the installation of Athena, you can try to reconstruct a simple proof.</p>
-<p>First, let us write the problem <img src="https://tex.s2cms.ru/svg/%5C%7B%20p%20%2C%20q%5C%7D%20%5Cvdash%20p%20%5Cwedge%20q" alt="\{ p , q\} \vdash p \wedge q" /> in TPTP to generate the solution using <a href="http://github.com/gilith/metis">metis</a>.</p>
+<p>First, let us write the problem <img src="https://tex.s2cms.ru/svg/%5Cinline%5C%7B%20p%20%2C%20q%5C%7D%20%5Cvdash%20p%20%5Cwedge%20q" alt="\inline\{ p , q\} \vdash p \wedge q" /> in TPTP to generate the solution using <a href="http://github.com/gilith/metis">metis</a>.</p>
 <pre><code>$ cat problem.tptp
 fof(a1, axiom, p).
 fof(a2, axiom, q).
@@ -114,12 +114,14 @@ proof =
     thm-strip
     (∧-intro proof₀ proof₁)
 </code></pre>
-<p>Finally, we type-check the proof. At this stage, we will assume
-you’ve already installed successfully the libraries <a href="http://github.com/jonaprieto/agda-prop">agda-prop</a>, and <a href="http://github.com/jonaprieto/agda-metis">agda-metis</a> and <a href="http://github.com/agda/agda-stdlib">agda-stdlib</a> libraries.</p>
+<p>Finally, we type-check the proof. At this stage, we will assume you’ve already
+installed successfully the libraries <a href="http://github.com/jonaprieto/agda-prop">agda-prop</a>, and <a href="http://github.com/jonaprieto/agda-metis">agda-metis</a> and
+<a href="http://github.com/agda/agda-stdlib">agda-stdlib</a> libraries.</p>
 <pre><code class="language-agda">$ agda problem.agda
 </code></pre>
-<p>If everything works as we expected, Agda will generate
-an interface file as result of the type-checking. At the end, we should have four files: the TPTP problem, the TSTP solution, the Agda proof-term, and the Agda interface file.</p>
+<p>If everything works as we expected, Agda will generate an interface file as
+result of the type-checking. At the end, we should have four files: the TPTP
+problem, the TSTP solution, the Agda proof-term, and the Agda interface file.</p>
 <pre><code>$ tree .
 .
 ├── problem.agda
