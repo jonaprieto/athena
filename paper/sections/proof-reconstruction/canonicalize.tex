@@ -425,7 +425,7 @@ normal form of the target formula. It definition is as follows.
       \UnaryInfC{$Γ ⊢ \fcnf~φ$}
       \RightLabel{Lemma~\ref{lem:reorder-and-or}}
       \UnaryInfC{$Γ ⊢ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$}
-      \AxiomC{$\fcnf~\freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$}
+      \AxiomC{$\fcnf~ψ~≡~\freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$}
       \RightLabel{\fsubst}
       \BinaryInfC{$Γ ⊢ \fcnf~ψ$}
       \RightLabel{Lemma~\ref{lem:cnf-inv}}
