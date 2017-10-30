@@ -97,7 +97,6 @@ PROP_PACK =test/prop-pack
 PROBLEMS  =$(addprefix $(PROP_PACK),/problems)
 
 BASIC     =$(addprefix $(PROBLEMS),/basic)
-BICOND    =$(addprefix $(PROBLEMS),/biconditional)
 CONJ      =$(addprefix $(PROBLEMS),/conjunction)
 DISJ      =$(addprefix $(PROBLEMS),/disjunction)
 IMPL      =$(addprefix $(PROBLEMS),/implication)
@@ -119,10 +118,6 @@ AGDA_DISJ := $(addprefix $(DISJ)/,$(notdir $(TSTP_DISJ:.tstp=.agda)))
 TPTP_IMPL := $(wildcard $(IMPL)/*.tptp)
 TSTP_IMPL := $(addprefix $(IMPL)/,$(notdir $(TPTP_IMPL:.tptp=.tstp)))
 AGDA_IMPL := $(addprefix $(IMPL)/,$(notdir $(TSTP_IMPL:.tstp=.agda)))
-
-TPTP_BICOND := $(wildcard $(BICOND)/*.tptp)
-TSTP_BICOND := $(addprefix $(BICOND)/,$(notdir $(TPTP_BICOND:.tptp=.tstp)))
-AGDA_BICOND := $(addprefix $(BICOND)/,$(notdir $(TSTP_BICOND:.tstp=.agda)))
 
 TPTP_NEG := $(wildcard $(NEG)/*.tptp)
 TSTP_NEG := $(addprefix $(NEG)/,$(notdir $(TPTP_NEG:.tptp=.tstp)))
@@ -151,10 +146,6 @@ $(IMPL)/%.tstp: $(IMPL)/%.tptp
 	@echo $@
 	@${ATP} $< > $@
 
-$(BICOND)/%.tstp: $(BICOND)/%.tptp
-	@echo $@
-	@${ATP} $< > $@
-
 $(NEG)/%.tstp: $(NEG)/%.tptp
 	@echo $@
 	@${ATP} $< > $@
@@ -180,10 +171,6 @@ $(NEG)/%.agda: $(NEG)/%.tstp
 	@$(ATHENA) $<
 
 $(PMETIS)/%.agda: $(PMETIS)/%.tstp
-	@echo $@
-	@$(ATHENA) $<
-
-$(BICOND)/%.agda: $(BICOND)/%.tstp
 	@echo $@
 	@$(ATHENA) $<
 
@@ -276,7 +263,7 @@ clean :
 	find ${SRC_DIR} -name 'cnf*' -delete
 	find . -name 'cnf*' -delete
 	find . -name 'saturation*' -delete
-	find . -name '*.tstp' -delete
+	find . -name '*.tstp' -not -path "*paper*" -delete
 	find ${TEST_DIR} -name '*.agdai' -delete
 	find . \
 		\( -path './lib' \) \
@@ -429,7 +416,6 @@ problems : prop-pack \
 					 $(TSTP_CONJ)  \
 					 $(TSTP_DISJ)  \
 					 $(TSTP_IMPL)  \
-					 $(TSTP_BICOND) \
 					 $(TSTP_NEG)  \
 					 $(TSTP_PMETIS)
 
@@ -446,7 +432,8 @@ reconstruct : install problems
 	@echo
 	@echo ${SEP}
 	@for tptpFile in `find ${TEST_DIR} \
-			-type f -name "*.tstp" | sort`; do \
+			-type f -name "*.tstp" \
+			-not -path "*bicond*" | sort`; do \
 		${ATHENA} --debug $$tptpFile ;\
 		echo ${SEP}; \
 	done
@@ -465,7 +452,6 @@ check : reconstruct  \
 				$(AGDA_CONJ)  \
 				$(AGDA_DISJ)  \
 				$(AGDA_IMPL)  \
-				$(AGDA_BICOND)  \
 				$(AGDA_NEG)   \
 				$(AGDA_PMETIS)
 
@@ -487,6 +473,7 @@ check : reconstruct  \
 
 	@for agdaFile in `find ${TEST_DIR} \
 			-type f -name "*.agda" \
+			-not -path "*bicond*" \
 			-not -path "*prop-21.agda" | sort`; do \
 		echo $$agdaFile; \
 		sh -c $(AGDACALL); \
