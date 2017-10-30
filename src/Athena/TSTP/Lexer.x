@@ -79,7 +79,20 @@ tokens :-
 {
 -- Each action has type :: String -> Token
 
-withPos f pos s = (pos, f s)
+withPos f pos s =
+  if  (  s == "!="
+      || s == "="
+      || s == "<=>"
+      || s == "<="
+      || s == "<~>"
+      || s == "~|"
+      || s == "~&"
+      || s == "!"
+      || s == "?"
+      || s == ":"
+      )
+    then (error "no support for (<=>) operator by Agda-Metis.")
+    else (pos, f s)
 
 -- The token type:
 data Token = Comma
