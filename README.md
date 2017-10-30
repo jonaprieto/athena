@@ -18,7 +18,7 @@ $ make install-libraries
 <ul>
 <li>GHC v8.0.2 and GHC v8.2.1</li>
 <li><a href="http://github.com/agda/agda">Agda</a> v2.5.3</li>
-<li><a href="http://github.com/gilith/metis">Metis</a> v2.3 (release 20170810)</li>
+<li><a href="http://www.gilith.com/software/metis/">Metis</a> v2.3 (release 20170810)</li>
 <li>[optional]: benefit of at least forty provers including Metis: <a href="http://github.com/jonaprieto/online-atps">OnlineATPs</a>.</li>
 </ul>
 <h3>Testing a small problem</h3>
