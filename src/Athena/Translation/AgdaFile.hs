@@ -179,7 +179,7 @@ docImports ∷ Int → Doc
 docImports n =
        hypenline
    <@> pretty "open import ATP.Metis" <+> int n <+> pretty "public" <> line
-   <>  pretty "open import Data.PropFormula" <+> int n <+> pretty "public" 
+   <>  pretty "open import Data.PropFormula" <+> int n <+> pretty "public"
    <> line <@> hypenline
 
 ------------------------------------------------------------------------------
@@ -398,8 +398,9 @@ docSteps _ (Leaf Conjecture conjecture) _ = pretty conjecture
 docSteps subgoalN (Leaf _ axiom) agdaFile =
   parens (prettyWeaken <> line
     <> indent 2
-      (parens (pretty "--" <+> getFormulaByTag agdaFile axiom <> line
-        <> prettyAssume)))
+       prettyAssume)
+      -- (parens (pretty "--" <+> getFormulaByTag agdaFile axiom <> line
+      --   <> prettyAssume)))
   where
 
     dict ∷ ProofMap
@@ -483,10 +484,10 @@ docSteps subgoalN (Root Conjunct tag [subtree]) agdaFile =
 
 docSteps subgoalN (Root Negate _ [subtree@(Root Strip _ _)]) agdaFile =
   parens $
-    pretty "-- ¬"
-    <+> parens (getFormulaByTag agdaFile ("subgoal-" ++ show subgoalN))
-    <> line
-    <> pretty "assume {Γ = Γ}" 
+    -- pretty "-- ¬"
+    -- <+> parens (getFormulaByTag agdaFile ("subgoal-" ++ show subgoalN))
+    -- <> line <>
+        pretty "assume {Γ = Γ}"
     <+> parens (pretty "¬" <+> docSteps subgoalN subtree agdaFile)
 
 ------------------------------------------------------------------------------

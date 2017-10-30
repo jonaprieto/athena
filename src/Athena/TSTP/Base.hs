@@ -87,7 +87,7 @@ readRole "type"               = Type
 readRole _                    = Unknown
 
 binOp ∷ BinOp → Formula → Formula → Formula
-binOp op f1 = BinOp f1 op
+binOp op f1    = BinOp f1 op
 
 readRule ∷ String → Rule
 readRule "canonicalize" = Canonicalize
@@ -96,10 +96,8 @@ readRule "conjunct"     = Conjunct
 readRule "negate"       = Negate
 readRule "resolve"      = Resolve
 readRule "simplify"     = Simplify
-readRule "skolemize"    = Skolemize
-readRule "specialize"   = Specialize
 readRule "strip"        = Strip
-readRule str            = NewRule str
+readRule str            = error (str ++ " is not supported yet.")
 
 readType ∷ String → IntroType
 readType "assumption"      = Assumption_
