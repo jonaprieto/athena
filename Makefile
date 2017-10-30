@@ -423,7 +423,7 @@ problems : prop-pack \
 #     Mostly the reason is the usage of biconditional operator (<=>).
 
 .PHONY : reconstruct
-reconstruct : install problems
+reconstruct : problems
 	@echo "==================================================================="
 	@echo "============== Generating Agda files of TSTP proofs ==============="
 	@echo "==================================================================="

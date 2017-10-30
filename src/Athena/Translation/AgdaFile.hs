@@ -371,7 +371,7 @@ docProofGoal agdaFile =
        <+> pretty "Γ ⊢ " <> (pretty (fileConjecture agdaFile)) <> line
   <> pretty "proof" <+> equals <> line
   <> indent 2 (pretty "⇒-elim" <> line)
-  <> indent 2 (pretty "thm-strip" <> line <> nestedproofs) <> line
+  <> indent 2 (pretty Strip <> line <> nestedproofs) <> line
     where
       nestedproofs :: Doc
       nestedproofs =
@@ -452,13 +452,8 @@ docSteps subgoalN (Leaf _ axiom) agdaFile =
 ------------------------------------------------------------------------------
 
 docSteps subgoalN (Root Canonicalize tag [subtree]) agdaFile =
-  parens (canonicalizeThm <+> getFormulaByTag agdaFile tag <> line
+  parens (pretty Canonicalize <+> getFormulaByTag agdaFile tag <> line
     <> indent 2 (docSteps subgoalN subtree agdaFile))
-  where
-    canonicalizeThm ∷ Doc
-    canonicalizeThm = case subtree of
-      (Leaf _ axiom ) → pretty "thm-canonicalize-axiom"
-      _               → pretty "thm-canonicalize"
 
 ------------------------------------------------------------------------------
 -- Clausify.
