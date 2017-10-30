@@ -419,6 +419,9 @@ problems : prop-pack \
 					 $(TSTP_NEG)  \
 					 $(TSTP_PMETIS)
 
+# [!] The prop-pack problems excluded are not supported by Agda-Metis.
+#     Mostly the reason is the usage of biconditional operator (<=>).
+
 .PHONY : reconstruct
 reconstruct : install problems
 	@echo "==================================================================="
@@ -433,10 +436,29 @@ reconstruct : install problems
 	@echo ${SEP}
 	@for tptpFile in `find ${TEST_DIR} \
 			-type f -name "*.tstp" \
-			-not -path "*bicond*" | sort`; do \
+			-not -path "*bicond*" \
+			-not -path "*neg-14*" \
+			-not -path "*neg-22*" \
+			-not -path "*neg-29*" \
+			-not -path "*prop-01*" \
+			-not -path "*prop-02*" \
+			-not -path "*prop-04*" \
+			-not -path "*prop-10*" \
+			-not -path "*prop-11*" \
+			-not -path "*prop-12*" \
+			-not -path "*prop-13*" \
+			-not -path "*prop-14*" \
+			-not -path "*prop-15*" \
+			-not -path "*prop-17*" \
+			-not -path "*prop-20*" \
+			-not -path "*prop-22*" \
+			-not -path "*prop-23*" | sort`; do \
 		${ATHENA} --debug $$tptpFile ;\
 		echo ${SEP}; \
 	done
+	@echo "[!] TPTP problems and TSTP solutions using (<=>) operator"
+	@echo "    were excluded for testing since it does not supported"
+	@echo "    by Agda-Metis at the moment."
 
 
 AGDACALL ="${TIMELIMIT} \
@@ -474,11 +496,29 @@ check : reconstruct  \
 	@for agdaFile in `find ${TEST_DIR} \
 			-type f -name "*.agda" \
 			-not -path "*bicond*" \
-			-not -path "*prop-21.agda" | sort`; do \
+			-not -path "*neg-14*" \
+			-not -path "*neg-22*" \
+			-not -path "*neg-29*" \
+			-not -path "*prop-01*" \
+			-not -path "*prop-02*" \
+			-not -path "*prop-04*" \
+			-not -path "*prop-10*" \
+			-not -path "*prop-11*" \
+			-not -path "*prop-12*" \
+			-not -path "*prop-13*" \
+			-not -path "*prop-14*" \
+			-not -path "*prop-15*" \
+			-not -path "*prop-17*" \
+			-not -path "*prop-20*" \
+			-not -path "*prop-22*" \
+			-not -path "*prop-23" | sort`; do \
 		echo $$agdaFile; \
 		sh -c $(AGDACALL); \
 		echo ${SEP}; \
 	done
+	@echo "[!] TSTP solutions using (<=>) operator"
+	@echo "    were excluded for type-checking since it does not supported"
+	@echo "    by Agda-Metis at the moment."
 
 # -----------------------------------------------------------------------------
 # Commit the log file
