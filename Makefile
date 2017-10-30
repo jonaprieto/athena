@@ -467,15 +467,7 @@ AGDACALL ="${TIMELIMIT} \
 
 .PHONY : check
 check : export AGDA_DIR := $(ATHENA_AGDA_LIB)
-check : reconstruct  \
-				agdaversion  \
-				install-libraries  \
-				$(AGDA_BASIC) \
-				$(AGDA_CONJ)  \
-				$(AGDA_DISJ)  \
-				$(AGDA_IMPL)  \
-				$(AGDA_NEG)   \
-				$(AGDA_PMETIS)
+check : reconstruct
 
 	@echo "==================================================================="
 	@echo "================== Type-checking Agda files ======================="
@@ -511,7 +503,7 @@ check : reconstruct  \
 			-not -path "*prop-17*" \
 			-not -path "*prop-20*" \
 			-not -path "*prop-22*" \
-			-not -path "*prop-23" | sort`; do \
+			-not -path "*prop-23*" | sort`; do \
 		echo $$agdaFile; \
 		sh -c $(AGDACALL); \
 		echo ${SEP}; \
