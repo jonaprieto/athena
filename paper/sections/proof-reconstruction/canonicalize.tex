@@ -274,18 +274,18 @@ polarity of the formula as an additional argument of the function.
   \begin{aligned}
   &\hspace{.495mm}\fnnfp : \abbre{Polarity} \to \Prop \to \NProp\\
 &\begin{array}{lll}
-  \fnnfp~⊕~(φ₁ ∧ φ₂) &=\fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~⊕~φ₁ ∧ \fnnfp~⊕~φ₂))\\
-  \fnnfp~⊕~(φ₁ ∨ φ₂) &=\fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~⊕~φ₁ ∨ \fnnfp~⊕~φ₂))\\
-  \fnnfp~⊕~(φ₁ ⇒ φ₂) &=\fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊕~φ₂))\\
-  \fnnfp~⊕~(¬ φ)     &=\fnnfp~⊖~φ\\
-  \fnnfp~⊕~φ         &=φ        \\
-  \fnnfp~⊖~(φ₁ ∧ φ₂) &=\fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊖~φ₂))\\
-  \fnnfp~⊖~(φ₁ ∨ φ₂) &=\fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~⊖~φ₁ ∧ \fnnfp~⊖~φ₂))\\
-  \fnnfp~⊖~(φ₁ ⇒ φ₂) &=\fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~⊖~φ₂ ∧ \fnnfp~⊖~φ₁))\\
-  \fnnfp~⊖~(¬ φ)     &=\fnnfp~⊕~φ\\
-  \fnnfp~⊖~⊤         &=⊥\\
-  \fnnfp~⊖~⊥         &=⊤\\
-  \fnnfp~⊖~φ         &=φ.
+  \fnnfp~⊕~(φ₁ ∧ φ₂) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~⊕~φ₁ ∧ \fnnfp~⊕~φ₂))\\
+  \fnnfp~⊕~(φ₁ ∨ φ₂) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~⊕~φ₁ ∨ \fnnfp~⊕~φ₂))\\
+  \fnnfp~⊕~(φ₁ ⇒ φ₂) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊕~φ₂))\\
+  \fnnfp~⊕~(¬ φ)     &= \fnnfp~⊖~φ\\
+  \fnnfp~⊕~φ         &= φ        \\
+  \fnnfp~⊖~(φ₁ ∧ φ₂) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊖~φ₂))\\
+  \fnnfp~⊖~(φ₁ ∨ φ₂) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~⊖~φ₁ ∧ \fnnfp~⊖~φ₂))\\
+  \fnnfp~⊖~(φ₁ ⇒ φ₂) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~⊖~φ₂ ∧ \fnnfp~⊖~φ₁))\\
+  \fnnfp~⊖~(¬ φ)     &= \fnnfp~⊕~φ\\
+  \fnnfp~⊖~⊤         &= ⊥\\
+  \fnnfp~⊖~⊥         &= ⊤\\
+  \fnnfp~⊖~φ         &= ¬~φ.
 \end{array}
   \end{aligned}
 \end{equation}
