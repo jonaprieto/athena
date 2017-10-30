@@ -398,9 +398,7 @@ docSteps _ (Leaf Conjecture conjecture) _ = pretty conjecture
 docSteps subgoalN (Leaf _ axiom) agdaFile =
   parens (prettyWeaken <> line
     <> indent 2
-       prettyAssume)
-      -- (parens (pretty "--" <+> getFormulaByTag agdaFile axiom <> line
-      --   <> prettyAssume)))
+      (parens prettyAssume))
   where
 
     dict ∷ ProofMap
