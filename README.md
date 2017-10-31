@@ -18,20 +18,25 @@ $ make install-libraries
 <ul>
 <li>GHC v8.0.2 and GHC v8.2.1</li>
 <li><a href="http://github.com/agda/agda">Agda</a> v2.5.3</li>
-<li><a href="http://github.com/gilith/metis">Metis</a> v2.3 (release 20170810)</li>
+<li><a href="http://www.gilith.com/software/metis/">Metis</a> v2.3 (release 20170810)</li>
 <li>[optional]: benefit of at least forty provers including Metis: <a href="http://github.com/jonaprieto/online-atps">OnlineATPs</a>.</li>
 </ul>
 <h3>Testing a small problem</h3>
 <p>In order to test the installation of Athena, you can try to reconstruct a simple proof.</p>
-<p>First, let us write the problem <img src="https://tex.s2cms.ru/svg/%5Cinline%5C%7B%20p%20%2C%20q%5C%7D%20%5Cvdash%20p%20%5Cwedge%20q" alt="\inline\{ p , q\} \vdash p \wedge q" /> in TPTP to generate the solution using <a href="http://github.com/gilith/metis">metis</a>.</p>
+<p>First, let us write the problem <img src="https://tex.s2cms.ru/svg/%5Cinline%5C%7B%20p%20%2C%20q%5C%7D%20%5Cvdash%20p%20%5Cwedge%20q" alt="\inline\{ p , q\} \vdash p \wedge q" /> in TPTP syntax:</p>
 <pre><code>$ cat problem.tptp
 fof(a1, axiom, p).
 fof(a2, axiom, q).
 fof(goal, conjecture, p &amp; q).
 </code></pre>
-<p>To get the TSTP proof run the following command:</p>
+<p>To get the TSTP proof you can use your local version of <ahref="http://www.gilith.com/software/metis/">Metis</a><p>
 <pre><code>$ metis --show proof problem.tptp &gt; problem.tstp
-$ cat problem.tstp
+</code></pre>
+<p>or you can use <a href="http://github.com/jonaprieto/online-atps">online-atps</a><p>
+<pre><code>$ online-atps --atp=metis problem.tptp &gt; problem.tstp
+</code></pre>
+<p>The generated TSTP proof is<p>
+<pre><code>$ cat problem.tstp
 ...
 fof(a1, axiom, (p)).
 fof(a2, axiom, (q)).
@@ -43,9 +48,6 @@ fof(subgoal_0, plain, (p), inference(strip, [], [goal])).
 cnf(refute_1_0, plain, ($false),
     inference(canonicalize, [], [normalize_1_3])).
 % SZS output end CNFRefutation for conj-01.tptp
-</code></pre>
-<p>Or if you are using <a href="http://github.com/jonaprieto/online-atps">online-atps</a>:</p>
-<pre><code>$ online-atps --atp=metis problem.tptp &gt; problem.tstp
 </code></pre>
 <p>Now, let us generate the Agda code using Athena:</p>
 <pre><code>$ athena problem.tstp
