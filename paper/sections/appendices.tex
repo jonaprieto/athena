@@ -227,6 +227,23 @@ the following definition in~\eqref{def:polarity}.
 % \verbatiminput{sections/data/problem.agda}
 
 
+% \section{Rank for a proposition}
+% \label{app:rank-for-a-proposition}
+% The rank for a proposition defined in~\cite{VanDalen1994} is
+% a complexity measure.
+% \begin{equation}
+% % \label{eq:rank-definition}
+% \begin{aligned}
+% &\hspace{.495mm}\frank : \Prop → \Nat\\
+% &\begin{array}{llll}
+% \frank~(¬~φ)           &= \frank~φ₁~+~c_{¬}\\
+% \frank~(φ₁~\square~φ₂) &= \fmax~(\frank~φ₁)~(\frank~φ₂) + c_{\square}\\
+% \frank~φ               &= 0.
+% \end{array}
+% \end{aligned}
+% \end{equation}
+
+
 \end{subappendices}
 
 \end{document}
