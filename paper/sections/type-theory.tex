@@ -4,8 +4,8 @@
 \section{Type Theory}
 \label{sec:type-theory}
 
-Type theory is another formalism for the foundation of mathematics, and it has became in a key instrument to study logic and proof theory.
-It was proposed in 1902 to avoid the Russell's paradox and it follows
+Type theory is a formalism for the foundation of mathematics, and it has became in a key instrument to study logic and proof theory.
+It was proposed in 1902 to avoid Russell's paradox and it follows
 the same philosophy of constructive mathematics where the witness of
 a statement is \emph{everything}. In that direction, we could say
 the main actors in type theory are the statements and their proofs.
@@ -14,7 +14,7 @@ By following the Curry-Howard correspondence (see, for example,~\cite{Wadler-201
 
 Since type theory is a formal system, we have a syntax and a set of
 derivation rules. These rules enables us to derive a kind of conclusions called
-\emph{judgments}. A judgment is another way to say a term has certain type.
+\emph{judgments}. A judgment is another way to say that a term has a certain type.
 
 \begin{notation}
   Types are written using \abbre{small caps}.  We write the type
@@ -43,9 +43,9 @@ point of view for proof-reconstruction is described in the following sections.
 \label{ssec:structural-recursion}
 
 
-To reconstruct \Metis inference rules in type theory, we observed that
-transformations performed by some rules are implemented by \emph{general
-recursive} functions.
+To reconstruct \Metis inference rules in type theory, we observed that some
+rules or their inner functions are implemented by \emph{general recursive}
+functions.
 
 Functions defined by a general recursion can not be directly translated in type
 theory since it is not a guarantee they terminate. For that reason, we follow
