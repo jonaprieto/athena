@@ -140,6 +140,8 @@
   {\csname lst@SaveFirstLabel\endcsname}
 
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
 \usepackage[utf8]{inputenc}
 \usepackage{autofe}
 \usepackage{afterpage}
@@ -268,9 +270,6 @@
 \newcommand{\tptpaxiom}{\name{axiom}}
 \newcommand{\tptpconjecture}{\name{conjecture}}
 
-\newcommand{\zero}{\textsf{zero}}
-\newcommand{\suc}{\textsf{succ}}
-
 \newcommand{\nnf}{\name{nnf}}
 
 \newcommand{\prg}[1]{\texttt{#1}\xspace}
@@ -286,8 +285,10 @@
 
 \newcommand{\NN}{\ensuremath{\mathbb{N}}}
 
-\newcommand{\fun}[1]{\textsf{#1}\xspace}
+\newcommand{\fun}[1]{ {\fontseries{sb}\selectfont \textsf{#1}} \xspace}
 
+\newcommand{\zero}{\fun{zero}}
+\newcommand{\suc}{\fun{succ}}
 \newcommand{\fassoc}{\fun{assoc}}
 \newcommand{\fbuild}{\fun{build}}
 \newcommand{\fcanonicalize}{\fun{canonicalize}}
