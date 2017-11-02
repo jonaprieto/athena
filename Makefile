@@ -475,7 +475,7 @@ check : reconstruct
 	@echo
 	@echo "[!] AGDA_DIR=${AGDA_DIR}"
 	@echo
-	@echo "If you want to type-check an isolote Agda file from the tests,"
+	@echo "If you want to type-check an isolate Agda file from the tests,"
 	@echo "you can execute the following command in your shell:"
 	@echo
 	@echo "  $$ pwd"
