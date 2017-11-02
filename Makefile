@@ -524,3 +524,11 @@ commit-test:
 	- @git add notes/*
 	- @git commit -m "[ test-$(shell date +"%Y-%m-%d_%H%M%S") ] added."
 	- @git push origin master
+
+# -----------------------------------------------------------------------------
+# Debug
+# -----------------------------------------------------------------------------
+
+debug :
+	@echo "TIMELIMIT = $(TIMELIMIT)"
+	@echo "AGDACALL  = $(AGDACALL)"
