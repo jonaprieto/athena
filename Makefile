@@ -512,6 +512,53 @@ check : reconstruct
 	@echo "    were excluded for type-checking since it does not supported"
 	@echo "    by Agda-Metis at the moment."
 
+.PHONY : check-asr
+check-asr : reconstruct
+	@echo "==================================================================="
+	@echo "================== Type-checking Agda files ======================="
+	@echo "==================================================================="
+	@echo
+	@echo "[!] AGDA_DIR=${AGDA_DIR}"
+	@echo
+	@echo "If you want to type-check an isolate Agda file from the tests,"
+	@echo "you can execute the following command in your shell:"
+	@echo
+	@echo "  $$ pwd"
+	@echo "  $(PWD)"
+	@echo "  $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
+	@echo "  $$ agda --library=test AgdaFileGeneratedByAthena"
+	@echo
+	@echo ${SEP}
+
+	@for agdaFile in `find ${TEST_DIR} \
+			-type f -name "*.agda" \
+			-not -path "*bicond*" \
+			-not -path "*neg-14*" \
+			-not -path "*neg-22*" \
+			-not -path "*neg-29*" \
+			-not -path "*prop-01*" \
+			-not -path "*prop-02*" \
+			-not -path "*prop-04*" \
+			-not -path "*prop-10*" \
+			-not -path "*prop-11*" \
+			-not -path "*prop-12*" \
+			-not -path "*prop-13*" \
+			-not -path "*prop-14*" \
+			-not -path "*prop-15*" \
+			-not -path "*prop-17*" \
+			-not -path "*prop-20*" \
+			-not -path "*prop-22*" \
+			-not -path "*prop-23*" | sort`; do \
+		echo $$agdaFile; \
+		if ! ${AGDA} --verbose=0 --library=test $$agdaFile; then \
+                  exit 1; \
+                fi; \
+		echo ${SEP}; \
+	done
+	@echo "[!] TSTP solutions using (<=>) operator"
+	@echo "    were excluded for type-checking since it does not supported"
+	@echo "    by Agda-Metis at the moment."
+
 # -----------------------------------------------------------------------------
 # Commit the log file
 # -----------------------------------------------------------------------------
