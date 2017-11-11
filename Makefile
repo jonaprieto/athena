@@ -78,14 +78,14 @@ ifeq ($(uname_S),Darwin)
 		TIME_BIN  := $(shell which gtime)
 endif
 ifeq ($(uname_S),Linux)
-		TIMELIMIT =timeout 10m
+		TIMELIMIT =timeout 180m
 endif
 ifeq ($(uname_S),GNU/kFreeBSD)
 		TIMELIMIT =timelimit -T60 -t60 -S9
 		TIME_BIN  := $(shell which gtime)
 endif
 ifeq ($(uname_S),UnixWare)
-		TIMELIMIT =timeout 10m
+		TIMELIMIT =timeout 180m
 endif
 
 
