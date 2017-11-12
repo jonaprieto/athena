@@ -525,10 +525,10 @@ docSteps subgoalN (Root Simplify tag nodes) agdaFile =
   where
     rNodes :: [ProofTree]
     rNodes = case nodes of
-      []       → []
-      [x]      → [x]
-      [x,y]    → [x,y]
-      (x:y:ys) → reverse ys ++ [x, y]
+      []    → []
+      [x]   → [x]
+      [x,y] → [x,y]
+      xs    → reverse xs
 
     simplification :: Doc
     simplification =
@@ -539,8 +539,8 @@ docSteps subgoalN (Root Simplify tag nodes) agdaFile =
               [ pretty Simplify <+> getFormulaByTag agdaFile tag
               , indent 2
                   (vsep
-                    [ docSteps subgoalN node agdaFile
-                    , y
+                    [ y
+                    , docSteps subgoalN node agdaFile
                     ]
                    )
                ]
