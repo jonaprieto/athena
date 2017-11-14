@@ -7,123 +7,55 @@
 \section{Related Work}
 \label{sec:related-work}
 
-In this section, we present an extended version of the related work description made in the proposal for this research~\cite{Sicard-Ramirez2016}.
+Many approaches have been proposed for proof-reconstruction and some tools have
+been implemented in the last decades. We first mention some tools in type
+theory and later we listed some proof-reconstruction tools for classical logic.
 
+\citeauthor{Kanso2012} in~\cite{Kanso2012,kanso2016light} presents a
+proof-reconstruction in \Agda for propositional logic. Its tool support
+proof-reconstruction for \name{EProver} and \name{Z3} ATPs following a similar work-flow as we presented in Section~\ref{ssec:workflow}.
+Nonetheless, its approach
+employs semantics for logic equivalences. We have avoided the use of
+propositions meanings towards a future work to support other logics where a
+syntactical approach plays an important role~(for an example of such logics, we
+refer the reader to \cite{Agudelo-Agudelo2017}).
+\citeauthor{foster2011integrating}~\cite{foster2011integrating} describe  the
+proof-reconstruction in \Agda for \name{Waldmeister}~\cite{hillenbrand1997}, a
+prover for pure equational logic. As far as we know, no other
+proof-reconstruction has been carried out neither in \Agda nor with \Metis prover.
 
+Another important proof-assistant in type theory is \name{Coq}~\cite{coqteam}.
+We found the \name{SMTCoq}~\cite{armand2011,Ekici2017} tool which provides a
+certified checker for proof witness coming from the \SMT solver
+\name{veriT}~\cite{bouton2009} and adds a new tactic named verit, that calls
+\name{veriT} on any \name{Coq} goal. Also for \name{Coq}, given a fixed but
+arbitrary first-order signature, \citeauthor{Bezem2002} in \cite{Bezem2002}
+transform a proof produced by the first-order automatic theorem prover
+\name{Bliksem}~\cite{deNivelle2003} in a \name{Coq} proof-term.
 
-% On the one hand, we have the
-% automatic theorem provers (henceforth \ATP) and their specification
-% logic. These tools are usually classified in at least one of the
-% following categories.
-% A \SAT solver (e.g., \name{zChaff}~\cite{Moskewicz2001} and
-% \name{MiniSat}~\cite{Een2004}) to prove unsatisfiability of \CNF
-% formulas, a \abbre{QBF} solver (e.g.,
-% \name{GhostQ}~\cite{Klieber2014} and
-% \name{DepQBF}~\cite{Lonsing2017}) to prove satisfiability and
-% invalidity of quantified Boolean formulas, a \SMT solver
-% (e.g \name{CVC4}~\cite{Barrett2011}, \name{veriT}~\cite{bouton2009},
-% and \name{Z3}~\cite{DeMoura2008}) to prove unsatisfiability of
-% formulas from first-order logic with theories, and a prover for
-% validity of formulas from first-order logic with equality
-% (e.g., \name{E}~\cite{Schulz:AICOM-2002},
-% \name{leanCoP}~\cite{Otten2008},
-% \Metis~\cite{hurd2003first},
-% \name{SPASS}~\cite{Weidenbach2009} and
-% \name{Vampire}~\cite{Riazanov1999}), high-order logic (e.g.,
-% \name{Leo-II}~\cite{Benzmuller2008} and
-% \name{Satallax}~\cite{Brown2012}) or intuitionistic logic (e.g.,
-% \name{ileanCoP}~\cite{Otten2008},
-% \name{JProver}~\cite{Schmitt2001}, and
-% \name{Gandalf}~\cite{Tammet1997}), among others. On the other hand,
-% we have the proof checkers, interactive theorem provers (henceforth
-% \ITP) or proof assistants (e.g., \Agda~\cite{agdateam},
-% \name{Coq}~\cite{coqteam},
-% \name{Isabelle}~\cite{paulson1994isabelle}, and
-% \name{HOL4}~\cite{norrish2007hol}).
+There are some successful attempts using proof-assistants for classical logic
+instead of type theory.
+Let us mention some representative of such tools. This description is
+mainly based on~\citeauthor{Sicard-Ramirez2016}~\cite{Sicard-Ramirez2016}.
 
-
-\name{Isabelle/HOL} incorporated \Metis as a macro-step
-reconstruction tool for explaining proof steps (usually \CNF goals)
-replied from other \ATPs like \name{CVC4}, \name{Vampire}, or
-\name{Z3} (more details in Ref.~\cite{paulson2007source}).
-\citeauthor{Farber2015} in \cite{Farber2015} present tactic based on \Metis for
-\name{HOL Light} capable to challenge others tactics like \emph{MESON}
-or the \emph{leanCoP} tactic~\cite{Farber2016}.
-
-\name{Sledgehammer} is a tool for \name{Isabelle} proof assistant
-\cite{paulson1994isabelle} that provides a full integration of
-automatic theorem provers including \ATPs (see, for example,
-\cite{meng2006automation}, \cite{blanchette2013extending} and
-\cite{Fleury2014}) and \SMT solvers (see, for instance,
-\cite{hurlin07practical}, \cite{bohme2010},
-\cite{blanchette2013extending}, and \cite{Fleury2014}) with
-\name{Isabelle/HOL} \cite{nipkow2002isabelle}, the specialization of
+The \name{Isabelle} proof-assistant has the \name{Sledgehammer} tool.
+This program provides a full integration between
+automatic theorem provers~\cite{blanchette2013extending,Fleury2014,bohme2010} and
+\name{Isabelle/HOL}~\cite{nipkow2002isabelle}, the specialization of
 \name{Isabelle} for higher-order logic.
-\citeauthor{Een2004}~\cite{Een2004} integrates \name{Leo-II} and
-\name{Satallax}, two theorem provers for high-order logic with
-\name{Isabelle/HOL} proposing a modular proof-reconstruction work
-flow.
+A modular proof-reconstruction workflow is presented jointly with
+the full integration of \name{Leo-II} and \name{Satallax} provers with
+\name{Isabelle/HOL} in \citeauthor{Een2004}~\cite{Een2004}.
 
-\name{SMTCoq}~\cite{armand2011,Ekici2017} is a tool for the
-\name{Coq} proof assistant \cite{coqteam} which provides a certified
-checker for proof witness coming from the \SMT solver
-\name{veriT}~\cite{bouton2009} and adds a new tactic named verit,
-that calls \name{veriT} on any \name{Coq} goal.
-In \cite{Bezem2002},
-given a fixed but arbitrary first-order signature, the authors
-transform a proof produced by the first-order automatic theorem
-prover \name{Bliksem} \cite{deNivelle2003} in a \name{Coq} proof
-term.
-
-Hurd~\cite{Hurd1999} integrates the first-order resolution prover
-\name{Gandalf} with \name{HOL}~\cite{norrish2007hol}, a high-order
-theorem prover, following an \abbre{LCF} model implementing the
-tactic \verb!GANDALF_TAC!. For \name{HOL Light}, a version of
+\citeauthor{Hurd1999}~\cite{Hurd1999} integrates the first-order resolution
+prover \name{Gandalf} with the high-order theorem prover
+\name{HOL}~\cite{norrish2017hol}.
+Its \verb!GANDALF_TAC! tactic is able to reconstruct \name{Gandalf} proofs
+by using a \abbre{LCF} model. For \name{HOL Light}, a version of
 \name{HOL} but with a simpler logic core, the \SMT solver \name{CVC4}
-was integrated, and \citeauthor{kaliszyk2013}~\cite{kaliszyk2013}
-reconstruct proofs from different ATPs with their \name{PRocH} tool,
-replaying the detailed inference steps from the ATPs with internal
+was integrated. \citeauthor{kaliszyk2013}~\cite{kaliszyk2013}
+reconstruct proofs from different \ATPs with the \name{PRocH} tool by
+replaying detailed inference steps from the \ATPs with internal
 inference methods implemented in \name{HOL Light}.
-
-% Taken from: % Färber, M., & Kaliszyk, C. (2015). Metis-based
-% Paramodulation Tactic for HOL
-
-% Light. In GCAI 2015. Global Conference on Artificial Intelligence
-% Metis-based
-
-% (Vol. 36, pp. 127–136).
-
-% HOL(y)Hammer [KU15] is an automated deduction framework for HOL4 and
-% HOL Light.
-
-% Given a conjecture, it attempts to find suitable premises, then
-% calls external ATPs such as E[Sch13], Vampire [KV13], or Z3 [dMB08],
-% and attempts to reconstruct the proof using the premises used by the
-% ATP. To reconstruct proofs, it uses tactics such as MESON,
-% simplification, and a few other decision procedures, however, these
-% are sometimes not p owerful enough to reconstruct proofs found by
-% the external ATPs.
-
-\name{Waldmeister} is an automatic theorem prover for unit
-equational logic \cite{hillenbrand1997}.
-\citeauthor{foster2011integrating}~\cite{foster2011integrating}
-integrate \name{Waldmeister} into \Agda
-\cite{agdateam}. This integration requires a proof-reconstruction
-step, but authors' approach is restricted to pure equation logic
---also called identity theory~\cite{humberstone2011}-- that is,
-first-order logic with equality but no other predicate symbols and
-no functions symbols~\cite{appel1959}.
-
-Kanso and Setzer~\cite{kanso2016light} integrate the propositional
-fragment of \name{EProver} in \Agda. In this work, the authors
-translate automatically propositional logic problems written in \Agda
-to \TPTP problems. By calling an external wrapper of the ATP, this
-tool gets a \TSTP derivation. The tool parses the \name{EProver}
-derivation and outputs \Agda code.
-We are able to say their proof-reconstruction is almost
-similar as the approach presented in Section~\ref{ssec:workflow}.
-Nevertheless, Kanso and Setzer aim to justify some of the inference
-rules by using propositional semantics instead of only syntactic
-treatment as shown above.
 
 \end{document}

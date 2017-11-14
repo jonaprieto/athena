@@ -1,0 +1,58 @@
+% @Author: Jonathan Prieto-Cubides
+% @Date:   2017-10-22 03:55:02
+% @Last Modified by:   Jonathan Prieto-Cubides
+% @Last Modified time: 2017-10-22 03:55:53
+
+
+
+
+% On the one hand, we have the
+% automatic theorem provers (henceforth \ATP) and their specification
+% logic. These tools are usually classified in at least one of the
+% following categories.
+% A \SAT solver (e.g., \name{zChaff}~\cite{Moskewicz2001} and
+% \name{MiniSat}~\cite{Een2004}) to prove unsatisfiability of \CNF
+% formulas, a \abbre{QBF} solver (e.g.,
+% \name{GhostQ}~\cite{Klieber2014} and
+% \name{DepQBF}~\cite{Lonsing2017}) to prove satisfiability and
+% invalidity of quantified Boolean formulas, a \SMT solver
+% (e.g \name{CVC4}~\cite{Barrett2011}, \name{veriT}~\cite{bouton2009},
+% and \name{Z3}~\cite{deMoura2008}) to prove unsatisfiability of
+% formulas from first-order logic with theories, and a prover for
+% validity of formulas from first-order logic with equality
+% (e.g., \name{E}~\cite{Schulz:AICOM-2002},
+% \name{leanCoP}~\cite{Otten2008},
+% \Metis~\cite{hurd2003first},
+% \name{SPASS}~\cite{Weidenbach2009} and
+% \name{Vampire}~\cite{Riazanov1999}), high-order logic (e.g.,
+% \name{Leo-II}~\cite{Benzmuller2008} and
+% \name{Satallax}~\cite{Brown2012}) or intuitionistic logic (e.g.,
+% \name{ileanCoP}~\cite{Otten2008},
+% \name{JProver}~\cite{Schmitt2001}, and
+% \name{Gandalf}~\cite{Tammet1997}), among others. On the other hand,
+% we have the proof checkers, interactive theorem provers (henceforth
+% \ITP) or proof-assistants (e.g., \Agda~\cite{agdateam},
+% \name{Coq}~\cite{coqteam},
+% \name{Isabelle}~\cite{paulson1994isabelle}, and
+% \name{HOL4}~\cite{norrish2017hol}).
+
+
+
+% Taken from: % Färber, M., & Kaliszyk, C. (2015). Metis-based
+% Paramodulation Tactic for HOL
+
+% Light. In GCAI 2015. Global Conference on Artificial Intelligence
+% Metis-based
+
+% (Vol. 36, pp. 127–136).
+
+% HOL(y)Hammer [KU15] is an automated deduction framework for HOL4 and
+% HOL Light.
+
+% Given a conjecture, it attempts to find suitable premises, then
+% calls external ATPs such as E[Sch13], Vampire [KV13], or Z3 [dMB08],
+% and attempts to reconstruct the proof using the premises used by the
+% ATP. To reconstruct proofs, it uses tactics such as MESON,
+% simplification, and a few other decision procedures, however, these
+% are sometimes not p owerful enough to reconstruct proofs found by
+% the external ATPs.

@@ -1,13 +1,27 @@
 \documentclass[
-    envcountsect    %% In order to provide the usual behaviour expected
+  envcountsame
+  % envcountchap
+    % envcountsect    %% In order to provide the usual behaviour expected
                     %% from \newtheorem
   , runningheads
   ]{llncs}
 
-\spnewtheorem{mainth}[theorem]{Main Theorem}{\bfseries}{\rmfamily}
+% \setlength{\mathindent}{1cm}
+% \let\remark\relax
+% \let\theorem\relax
+% \let\lemma\relax
+% \let\definition\relax
 
-\usepackage[numbers]{natbib}
+\spnewtheorem{mainth}{Theorem}{\bfseries}{\rmfamily}
+\spnewtheorem{mainlemma}[mainth]{Lemma}{\bfseries}{\rmfamily}
+\spnewtheorem{mydefinition}[mainth]{Definition}{\bfseries}{\rmfamily}
+\spnewtheorem{myexamplenum}[mainth]{Example}{\bfseries}{\rmfamily}
 
+\spnewtheorem*{notation}{Notation}{\it}{\rmfamily}
+\spnewtheorem*{myremark}{Remark}{\bfseries}{\rmfamily}
+% \spnewtheorem*{myexample}{Example}{\bfseries}{\rmfamily}
+
+\usepackage{geometry}   %% helps with the text overflow
 \usepackage{subfiles}
 
 \usepackage{needspace}  %% https://tex.stackexchange.com/questions/28203/
@@ -38,8 +52,13 @@
 % -------------------------------------------------------------------
 
 \usepackage{xargs}
-\usepackage[dvipsnames]{xcolor}
-% \usepackage[pdftex,dvipsnames]{xcolor}
+
+% If we are using the tikz package we must declare the color package
+% before it.
+% \usepackage[svgnames,dvipsnames]{xcolor}
+
+\usepackage[pdftex,svgnames,dvipsnames]{xcolor}
+
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 \newcommandx{\unsure}[2][1=]
   {\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
@@ -121,8 +140,9 @@
   {\csname lst@SaveFirstLabel\endcsname}
 
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
 \usepackage[utf8]{inputenc}
-\usepackage{ucs}
 \usepackage{autofe}
 \usepackage{afterpage}
 \usepackage{comment}
@@ -138,8 +158,8 @@
 
 \newenvironment{sketchproof}{%
   \renewcommand{\proofname}{Sketch of the Proof}\proof}{\endproof}
-\renewcommand\qedsymbol{$\blacksquare$}
 
+\renewcommand\qedsymbol{$\blacksquare$}
 
 %\usepackage{stmaryrd} %new symbol font for tcs
 \usepackage{color}
@@ -170,12 +190,14 @@
 \newunicodechar{₈}{\ensuremath{{}_{8}}}
 \newunicodechar{₉}{\ensuremath{{}_{9}}}
 \newunicodechar{ₙ}{\ensuremath{{}_{n}}}
+\newunicodechar{ℓ}{\ensuremath{\ell}}
 \newunicodechar{→}{\ensuremath{\rightarrow}}
 \newunicodechar{⇒}{\ensuremath{\Rightarrow}}
 \newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
 \newunicodechar{∅}{\ensuremath{\emptyset}}
 \newunicodechar{∈}{\ensuremath{\in}}
 \newunicodechar{∘}{\ensuremath{\circ}}
+\newunicodechar{∙}{\ensuremath{\bullet}}
 \newunicodechar{∧}{\ensuremath{\wedge}}
 \newunicodechar{∨}{\ensuremath{\vee}}
 \newunicodechar{∼}{\ensuremath{\sim}}
@@ -187,8 +209,10 @@
 \newunicodechar{⊤}{\ensuremath{\top}}
 \newunicodechar{⊥}{\ensuremath{\bot}}
 \newunicodechar{⊻}{\ensuremath{\veebar}}
-\newunicodechar{⟝}{\ensuremath{\vdash_{2}}}
+\newunicodechar{⟝}{\ensuremath{\vdash}}
+\newunicodechar{⬓}{\ensuremath{\square}}
 \newunicodechar{ⱼ}{\ensuremath{{}_{j}}}
+\newunicodechar{λ}{\ensuremath{\lambda}}
 
 % -------------------------------------------------------------------
 % Verbatim.
@@ -226,9 +250,12 @@
 \newcommand{\ITP}{\abbre{ITP}}
 \newcommand{\ITPs}{\abbre{ITPs}}
 \newcommand{\List}{\abbre{List}}
-\newcommand{\NProp}{\abbre{NProp}}
+\newcommand{\NProp}{\abbre{Prop}}
 \newcommand{\Nat}{\abbre{Nat}}
 \newcommand{\Prop}{\abbre{Prop}}
+\newcommand{\Source}{\abbre{Premise}}
+\newcommand{\Target}{\abbre{Conclusion}}
+\newcommand{\Lit}{\abbre{Lit}}
 \newcommand{\SAT}{\abbre{SAT}}
 \newcommand{\SMT}{\abbre{SMT}}
 
@@ -243,11 +270,7 @@
 \newcommand{\tptpaxiom}{\name{axiom}}
 \newcommand{\tptpconjecture}{\name{conjecture}}
 
-\newcommand{\zero}{\rm{zero}\xspace}
-\newcommand{\suc}{\rm{succ}\xspace}
-
 \newcommand{\nnf}{\name{nnf}}
-
 
 \newcommand{\prg}[1]{\texttt{#1}\xspace}
 \newcommand{\Agda}{\prg{Agda}}
@@ -262,46 +285,40 @@
 
 \newcommand{\NN}{\ensuremath{\mathbb{N}}}
 
-\newcommand{\fun}[1]{\rm{#1}\xspace}
+\newcommand{\fun}[1]{ {\fontseries{sb}\selectfont \textsf{#1}} \xspace}
+
+\newcommand{\zero}{\fun{zero}}
+\newcommand{\suc}{\fun{succ}}
+\newcommand{\fassoc}{\fun{assoc}}
 \newcommand{\fbuild}{\fun{build}}
-\newcommand{\fcanon}{\fun{canon}}
+\newcommand{\fcanonicalize}{\fun{canonicalize}}
+\newcommand{\fcanon}{\fun{simplify}}
+\newcommand{\fclausify}{\fun{clausify}}
 \newcommand{\fcnf}{\fun{cnf}}
+\newcommand{\fconjunctor}{\fun{disj}}
+\newcommand{\fconjunct}{\fun{conjunct}}
 \newcommand{\fdist}{\fun{dist}}
 \newcommand{\ffactor}{\fun{factor}}
 \newcommand{\fform}{\fun{form}}
 \newcommand{\fmax}{\fun{max}}
 \newcommand{\fndisj}{\fun{ndisj}}
+\newcommand{\fnegate}{\fun{negate}}
+\newcommand{\fnnfp}{\fun{nnf}₀}
 \newcommand{\fnnf}{\fun{nnf}}
+\newcommand{\fpolarity}{\fun{polarity}}
 \newcommand{\frank}{\fun{rank}}
 \newcommand{\frconj}{\fun{rconj}}
 \newcommand{\frdisj}{\fun{rdisj}}
 \newcommand{\freorder}{\fun{reorder}}
+\newcommand{\fresolve}{\fun{resolve}}
 \newcommand{\frm}{\fun{rm}}
+\newcommand{\frsol}{\fun{rsol}}
 \newcommand{\fsbuild}{\fun{sbuild}}
+\newcommand{\fsimplify}{\fun{simplify}}
+\newcommand{\fstripp}{\fun{strip}\prime}
+\newcommand{\fstrip}{\fun{strip}}
 \newcommand{\fsubst}{\fun{subst}}
 \newcommand{\fuh}{\fun{uh}}
-\newcommand{\tunshunt}{\fun{thm-uh}}
-
-\newcommand{\fstrip}{\fun{strip}}
-\newcommand{\tstrip}{\fun{thm-strip}}
-
-\newcommand{\fcanonicalize}{\fun{canonicalize}}
-\newcommand{\tcanonicalize}{\fun{thm-canonicalize}}
-
-\newcommand{\fconjunct}{\fun{conjunct}}
-\newcommand{\tconjunct}{\fun{thm-conjunct}}
-
-\newcommand{\fresolve}{\fun{resolve}}
-\newcommand{\tresolve}{\fun{thm-resolve}}
-
-\newcommand{\fclausify}{\fun{clausify}}
-\newcommand{\tclausify}{\fun{thm-clausify}}
-
-\newcommand{\fsimplify}{\fun{simplify}}
-\newcommand{\tsimplify}{\fun{thm-simplify}}
-
-\newcommand{\fnegate}{\fun{negate}}
-\newcommand{\tnegate}{\fun{thm-negate}}
 
 % latin etc. abbrev
 \newcommand{\abbrev}[1]{#1} % alternative: \emph{#1}
@@ -314,6 +331,7 @@
 \newcommand{\wwlog}{w.\,l.\,o.\,g.} % \wlog is ``write into log file''
 \newcommand{\Wlog}{W.\,l.\,o.\,g.}
 \newcommand{\wrt}{w.\,r.\,t.}
+\newcommand{\TheEnd}{\\\hspace*{0.975\textwidth}$\blacksquare$}
 
 % -------------------------------------------------------------------
 % Rest.
@@ -325,16 +343,109 @@
 \noindent\keywordname\enspace\ignorespaces#1}
 
 % -------------------------------------------------------------------
+% biblatex.
+% -------------------------------------------------------------------
+
+\usepackage[%
+backend=biber,
+backref=true,%
+% bibstyle=authoryear,%
+% citestyle=authoryear-comp,%
+% giveninits=false,%%
+isbn=false,%
+maxbibnames=6,%
+% maxcitenames=4,%
+]{biblatex}
+\usepackage{csquotes}
+
+\addbibresource{ref.bib}
+
+% Remove the quotes from the title.
+\DeclareFieldFormat
+  [article,%
+  incollection,%
+  inproceedings,%
+  thesis,% works for mastersthesis and phdthesis
+  unpublished,%
+  ]{title}{#1}
+
+% Remove "In:" before journal names.
+%
+% From
+% http://tex.stackexchange.com/questions/10682/suppress-in-biblatex
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+
+% Remove italics from journal names.
+\DeclareFieldFormat{journaltitle}{#1}
+
+% Remove italics from proceedings names in articles in proceedings.
+\DeclareFieldFormat%
+  [incollection,%
+  inproceedings,%
+  ]{booktitle}{#1}
+
+% Remove italics from the title names.
+\DeclareFieldFormat%
+ [book,%
+ misc,%
+ online,%
+ report,%
+ ]{title}{#1}
+
+% Remove URL if there is DOI.
+%
+% From:
+% https://tex.stackexchange.com/questions/154864/biblatex-use-doi-only-if-there-is-no-url
+
+\renewbibmacro*{doi+eprint+url}{%
+  \iftoggle{bbx:url}
+    {\iffieldundef{doi}{\usebibmacro{url+urldate}}{}}
+    {}%
+  \newunit\newblock
+  \iftoggle{bbx:eprint}
+    {\usebibmacro{eprint}}
+    {}%
+  \newunit\newblock
+    \iftoggle{bbx:doi}
+    {\printfield{doi}}
+    {}}
+
+% -------------------------------------------------------------------
 % Hyperef.
 % -------------------------------------------------------------------
 
 \usepackage{hyperref}
 
+\hypersetup{citecolor=DarkGreen}
+
+% Colors the text instead of their the anchors.
+\hypersetup{colorlinks=true}
+
+\hypersetup{urlcolor=blue}
+
+% -------------------------------------------------------------------
+% Include a footer with date and hour of the compilation
+% -------------------------------------------------------------------
+
+\usepackage{fancyhdr}
+\usepackage[us,12hr]{datetime} % `us' makes \today behave as usual in TeX/LaTeX
+\fancypagestyle{plain}{
+\fancyhf{}
+\rfoot{Compiled on {\ddmmyyyydate\today} at \currenttime}
+\lfoot{Page \thepage}
+\renewcommand{\headrulewidth}{0pt}}
+\pagestyle{plain}
+
+% -------------------------------------------------------------------
+
 \begin{document}
 
 \mainmatter
 
-\title{Proof-Reconstruction in Type Theory for Propositional Logic}
+
+\title{Reconstructing Propositional Proofs in Type Theory}
+% \title{Proof-Reconstruction in Type Theory for Propositional Logic}
 \author{Jonathan Prieto-Cubides%
 %\and Andr\'es Sicard-Ram\'irez
 }
@@ -361,19 +472,18 @@ Universidad EAFIT, Medell\'in, Colombia\\
 \subfile{sections/abstract.tex}
 % \tableofcontents
 \subfile{sections/introduction.tex}
-% \subfile{sections/preliminaries.tex}
+\subfile{sections/type-theory.tex}
 \subfile{sections/metis-language-and-proofs.tex}
 \subfile{sections/proof-reconstruction.tex}
 % \subfile{sections/implementation.tex}
 \subfile{sections/related-work.tex}
-\subfile{sections/conclusions.tex}
+\subfile{sections/conclusions-and-future-work.tex}
 \subfile{sections/acknowledgements.tex}
 
-\bibliographystyle{plainnat}
-\bibliography{ref}
+\printbibliography
 \addcontentsline{toc}{section}{References}
 
-\newpage
+% \newpage
 \subfile{sections/appendices.tex}
 
 \end{document}

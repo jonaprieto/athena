@@ -1,6 +1,43 @@
-This study aimed to address proof-reconstruction for refutation
-proofs. Then, we annotated \abbre{CPL} problems using \verb!fof! formulas.
-\Metis converts \abbre{FOF} formulas to \abbre{CNF} clauses to look for a
-refutation.
 
+\begin{proof} If $φ ≡ φ₁ ∨ φ₂$, we get for $i = 1, 2$,
+\begin{equation*}
+  \begin{bprooftree}
+    \RightLabel{assume}
+    \AxiomC{$Γ, φ_{i} ⊢ φ_{i}$}
+    \RightLabel{by~ind.~hyp.}
+    \UnaryInfC{$Γ ⊢ \fdist~φ_{i}$}
+    \RightLabel{∨-intro$_{1,2}$}
+    \UnaryInfC{$Γ, φ_{i} ⊢ \fdist~φ₁ ∨ \fdist~φ₂$}
+    \RightLabel{Lemma~\ref{lem:dist-or}}
+    \UnaryInfC{$Γ, φ_{i} ⊢ \fdist_{∨}(\fdist~φ₁ ∨ \fdist~φ₂)$}
+    \end{bprooftree}
+\end{equation*}
 
+Then, by using the ∨-elim rule in the last derivation above, we
+derive $Γ, φ₁ ∨ φ₂ ⟝ \fdist_{∨}(\fdist~φ₁ ∨ \fdist~φ₂)$ and the lemma
+follows.
+\end{proof}
+
+\begin{equation}
+\label{eq:strip-unfixed}
+\begin{aligned}
+&\hspace{.495mm}\fstripp : \Prop → \Prop\\
+&\begin{array}{lll}
+\fstripp &(φ₁ ∧ φ₂)     &= \fuh~(\fstripp~φ₁) ∧ \fuh~(φ₁ ⇒ \fstripp~φ₂)\\
+\fstripp &(φ₁ ∨ φ₂)     &= \fuh~(¬ φ₁ ⇒ \fstripp~φ₂)\\
+\fstripp &(φ₁ ⇒ φ₂)     &= \fuh~(φ₁ ⇒ \fstripp~φ₂)\\
+\fstripp &(¬ (φ₁ ∧ φ₂)) &= \fuh~(φ₁ ⇒ \fstripp~¬ φ₂)\\
+\fstripp &(¬ (φ₁ ∨ φ₂)) &= \fuh~(\fstripp~¬ φ₁) ∧ \fuh~(¬ φ₁ ⇒ \fstripp~¬ φ₂)\\
+\fstripp &(¬ (φ₁ ⇒ φ₂)) &= \fuh~(\fstripp~φ₁) ∧ \fuh~(φ₁ ⇒ \fstripp~¬ φ₂)\\
+\fstripp &(¬ ¬ φ₁)      &= \fuh~(\fstripp~φ₁)\\
+\fstripp &(¬ ⊥)         &= ⊤\\
+\fstripp &(¬ ⊤)         &= ⊥\\
+\fstripp &φ             &= φ
+\end{array}
+\end{aligned}
+\end{equation}
+
+The function defined above is not a structural recursion function. Therefore,
+we have reformulated it in~\eqref{eq:strip-fixed} in order to solve such an
+issue following the technique described in
+Section~\ref{ssec:structural-recursion}.
