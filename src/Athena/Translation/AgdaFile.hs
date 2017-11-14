@@ -337,7 +337,6 @@ getRefutes dict tstp = map (\tag → fromJust (Map.lookup tag dict)) names
           in ( read (takeWhile (/= '-') nid) ∷ Int
              , read (tail (dropWhile (/= '-') nid)) ∷ Int)
 
-
 type Tag = String
 
 extractTagTree ∷ ProofTree → Tag
@@ -436,12 +435,17 @@ docProofGoal agdaFile =
 -- ScriptMode
 ------------------------------------------------------------------------------
 
+-- docTag ∷ Int → ProofTree → AgdaFile → Doc
+-- docTag subgoalN t@(Leaf _ axiom) agdaFile = docSteps subgoalN t agdaFile
+-- docTag subgoalN t@(Rule _ tag _) agdaFile = (pretty . stdName) tag
+-- docTag _ _ _ = pretty "?"
+
 -- | In script mode, we print step-by-step providing new terms
 -- for each step in the TSTP proof.
 docTypeStep ∷ Int     -- ^ The number of the subgoal.
-         → String     -- ^ Tag step.
-         → AgdaFile   -- ^ Agda file.
-         → Doc        -- ^ Doc of the step.
+            → Tag     -- ^ Tag step.
+            → AgdaFile   -- ^ Agda file.
+            → Doc        -- ^ Doc of the step.
 
 docTypeStep subgoalN tag agdaFile =
   if fileScriptMode agdaFile
@@ -522,16 +526,13 @@ docScriptMode subgoalN (Root Simplify tag subtrees) agdaFile =
         (pretty (head rTags))
         (tail rTags)
 
-
 docScriptMode subgoalN (Root Resolve tag [left, right]) agdaFile =
-  pretty tag <+> pretty "4" <> line
-
   if not (Set.member tag (fileTags agdaFile))
     then empty
     else (
       (  (docScriptMode subgoalN left (removeTagAgdaFile tag agdaFile))
       <> (docScriptMode subgoalN right (removeTagsAgdaFile rTags agdaFile))
-      <> (  docTypeStep subgoalN tag agdaFile <> line
+      <> (  docTypeStep subgoalN tag agdaFile
          <> pretty (stdName tag) <+> pretty "=" <> line
          <> indent 2
             (  pretty Resolve <+> getFormulaByTag agdaFile tag <+> pretty literal
@@ -563,21 +564,17 @@ docScriptMode subgoalN (Root rule tag [subtree]) agdaFile =
   if not (Set.member tag (fileTags agdaFile))
     then empty
     else
-      (
-       case subtree of
-        (Leaf _ axiom) → docSteps subgoalN subtree agdaFile -- weakening.
-        _ →
-         ((docScriptMode subgoalN subtree (removeTagAgdaFile tag agdaFile))
-          <> ( docTypeStep subgoalN tag agdaFile
-               <> pretty (stdName tag) <+> pretty "="
-               <> line
-               <> indent 2
-                    (   pretty rule <+> getFormulaByTag agdaFile tag
-                    <+> pretty (extractTagTree subtree))
-               )
-          <> line
-          )
+     ((docScriptMode subgoalN subtree (removeTagAgdaFile tag agdaFile))
+      <> ( docTypeStep subgoalN tag agdaFile
+           <> pretty (stdName tag) <+> pretty "="
+           <> line
+           <> indent 2
+                (   pretty rule <+> getFormulaByTag agdaFile tag
+                <+> pretty (extractTagTree subtree))
+           )
+      <> line
       )
+
 
 docScriptMode subgoalN _ agdaFile = empty
 
