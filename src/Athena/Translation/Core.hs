@@ -15,7 +15,9 @@ import Athena.Translation.AgdaFile
      , fileDict
      , fileName
      , filePremises
+     , fileScriptMode
      , fileSubgoals
+     , fileTags
      , fileTrees
      , fileVariables
      )
@@ -31,6 +33,7 @@ import Athena.Options
     ( optDebug
     , optInputFile
     , optOutputFile
+    , optScriptMode
     )
   )
 
@@ -38,7 +41,7 @@ import Athena.TSTP              ( parseFile )
 
 import Control.Monad            ( when )
 import Data.Maybe               ( fromJust, fromMaybe )
-
+import qualified Data.Map.Lazy as Map
 import Data.Proof
   ( buildProofMap
   , buildProofTree
@@ -89,7 +92,6 @@ mainCore opts = do
           (replaceExtension (fromJust (optInputFile opts)) ".agda")
           (optOutputFile opts)
 
-
   -- Agda file.
   hAgdaFile ← openFile filename WriteMode
 
@@ -103,9 +105,11 @@ mainCore opts = do
         , fileConjecture = conj
         , fileDict       = rulesMap
         , fileName       = filename
+        , fileScriptMode = optScriptMode opts
         , filePremises   = getAxioms tstp
         , fileSubgoals   = getSubgoals tstp
         , fileTrees      = trees
+        , fileTags       = Map.keysSet rulesMap
         , fileVariables  = getFreeVars formulas
         }
 

@@ -27,7 +27,7 @@ module Athena.Utils.PrettyPrint
    hsep, vsep, fillSep, sep, hcat, vcat, fillCat, cat, punctuate,
 
    -- * Fillers
-   fill, fillBreak, hypenline,
+   fill, fillBreak, hypenline, hypenlineQED,
 
    -- * Bracketing combinators
    enclose, squotes, dquotes, parens, angles, braces, brackets,
@@ -633,6 +633,8 @@ fill f d = width d (\w →
 hypenline :: Doc
 hypenline = (hcat . replicate 78 $ hypen) <> line
 
+hypenlineQED :: Doc
+hypenlineQED = (hcat . replicate 76 $ hypen) <+> pretty '∎' <> line
 
 width ∷ Doc → (Int → Doc) → Doc
 width d f = column (\k1 → d <> column (\k2 → f (k2 - k1)))
