@@ -11,6 +11,7 @@ module Athena.Options
     , optHelp
     , optInputFile
     , optOutputFile
+    , optScriptMode
     , optVersion
     )
   , printUsage
@@ -40,6 +41,7 @@ data Options = Options
   , optHelp       ∷ Bool
   , optInputFile  ∷ Maybe FilePath
   , optOutputFile ∷ Maybe FilePath
+  , optScriptMode ∷ Bool
   , optVersion    ∷ Bool
   }
 
@@ -49,6 +51,7 @@ defaultOptions = Options
   , optHelp       = False
   , optInputFile  = Nothing
   , optOutputFile = Nothing
+  , optScriptMode = False
   , optVersion    = False
   }
 
@@ -76,6 +79,9 @@ outputFileOpt file opts =
 versionOpt ∷ OM
 versionOpt opts = Right opts { optVersion = True }
 
+scriptModeOpt ∷ OM
+scriptModeOpt opts = Right opts { optScriptMode = True }
+
 -- | Description of the command-line 'Options'.
 options ∷ [OptDescr OM]
 options =
@@ -83,6 +89,8 @@ options =
       ""
   , Option ['h'] ["help"] (NoArg helpOpt)
       "Prints help message"
+  , Option []    ["script"] (NoArg scriptModeOpt)
+      "Script mode for printing the proof."
   , Option []    ["version"] (NoArg versionOpt)
       "Show version number"
   ]

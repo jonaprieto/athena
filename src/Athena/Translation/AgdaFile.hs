@@ -8,14 +8,16 @@ module Athena.Translation.AgdaFile
    (
    AgdaFile
       ( AgdaFile
-      , fileVariables
       , fileAxioms
       , fileConjecture
       , fileDict
       , fileName
       , filePremises
+      , fileScriptMode
       , fileSubgoals
+      , fileTags
       , fileTrees
+      , fileVariables
       )
    , docAxioms
    , docConjecture
@@ -53,6 +55,7 @@ import Athena.Utils.PrettyPrint
   , equals
   , hashtag
   , hypenline
+  , hypenlineQED
   , indent
   , int
   , lbracket
@@ -73,6 +76,7 @@ import Data.Proof
 import Data.List                ( isPrefixOf, nub)
 import Data.Maybe               ( fromJust )
 import qualified Data.Map as Map
+import qualified Data.Set as Set
 
 import Data.TSTP
   ( F ( name, role, formula, source )
@@ -108,7 +112,9 @@ data AgdaFile = AgdaFile
   , fileDict       ∷ ProofMap
   , fileName       ∷ FilePath
   , filePremises   ∷ [F]
+  , fileScriptMode ∷ Bool
   , fileSubgoals   ∷ [F]
+  , fileTags       ∷ Set.Set String
   , fileTrees      ∷ [ProofTree]
   , fileVariables  ∷ [V]
   }
@@ -178,9 +184,11 @@ docModule filename =
 docImports ∷ Int → Doc
 docImports n =
        hypenline
-   <@> pretty "open import ATP.Metis" <+> int n <+> pretty "public" <> line
-   <>  pretty "open import Data.PropFormula" <+> int n <+> pretty "public"
-   <> line <@> hypenline
+   <@> pretty "open import ATP.Metis" <+> int n <+> pretty "public"
+   <> line
+   <> pretty "open import Data.PropFormula" <+> int n <+> pretty "public"
+   <> line
+   <@> hypenline
 
 ------------------------------------------------------------------------------
 -- Variables.
@@ -215,7 +223,7 @@ docVars vars =
 
 definition ∷ F → Doc
 definition fm =
-     pretty fm <+> colon  <+> pretty "PropFormula"   <> line
+     pretty fm <+> colon  <+> pretty "PropFormula" <> line
   <> pretty fm <+> equals <+> pretty formulaF <> line
   where
     formulaF ∷ Formula
@@ -278,6 +286,7 @@ docConjecture ∷ F → Doc
 docConjecture fm =
      comment (pretty "Conjecture" <> dot) <> line
   <> definition fm
+
 ------------------------------------------------------------------------------
 -- Sub-goals.
 ------------------------------------------------------------------------------
@@ -325,8 +334,31 @@ getRefutes dict tstp = map (\tag → fromJust (Map.lookup tag dict)) names
     extractRefuteId ∷ String → (Int, Int)
     extractRefuteId ref =
           let nid = drop 7 ref
-          in ( read (takeWhile (/= '-') nid) :: Int
-             , read (tail (dropWhile (/= '-') nid)) :: Int)
+          in ( read (takeWhile (/= '-') nid) ∷ Int
+             , read (tail (dropWhile (/= '-') nid)) ∷ Int)
+
+type Tag = String
+
+extractTagTree ∷ ProofTree → Tag
+extractTagTree (Leaf _ tag)   = stdName tag
+extractTagTree (Root _ tag _) = stdName tag
+
+extractTagsTree ∷ ProofTree → [Tag]
+extractTagsTree (Leaf _ tag)        = [tag]
+extractTagsTree (Root _ tag strees) =
+  [tag] ++ (concatMap extractTagsTree strees)
+
+removeTagAgdaFile ∷ Tag → AgdaFile → AgdaFile
+removeTagAgdaFile tag agdaFile =
+  agdaFile {fileTags = Set.delete tag (fileTags agdaFile)}
+
+removeTagsAgdaFile ∷ [Tag] → AgdaFile → AgdaFile
+removeTagsAgdaFile [] agdaFile = agdaFile
+removeTagsAgdaFile (tag:tags) agdaFile =
+  removeTagsAgdaFile tags newAgdaFile
+  where
+    newAgdaFile ∷ AgdaFile
+    newAgdaFile = removeTagAgdaFile tag agdaFile
 
 ------------------------------------------------------------------------------
 -- Proof.
@@ -342,7 +374,7 @@ docProof agdaFile =
   <> hypenline
   <@> vsep
        [ docProofSubgoals agdaFile
-       , docProofGoal agdaFile  -- TODO
+       , docProofGoal agdaFile
        ]
 
 docProofSubgoals ∷ AgdaFile → Doc
@@ -357,13 +389,32 @@ docProofSubgoals agdaFile =
 
 docProofSubgoal ∷ Int → ProofTree → AgdaFile → Doc
 docProofSubgoal n tree agdaFile =
-     pName <+> colon <+> pretty "Γ ⊢" <+> pretty (subgoalName n) <> line
-  <> pName <+> equals <> line
-  <> indent 2 (parens (pretty "RAA" <> line <>
-              indent 2 (docSteps n tree agdaFile))) <> line
+     proof
+  <> line
+  <> hypenlineQED
   where
     pName ∷  Doc
     pName = pretty "proof" <> (pretty . stdName . show) n
+
+    proof ∷ Doc
+    proof =
+      if not (fileScriptMode agdaFile)
+        then
+          (  pName <+> colon <+> pretty "Γ ⊢" <+> pretty (subgoalName n)
+          <> line
+          <> pName <+> equals
+          <> line
+          <> indent 2 (parens (pretty "RAA"
+               <> line
+               <> indent 2 (docSteps n tree agdaFile)))
+          )
+        else
+          (  docScriptMode n tree agdaFile
+          <> line
+          <> pName <+> colon <+> pretty "Γ ⊢" <+> pretty (subgoalName n)
+          <> line
+          <> pName <+> equals <+> pretty "RAA" <+> pretty (extractTagTree tree)
+          )
 
 docProofGoal ∷ AgdaFile → Doc
 docProofGoal agdaFile =
@@ -372,18 +423,167 @@ docProofGoal agdaFile =
   <> pretty "proof" <+> equals <> line
   <> indent 2 (pretty "⇒-elim" <> line)
   <> indent 2 (pretty Strip <> line <> nestedproofs) <> line
+  <> hypenlineQED
     where
-      nestedproofs :: Doc
+      nestedproofs ∷ Doc
       nestedproofs =
         inferSplit
           (formula (fileConjecture agdaFile))
           (map formula (fileSubgoals agdaFile))
 
 ------------------------------------------------------------------------------
+-- ScriptMode
+------------------------------------------------------------------------------
+
+-- docTag ∷ Int → ProofTree → AgdaFile → Doc
+-- docTag subgoalN t@(Leaf _ axiom) agdaFile = docSteps subgoalN t agdaFile
+-- docTag subgoalN t@(Rule _ tag _) agdaFile = (pretty . stdName) tag
+-- docTag _ _ _ = pretty "?"
+
+-- | In script mode, we print step-by-step providing new terms
+-- for each step in the TSTP proof.
+docTypeStep ∷ Int     -- ^ The number of the subgoal.
+            → Tag     -- ^ Tag step.
+            → AgdaFile   -- ^ Agda file.
+            → Doc        -- ^ Doc of the step.
+
+docTypeStep subgoalN tag agdaFile =
+  if fileScriptMode agdaFile
+    then
+     (   line
+     <>  pretty (stdName tag) <+> colon
+     <+> pretty "Γ , ¬" <+> (pretty . stdName) ("subgoal" ++ show subgoalN)
+     <+> pretty "⊢"
+     <+> (pretty (getFormulaByTag agdaFile tag))
+     <>  line
+     )
+    else empty   -- do nothing.
+
+docSubTrees ∷ Int → [ProofTree] → AgdaFile → Doc
+docSubTrees subgoalN []          _        = empty
+docSubTrees subgoalN (tree : ts) agdaFile =
+     (docScriptMode subgoalN tree (removeTagAgdaFile tag agdaFile))
+  <> (docSubTrees subgoalN ts (removeTagsAgdaFile rTags agdaFile))
+  where
+    tag ∷ Tag
+    tag = extractTagTree tree
+
+    rTags ∷ [Tag]
+    rTags = extractTagsTree tree
+
+-- | Printing the step by annotating the type and the proof-term.
+docScriptMode ∷ Int        -- ^ The number of the subgoal.
+              → ProofTree  -- ^
+              → AgdaFile   -- ^ Agda file.
+              → Doc
+
+docScriptMode subgoalN (Root Negate tag _) agdaFile =
+  if not (Set.member tag (fileTags agdaFile))
+    then empty
+    else
+      (  docTypeStep subgoalN tag agdaFile
+      <> pretty (stdName tag) <+> pretty "="
+      <> line <> indent 2
+         (   pretty "assume {Γ = Γ}"
+         <+> parens (pretty "¬" <+> pretty (subgoalName subgoalN))
+         )
+      ) <> line
+
+docScriptMode subgoalN (Root Simplify tag subtrees) agdaFile =
+  if not (Set.member tag (fileTags agdaFile))
+    then empty
+    else
+      (  (docSubTrees subgoalN subtrees agdaFile)
+      <> (  docTypeStep subgoalN tag agdaFile
+         <> pretty (stdName tag) <+> pretty "=" <> line
+         <> indent 2 (simplification rTags)
+         )
+      <> line
+      )
+  where
+    rTags ∷ [Tag]
+    rTags = map extractTagTree subtrees
+
+    expectedOut ∷ Doc
+    expectedOut = pretty Simplify <+> getFormulaByTag agdaFile tag
+
+    simplification ∷ [Tag] → Doc
+    simplification tags =
+      foldl
+        (\x y ->
+          parens $
+            vsep
+              [ expectedOut
+              , indent 2
+                  (vsep
+                    [ pretty x
+                    , pretty y
+                    ]
+                   )
+               ]
+
+        )
+        (pretty (head rTags))
+        (tail rTags)
+
+docScriptMode subgoalN (Root Resolve tag [left, right]) agdaFile =
+  if not (Set.member tag (fileTags agdaFile))
+    then empty
+    else (
+      (  (docScriptMode subgoalN left (removeTagAgdaFile tag agdaFile))
+      <> (docScriptMode subgoalN right (removeTagsAgdaFile rTags agdaFile))
+      <> (  docTypeStep subgoalN tag agdaFile
+         <> pretty (stdName tag) <+> pretty "=" <> line
+         <> indent 2
+            (  pretty Resolve <+> getFormulaByTag agdaFile tag <+> pretty literal
+            <+> pretty (extractTagTree left) <+> pretty (extractTagTree right)
+            )
+         <> line
+         )
+      )
+    )
+  where
+    rTags ∷ [Tag]
+    rTags = [tag] ++ extractTagsTree left
+
+    dict ∷ ProofMap
+    dict = fileDict agdaFile
+
+    literal ∷ Formula
+    literal = let sourceInfo ∷ Source
+                  sourceInfo = source . fromJust $ Map.lookup tag dict
+              in  getResolveLiteral sourceInfo
+
+    getResolveLiteral ∷ Source → Formula
+    getResolveLiteral
+      (Inference Resolve (Function _ (GTerm (GWord lit):_) :_) _) =
+        PredApp lit []
+    getResolveLiteral _ = error "Athena expected a literal here."
+
+docScriptMode subgoalN (Root rule tag [subtree]) agdaFile =
+  if not (Set.member tag (fileTags agdaFile))
+    then empty
+    else
+     ((docScriptMode subgoalN subtree (removeTagAgdaFile tag agdaFile))
+      <> ( docTypeStep subgoalN tag agdaFile
+           <> pretty (stdName tag) <+> pretty "="
+           <> line
+           <> indent 2
+                (   pretty rule <+> getFormulaByTag agdaFile tag
+                <+> pretty (extractTagTree subtree))
+           )
+      <> line
+      )
+
+
+docScriptMode subgoalN _ agdaFile = empty
+
+------------------------------------------------------------------------------
+-- Natural Deduction Style proofs.
+------------------------------------------------------------------------------
 
 -- | docSteps generates the document with the proof making recursion
 -- over the deduction tree.
-
 docSteps ∷ Int        -- ^ The number of the subgoal.
          → ProofTree  -- ^ Deduction tree.
          → AgdaFile   -- ^ Agda file.
@@ -396,6 +596,7 @@ docSteps ∷ Int        -- ^ The number of the subgoal.
 docSteps _ (Leaf Conjecture conjecture) _ = pretty conjecture
 
 docSteps subgoalN (Leaf _ axiom) agdaFile =
+
   parens (prettyWeaken <> line
     <> indent 2
       (parens prettyAssume))
@@ -443,7 +644,6 @@ docSteps subgoalN (Leaf _ axiom) agdaFile =
           <> indent 2
           (pretty "{Γ = ∅ ," <+> toCtxt (map pretty axs) <> pretty "}"
             <+> pAxiom)
-
 
 ------------------------------------------------------------------------------
 -- Canonicalize.
@@ -523,14 +723,17 @@ docSteps subgoalN (Root Resolve tag [left, right]) agdaFile =
 docSteps subgoalN (Root Simplify tag nodes) agdaFile =
   simplification
   where
-    rNodes :: [ProofTree]
+    smode ∷ Bool
+    smode = fileScriptMode agdaFile
+
+    rNodes ∷ [ProofTree]
     rNodes = case nodes of
       []    → []
       [x]   → [x]
       [x,y] → [x,y]
       xs    → reverse xs
 
-    simplification :: Doc
+    simplification ∷ Doc
     simplification =
       foldr
         (\node y →
