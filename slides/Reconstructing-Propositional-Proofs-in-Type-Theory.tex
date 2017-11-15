@@ -751,28 +751,34 @@ the following inferences:
 \end{frame}
 
 \begin{frame}[fragile]{\Metis Algorithm}
+The following algorithm is no official, but it aims to explain the basics of the \Metis reasoning, and how it generates the proofs.
 \begin{algorithm}[H]
-    \caption{\Metis Refutation Strategy}
-    \begin{algorithmic}[Metis]
-        \Procedure{metis}{}\newline
-        \textbf{input:} a \textit{goal} and a set of \emph{premises} $a_i$\newline
-        \textbf{output:} maybe a derivation when $\{a_i\} \vdash goal$, otherwise nothing.
-        \State{Strip the goal into a list of \emph{subgoals}.}
-        \For{each subgoal $s_i$}
-        \State{Try to find by a refutation of $\neg s_i$:}
-
-        \EndFor
-
-        % \If{si el número de la iteración numIter en Alg.~1 es un múltiplo $l$}
-        %     \State{$p_k \leftarrow$ seleccione aleatoriamente un parámetro de $c_{+}$}
-        % \Else
-        %     \State{$p_k \leftarrow$ seleccione aleatoriamente un parámetro de $c_{-}$}
-        % \EndIf
-        % \State{modifique el parámetro $p_k$ en una proporción $\lambda$}
-        % \State{retorne el nuevo conjunto de parámetros}
-        \EndProcedure
-    \end{algorithmic}
-    \label{alg_2}
+\caption{\Metis refutation strategy}
+\begin{algorithmic}[Metis]
+\Procedure{metis}{}\newline
+  \textbf{input:} the \textrm{goal} and a set of \emph{premises} $a_i$
+  \newline
+  \textbf{output:} maybe a derivation when $\{a_i\} \vdash \textrm{goal}$, otherwise nothing.
+    \State{Strip the goal into a list of \emph{subgoals}.}
+    \For{each subgoal $s_i$}
+    \State{Try to find by a refutation for $\neg s_i$:}
+    \State{\ \ \ Apply clausification for the negated subgoal $¬ s_i$}
+    \ \ \ \If{a premise $a_j$ is relevant}
+    \ \ \ \ \ \State{Apply clausification to $a_j$}
+    \ \ \ \EndIf
+    \State{\ \ \ Application of \Metis rules to get $\bot$ using $¬ s_i$ and $a_j$ }
+     \If{$⊥$ can be derived}
+     \State{Keep the refutation and continue with the others subgoals}
+    \Else
+    \State{Exit. It's not a theorem.}
+    \EndIf
+    \EndFor
+    \If{Every subgoal has a refutation}
+    \State{The conjecture can be derived from the assumptions}
+    \State{Print the derivation for each refutation.}
+    \EndIf
+    \EndProcedure
+\end{algorithmic}
 \end{algorithm}
 \end{frame}
 
