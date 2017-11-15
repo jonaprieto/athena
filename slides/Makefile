@@ -1,7 +1,13 @@
-
+NAME=Reconstructing-Propositional-Proofs-in-Type-Theory
 
 .PHONY : pdf
 pdf : dependencies
+	- make clean
+	- rm -f $(NAME).pdf
+	- latexmk -pdf -xelatex -shell-escape $(NAME).tex
+
+.PHONY : old-pdf
+old-pdf : dependencies
 	- make clean
 	- rm -f Jonathan-Proof-Reconstruction.pdf
 	- latexmk -pdf -xelatex -shell-escape Jonathan-Proof-Reconstruction.tex

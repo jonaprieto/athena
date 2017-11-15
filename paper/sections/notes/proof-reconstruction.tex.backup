@@ -10,8 +10,8 @@
 \end{split}
 \end{equation}
 
-\begin{lemma}[thm-rconj] $Γ ⊢ φ$ then $Γ ⊢ rconj(φ)$.
-\end{lemma}
+\begin{mainlemma}[thm-rconj] $Γ ⊢ φ$ then $Γ ⊢ rconj(φ)$.
+\end{mainlemma}
 
 % -------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ One of the main strengths of \Agda is its support for writing proofs,
 which we shall call \Agda's proof engine. It consists of: support for
 inductively defined types, including inductive families, and function
 definitions using pattern matching on such types, normalisation during type-
-checking, commands for refining proof terms, coverage checker and termination
+checking, commands for refining proof-terms, coverage checker and termination
 checker.
 The inductive approach for representing classical propositional logic
 is better because we benefit from \Agda's proof engine and its Unicode

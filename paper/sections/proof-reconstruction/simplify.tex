@@ -4,105 +4,116 @@
 \subsubsection{Simplification.}
 \label{sssec:simplify}
 
-The \simplify rule is an inference that performs simplification of
-definitions and tautologies. This rule
-transverses a list of previous derivations by applying different theorems
-(e.g., \emph{modus pones}, \emph{modus tollens}, or \emph{disjunctive
-syllogism}) to get a contradiction in the first place, or a smaller
-convenient formula
+The \simplify rule is an inference that performs simplification of definitions
+and tautologies. This rule transverses a list of previous derivations by
+applying different theorems (e.g., \emph{modus pones}, \emph{modus tollens}, or
+\emph{disjunctive syllogism}) to get a contradiction in the first place, or a
+new formula to use later in the derivation.
 
-% To emulate this rule, we use theorems from Section~\ref{sssec:canonicalize},
-% Section~\ref{sssec:conjunct}.
-The following \TSTP excerpt is an example of the \simplify rule.
+We observe based on the analysis of different
+cases in the \TSTP derivations that \simplify can be modeled by a
+function with three arguments: two source formulas and the target formula.
+As we see in~\eqref{eq:simplify-1}, if \fsimplify gets ⊥
+from its input derivations, it derives ⊥. When the target formula, the expected conclusion is ⊤, we derive immediately ⊤.
+Otherwise, the \fsimplify rule performs  in~\eqref{eq:simplify-2} an analysis by following the cases to determine which case should apply.
 
-% \begin{figure}
-\begin{verbatim}
-fof(normalize_0_1, plain, (g | (~ a & k)),
-    inference(conjunct, [], [normalize_0_0])).
-fof(normalize_0_2, plain, (~ g | q),
-    inference(conjunct, [], [normalize_0_0])).
-fof(normalize_0_3, plain, (~ q),
-  inference(conjunct, [], [normalize_0_0])).
-fof(normalize_0_4, plain, (~ g),
-    inference(simplify, [], [normalize_0_2, normalize_0_3])).
-fof(normalize_0_5, plain, (~ k),
-inference(conjunct, [], [normalize_0_0])).
-fof(normalize_0_6, plain, ($false),
-    inference(simplify, [],
-              [normalize_0_1, normalize_0_4, normalize_0_5])).
-\end{verbatim}
-% \caption{Example of \simplify rule in a \TSTP derivation of \Metis.}
-% \end{figure}
-
-%TODO check canonicalize can reduce a conjunction into one smaller.
-\begin{definition}[simplify]
-\label{def:simplify}
+ \begin{equation}
+  \label{eq:simplify-1}
+  \begin{aligned}
+  &\hspace{.495mm}\fsimplify : \Source → \Source → \Target → \Prop\hspace*{3.5cm}\\
+  &\begin{array}{ll}
+   \fsimplify~⊥~φ~ψ  &=ψ\\
+   \fsimplify~φ~⊥~ψ  &=ψ\\
+%   \fsimplify~φ₁~φ₂~⊤ &=⊤.
+  \end{array}
+  \end{aligned}
+  \end{equation}
 For $i,\, j = 1, 2$, $i\neq j$ and $γ : \Prop$,
-\begin{align*}
-    \begin{split}
-      &\fsimplify : \Prop → \Prop → \Prop → \Prop\\
-      &\fsimplify(φ₁, φ₂, ψ) =%\\
-      % &\hspace{4mm}
+\begin{equation}
+  \label{eq:simplify-2}
+  \begin{aligned}
+  \begin{array}{ll}
+   \fsimplify~φ₁~φ₂~ψ &=
       \begin{cases}
-        ψ,          &\text{ if }φᵢ ≡ ψ\\
-        ⊥,          &\text{ if }φᵢ ≡ ⊥\\
-        φⱼ,         &\text{ if }φᵢ ≡ ⊤\\
-        γ,          &\text{ if }φᵢ ≡ φⱼ ⇒ γ\\
-        γ,          &\text{ if }φᵢ ≡ γ ⇒ \fnnf(¬ φⱼ)\\
-        γ,          &\text{ if }φᵢ ≡ \fnnf(¬ φⱼ) ∨ γ\\
-        ⊥,          &\text{ if } \fnnf(¬ φⱼ) ≡ \fconjunct(φᵢ, \fnnf(¬ φⱼ))\\
-      % φ          &\text{ if }\fconjunct(nnf(¬ φᵢ), φⱼ) ≡  φⱼ\\
-        ⊥,          &\text{ if } ¬ φⱼ ≡ \fcanonicalize(φᵢ, ¬ φⱼ) \\
-        φ₁,         &\text{ otherwise.}\\
-      \end{cases}%\hspace{10cm}
-    \end{split}
-\end{align*}
-\end{definition}
+        ψ,           &\text{ if }φᵢ ≡ ψ;\\
+        γ,           &\text{ if }φᵢ ≡ φⱼ ⇒ γ;\\
+        \fnnf~(¬ γ), &\text{ if }φᵢ ≡ γ ⇒ \fnnf~(¬ φⱼ);\\
+        γ,           &\text{ if }φᵢ ≡ (\fnnf~(¬ φⱼ)) ∨ γ;\\
+        ψ,           &\text{ if } \fnnf~(¬ φⱼ) ≡ \fconjunct~φᵢ~(\fnnf~(¬ φⱼ));\\
+      % φ          &\text{ if }\fconjunct(nnf(¬ φᵢ), φⱼ) ≡  φⱼ;\\
+        ψ,           &\text{ if } (¬ φⱼ) ≡ \fcanonicalize~φᵢ~(¬φⱼ);\\
+        φ₁,          &\text{ otherwise.}
+      \end{cases}
+  \end{array}
+  \end{aligned}
+  \end{equation}
 
-\begin{remark}
-Besides the fact that $\List\ \Prop \to \Prop$ is the type that coincides
-with the \simplify rule in \TSTP derivations, we choose a different
+\begin{mainth}
+  \label{thm:simplify}
+  Let $ψ : \Target$ and $Γ ⊢ φᵢ$, for $i=1,\, 2, \dots, n$. If $n > 2$
+  then $Γ ⊢ \fsimplify~γ_{n-2}~φ_{n}~ψ$, where
+  $γ_{i} = \fsimplify~φ_{i}~φ_{i+1}~ψ$, else $Γ ⊢ \fsimplify~φ₁~φ₂~ψ$.
+\end{mainth}
+
+\begin{myremark}
+Besides the fact that $\List\ \Prop \to \Prop$ is the type that most
+fit with the \simplify rule in \TSTP derivations, we choose a different
 option. In the translation from \TSTP to \Agda, we take the list of
-derivations and use a classical left folding ($\rm{foldl}$) with
+derivations to use a classical left folding ($\rm{foldl}$) with the
 $\fsimplify$ function over the list of $φ₁, φ₂, \cdots, φₙ$
-that avoids us to define a new sequent type to
+that avoids us to define a new theorem type to
 support \List \Prop type in the conclusion side.
-\end{remark}
+\end{myremark}
 
-\begin{theorem}[thm-simplify] % (fold)
-  \label{thm:thm-simplify}
-For $i=1,\, 2, \cdots, n$, $Γ ⊢ φᵢ$ and $ψ : \Prop$ then
-if $n > 2$, $Γ ⊢ \fsimplify(γ_{n-2}, φ_{n}, ψ)$ where $γ_{i} = \fsimplify(φ_{i}, φ_{i+1}, ψ)$
-else $Γ ⊢ \fsimplify(φ₁, φ₂, ψ)$.
-\end{theorem}
 
-% \begin{sketchproof}
-% If $Γ ⊢ φᵢ$ for $i=1, \cdots, n$, we prove this theorem by induction on $n$.
-% Let us show one case.
-% \begin{itemize}
-%   \item If $n ==2$ and $(canonicalize(φ₁, ¬ φ₂) ≡ ¬ φ₂)$, we need to prove
-%   $Γ ⊢ simplify(φ₁, φ₂, ψ)$.
-% \begin{equation*}
-%   \begin{bprooftree}
-%     \AxiomC{$Γ ⊢ φ₁$}
-%     \RightLabel{thm-canonicalize}
-%     \UnaryInfC{$Γ ⊢ canonicalize(φ₁, ¬φ₂)$}
-%     \AxiomC{$¬ φ₂ ≡ canonicalize(φ₁, ¬ φ₂)$}
-%     \RightLabel{subst}
-%     \BinaryInfC{$Γ ⊢ ¬ φ₂ $}
-%   \end{bprooftree}
-%   \begin{bprooftree}
-%   \AxiomC{$Γ ⊢ ¬ φ₂ $}
-%   \AxiomC{$Γ ⊢ φ₂$}
-%   \RightLabel{¬-elim}
-%   \BinaryInfC{$Γ ⊢ ⊥$}
-%   \RightLabel{by def.}
-%   \UnaryInfC{$Γ ⊢ simplify(φ₁, φ₂, ψ)$}
-%   \end{bprooftree}
-% \end{equation*}
+\begin{myexamplenum}
+Let us review the following \TSTP excerpt where \simplify was used two times.
 
-% \end{itemize}
-% \end{sketchproof}
+\begin{verbatim}
+  fof(n0, (¬ p ∨ q) ∧ ¬ r ∧ ¬ q ∧ (p ∨ (¬ s ∨ r)), ...
+  fof(n1, p ∨ (¬ s ∨ r), inf(conjunct, [n0])).
+  fof(n2, ¬ p ∨ q, inf(conjunct, [n0])).
+  fof(n3, ¬ q, inf(conjunct, [n0])).
+  fof(n4, ¬ p, inf(simplify, [n2, n3])).
+  fof(n5, ¬ r, inf(conjunct, [n0])).
+  fof(n6, ⊥, inf(simplify, [n1, n4, n5])).
+\end{verbatim}
+
+\begin{enumerate}
+\item The \simplify rule derives $¬ p$ in \verb!n4!
+from \verb!n2! and \verb!n3! derivations using the fourth case
+in~\eqref{eq:simplify-2}, that is,
+
+$$\fsimplify~(¬ p ∨ q)~(¬ q)~(¬ p) = ¬ p.$$
+% \begin{verbatim}
+% fof(norm2, ¬ p ∨ q, inf(conjunct, [norm0])).
+% fof(norm3, ¬ q, inf(conjunct, [norm0])).
+% fof(norm4, ¬ p, inf(simplify, [norm2, norm3])).
+% \end{verbatim}
+\item To derive ⊥ in \verb!n6! we use
+Theorem~\ref{thm:simplify} and we get the following proof.
+
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{$Γ ⊢ p ∨ (¬ s ∧ r)$}
+\AxiomC{$Γ ⊢ ¬ p$}
+\RightLabel{Theorem~\ref{thm:simplify}}
+\BinaryInfC{$Γ ⊢ ¬ s ∧ r$}
+\AxiomC{$Γ ⊢ ¬ r$}
+\RightLabel{Theorem~\ref{thm:simplify}}
+\BinaryInfC{$Γ ⊢ ⊥$}
+\end{bprooftree}
+\end{equation*}
+
+% \begin{verbatim}
+% fof(n1, g ∨ (¬ s ∧ r), inf(conjunct, [n0])).
+% fof(n4, ¬ p, inf(simplify, [n2, n3])).
+% fof(n5, ¬ r, inf(conjunct, [n0])).
+% fof(n6, ⊥, inf(simplify, [n1, n4, n5])).
+% \end{verbatim}
+\end{enumerate}
+\end{myexamplenum}
+
 
 % subsubsection simplify (end)
 % -------------------------------------------------------------------

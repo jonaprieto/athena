@@ -4,6 +4,8 @@ main.bbl
 main.blg
 main.pdf
 main.ptb
+main.run.xml
+main.bcf
 main.tdo
 main.synctex.gz*
 *_bibertool.bib
