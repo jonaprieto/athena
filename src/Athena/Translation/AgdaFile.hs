@@ -721,35 +721,21 @@ docSteps subgoalN (Root Resolve tag [left, right]) agdaFile =
 ------------------------------------------------------------------------------
 
 docSteps subgoalN (Root Simplify tag nodes) agdaFile =
-  simplification
-  where
-    smode ∷ Bool
-    smode = fileScriptMode agdaFile
-
-    rNodes ∷ [ProofTree]
-    rNodes = case nodes of
-      []    → []
-      [x]   → [x]
-      [x,y] → [x,y]
-      xs    → reverse xs
-
-    simplification ∷ Doc
-    simplification =
-      foldr
-        (\node y →
-          parens $
-            vsep
-              [ pretty Simplify <+> getFormulaByTag agdaFile tag
-              , indent 2
-                  (vsep
-                    [ y
-                    , docSteps subgoalN node agdaFile
-                    ]
-                   )
-               ]
-        )
-        (docSteps subgoalN (last rNodes) agdaFile)
-        (init rNodes)
+  foldl
+    (\x node →
+      parens $
+        vsep
+          [ pretty Simplify <+> getFormulaByTag agdaFile tag
+          , indent 2
+              (vsep
+                [ x
+                , docSteps subgoalN node agdaFile
+                ]
+               )
+           ]
+    )
+    (docSteps subgoalN (head nodes) agdaFile)
+    (tail nodes)
 
 ------------------------------------------------------------------------------
 -- Strip.
