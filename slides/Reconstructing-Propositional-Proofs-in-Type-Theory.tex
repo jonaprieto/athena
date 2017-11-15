@@ -750,8 +750,9 @@ the following inferences:
 \vfill
 \end{frame}
 
-\begin{frame}[fragile]{\Metis Algorithm}
-The following algorithm is no official, but it aims to explain the basics of the \Metis reasoning, and how it generates the proofs.
+\begin{frame}[fragile]{The intuition behind the \Metis Algorithm}
+% The following algorithm is no official, but it aims to explain the basics of the \Metis reasoning, and how it generates the proofs.
+
 \begin{algorithm}[H]
 \caption{\Metis refutation strategy}
 \begin{algorithmic}[Metis]
@@ -773,13 +774,14 @@ The following algorithm is no official, but it aims to explain the basics of the
     \State{Exit. It's not a theorem.}
     \EndIf
     \EndFor
-    \If{Every subgoal has a refutation}
-    \State{The conjecture can be derived from the assumptions}
-    \State{Print the derivation for each refutation.}
-    \EndIf
+    % \If{Every subgoal has a refutation}
+    % \State{The conjecture can be derived from the assumptions}
+    % \State{Print the derivation for each refutation.}
+    % \EndIf
     \EndProcedure
 \end{algorithmic}
 \end{algorithm}
+
 \end{frame}
 
 
