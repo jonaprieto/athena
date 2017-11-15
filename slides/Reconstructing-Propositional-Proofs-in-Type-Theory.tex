@@ -1,32 +1,218 @@
 \documentclass[10pt, xetex, hyperref={pdfpagelabels=false}]{beamer}
 
-% --------------------------------------------------------------------------
+% -------------------------------------------------------------------
 % Packages
-% --------------------------------------------------------------------------
+% -------------------------------------------------------------------
 \usepackage[english]{babel}
 \usepackage{amsmath, amsthm, amssymb}
 
+% -------------------------------------------------------------------
+% Natural deduction proofs
+% -------------------------------------------------------------------
 \usepackage{bussproofs}
+\EnableBpAbbreviations
 \def\extraVskip{3pt}
-\def\labelSpacing{3pt}
-\def\defaultHypSeparation{\hskip.2in}
-\def\EnableBpAbbreviations{true}
-
-\usepackage[utf8]{inputenc}
+% -------------------------------------------------------------------
 
 \usepackage{fancyvrb}
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{lmodern}
-
-\usepackage{mylst}
 \usepackage{url}
+
+% --------------------------------------------------------------------------
+% Color definitions.
+% --------------------------------------------------------------------------
+\usepackage{xcolor}
+\definecolor{blu}{RGB}{1,0,102}
+\definecolor{decoration}{RGB}{10,164,216}
+\definecolor{darkred}{rgb}{0.5, 0.0, 0.13}
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+
+% --------------------------------------------------------------------------
+% Beamer configuration.
+% --------------------------------------------------------------------------
+\usetheme{default}
+\usecolortheme{default}
+% \usefonttheme{serif}
+
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{navigation symbols}{}
+\hypersetup{pdfpagemode=UseNone}
+
+% footer.
+\setbeamercolor{headFoot}{fg=gray, bg=white}
+
+\setbeamertemplate{footline}{
+  \leavevmode%
+  \hbox{%
+  % \begin{beamercolorbox}
+  %   [wd=.8\paperwidth,ht=2.3ex,dp=1ex,left]{headFoot}%
+  %   \hspace*{2ex}\textbf\insertshorttitle\hspace*{2mm}|
+  %   \hspace*{2mm}\textbf\insertshortauthor
+  % \end{beamercolorbox}%
+  \begin{beamercolorbox}
+    [wd=\paperwidth,ht=2.4ex,dp=1ex,right]{headFoot}%
+    \insertframenumber{}/\inserttotalframenumber\hspace*{2ex}
+  \end{beamercolorbox}}%
+  \vskip 0pt%
+}
+
+\setbeamerfont{frametitle}{size=\small,series=\bfseries}
+\setbeamercolor{frametitle}{fg=white,bg=blu}
+
+\setbeamerfont{framesubtitle}{size=\normalfont\scriptsize}
+\setbeamercolor{framesubtitle}{fg=white, bg=blu}
+
+\setbeamercolor{background canvas}{bg=white}
+\setbeamercolor{normal text}{fg=black}
+
+% \setbeamercolor{institute}{fg=blu}
+\setbeamercolor{title}{fg=blu}
+% \setbeamercolor{subtitle}{fg=blu}
+
+% \setbeamercolor{titlelike}{fg=blu}
+\setbeamerfont{footnote}{size=\tiny}
+\setbeamercolor{footnote}{fg=gray}
+% \setbeamercolor{block title}{bg=blu,fg=blu}
+% \setbeamercolor{block body}{bg=aliceblue}
+% \setbeamercolor{item}{fg=blu} % color of bullets
+% \setbeamercolor{subitem}{fg=blu}
+% \setbeamercolor{itemize/enumerate subbody}{fg=blu}
+% \setbeamertemplate{itemize subitem}{{\textendash}}
+% \setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
+% \setbeamerfont{itemize/enumerate subitem}{size=\footnotesize}
+
+% --------------------------------------------------------------------------
+% Fonts
+% --------------------------------------------------------------------------
+\usefonttheme{professionalfonts}
+% \usefonttheme{serif}
+
+\usepackage{fontspec}
+\usepackage{mathtools}
+\usepackage{unicode-math}
+
+% \newfontfamily\djvu[ExternalLocation=fonts/
+%   , BoldFont=DejaVuSansMono-Bold.ttf
+%   , BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
+%   , ItalicFont=DejaVuSansMono-Oblique.ttf
+%   ]{DejaVuSansMono.ttf}
+
+% \setmonofont[ExternalLocation=fonts/
+% , BoldFont=DejaVuSansMono-Bold.ttf
+% , BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
+% , ItalicFont=DejaVuSansMono-Oblique.ttf
+% ]{DejaVuSansMono.ttf}
+
+% \setmathfont[ExternalLocation=fonts/
+%   ]{DejaVuMathTeXGyre.ttf}
+% \newfontfamily\mathfont{fonts/DejaVuMathTeXGyre.ttf}
+
+
+% \newfontfamily\sourcecode[ExternalLocation=fonts/
+%   , BoldFont=SourceCodePro-Semibold.ttf
+%   , BoldItalicFont=SourceCodePro-SemiboldIt.ttf
+%   , ItalicFont=SourceCodePro-It.ttf
+%   ]{SourceCodePro-Regular.ttf}
+
 % -------------------------------------------------------------------
-% Unicode Characters.
+% Tikz Configuration
 % -------------------------------------------------------------------
 
-\usepackage{textcomp}
-\usepackage[verbose]{newunicodechar}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes}
+\usepackage{rotating}
+
+\tikzset{
+  hyperlink node/.style={
+    alias=sourcenode,
+    append after command={
+        let     \p1 = (sourcenode.north west),
+            \p2=(sourcenode.south east),
+            \n1={\x2-\x1},
+            \n2={\y1-\y2} in
+        node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\p1)]
+        {\hyperlink{#1}{\XeTeXLinkBox{\phantom{\rule{\n1}{\n2}}}}}
+                %xelatex needs \XeTeXLinkBox, won't create a link unless it
+                %finds text --- rules don't work without \XeTeXLinkBox.
+                %Still builds correctly with pdflatex and lualatex
+    }
+  }
+}
+
+\tikzstyle{vertex}=[
+    auto=left
+  , circle
+  , fill=black!25
+  , minimum size=5pt
+  , inner sep=0pt
+  ]
+
+% -------------------------------------------------------------------
+% Listings
+% -------------------------------------------------------------------
+
+\usepackage{listings}
+\usepackage{lstautogobble}
+
+\lstdefinestyle{TPTP}{
+    aboveskip=10pt
+  , basicstyle=\tt
+  , belowskip=10pt
+  , keywords=[2]{axiom
+    , conjecture
+    , inference
+    , negated_conjecture
+    , plain
+    , source}
+  , keywords=[3]{fof, cnf}
+  , keywords=[4]{canonicalize, resolve, conjunct,
+    strip, simplify, negate, clausify}
+  , keywordstyle=[2]\bfseries
+  , keywordstyle=[3]\bfseries
+  , keywordstyle=[4]\bfseries
+  , showstringspaces=false
+  , keepspaces=true
+}
+
+\lstnewenvironment{tptp}
+  {\lstset{style=TPTP,columns=fullflexible}\csname lst@SetFirstLabel\endcsname}
+  {\csname lst@SaveFirstLabel\endcsname}
+
+% \usepackage{autofe}
+% \usepackage{afterpage}
+% \usepackage{comment}
+% \usepackage[hyphens]{url}
+% \usepackage{bm}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+\let\proof\relax      %% https://tex.stackexchange.com/questions/43835/
+\let\endproof\relax   %% conflict-between-amsthm-and-some-other-package
+\usepackage{amsthm}
+
+\newenvironment{sketchproof}{%
+  \renewcommand{\proofname}{Sketch of the Proof}\proof}{\endproof}
+
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%\usepackage{stmaryrd} %new symbol font for tcs
+% \usepackage{color}
+\usepackage{fancybox}
+% \usepackage{minted}
+% \setminted[cagda]{
+%   bgcolor   = aliceblue
+% , fontsize  = \footnotesize
+% , frame     = none
+% % , framerule = 0.4pt
+% % , framesep  = 0pt
+% , style     = cagda
+% }
 
 % -------------------------------------------------------------------
 % Verbatim.
@@ -147,171 +333,75 @@
 \newcommand{\wrt}{w.\,r.\,t.}
 \newcommand{\TheEnd}{\\\hspace*{0.975\textwidth}$\blacksquare$}
 
-% --------------------------------------------------------------------------
-% Tikz Configuration
-% --------------------------------------------------------------------------
-\usepackage{tikz}
-\usetikzlibrary{positioning}
-\usetikzlibrary{arrows}
-\usetikzlibrary{automata}
-\usetikzlibrary{calc}
-\usepackage{rotating}
+% -------------------------------------------------------------------
+% biblatex.
+% -------------------------------------------------------------------
 
-\tikzset{
-    hyperlink node/.style={
-        alias=sourcenode,
-        append after command={
-            let     \p1 = (sourcenode.north west),
-                \p2=(sourcenode.south east),
-                \n1={\x2-\x1},
-                \n2={\y1-\y2} in
-            node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\p1)]
-            {\hyperlink{#1}{\XeTeXLinkBox{\phantom{\rule{\n1}{\n2}}}}}
-                    %xelatex needs \XeTeXLinkBox, won't create a link unless it
-                    %finds text --- rules don't work without \XeTeXLinkBox.
-                    %Still builds correctly with pdflatex and lualatex
-        }
-    }
-}
-
-\tikzstyle{vertex}=[auto=left,circle,fill=black!25,minimum size=5pt,inner sep=0pt]
-
-\newcommand{\gobackreconstruction}{
-  \begin{tikzpicture}[overlay, remember picture, scale=0.5]
-    \tikzset{shift={(current page.center)}, xshift=11.8cm,yshift=-8.4cm}
-    \node[fill=blu,text=white, hyperlink node = reconstruction]
-      (go) at (0,0) {\tiny Go Back};
-  \end{tikzpicture}}
-
-
-% --------------------------------------------------------------------------
-% Color definitions.
-% --------------------------------------------------------------------------
-\usepackage{xcolor}\definecolor{blu}{RGB}{1,0,102}
-\definecolor{blu}{RGB}{1,0,102}
-\definecolor{decoration}{RGB}{10,164,216}
-
-% --------------------------------------------------------------------------
-% Beamer configuration.
-% --------------------------------------------------------------------------
-\usetheme{default}
-\usecolortheme{default}
-\usefonttheme{serif}
-
-\beamertemplatenavigationsymbolsempty
-\setbeamertemplate{navigation symbols}{}
-\hypersetup{pdfpagemode=UseNone}
-
-% footer.
-\setbeamercolor{headFoot}{fg=white, bg=blu}
-\setbeamertemplate{footline}{
-  \leavevmode%
-  \hbox{%
-  \begin{beamercolorbox}
-    [wd=.8\paperwidth,ht=2.3ex,dp=1ex,left]{headFoot}%
-    \hspace*{2ex}\textbf\insertshorttitle\hspace*{2mm}|
-    \hspace*{2mm}\textbf\insertshortauthor
-  \end{beamercolorbox}%
-  \begin{beamercolorbox}
-    [wd=.2\paperwidth,ht=2.3ex,dp=1ex,right]{headFoot}%
-    \insertframenumber{}/\inserttotalframenumber\hspace*{2ex}
-  \end{beamercolorbox}}%
-  \vskip 0pt%
-}
-
-\setbeamerfont{frametitle}{size=\small,series=\bfseries}
-\setbeamercolor{frametitle}{fg=white,bg=blu}
-
-\setbeamerfont{framesubtitle}{size=\normalfont\scriptsize}
-\setbeamercolor{framesubtitle}{fg=white, bg=blu}
-
-\setbeamercolor{background canvas}{bg=white}
-\setbeamercolor{normal text}{fg=black}
-
-% \setbeamercolor{institute}{fg=blu}
-\setbeamercolor{title}{fg=blu}
-% \setbeamercolor{subtitle}{fg=blu}
-
-% \setbeamercolor{titlelike}{fg=blu}
-\setbeamerfont{footnote}{size=\tiny}
-\setbeamercolor{footnote}{fg=gray}
-% \setbeamercolor{block title}{bg=blue,fg=blu}
-% \setbeamercolor{block body}{bg=aliceblue}
-% \setbeamercolor{item}{fg=blu} % color of bullets
-% \setbeamercolor{subitem}{fg=blu}
-% \setbeamercolor{itemize/enumerate subbody}{fg=blu}
-% \setbeamertemplate{itemize subitem}{{\textendash}}
-% \setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
-% \setbeamerfont{itemize/enumerate subitem}{size=\footnotesize}
-
-% --------------------------------------------------------------------------
-% Fonts
-% --------------------------------------------------------------------------
-\usefonttheme{professionalfonts}
-\usefonttheme{serif}
-\usepackage{fontspec}
-\usepackage{mathtools}
-\usepackage{unicode-math}
-
-\newfontfamily\djvu[ExternalLocation=fonts/
-  , BoldFont=DejaVuSansMono-Bold.ttf
-  , BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
-  , ItalicFont=DejaVuSansMono-Oblique.ttf
-  ]{DejaVuSansMono.ttf}
-
-\setmonofont[ExternalLocation=fonts/
-, BoldFont=DejaVuSansMono-Bold.ttf
-, BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
-, ItalicFont=DejaVuSansMono-Oblique.ttf
-]{DejaVuSansMono.ttf}
-
-\setmathfont[ExternalLocation=fonts/
-  ]{DejaVuMathTeXGyre.ttf}
-\newfontfamily\mathfont{fonts/DejaVuMathTeXGyre.ttf}
-
-\setmainfont[ExternalLocation=fonts/
-  , BoldFont=SourceSansPro-Semibold.otf
-  , BoldItalicFont=SourceSansPro-SemiboldIt.otf
-  , ItalicFont=SourceSansPro-It.otf
-  ]{SourceSansPro-Regular.otf}
-
-\newfontfamily\sourcecode[ExternalLocation=fonts/
-  , BoldFont=SourceCodePro-Semibold.ttf
-  , BoldItalicFont=SourceCodePro-SemiboldIt.ttf
-  , ItalicFont=SourceCodePro-It.ttf
-  ]{SourceCodePro-Regular.ttf}
-
-% --------------------------------------------------------------------------
-% Listings
-% --------------------------------------------------------------------------
-
-% \usepackage{minted}
-% \setminted[cagda]{
-%   bgcolor   = aliceblue
-% , fontsize  = \footnotesize
-% , frame     = none
-% % , framerule = 0.4pt
-% % , framesep  = 0pt
-% , style     = cagda
-% }
-
-% --------------------------------------------------------------------------
-% References
-% --------------------------------------------------------------------------
-
-\usepackage[autostyle]{csquotes}
-\usepackage[
-    backend=biber
-  , doi=false
-  , eprint=false
-  , isbn=false
-  , natbib=true
-  , sortlocale=en_US
-  , style=authoryear-icomp
-  , url=true
+\usepackage[%
+backend=biber,
+backref=true,%
+% bibstyle=authoryear,%
+% citestyle=authoryear-comp,%
+% giveninits=false,%%
+isbn=false,%
+maxbibnames=6,%
+% maxcitenames=4,%
 ]{biblatex}
+\usepackage{csquotes}
+
 \addbibresource{ref.bib}
-\renewcommand*{\nameyeardelim}{\addcomma\addspace}
+
+% Remove the quotes from the title.
+\DeclareFieldFormat
+  [article,%
+  incollection,%
+  inproceedings,%
+  thesis,% works for mastersthesis and phdthesis
+  unpublished,%
+  ]{title}{#1}
+
+% Remove "In:" before journal names.
+%
+% From
+% http://tex.stackexchange.com/questions/10682/suppress-in-biblatex
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+
+% Remove italics from journal names.
+\DeclareFieldFormat{journaltitle}{#1}
+
+% Remove italics from proceedings names in articles in proceedings.
+\DeclareFieldFormat%
+  [incollection,%
+  inproceedings,%
+  ]{booktitle}{#1}
+
+% Remove italics from the title names.
+\DeclareFieldFormat%
+ [book,%
+ misc,%
+ online,%
+ report,%
+ ]{title}{#1}
+
+% Remove URL if there is DOI.
+%
+% From:
+% https://tex.stackexchange.com/questions/154864/biblatex-use-doi-only-if-there-is-no-url
+
+\renewbibmacro*{doi+eprint+url}{%
+  \iftoggle{bbx:url}
+    {\iffieldundef{doi}{\usebibmacro{url+urldate}}{}}
+    {}%
+  \newunit\newblock
+  \iftoggle{bbx:eprint}
+    {\usebibmacro{eprint}}
+    {}%
+  \newunit\newblock
+    \iftoggle{bbx:doi}
+    {\printfield{doi}}
+    {}}
+
 \usepackage{silence}
 \WarningFilter{biblatex}{Patching footnotes failed}
 \WarningFilter{hyperref}{Token not allowed in a PDF string}
@@ -322,9 +412,10 @@
 
 \title[Reconstructing Propositional Proofs in Type Theory]
   {\textbf{Reconstructing Propositional Proofs in Type Theory}}
-\subtitle{Advisor: Andr\'es Sicard-Ram\'irez}
 \date{\today}
-\author[Jonathan Prieto-Cubides]{Jonathan Prieto-Cubides}
+\author[Jonathan Prieto-Cubides]{Jonathan Prieto-Cubides\\
+Advisor: Andr\'es Sicard-Ram\'irez
+}
 \institute{
 Master in Applied Mathematics\\
 Universidad EAFIT\\
@@ -336,6 +427,8 @@ Medell\'in, Colombia}
 \begin{document}
 \setcounter{page}{1}
 
+% --------------------------------------------------------------------
+
 \begin{frame}[plain]
 \titlepage
   \begin{tikzpicture}[overlay, remember picture]
@@ -345,40 +438,147 @@ Medell\'in, Colombia}
   \end{tikzpicture}
 \end{frame}
 
-\begin{frame}[fragile, label=reconstruction]{Proof Reconstruction: Overview}
-\vfill
-\begin{tikzpicture}
-\node(problem) at (0,0)
-   {\includegraphics[scale=0.7]{figures/problem}};
-\node[right = 0.8cm of problem, hyperlink node=tptp-syntax](tptp){
-\includegraphics[scale=0.7]{figures/tptp}
-};
-\node[right= 0.8cm of tptp, hyperlink node=metis] (metis)
-  {\includegraphics[scale=0.7]{figures/metis}};
-\node[right= 0.8cm of metis, hyperlink node=tstp-syntax] (tstp)
-  {\includegraphics[scale=0.7]{figures/tstp}};
-\node[below= 1.5cm of tstp, hyperlink node=athena] (athena)
-  {\includegraphics[scale=0.7]{figures/athena}};
-\node[left = 0.6cm of athena, hyperlink node=agda-file] (agdafile)
-  {\includegraphics[scale=0.7]{figures/agdafile}};
-\node[left = 0.5cm of agdafile] (agda)
-  {\includegraphics[scale=0.7]{figures/agda}};
-\node[below = 0.18cm of problem, hyperlink node=verified-example] (verified)
-  {\includegraphics[scale=0.7]{figures/verified}};
-\node[below = 0.18cm of verified, opacity=0.5, hyperlink node=failure-example] (failure)
-  {\includegraphics[scale=0.7]{figures/failure}};
+% --------------------------------------------------------------------
 
-\draw[->, thick] (problem) to (tptp);
-\draw[->, thick] (tptp) to (metis);
-\draw[->, thick] (metis) to (tstp);
-\draw[->, thick] (tstp) to (athena);
-\draw[->, thick] (athena) to (agdafile);
-\draw[->, thick] (agdafile) to (agda);
-\draw[->, thick] (agda) to (verified);
-\draw[->, thick, gray] (agda) to (failure);
+\begin{frame}[fragile]{Proof Reconstruction: Overview}
+\vfill
+\begin{center}
+\scalebox{0.9}{
+\tikzstyle{line} = [draw, -latex']
+\begin{tikzpicture}[
+   auto
+ % , scale=0.15
+ , font=\small
+ , base/.style =
+      { align=center
+      }
+ , file/.style =
+      { base
+      , minimum height=3em
+      , shape=rectangle
+      % , rounded corners
+%      , fill=blue!2
+      , inner sep=3pt
+      , outer sep=1pt
+      , draw%=blue!20
+      }
+  , program/.style =
+      { base
+      % , fill=gray!1
+      % , rounded corners
+      , inner sep=3pt
+      , outer sep=1pt
+      }
+  , library/.style =
+      { shape=rectangle
+      % , rounded corners
+     % , fill=blue!2
+      , draw%=blue!20
+      , inner sep=3pt
+      , outer sep=1pt
+      }
+  , Rhoumbus/.style =
+      { base
+      , aspect=2
+      % , fill=blue!2
+      , draw%=blue!20
+      , diamond
+      , align=center
+      , inner xsep=1pt,
+      , inner ysep=1.5pt
+      , outer sep = 2pt
+      }
+ ]
+\node[file]
+(tptp) at (0,0) {1.~\TPTP file \\ (CPL problem)};
+
+\node[ Rhoumbus
+     , right of=tptp
+     , node distance=3.8cm
+     ]
+(metis) {\Metis \\ (prover) };
+
+\node[ below of= metis
+     , node distance=1.6cm
+     ]
+(nothm) {};
+
+\node[ file
+     , right of=metis
+     , node distance=3.8cm
+     ]
+(tstp) {2.~\TSTP file\\(derivation)};
+
+\node[ program
+     , below of=tstp
+     , node distance=2.5cm
+     ]
+(athena) {\Athena tool\\(translator)
+};
+
+\node[ library
+     , right of=athena
+     , align=center
+     , node distance=2.5cm
+     ]
+(agdaprop)
+{\texttt{agda-metis}\\
+\texttt{agda-prop}\\
+(libraries)};
+
+\node[ file
+     , left of =athena
+     , node distance=3.8cm
+     ]
+(agdaproof) {3.~\Agda File\\(proof-term)};
+\node[ Rhoumbus
+     , below of=agdaproof
+     , node distance=2cm
+     ]
+(agda) {\Agda\\(type-checker)};
+
+\node[ library
+     , align=center
+     , left of=agda
+     , node distance=3.8cm
+     ]
+(libraries)
+{
+\prg{agda-metis}\\
+\prg{agda-prop}\\
+\prg{agda-stdlib}\\
+(imports)
+};
+
+\node[ file
+     , below of= agda
+     , node distance=2.1cm
+     ]
+(agdai) {4.1. Interface\\ \Agda File};
+
+\node[ file
+     , right of =agda
+     , node distance=3.8cm
+     ]
+(invalid) {4.2. Invalid\\ \Agda File};
+
+\path [line, thick] (tptp)      -- (metis);
+\path [line, thick] (metis)     -- node {\color{darkgreen}theorem} (tstp);
+\draw [-o,   thick] (metis)     -- node {\color{darkred}no theorem} (nothm);
+\path [line, thick] (tstp)      -- (athena);
+\path [line, thick] (athena)    -- (agdaproof);
+\path [line, thick] (agdaprop)  -- (athena);
+\path [line, thick] (agdaproof) -- (agda);
+\path [line, thick] (libraries) -- (agda);
+\path [line, thick] (agda)      -- node {\color{darkgreen}success} (agdai);
+\path [line, thick] (agda)      -- node {\color{darkred}failure} (invalid);
 \end{tikzpicture}
+}
+\end{center}
 \vfill
 \end{frame}
+
+% --------------------------------------------------------------------
 
 \begin{frame}[label=metis, fragile]{\Metis Theorem Prover}
  % \tikz[overlay,remember picture]
@@ -386,8 +586,8 @@ Medell\'in, Colombia}
  %    {\includegraphics[width=0.15\textwidth]{figures/metis}};
 
 \Metis is an automatic theorem prover for first-order logic with
-equality developed by~\cite{hurd2003first}. For the propositional
-fragment, \Metis has only three inference rules:
+equality developed by~\citeauthor{hurd2003first}~\cite{hurd2003first}.
+For the propositional fragment, \Metis has only three inference rules:
 
   \begin{prooftree}
     \AxiomC{}
@@ -405,6 +605,7 @@ fragment, \Metis has only three inference rules:
     \RightLabel{resolve $l$}
     \BinaryInfC{$\Gamma \vdash \varphi \vee \psi$}
   \end{prooftree}
+
 Where $\Gamma$ is a set of premises, and $\_\vdash\_$ is the syntactical
 consequence relation between the premises on the right, and the conclusion on
 the left.
@@ -463,7 +664,6 @@ the following inferences:
   \end{center}
 \end{table}
 \vfill
-\gobackreconstruction
 \end{frame}
 
 % \begin{frame}[fragile, label=tstp-syntax]{\texttt{TSTP} Syntax}
