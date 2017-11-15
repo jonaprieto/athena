@@ -1,0 +1,22 @@
+fof(a1, axiom, (p ⇒ q) ∧ (q ⇒ p)).
+fof(goal, conjecture, (p ∨ q) ⇒ (p ∧ q))).
+fof(sg0, (p ∨ q) ⇒ p, inf(strip,goal)).
+fof(sg1, ((p ∨ q) ∧ p)⇒ q, inf(strip,goal)).
+fof(neg00, ¬ ((p ∨ q) ⇒ p), inf(negate,sg0)).
+fof(n00, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, a1)).
+fof(n01, ¬ q ∨ p, inf(conjunct, n00)).
+fof(n02, ¬ p ∧ (p ∨ q), inf(canonicalize, neg00)).
+fof(n03, p ∨ q, inf(conjunct, n02)).
+fof(n04, ¬ p, inf(conjunct, n02)).
+fof(n05, q, inf(simplify,[n03, n04])).
+cnf(r00, ¬ q ∨ p, inf(canonicalize, n01)).
+cnf(r01, q, inf(canonicalize, n05)).
+cnf(r02, p, inf(resolve, q, [r01, r00])).
+cnf(r03, ¬ p, inf(canonicalize, n04)).
+cnf(r04, ⊥, inf(resolve, p, [r02, r03])).
+fof(neg10, ¬ (((p ∨ q) ∧ p) ⇒ q), inf(negate,[sg1])).
+fof(n10, ¬ q ∧ p ∧ (p ∨ q), inf(canonicalize, neg10)).
+fof(n11, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, a1)).
+fof(n12, ¬ p ∨ q, inf(conjunct, n11)).
+fof(n13, ⊥, inf(simplify,[n10, n12])).
+cnf(r10, ⊥, inf(canonicalize, n13)).
