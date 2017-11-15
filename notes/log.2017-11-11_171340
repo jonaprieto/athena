@@ -1,0 +1,541 @@
+make[1]: Entering directory '/tmp/athena'
+===================================================================
+==== Downloading problems from github.com/jonaprieto/prop-pack ====
+===================================================================
+git submodule update --init test/prop-pack
+===================================================================
+================= Generating TSTP files of proofs =================
+===================================================================
+
+[!] To use Metis locally instead of using Metis from OnlineATPs, 
+please set ATP variable in your environment:
+
+  $ export ATP="metis --show proof"
+
+If you don't have Metis anyway, you can install OnlineATPs:
+
+  $ make online-atps
+  $ export ATP="online-atps --atp=metis"
+
+-------------------------------------------------------------------
+===================================================================
+============== Generating Agda files of TSTP proofs ===============
+===================================================================
+
+If you want to generate an Agda file from the tests,
+you can execute the following command in your shell:
+
+  $ athena TSTPFileGeneratedByMETIS.tpsp
+
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/basic/basic-01.tstp"
+file generated: test/prop-pack/problems/basic/basic-01.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/basic/basic-02.tstp"
+file generated: test/prop-pack/problems/basic/basic-02.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/basic/basic-03.tstp"
+file generated: test/prop-pack/problems/basic/basic-03.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/basic/basic-04.tstp"
+file generated: test/prop-pack/problems/basic/basic-04.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/conjunction/conj-01.tstp"
+file generated: test/prop-pack/problems/conjunction/conj-01.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/conjunction/conj-02.tstp"
+file generated: test/prop-pack/problems/conjunction/conj-02.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/conjunction/conj-03.tstp"
+file generated: test/prop-pack/problems/conjunction/conj-03.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/conjunction/conj-04.tstp"
+file generated: test/prop-pack/problems/conjunction/conj-04.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/conjunction/conj-05.tstp"
+file generated: test/prop-pack/problems/conjunction/conj-05.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/conjunction/conj-06.tstp"
+file generated: test/prop-pack/problems/conjunction/conj-06.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-01.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-01.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-02.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-02.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-03.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-03.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-04.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-04.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-05.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-05.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-06.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-06.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-07.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-07.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-08.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-08.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-09.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-09.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-10.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-10.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-11.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-11.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-12.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-12.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-13.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-13.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-14.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-14.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/disjunction/disj-15.tstp"
+file generated: test/prop-pack/problems/disjunction/disj-15.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-01.tstp"
+file generated: test/prop-pack/problems/implication/impl-01.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-02.tstp"
+file generated: test/prop-pack/problems/implication/impl-02.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-03.tstp"
+file generated: test/prop-pack/problems/implication/impl-03.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-04.tstp"
+file generated: test/prop-pack/problems/implication/impl-04.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-05.tstp"
+file generated: test/prop-pack/problems/implication/impl-05.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-06.tstp"
+file generated: test/prop-pack/problems/implication/impl-06.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-07.tstp"
+file generated: test/prop-pack/problems/implication/impl-07.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-08.tstp"
+file generated: test/prop-pack/problems/implication/impl-08.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-09.tstp"
+file generated: test/prop-pack/problems/implication/impl-09.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-10.tstp"
+file generated: test/prop-pack/problems/implication/impl-10.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-11.tstp"
+file generated: test/prop-pack/problems/implication/impl-11.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-12.tstp"
+file generated: test/prop-pack/problems/implication/impl-12.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-13.tstp"
+file generated: test/prop-pack/problems/implication/impl-13.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-14.tstp"
+file generated: test/prop-pack/problems/implication/impl-14.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-15.tstp"
+file generated: test/prop-pack/problems/implication/impl-15.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-16.tstp"
+file generated: test/prop-pack/problems/implication/impl-16.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-17.tstp"
+file generated: test/prop-pack/problems/implication/impl-17.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/implication/impl-18.tstp"
+file generated: test/prop-pack/problems/implication/impl-18.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-01.tstp"
+file generated: test/prop-pack/problems/negation/neg-01.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-02.tstp"
+file generated: test/prop-pack/problems/negation/neg-02.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-03.tstp"
+file generated: test/prop-pack/problems/negation/neg-03.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-04.tstp"
+file generated: test/prop-pack/problems/negation/neg-04.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-05.tstp"
+file generated: test/prop-pack/problems/negation/neg-05.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-06.tstp"
+file generated: test/prop-pack/problems/negation/neg-06.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-07.tstp"
+file generated: test/prop-pack/problems/negation/neg-07.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-08.tstp"
+file generated: test/prop-pack/problems/negation/neg-08.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-09.tstp"
+file generated: test/prop-pack/problems/negation/neg-09.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-10.tstp"
+file generated: test/prop-pack/problems/negation/neg-10.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-11.tstp"
+file generated: test/prop-pack/problems/negation/neg-11.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-12.tstp"
+file generated: test/prop-pack/problems/negation/neg-12.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-13.tstp"
+file generated: test/prop-pack/problems/negation/neg-13.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-15.tstp"
+file generated: test/prop-pack/problems/negation/neg-15.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-16.tstp"
+file generated: test/prop-pack/problems/negation/neg-16.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-17.tstp"
+file generated: test/prop-pack/problems/negation/neg-17.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-18.tstp"
+file generated: test/prop-pack/problems/negation/neg-18.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-19.tstp"
+file generated: test/prop-pack/problems/negation/neg-19.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-20.tstp"
+file generated: test/prop-pack/problems/negation/neg-20.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-21.tstp"
+file generated: test/prop-pack/problems/negation/neg-21.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-23.tstp"
+file generated: test/prop-pack/problems/negation/neg-23.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-24.tstp"
+file generated: test/prop-pack/problems/negation/neg-24.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-25.tstp"
+file generated: test/prop-pack/problems/negation/neg-25.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-26.tstp"
+file generated: test/prop-pack/problems/negation/neg-26.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-27.tstp"
+file generated: test/prop-pack/problems/negation/neg-27.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-28.tstp"
+file generated: test/prop-pack/problems/negation/neg-28.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-30.tstp"
+file generated: test/prop-pack/problems/negation/neg-30.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-31.tstp"
+file generated: test/prop-pack/problems/negation/neg-31.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/negation/neg-32.tstp"
+file generated: test/prop-pack/problems/negation/neg-32.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/prop-metis/prop-03.tstp"
+file generated: test/prop-pack/problems/prop-metis/prop-03.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/prop-metis/prop-05.tstp"
+file generated: test/prop-pack/problems/prop-metis/prop-05.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/prop-metis/prop-06.tstp"
+file generated: test/prop-pack/problems/prop-metis/prop-06.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/prop-metis/prop-07.tstp"
+file generated: test/prop-pack/problems/prop-metis/prop-07.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/prop-metis/prop-08.tstp"
+file generated: test/prop-pack/problems/prop-metis/prop-08.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/prop-metis/prop-09.tstp"
+file generated: test/prop-pack/problems/prop-metis/prop-09.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/prop-metis/prop-16.tstp"
+file generated: test/prop-pack/problems/prop-metis/prop-16.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/prop-metis/prop-18.tstp"
+file generated: test/prop-pack/problems/prop-metis/prop-18.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/prop-metis/prop-19.tstp"
+file generated: test/prop-pack/problems/prop-metis/prop-19.agda
+-------------------------------------------------------------------
+tstp proof: Just "test/prop-pack/problems/prop-metis/prop-21.tstp"
+file generated: test/prop-pack/problems/prop-metis/prop-21.agda
+-------------------------------------------------------------------
+[!] TPTP problems and TSTP solutions using (<=>) operator
+    were excluded for testing since it does not supported
+    by Agda-Metis at the moment.
+===================================================================
+================== Type-checking Agda files =======================
+===================================================================
+
+[!] AGDA_DIR=/tmp/athena/lib/.agda
+
+If you want to type-check an isolate Agda file from the tests,
+you can execute the following command in your shell:
+
+  $ pwd
+  /tmp/athena
+  $ export AGDA_DIR=/tmp/athena/lib/.agda
+  $ agda --library=test AgdaFileGeneratedByAthena
+
+-------------------------------------------------------------------
+test/prop-pack/problems/basic/basic-01.agda
+user = 1.24, system = 0.06, elapsed = 0:01.32, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/basic/basic-02.agda
+user = 1.29, system = 0.04, elapsed = 0:01.34, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/basic/basic-03.agda
+user = 1.23, system = 0.08, elapsed = 0:01.32, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/basic/basic-04.agda
+user = 1.28, system = 0.04, elapsed = 0:01.34, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/conjunction/conj-01.agda
+user = 1.35, system = 0.06, elapsed = 0:01.42, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/conjunction/conj-02.agda
+user = 1.29, system = 0.07, elapsed = 0:01.36, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/conjunction/conj-03.agda
+user = 1.30, system = 0.08, elapsed = 0:01.38, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/conjunction/conj-04.agda
+user = 1.74, system = 0.07, elapsed = 0:01.82, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/conjunction/conj-05.agda
+user = 1.39, system = 0.06, elapsed = 0:01.46, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/conjunction/conj-06.agda
+user = 2.13, system = 0.07, elapsed = 0:02.21, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-01.agda
+user = 1.28, system = 0.08, elapsed = 0:01.37, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-02.agda
+user = 4.09, system = 0.07, elapsed = 0:04.18, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-03.agda
+user = 8.07, system = 0.12, elapsed = 0:08.21, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-04.agda
+user = 100.64, system = 0.33, elapsed = 1:41.19, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-05.agda
+user = 9.42, system = 0.08, elapsed = 0:09.53, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-06.agda
+user = 4.32, system = 0.05, elapsed = 0:04.39, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-07.agda
+user = 85.85, system = 0.26, elapsed = 1:26.29, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-08.agda
+user = 134.30, system = 0.32, elapsed = 2:14.90, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-09.agda
+user = 1.27, system = 0.08, elapsed = 0:01.35, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-10.agda
+user = 6.70, system = 0.07, elapsed = 0:06.79, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-11.agda
+user = 8798.57, system = 14.66, elapsed = 2:27:11, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-12.agda
+user = 8.12, system = 0.08, elapsed = 0:08.23, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-13.agda
+user = 8.97, system = 0.08, elapsed = 0:09.08, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-14.agda
+user = 271.79, system = 0.58, elapsed = 4:32.94, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/disjunction/disj-15.agda
+user = 1313.27, system = 2.37, elapsed = 21:58.37, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-01.agda
+user = 1.25, system = 0.08, elapsed = 0:01.34, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-02.agda
+user = 1.27, system = 0.06, elapsed = 0:01.33, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-03.agda
+user = 2.60, system = 0.07, elapsed = 0:02.68, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-04.agda
+user = 1.88, system = 0.10, elapsed = 0:01.99, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-05.agda
+user = 7587.92, system = 12.68, elapsed = 2:06:56, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-06.agda
+user = 905.46, system = 1.72, elapsed = 15:09.07, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-07.agda
+user = 7.65, system = 0.10, elapsed = 0:07.77, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-08.agda
+user = 3.16, system = 0.06, elapsed = 0:03.24, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-09.agda
+user = 1.32, system = 0.08, elapsed = 0:01.42, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-10.agda
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-11.agda
+user = 1.26, system = 0.08, elapsed = 0:01.35, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-12.agda
+user = 1.25, system = 0.09, elapsed = 0:01.34, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-13.agda
+user = 1.73, system = 0.06, elapsed = 0:01.80, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-14.agda
+user = 1.32, system = 0.07, elapsed = 0:01.40, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-15.agda
+user = 1.34, system = 0.08, elapsed = 0:01.43, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-16.agda
+user = 1.26, system = 0.06, elapsed = 0:01.33, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-17.agda
+user = 201.00, system = 0.38, elapsed = 3:21.80, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/implication/impl-18.agda
+user = 1.29, system = 0.07, elapsed = 0:01.36, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-01.agda
+user = 1.25, system = 0.07, elapsed = 0:01.33, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-02.agda
+user = 1.36, system = 0.06, elapsed = 0:01.42, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-03.agda
+user = 1.19, system = 0.05, elapsed = 0:01.25, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-04.agda
+user = 1.29, system = 0.05, elapsed = 0:01.35, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-05.agda
+user = 1.59, system = 0.05, elapsed = 0:01.65, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-06.agda
+user = 1.59, system = 0.08, elapsed = 0:01.68, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-07.agda
+user = 1.32, system = 0.07, elapsed = 0:01.39, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-08.agda
+user = 1.47, system = 0.07, elapsed = 0:01.55, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-09.agda
+user = 1.58, system = 0.08, elapsed = 0:01.66, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-10.agda
+user = 1.28, system = 0.06, elapsed = 0:01.35, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-11.agda
+user = 1.28, system = 0.07, elapsed = 0:01.36, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-12.agda
+user = 1.58, system = 0.06, elapsed = 0:01.66, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-13.agda
+user = 1.42, system = 0.12, elapsed = 0:01.54, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-15.agda
+user = 1.26, system = 0.06, elapsed = 0:01.33, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-16.agda
+user = 1.26, system = 0.06, elapsed = 0:01.33, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-17.agda
+user = 1.60, system = 0.09, elapsed = 0:01.69, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-18.agda
+user = 1.31, system = 0.06, elapsed = 0:01.38, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-19.agda
+user = 1.60, system = 0.07, elapsed = 0:01.68, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-20.agda
+user = 1.29, system = 0.08, elapsed = 0:01.37, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-21.agda
+user = 904.59, system = 1.70, elapsed = 15:08.17, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-23.agda
+user = 543.47, system = 1.05, elapsed = 9:05.66, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-24.agda
+user = 1.41, system = 0.06, elapsed = 0:01.47, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-25.agda
+user = 1.24, system = 0.08, elapsed = 0:01.33, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-26.agda
+user = 1.27, system = 0.08, elapsed = 0:01.36, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-27.agda
+user = 502.75, system = 0.94, elapsed = 8:24.74, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-28.agda
+user = 22.68, system = 0.14, elapsed = 0:22.88, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-30.agda
+user = 1.17, system = 0.06, elapsed = 0:01.24, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-31.agda
+user = 1.26, system = 0.06, elapsed = 0:01.32, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/negation/neg-32.agda
+user = 1.30, system = 0.08, elapsed = 0:01.39, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/prop-metis/prop-03.agda
+user = 1.31, system = 0.05, elapsed = 0:01.37, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/prop-metis/prop-05.agda
+-------------------------------------------------------------------
+test/prop-pack/problems/prop-metis/prop-06.agda
+user = 1.26, system = 0.06, elapsed = 0:01.33, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/prop-metis/prop-07.agda
+user = 1.24, system = 0.07, elapsed = 0:01.32, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/prop-metis/prop-08.agda
+user = 51.59, system = 0.18, elapsed = 0:51.88, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/prop-metis/prop-09.agda
+user = 1255.61, system = 2.22, elapsed = 21:00.47, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/prop-metis/prop-16.agda
+user = 1.29, system = 0.07, elapsed = 0:01.36, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/prop-metis/prop-18.agda
+user = 2647.87, system = 4.62, elapsed = 44:18.00, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/prop-metis/prop-19.agda
+user = 2059.49, system = 3.43, elapsed = 34:27.20, mem=0, cpu=99%
+-------------------------------------------------------------------
+test/prop-pack/problems/prop-metis/prop-21.agda
+-------------------------------------------------------------------
+[!] TSTP solutions using (<=>) operator
+    were excluded for type-checking since it does not supported
+    by Agda-Metis at the moment.
+make[1]: Leaving directory '/tmp/athena'
