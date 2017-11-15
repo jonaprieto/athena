@@ -1,5 +1,10 @@
 NAME=Reconstructing-Propositional-Proofs-in-Type-Theory
 
+.PHONY : fast
+fast :
+	- make clean
+	- xelatex $(NAME).tex
+
 .PHONY : pdf
 pdf :
 	- make clean
@@ -38,4 +43,4 @@ clean :
 	@rm -Rf _*
 	@rm -Rf auto
 
-default: pdf
+default: fast

@@ -58,7 +58,7 @@
   \vskip 0pt%
 }
 
-\setbeamerfont{frametitle}{size=\small,series=\bfseries}
+\setbeamerfont{frametitle}{series=\bfseries}
 \setbeamercolor{frametitle}{fg=white,bg=blu}
 
 \setbeamerfont{framesubtitle}{size=\normalfont\scriptsize}
@@ -238,6 +238,52 @@
 % -------------------------------------------------------------------
 % New commands
 % -------------------------------------------------------------------
+
+\usepackage{textcomp}
+\usepackage[verbose]{newunicodechar}
+
+\newunicodechar{¬}{\ensuremath{\neg}\;}
+\newunicodechar{Γ}{\ensuremath{\Gamma}}
+\newunicodechar{γ}{\ensuremath{\gamma}}
+\newunicodechar{φ}{\ensuremath{\varphi}}
+\newunicodechar{ψ}{\ensuremath{\psi}}
+\newunicodechar{ϕ}{\ensuremath{\varphi}}
+\newunicodechar{ᵢ}{\ensuremath{{}_{i}}}
+\newunicodechar{₀}{\ensuremath{{}_{0}}}
+\newunicodechar{₁}{\ensuremath{{}_{1}}}
+\newunicodechar{₂}{\ensuremath{{}_{2}}}
+\newunicodechar{₃}{\ensuremath{{}_{3}}}
+\newunicodechar{₄}{\ensuremath{{}_{4}}}
+\newunicodechar{₅}{\ensuremath{{}_{5}}}
+\newunicodechar{₆}{\ensuremath{{}_{6}}}
+\newunicodechar{₇}{\ensuremath{{}_{7}}}
+\newunicodechar{₈}{\ensuremath{{}_{8}}}
+\newunicodechar{₉}{\ensuremath{{}_{9}}}
+\newunicodechar{ₙ}{\ensuremath{{}_{n}}}
+\newunicodechar{ₘ}{\ensuremath{{}_{m}}}
+\newunicodechar{ℓ}{\ensuremath{\ell}}
+\newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
+\newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
+\newunicodechar{∅}{\ensuremath{\emptyset}}
+\newunicodechar{∈}{\ensuremath{\in}}
+\newunicodechar{∘}{\ensuremath{\circ}}
+\newunicodechar{∙}{\ensuremath{\bullet}}
+\newunicodechar{∧}{\ensuremath{\wedge}}
+\newunicodechar{∨}{\ensuremath{\vee}}
+\newunicodechar{∼}{\ensuremath{\sim}}
+\newunicodechar{≠}{\ensuremath{\neq}}
+\newunicodechar{≡}{\ensuremath{\equiv}}
+\newunicodechar{⊕}{\ensuremath{\oplus}}
+\newunicodechar{⊖}{\ensuremath{\ominus}}
+\newunicodechar{⊢}{\ensuremath{⊢}}
+\newunicodechar{⊤}{\ensuremath{\top}}
+\newunicodechar{⊥}{\ensuremath{\bot}}
+\newunicodechar{⊻}{\ensuremath{\veebar}}
+\newunicodechar{⟝}{\ensuremath{⊢}}
+\newunicodechar{⬓}{\ensuremath{\square}}
+\newunicodechar{ⱼ}{\ensuremath{{}_{j}}}
+\newunicodechar{λ}{\ensuremath{\lambda}}
 
 \usepackage{xspace}
 
@@ -586,76 +632,67 @@ Medell\'in, Colombia}
  %    {\includegraphics[width=0.15\textwidth]{figures/metis}};
 
 \Metis is an automatic theorem prover for first-order logic with
-equality developed by~\citeauthor{hurd2003first}~\cite{hurd2003first}.
-For the propositional fragment, \Metis has only three inference rules:
-
+equality.
+For the propositional logic, \Metis has only three inference rules:
+\vfill
   \begin{prooftree}
     \AxiomC{}
-    \RightLabel{axiom}
-    \UnaryInfC{$\Gamma \vdash \varphi$}
+    \RightLabel{axiom $φ₁, \cdots,φₙ$}
+    \UnaryInfC{$\Gamma ⊢ φ₁ ∨ \cdots ∨ φₙ$}
   \end{prooftree}
+\vfill
   \begin{prooftree}
     \AxiomC{}
     \RightLabel{assume $\varphi$}
-    \UnaryInfC{$\Gamma \vdash \varphi \vee \neg \varphi$}
+    \UnaryInfC{$\Gamma ⊢ \varphi \vee \neg \varphi$}
   \end{prooftree}
+  \vfill
   \begin{prooftree}
-    \AxiomC{$\Gamma \vdash l \vee \varphi$}
-    \AxiomC{$\Gamma \vdash \neg l \vee \psi$}
+    \AxiomC{$\Gamma ⊢ φ₁ ∨ \cdots ∨ l ∨ \cdots  ∨ φₙ$}
+    \AxiomC{$\Gamma ⊢ ψ₁ ∨ \cdots ∨ ¬ l ∨ \cdots ∨ ψₘ$}
     \RightLabel{resolve $l$}
-    \BinaryInfC{$\Gamma \vdash \varphi \vee \psi$}
+    \BinaryInfC{$\Gamma ⊢ φ₁ ∨ \cdots ∨ φₙ ∨ ψ₁ ∨ \cdots ∨ ψₘ$}
   \end{prooftree}
-
-Where $\Gamma$ is a set of premises, and $\_\vdash\_$ is the syntactical
-consequence relation between the premises on the right, and the conclusion on
-the left.
+\vfill
 \end{frame}
 
 
 \begin{frame}{Why Metis?}
   \begin{itemize}
-    \item \href{https://github.com/gilith/metis}{Open source} implemented in
-       \texttt{Standard ML}
-    \item Each refutation step is one of
-      \hyperlink{metis-inference-rules}{\textit{six rules}}
-    \item Reads problem in \hyperlink{tptp-syntax}{\texttt{TPTP} format}
-    \item Outputs \textit{detailed} proofs in \hyperlink{tstp-syntax}{\texttt{TSTP} format}
+    \item \href{https://github.com/gilith/metis}{Open source} implemented in \texttt{Standard ML}
+    \item Each refutation step is one of the three rules
+    \item Reads problems in \TPTP format
+    \item Outputs \textit{detailed} proofs in \TSTP format
   \end{itemize}
 
 \end{frame}
 
-\begin{frame}[fragile, label=metis-rules]{Inference Rules of \texttt{Metis}}
-\hyperlink{tstp-example}{\texttt{TSTP}} derivations by \texttt{Metis} exhibit
+\begin{frame}[fragile, label=metis-rules]{Inference Rules of \Metis}
+\hyperlink{tstp-example}{\TSTP} derivations by \Metis exhibit
 the following inferences:
 \vfill
 \begin{table}[!ht]
   \begin{center}
   {\renewcommand{\arraystretch}{1.6}%
     \label{tab:agda-metis-table}
-    \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{2mm}}c@{\hspace{2mm}}|}
+    \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}|}
     \hline
     \textbf{\Metis rule} & \textbf{Purpose}\\ \hline
-
       \texttt{strip}
       &Strip a goal into subgoals
       \\
-
       \texttt{conjunct}
       &Takes a formula from a conjunction
       \\
-
       \texttt{resolve}
       &A general form of the resolution theorem
       \\
-
       \texttt{canonicalize}
       &Normalization of the formula
       \\
-
       \texttt{clausify}
       &Performs clausification
       \\
-
       \texttt{simplify}
       &Simplify definitions and theorems
       \\[1ex]
@@ -666,105 +703,356 @@ the following inferences:
 \vfill
 \end{frame}
 
-% \begin{frame}[fragile, label=tstp-syntax]{\texttt{TSTP} Syntax}
+\begin{frame}{Proof Reconstruction}
+\end{frame}
 
-%  \tikz[overlay,remember picture]
-%   \node at (0.92\textwidth, -0.5cm)
-%     {\includegraphics[width=0.15\textwidth]{figures/tstp}};
+\begin{frame}{Stripping a Goal}
+\end{frame}
 
-% A \texttt{TSTP} derivation\footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/QuickGuide/Derivations.html}.}
-% \begin{itemize}
-%   \item Is a \hyperlink{tstp-dag}{\textbf{D}irected \textbf{A}cyclic \textbf{G}raph} where
-%   \begin{itemize}
-%     \item[\texttt{leaf}] is a formula from the \hyperlink{tptp-syntax}{\texttt{TPTP}} input
-%     \item[\texttt{node}] is a formula inferred from parent formula
-%     \item[\texttt{root}] the final derived formula
-%   \end{itemize}
-%   \item Is a list of annotated formulas with the form
-%   \end{itemize}
+\begin{frame}{Splitting a Conjunct}
+\end{frame}
 
-% \begin{center}
-%   {\footnotesize
-% \begin{tptp}
-% language(name, role, formula, source [,useful info]).
-% \end{tptp}}
-% \end{center}
+\begin{frame}{Resolution}
+\end{frame}
 
-% where \texttt{\color{blu} source} typically is an inference record
-% \begin{center}
-% {\footnotesize
-% \begin{tptp}
-% inference(rule, useful info, parents).
-% \end{tptp}
-% }
-% \end{center}
-% \end{frame}
+\begin{frame}{Canonicalize}
+\end{frame}
 
-% \begin{frame}[fragile, label=tstp-example]{\texttt{TSTP} Example}
+\begin{frame}{Clausification}
+\end{frame}
 
-%  % \tikz[overlay,remember picture]
-%  %  \node at (0.93\textwidth, -0.3cm)
-%  %    {\includegraphics[width=0.15\textwidth]{figures/metis}};
+\begin{frame}{Simplification}
+\end{frame}
 
-% \begin{itemize}
-%   \item Proof found by \texttt{Metis} for the problem $p ⊢ p$
-% {\small
-% \begin{tptp}
-% $ metis --show proof problem.tptp
-% fof(a, axiom, p).
-% fof(goal, conjecture, p).
-% fof(subgoal_0, plain, p),
-%   inference(strip, [], [goal])).
-% fof(negate_0_0, plain, ~ p,
-%   inference(negate, [], [subgoal_0])).
-% fof(normalize_0_0, plain, ~ p,
-%   inference(canonicalize, [], [negate_0_0])).
-% fof(normalize_0_1, plain, p,
-%   inference(canonicalize, [], [a])).
-% fof(normalize_0_2, plain, $false,
-%   inference(simplify, [],
-%     [normalize_0_0, normalize_0_1])).
-% cnf(refute_0_0, plain, $false,
-%     inference(canonicalize, [], [normalize_0_2])).
-% \end{tptp}
-% }
-% \end{itemize}
-% \end{frame}
+\begin{frame}{Formalization Challenges}
+\begin{itemize}
+  \item Terminating of functions to reconstruct inference rules
+  \item Intuitionistic logic implementation
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Complete Example}
+The problem:
+\begin{equation*}
+(p \Rightarrow q) \wedge (q \Rightarrow p) ⊢ (p \vee q) \Rightarrow (p \wedge q)
+\end{equation*}
+In \TPTP$^*$ syntax:
+\begin{tptp}
+fof(a1, axiom, (p ⇒ q) ∧ (q ⇒ p)).
+fof(goal, conjecture, (p ∨ q) ⇒ (p ∧ q)).
+\end{tptp}
+Its \TSTP$^*$ solution using \Metis:
+\begin{tptp}
+fof(a1, axiom, (p ⇒ q) ∧ (q ⇒ p)).
+fof(goal, conjecture, (p ∨ q) ⇒ (p ∧ q))).
+fof(s1, (p ∨ q) ⇒ p, inf(strip,goal)).
+fof(s2, ((p ∨ q) ∧ p) ⇒ q, inf(strip,goal)).
+...
+\end{tptp}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\begin{verbatim}
+fof(s1, (p ∨ q) ⇒ p, inf(strip,goal)).
+fof(s2, ((p ∨ q) ∧ p) ⇒ q, inf(strip,goal)).
+fof(neg1, ¬ ((p ∨ q) ⇒ p), inf(negate,s1)).
+fof(n00, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, a1)).
+fof(n01, ¬ q ∨ p, inf(conjunct, n00)).
+fof(n02, ¬ p ∧ (p ∨ q), inf(canonicalize, neg1)).
+fof(n03, p ∨ q, inf(conjunct, n02)).
+fof(n04, ¬ p, inf(conjunct, n02)).
+fof(n05, q, inf(simplify,[n03, n04])).
+cnf(r00, ¬ q ∨ p, inf(canonicalize, n01)).
+cnf(r01, q, inf(canonicalize, n05)).
+cnf(r02, p, inf(resolve, q, [r01, r00])).
+cnf(r03, ¬ p, inf(canonicalize, n04)).
+cnf(r04, ⊥, inf(resolve, p, [r02, r03])).
+fof(neg2, ¬ (((p ∨ q) ∧ p) ⇒ q), inf(negate,s2)).
+fof(n10, ¬ q ∧ p ∧ (p ∨ q), inf(canonicalize, neg2)).
+fof(n11, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, a1)).
+fof(n12, ¬ p ∨ q, inf(conjunct, n11)).
+fof(n13, ⊥, inf(simplify,[n10, n12])).
+cnf(r10, ⊥, inf(canonicalize, n13)).
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{\TSTP Refutation of Subgoal No. 1}
+\begin{tptp}
+fof(s1, (p ∨ q) ⇒ p, inf(strip,goal)).
+fof(neg1, ¬ ((p ∨ q) ⇒ p), inf(negate,s1)).
+fof(n00, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, a1)).
+fof(n01, ¬ q ∨ p, inf(conjunct, n00)).
+fof(n02, ¬ p ∧ (p ∨ q), inf(canonicalize, neg1)).
+fof(n03, p ∨ q, inf(conjunct, n02)).
+fof(n04, ¬ p, inf(conjunct, n02)).
+fof(n05, q, inf(simplify,[n03, n04])).
+cnf(r00, ¬ q ∨ p, inf(canonicalize, n01)).
+cnf(r01, q, inf(canonicalize, n05)).
+cnf(r02, p, inf(resolve, q, [r01, r00])).
+cnf(r03, ¬ p, inf(canonicalize, n04)).
+cnf(r04, ⊥, inf(resolve, p, [r02, r03])).
+\end{tptp}
+\end{frame}
+
+\begin{frame}[fragile]{Refutation Tree for the Subgoal No. 1: $(p ∨ q) ⇒ p$}
+
+{
+\begin{tptp}
+fof(a1, axiom, (p ⇒ q) ∧ (q ⇒ p)).
+...
+fof(n00, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, a1)).
+fof(n01, ¬ q ∨ p, inf(conjunct, n00)).
+...
+\end{tptp}}
+
+($\mathcal{D}_1$)
+\begin{prooftree}
+\AxiomC{}
+\RightLabel{axiom $a_1$}
+\UnaryInfC{$\Gamma \vdash (p \Rightarrow q) \wedge (q \Rightarrow p)$}
+\RightLabel{weaken}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash (p \Rightarrow q) \wedge (q \Rightarrow p)$}
+\RightLabel{canonicalize}
+\UnaryInfC{$\Gamma , \neg s_1 \vdash (\neg p \vee q) \wedge (\neg q \vee p)$}
+\RightLabel{conjunct}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash \neg q \vee p$}
+\end{prooftree}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\begin{tptp}
+...
+fof(s1, (p ∨ q) ⇒ p, inf(strip,goal)).
+fof(neg1, ¬ ((p ∨ q) ⇒ p), inf(negate,s1)).
+...
+fof(n02, ¬ p ∧ (p ∨ q), inf(canonicalize, neg1)).
+fof(n03, p ∨ q, inf(conjunct, n02)).
+fof(n04, ¬ p, inf(conjunct, n02)).
+...
+\end{tptp}
+
+($\mathcal{D}_2$)
+\begin{prooftree}
+\AxiomC{}
+\RightLabel{assume}
+\UnaryInfC{$\Gamma , \neg s_1 \vdash \neg s_1$}
+\RightLabel{canonicalize}
+\UnaryInfC{$\Gamma , \neg s_1 \vdash \neg p \wedge (p \vee q)$}
+\RightLabel{conjunct}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash p \vee q$}
+\end{prooftree}
+
+($\mathcal{D}_3$)
+\begin{prooftree}
+\AxiomC{}
+\RightLabel{assume $\neg s_1$}
+\UnaryInfC{$\Gamma , \neg s_1 \vdash \neg s_1$}
+% \UnaryInfC{$\Gamma , \neg s_1 \vdash (p \vee q) \Rightarrow p$}
+\RightLabel{canonicalize}
+\UnaryInfC{$\Gamma , \neg s_1 \vdash \neg p \wedge (p \vee q)$}
+\RightLabel{conjunct}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash \neg p$}
+\end{prooftree}
+\end{frame}
+
+\begin{frame}
+($\mathcal{D}_4$)
+\begin{prooftree}
+\AxiomC{$\mathcal{D}_2$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash p \vee q$}
+%
+\AxiomC{$\mathcal{D}_3$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash \neg p$}
+%
+\RightLabel{simplify}
+\BinaryInfC{$\Gamma, \neg s_1 \vdash q$}
+\end{prooftree}
+
+($\mathcal{D}_5$)
+\begin{prooftree}
+\AxiomC{$\mathcal{D}_1$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash \neg q \vee p$}
+\AxiomC{$\mathcal{D}_4$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash q$}
+\RightLabel{resolve $q$}
+\BinaryInfC{$\Gamma, \neg s_1 \vdash p$}
+\RightLabel{}
+\AxiomC{$\mathcal{D}_3$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash \neg p$}
+\RightLabel{resolve $p$}
+\BinaryInfC{$\Gamma, \neg s_1 \vdash \bot$}
+\RightLabel{RAA}
+\UnaryInfC{$\Gamma \vdash s_1$}
+\end{prooftree}
+\end{frame}
+
+\begin{frame}[fragile]{Refutation of Subgoal 2}
+\begin{tptp}
+fof(s2, ((p ∨ q) ∧ p) ⇒ q, inf(strip,goal)).
+fof(neg2, ¬ (((p ∨ q) ∧ p) ⇒ q), inf(negate,s2)).
+fof(n10, ¬ q ∧ p ∧ (p ∨ q), inf(canonicalize, neg2)).
+fof(n11, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, a1)).
+fof(n12, ¬ p ∨ q, inf(conjunct, n11)).
+fof(n13, ⊥, inf(simplify,[n10, n12])).
+cnf(r10, ⊥, inf(canonicalize, n13)).
+\end{tptp}
+\end{frame}
+
+\begin{frame}[label=contributions]{Results}
+Academic results: paper (work in progress)
+Software related results:
+\begin{itemize}
+\item \Athena\footnote{\url{https://github.com/jonaprieto/athena}.}: a translator tool for \Metis proofs to \Agda in \Haskell
+\item \Agda libraries:
+\begin{itemize}
+  \item \texttt{Agda-Metis}\footnote{\url{https://github.com/jonaprieto/agda-metis}.}: \Metis prover reasoning for propositional logic
+  \item \texttt{Agda-Prop}\footnote{\url{https://github.com/jonaprieto/agda-prop}.}: intuitionistic propositional logic with PEM
+\end{itemize}
+\item Bugs found in \Metis: see issues No.~2, No.~4, and commit
+\name{8a3f11e} in \Metis official
+repository\footnote{\url{https://github.com/gilith/metis}.}
+\end{itemize}
+
+In parallel, we develop:
+\begin{itemize}
+\item \name{Online-ATPs}\footnote{\url{https://github.com/jonaprieto/online-atps}.}: a client for the \TPTP world in \Haskell
+This tool allowed us to use \Metis without installing it
+\item \name{Prop-Pack}\footnote{\url{https://github.com/jonaprieto/prop-pack}.}: Compendium of \TPTP problems in classical propositional logic used to test \Athena
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[label=future-work]{Future Work}
+Further research directions include, but are not limited to:
+
+\begin{itemize}
+\item improve the performance of the \canonicalize rule
+\item extend the proof-reconstruction presented in this paper to
+  \begin{itemize}
+    \item support the proposition logic with equality of \Metis
+    \item support other \ATPs for propositional logic like \name{EProver}
+     or \name{Z3}.\\
+     See Kanso's Ph.D. thesis~\cite{Kanso2012}
+    \item support \Metis first-order proofs
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[allowframebreaks]{References}
+\printbibliography
+\end{frame}
 
 
-% \begin{frame}[fragile, label=tstp-dag]{DAG Example}
-% \vfill
-% By refutation, we proved $p ⊢ p$:
+\begin{frame}
+\end{frame}
 
-% \begin{columns}
-% \begin{column}{0.5\textwidth}
+\begin{frame}[fragile, label=tptp-syntax]{\TPTP Syntax}
+  {Thousands of Problems for Theorem Provers}
 
-% \begin{prooftree}
-% \AxiomC{}
-% \RightLabel{\texttt{\scriptsize assume}}
-% \UnaryInfC{$\neg p$}
-% \RightLabel{\texttt{\scriptsize strip}}
-% \UnaryInfC{$\neg p$}
-% \AxiomC{}
-% \RightLabel{\texttt{\scriptsize axiom}}
-% \UnaryInfC{$p$}
-% \RightLabel{\texttt{\scriptsize canonicalize}}
-% \UnaryInfC{$p$}
-% \RightLabel{\texttt{\scriptsize simplify}}
-% \BinaryInfC{$⊥$}
-% \RightLabel{\texttt{\scriptsize canonicalize}}
-% \UnaryInfC{$⊥$}
-% \end{prooftree}
-% \end{column}
-% \begin{column}{0.5\textwidth}  %%<--- here
-%     \begin{center}
-%     \includegraphics[height=0.8\textwidth]{figures/derivation.png}
-%      \end{center}
-% \end{column}
-% \end{columns}
-% \vfill
-% \gobackreconstruction
-% \end{frame}
+  \begin{itemize}
+  \item Is a language\footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/SyntaxBNF.html}.}  to encode problems
+  \item Is the input of the \ATPs
+  \item Annotated formulas with the form
+   \begin{center}
+\begin{tptp}
+language(name, role, formula).
+\end{tptp}
+    \end{center}
+    \begin{itemize}
+      \item[\texttt{language}] FOF or CNF
+      \item[\texttt{name}] to identify the formula within the problem
+      \item[\texttt{role}] axiom, definition, hypothesis, conjecture
+      \item[\texttt{formula}] formula in \TPTP format
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{\TSTP Syntax}
+A \TSTP derivation\footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/QuickGuide/Derivations.html}.}
+\begin{itemize}
+  \item Is a \textbf{D}irected \textbf{A}cyclic \textbf{G}raph where
+  \begin{itemize}
+    \item[\texttt{leaf}] is a formula from the \TPTP input
+    \item[\texttt{node}] is a formula inferred from parent formula
+    \item[\texttt{root}] the final derived formula
+  \end{itemize}
+  \item Is a list of annotated formulas with the form
+  \end{itemize}
+
+\begin{tptp}
+  language(name, role, formula, source [,useful info]).
+\end{tptp}
+
+where \texttt{\color{blu} source} typically is an inference record
+\begin{tptp}
+  inference(rule, useful info, parents).
+\end{tptp}
+\end{frame}
+
+
+\begin{frame}[fragile, label=tstp-example]{\TSTP Example}
+
+\begin{itemize}
+  \item Proof found by \Metis for the problem $p ⊢ p$
+{\small
+\begin{tptp}
+$ metis --show proof problem.tptp
+fof(a, axiom, p).
+fof(goal, conjecture, p).
+fof(subgoal_0, plain, p),
+  inference(strip, [], [goal])).
+fof(negate_0_0, plain, ~ p,
+  inference(negate, [], [subgoal_0])).
+fof(normalize_0_0, plain, ~ p,
+  inference(canonicalize, [], [negate_0_0])).
+fof(normalize_0_1, plain, p,
+  inference(canonicalize, [], [a])).
+fof(normalize_0_2, plain, $false,
+  inference(simplify, [],
+    [normalize_0_0, normalize_0_1])).
+cnf(refute_0_0, plain, $false,
+    inference(canonicalize, [], [normalize_0_2])).
+\end{tptp}
+}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile, label=tstp-dag]{DAG Example}
+\vfill
+By refutation, we proved $p ⊢ p$:
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\begin{prooftree}
+\AxiomC{}
+\RightLabel{assume}
+\UnaryInfC{$¬ p$}
+\RightLabel{strip}
+\UnaryInfC{$¬ p$}
+\AxiomC{}
+\RightLabel{axiom}
+\UnaryInfC{$p$}
+\RightLabel{canonicalize}
+\UnaryInfC{$p$}
+\RightLabel{simplify}
+\BinaryInfC{$⊥$}
+\RightLabel{canonicalize}
+\UnaryInfC{$⊥$}
+\end{prooftree}
+\end{column}
+\begin{column}{0.5\textwidth}  %%<--- here
+    \begin{center}
+    \includegraphics[height=0.8\textwidth]{figures/derivation.png}
+     \end{center}
+\end{column}
+\end{columns}
+\vfill
+\end{frame}
 
 
 % \begin{frame}[fragile, label=athena]{\texttt{Athena}~\citep{Athena}}
@@ -776,13 +1064,13 @@ the following inferences:
 % \end{tikzpicture}
 
 % Is a \texttt{Haskell} program
-% that translates proofs given by \texttt{Metis}
-% in \texttt{TSTP} format to \texttt{Agda} code\\
+% that translates proofs given by \Metis
+% in \TSTP format to \texttt{Agda} code\\
 
 % \begin{itemize}
-%     \item Parsing of \texttt{TSTP} language\footnote{\label{parsing}\url{https://github.com/agomezl/tstp2agda}.}
+%     \item Parsing of \TSTP language\footnote{\label{parsing}\url{https://github.com/agomezl/tstp2agda}.}
 %     \item Creation\textsuperscript{\ref{parsing}} and analysis of \hyperlink{tstp-dag}{\textbf{DAG}} derivations
-%     \item Analysis of inference rules used in the \texttt{TSTP} derivation
+%     \item Analysis of inference rules used in the \TSTP derivation
 %     \item \texttt{Agda} code generation
 % \begin{table}[!ht]
 % \begin{center}
@@ -793,7 +1081,7 @@ the following inferences:
 % \textbf{Library} & \textbf{Purpose} \\
 % \hline
 % \texttt{\hyperlink{agda-prop}{\texttt{Agda-Prop}}}& axioms and theorems of Classical Propositional Logic\\
-% \texttt{\hyperlink{agda-metis}{\texttt{Agda-Metis}}} & versions of the inference rules used by \texttt{Metis}\\
+% \texttt{\hyperlink{agda-metis}{\texttt{Agda-Metis}}} & versions of the inference rules used by \Metis\\
 % \hline
 % \end{tabular}}
 % }
@@ -807,7 +1095,7 @@ the following inferences:
 % \begin{frame}[fragile, label=agda-prop-2]{\texttt{Agda-Prop} Library
 %   \footnote{\url{https://github.com/jonaprieto/agda-prop}.}}
 % \begin{itemize}
-%   \item Intuitionistic Propositional Logic + PEM ($\Gamma \vdash ϕ \vee \neg ϕ$)
+%   \item Intuitionistic Propositional Logic + PEM ($\Gamma ⊢ ϕ \vee \neg ϕ$)
 %   \item A data type for formulas
 %   \vspace*{1mm}
 
@@ -1021,8 +1309,8 @@ the following inferences:
 % atp-conjunct
 %   : ∀ {Γ} {\varphi}
 %   → (\psi : Prop)
-%   → \Gamma \vdash \varphi
-%   → \Gamma \vdash conjunct \varphi \psi
+%   → \Gamma ⊢ \varphi
+%   → \Gamma ⊢ conjunct \varphi \psi
 
 % atp-conjunct {Γ} {\varphi} \psi Γ⊢\varphi
 %   with conj-view \varphi | conjunct-path \varphi \psi []
@@ -1033,7 +1321,6 @@ the following inferences:
 % ...  | other _     | (_ ∷ _)   = Γ⊢\varphi
 % \end{minted}
 % \vfill
-% \gobackreconstruction
 % \end{frame}
 
 % \begin{frame}[fragile, label=agda-file]{\texttt{Agda} Code Example}
@@ -1041,7 +1328,7 @@ the following inferences:
 
 % \begin{itemize}
 %   \item The problem is $p ∧ q ⊢ q ∧ p$
-%   \item In \texttt{TPTP} format
+%   \item In \TPTP format
 % \begin{tptp}
 % $ cat problem.tptp
 % fof(a, axiom, p & q).
@@ -1057,7 +1344,7 @@ the following inferences:
 % \end{itemize}
 % \end{frame}
 
-% \begin{frame}[fragile, allowframebreaks]{\texttt{TSTP} Derivation given by \texttt{Metis}}
+% \begin{frame}[fragile, allowframebreaks]{\TSTP Derivation given by \Metis}
 % \begin{tptp}
 % fof(a, axiom, p & q).
 % fof(goal, conjecture, q & p).
@@ -1127,7 +1414,7 @@ the following inferences:
 % subgoal₀ : Prop
 % subgoal₀ = q
 
-% proof₀ : \Gamma \vdash subgoal₀
+% proof₀ : \Gamma ⊢ subgoal₀
 % proof₀ =
 %   (RAA
 %     (atp-simplify ⊥
@@ -1148,7 +1435,7 @@ the following inferences:
 % subgoal₁ : Prop
 % subgoal₁ = q ⇒ p
 
-% proof₁ : \Gamma \vdash subgoal₁
+% proof₁ : \Gamma ⊢ subgoal₁
 % proof₁ =
 %   (RAA
 %     (atp-simplify ⊥
@@ -1182,21 +1469,20 @@ the following inferences:
 % subgoal₁ = q ⇒ p
 
 % -- Proof
-% proof₀ : \Gamma \vdash subgoal₀
-% proof₁ : \Gamma \vdash subgoal₁
+% proof₀ : \Gamma ⊢ subgoal₀
+% proof₁ : \Gamma ⊢ subgoal₁
 
-% proof : \Gamma \vdash goal
+% proof : \Gamma ⊢ goal
 % proof =
 %   ⇒-elim
 %     atp-splitGoal            -- q ∧ (q ⇒ p) ⇒ p
 %     (∧-intro proof₀ proof₁)
 % \end{minted}
 % \vfill
-% \gobackreconstruction
 % \end{frame}
 
 % \begin{frame}[fragile, label=failure-example]{Bug\footnote{\url{https://github.com/gilith/metis/issues/2}.} in the Printing of the Proof}
-%   {\texttt{Metis} v2.3 (release 20161108)}
+%   {\Metis v2.3 (release 20161108)}
 % % {}
 % \begin{tptp}
 % $ cat problem.tptp
@@ -1223,7 +1509,7 @@ the following inferences:
 % \end{frame}
 
 % \begin{frame}[fragile, label=failure-example-2]{Bug in the Printing of the Proof}
-%   {\texttt{Metis} v2.3 (release 20161108)}
+%   {\Metis v2.3 (release 20161108)}
 
 % \[ \varphi := \neg p ∧ (\neg q ⇔ \neg r) ∧ (\neg p ⇔ (\neg q ⇔ \neg r))\]
 
@@ -1253,7 +1539,6 @@ the following inferences:
 % The bug was caused by the conversion of \texttt{Xor} sets to \texttt{Iff} lists.
 % After reporting this, Hurd fixed the printing of \texttt{canonicalize} inference rule
 % \[ \varphi := \neg p ∧ (\neg q ⇔ \neg r) ∧ (\neg p ⇔ (\neg q ⇔ {\color{red} r}))\]
-% \gobackreconstruction
 % \end{frame}
 
 
@@ -1261,7 +1546,7 @@ the following inferences:
 % \begin{block}{SledgeHammer} \citep{Paulson2007}
 % \begin{itemize}
 % \item \texttt{Isabelle}/\texttt{HOL} mature tool
-% \item \texttt{Metis} ported within \texttt{Isabelle/HOL}
+% \item \Metis ported within \texttt{Isabelle/HOL}
 % \item Reconstruct proofs of well-known ATPs: \texttt{EProver}, \texttt{Vampire},
 % among others using \texttt{SystemOnTPTP} server
 % \end{itemize}
@@ -1349,52 +1634,7 @@ the following inferences:
 % \end{frame}
 
 
-% \begin{frame}[label=pending-work]{TODO}
-% \begin{itemize}
-% \item Complete implementation for \texttt{simplify} inference\footnote{\url{https://github.com/gilith/metis/issues/3}.}
-% \item Complete implementation for \texttt{canonicalize} inference: what
-% normal form use to transform the formulas
-% \item Complete implementation for Splitting a goal in a list of subgoals
-% \end{itemize}
-% \end{frame}
-
-% \begin{frame}[label=contributions]{Contributions}
-% \vfill
-% \begin{table}[!ht]
-% \begin{center}
-% \scalebox{0.8}{
-% {\renewcommand{\arraystretch}{1.3}%
-% \begin{tabular}{|ll|}
-% \hline
-% \textbf{Name} & \textbf{References} \\
-% \hline
-% \href{http://github.com/jonaprieto/agda-metis}{\texttt{Agda-Metis}}   & \citep{AgdaMetis}\\
-% \href{http://github.com/jonaprieto/agda-prop}{\texttt{Agda-Prop}}     & \citep{AgdaProp}\\
-% \href{http://github.com/jonaprieto/athena}{\texttt{Athena}}           & \citep{Athena}\\
-% \href{http://github.com/jonaprieto/online-atps}{\texttt{OnlineATPs}}  & \citep{OnlineATPs}\\
-% \href{http://github.com/jonaprieto/prop-pack}{\texttt{Prop-Pack}}     & \citep{ProPack}\\[1ex]
-% \hline
-% \end{tabular}}
-% }
-% \end{center}
-% \end{table}
-% \vfill
-% \end{frame}
-
-% \begin{frame}[label=future-work]{Future Work}
-% \begin{itemize}
-%   \item Integration with \texttt{Apia}
-%   \item Support First-Order Logic with Equality
-%   \item Support another prover like \texttt{EProver} or \texttt{Vampire}
-% \end{itemize}
-% \end{frame}
-
-\begin{frame}[allowframebreaks]{References}
-\printbibliography
-\end{frame}
-
-
-% \begin{frame}[fragile,label=metis-inference-rules]{\texttt{Metis} Inference Rules}
+% \begin{frame}[fragile,label=metis-inference-rules]{\Metis Inference Rules}
 % \vfill
 % \begin{prooftree}
 % \AxiomC{}
