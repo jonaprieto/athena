@@ -7,8 +7,6 @@ fast :
 
 .PHONY : pdf
 pdf :
-	- make clean
-	- rm -f $(NAME).pdf
 	- latexmk -pdf -xelatex -shell-escape $(NAME).tex
 
 .PHONY : old-pdf
@@ -43,4 +41,4 @@ clean :
 	@rm -Rf _*
 	@rm -Rf auto
 
-default: fast
+default: pdf

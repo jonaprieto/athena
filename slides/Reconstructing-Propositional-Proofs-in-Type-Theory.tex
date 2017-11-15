@@ -750,16 +750,17 @@ the following inferences:
 \vfill
 \end{frame}
 
-\begin{frame}[fragile]{\Metis Refutation Strategy}
+\begin{frame}[fragile]{\Metis Algorithm}
 \begin{algorithm}[H]
-    % \caption{Perturbación de una solución}
+    \caption{\Metis Refutation Strategy}
     \begin{algorithmic}[Metis]
         \Procedure{metis}{}\newline
         \textbf{input:} a \textit{goal} and a set of \emph{premises} $a_i$\newline
         \textbf{output:} maybe a derivation when $\{a_i\} \vdash goal$, otherwise nothing.
         \State{Strip the goal into a list of \emph{subgoals}.}
         \For{each subgoal $s_i$}
-        \State{Try to find by a refutation of $\neg s_i$}
+        \State{Try to find by a refutation of $\neg s_i$:}
+
         \EndFor
 
         % \If{si el número de la iteración numIter en Alg.~1 es un múltiplo $l$}
