@@ -1,0 +1,28 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kr}{data} \PYG{k+kt}{ConjView} \PYG{o+ow}{:} \PYG{k+kt}{Prop} \PYG{o+ow}{→} \PYG{k+kt}{Set} \PYG{k+kr}{where}
+  \PYG{n+nf}{conj}  \PYG{o+ow}{:} \PYG{o}{(}φ₁ φ₂ \PYG{o+ow}{:} \PYG{k+kt}{Prop}\PYG{o}{)} \PYG{o+ow}{→} \PYG{k+kt}{ConjView} \PYG{o}{(}φ₁ ∧ φ₂\PYG{o}{)}
+  \PYG{n+nf}{other} \PYG{o+ow}{:} \PYG{o}{(}φ \PYG{o+ow}{:} \PYG{k+kt}{Prop}\PYG{o}{)}     \PYG{o+ow}{→} \PYG{k+kt}{ConjView} φ
+
+\PYG{n+nf}{conj\PYGZhy{}view} \PYG{o+ow}{:} \PYG{o}{(}φ \PYG{o+ow}{:} \PYG{k+kt}{Prop}\PYG{o}{)} \PYG{o+ow}{→} \PYG{k+kt}{ConjView} φ
+\PYG{k+kp}{conj\PYGZhy{}view} \PYG{o}{(}φ ∧ ψ\PYG{o}{)} \PYG{o+ow}{=} conj \PYGZus{} \PYGZus{}
+\PYG{k+kp}{conj\PYGZhy{}view} φ       \PYG{o+ow}{=} other \PYGZus{}
+
+\PYG{k+kr}{data} \PYG{k+kt}{Step} \PYG{o+ow}{:} \PYG{k+kt}{Set} \PYG{k+kr}{where}
+  \PYG{n+nf}{pick}  \PYG{o+ow}{:} \PYG{k+kt}{Step}
+  \PYG{n+nf}{proj₁} \PYG{o+ow}{:} \PYG{k+kt}{Step}
+  \PYG{n+nf}{proj₂} \PYG{o+ow}{:} \PYG{k+kt}{Step}
+
+\PYG{n+nf}{Path} \PYG{o+ow}{:} \PYG{k+kt}{Set}
+\PYG{k+kt}{Path} \PYG{o+ow}{=} \PYG{k+kt}{List} \PYG{k+kt}{Step}
+
+\PYG{n+nf}{conjunct\PYGZhy{}path} \PYG{o+ow}{:} \PYG{o}{(}φ ψ \PYG{o+ow}{:} \PYG{k+kt}{Prop}\PYG{o}{)} \PYG{o+ow}{→} \PYG{k+kt}{Path} \PYG{o+ow}{→} \PYG{k+kt}{Path}
+\PYG{k+kp}{conjunct\PYGZhy{}path} φ ψ path \PYG{k+kr}{with} ⌊ \PYG{k+kp}{eq} φ ψ ⌋
+\PYG{o+ow}{...} \PYG{o+ow}{|} true  \PYG{o+ow}{=} path ∷ʳ pick
+\PYG{o+ow}{...} \PYG{o+ow}{|} false \PYG{k+kr}{with} \PYG{k+kp}{conj\PYGZhy{}view} φ
+\PYG{o+ow}{...}   \PYG{o+ow}{|} other \PYGZus{} \PYG{o+ow}{=} []
+\PYG{o+ow}{...}   \PYG{o+ow}{|} conj φ₁ φ₂ \PYG{k+kr}{with} \PYG{k+kp}{conjunct\PYGZhy{}path} φ₁ ψ []
+\PYG{o+ow}{...}     \PYG{o+ow}{|} subpath@\PYG{o}{(}\PYGZus{} ∷ \PYGZus{}\PYG{o}{)} \PYG{o+ow}{=} \PYG{o}{(}path ∷ʳ \PYG{k+kp}{proj₁}\PYG{o}{)} ++ subpath
+\PYG{o+ow}{...}     \PYG{o+ow}{|} [] \PYG{k+kr}{with} \PYG{k+kp}{conjunct\PYGZhy{}path} φ₂ ψ []
+\PYG{o+ow}{...}          \PYG{o+ow}{|} subpath@\PYG{o}{(}\PYGZus{} ∷ \PYGZus{}\PYG{o}{)} \PYG{o+ow}{=} \PYG{o}{(}path ∷ʳ \PYG{k+kp}{proj₂}\PYG{o}{)} ++ subpath
+\PYG{o+ow}{...}          \PYG{o+ow}{|} []              \PYG{o+ow}{=} []
+\end{Verbatim}

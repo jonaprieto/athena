@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kr}{module} \PYG{n}{Or} \PYG{k+kr}{where}
+
+\PYG{k+kr}{data} \PYGZus{}∨\PYGZus{} \PYG{o}{(}A B \PYG{o+ow}{:} \PYG{k+kt}{Set}\PYG{o}{)} \PYG{o+ow}{:} \PYG{k+kt}{Set} \PYG{k+kr}{where}
+  \PYG{n+nf}{inj₁} \PYG{o+ow}{:} A \PYG{o+ow}{→} A ∨ B
+  \PYG{n+nf}{inj₂} \PYG{o+ow}{:} B \PYG{o+ow}{→} A ∨ B
+
+\PYG{k+kr}{postulate}
+  A B    \PYG{o+ow}{:} \PYG{k+kt}{Set}
+  \PYG{n+nf}{∨\PYGZhy{}comm} \PYG{o+ow}{:} A ∨ B \PYG{o+ow}{→} B ∨ A
+\PYG{c+cm}{\PYGZob{}\PYGZhy{}\PYGZsh{} ATP prove ∨\PYGZhy{}comm \PYGZsh{}\PYGZhy{}\PYGZcb{}}
+\end{Verbatim}

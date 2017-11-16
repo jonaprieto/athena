@@ -1,0 +1,102 @@
+
+\makeatletter
+\def\PYGcagda@reset{\let\PYGcagda@it=\relax \let\PYGcagda@bf=\relax%
+    \let\PYGcagda@ul=\relax \let\PYGcagda@tc=\relax%
+    \let\PYGcagda@bc=\relax \let\PYGcagda@ff=\relax}
+\def\PYGcagda@tok#1{\csname PYGcagda@tok@#1\endcsname}
+\def\PYGcagda@toks#1+{\ifx\relax#1\empty\else%
+    \PYGcagda@tok{#1}\expandafter\PYGcagda@toks\fi}
+\def\PYGcagda@do#1{\PYGcagda@bc{\PYGcagda@tc{\PYGcagda@ul{%
+    \PYGcagda@it{\PYGcagda@bf{\PYGcagda@ff{#1}}}}}}}
+\def\PYGcagda#1#2{\PYGcagda@reset\PYGcagda@toks#1+\relax+\PYGcagda@do{#2}}
+
+\expandafter\def\csname PYGcagda@tok@\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PYGcagda@tok@gu\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.67,0.67,0.67}{##1}}}
+\expandafter\def\csname PYGcagda@tok@ch\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.51,0.51,0.49}{##1}}}
+\expandafter\def\csname PYGcagda@tok@gs\endcsname{\let\PYGcagda@bf=\textbf}
+\expandafter\def\csname PYGcagda@tok@gr\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.67,0.00,0.00}{##1}}}
+\expandafter\def\csname PYGcagda@tok@cm\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.51,0.51,0.49}{##1}}}
+\expandafter\def\csname PYGcagda@tok@vg\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.50,0.50}{##1}}}
+\expandafter\def\csname PYGcagda@tok@m\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.60,0.60}{##1}}}
+\expandafter\def\csname PYGcagda@tok@vm\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.50,0.50}{##1}}}
+\expandafter\def\csname PYGcagda@tok@mh\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.60,0.60}{##1}}}
+\expandafter\def\csname PYGcagda@tok@cs\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PYGcagda@tok@ge\endcsname{\let\PYGcagda@it=\textit\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PYGcagda@tok@gd\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.00,0.00}{##1}}\def\PYGcagda@bc##1{\setlength{\fboxsep}{0pt}\colorbox[rgb]{1.00,0.87,0.87}{\strut ##1}}}
+\expandafter\def\csname PYGcagda@tok@il\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.60,0.60}{##1}}}
+\expandafter\def\csname PYGcagda@tok@go\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PYGcagda@tok@cp\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PYGcagda@tok@gi\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.00,0.00}{##1}}\def\PYGcagda@bc##1{\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.87,1.00,0.87}{\strut ##1}}}
+\expandafter\def\csname PYGcagda@tok@gh\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PYGcagda@tok@gt\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.67,0.00,0.00}{##1}}}
+\expandafter\def\csname PYGcagda@tok@ni\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PYGcagda@tok@nl\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.60,0.00,0.00}{##1}}}
+\expandafter\def\csname PYGcagda@tok@nn\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.33,0.33,0.33}{##1}}}
+\expandafter\def\csname PYGcagda@tok@no\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.50,0.50}{##1}}}
+\expandafter\def\csname PYGcagda@tok@na\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.50,0.50}{##1}}}
+\expandafter\def\csname PYGcagda@tok@nb\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.53,0.70}{##1}}}
+\expandafter\def\csname PYGcagda@tok@nc\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.27,0.33,0.53}{##1}}}
+\expandafter\def\csname PYGcagda@tok@nd\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.24,0.36,0.36}{##1}}}
+\expandafter\def\csname PYGcagda@tok@ne\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.60,0.00,0.00}{##1}}}
+\expandafter\def\csname PYGcagda@tok@nf\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.43,0.31,0.55}{##1}}}
+\expandafter\def\csname PYGcagda@tok@si\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.87,0.07,0.27}{##1}}}
+\expandafter\def\csname PYGcagda@tok@s2\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.87,0.07,0.27}{##1}}}
+\expandafter\def\csname PYGcagda@tok@vi\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.50,0.50}{##1}}}
+\expandafter\def\csname PYGcagda@tok@nt\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PYGcagda@tok@nv\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.50,0.50}{##1}}}
+\expandafter\def\csname PYGcagda@tok@s1\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.87,0.07,0.27}{##1}}}
+\expandafter\def\csname PYGcagda@tok@dl\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.80,0.33,0.33}{##1}}}
+\expandafter\def\csname PYGcagda@tok@vc\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.50,0.50}{##1}}}
+\expandafter\def\csname PYGcagda@tok@gp\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.33,0.33,0.33}{##1}}}
+\expandafter\def\csname PYGcagda@tok@sh\endcsname{\let\PYGcagda@it=\textit\def\PYGcagda@tc##1{\textcolor[rgb]{0.11,0.49,0.44}{##1}}}
+\expandafter\def\csname PYGcagda@tok@ow\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.43,0.31,0.55}{##1}}}
+\expandafter\def\csname PYGcagda@tok@sx\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.80,0.42,0.13}{##1}}}
+\expandafter\def\csname PYGcagda@tok@bp\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PYGcagda@tok@c1\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.51,0.51,0.49}{##1}}}
+\expandafter\def\csname PYGcagda@tok@fm\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.43,0.31,0.55}{##1}}}
+\expandafter\def\csname PYGcagda@tok@o\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.43,0.31,0.55}{##1}}}
+\expandafter\def\csname PYGcagda@tok@kc\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.43,0.31,0.55}{##1}}}
+\expandafter\def\csname PYGcagda@tok@c\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.51,0.51,0.49}{##1}}}
+\expandafter\def\csname PYGcagda@tok@mf\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.60,0.60}{##1}}}
+\expandafter\def\csname PYGcagda@tok@err\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.65,0.09,0.09}{##1}}\def\PYGcagda@bc##1{\setlength{\fboxsep}{0pt}\colorbox[rgb]{0.89,0.82,0.82}{\strut ##1}}}
+\expandafter\def\csname PYGcagda@tok@mb\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.60,0.60}{##1}}}
+\expandafter\def\csname PYGcagda@tok@ss\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.60,0.00,0.45}{##1}}}
+\expandafter\def\csname PYGcagda@tok@sr\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.71,0.32,0.80}{##1}}}
+\expandafter\def\csname PYGcagda@tok@mo\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.60,0.60}{##1}}}
+\expandafter\def\csname PYGcagda@tok@kd\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.43,0.31,0.55}{##1}}}
+\expandafter\def\csname PYGcagda@tok@mi\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.00,0.60,0.60}{##1}}}
+\expandafter\def\csname PYGcagda@tok@kn\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.34,0.31,0.64}{##1}}}
+\expandafter\def\csname PYGcagda@tok@cpf\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.51,0.51,0.49}{##1}}}
+\expandafter\def\csname PYGcagda@tok@kr\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.43,0.31,0.55}{##1}}}
+\expandafter\def\csname PYGcagda@tok@s\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.80,0.33,0.33}{##1}}}
+\expandafter\def\csname PYGcagda@tok@kp\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.39,0.16,0.41}{##1}}}
+\expandafter\def\csname PYGcagda@tok@w\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PYGcagda@tok@kt\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.34,0.31,0.64}{##1}}}
+\expandafter\def\csname PYGcagda@tok@sc\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.87,0.07,0.27}{##1}}}
+\expandafter\def\csname PYGcagda@tok@sb\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.87,0.07,0.27}{##1}}}
+\expandafter\def\csname PYGcagda@tok@sa\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.80,0.33,0.33}{##1}}}
+\expandafter\def\csname PYGcagda@tok@k\endcsname{\let\PYGcagda@bf=\textbf\def\PYGcagda@tc##1{\textcolor[rgb]{0.43,0.31,0.55}{##1}}}
+\expandafter\def\csname PYGcagda@tok@se\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.87,0.07,0.27}{##1}}}
+\expandafter\def\csname PYGcagda@tok@sd\endcsname{\def\PYGcagda@tc##1{\textcolor[rgb]{0.87,0.07,0.27}{##1}}}
+
+\def\PYGcagdaZbs{\char`\\}
+\def\PYGcagdaZus{\char`\_}
+\def\PYGcagdaZob{\char`\{}
+\def\PYGcagdaZcb{\char`\}}
+\def\PYGcagdaZca{\char`\^}
+\def\PYGcagdaZam{\char`\&}
+\def\PYGcagdaZlt{\char`\<}
+\def\PYGcagdaZgt{\char`\>}
+\def\PYGcagdaZsh{\char`\#}
+\def\PYGcagdaZpc{\char`\%}
+\def\PYGcagdaZdl{\char`\$}
+\def\PYGcagdaZhy{\char`\-}
+\def\PYGcagdaZsq{\char`\'}
+\def\PYGcagdaZdq{\char`\"}
+\def\PYGcagdaZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYGcagdaZat{@}
+\def\PYGcagdaZlb{[}
+\def\PYGcagdaZrb{]}
+\makeatother
+

@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k+kr}{data} \PYGZus{}⊢\PYGZus{} \PYG{o+ow}{:} \PYG{o}{(}Γ \PYG{o+ow}{:} \PYG{k+kt}{Ctxt}\PYG{o}{)(}φ \PYG{o+ow}{:} \PYG{k+kt}{Prop}\PYG{o}{)} \PYG{o+ow}{→} \PYG{k+kt}{Set}
+  \PYG{o+ow}{...}
+  \PYG{n+nf}{∧\PYGZhy{}intro}
+    \PYG{o+ow}{:} \PYG{o+ow}{∀} \PYG{o}{\PYGZob{}}Γ\PYG{o}{\PYGZcb{}} \PYG{o}{\PYGZob{}}φ ψ\PYG{o}{\PYGZcb{}}
+    \PYG{o+ow}{→} Γ ⊢ φ \PYG{o+ow}{→} Γ ⊢ ψ
+    \PYG{o+ow}{→} Γ ⊢ φ ∧ ψ
+
+  \PYG{n+nf}{∧\PYGZhy{}proj₁}
+    \PYG{o+ow}{:} \PYG{o+ow}{∀} \PYG{o}{\PYGZob{}}Γ\PYG{o}{\PYGZcb{}} \PYG{o}{\PYGZob{}}φ ψ\PYG{o}{\PYGZcb{}}
+    \PYG{o+ow}{→} Γ ⊢ φ ∧ ψ
+    \PYG{o+ow}{→} Γ ⊢ φ
+
+  \PYG{n+nf}{∧\PYGZhy{}proj₂}
+    \PYG{o+ow}{:} \PYG{o+ow}{∀} \PYG{o}{\PYGZob{}}Γ\PYG{o}{\PYGZcb{}} \PYG{o}{\PYGZob{}}φ ψ\PYG{o}{\PYGZcb{}}
+    \PYG{o+ow}{→} Γ ⊢ φ ∧ ψ
+    \PYG{o+ow}{→} Γ ⊢ ψ
+  \PYG{o+ow}{...}
+\end{Verbatim}

@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kr}{data} \PYGZus{}⊢\PYGZus{} \PYG{o+ow}{:} \PYG{o}{(}Γ \PYG{o+ow}{:} \PYG{k+kt}{Ctxt}\PYG{o}{)(}φ \PYG{o+ow}{:} \PYG{k+kt}{Prop}\PYG{o}{)} \PYG{o+ow}{→} \PYG{k+kt}{Set}
+\end{Verbatim}

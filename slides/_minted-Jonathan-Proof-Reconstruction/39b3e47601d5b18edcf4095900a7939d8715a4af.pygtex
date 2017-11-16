@@ -1,0 +1,23 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nf}{conjunct} \PYG{o+ow}{:} \PYG{k+kt}{Prop} \PYG{o+ow}{→} \PYG{k+kt}{Prop} \PYG{o+ow}{→} \PYG{k+kt}{Prop}
+conjunct φ ψ \PYG{k+kr}{with} \PYG{k+kp}{conj\PYGZhy{}view} φ \PYG{o+ow}{|} \PYG{k+kp}{conjunct\PYGZhy{}path} φ ψ []
+\PYG{o+ow}{...} \PYG{o+ow}{|} \PYGZus{}          \PYG{o+ow}{|} []        \PYG{o+ow}{=} φ
+\PYG{o+ow}{...} \PYG{o+ow}{|} conj \PYGZus{} \PYGZus{}   \PYG{o+ow}{|} pick  ∷ \PYGZus{} \PYG{o+ow}{=} φ
+\PYG{o+ow}{...} \PYG{o+ow}{|} conj φ₁ \PYGZus{}  \PYG{o+ow}{|} \PYG{k+kp}{proj₁} ∷ \PYGZus{} \PYG{o+ow}{=} conjunct φ₁ ψ
+\PYG{o+ow}{...} \PYG{o+ow}{|} conj \PYGZus{} φ₂  \PYG{o+ow}{|} \PYG{k+kp}{proj₂} ∷ \PYGZus{} \PYG{o+ow}{=} conjunct φ₂ ψ
+\PYG{o+ow}{...} \PYG{o+ow}{|} other \PYG{o+ow}{.}φ   \PYG{o+ow}{|} \PYGZus{}         \PYG{o+ow}{=} φ
+
+\PYG{n+nf}{atp\PYGZhy{}conjunct}
+  \PYG{o+ow}{:} \PYG{o+ow}{∀} \PYG{o}{\PYGZob{}}Γ\PYG{o}{\PYGZcb{}} \PYG{o}{\PYGZob{}}φ\PYG{o}{\PYGZcb{}}
+  \PYG{o+ow}{→} \PYG{o}{(}ψ \PYG{o+ow}{:} \PYG{k+kt}{Prop}\PYG{o}{)}
+  \PYG{o+ow}{→} Γ ⊢ φ
+  \PYG{o+ow}{→} Γ ⊢ conjunct φ ψ
+
+\PYG{k+kn}{atp\PYGZhy{}conjunct} \PYG{o}{\PYGZob{}}Γ\PYG{o}{\PYGZcb{}} \PYG{o}{\PYGZob{}}φ\PYG{o}{\PYGZcb{}} ψ Γ⊢φ
+  \PYG{k+kr}{with} \PYG{k+kp}{conj\PYGZhy{}view} φ \PYG{o+ow}{|} \PYG{k+kp}{conjunct\PYGZhy{}path} φ ψ []
+\PYG{o+ow}{...}  \PYG{o+ow}{|} \PYGZus{}           \PYG{o+ow}{|} []        \PYG{o+ow}{=} Γ⊢φ
+\PYG{o+ow}{...}  \PYG{o+ow}{|} conj \PYGZus{} \PYGZus{}    \PYG{o+ow}{|} pick  ∷ \PYGZus{} \PYG{o+ow}{=} Γ⊢φ
+\PYG{o+ow}{...}  \PYG{o+ow}{|} conj \PYGZus{} \PYGZus{}    \PYG{o+ow}{|} \PYG{k+kp}{proj₁} ∷ \PYGZus{} \PYG{o+ow}{=} \PYG{k+kn}{atp\PYGZhy{}conjunct} ψ \PYG{o}{(}\PYG{k+kp}{∧\PYGZhy{}proj₁} Γ⊢φ\PYG{o}{)}
+\PYG{o+ow}{...}  \PYG{o+ow}{|} conj \PYGZus{} \PYGZus{}    \PYG{o+ow}{|} \PYG{k+kp}{proj₂} ∷ \PYGZus{} \PYG{o+ow}{=} \PYG{k+kn}{atp\PYGZhy{}conjunct} ψ \PYG{o}{(}\PYG{k+kp}{∧\PYGZhy{}proj₂} Γ⊢φ\PYG{o}{)}
+\PYG{o+ow}{...}  \PYG{o+ow}{|} other \PYGZus{}     \PYG{o+ow}{|} \PYG{o}{(}\PYGZus{} ∷ \PYGZus{}\PYG{o}{)}   \PYG{o+ow}{=} Γ⊢φ
+\end{Verbatim}

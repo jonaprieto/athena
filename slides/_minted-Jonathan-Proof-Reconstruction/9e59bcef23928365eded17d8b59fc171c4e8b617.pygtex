@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nf}{subgoal₁} \PYG{o+ow}{:} \PYG{k+kt}{Prop}
+subgoal₁ \PYG{o+ow}{=} q ⇒ p
+
+\PYG{n+nf}{proof₁} \PYG{o+ow}{:} Γ ⊢ subgoal₁
+proof₁ \PYG{o+ow}{=}
+  \PYG{o}{(}\PYG{k+kt}{RAA}
+    \PYG{o}{(}\PYG{k+kn}{atp\PYGZhy{}simplify} ⊥
+      \PYG{o}{(}\PYG{k+kn}{atp\PYGZhy{}conjunct} q
+        \PYG{o}{(}\PYG{k+kn}{atp\PYGZhy{}canonicalize} \PYG{o}{(}p ∧ q\PYG{o}{)}
+          \PYG{o}{(}\PYG{k+kp}{weaken} \PYG{o}{(}¬ subgoal₁\PYG{o}{)}
+            \PYG{o}{(}\PYG{k+kp}{assume} \PYG{o}{\PYGZob{}}Γ \PYG{o+ow}{=} ∅\PYG{o}{\PYGZcb{}} a\PYG{o}{))))}
+      \PYG{o}{(}\PYG{k+kn}{atp\PYGZhy{}simplify} ⊥
+        \PYG{o}{(}\PYG{k+kn}{atp\PYGZhy{}canonicalize} \PYG{o}{((}¬ p\PYG{o}{)} ∧ q\PYG{o}{)}
+          \PYG{o}{(}\PYG{k+kp}{assume} \PYG{o}{\PYGZob{}}Γ \PYG{o+ow}{=} Γ\PYG{o}{\PYGZcb{}}
+            \PYG{o}{(}¬ subgoal₁\PYG{o}{)))}
+        \PYG{o}{(}\PYG{k+kn}{atp\PYGZhy{}conjunct} p
+          \PYG{o}{(}\PYG{k+kn}{atp\PYGZhy{}canonicalize} \PYG{o}{(}p ∧ q\PYG{o}{)}
+            \PYG{o}{(}\PYG{k+kp}{weaken} \PYG{o}{(}¬ subgoal₁\PYG{o}{)}
+              \PYG{o}{(}\PYG{k+kp}{assume} \PYG{o}{\PYGZob{}}Γ \PYG{o+ow}{=} ∅\PYG{o}{\PYGZcb{}} a\PYG{o}{)))))))}
+\end{Verbatim}

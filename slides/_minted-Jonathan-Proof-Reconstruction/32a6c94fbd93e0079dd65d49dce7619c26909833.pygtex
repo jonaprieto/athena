@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+p, q, a, goal, subgoal₀, subgoal₁ \PYG{o+ow}{:} \PYG{k+kt}{Prop}
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} Axiom.}
+a \PYG{o+ow}{=} p ∧ q
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} Premise.}
+\PYG{n+nf}{Γ} \PYG{o+ow}{:} \PYG{k+kt}{Ctxt}
+Γ \PYG{o+ow}{=} [ a ]
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} Conjecture.}
+goal \PYG{o+ow}{=} q ∧ p
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} Subgoals.}
+subgoal₀ \PYG{o+ow}{=} q
+subgoal₁ \PYG{o+ow}{=} q ⇒ p
+\end{Verbatim}

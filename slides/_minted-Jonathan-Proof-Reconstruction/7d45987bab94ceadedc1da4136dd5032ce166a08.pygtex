@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} Premise.}
+Γ \PYG{o+ow}{=} [ a ]
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} Conjecture.}
+goal \PYG{o+ow}{=} q ∧ p
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} Subgoals.}
+subgoal₀ \PYG{o+ow}{=} q
+subgoal₁ \PYG{o+ow}{=} q ⇒ p
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} Proof}
+\PYG{n+nf}{proof₀} \PYG{o+ow}{:} Γ ⊢ subgoal₀
+\PYG{n+nf}{proof₁} \PYG{o+ow}{:} Γ ⊢ subgoal₁
+
+\PYG{n+nf}{proof} \PYG{o+ow}{:} Γ ⊢ goal
+proof \PYG{o+ow}{=}
+  \PYG{k+kp}{⇒\PYGZhy{}elim}
+    \PYG{k+kn}{atp\PYGZhy{}splitGoal}            \PYG{c+c1}{\PYGZhy{}\PYGZhy{} q ∧ (q ⇒ p) ⇒ p}
+    \PYG{o}{(}\PYG{k+kp}{∧\PYGZhy{}intro} proof₀ proof₁\PYG{o}{)}
+\end{Verbatim}
