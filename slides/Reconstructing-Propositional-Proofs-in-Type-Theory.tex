@@ -6,6 +6,14 @@
 \usepackage[english]{babel}
 \usepackage{amsmath, amsthm, amssymb}
 
+\newtheorem{mainth}{Theorem}{\bfseries}{\rmfamily}
+% \newtheorem{mainlemma}[mainth]{Lemma}{\bfseries}{\rmfamily}
+% \newtheorem{mydefinition}[mainth]{Definition}{\bfseries}{\rmfamily}
+% \newtheorem{myexamplenum}[mainth]{Example}{\bfseries}{\rmfamily}
+
+% \newtheorem*{notation}{Notation}{\it}{\rmfamily}
+% \newtheorem*{myremark}{Remark}{\bfseries}{\rmfamily}
+
 % -------------------------------------------------------------------
 % Natural deduction proofs
 % -------------------------------------------------------------------
@@ -17,33 +25,57 @@
 % how-to-scale-prooftree-environment-bussproofs-package
 \newenvironment{scprooftree}[1]%
   {\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
-  {\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
+  {\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center}}
 
 % -------------------------------------------------------------------
 % -- Algorithms
 % -------------------------------------------------------------------
-
 \usepackage{algorithm,algpseudocode}
-% -------------------------------------------------------------------
 
-\usepackage{fancyvrb}
+% -------------------------------------------------------------------
+% \usepackage{fancyvrb}
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{lmodern}
 \usepackage{url}
 
-% --------------------------------------------------------------------------
+% --------------------------------------------------------------------
 % Color definitions.
-% --------------------------------------------------------------------------
+% --------------------------------------------------------------------
 \usepackage{xcolor}
+\definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{amethyst}{rgb}{0.6, 0.4, 0.8}
+\definecolor{antiquefuchsia}{rgb}{0.57, 0.36, 0.51}
+\definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
+\definecolor{background}{RGB}{1,0,102}
+\definecolor{ballblue}{rgb}{0.13, 0.67, 0.8}
+\definecolor{bline}{RGB}{255, 255, 255}
+\definecolor{blue(munsell)}{rgb}{0.0, 0.5, 0.69}
+\definecolor{blue(pigment)}{rgb}{0.2, 0.2, 0.6}
 \definecolor{blu}{RGB}{1,0,102}
-\definecolor{decoration}{RGB}{10,164,216}
-\definecolor{darkred}{rgb}{0.5, 0.0, 0.13}
+\definecolor{bondiblue}{rgb}{0.0, 0.58, 0.71}
+\definecolor{brightmaroon}{rgb}{0.76, 0.13, 0.28}
+\definecolor{cadet}{rgb}{0.33, 0.41, 0.47}
 \definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\definecolor{darkred}{rgb}{0.5, 0.0, 0.13}
+\definecolor{decoration}{RGB}{10,164,216}
+\definecolor{fontc}{RGB}{255, 255, 255}
+\definecolor{logo}{RGB}{1,0,102}
 
-% --------------------------------------------------------------------------
+% --------------------------------------------------------------------
+% My palette.
+% --------------------------------------------------------------------
+\definecolor{energy}{RGB}{49,247,250}
+\definecolor{delicate}{RGB}{67,179,223}
+\definecolor{faded}{RGB}{76,117,195}
+\definecolor{plum}{RGB}{87,78,164}
+\definecolor{petunias}{RGB}{109,80,139}
+\definecolor{letour}{RGB}{101,41,105}
+
+% --------------------------------------------------------------------
 % Beamer configuration.
-% --------------------------------------------------------------------------
+% --------------------------------------------------------------------
 \usetheme{default}
 \usecolortheme{default}
 % \usefonttheme{serif}
@@ -88,28 +120,27 @@
 \setbeamercolor{footnote}{fg=gray}
 % \setbeamercolor{block title}{bg=blu,fg=blu}
 % \setbeamercolor{block body}{bg=aliceblue}
-% \setbeamercolor{item}{fg=blu} % color of bullets
-% \setbeamercolor{subitem}{fg=blu}
+\setbeamercolor{item}{fg=blu} % color of bullets
+\setbeamercolor{subitem}{fg=blu}
 % \setbeamercolor{itemize/enumerate subbody}{fg=blu}
 % \setbeamertemplate{itemize subitem}{{\textendash}}
 % \setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
 % \setbeamerfont{itemize/enumerate subitem}{size=\footnotesize}
 
-% --------------------------------------------------------------------------
+% --------------------------------------------------------------------
 % Fonts
-% --------------------------------------------------------------------------
+% --------------------------------------------------------------------
 \usefonttheme{professionalfonts}
 % \usefonttheme{serif}
 
 \usepackage{fontspec}
 \usepackage{mathtools}
 \usepackage{unicode-math}
-
-% \newfontfamily\djvu[ExternalLocation=fonts/
-%   , BoldFont=DejaVuSansMono-Bold.ttf
-%   , BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
-%   , ItalicFont=DejaVuSansMono-Oblique.ttf
-%   ]{DejaVuSansMono.ttf}
+\newfontfamily\djvu[ExternalLocation=fonts/
+  , BoldFont=DejaVuSansMono-Bold.ttf
+  , BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
+  , ItalicFont=DejaVuSansMono-Oblique.ttf
+  ]{DejaVuSansMono.ttf}
 
 % \setmonofont[ExternalLocation=fonts/
 % , BoldFont=DejaVuSansMono-Bold.ttf
@@ -119,19 +150,53 @@
 
 % \setmathfont[ExternalLocation=fonts/
 %   ]{DejaVuMathTeXGyre.ttf}
-% \newfontfamily\mathfont{fonts/DejaVuMathTeXGyre.ttf}
 
 
-% \newfontfamily\sourcecode[ExternalLocation=fonts/
-%   , BoldFont=SourceCodePro-Semibold.ttf
-%   , BoldItalicFont=SourceCodePro-SemiboldIt.ttf
-%   , ItalicFont=SourceCodePro-It.ttf
-%   ]{SourceCodePro-Regular.ttf}
+\newfontfamily\djvumathfont[ExternalLocation=fonts/,
+, BoldFont=DejaVuSansMono-Bold.ttf
+, BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
+, ItalicFont=DejaVuSansMono-Oblique.ttf
+]{DejaVuMathTeXGyre.ttf}
+
+% \setmainfont[ExternalLocation=fonts/
+%   , BoldFont=SourceSansPro-Semibold.otf
+%   , BoldItalicFont=SourceSansPro-SemiboldIt.otf
+%   , ItalicFont=SourceSansPro-It.otf
+%   ]{SourceSansPro-Regular.otf}
+
+\newfontfamily\sourcecode[ExternalLocation=fonts/
+  , BoldFont=SourceCodePro-Semibold.ttf
+  , BoldItalicFont=SourceCodePro-SemiboldIt.ttf
+  , ItalicFont=SourceCodePro-It.ttf
+  ]{SourceCodePro-Regular.ttf}
+
+
+%following lines borrowed from cmbright.sty
+% \DeclareSymbolFont      {operators} {OT1}{cmbr}{m}{n}
+% \DeclareSymbolFont        {letters} {OML}{cmbrm}{m}{it}
+% \SetSymbolFont      {letters}{bold} {OML}{cmbrm}{b}{it}
+% \DeclareSymbolFont        {symbols} {OMS}{cmbrs}{m}{n}
+% \DeclareMathAlphabet{\mathit} {OT1}{cmbr}{m}{sl}
+% \DeclareMathAlphabet{\mathbf} {OT1}{cmbr}{bx}{n}
+% \DeclareMathAlphabet{\mathtt} {OT1}{cmtl}{m}{n}
+% \DeclareMathAlphabet{\mathbold}{OML}{cmbrm}{b}{it}
+% \DeclareMathSymbol{\alpha}{\mathalpha}{letters}{11}
+% \DeclareMathSymbol{\beta}{\mathalpha}{letters}{12}
+% \DeclareMathSymbol{\gamma}{\mathalpha}{letters}{13}
+% \DeclareMathSymbol{\delta}{\mathalpha}{letters}{14}
+% \DeclareMathSymbol{\epsilon}{\mathalpha}{letters}{15}
+
+\DeclareMathSizes{9.8}{17}{7}{7}
+\DeclareMathSizes{10.0}{17}{7}{7}
+\DeclareMathSizes{10.95}{10}{7}{7}   % For size 10 text
+\DeclareMathSizes{11}{19}{13}{9}      % For size 11 text
+\DeclareMathSizes{12}{20}{14}{10}     % For size 12 text
+
+% \newenvironment{forAgda}{\fontfamily{sourcecode}\selectfont}{\par}
 
 % -------------------------------------------------------------------
 % Tikz Configuration
 % -------------------------------------------------------------------
-
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
@@ -139,61 +204,35 @@
 \usetikzlibrary{shapes}
 \usepackage{rotating}
 
-\tikzset{
-  hyperlink node/.style={
-    alias=sourcenode,
-    append after command={
-        let     \p1 = (sourcenode.north west),
-            \p2=(sourcenode.south east),
-            \n1={\x2-\x1},
-            \n2={\y1-\y2} in
-        node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\p1)]
-        {\hyperlink{#1}{\XeTeXLinkBox{\phantom{\rule{\n1}{\n2}}}}}
-                %xelatex needs \XeTeXLinkBox, won't create a link unless it
-                %finds text --- rules don't work without \XeTeXLinkBox.
-                %Still builds correctly with pdflatex and lualatex
-    }
-  }
-}
-
-\tikzstyle{vertex}=[
-    auto=left
-  , circle
-  , fill=black!25
-  , minimum size=5pt
-  , inner sep=0pt
-  ]
-
 % -------------------------------------------------------------------
 % Listings
 % -------------------------------------------------------------------
+% \usepackage{listings}
+% \usepackage{lstautogobble}
 
-\usepackage{listings}
-\usepackage{lstautogobble}
+% \lstdefinestyle{TPTP}{
+%     aboveskip=10pt
+%   , basicstyle=\tt
+%   , belowskip=10pt
+%   , keywords=[2]{axiom
+%     , conjecture
+%     , inference
+%     , negated_conjecture
+%     , plain
+%     , source}
+%   , keywords=[3]{fof, cnf}
+%   , keywords=[4]{canonicalize, resolve, conjunct,
+%     strip, simplify, negate, clausify}
+%   , keywordstyle=[2]\bfseries
+%   , keywordstyle=[3]\bfseries
+%   , keywordstyle=[4]\bfseries
+%   , showstringspaces=false
+%   , keepspaces=true
+% }
 
-\lstdefinestyle{TPTP}{
-    aboveskip=10pt
-  , basicstyle=\tt
-  , belowskip=10pt
-  , keywords=[2]{axiom
-    , conjecture
-    , inference
-    , negated_conjecture
-    , plain
-    , source}
-  , keywords=[3]{fof, cnf}
-  , keywords=[4]{canonicalize, resolve, conjunct,
-    strip, simplify, negate, clausify}
-  , keywordstyle=[2]\bfseries
-  , keywordstyle=[3]\bfseries
-  , keywordstyle=[4]\bfseries
-  , showstringspaces=false
-  , keepspaces=true
-}
-
-\lstnewenvironment{tptp}
-  {\lstset{style=TPTP,columns=fullflexible}\csname lst@SetFirstLabel\endcsname}
-  {\csname lst@SaveFirstLabel\endcsname}
+% \lstnewenvironment{tptp}
+%   {\lstset{style=TPTP,columns=fullflexible}\csname lst@SetFirstLabel\endcsname}
+%   {\csname lst@SaveFirstLabel\endcsname}
 
 % \usepackage{autofe}
 % \usepackage{afterpage}
@@ -216,23 +255,14 @@
 %\usepackage{stmaryrd} %new symbol font for tcs
 % \usepackage{color}
 \usepackage{fancybox}
-% \usepackage{minted}
-% \setminted[cagda]{
-%   bgcolor   = aliceblue
-% , fontsize  = \footnotesize
-% , frame     = none
-% % , framerule = 0.4pt
-% % , framesep  = 0pt
-% , style     = cagda
-% }
 
 % -------------------------------------------------------------------
 % Verbatim.
 % -------------------------------------------------------------------
 
-\usepackage{verbatim}
-\usepackage{relsize}
-\usepackage{fancyvrb}
+% \usepackage{verbatim}
+% \usepackage{relsize}
+% \usepackage{fancyvrb}
 % \DefineVerbatimEnvironment
 %   {code}{Verbatim}
 %   { fontsize=\relsize{-2}
@@ -464,9 +494,32 @@ maxbibnames=6,%
 \WarningFilter{biblatex}{Patching footnotes failed}
 \WarningFilter{hyperref}{Token not allowed in a PDF string}
 
-% --------------------------------------------------------------------------
+\usepackage{minted}
+\setminted[cagda]{
+  bgcolor    = aliceblue
+, fontsize   = \footnotesize
+, frame      = none
+% , framerule = 0.4pt
+% , framesep  = 0pt
+, style     = cagda
+}
+
+\newenvironment{MyAgda}{%
+  \VerbatimEnvironment
+  \begin{center}%
+  \djvumathfont\bfseries
+  \vskip 1.5mm
+    \begin{minipage}{\linewidth}%
+      \begin{minted}{cagda}}
+{%
+      \end{minted}%
+    \end{minipage}%
+    \vskip 1.5mm
+  \end{center}}
+
+% --------------------------------------------------------------------
 % Title and Author
-% --------------------------------------------------------------------------
+% --------------------------------------------------------------------
 
 \title[Reconstructing Propositional Proofs in Type Theory]
   {\textbf{Reconstructing Propositional Proofs in Type Theory}}
@@ -478,7 +531,7 @@ Advisor: Andr\'es Sicard-Ram\'irez
 Master in Applied Mathematics\\
 Universidad EAFIT\\
 Medell\'in, Colombia}
-% --------------------------------------------------------------------------
+% --------------------------------------------------------------------
 
 \newsavebox\agdapragma
 
@@ -502,36 +555,45 @@ Medell\'in, Colombia}
 
 \begin{block}{Goal}
 Formalization in type theory, classical propositional
-derivations generated by the \Metis theorem prover
+derivations generated by the \Metis theorem prover.
 \end{block}
 \pause
 \begin{block}{Topics}
 \begin{itemize}
 \item Automatic reasoning using automatic theorem provers (\ATPs) (\eg, \Metis, \name{EProver})
-\item Interactive proving using Proof-assistants (\eg, \Agda, \name{Coq})
-\item Formal methods to verify outputs of \ATPs in Proof-assistants
+\item Interactive proving using proof-assistants (\eg, \Agda, \name{Coq})
+\item Formal methods to verify outputs of \ATPs in proof-assistants
 \end{itemize}
 \end{block}
 \end{frame}
 
-\begin{frame}{Related Work}
-In type theory:
+
+% --------------------------------------------------------------------
+
+\begin{frame}[label=contributions]{Outcomes of the Research}
+Academic result: paper (work in progress)\\
+Software related results:
 \begin{itemize}
-  \item \citeauthor{Kanso2012} in \cite{Kanso2012} reconstructs in \Agda propositional proofs generated by \name{EProver} and \name{Z3}
-  \item \citeauthor{foster2011integrating} in \cite{foster2011integrating}
-  describe proof-reconstruction in \Agda for equational logic of \name{Waldmeister} prover
-  \item \citeauthor{Bezem2002} in \cite{Bezem2002} transform a proof produced by the first-order prover \name{Bliksem} in a \name{Coq} proof-term
+\item \Athena\footnote{\url{https://github.com/jonaprieto/athena}.}: a translator tool for \Metis proofs to \Agda in \Haskell
+\item \Agda libraries:
+\begin{itemize}
+  \item \texttt{Agda-Metis}\footnote{\url{https://github.com/jonaprieto/agda-metis}.}: \Metis prover reasoning for propositional logic
+  \item \texttt{Agda-Prop}\footnote{\url{https://github.com/jonaprieto/agda-prop}.}: intuitionistic propositional logic with PEM
 \end{itemize}
-In classical logic:
+\item Bugs found in \Metis: see issues No.~2, No.~4, and commit
+\name{8a3f11e} in \Metis official
+repository\footnote{\url{https://github.com/gilith/metis}.}
+\end{itemize}
+
+In parallel, we develop:
 \begin{itemize}
-\item \citeauthor{paulson2007source} in \cite{paulson2007source} introduce
-\name{SledgeHammer}, a tool ables to reconstructs proofs of well-known \ATPs: \name{EProver}, \name{Vampire}, among others using \name{SystemOnTPTP} server
-\item \citeauthor{Hurd1999} in \cite{Hurd1999} integrates the first-order resolution prover \name{Gandalf} prover for \name{HOL} proof-assistant
-\item \citeauthor{kaliszyk2013} in \cite{kaliszyk2013} reconstruct proofs
-of different \ATPs for \name{HOL Light}
+\item \name{Online-ATPs}\footnote{\url{https://github.com/jonaprieto/online-atps}.}: a client for the \TPTP world in \Haskell
+This tool allowed us to use \Metis without installing it
+\item \name{Prop-Pack}\footnote{\url{https://github.com/jonaprieto/prop-pack}.}: compendium of \TPTP problems in classical propositional logic used to test \Athena
 \end{itemize}
 \end{frame}
 
+% --------------------------------------------------------------------
 
 \begin{frame}[fragile]{Proof Reconstruction: Overview}
 \vfill
@@ -623,7 +685,7 @@ of different \ATPs for \name{HOL Light}
      , left of =athena
      , node distance=3.8cm
      ]
-(agdaproof) {3.~\Agda File\\(proof-term)};
+(agdaproof) {3.~\Agda file\\(proof-term)};
 \node[ Rhoumbus
      , below of=agdaproof
      , node distance=2cm
@@ -647,13 +709,13 @@ of different \ATPs for \name{HOL Light}
      , below of= agda
      , node distance=2.1cm
      ]
-(agdai) {4.1. Interface\\ \Agda File};
+(agdai) {4.1. Interface\\ \Agda file};
 
 \node[ file
      , right of =agda
      , node distance=3.8cm
      ]
-(invalid) {4.2. Invalid\\ \Agda File};
+(invalid) {4.2. Invalid\\ \Agda file};
 
 \path [line, thick] (tptp)      -- (metis);
 \path [line, thick] (metis)     -- node {\color{darkgreen}theorem} (tstp);
@@ -673,47 +735,6 @@ of different \ATPs for \name{HOL Light}
 
 % --------------------------------------------------------------------
 
-\begin{frame}[label=metis, fragile]{\Metis Theorem Prover}
- % \tikz[overlay,remember picture]
- %  \node at (0.92\textwidth, 0.5cm)
- %    {\includegraphics[width=0.15\textwidth]{figures/metis}};
-
-\Metis is an automatic theorem prover for first-order logic with
-equality.
-
-\begin{block}{}
-  \begin{itemize}
-    \item \href{https://github.com/gilith/metis}{Open source} implemented
-    % in \texttt{Standard ML}
-    \item Reads problems in \TPTP format
-    \item Outputs \textit{detailed} proofs in \TSTP format
-    \item For the propositional logic, \Metis has only three inference rules:
-      \vfill
-      \begin{prooftree}
-        \AxiomC{}
-        \RightLabel{axiom $φ₁, \cdots,φₙ$}
-        \UnaryInfC{$\Gamma ⊢ φ₁ ∨ \cdots ∨ φₙ$}
-      \end{prooftree}
-      \vfill
-      \begin{prooftree}
-        \AxiomC{}
-        \RightLabel{assume $\varphi$}
-        \UnaryInfC{$\Gamma ⊢ \varphi \vee \neg \varphi$}
-      \end{prooftree}
-      \vfill
-      \begin{prooftree}
-        \AxiomC{$\Gamma ⊢ φ₁ ∨ \cdots ∨ l ∨ \cdots  ∨ φₙ$}
-        \AxiomC{$\Gamma ⊢ ψ₁ ∨ \cdots ∨ ¬ l ∨ \cdots ∨ ψₘ$}
-        \RightLabel{resolve $l$}
-        \BinaryInfC{$\Gamma ⊢ φ₁ ∨ \cdots ∨ φₙ ∨ ψ₁ ∨ \cdots ∨ ψₘ$}
-      \end{prooftree}
-  \vfill
-  \end{itemize}
-\vfill
-\end{block}
-
-\end{frame}
-
 \begin{frame}[fragile, label=metis-rules]{Inference Rules of \Metis}
 \hyperlink{tstp-example}{\TSTP} derivations by \Metis exhibit
 the following inferences:
@@ -722,7 +743,7 @@ the following inferences:
   \begin{center}
   {\renewcommand{\arraystretch}{1.6}%
     \label{tab:agda-metis-table}
-    \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}|}
+    \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{4mm}}l@{\hspace{2mm}}|}
     \hline
     \textbf{\Metis rule} & \textbf{Purpose}\\ \hline
       \texttt{strip}
@@ -750,66 +771,302 @@ the following inferences:
 \vfill
 \end{frame}
 
-\begin{frame}[fragile]{The intuition behind the \Metis Algorithm}
-% The following algorithm is no official, but it aims to explain the basics of the \Metis reasoning, and how it generates the proofs.
+\begin{frame}[fragile]{Proposition Type}
+\begin{itemize}
+  \item A data type for formulas
+\begin{MyAgda}
+data Prop : Set where
+  Var : Fin n → Prop
+  ⊤   : Prop
+  ⊥   : Prop
+  _∧_ : (φ ψ : Prop) → Prop
+  _∨_ : (φ ψ : Prop) → Prop
+  _⇒_ : (φ ψ : Prop) → Prop
+  _⇔_ : (φ ψ : Prop) → Prop
+  ¬_  : (φ : Prop)   → Prop
+\end{MyAgda}
+\item Intuitionistic Propositional Logic + PEM ($\Gamma ⊢ \varphi \vee \neg \varphi$)
+\end{itemize}
+\end{frame}
 
+\begin{frame}[fragile]{Inference Rules For Propositional Logic I}
+
+\begin{columns}[t]
+\column{0.33\textwidth}
+  \begin{scprooftree}{0.8}
+    \AxiomC{$ $}
+    \RightLabel{assume}
+    \UnaryInfC{$Γ , φ ⊢ φ$}
+  \end{scprooftree}
+\column{0.33\textwidth}
+  \begin{scprooftree}{0.8}
+    \AxiomC{$ $}
+    \RightLabel{$⊤$-intro}
+    \UnaryInfC{$Γ ⊢ ⊤$}
+  \end{scprooftree}
+\column{0.33\textwidth}
+  \begin{scprooftree}{0.8}
+\AxiomC{\,}
+\RightLabel{PEM}
+\UnaryInfC{$Γ ⊢ φ ∨ ¬ φ$}
+\end{scprooftree}
+  \end{columns}
+\medskip
+
+\begin{columns}[t]
+\column{0.33\textwidth}
+ \begin{scprooftree}{0.8}
+    \AxiomC{$Γ ⊢ ⊥$}
+    \RightLabel{$⊥$-elim}
+    \UnaryInfC{$Γ ⊢ φ$}
+  \end{scprooftree}
+\column{0.33\textwidth}
+\begin{scprooftree}{0.8}
+    \AxiomC{$Γ , φ ⊢ ⊥$}
+    \RightLabel{$¬$-intro}
+    \UnaryInfC{$Γ ⊢ ¬ φ$}
+  \end{scprooftree}
+\column{0.30\textwidth}
+  \begin{scprooftree}{0.8}
+    \AxiomC{$Γ ⊢ ¬ φ$}
+    \AxiomC{$Γ ⊢ φ$}
+    \RightLabel{$¬$-elim}
+    \BinaryInfC{$Γ ⊢ ⊥$}
+  \end{scprooftree}
+\end{columns}
+\medskip
+\begin{columns}[t]
+\column{0.33\textwidth}
+  \begin{scprooftree}{0.8}
+    \AxiomC{$Γ ⊢ φ$}
+    \AxiomC{$Γ ⊢ ψ$}
+    \RightLabel{$\wedge$-intro}
+    \BinaryInfC{$Γ ⊢ φ \wedge ψ$}
+  \end{scprooftree}
+  \column{0.33\textwidth}
+  \begin{scprooftree}{0.8}
+    \AxiomC{$Γ ⊢ φ \wedge ψ$}
+    \RightLabel{$\wedge$-proj$_1$}
+    \UnaryInfC{$Γ⊢ φ$}
+  \end{scprooftree}
+  \column{0.33\textwidth}
+  \begin{scprooftree}{0.8}
+    \AxiomC{$Γ ⊢ φ \wedge ψ$}
+    \RightLabel{$\wedge$-proj$_2$}
+    \UnaryInfC{$Γ⊢ ψ$}
+  \end{scprooftree}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile]{Inference Rules For Propositional Logic II}
+
+\begin{columns}[t]
+  \column{0.25\textwidth}
+  \begin{scprooftree}{0.8}
+    \AxiomC{$Γ ⊢ φ$}
+    \RightLabel{$\vee$-intro$_1$}
+    \UnaryInfC{$Γ ⊢ φ \vee ψ$}
+  \end{scprooftree}
+  \column{0.25\textwidth}
+  \begin{scprooftree}{0.8}
+    \AxiomC{$Γ ⊢ ψ$}
+    \RightLabel{$\vee$-intro$_2$}
+    \UnaryInfC{$Γ ⊢ φ \vee ψ$}
+  \end{scprooftree}
+\column{0.40\textwidth}
+  \begin{scprooftree}{0.8}
+    \AxiomC{$Γ , φ ⊢ γ $}
+    \AxiomC{$Γ , ψ  ⊢ γ$}
+    \RightLabel{$\vee$-elim}
+    \BinaryInfC{$Γ , φ \vee ψ ⊢ γ$}
+  \end{scprooftree}
+\end{columns}
+\medskip
+\begin{columns}[t]
+\column{0.40\textwidth}
+  \begin{scprooftree}{0.8}
+    \AxiomC{$Γ , φ ⊢ ψ$}
+    \RightLabel{$\Rightarrow$-intro}
+    \UnaryInfC{$Γ ⊢ φ \Rightarrow ψ$}
+  \end{scprooftree}
+\column{0.40\textwidth}
+  \begin{scprooftree}{0.8}
+\AxiomC{$Γ ⊢ φ \Rightarrow ψ$}
+\AxiomC{$Γ ⊢ φ$}
+\RightLabel{$\Rightarrow$-elim}
+\BinaryInfC{$Γ ⊢ ψ$}
+\end{scprooftree}
+\end{columns}
+\medskip
+Useful rules:
+\medskip
+\begin{columns}[t]
+\column{0.5\textwidth}
+\begin{scprooftree}{0.8}
+    \AxiomC{$Γ ⊢ φ$}
+    \RightLabel{weaken}
+    \UnaryInfC{$Γ , ψ ⊢ φ$}
+  \end{scprooftree}
+\column{0.5\textwidth}
+\begin{scprooftree}{0.8}
+\AxiomC{$Γ, ¬ φ ⊢ ⊥$}
+\RightLabel{RAA}
+\UnaryInfC{$Γ ⊢ φ$}
+\end{scprooftree}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile]{Syntactical Consequence Relation}
+\begin{itemize}
+  \item Inductive family $\_⊢\_$ with two indexes: a set of propositions~$Γ$
+  (the premises) and a proposition~$φ$ (the conclusion)
+
+\begin{MyAgda}
+data _⊢_ : (Γ : Ctxt)(φ : Prop) → Set
+\end{MyAgda}
+
+\item Constructors (inference rules)
+
+\begin{MyAgda}
+assume, axiom, weaken, ⊤-intro, ⊥-elim, ¬-intro,
+¬-elim, ∧-intro, ∧-proj₁, ∧-proj₂, ∨-intro₁,
+∨-intro₂, ∨-elim, ⇒-intro, ⇒-elim, ⇔-intro,
+⇔-elim₁, ⇔-elim₂.
+\end{MyAgda}
+
+  \item Natural deduction proofs for more than 99 theorems
+
+\begin{MyAgda}
+⇔-equiv, ⇔-assoc, ⇔-comm, ⇒-⇔-¬∨, ⇔-¬-to-¬,
+¬⇔-to-¬, ¬¬-equiv, ⇒⇒-⇔-∧⇒, ⇔-trans, ∧-assoc,
+∧-comm, ∧-dist, ¬∧-to-¬∨¬, ¬∨¬-to-¬∧, ¬∨¬-⇔-¬∧,
+subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
+∨-equiv, ¬∨-to-¬∧¬, ¬∧¬-to-¬∨, ∨-dmorgan,
+¬¬∨¬¬-to-∨, cnf, nnf, dnf, ...
+\end{MyAgda}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Reconstructing \Metis Rules in Type Theory}
+
+Let \textrm{metisRule} be a \Metis inference rule. We define in \Agda the function \fun{metisRule} which has the following pattern\footnote{
+\Source and \Target as synonyms of the \Prop type to describe in the
+function types the role of the arguments}:
+\begin{equation*}
+  \begin{aligned}
+  &\hspace{.495mm}\fun{metisRule} : \Source → \Target → \Prop\\
+  &\begin{array}{ll}
+  \fun{metisRule}~φ~ψ\ &=
+      \begin{cases}
+      ψ, &\text{if }\fun{metisRule} \text{ built }ψ\text{ by applying inference}\\
+         &\text{rules to }φ;\\
+      φ, &\text{otherwise;}
+      \end{cases}
+  \end{array}
+  \end{aligned}
+\end{equation*}
+
+To justify all transformations done by the \fun{metisRule} rule, we prove
+its soundness with a theorem like the following:
+\begin{equation*}
+  \text{If }Γ ⊢ φ \text{ then }Γ ⊢ \fun{metisRule}~φ~ψ, \text{ where } ψ : \Target.
+\end{equation*}
+\end{frame}
+
+% --------------------------------------------------------------------
+\begin{frame}[fragile]{Reconstructing Example}
+
+The \clausify rule transforms a formula into its clausal normal form.
+
+\begin{example}
+In the following \TSTP derivation by \Metis, we see how
+\clausify transforms the \texttt{norm₀} formula to get \texttt{norm₁} formula.
+
+\begin{verbatim}
+fof(norm₀, ¬ p ∨ (q ∧ r) ...
+fof(norm₁, (¬ p ∨ q) ∧ (¬ p ∨ r), inf(clausify, norm₀)).
+\end{verbatim}
+
+\end{example}
+
+\begin{mainth}
+   Let $ψ : \Target$. If $Γ ⊢ φ$ then $Γ ⊢ \fclausify~φ~ψ$, where
+  \begin{equation*}
+  \begin{aligned}
+  &\hspace{.495mm}\fclausify : \Source → \Target → \Prop\\
+  &\begin{array}{llll}
+  \fclausify~φ~ψ &=
+         \begin{cases}
+        ψ, &\text{ if }φ≡ψ;\\
+        \freorder_{∧∨}~(\fcnf~φ)~ψ, &\text{ otherwise.}
+      \end{cases}
+  \end{array}
+  \end{aligned}
+  \end{equation*}
+\end{mainth}
+
+% \begin{proof}
+% If $φ ≡ ψ$, $Γ ⊢ \fclausify~φ~ψ$ normalizes to $Γ ⊢ ψ$. The conclusion follows by applying the $\fsubst$ lemma. Otherwise, we use Lemma~\ref{lem:reorder-and-or} and Lemma~\ref{lem:cnf}.
+% \end{proof}
+
+\end{frame}
+
+% --------------------------------------------------------------------
+\begin{frame}[fragile]{The Intuition behind the \Metis Algorithm}
+\begin{center}
+\scalebox{0.75}{
+\begin{minipage}{\textwidth}
 \begin{algorithm}[H]
 \caption{\Metis refutation strategy}
 \begin{algorithmic}[Metis]
 \Procedure{metis}{}\newline
-  \textbf{input:} the \textrm{goal} and a set of \emph{premises} $a_i$
+  \textbf{input:} the \textrm{goal} and a set of \emph{premises} $a_1,\cdots, a_n$
   \newline
-  \textbf{output:} maybe a derivation when $\{a_i\} \vdash \textrm{goal}$, otherwise nothing.
-    \State{Strip the goal into a list of \emph{subgoals}.}
+  \textbf{output:} maybe a derivation when $a_1,\cdots,a_n \vdash \textrm{goal}$, otherwise nothing. \newline
+    \State{strip the goal into a list of \emph{subgoals} $s_i$}
     \For{each subgoal $s_i$}
-    \State{Try to find by a refutation for $\neg s_i$:}
-    \State{\ \ \ Apply clausification for the negated subgoal $¬ s_i$}
+    \State{try to find by a refutation for $\neg s_i$:}
+    \State{\ \ \ apply clausification for the negated subgoal $¬ s_i$}
     \ \ \ \If{a premise $a_j$ is relevant}
-    \ \ \ \ \ \State{Apply clausification to $a_j$}
+    \ \ \ \ \ \State{apply clausification to $a_j$}
     \ \ \ \EndIf
-    \State{\ \ \ Application of \Metis rules to get $\bot$ using $¬ s_i$ and $a_j$ }
-     \If{$⊥$ can be derived}
-     \State{Keep the refutation and continue with the others subgoals}
-    \Else
-    \State{Exit. It's not a theorem.}
+    \State{\ \ \ application of \Metis inference rules}
+    \ \ \  \If{a contradiction can be derived the assumptions}
+    \ \ \ \ \ \State{keep the refutation and continue with the others subgoals}
+   \ \ \ \ \ \Else
+    \ \ \ \ \ \State{exit without a proof. The conjecture can not be derived from the premises}
     \EndIf
     \EndFor
-    % \If{Every subgoal has a refutation}
-    % \State{The conjecture can be derived from the assumptions}
-    % \State{Print the derivation for each refutation.}
-    % \EndIf
+    \State{print the conjecture and the premises}
+    \State{print each refutation for each negated subgoal}
     \EndProcedure
 \end{algorithmic}
 \end{algorithm}
-
+\end{minipage}
+}
+\end{center}
 \end{frame}
 
 
-% \begin{frame}{Proof Reconstruction}
-% \end{frame}
-
-% \begin{frame}{Stripping a Goal}
-% \end{frame}
-
-% \begin{frame}{Splitting a Conjunct}
-% \end{frame}
-
-% \begin{frame}{Resolution}
-% \end{frame}
-
-% \begin{frame}{Canonicalize}
-% \end{frame}
-
-% \begin{frame}{Clausification}
-% \end{frame}
-
-% \begin{frame}{Simplification}
-% \end{frame}
-
-\begin{frame}{Formalization Challenges}
+\begin{frame}{Challenges}
 \begin{itemize}
-  \item Terminating of functions to reconstruct inference rules
+  \item Formalization
+\begin{itemize}
+  \item Understanding the \Metis reasoning without a proper
+  documentation or description from the \Metis author
+  \item Terminating of functions that reconstruct \Metis inference rules
   \item Intuitionistic logic implementation
+\end{itemize}
+\item Software related
+\begin{itemize}
+  \item Parsing of \TSTP derivations
+  \item Printing valid \Agda files
+  \item Testing
+\end{itemize}
+
 \end{itemize}
 \end{frame}
 
@@ -891,12 +1148,12 @@ fof(n01, ¬ q ∨ p, inf(conjunct, n00)).
 \RightLabel{axiom $a_1$}
 \UnaryInfC{$\Gamma \vdash (p \Rightarrow q) \wedge (q \Rightarrow p)$}
 \RightLabel{weaken}
-\UnaryInfC{$\neg s_1 \vdash (p \Rightarrow q) \wedge (q \Rightarrow p)$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash (p \Rightarrow q) \wedge (q \Rightarrow p)$}
 \LeftLabel{$(\mathcal{D}_1)$\hspace{1.5cm}}
 \RightLabel{canonicalize}
-\UnaryInfC{$\neg s_1 \vdash (\neg p \vee q) \wedge (\neg q \vee p)$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash (\neg p \vee q) \wedge (\neg q \vee p)$}
 \RightLabel{conjunct}
-\UnaryInfC{$\neg s_1 \vdash \neg q \vee p$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash \neg q \vee p$}
 \end{prooftree}
 
 \end{frame}
@@ -915,25 +1172,25 @@ fof(n04, ¬ p, inf(conjunct, n02)).
 \begin{prooftree}
 \AxiomC{}
 \RightLabel{assume}
-\UnaryInfC{$\neg s_1 \vdash \neg s_1$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash \neg s_1$}
 \LeftLabel{$(\mathcal{D}_2)$\hspace{1.5cm}}
 \RightLabel{canonicalize}
-\UnaryInfC{$\neg s_1 \vdash \neg p \wedge (p \vee q)$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash \neg p \wedge (p \vee q)$}
 \RightLabel{conjunct}
-\UnaryInfC{$\neg s_1 \vdash p \vee q$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash p \vee q$}
 \end{prooftree}
 
 % ($\mathcal{D}_3$)
 \begin{prooftree}
 \AxiomC{}
 \RightLabel{assume $\neg s_1$}
-\UnaryInfC{$\neg s_1 \vdash \neg s_1$}
-% \UnaryInfC{$\neg s_1 \vdash (p \vee q) \Rightarrow p$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash \neg s_1$}
+% \UnaryInfC{$\Gamma, \neg s_1 \vdash (p \vee q) \Rightarrow p$}
 \LeftLabel{$(\mathcal{D}_3)$\hspace{1.5cm}}
 \RightLabel{canonicalize}
-\UnaryInfC{$\neg s_1 \vdash \neg p \wedge (p \vee q)$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash \neg p \wedge (p \vee q)$}
 \RightLabel{conjunct}
-\UnaryInfC{$\neg s_1 \vdash \neg p$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash \neg p$}
 \end{prooftree}
 \end{frame}
 
@@ -941,29 +1198,29 @@ fof(n04, ¬ p, inf(conjunct, n02)).
 \vfill
 \begin{prooftree}
 \AxiomC{$\mathcal{D}_2$}
-\UnaryInfC{$\neg s_1 \vdash p \vee q$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash p \vee q$}
 %
 \AxiomC{$\mathcal{D}_3$}
-\UnaryInfC{$\neg s_1 \vdash \neg p$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash \neg p$}
 %
 \LeftLabel{$(\mathcal{D}_4)$\hspace{1.5cm}}
 \RightLabel{simplify}
-\BinaryInfC{$\neg s_1 \vdash q$}
+\BinaryInfC{$\Gamma, \neg s_1 \vdash q$}
 \end{prooftree}
 \vfill
 \begin{prooftree}
 \AxiomC{$\mathcal{D}_1$}
-\UnaryInfC{$\neg s_1 \vdash \neg q \vee p$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash \neg q \vee p$}
 \AxiomC{$\mathcal{D}_4$}
-\UnaryInfC{$\neg s_1 \vdash q$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash q$}
 \RightLabel{resolve $q$}
-\BinaryInfC{$\neg s_1 \vdash p$}
+\BinaryInfC{$\Gamma, \neg s_1 \vdash p$}
 \RightLabel{}
 \AxiomC{$\mathcal{D}_3$}
-\UnaryInfC{$\neg s_1 \vdash \neg p$}
+\UnaryInfC{$\Gamma, \neg s_1 \vdash \neg p$}
 \RightLabel{resolve $p$}
 \LeftLabel{$(\mathcal{R}_1)$\hspace{1.5cm}}
-\BinaryInfC{$\neg s_1 \vdash \bot$}
+\BinaryInfC{$\Gamma, \neg s_1 \vdash \bot$}
 \RightLabel{RAA}
 \UnaryInfC{$\Gamma \vdash s_1$}
 \end{prooftree}
@@ -982,24 +1239,24 @@ fof(n13, ⊥, inf(simplify,[n10, n12])).
 cnf(r10, ⊥, inf(canonicalize, n13)).
 \end{verbatim}
 
-\begin{scprooftree}{0.78}
+\begin{scprooftree}{0.7}
 \AxiomC{}
 \RightLabel{assume ($\neg s_2)$}
 \UnaryInfC{$\Gamma ,\neg s_2 \vdash \neg s_2$}
 \RightLabel{canonicalize}
-\UnaryInfC{$\neg s_2\vdash \neg q \wedge p \wedge (p \vee q)$}
+\UnaryInfC{$\Gamma, \neg s_2\vdash \neg q \wedge p \wedge (p \vee q)$}
 \AxiomC{}
 \RightLabel{axiom $a_1$}
 \UnaryInfC{$\Gamma \vdash (p \Rightarrow q) \wedge (q \Rightarrow p)$}
 \RightLabel{weaken}
-\UnaryInfC{$\neg s_2 \vdash (p\Rightarrow q) \wedge (q \Rightarrow p)$}
+\UnaryInfC{$\Gamma, \neg s_2 \vdash (p\Rightarrow q) \wedge (q \Rightarrow p)$}
 \RightLabel{canonicalize}
-\UnaryInfC{$\neg s_2 \vdash (\neg p \vee q) \wedge (\neg q \vee p)$}
+\UnaryInfC{$\Gamma, \neg s_2 \vdash (\neg p \vee q) \wedge (\neg q \vee p)$}
 \RightLabel{conjunct}
-\UnaryInfC{$\neg s_2 \vdash \neg p \vee q$}
-\LeftLabel{$(\mathcal{R_2})$\hspace{1.5cm}}
+\UnaryInfC{$\Gamma, \neg s_2 \vdash \neg p \vee q$}
+\LeftLabel{$(\mathcal{R_2})$\hspace{1cm}}
 \RightLabel{simplify}
-\BinaryInfC{$\neg s_2 \vdash \bot$}
+\BinaryInfC{$\Gamma, \neg s_2 \vdash \bot$}
 \RightLabel{RAA}
 \UnaryInfC{$\Gamma \vdash s_2$}
 \end{scprooftree}
@@ -1036,29 +1293,6 @@ The proof is:
 \vfill
 \end{frame}
 
-\begin{frame}[label=contributions]{Results}
-Academic results: paper (work in progress)\\
-Software related results:
-\begin{itemize}
-\item \Athena\footnote{\url{https://github.com/jonaprieto/athena}.}: a translator tool for \Metis proofs to \Agda in \Haskell
-\item \Agda libraries:
-\begin{itemize}
-  \item \texttt{Agda-Metis}\footnote{\url{https://github.com/jonaprieto/agda-metis}.}: \Metis prover reasoning for propositional logic
-  \item \texttt{Agda-Prop}\footnote{\url{https://github.com/jonaprieto/agda-prop}.}: intuitionistic propositional logic with PEM
-\end{itemize}
-\item Bugs found in \Metis: see issues No.~2, No.~4, and commit
-\name{8a3f11e} in \Metis official
-repository\footnote{\url{https://github.com/gilith/metis}.}
-\end{itemize}
-
-In parallel, we develop:
-\begin{itemize}
-\item \name{Online-ATPs}\footnote{\url{https://github.com/jonaprieto/online-atps}.}: a client for the \TPTP world in \Haskell
-This tool allowed us to use \Metis without installing it
-\item \name{Prop-Pack}\footnote{\url{https://github.com/jonaprieto/prop-pack}.}: Compendium of \TPTP problems in classical propositional logic used to test \Athena
-\end{itemize}
-
-\end{frame}
 
 \begin{frame}[label=future-work]{Future Work}
 Further research directions include, but are not limited to:
@@ -1074,15 +1308,31 @@ Further research directions include, but are not limited to:
     \item support \Metis first-order proofs
   \end{itemize}
 \end{itemize}
+\end{frame}
 
+\begin{frame}{Related Work}
+In type theory:
+\begin{itemize}
+  \item \citeauthor{Kanso2012} in \cite{Kanso2012} reconstructs in \Agda propositional proofs generated by \name{EProver} and \name{Z3}
+  \item \citeauthor{foster2011integrating} in \cite{foster2011integrating}
+  describe proof-reconstruction in \Agda for equational logic of \name{Waldmeister} prover
+  \item \citeauthor{Bezem2002} in \cite{Bezem2002} transform a proof produced by the first-order prover \name{Bliksem} in a \name{Coq} proof-term
+\end{itemize}
+In classical logic:
+\begin{itemize}
+\item \citeauthor{paulson2007source} in \cite{paulson2007source} introduce
+\name{SledgeHammer}, a tool ables to reconstructs proofs of well-known \ATPs: \name{EProver}, \name{Vampire}, among others using \name{SystemOnTPTP} server
+\item \citeauthor{Hurd1999} in \cite{Hurd1999} integrates the first-order resolution prover \name{Gandalf} prover for \name{HOL} proof-assistant
+\item \citeauthor{kaliszyk2013} in \cite{kaliszyk2013} reconstruct proofs
+of different \ATPs for \name{HOL Light}
+\end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{References}
 \printbibliography
 \end{frame}
 
-
-\begin{frame}
+\begin{frame}{BONUS SLIDES}
 \end{frame}
 
 \begin{frame}[fragile, label=tptp-syntax]{\TPTP Syntax}
@@ -1093,9 +1343,9 @@ Further research directions include, but are not limited to:
   \item Is the input of the \ATPs
   \item Annotated formulas with the form
    \begin{center}
-\begin{tptp}
+\begin{verbatim}
 language(name, role, formula).
-\end{tptp}
+\end{verbatim}
     \end{center}
     \begin{itemize}
       \item[\texttt{language}] FOF or CNF
@@ -1104,6 +1354,42 @@ language(name, role, formula).
       \item[\texttt{formula}] formula in \TPTP format
     \end{itemize}
   \end{itemize}
+\end{frame}
+
+\begin{frame}[label=metis, fragile]{\Metis Theorem Prover}
+\Metis is an automatic theorem prover for first-order logic with
+equality.
+\begin{block}{}
+  \begin{itemize}
+    \item \href{https://github.com/gilith/metis}{Open source} implemented
+    % in \texttt{Standard ML}
+    \item Reads problems in \TPTP format
+    \item Outputs \textit{detailed} proofs in \TSTP format
+    \item For the propositional logic, \Metis has only three inference rules:
+      \vfill
+      \begin{prooftree}
+        \AxiomC{}
+        \RightLabel{axiom $φ₁, \cdots,φₙ$}
+        \UnaryInfC{$\Gamma ⊢ φ₁ ∨ \cdots ∨ φₙ$}
+      \end{prooftree}
+      \vfill
+      \begin{prooftree}
+        \AxiomC{}
+        \RightLabel{assume $\varphi$}
+        \UnaryInfC{$\Gamma ⊢ \varphi \vee \neg \varphi$}
+      \end{prooftree}
+      \vfill
+      \begin{scprooftree}{0.8}
+        \AxiomC{$\Gamma ⊢ φ₁ ∨ \cdots ∨ l ∨ \cdots  ∨ φₙ$}
+        \AxiomC{$\Gamma ⊢ ψ₁ ∨ \cdots ∨ ¬ l ∨ \cdots ∨ ψₘ$}
+        \RightLabel{resolve $l$}
+        \BinaryInfC{$\Gamma ⊢ φ₁ ∨ \cdots ∨ φₙ ∨ ψ₁ ∨ \cdots ∨ ψₘ$}
+      \end{scprooftree}
+  \vfill
+  \end{itemize}
+\vfill
+\end{block}
+
 \end{frame}
 
 \begin{frame}[fragile]{\TSTP Syntax}
@@ -1118,23 +1404,23 @@ A \TSTP derivation\footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/QuickGuide/D
   \item Is a list of annotated formulas with the form
   \end{itemize}
 
-\begin{tptp}
+\begin{verbatim}
   language(name, role, formula, source [,useful info]).
-\end{tptp}
+\end{verbatim}
 
 where \texttt{\color{blu} source} typically is an inference record
-\begin{tptp}
+\begin{verbatim}
   inference(rule, useful info, parents).
-\end{tptp}
+\end{verbatim}
 \end{frame}
 
 
-\begin{frame}[fragile, label=tstp-example]{\TSTP Example}
+\begin{frame}[fragile, label=tstp-example]{Another \TSTP Example}
 
 \begin{itemize}
   \item Proof found by \Metis for the problem $p ⊢ p$
 {\small
-\begin{tptp}
+\begin{verbatim}
 $ metis --show proof problem.tptp
 fof(a, axiom, p).
 fof(goal, conjecture, p).
@@ -1151,7 +1437,7 @@ fof(normalize_0_2, plain, $false,
     [normalize_0_0, normalize_0_1])).
 cnf(refute_0_0, plain, $false,
     inference(canonicalize, [], [normalize_0_2])).
-\end{tptp}
+\end{verbatim}
 }
 \end{itemize}
 \end{frame}
@@ -1191,93 +1477,37 @@ By refutation, we proved $p ⊢ p$:
 \end{frame}
 
 
-% \begin{frame}[fragile, label=athena]{\texttt{Athena}~\citep{Athena}}
+\begin{frame}[fragile]{\Athena tool}
 
-%  \begin{tikzpicture}[overlay,remember picture]
-%  \tikzset{shift={(current page.north)}, xshift=0cm,yshift=0cm}
-%   \node[] at (0.92\textwidth, 1cm)
-%     {\includegraphics[width=0.15\textwidth]{figures/athena}};
-% \end{tikzpicture}
+Is a \Haskell program that translates proofs given by \Metis in \TSTP
+format to \Agda code\\
 
-% Is a \texttt{Haskell} program
-% that translates proofs given by \Metis
-% in \TSTP format to \texttt{Agda} code\\
+\begin{itemize}
+    \item Parsing of \TSTP language\footnote{\label{parsing}\url{https://github.com/agomezl/tstp2agda}.}
+    \item Creation\textsuperscript{\ref{parsing}} and analysis of \hyperlink{tstp-dag}{\textbf{DAG}} derivations
+    \item Analysis of inference rules used in the \TSTP derivation
+    \item \Agda code generation
+\begin{table}[!ht]
 
-% \begin{itemize}
-%     \item Parsing of \TSTP language\footnote{\label{parsing}\url{https://github.com/agomezl/tstp2agda}.}
-%     \item Creation\textsuperscript{\ref{parsing}} and analysis of \hyperlink{tstp-dag}{\textbf{DAG}} derivations
-%     \item Analysis of inference rules used in the \TSTP derivation
-%     \item \texttt{Agda} code generation
-% \begin{table}[!ht]
-% \begin{center}
-% \scalebox{0.8}{
-% {\renewcommand{\arraystretch}{1.3}%
-% \begin{tabular}{|ll| }
-% \hline
-% \textbf{Library} & \textbf{Purpose} \\
-% \hline
-% \texttt{\hyperlink{agda-prop}{\texttt{Agda-Prop}}}& axioms and theorems of Classical Propositional Logic\\
-% \texttt{\hyperlink{agda-metis}{\texttt{Agda-Metis}}} & versions of the inference rules used by \Metis\\
-% \hline
-% \end{tabular}}
-% }
-% \end{center}
-% \label{tab:library}
-% \end{table}
+\begin{center}
+\scalebox{0.8}{
+{\renewcommand{\arraystretch}{1.3}%
+\begin{tabular}{|ll| }
+\hline
+\textbf{Library} & \textbf{Purpose} \\
+\hline
+\texttt{Agda-Prop}& axioms and theorems of classical propositional logic\\
+\texttt{Agda-Metis} & versions of the inference rules used by \Metis\\
+\hline
+\end{tabular}}
+}
+\end{center}
+\label{tab:library}
+\end{table}
 
-% \end{itemize}
-% \end{frame}
+\end{itemize}
+\end{frame}
 
-% \begin{frame}[fragile, label=agda-prop-2]{\texttt{Agda-Prop} Library
-%   \footnote{\url{https://github.com/jonaprieto/agda-prop}.}}
-% \begin{itemize}
-%   \item Intuitionistic Propositional Logic + PEM ($\Gamma ⊢ ϕ \vee \neg ϕ$)
-%   \item A data type for formulas
-%   \vspace*{1mm}
-
-% \begin{minted}{cagda}
-% data Prop : Set where
-%   Var : Fin n → Prop
-%   ⊤   : Prop
-%   ⊥   : Prop
-%   _∧_ : (\varphi \psi : Prop) → Prop
-%   _∨_ : (\varphi \psi : Prop) → Prop
-%   _⇒_ : (\varphi \psi : Prop) → Prop
-%   _⇔_ : (\varphi \psi : Prop) → Prop
-%   ¬_  : (\varphi : Prop)   → Prop
-% \end{minted}
-% \end{itemize}
-% \end{frame}
-
-% \begin{frame}[fragile, label=agda-prop]{\texttt{Agda-Prop} Library~\citep{AgdaProp}}
-% \begin{itemize}
-%   \item A data type for theorems
-%   \vspace*{1mm}
-% \begin{minted}{cagda}
-% data _⊢_ : (Γ : Ctxt)(\varphi : Prop) → Set
-% \end{minted}
-
-% \item Constructors
-%   \vspace*{1mm}
-
-% \begin{minted}{cagda}
-% assume, axiom, weaken, ⊤-intro, ⊥-elim, ¬-intro,
-% ¬-elim, ∧-intro, ∧-proj₁, ∧-proj₂, ∨-intro₁,
-% ∨-intro₂, ∨-elim, ⇒-intro, ⇒-elim, ⇔-intro,
-% ⇔-elim₁, ⇔-elim₂.
-% \end{minted}
-%   \item Natural deduction proofs for more than 71 theorems
-%   \vspace*{1mm}
-% \begin{minted}{cagda}
-% ⇔-equiv, ⇔-assoc, ⇔-comm, ⇒-⇔-¬∨, ⇔-¬-to-¬,
-% ¬⇔-to-¬, ¬¬-equiv, ⇒⇒-⇔-∧⇒, ⇔-trans, ∧-assoc,
-% ∧-comm, ∧-dist, ¬∧-to-¬∨¬, ¬∨¬-to-¬∧, ¬∨¬-⇔-¬∧,
-% subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
-% ∨-equiv, ¬∨-to-¬∧¬, ¬∧¬-to-¬∨, ∨-dmorgan,
-% ¬¬∨¬¬-to-∨, cnf, nnf, dnf, RAA, ...
-% \end{minted}
-% \end{itemize}
-% \end{frame}
 
 
 % \begin{frame}[fragile, label=agda-metis]{\texttt{Agda-Metis} Library
@@ -1459,17 +1689,17 @@ By refutation, we proved $p ⊢ p$:
 % \vfill
 % \end{frame}
 
-% \begin{frame}[fragile, label=agda-file]{\texttt{Agda} Code Example}
-%   {Generated by \texttt{Athena} Tool}
+% \begin{frame}[fragile, label=agda-file]{\Agda Code Example}
+%   {Generated by \Athena Tool}
 
 % \begin{itemize}
 %   \item The problem is $p ∧ q ⊢ q ∧ p$
 %   \item In \TPTP format
-% \begin{tptp}
+% \begin{verbatim}
 % $ cat problem.tptp
 % fof(a, axiom, p & q).
 % fof(goal, conjecture, q & p).
-% \end{tptp}
+% \end{verbatim}
 %   \item How to use Athena with your problem
 
 % \begin{tptp}
@@ -1519,7 +1749,7 @@ By refutation, we proved $p ⊢ p$:
 % \end{tptp}
 % \end{frame}
 
-% \begin{frame}[fragile, label=verified-example]{Problem $p ∧ q ⊢ q ∧ p$}{Proof generated with \texttt{Athena}}
+% \begin{frame}[fragile, label=verified-example]{Problem $p ∧ q ⊢ q ∧ p$}{Proof generated with \Athena}
 % \vfill
 % \begin{minted}{cagda}
 % p, q, a, goal, subgoal₀, subgoal₁ : Prop
@@ -1654,19 +1884,19 @@ By refutation, we proved $p ⊢ p$:
 % \RightLabel{\scriptsize{canonicalize}}
 % \UnaryInfC{$\varphi$}
 % \RightLabel{\scriptsize{conjunct}}
-% \UnaryInfC{$\neg p ⇔ (\neg q ⇔ \neg r)$}
+% \UnaryInfC{$\Gamma, \neg p ⇔ (\neg q ⇔ \neg r)$}
 
 % \AxiomC{$\vdots$}
 % \RightLabel{\scriptsize{canonicalize}}
 % \UnaryInfC{$\varphi$}
 % \RightLabel{\scriptsize{conjunct}}
-% \UnaryInfC{$\neg q ⇔ \neg r$}
+% \UnaryInfC{$\Gamma, \neg q ⇔ \neg r$}
 
 % \AxiomC{$\vdots$}
 % \RightLabel{\scriptsize{canonicalize}}
 % \UnaryInfC{$\varphi$}
 % \RightLabel{\scriptsize{conjunct}}
-% \UnaryInfC{$\neg p$}
+% \UnaryInfC{$\Gamma, \neg p$}
 
 % \RightLabel{\scriptsize{simplify}}
 % \TrinaryInfC{$\bot$}
@@ -1688,9 +1918,9 @@ By refutation, we proved $p ⊢ p$:
 % \end{itemize}
 % \end{block}
 
-% \begin{block}{Integrating \texttt{Waldmeister} into \texttt{Agda}} \citep{Foster2011}
+% \begin{block}{Integrating \texttt{Waldmeister} into \Agda} \citep{Foster2011}
 % \begin{itemize}
-%   \item Framework for a integration between \texttt{Agda} and ATPs
+%   \item Framework for a integration between \Agda and ATPs
 %   \begin{itemize}
 %     \item Equational Logic
 %     \item Reflection Layers
@@ -1703,10 +1933,10 @@ By refutation, we proved $p ⊢ p$:
 
 
 % \begin{frame}[fragile]{Related Work: \texttt{Apia}}
-%   {Proving First-Order theorems written in \texttt{Agda} using automatic
+%   {Proving First-Order theorems written in \Agda using automatic
 %   theorem provers for First-Order Logic}
 
-% \only<1>{At the moment, the communication between \texttt{Agda} and
+% \only<1>{At the moment, the communication between \Agda and
 % the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sicard2015}
 % \vfill
 % }
@@ -1806,7 +2036,7 @@ By refutation, we proved $p ⊢ p$:
 % \begin{prooftree}
 % \AxiomC{}
 % \RightLabel{eq $L$ $p$ $t$}
-% \UnaryInfC{$\neg (L[p] = t) \vee \neg L \vee L[ p ↦ t]$}
+% \UnaryInfC{$\Gamma, \neg (L[p] = t) \vee \neg L \vee L[ p ↦ t]$}
 % \end{prooftree}
 % \vfill
 %  \begin{tikzpicture}[overlay, remember picture, scale=0.5]

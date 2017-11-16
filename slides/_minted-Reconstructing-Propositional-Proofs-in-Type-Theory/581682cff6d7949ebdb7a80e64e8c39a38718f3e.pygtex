@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kp}{assume,} \PYG{k+kp}{axiom,} \PYG{k+kp}{weaken,} \PYG{k+kp}{⊤\PYGZhy{}intro,} \PYG{k+kp}{⊥\PYGZhy{}elim,} \PYG{k+kp}{¬\PYGZhy{}intro,}
+\PYG{k+kp}{¬\PYGZhy{}elim,} \PYG{k+kp}{∧\PYGZhy{}intro,} \PYG{k+kp}{∧\PYGZhy{}proj₁,} \PYG{k+kp}{∧\PYGZhy{}proj₂,} \PYG{k+kp}{∨\PYGZhy{}intro₁,}
+\PYG{k+kp}{∨\PYGZhy{}intro₂,} \PYG{k+kp}{∨\PYGZhy{}elim,} \PYG{k+kp}{⇒\PYGZhy{}intro,} \PYG{k+kp}{⇒\PYGZhy{}elim,} \PYG{k+kp}{⇔\PYGZhy{}intro,}
+\PYG{k+kp}{⇔\PYGZhy{}elim₁,} \PYG{k+kp}{⇔\PYGZhy{}elim₂.}
+\end{Verbatim}

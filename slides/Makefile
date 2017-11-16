@@ -3,7 +3,7 @@ NAME=Reconstructing-Propositional-Proofs-in-Type-Theory
 .PHONY : fast
 fast :
 	- make clean
-	- xelatex $(NAME).tex
+	- xelatex -shell-escape  $(NAME).tex
 
 .PHONY : pdf
 pdf :

@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kr}{data} \PYG{k+kt}{Prop} \PYG{o+ow}{:} \PYG{k+kt}{Set} \PYG{k+kr}{where}
+  \PYG{n+nf}{Var} \PYG{o+ow}{:} \PYG{k+kt}{Fin} n \PYG{o+ow}{→} \PYG{k+kt}{Prop}
+  \PYG{n+nf}{⊤}   \PYG{o+ow}{:} \PYG{k+kt}{Prop}
+  \PYG{n+nf}{⊥}   \PYG{o+ow}{:} \PYG{k+kt}{Prop}
+  \PYG{n+nf}{\PYGZus{}∧\PYGZus{}} \PYG{o+ow}{:} \PYG{o}{(}φ ψ \PYG{o+ow}{:} \PYG{k+kt}{Prop}\PYG{o}{)} \PYG{o+ow}{→} \PYG{k+kt}{Prop}
+  \PYG{n+nf}{\PYGZus{}∨\PYGZus{}} \PYG{o+ow}{:} \PYG{o}{(}φ ψ \PYG{o+ow}{:} \PYG{k+kt}{Prop}\PYG{o}{)} \PYG{o+ow}{→} \PYG{k+kt}{Prop}
+  \PYG{n+nf}{\PYGZus{}⇒\PYGZus{}} \PYG{o+ow}{:} \PYG{o}{(}φ ψ \PYG{o+ow}{:} \PYG{k+kt}{Prop}\PYG{o}{)} \PYG{o+ow}{→} \PYG{k+kt}{Prop}
+  \PYG{n+nf}{\PYGZus{}⇔\PYGZus{}} \PYG{o+ow}{:} \PYG{o}{(}φ ψ \PYG{o+ow}{:} \PYG{k+kt}{Prop}\PYG{o}{)} \PYG{o+ow}{→} \PYG{k+kt}{Prop}
+  \PYG{n+nf}{¬\PYGZus{}}  \PYG{o+ow}{:} \PYG{o}{(}φ \PYG{o+ow}{:} \PYG{k+kt}{Prop}\PYG{o}{)}   \PYG{o+ow}{→} \PYG{k+kt}{Prop}
+\end{Verbatim}
