@@ -58,12 +58,32 @@
 % Color definitions.
 % --------------------------------------------------------------------------
 \usepackage{xcolor}
+<<<<<<< HEAD
 \definecolor{background}{RGB}{1,0,102}
 \definecolor{logo}{RGB}{1,0,102}
 \definecolor{bline}{RGB}{255, 255, 255}
 \definecolor{fontc}{RGB}{255, 255, 255}
 \definecolor{blu}{RGB}{1,0,102}
 \definecolor{decoration}{RGB}{10,164,216}
+=======
+\definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{amethyst}{rgb}{0.6, 0.4, 0.8}
+\definecolor{antiquefuchsia}{rgb}{0.57, 0.36, 0.51}
+\definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
+\definecolor{background}{RGB}{1,0,102}
+\definecolor{ballblue}{rgb}{0.13, 0.67, 0.8}
+\definecolor{bline}{RGB}{255, 255, 255}
+\definecolor{blue(munsell)}{rgb}{0.0, 0.5, 0.69}
+\definecolor{blue(pigment)}{rgb}{0.2, 0.2, 0.6}
+\definecolor{blu}{RGB}{1,0,102}
+\definecolor{bondiblue}{rgb}{0.0, 0.58, 0.71}
+\definecolor{brightmaroon}{rgb}{0.76, 0.13, 0.28}
+\definecolor{cadet}{rgb}{0.33, 0.41, 0.47}
+\definecolor{decoration}{RGB}{10,164,216}
+\definecolor{fontc}{RGB}{255, 255, 255}
+\definecolor{logo}{RGB}{1,0,102}
+>>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 
 % --------------------------------------------------------------------------
 
@@ -615,7 +635,7 @@ in \texttt{TSTP} format to \texttt{Agda} code\\
   \vspace*{1mm}
 
 \begin{minted}{cagda}
-data Prop : Set where
+data PropFormula : Set where
   Var : Fin n → Prop
   ⊤   : Prop
   ⊥   : Prop
