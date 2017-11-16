@@ -309,6 +309,7 @@
 \newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
 \newunicodechar{∅}{\ensuremath{\emptyset}}
 \newunicodechar{∈}{\ensuremath{\in}}
+\newunicodechar{∀}{\ensuremath{\forall}}
 \newunicodechar{∘}{\ensuremath{\circ}}
 \newunicodechar{∙}{\ensuremath{\bullet}}
 \newunicodechar{∧}{\ensuremath{\wedge}}
@@ -499,6 +500,7 @@ maxbibnames=6,%
   bgcolor    = aliceblue
 , fontsize   = \footnotesize
 , frame      = none
+, mathescape = true
 % , framerule = 0.4pt
 % , framesep  = 0pt
 , style     = cagda
@@ -594,6 +596,86 @@ This tool allowed us to use \Metis without installing it
 \end{frame}
 
 % --------------------------------------------------------------------
+
+\begin{frame}[fragile]{Bug in the Printing of the Proof}
+  {Fixed in \Metis v2.3 (release 20161108)}
+
+\[ \varphi := \neg p ∧ (\neg q ⇔ \neg r) ∧ (\neg p ⇔ (\neg q ⇔ \neg r))\]
+
+\begin{prooftree}
+\AxiomC{$\vdots$}
+\RightLabel{\scriptsize{canonicalize}}
+\UnaryInfC{$\varphi$}
+\RightLabel{\scriptsize{conjunct}}
+\UnaryInfC{$\Gamma, \neg p ⇔ (\neg q ⇔ \neg r)$}
+
+\AxiomC{$\vdots$}
+\RightLabel{\scriptsize{canonicalize}}
+\UnaryInfC{$\varphi$}
+\RightLabel{\scriptsize{conjunct}}
+\UnaryInfC{$\Gamma, \neg q ⇔ \neg r$}
+
+\AxiomC{$\vdots$}
+\RightLabel{\scriptsize{canonicalize}}
+\UnaryInfC{$\varphi$}
+\RightLabel{\scriptsize{conjunct}}
+\UnaryInfC{$\Gamma, \neg p$}
+
+\RightLabel{\scriptsize{simplify}}
+\TrinaryInfC{$\bot$}
+\end{prooftree}
+\pause
+The bug was caused by the conversion of \texttt{Xor} sets to \texttt{Iff} lists.
+After reporting this, \Metis developer fixed the printing of \texttt{canonicalize} inference rule
+\[ \varphi := \neg p ∧ (\neg q ⇔ \neg r) ∧ (\neg p ⇔ (\neg q ⇔ {\color{red} r}))\]
+\end{frame}
+
+
+\begin{frame}[fragile]{Soundness Bug in Splitting goals}
+  {Fixed in \Metis v2.3 (release 20170810)}
+
+Consider this \TPTP problem
+\begin{verbatim}
+  $ cat issue.tptp
+  fof(goal, conjecture, (~ (p <=> q)) <=> ((p => ~ q) & (q => ~p))).
+\end{verbatim}
+
+\Metis found a proof when other \ATPs do not. Indeed, the problem is not a tautology.
+
+\begin{verbatim}
+  $ metis issue.tptp
+  SZS status Theorem for issue.tptp
+\end{verbatim}
+
+Testing with \name{EProver} with a client for \name{SystemOnTPTP} (\name{Online-ATPs}).
+
+\begin{verbatim}
+  $ online-atps --atp=e issue.tptp
+  ...
+  # No proof found!
+  # SZS status CounterSatisfiable
+  ...
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Soundness Bug in Splitting goals}
+  {Fixed in \Metis v2.3 (release 20170810)}
+
+The bug was in the \texttt{strip} inference rule:
+
+\begin{equation*}
+¬ (p ⇔ q) ⇔ ((p ⇒ ¬ q) ∧ (q ⇒ ¬ p))
+\end{equation*}
+
+Solved with:
+
+\begin{equation*}
+¬ (p ⇔ q) ⇔ ((p ⇒ ¬ q) ∧ (¬ q ⇒ p))
+\end{equation*}
+
+\end{frame}
+
 
 \begin{frame}[fragile]{Proof Reconstruction: Overview}
 \vfill
@@ -903,8 +985,10 @@ Intuitionistic Propositional Logic + PEM ($\Gamma ⊢ \varphi \vee \neg \varphi$
 \end{frame}
 
 
-\begin{frame}{Useful Rules}
-
+\begin{frame}{Other Rules}
+\begin{itemize}
+\item Weakening: to extend the hypotheses with additional formulas
+\vskip 2mm
 \begin{center}
 \begin{scprooftree}{1.1}
     \AxiomC{$Γ ⊢ φ$}
@@ -912,9 +996,11 @@ Intuitionistic Propositional Logic + PEM ($\Gamma ⊢ \varphi \vee \neg \varphi$
     \UnaryInfC{$Γ , ψ ⊢ φ$}
   \end{scprooftree}
 \end{center}
-
+\vskip 2mm
+\item
 The \abbrev{RAA} rule is the formulation of
 the principle of proof by contradiction:
+\vskip 2mm
 \begin{center}
 \begin{scprooftree}{1.1}
 \AxiomC{$Γ, ¬ φ ⊢ ⊥$}
@@ -922,6 +1008,8 @@ the principle of proof by contradiction:
 \UnaryInfC{$Γ ⊢ φ$}
 \end{scprooftree}
 \end{center}
+\vskip 2mm
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Syntactical Consequence Relation in \Agda}
@@ -929,41 +1017,34 @@ the principle of proof by contradiction:
   \item Inductive family $\_⊢\_$ with two indexes: a set of propositions~$Γ$
   (the premises) and a proposition~$φ$ (the conclusion)
 
+\begin{example}
+In \cite{AgdaProp} we define $\_⊢\_$ as follows
 \begin{MyAgda}
 data _⊢_ : (Γ : Ctxt)(φ : Prop) → Set
-\end{MyAgda}
-
-\item Constructors (inference rules)
-
-\begin{MyAgda}
-assume, ⊤-intro, ⊥-elim, ¬-intro,
-¬-elim, ∧-intro, ∧-proj₁, ∧-proj₂, ∨-intro₁,
-∨-intro₂, ∨-elim, ⇒-intro, ⇒-elim, ⇔-intro,
-⇔-elim₁, ⇔-elim₂.
-\end{MyAgda}
-For example, the introduction rule for conjunction ∧-intro is
-the constructor:
-\begin{MyAgda}
+  ...
   ∧-intro
     : ∀ {Γ} {φ ψ}
     → Γ ⊢ φ → Γ ⊢ ψ
     → Γ ⊢ φ ∧ ψ
+
+  ∧-proj₁
+    : ∀ {Γ} {φ ψ}
+    → Γ ⊢ φ ∧ ψ
+    → Γ ⊢ φ
+
+  ∧-proj₂
+    : ∀ {Γ} {φ ψ}
+    → Γ ⊢ φ ∧ ψ
+    → Γ ⊢ ψ
+  ...
 \end{MyAgda}
-
-  \item In \cite{AgdaProp} we can find more than 99 theorems to reasoning
-  in classical propositional logic
-
-\begin{MyAgda}
-∧-assoc, ∧-comm, ∧-dist, ¬∧-to-¬∨¬, ∨-assoc, ∨-comm, ∨-dist, ∨-equiv
-¬¬∨¬¬-to-∨, cnf, nnf, dnf, ...
-\end{MyAgda}
-
+\end{example}
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Reconstructing \Metis Rules in Type Theory}
 
-Let \textrm{metisRule} be a \Metis inference rule. We define in \Agda the function \fun{metisRule} which has the following pattern\footnote{
+Let \textrm{metisRule} be a \Metis inference rule. We define the function \fun{metisRule} in type theory which has the following pattern\footnote{
 \Source and \Target as synonyms of the \Prop type to describe in the
 function types the role of the arguments}:
 \begin{equation*}
@@ -1045,10 +1126,10 @@ fof(norm₁, (¬ p ∨ q) ∧ (¬ p ∨ r), inf(clausify, norm₀)).
     \ \ \ \ \ \State{apply clausification to $a_j$}
     \ \ \ \EndIf
     \State{\ \ \ application of \Metis inference rules}
-    \ \ \  \If{a contradiction can be derived the assumptions}
+    \ \ \  \If{a contradiction can be derived from the assumptions}
     \ \ \ \ \ \State{keep the refutation and continue with the others subgoals}
    \ \ \ \ \ \Else
-    \ \ \ \ \ \State{exit without a proof. The conjecture can not be derived from the premises}
+    \ \ \ \ \ \State{exit without a proof.}
     \EndIf
     \EndFor
     \State{print the conjecture and the premises}
@@ -1062,7 +1143,7 @@ fof(norm₁, (¬ p ∨ q) ∧ (¬ p ∨ r), inf(clausify, norm₀)).
 \end{frame}
 
 
-\begin{frame}{Challenges}
+\begin{frame}{Some Challenges}
 \begin{itemize}
   \item Formalization
 \begin{itemize}
@@ -1075,7 +1156,6 @@ fof(norm₁, (¬ p ∨ q) ∧ (¬ p ∨ r), inf(clausify, norm₀)).
 \begin{itemize}
   \item Parsing of \TSTP derivations
   \item Printing valid \Agda files
-  \item Testing
 \end{itemize}
 
 \end{itemize}
@@ -1302,6 +1382,7 @@ The proof is:
 \BinaryInfC{$\Gamma \vdash \text{goal}$}
 \end{prooftree}
 \vfill
+(Live example using Agda and Athena)
 \end{frame}
 
 
@@ -1494,8 +1575,8 @@ Is a \Haskell program that translates proofs given by \Metis in \TSTP
 format to \Agda code\\
 
 \begin{itemize}
-    \item Parsing of \TSTP language\footnote{\label{parsing}\url{https://github.com/agomezl/tstp2agda}.}
-    \item Creation\textsuperscript{\ref{parsing}} and analysis of \hyperlink{tstp-dag}{\textbf{DAG}} derivations
+    \item Parsing of \TSTP language
+    \item Creation and analysis of \hyperlink{tstp-dag}{\textbf{DAG}} derivations
     \item Analysis of inference rules used in the \TSTP derivation
     \item \Agda code generation
 \begin{table}[!ht]
@@ -1521,402 +1602,96 @@ format to \Agda code\\
 
 
 
-% \begin{frame}[fragile, label=agda-metis]{\texttt{Agda-Metis} Library
-%   ~\citep{AgdaMetis}}
-% \vfill
-% \begin{table}[!ht]
-% \begin{center}
-% \scalebox{0.7}{
-% {\renewcommand{\arraystretch}{1.3}%
-% \begin{tabular}{|lll|}
-% \hline
-% \textbf{Rule} & \textbf{Purpose} &\textbf{Theorem}\\
-% \hline
-% \texttt{canonicalize} & transforms formulas to CNF, DNF or NNF &\texttt{atp-canonicalize}\\
-% \texttt{clausify} & performs clausification &\texttt{atp-clausify}\\
-% \hyperlink{atp-conjunct}{\texttt{conjunct}} & takes a formula from a conjunction &\hyperlink{atp-conjunct}{\texttt{atp-conjunct}}\\
-% \texttt{negate} & append negation symbol to the formula &\texttt{atp-negate}\\
-% \texttt{resolve} & applies theorems of resolution &\texttt{atp-resolve}\\
-% \texttt{simplify} & applies over a list of formula to simplify them &\texttt{atp-simplify}\\
-% \texttt{strip} & splits a formula into subgoals &\texttt{atp-strip}\\[1ex]
-% \hline
-% \end{tabular}}
-% }
-% \end{center}
-% \label{tab:agda-metis-table}
-% \end{table}
-% \vfill
-% \end{frame}
+
+\begin{frame}[fragile, label=conjunct-thm]{\texttt{Agda-Metis}: Conjunct Inference
+  \footnote{\url{https://github.com/jonaprieto/agda-metis}.}
+  }
+
+\vfill
+\begin{itemize}
+\item Definition
+\begin{equation*}
+\text{\color{blu!40!black}conjunct}(\overbrace{\varphi_1 ∧ ⋯ ∧ \varphi_n}^{\varphi}, \psi)
+= \begin{cases}
+\varphi_{i} \ \ \ \ \text{if }\psi\text{ is equal to some }\varphi_i\\
+\varphi    \ \ \ \ \text{otherwise}
+\end{cases}
+\end{equation*}
+
+\pause
+\item Inference rules involved
+\begin{center}
+\begin{columns}
+\begin{column}{0.42\textwidth}
+
+ \begin{prooftree}
+  \AxiomC{$\varphi_1 ∧ \varphi_2$}
+  \RightLabel{\scriptsize $∧$-\texttt{proj}$₁$}
+  \UnaryInfC{$\varphi_1$}
+  \end{prooftree}
+\end{column}
+
+\begin{column}{0.42\textwidth}
+ \begin{prooftree}
+  \AxiomC{$\varphi_1 ∧ \varphi_2$}
+  \RightLabel{\scriptsize $∧$-\texttt{proj}$₂$}
+  \UnaryInfC{$\varphi₂$}
+  \end{prooftree}
+\end{column}
+
+\begin{column}{0.2\textwidth}  %%<--- here
+  \begin{tikzpicture}[
+    ->
+  , >=stealth'
+  , shorten >=1pt
+  , auto
+%  , node distance=2.8cm
+  , thick
+  , overlay
+  , remember picture
+    , transform canvas={scale=.75}
+    ]
+  \tikzset{shift={(current page.center)}, xshift=4.5cm,yshift=0cm}
+
+  \node[fill=blu!45!black,draw=none,text=white]  (phi)                     {$\varphi$};
+  \node[fill=blu!45!black,draw=none,text=white]  (phi1) [below left =1.3cm and 0.1cm of phi]  {$\varphi_1$};
+  \node[fill=blu!45!black,draw=none,text=white]  (phi2) [below right=1.3cm and 0.1cm of phi]  {$\varphi_2$};
+  \node[fill=blu!45!black,draw=none,text=white]  (phi3)  [below left =1.3cm and 0.1cm of phi2]  {$\varphi_3$};
+  \node[fill=blu!45!black,draw=none,text=white]  (phi4)  [below right =1.3cm and 0.1cm of phi2]  {$\varphi_4$};
+
+  \path[every node/.style={sloped,anchor=south,auto=false}]
+        (phi) edge node {\tiny $∧$-\texttt{proj}$₁$} (phi1)
+        (phi) edge node {\tiny $∧$-\texttt{proj}$₂$} (phi2)
+        (phi2) edge node {\tiny $∧$-\texttt{proj}$₁$} (phi3)
+        (phi2) edge node {\tiny $∧$-\texttt{proj}$₂$} (phi4);
+
+\end{tikzpicture}
+\end{column}
+\end{columns}
+\end{center}
+\vskip 2mm
+
+\item Example
+\[ \varphi := \varphi_1 ∧ \overbrace{(\varphi_3 ∧ \varphi_4)}^{\varphi_2}\]
+
+\begin{itemize}
+
+\item
+\fun{conjunct}$(\varphi , \varphi_3 ∧ \varphi_1) ≡ \varphi$
+\vskip 3mm
+\item
+\fun{conjunct}$(\varphi , \varphi_3)      ≡ \varphi_3$
+\vskip 3mm
+\item
+\fun{conjunct}$(\varphi , \varphi_2)      ≡ \varphi_2$
+\vskip 3mm
+\end{itemize}
+
+\end{itemize}
+\end{frame}
 
 
-% \begin{frame}[fragile, label=atp-conjunct]{\texttt{Agda-Metis}: Conjunct Inference
-%   \footnote{\url{https://github.com/jonaprieto/agda-metis}.}
-%   }
 
-% \vfill
-% \begin{itemize}
-% \item Definition
-% \begin{equation*}
-% \text{\color{blu!40!black}conjunct}(\overbrace{\varphi_1 ∧ ⋯ ∧ \varphi_n}^{\varphi}, \psi)
-% = \begin{cases}
-% \varphi_{i} \ \ \ \ \text{if }\psi\text{ is equal to some }\varphi_i\\
-% \varphi    \ \ \ \ \text{otherwise}
-% \end{cases}
-% \end{equation*}
-
-% \pause
-% \item Inference rules involved
-% \begin{center}
-% \begin{columns}
-% \begin{column}{0.42\textwidth}
-
-%  \begin{prooftree}
-%   \AxiomC{$\varphi_1 ∧ \varphi_2$}
-%   \RightLabel{\scriptsize $∧$-\texttt{proj}$₁$}
-%   \UnaryInfC{$\varphi_1$}
-%   \end{prooftree}
-% \end{column}
-
-% \begin{column}{0.42\textwidth}
-%  \begin{prooftree}
-%   \AxiomC{$\varphi_1 ∧ \varphi_2$}
-%   \RightLabel{\scriptsize $∧$-\texttt{proj}$₂$}
-%   \UnaryInfC{$\varphi₂$}
-%   \end{prooftree}
-% \end{column}
-
-% \begin{column}{0.2\textwidth}  %%<--- here
-%   \begin{tikzpicture}[
-%     ->
-%   , >=stealth'
-%   , shorten >=1pt
-%   , auto
-% %  , node distance=2.8cm
-%   , thick
-%   , every state/.style={fill=blu!45!black,draw=none,text=white}
-%   , overlay
-%   , remember picture
-%     , transform canvas={scale=.75}
-%     ]
-%   \tikzset{shift={(current page.center)}, xshift=4.5cm,yshift=0cm}
-
-
-%   \node[state]  (phi)                     {$\varphi$};
-%   \node[state]  (phi1) [below left =1.3cm and 0.1cm of phi]  {$\varphi_1$};
-%   \node[state]  (phi2) [below right=1.3cm and 0.1cm of phi]  {$\varphi_2$};
-%   \node[state]  (phi3)  [below left =1.3cm and 0.1cm of phi2]  {$\varphi_3$};
-%   \node[state]  (phi4)  [below right =1.3cm and 0.1cm of phi2]  {$\varphi_4$};
-
-%   \path[every node/.style={sloped,anchor=south,auto=false}]
-%         (phi) edge node {\tiny $∧$-\texttt{proj}$₁$} (phi1)
-%         (phi) edge node {\tiny $∧$-\texttt{proj}$₂$} (phi2)
-%         (phi2) edge node {\tiny $∧$-\texttt{proj}$₁$} (phi3)
-%         (phi2) edge node {\tiny $∧$-\texttt{proj}$₂$} (phi4);
-
-% \end{tikzpicture}
-% \end{column}
-% \end{columns}
-% \end{center}
-% \vskip 2mm
-
-% \item Example
-% \[ \varphi := \varphi_1 ∧ \overbrace{(\varphi_3 ∧ \varphi_4)}^{\varphi_2}\]
-
-% \begin{itemize}
-
-% \item
-% \texttt{conjunct}$(\varphi , \varphi_3 ∧ \varphi_1) ≡ \varphi$
-% \vskip 3mm
-% \item
-% \texttt{conjunct}$(\varphi , \varphi_3)      ≡ \varphi_3$
-% \vskip 3mm
-% \item
-% \texttt{conjunct}$(\varphi , \varphi_2)      ≡ \varphi_2$
-% \vskip 3mm
-% \end{itemize}
-
-% \end{itemize}
-% \end{frame}
-
-% \begin{frame}[fragile]
-
-% \begin{minted}{cagda}
-% data ConjView : Prop → Set where
-%   conj  : (\varphi₁ \varphi₂ : Prop) → ConjView (\varphi₁ ∧ \varphi₂)
-%   other : (\varphi : Prop)     → ConjView \varphi
-
-% conj-view : (\varphi : Prop) → ConjView \varphi
-% conj-view (\varphi ∧ \psi) = conj _ _
-% conj-view \varphi       = other _
-
-% data Step : Set where
-%   pick  : Step
-%   proj₁ : Step
-%   proj₂ : Step
-
-% Path : Set
-% Path = List Step
-
-% conjunct-path : (\varphi \psi : Prop) → Path → Path
-% conjunct-path \varphi \psi path with ⌊ eq \varphi \psi ⌋
-% ... | true  = path ∷ʳ pick
-% ... | false with conj-view \varphi
-% ...   | other _ = []
-% ...   | conj \varphi₁ \varphi₂ with conjunct-path \varphi₁ \psi []
-% ...     | subpath@(_ ∷ _) = (path ∷ʳ proj₁) ++ subpath
-% ...     | [] with conjunct-path \varphi₂ \psi []
-% ...          | subpath@(_ ∷ _) = (path ∷ʳ proj₂) ++ subpath
-% ...          | []              = []
-% \end{minted}
-
-% \end{frame}
-
-
-% \begin{frame}[fragile, label=atp-conjunct-proof]{The \texttt{conjunct} function and its theorem, \texttt{atp-conjunct}}
-% \vfill
-% \begin{minted}{cagda}
-% conjunct : Prop → Prop → Prop
-% conjunct \varphi \psi with conj-view \varphi | conjunct-path \varphi \psi []
-% ... | _          | []        = \varphi
-% ... | conj _ _   | pick  ∷ _ = \varphi
-% ... | conj \varphi₁ _  | proj₁ ∷ _ = conjunct \varphi₁ \psi
-% ... | conj _ \varphi₂  | proj₂ ∷ _ = conjunct \varphi₂ \psi
-% ... | other .\varphi   | _         = \varphi
-
-% atp-conjunct
-%   : ∀ {Γ} {\varphi}
-%   → (\psi : Prop)
-%   → \Gamma ⊢ \varphi
-%   → \Gamma ⊢ conjunct \varphi \psi
-
-% atp-conjunct {Γ} {\varphi} \psi Γ⊢\varphi
-%   with conj-view \varphi | conjunct-path \varphi \psi []
-% ...  | _           | []        = Γ⊢\varphi
-% ...  | conj _ _    | pick  ∷ _ = Γ⊢\varphi
-% ...  | conj _ _    | proj₁ ∷ _ = atp-conjunct \psi (∧-proj₁ Γ⊢\varphi)
-% ...  | conj _ _    | proj₂ ∷ _ = atp-conjunct \psi (∧-proj₂ Γ⊢\varphi)
-% ...  | other _     | (_ ∷ _)   = Γ⊢\varphi
-% \end{minted}
-% \vfill
-% \end{frame}
-
-% \begin{frame}[fragile, label=agda-file]{\Agda Code Example}
-%   {Generated by \Athena Tool}
-
-% \begin{itemize}
-%   \item The problem is $p ∧ q ⊢ q ∧ p$
-%   \item In \TPTP format
-% \begin{verbatim}
-% $ cat problem.tptp
-% fof(a, axiom, p & q).
-% fof(goal, conjecture, q & p).
-% \end{verbatim}
-%   \item How to use Athena with your problem
-
-% \begin{tptp}
-% $ metis --show proof problem.tptp > problem.tstp
-% $ athena problem.tstp
-% $ agda problem.tstp
-% \end{tptp}
-% \end{itemize}
-% \end{frame}
-
-% \begin{frame}[fragile, allowframebreaks]{\TSTP Derivation given by \Metis}
-% \begin{tptp}
-% fof(a, axiom, p & q).
-% fof(goal, conjecture, q & p).
-% fof(subgoal_0, plain, q,
-%     inference(strip, [], [goal])).
-% fof(subgoal_1, plain, q => p,
-%     inference(strip, [], [goal])).
-% fof(negate_0_0, plain, ~ q,
-% inference(negate, [], [subgoal_0])).
-% fof(normalize_0_0, plain, (~ q),
-%     inference(canonicalize, [], [negate_0_0])).
-% fof(normalize_0_1, plain, p & q,
-%     inference(canonicalize, [], [a])).
-% fof(normalize_0_2, plain, q,
-%     inference(conjunct, [], [normalize_0_1])).
-% fof(normalize_0_3, plain, $false,
-%     inference(simplify, [],
-%         [normalize_0_0, normalize_0_2])).
-% cnf(refute_0_0, plain, $false,
-%     inference(canonicalize, [], [normalize_0_3])).
-% fof(negate_1_0, plain, ~ (q => p),
-%     inference(negate, [], [subgoal_1])).
-% fof(normalize_1_0, plain, ~ p & q,
-%     inference(canonicalize, [], [negate_1_0])).
-% fof(normalize_1_1, plain, p & q,
-%      inference(canonicalize, [], [a])).
-% fof(normalize_1_2, plain, p,
-%     inference(conjunct, [], [normalize_1_1])).
-% fof(normalize_1_3, plain, q,
-%     inference(conjunct, [], [normalize_1_1])).
-% fof(normalize_1_4, plain, $false,
-%     inference(simplify, [],
-%       [normalize_1_0, normalize_1_2, normalize_1_3])).
-% cnf(refute_1_0, plain, ($false),
-%     inference(canonicalize, [], [normalize_1_4])).
-% \end{tptp}
-% \end{frame}
-
-% \begin{frame}[fragile, label=verified-example]{Problem $p ∧ q ⊢ q ∧ p$}{Proof generated with \Athena}
-% \vfill
-% \begin{minted}{cagda}
-% p, q, a, goal, subgoal₀, subgoal₁ : Prop
-
-% -- Axiom.
-% a = p ∧ q
-
-% -- Premise.
-% Γ : Ctxt
-% Γ = [ a ]
-
-% -- Conjecture.
-% goal = q ∧ p
-
-% -- Subgoals.
-% subgoal₀ = q
-% subgoal₁ = q ⇒ p
-% \end{minted}
-% \vfill
-% \end{frame}
-
-% \begin{frame}[fragile, label=verified-example-2]{Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
-% \vfill
-% \begin{minted}{cagda}
-% a : Prop
-% a = p ∧ q
-
-% subgoal₀ : Prop
-% subgoal₀ = q
-
-% proof₀ : \Gamma ⊢ subgoal₀
-% proof₀ =
-%   (RAA
-%     (atp-simplify ⊥
-%       (assume {Γ = Γ}
-%         (\neg subgoal₀))
-%       (atp-conjunct q
-%         (atp-canonicalize (p ∧ q)
-%           (weaken (\neg subgoal₀)
-%             (assume {Γ = ∅} a))))))
-% \end{minted}
-% \vfill
-% \end{frame}
-
-% \begin{frame}[fragile, label=verified-example-3]
-%   {Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
-% \vfill
-% \begin{minted}{cagda}
-% subgoal₁ : Prop
-% subgoal₁ = q ⇒ p
-
-% proof₁ : \Gamma ⊢ subgoal₁
-% proof₁ =
-%   (RAA
-%     (atp-simplify ⊥
-%       (atp-conjunct q
-%         (atp-canonicalize (p ∧ q)
-%           (weaken (\neg subgoal₁)
-%             (assume {Γ = ∅} a))))
-%       (atp-simplify ⊥
-%         (atp-canonicalize ((\neg p) ∧ q)
-%           (assume {Γ = Γ}
-%             (\neg subgoal₁)))
-%         (atp-conjunct p
-%           (atp-canonicalize (p ∧ q)
-%             (weaken (\neg subgoal₁)
-%               (assume {Γ = ∅} a)))))))
-% \end{minted}
-% \vfill
-% \end{frame}
-
-% \begin{frame}[fragile, label=verified-example-4]{Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed proof}
-% \vfill
-% \begin{minted}{cagda}
-% -- Premise.
-% Γ = [ a ]
-
-% -- Conjecture.
-% goal = q ∧ p
-
-% -- Subgoals.
-% subgoal₀ = q
-% subgoal₁ = q ⇒ p
-
-% -- Proof
-% proof₀ : \Gamma ⊢ subgoal₀
-% proof₁ : \Gamma ⊢ subgoal₁
-
-% proof : \Gamma ⊢ goal
-% proof =
-%   ⇒-elim
-%     atp-splitGoal            -- q ∧ (q ⇒ p) ⇒ p
-%     (∧-intro proof₀ proof₁)
-% \end{minted}
-% \vfill
-% \end{frame}
-
-% \begin{frame}[fragile, label=failure-example]{Bug\footnote{\url{https://github.com/gilith/metis/issues/2}.} in the Printing of the Proof}
-%   {\Metis v2.3 (release 20161108)}
-% % {}
-% \begin{tptp}
-% $ cat problem.tptp
-% fof(goal, conjecture,
-%   ((p <=> q) <=> r) <=> (p <=> (q <=> r))).
-% \end{tptp}
-% \begin{tptp}
-% $ metis --show proof problem.tptp
-% ...
-% fof(normalize_2_0, plain,
-%   (~ p & (~ q <=> ~ r) & (~ p <=> (~ q <=> ~ r))),
-%   inference(canonicalize, [], [negate_2_0])).
-% fof(normalize_2_1, plain, ~ p <=> (~ q <=> ~ r),
-%     inference(conjunct, [], [normalize_2_0])).
-% fof(normalize_2_2, plain, ~ q <=> ~ r,
-%     inference(conjunct, [], [normalize_2_0])).
-% fof(normalize_2_3, plain, ~ p,
-%   inference(conjunct, [], [normalize_2_0])).
-% fof(normalize_2_4, plain, $false,
-%     inference(simplify, [],
-%       [normalize_2_1, normalize_2_2, normalize_2_3])).
-% ...
-% \end{tptp}
-% \end{frame}
-
-% \begin{frame}[fragile, label=failure-example-2]{Bug in the Printing of the Proof}
-%   {\Metis v2.3 (release 20161108)}
-
-% \[ \varphi := \neg p ∧ (\neg q ⇔ \neg r) ∧ (\neg p ⇔ (\neg q ⇔ \neg r))\]
-
-% \begin{prooftree}
-% \AxiomC{$\vdots$}
-% \RightLabel{\scriptsize{canonicalize}}
-% \UnaryInfC{$\varphi$}
-% \RightLabel{\scriptsize{conjunct}}
-% \UnaryInfC{$\Gamma, \neg p ⇔ (\neg q ⇔ \neg r)$}
-
-% \AxiomC{$\vdots$}
-% \RightLabel{\scriptsize{canonicalize}}
-% \UnaryInfC{$\varphi$}
-% \RightLabel{\scriptsize{conjunct}}
-% \UnaryInfC{$\Gamma, \neg q ⇔ \neg r$}
-
-% \AxiomC{$\vdots$}
-% \RightLabel{\scriptsize{canonicalize}}
-% \UnaryInfC{$\varphi$}
-% \RightLabel{\scriptsize{conjunct}}
-% \UnaryInfC{$\Gamma, \neg p$}
-
-% \RightLabel{\scriptsize{simplify}}
-% \TrinaryInfC{$\bot$}
-% \end{prooftree}
-% \pause
-% The bug was caused by the conversion of \texttt{Xor} sets to \texttt{Iff} lists.
-% After reporting this, Hurd fixed the printing of \texttt{canonicalize} inference rule
-% \[ \varphi := \neg p ∧ (\neg q ⇔ \neg r) ∧ (\neg p ⇔ (\neg q ⇔ {\color{red} r}))\]
-% \end{frame}
 
 
 % \begin{frame}[fragile, label=hammer]{Related Work}
