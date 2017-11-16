@@ -607,19 +607,19 @@ This tool allowed us to use \Metis without installing it
 \RightLabel{\scriptsize{canonicalize}}
 \UnaryInfC{$\varphi$}
 \RightLabel{\scriptsize{conjunct}}
-\UnaryInfC{$\Gamma, \neg p ⇔ (\neg q ⇔ \neg r)$}
+\UnaryInfC{$\neg p ⇔ (\neg q ⇔ \neg r)$}
 
 \AxiomC{$\vdots$}
 \RightLabel{\scriptsize{canonicalize}}
 \UnaryInfC{$\varphi$}
 \RightLabel{\scriptsize{conjunct}}
-\UnaryInfC{$\Gamma, \neg q ⇔ \neg r$}
+\UnaryInfC{$\neg q ⇔ \neg r$}
 
 \AxiomC{$\vdots$}
 \RightLabel{\scriptsize{canonicalize}}
 \UnaryInfC{$\varphi$}
 \RightLabel{\scriptsize{conjunct}}
-\UnaryInfC{$\Gamma, \neg p$}
+\UnaryInfC{$\neg p$}
 
 \RightLabel{\scriptsize{simplify}}
 \TrinaryInfC{$\bot$}
@@ -853,8 +853,9 @@ the following inferences:
 \vfill
 \end{frame}
 
-\begin{frame}[fragile]{Proposition Type}
+\begin{frame}[fragile]{Proposition Type in \Agda}
 A data type for formulas
+{\large
 \begin{MyAgda}
 data Prop : Set where
   Var : Fin n → Prop
@@ -866,6 +867,7 @@ data Prop : Set where
   _⇔_ : (φ ψ : Prop) → Prop
   ¬_  : (φ : Prop)   → Prop
 \end{MyAgda}
+}
 
 \end{frame}
 
