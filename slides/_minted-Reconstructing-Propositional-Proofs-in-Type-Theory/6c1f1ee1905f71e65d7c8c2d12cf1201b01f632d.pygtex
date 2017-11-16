@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+  \PYG{n+nf}{∧\PYGZhy{}intro}
+    \PYG{o+ow}{:} \PYG{o+ow}{∀} \PYG{o}{\PYGZob{}}Γ\PYG{o}{\PYGZcb{}} \PYG{o}{\PYGZob{}}φ ψ\PYG{o}{\PYGZcb{}}
+    \PYG{o+ow}{→} Γ ⊢ φ \PYG{o+ow}{→} Γ ⊢ ψ
+    \PYG{o+ow}{→} Γ ⊢ φ ∧ ψ
+\end{Verbatim}

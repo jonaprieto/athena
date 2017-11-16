@@ -1,8 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{k+kp}{⇔\PYGZhy{}equiv,} \PYG{k+kp}{⇔\PYGZhy{}assoc,} \PYG{k+kp}{⇔\PYGZhy{}comm,} \PYG{k+kp}{⇒\PYGZhy{}⇔\PYGZhy{}¬∨,} \PYG{k+kp}{⇔\PYGZhy{}¬\PYGZhy{}to\PYGZhy{}¬,}
-\PYG{k+kp}{¬⇔\PYGZhy{}to\PYGZhy{}¬,} \PYG{k+kp}{¬¬\PYGZhy{}equiv,} \PYG{k+kp}{⇒⇒\PYGZhy{}⇔\PYGZhy{}∧⇒,} \PYG{k+kp}{⇔\PYGZhy{}trans,} \PYG{k+kp}{∧\PYGZhy{}assoc,}
-\PYG{k+kp}{∧\PYGZhy{}comm,} \PYG{k+kp}{∧\PYGZhy{}dist,} \PYG{k+kp}{¬∧\PYGZhy{}to\PYGZhy{}¬∨¬,} \PYG{k+kp}{¬∨¬\PYGZhy{}to\PYGZhy{}¬∧,} \PYG{k+kp}{¬∨¬\PYGZhy{}⇔\PYGZhy{}¬∧,}
-\PYG{k+kp}{subst⊢∧₁,} \PYG{k+kp}{subst⊢∧₂,} \PYG{k+kp}{∨\PYGZhy{}assoc,} \PYG{k+kp}{∨\PYGZhy{}comm,} \PYG{k+kp}{∨\PYGZhy{}dist,}
-\PYG{k+kp}{∨\PYGZhy{}equiv,} \PYG{k+kp}{¬∨\PYGZhy{}to\PYGZhy{}¬∧¬,} \PYG{k+kp}{¬∧¬\PYGZhy{}to\PYGZhy{}¬∨,} \PYG{k+kp}{∨\PYGZhy{}dmorgan,}
-\PYG{k+kp}{¬¬∨¬¬\PYGZhy{}to\PYGZhy{}∨,} \PYG{k+kp}{cnf,} \PYG{k+kp}{nnf,} \PYG{k+kp}{dnf,} \PYG{o+ow}{...}
-\end{Verbatim}

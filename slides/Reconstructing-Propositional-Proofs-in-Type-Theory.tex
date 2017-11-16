@@ -772,8 +772,7 @@ the following inferences:
 \end{frame}
 
 \begin{frame}[fragile]{Proposition Type}
-\begin{itemize}
-  \item A data type for formulas
+A data type for formulas
 \begin{MyAgda}
 data Prop : Set where
   Var : Fin n → Prop
@@ -785,11 +784,12 @@ data Prop : Set where
   _⇔_ : (φ ψ : Prop) → Prop
   ¬_  : (φ : Prop)   → Prop
 \end{MyAgda}
-\item Intuitionistic Propositional Logic + PEM ($\Gamma ⊢ \varphi \vee \neg \varphi$)
-\end{itemize}
+
 \end{frame}
 
 \begin{frame}[fragile]{Inference Rules For Propositional Logic I}
+
+Intuitionistic Propositional Logic + PEM ($\Gamma ⊢ \varphi \vee \neg \varphi$)
 
 \begin{columns}[t]
 \column{0.33\textwidth}
@@ -862,63 +862,69 @@ data Prop : Set where
 \begin{frame}[fragile]{Inference Rules For Propositional Logic II}
 
 \begin{columns}[t]
-  \column{0.25\textwidth}
-  \begin{scprooftree}{0.8}
+  \column{0.40\textwidth}
+  \begin{scprooftree}{1}
     \AxiomC{$Γ ⊢ φ$}
     \RightLabel{$\vee$-intro$_1$}
     \UnaryInfC{$Γ ⊢ φ \vee ψ$}
   \end{scprooftree}
-  \column{0.25\textwidth}
-  \begin{scprooftree}{0.8}
+  \column{0.40\textwidth}
+  \begin{scprooftree}{1}
     \AxiomC{$Γ ⊢ ψ$}
     \RightLabel{$\vee$-intro$_2$}
     \UnaryInfC{$Γ ⊢ φ \vee ψ$}
   \end{scprooftree}
-\column{0.40\textwidth}
-  \begin{scprooftree}{0.8}
+\end{columns}
+\medskip
+\begin{center}
+  \begin{scprooftree}{1}
     \AxiomC{$Γ , φ ⊢ γ $}
     \AxiomC{$Γ , ψ  ⊢ γ$}
     \RightLabel{$\vee$-elim}
     \BinaryInfC{$Γ , φ \vee ψ ⊢ γ$}
   \end{scprooftree}
-\end{columns}
+\end{center}
 \medskip
 \begin{columns}[t]
-\column{0.40\textwidth}
-  \begin{scprooftree}{0.8}
+\column{0.35\textwidth}
+  \begin{scprooftree}{1}
     \AxiomC{$Γ , φ ⊢ ψ$}
     \RightLabel{$\Rightarrow$-intro}
     \UnaryInfC{$Γ ⊢ φ \Rightarrow ψ$}
   \end{scprooftree}
-\column{0.40\textwidth}
-  \begin{scprooftree}{0.8}
+\column{0.50\textwidth}
+  \begin{scprooftree}{1}
 \AxiomC{$Γ ⊢ φ \Rightarrow ψ$}
 \AxiomC{$Γ ⊢ φ$}
 \RightLabel{$\Rightarrow$-elim}
 \BinaryInfC{$Γ ⊢ ψ$}
 \end{scprooftree}
 \end{columns}
-\medskip
-Useful rules:
-\medskip
-\begin{columns}[t]
-\column{0.5\textwidth}
-\begin{scprooftree}{0.8}
+\end{frame}
+
+
+\begin{frame}{Useful Rules}
+
+\begin{center}
+\begin{scprooftree}{1.1}
     \AxiomC{$Γ ⊢ φ$}
     \RightLabel{weaken}
     \UnaryInfC{$Γ , ψ ⊢ φ$}
   \end{scprooftree}
-\column{0.5\textwidth}
-\begin{scprooftree}{0.8}
+\end{center}
+
+The \abbrev{RAA} rule is the formulation of
+the principle of proof by contradiction:
+\begin{center}
+\begin{scprooftree}{1.1}
 \AxiomC{$Γ, ¬ φ ⊢ ⊥$}
 \RightLabel{RAA}
 \UnaryInfC{$Γ ⊢ φ$}
 \end{scprooftree}
-\end{columns}
-
+\end{center}
 \end{frame}
 
-\begin{frame}[fragile]{Syntactical Consequence Relation}
+\begin{frame}[fragile]{Syntactical Consequence Relation in \Agda}
 \begin{itemize}
   \item Inductive family $\_⊢\_$ with two indexes: a set of propositions~$Γ$
   (the premises) and a proposition~$φ$ (the conclusion)
@@ -930,20 +936,25 @@ data _⊢_ : (Γ : Ctxt)(φ : Prop) → Set
 \item Constructors (inference rules)
 
 \begin{MyAgda}
-assume, axiom, weaken, ⊤-intro, ⊥-elim, ¬-intro,
+assume, ⊤-intro, ⊥-elim, ¬-intro,
 ¬-elim, ∧-intro, ∧-proj₁, ∧-proj₂, ∨-intro₁,
 ∨-intro₂, ∨-elim, ⇒-intro, ⇒-elim, ⇔-intro,
 ⇔-elim₁, ⇔-elim₂.
 \end{MyAgda}
+For example, the introduction rule for conjunction ∧-intro is
+the constructor:
+\begin{MyAgda}
+  ∧-intro
+    : ∀ {Γ} {φ ψ}
+    → Γ ⊢ φ → Γ ⊢ ψ
+    → Γ ⊢ φ ∧ ψ
+\end{MyAgda}
 
-  \item Natural deduction proofs for more than 99 theorems
+  \item In \cite{AgdaProp} we can find more than 99 theorems to reasoning
+  in classical propositional logic
 
 \begin{MyAgda}
-⇔-equiv, ⇔-assoc, ⇔-comm, ⇒-⇔-¬∨, ⇔-¬-to-¬,
-¬⇔-to-¬, ¬¬-equiv, ⇒⇒-⇔-∧⇒, ⇔-trans, ∧-assoc,
-∧-comm, ∧-dist, ¬∧-to-¬∨¬, ¬∨¬-to-¬∧, ¬∨¬-⇔-¬∧,
-subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
-∨-equiv, ¬∨-to-¬∧¬, ¬∧¬-to-¬∨, ∨-dmorgan,
+∧-assoc, ∧-comm, ∧-dist, ¬∧-to-¬∨¬, ∨-assoc, ∨-comm, ∨-dist, ∨-equiv
 ¬¬∨¬¬-to-∨, cnf, nnf, dnf, ...
 \end{MyAgda}
 
