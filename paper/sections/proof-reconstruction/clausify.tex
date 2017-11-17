@@ -5,7 +5,9 @@
 \subsubsection{Clausification.}
 \label{sssec:clausification}
 
-The \clausify rule transforms a formula into its clausal normal form.
+The \clausify rule is another alternative way to transform a formula into its
+clausal normal form but without any simplification since remember this
+conversion is taking into account by the \canonicalize rule.
 It is important to notice that this kind of conversion between one formula
 to its clausal normal form is not unique, and \Metis has a customized
 approach to perform that transformation. Hence, we perform a
@@ -13,11 +15,7 @@ reordering of the conjunctive normal form for the source formula.
 
 \begin{myexamplenum}
 In the following \TSTP derivation by \Metis, we see how
-<<<<<<< HEAD
-\clausify transform the \texttt{norm0} formula to get \texttt{norm1} formula.
-=======
 \clausify transforms the \texttt{norm0} formula to get \texttt{norm1} formula.
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 
 \begin{verbatim}
   fof(norm0, ¬ p ∨ (q ∧ r) ...
