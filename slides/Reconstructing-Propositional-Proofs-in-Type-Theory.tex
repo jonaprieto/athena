@@ -1,34 +1,5 @@
 \documentclass[10pt, xetex, hyperref={pdfpagelabels=false}]{beamer}
 
-<<<<<<< HEAD
-% --------------------------------------------------------------------------
-% Packages
-% --------------------------------------------------------------------------
-\usepackage[english]{babel}
-\usepackage{amsmath, amsthm, amssymb}
-
-\usepackage{bussproofs}
-\def\extraVskip{3pt}
-\def\labelSpacing{3pt}
-\def\defaultHypSeparation{\hskip.2in}
-\def\EnableBpAbbreviations{true}
-
-\usepackage[utf8]{inputenc}
-
-\usepackage{fancyvrb}
-\usepackage{geometry}
-\usepackage{graphicx}
-\usepackage{lmodern}
-
-\usepackage{mylst}
-\usepackage{url}
-% -------------------------------------------------------------------
-% Unicode Characters.
-% -------------------------------------------------------------------
-
-\usepackage{textcomp}
-\usepackage[verbose]{newunicodechar}
-=======
 % -------------------------------------------------------------------
 % Packages
 % -------------------------------------------------------------------
@@ -284,21 +255,14 @@
 %\usepackage{stmaryrd} %new symbol font for tcs
 % \usepackage{color}
 \usepackage{fancybox}
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 
 % -------------------------------------------------------------------
 % Verbatim.
 % -------------------------------------------------------------------
 
-<<<<<<< HEAD
-\usepackage{verbatim}
-\usepackage{relsize}
-\usepackage{fancyvrb}
-=======
 % \usepackage{verbatim}
 % \usepackage{relsize}
 % \usepackage{fancyvrb}
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 % \DefineVerbatimEnvironment
 %   {code}{Verbatim}
 %   { fontsize=\relsize{-2}
@@ -317,8 +281,6 @@
 % New commands
 % -------------------------------------------------------------------
 
-<<<<<<< HEAD
-=======
 \usepackage{textcomp}
 \usepackage[verbose]{newunicodechar}
 
@@ -366,7 +328,6 @@
 \newunicodechar{ⱼ}{\ensuremath{{}_{j}}}
 \newunicodechar{λ}{\ensuremath{\lambda}}
 
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 \usepackage{xspace}
 
 \newcommand{\abbre}[1]{\textsc{#1}\xspace}
@@ -461,173 +422,6 @@
 \newcommand{\wrt}{w.\,r.\,t.}
 \newcommand{\TheEnd}{\\\hspace*{0.975\textwidth}$\blacksquare$}
 
-<<<<<<< HEAD
-% --------------------------------------------------------------------------
-% Tikz Configuration
-% --------------------------------------------------------------------------
-\usepackage{tikz}
-\usetikzlibrary{positioning}
-\usetikzlibrary{arrows}
-\usetikzlibrary{automata}
-\usetikzlibrary{calc}
-\usepackage{rotating}
-
-\tikzset{
-    hyperlink node/.style={
-        alias=sourcenode,
-        append after command={
-            let     \p1 = (sourcenode.north west),
-                \p2=(sourcenode.south east),
-                \n1={\x2-\x1},
-                \n2={\y1-\y2} in
-            node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\p1)]
-            {\hyperlink{#1}{\XeTeXLinkBox{\phantom{\rule{\n1}{\n2}}}}}
-                    %xelatex needs \XeTeXLinkBox, won't create a link unless it
-                    %finds text --- rules don't work without \XeTeXLinkBox.
-                    %Still builds correctly with pdflatex and lualatex
-        }
-    }
-}
-
-\tikzstyle{vertex}=[auto=left,circle,fill=black!25,minimum size=5pt,inner sep=0pt]
-
-\newcommand{\gobackreconstruction}{
-  \begin{tikzpicture}[overlay, remember picture, scale=0.5]
-    \tikzset{shift={(current page.center)}, xshift=11.8cm,yshift=-8.4cm}
-    \node[fill=blu,text=white, hyperlink node = reconstruction]
-      (go) at (0,0) {\tiny Go Back};
-  \end{tikzpicture}}
-
-
-% --------------------------------------------------------------------------
-% Color definitions.
-% --------------------------------------------------------------------------
-\usepackage{xcolor}\definecolor{blu}{RGB}{1,0,102}
-\definecolor{blu}{RGB}{1,0,102}
-\definecolor{decoration}{RGB}{10,164,216}
-
-% --------------------------------------------------------------------------
-% Beamer configuration.
-% --------------------------------------------------------------------------
-\usetheme{default}
-\usecolortheme{default}
-\usefonttheme{serif}
-
-\beamertemplatenavigationsymbolsempty
-\setbeamertemplate{navigation symbols}{}
-\hypersetup{pdfpagemode=UseNone}
-
-% footer.
-\setbeamercolor{headFoot}{fg=white, bg=blu}
-\setbeamertemplate{footline}{
-  \leavevmode%
-  \hbox{%
-  \begin{beamercolorbox}
-    [wd=.8\paperwidth,ht=2.3ex,dp=1ex,left]{headFoot}%
-    \hspace*{2ex}\textbf\insertshorttitle\hspace*{2mm}|
-    \hspace*{2mm}\textbf\insertshortauthor
-  \end{beamercolorbox}%
-  \begin{beamercolorbox}
-    [wd=.2\paperwidth,ht=2.3ex,dp=1ex,right]{headFoot}%
-    \insertframenumber{}/\inserttotalframenumber\hspace*{2ex}
-  \end{beamercolorbox}}%
-  \vskip 0pt%
-}
-
-\setbeamerfont{frametitle}{size=\small,series=\bfseries}
-\setbeamercolor{frametitle}{fg=white,bg=blu}
-
-\setbeamerfont{framesubtitle}{size=\normalfont\scriptsize}
-\setbeamercolor{framesubtitle}{fg=white, bg=blu}
-
-\setbeamercolor{background canvas}{bg=white}
-\setbeamercolor{normal text}{fg=black}
-
-% \setbeamercolor{institute}{fg=blu}
-\setbeamercolor{title}{fg=blu}
-% \setbeamercolor{subtitle}{fg=blu}
-
-% \setbeamercolor{titlelike}{fg=blu}
-\setbeamerfont{footnote}{size=\tiny}
-\setbeamercolor{footnote}{fg=gray}
-% \setbeamercolor{block title}{bg=blue,fg=blu}
-% \setbeamercolor{block body}{bg=aliceblue}
-% \setbeamercolor{item}{fg=blu} % color of bullets
-% \setbeamercolor{subitem}{fg=blu}
-% \setbeamercolor{itemize/enumerate subbody}{fg=blu}
-% \setbeamertemplate{itemize subitem}{{\textendash}}
-% \setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
-% \setbeamerfont{itemize/enumerate subitem}{size=\footnotesize}
-
-% --------------------------------------------------------------------------
-% Fonts
-% --------------------------------------------------------------------------
-\usefonttheme{professionalfonts}
-\usefonttheme{serif}
-\usepackage{fontspec}
-\usepackage{mathtools}
-\usepackage{unicode-math}
-
-\newfontfamily\djvu[ExternalLocation=fonts/
-  , BoldFont=DejaVuSansMono-Bold.ttf
-  , BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
-  , ItalicFont=DejaVuSansMono-Oblique.ttf
-  ]{DejaVuSansMono.ttf}
-
-\setmonofont[ExternalLocation=fonts/
-, BoldFont=DejaVuSansMono-Bold.ttf
-, BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
-, ItalicFont=DejaVuSansMono-Oblique.ttf
-]{DejaVuSansMono.ttf}
-
-\setmathfont[ExternalLocation=fonts/
-  ]{DejaVuMathTeXGyre.ttf}
-\newfontfamily\mathfont{fonts/DejaVuMathTeXGyre.ttf}
-
-\setmainfont[ExternalLocation=fonts/
-  , BoldFont=SourceSansPro-Semibold.otf
-  , BoldItalicFont=SourceSansPro-SemiboldIt.otf
-  , ItalicFont=SourceSansPro-It.otf
-  ]{SourceSansPro-Regular.otf}
-
-\newfontfamily\sourcecode[ExternalLocation=fonts/
-  , BoldFont=SourceCodePro-Semibold.ttf
-  , BoldItalicFont=SourceCodePro-SemiboldIt.ttf
-  , ItalicFont=SourceCodePro-It.ttf
-  ]{SourceCodePro-Regular.ttf}
-
-% --------------------------------------------------------------------------
-% Listings
-% --------------------------------------------------------------------------
-
-% \usepackage{minted}
-% \setminted[cagda]{
-%   bgcolor   = aliceblue
-% , fontsize  = \footnotesize
-% , frame     = none
-% % , framerule = 0.4pt
-% % , framesep  = 0pt
-% , style     = cagda
-% }
-
-% --------------------------------------------------------------------------
-% References
-% --------------------------------------------------------------------------
-
-\usepackage[autostyle]{csquotes}
-\usepackage[
-    backend=biber
-  , doi=false
-  , eprint=false
-  , isbn=false
-  , natbib=true
-  , sortlocale=en_US
-  , style=authoryear-icomp
-  , url=true
-]{biblatex}
-\addbibresource{ref.bib}
-\renewcommand*{\nameyeardelim}{\addcomma\addspace}
-=======
 % -------------------------------------------------------------------
 % biblatex.
 % -------------------------------------------------------------------
@@ -697,22 +491,10 @@ maxbibnames=6,%
     {\printfield{doi}}
     {}}
 
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 \usepackage{silence}
 \WarningFilter{biblatex}{Patching footnotes failed}
 \WarningFilter{hyperref}{Token not allowed in a PDF string}
 
-<<<<<<< HEAD
-% --------------------------------------------------------------------------
-% Title and Author
-% --------------------------------------------------------------------------
-
-\title[Reconstructing Propositional Proofs in Type Theory]
-  {\textbf{Reconstructing Propositional Proofs in Type Theory}}
-\subtitle{Advisor: Andr\'es Sicard-Ram\'irez}
-\date{\today}
-\author[Jonathan Prieto-Cubides]{Jonathan Prieto-Cubides}
-=======
 \usepackage{minted}
 \setminted[cagda]{
   bgcolor    = aliceblue
@@ -747,27 +529,19 @@ maxbibnames=6,%
 \author[Jonathan Prieto-Cubides]{Jonathan Prieto-Cubides\\
 Advisor: Andr\'es Sicard-Ram\'irez
 }
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 \institute{
 Master in Applied Mathematics\\
 Universidad EAFIT\\
 Medell\'in, Colombia}
-<<<<<<< HEAD
-% --------------------------------------------------------------------------
-=======
 % --------------------------------------------------------------------
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 
 \newsavebox\agdapragma
 
 \begin{document}
 \setcounter{page}{1}
 
-<<<<<<< HEAD
-=======
 % --------------------------------------------------------------------
 
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 \begin{frame}[plain]
 \titlepage
   \begin{tikzpicture}[overlay, remember picture]
@@ -777,88 +551,6 @@ Medell\'in, Colombia}
   \end{tikzpicture}
 \end{frame}
 
-<<<<<<< HEAD
-\begin{frame}[fragile, label=reconstruction]{Proof Reconstruction: Overview}
-\vfill
-\begin{tikzpicture}
-\node(problem) at (0,0)
-   {\includegraphics[scale=0.7]{figures/problem}};
-\node[right = 0.8cm of problem, hyperlink node=tptp-syntax](tptp){
-\includegraphics[scale=0.7]{figures/tptp}
-};
-\node[right= 0.8cm of tptp, hyperlink node=metis] (metis)
-  {\includegraphics[scale=0.7]{figures/metis}};
-\node[right= 0.8cm of metis, hyperlink node=tstp-syntax] (tstp)
-  {\includegraphics[scale=0.7]{figures/tstp}};
-\node[below= 1.5cm of tstp, hyperlink node=athena] (athena)
-  {\includegraphics[scale=0.7]{figures/athena}};
-\node[left = 0.6cm of athena, hyperlink node=agda-file] (agdafile)
-  {\includegraphics[scale=0.7]{figures/agdafile}};
-\node[left = 0.5cm of agdafile] (agda)
-  {\includegraphics[scale=0.7]{figures/agda}};
-\node[below = 0.18cm of problem, hyperlink node=verified-example] (verified)
-  {\includegraphics[scale=0.7]{figures/verified}};
-\node[below = 0.18cm of verified, opacity=0.5, hyperlink node=failure-example] (failure)
-  {\includegraphics[scale=0.7]{figures/failure}};
-
-\draw[->, thick] (problem) to (tptp);
-\draw[->, thick] (tptp) to (metis);
-\draw[->, thick] (metis) to (tstp);
-\draw[->, thick] (tstp) to (athena);
-\draw[->, thick] (athena) to (agdafile);
-\draw[->, thick] (agdafile) to (agda);
-\draw[->, thick] (agda) to (verified);
-\draw[->, thick, gray] (agda) to (failure);
-\end{tikzpicture}
-\vfill
-\end{frame}
-
-\begin{frame}[label=metis, fragile]{\Metis Theorem Prover}
- % \tikz[overlay,remember picture]
- %  \node at (0.92\textwidth, 0.5cm)
- %    {\includegraphics[width=0.15\textwidth]{figures/metis}};
-
-\Metis is an automatic theorem prover for first-order logic with
-equality developed by~\cite{hurd2003first}. For the propositional
-fragment, \Metis has only three inference rules:
-
-  \begin{prooftree}
-    \AxiomC{}
-    \RightLabel{axiom}
-    \UnaryInfC{$\Gamma \vdash \varphi$}
-  \end{prooftree}
-  \begin{prooftree}
-    \AxiomC{}
-    \RightLabel{assume $\varphi$}
-    \UnaryInfC{$\Gamma \vdash \varphi \vee \neg \varphi$}
-  \end{prooftree}
-  \begin{prooftree}
-    \AxiomC{$\Gamma \vdash l \vee \varphi$}
-    \AxiomC{$\Gamma \vdash \neg l \vee \psi$}
-    \RightLabel{resolve $l$}
-    \BinaryInfC{$\Gamma \vdash \varphi \vee \psi$}
-  \end{prooftree}
-Where $\Gamma$ is a set of premises, and $\_\vdash\_$ is the syntactical
-consequence relation between the premises on the right, and the conclusion on
-the left.
-\end{frame}
-
-
-\begin{frame}{Why Metis?}
-  \begin{itemize}
-    \item \href{https://github.com/gilith/metis}{Open source} implemented in
-       \texttt{Standard ML}
-    \item Each refutation step is one of
-      \hyperlink{metis-inference-rules}{\textit{six rules}}
-    \item Reads problem in \hyperlink{tptp-syntax}{\texttt{TPTP} format}
-    \item Outputs \textit{detailed} proofs in \hyperlink{tstp-syntax}{\texttt{TSTP} format}
-  \end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile, label=metis-rules]{Inference Rules of \texttt{Metis}}
-\hyperlink{tstp-example}{\texttt{TSTP}} derivations by \texttt{Metis} exhibit
-=======
 % --------------------------------------------------------------------
 
 \begin{frame}{Research}
@@ -1127,39 +819,12 @@ Solved with:
 
 \begin{frame}[fragile, label=metis-rules]{Inference Rules of \Metis}
 \hyperlink{tstp-example}{\TSTP} derivations by \Metis exhibit
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 the following inferences:
 \vfill
 \begin{table}[!ht]
   \begin{center}
   {\renewcommand{\arraystretch}{1.6}%
     \label{tab:agda-metis-table}
-<<<<<<< HEAD
-    \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{2mm}}c@{\hspace{2mm}}|}
-    \hline
-    \textbf{\Metis rule} & \textbf{Purpose}\\ \hline
-
-      \texttt{strip}
-      &Strip a goal into subgoals
-      \\
-
-      \texttt{conjunct}
-      &Takes a formula from a conjunction
-      \\
-
-      \texttt{resolve}
-      &A general form of the resolution theorem
-      \\
-
-      \texttt{canonicalize}
-      &Normalization of the formula
-      \\
-
-      \texttt{clausify}
-      &Performs clausification
-      \\
-
-=======
     \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{4mm}}l@{\hspace{2mm}}|}
     \hline
     \textbf{\Metis rule} & \textbf{Purpose}\\ \hline
@@ -1178,7 +843,6 @@ the following inferences:
       \texttt{clausify}
       &Performs clausification
       \\
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
       \texttt{simplify}
       &Simplify definitions and theorems
       \\[1ex]
@@ -1187,600 +851,6 @@ the following inferences:
   \end{center}
 \end{table}
 \vfill
-<<<<<<< HEAD
-\gobackreconstruction
-\end{frame}
-
-% \begin{frame}[fragile, label=tstp-syntax]{\texttt{TSTP} Syntax}
-
-%  \tikz[overlay,remember picture]
-%   \node at (0.92\textwidth, -0.5cm)
-%     {\includegraphics[width=0.15\textwidth]{figures/tstp}};
-
-% A \texttt{TSTP} derivation\footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/QuickGuide/Derivations.html}.}
-% \begin{itemize}
-%   \item Is a \hyperlink{tstp-dag}{\textbf{D}irected \textbf{A}cyclic \textbf{G}raph} where
-%   \begin{itemize}
-%     \item[\texttt{leaf}] is a formula from the \hyperlink{tptp-syntax}{\texttt{TPTP}} input
-%     \item[\texttt{node}] is a formula inferred from parent formula
-%     \item[\texttt{root}] the final derived formula
-%   \end{itemize}
-%   \item Is a list of annotated formulas with the form
-%   \end{itemize}
-
-% \begin{center}
-%   {\footnotesize
-% \begin{tptp}
-% language(name, role, formula, source [,useful info]).
-% \end{tptp}}
-% \end{center}
-
-% where \texttt{\color{blu} source} typically is an inference record
-% \begin{center}
-% {\footnotesize
-% \begin{tptp}
-% inference(rule, useful info, parents).
-% \end{tptp}
-% }
-% \end{center}
-% \end{frame}
-
-% \begin{frame}[fragile, label=tstp-example]{\texttt{TSTP} Example}
-
-%  % \tikz[overlay,remember picture]
-%  %  \node at (0.93\textwidth, -0.3cm)
-%  %    {\includegraphics[width=0.15\textwidth]{figures/metis}};
-
-% \begin{itemize}
-%   \item Proof found by \texttt{Metis} for the problem $p ⊢ p$
-% {\small
-% \begin{tptp}
-% $ metis --show proof problem.tptp
-% fof(a, axiom, p).
-% fof(goal, conjecture, p).
-% fof(subgoal_0, plain, p),
-%   inference(strip, [], [goal])).
-% fof(negate_0_0, plain, ~ p,
-%   inference(negate, [], [subgoal_0])).
-% fof(normalize_0_0, plain, ~ p,
-%   inference(canonicalize, [], [negate_0_0])).
-% fof(normalize_0_1, plain, p,
-%   inference(canonicalize, [], [a])).
-% fof(normalize_0_2, plain, $false,
-%   inference(simplify, [],
-%     [normalize_0_0, normalize_0_1])).
-% cnf(refute_0_0, plain, $false,
-%     inference(canonicalize, [], [normalize_0_2])).
-% \end{tptp}
-% }
-% \end{itemize}
-% \end{frame}
-
-
-% \begin{frame}[fragile, label=tstp-dag]{DAG Example}
-% \vfill
-% By refutation, we proved $p ⊢ p$:
-
-% \begin{columns}
-% \begin{column}{0.5\textwidth}
-
-% \begin{prooftree}
-% \AxiomC{}
-% \RightLabel{\texttt{\scriptsize assume}}
-% \UnaryInfC{$\neg p$}
-% \RightLabel{\texttt{\scriptsize strip}}
-% \UnaryInfC{$\neg p$}
-% \AxiomC{}
-% \RightLabel{\texttt{\scriptsize axiom}}
-% \UnaryInfC{$p$}
-% \RightLabel{\texttt{\scriptsize canonicalize}}
-% \UnaryInfC{$p$}
-% \RightLabel{\texttt{\scriptsize simplify}}
-% \BinaryInfC{$⊥$}
-% \RightLabel{\texttt{\scriptsize canonicalize}}
-% \UnaryInfC{$⊥$}
-% \end{prooftree}
-% \end{column}
-% \begin{column}{0.5\textwidth}  %%<--- here
-%     \begin{center}
-%     \includegraphics[height=0.8\textwidth]{figures/derivation.png}
-%      \end{center}
-% \end{column}
-% \end{columns}
-% \vfill
-% \gobackreconstruction
-% \end{frame}
-
-
-% \begin{frame}[fragile, label=athena]{\texttt{Athena}~\citep{Athena}}
-
-%  \begin{tikzpicture}[overlay,remember picture]
-%  \tikzset{shift={(current page.north)}, xshift=0cm,yshift=0cm}
-%   \node[] at (0.92\textwidth, 1cm)
-%     {\includegraphics[width=0.15\textwidth]{figures/athena}};
-% \end{tikzpicture}
-
-% Is a \texttt{Haskell} program
-% that translates proofs given by \texttt{Metis}
-% in \texttt{TSTP} format to \texttt{Agda} code\\
-
-% \begin{itemize}
-%     \item Parsing of \texttt{TSTP} language\footnote{\label{parsing}\url{https://github.com/agomezl/tstp2agda}.}
-%     \item Creation\textsuperscript{\ref{parsing}} and analysis of \hyperlink{tstp-dag}{\textbf{DAG}} derivations
-%     \item Analysis of inference rules used in the \texttt{TSTP} derivation
-%     \item \texttt{Agda} code generation
-% \begin{table}[!ht]
-% \begin{center}
-% \scalebox{0.8}{
-% {\renewcommand{\arraystretch}{1.3}%
-% \begin{tabular}{|ll| }
-% \hline
-% \textbf{Library} & \textbf{Purpose} \\
-% \hline
-% \texttt{\hyperlink{agda-prop}{\texttt{Agda-Prop}}}& axioms and theorems of Classical Propositional Logic\\
-% \texttt{\hyperlink{agda-metis}{\texttt{Agda-Metis}}} & versions of the inference rules used by \texttt{Metis}\\
-% \hline
-% \end{tabular}}
-% }
-% \end{center}
-% \label{tab:library}
-% \end{table}
-
-% \end{itemize}
-% \end{frame}
-
-% \begin{frame}[fragile, label=agda-prop-2]{\texttt{Agda-Prop} Library
-%   \footnote{\url{https://github.com/jonaprieto/agda-prop}.}}
-% \begin{itemize}
-%   \item Intuitionistic Propositional Logic + PEM ($\Gamma \vdash ϕ \vee \neg ϕ$)
-%   \item A data type for formulas
-%   \vspace*{1mm}
-
-% \begin{minted}{cagda}
-% data Prop : Set where
-%   Var : Fin n → Prop
-%   ⊤   : Prop
-%   ⊥   : Prop
-%   _∧_ : (\varphi \psi : Prop) → Prop
-%   _∨_ : (\varphi \psi : Prop) → Prop
-%   _⇒_ : (\varphi \psi : Prop) → Prop
-%   _⇔_ : (\varphi \psi : Prop) → Prop
-%   ¬_  : (\varphi : Prop)   → Prop
-% \end{minted}
-% \end{itemize}
-% \end{frame}
-
-% \begin{frame}[fragile, label=agda-prop]{\texttt{Agda-Prop} Library~\citep{AgdaProp}}
-% \begin{itemize}
-%   \item A data type for theorems
-%   \vspace*{1mm}
-% \begin{minted}{cagda}
-% data _⊢_ : (Γ : Ctxt)(\varphi : Prop) → Set
-% \end{minted}
-
-% \item Constructors
-%   \vspace*{1mm}
-
-% \begin{minted}{cagda}
-% assume, axiom, weaken, ⊤-intro, ⊥-elim, ¬-intro,
-% ¬-elim, ∧-intro, ∧-proj₁, ∧-proj₂, ∨-intro₁,
-% ∨-intro₂, ∨-elim, ⇒-intro, ⇒-elim, ⇔-intro,
-% ⇔-elim₁, ⇔-elim₂.
-% \end{minted}
-%   \item Natural deduction proofs for more than 71 theorems
-%   \vspace*{1mm}
-% \begin{minted}{cagda}
-% ⇔-equiv, ⇔-assoc, ⇔-comm, ⇒-⇔-¬∨, ⇔-¬-to-¬,
-% ¬⇔-to-¬, ¬¬-equiv, ⇒⇒-⇔-∧⇒, ⇔-trans, ∧-assoc,
-% ∧-comm, ∧-dist, ¬∧-to-¬∨¬, ¬∨¬-to-¬∧, ¬∨¬-⇔-¬∧,
-% subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
-% ∨-equiv, ¬∨-to-¬∧¬, ¬∧¬-to-¬∨, ∨-dmorgan,
-% ¬¬∨¬¬-to-∨, cnf, nnf, dnf, RAA, ...
-% \end{minted}
-% \end{itemize}
-% \end{frame}
-
-
-% \begin{frame}[fragile, label=agda-metis]{\texttt{Agda-Metis} Library
-%   ~\citep{AgdaMetis}}
-% \vfill
-% \begin{table}[!ht]
-% \begin{center}
-% \scalebox{0.7}{
-% {\renewcommand{\arraystretch}{1.3}%
-% \begin{tabular}{|lll|}
-% \hline
-% \textbf{Rule} & \textbf{Purpose} &\textbf{Theorem}\\
-% \hline
-% \texttt{canonicalize} & transforms formulas to CNF, DNF or NNF &\texttt{atp-canonicalize}\\
-% \texttt{clausify} & performs clausification &\texttt{atp-clausify}\\
-% \hyperlink{atp-conjunct}{\texttt{conjunct}} & takes a formula from a conjunction &\hyperlink{atp-conjunct}{\texttt{atp-conjunct}}\\
-% \texttt{negate} & append negation symbol to the formula &\texttt{atp-negate}\\
-% \texttt{resolve} & applies theorems of resolution &\texttt{atp-resolve}\\
-% \texttt{simplify} & applies over a list of formula to simplify them &\texttt{atp-simplify}\\
-% \texttt{strip} & splits a formula into subgoals &\texttt{atp-strip}\\[1ex]
-% \hline
-% \end{tabular}}
-% }
-% \end{center}
-% \label{tab:agda-metis-table}
-% \end{table}
-% \vfill
-% \end{frame}
-
-
-% \begin{frame}[fragile, label=atp-conjunct]{\texttt{Agda-Metis}: Conjunct Inference
-%   \footnote{\url{https://github.com/jonaprieto/agda-metis}.}
-%   }
-
-% \vfill
-% \begin{itemize}
-% \item Definition
-% \begin{equation*}
-% \text{\color{blu!40!black}conjunct}(\overbrace{\varphi_1 ∧ ⋯ ∧ \varphi_n}^{\varphi}, \psi)
-% = \begin{cases}
-% \varphi_{i} \ \ \ \ \text{if }\psi\text{ is equal to some }\varphi_i\\
-% \varphi    \ \ \ \ \text{otherwise}
-% \end{cases}
-% \end{equation*}
-
-% \pause
-% \item Inference rules involved
-% \begin{center}
-% \begin{columns}
-% \begin{column}{0.42\textwidth}
-
-%  \begin{prooftree}
-%   \AxiomC{$\varphi_1 ∧ \varphi_2$}
-%   \RightLabel{\scriptsize $∧$-\texttt{proj}$₁$}
-%   \UnaryInfC{$\varphi_1$}
-%   \end{prooftree}
-% \end{column}
-
-% \begin{column}{0.42\textwidth}
-%  \begin{prooftree}
-%   \AxiomC{$\varphi_1 ∧ \varphi_2$}
-%   \RightLabel{\scriptsize $∧$-\texttt{proj}$₂$}
-%   \UnaryInfC{$\varphi₂$}
-%   \end{prooftree}
-% \end{column}
-
-% \begin{column}{0.2\textwidth}  %%<--- here
-%   \begin{tikzpicture}[
-%     ->
-%   , >=stealth'
-%   , shorten >=1pt
-%   , auto
-% %  , node distance=2.8cm
-%   , thick
-%   , every state/.style={fill=blu!45!black,draw=none,text=white}
-%   , overlay
-%   , remember picture
-%     , transform canvas={scale=.75}
-%     ]
-%   \tikzset{shift={(current page.center)}, xshift=4.5cm,yshift=0cm}
-
-
-%   \node[state]  (phi)                     {$\varphi$};
-%   \node[state]  (phi1) [below left =1.3cm and 0.1cm of phi]  {$\varphi_1$};
-%   \node[state]  (phi2) [below right=1.3cm and 0.1cm of phi]  {$\varphi_2$};
-%   \node[state]  (phi3)  [below left =1.3cm and 0.1cm of phi2]  {$\varphi_3$};
-%   \node[state]  (phi4)  [below right =1.3cm and 0.1cm of phi2]  {$\varphi_4$};
-
-%   \path[every node/.style={sloped,anchor=south,auto=false}]
-%         (phi) edge node {\tiny $∧$-\texttt{proj}$₁$} (phi1)
-%         (phi) edge node {\tiny $∧$-\texttt{proj}$₂$} (phi2)
-%         (phi2) edge node {\tiny $∧$-\texttt{proj}$₁$} (phi3)
-%         (phi2) edge node {\tiny $∧$-\texttt{proj}$₂$} (phi4);
-
-% \end{tikzpicture}
-% \end{column}
-% \end{columns}
-% \end{center}
-% \vskip 2mm
-
-% \item Example
-% \[ \varphi := \varphi_1 ∧ \overbrace{(\varphi_3 ∧ \varphi_4)}^{\varphi_2}\]
-
-% \begin{itemize}
-
-% \item
-% \texttt{conjunct}$(\varphi , \varphi_3 ∧ \varphi_1) ≡ \varphi$
-% \vskip 3mm
-% \item
-% \texttt{conjunct}$(\varphi , \varphi_3)      ≡ \varphi_3$
-% \vskip 3mm
-% \item
-% \texttt{conjunct}$(\varphi , \varphi_2)      ≡ \varphi_2$
-% \vskip 3mm
-% \end{itemize}
-
-% \end{itemize}
-% \end{frame}
-
-% \begin{frame}[fragile]
-
-% \begin{minted}{cagda}
-% data ConjView : Prop → Set where
-%   conj  : (\varphi₁ \varphi₂ : Prop) → ConjView (\varphi₁ ∧ \varphi₂)
-%   other : (\varphi : Prop)     → ConjView \varphi
-
-% conj-view : (\varphi : Prop) → ConjView \varphi
-% conj-view (\varphi ∧ \psi) = conj _ _
-% conj-view \varphi       = other _
-
-% data Step : Set where
-%   pick  : Step
-%   proj₁ : Step
-%   proj₂ : Step
-
-% Path : Set
-% Path = List Step
-
-% conjunct-path : (\varphi \psi : Prop) → Path → Path
-% conjunct-path \varphi \psi path with ⌊ eq \varphi \psi ⌋
-% ... | true  = path ∷ʳ pick
-% ... | false with conj-view \varphi
-% ...   | other _ = []
-% ...   | conj \varphi₁ \varphi₂ with conjunct-path \varphi₁ \psi []
-% ...     | subpath@(_ ∷ _) = (path ∷ʳ proj₁) ++ subpath
-% ...     | [] with conjunct-path \varphi₂ \psi []
-% ...          | subpath@(_ ∷ _) = (path ∷ʳ proj₂) ++ subpath
-% ...          | []              = []
-% \end{minted}
-
-% \end{frame}
-
-
-% \begin{frame}[fragile, label=atp-conjunct-proof]{The \texttt{conjunct} function and its theorem, \texttt{atp-conjunct}}
-% \vfill
-% \begin{minted}{cagda}
-% conjunct : Prop → Prop → Prop
-% conjunct \varphi \psi with conj-view \varphi | conjunct-path \varphi \psi []
-% ... | _          | []        = \varphi
-% ... | conj _ _   | pick  ∷ _ = \varphi
-% ... | conj \varphi₁ _  | proj₁ ∷ _ = conjunct \varphi₁ \psi
-% ... | conj _ \varphi₂  | proj₂ ∷ _ = conjunct \varphi₂ \psi
-% ... | other .\varphi   | _         = \varphi
-
-% atp-conjunct
-%   : ∀ {Γ} {\varphi}
-%   → (\psi : Prop)
-%   → \Gamma \vdash \varphi
-%   → \Gamma \vdash conjunct \varphi \psi
-
-% atp-conjunct {Γ} {\varphi} \psi Γ⊢\varphi
-%   with conj-view \varphi | conjunct-path \varphi \psi []
-% ...  | _           | []        = Γ⊢\varphi
-% ...  | conj _ _    | pick  ∷ _ = Γ⊢\varphi
-% ...  | conj _ _    | proj₁ ∷ _ = atp-conjunct \psi (∧-proj₁ Γ⊢\varphi)
-% ...  | conj _ _    | proj₂ ∷ _ = atp-conjunct \psi (∧-proj₂ Γ⊢\varphi)
-% ...  | other _     | (_ ∷ _)   = Γ⊢\varphi
-% \end{minted}
-% \vfill
-% \gobackreconstruction
-% \end{frame}
-
-% \begin{frame}[fragile, label=agda-file]{\texttt{Agda} Code Example}
-%   {Generated by \texttt{Athena} Tool}
-
-% \begin{itemize}
-%   \item The problem is $p ∧ q ⊢ q ∧ p$
-%   \item In \texttt{TPTP} format
-% \begin{tptp}
-% $ cat problem.tptp
-% fof(a, axiom, p & q).
-% fof(goal, conjecture, q & p).
-% \end{tptp}
-%   \item How to use Athena with your problem
-
-% \begin{tptp}
-% $ metis --show proof problem.tptp > problem.tstp
-% $ athena problem.tstp
-% $ agda problem.tstp
-% \end{tptp}
-% \end{itemize}
-% \end{frame}
-
-% \begin{frame}[fragile, allowframebreaks]{\texttt{TSTP} Derivation given by \texttt{Metis}}
-% \begin{tptp}
-% fof(a, axiom, p & q).
-% fof(goal, conjecture, q & p).
-% fof(subgoal_0, plain, q,
-%     inference(strip, [], [goal])).
-% fof(subgoal_1, plain, q => p,
-%     inference(strip, [], [goal])).
-% fof(negate_0_0, plain, ~ q,
-% inference(negate, [], [subgoal_0])).
-% fof(normalize_0_0, plain, (~ q),
-%     inference(canonicalize, [], [negate_0_0])).
-% fof(normalize_0_1, plain, p & q,
-%     inference(canonicalize, [], [a])).
-% fof(normalize_0_2, plain, q,
-%     inference(conjunct, [], [normalize_0_1])).
-% fof(normalize_0_3, plain, $false,
-%     inference(simplify, [],
-%         [normalize_0_0, normalize_0_2])).
-% cnf(refute_0_0, plain, $false,
-%     inference(canonicalize, [], [normalize_0_3])).
-% fof(negate_1_0, plain, ~ (q => p),
-%     inference(negate, [], [subgoal_1])).
-% fof(normalize_1_0, plain, ~ p & q,
-%     inference(canonicalize, [], [negate_1_0])).
-% fof(normalize_1_1, plain, p & q,
-%      inference(canonicalize, [], [a])).
-% fof(normalize_1_2, plain, p,
-%     inference(conjunct, [], [normalize_1_1])).
-% fof(normalize_1_3, plain, q,
-%     inference(conjunct, [], [normalize_1_1])).
-% fof(normalize_1_4, plain, $false,
-%     inference(simplify, [],
-%       [normalize_1_0, normalize_1_2, normalize_1_3])).
-% cnf(refute_1_0, plain, ($false),
-%     inference(canonicalize, [], [normalize_1_4])).
-% \end{tptp}
-% \end{frame}
-
-% \begin{frame}[fragile, label=verified-example]{Problem $p ∧ q ⊢ q ∧ p$}{Proof generated with \texttt{Athena}}
-% \vfill
-% \begin{minted}{cagda}
-% p, q, a, goal, subgoal₀, subgoal₁ : Prop
-
-% -- Axiom.
-% a = p ∧ q
-
-% -- Premise.
-% Γ : Ctxt
-% Γ = [ a ]
-
-% -- Conjecture.
-% goal = q ∧ p
-
-% -- Subgoals.
-% subgoal₀ = q
-% subgoal₁ = q ⇒ p
-% \end{minted}
-% \vfill
-% \end{frame}
-
-% \begin{frame}[fragile, label=verified-example-2]{Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
-% \vfill
-% \begin{minted}{cagda}
-% a : Prop
-% a = p ∧ q
-
-% subgoal₀ : Prop
-% subgoal₀ = q
-
-% proof₀ : \Gamma \vdash subgoal₀
-% proof₀ =
-%   (RAA
-%     (atp-simplify ⊥
-%       (assume {Γ = Γ}
-%         (\neg subgoal₀))
-%       (atp-conjunct q
-%         (atp-canonicalize (p ∧ q)
-%           (weaken (\neg subgoal₀)
-%             (assume {Γ = ∅} a))))))
-% \end{minted}
-% \vfill
-% \end{frame}
-
-% \begin{frame}[fragile, label=verified-example-3]
-%   {Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
-% \vfill
-% \begin{minted}{cagda}
-% subgoal₁ : Prop
-% subgoal₁ = q ⇒ p
-
-% proof₁ : \Gamma \vdash subgoal₁
-% proof₁ =
-%   (RAA
-%     (atp-simplify ⊥
-%       (atp-conjunct q
-%         (atp-canonicalize (p ∧ q)
-%           (weaken (\neg subgoal₁)
-%             (assume {Γ = ∅} a))))
-%       (atp-simplify ⊥
-%         (atp-canonicalize ((\neg p) ∧ q)
-%           (assume {Γ = Γ}
-%             (\neg subgoal₁)))
-%         (atp-conjunct p
-%           (atp-canonicalize (p ∧ q)
-%             (weaken (\neg subgoal₁)
-%               (assume {Γ = ∅} a)))))))
-% \end{minted}
-% \vfill
-% \end{frame}
-
-% \begin{frame}[fragile, label=verified-example-4]{Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed proof}
-% \vfill
-% \begin{minted}{cagda}
-% -- Premise.
-% Γ = [ a ]
-
-% -- Conjecture.
-% goal = q ∧ p
-
-% -- Subgoals.
-% subgoal₀ = q
-% subgoal₁ = q ⇒ p
-
-% -- Proof
-% proof₀ : \Gamma \vdash subgoal₀
-% proof₁ : \Gamma \vdash subgoal₁
-
-% proof : \Gamma \vdash goal
-% proof =
-%   ⇒-elim
-%     atp-splitGoal            -- q ∧ (q ⇒ p) ⇒ p
-%     (∧-intro proof₀ proof₁)
-% \end{minted}
-% \vfill
-% \gobackreconstruction
-% \end{frame}
-
-% \begin{frame}[fragile, label=failure-example]{Bug\footnote{\url{https://github.com/gilith/metis/issues/2}.} in the Printing of the Proof}
-%   {\texttt{Metis} v2.3 (release 20161108)}
-% % {}
-% \begin{tptp}
-% $ cat problem.tptp
-% fof(goal, conjecture,
-%   ((p <=> q) <=> r) <=> (p <=> (q <=> r))).
-% \end{tptp}
-% \begin{tptp}
-% $ metis --show proof problem.tptp
-% ...
-% fof(normalize_2_0, plain,
-%   (~ p & (~ q <=> ~ r) & (~ p <=> (~ q <=> ~ r))),
-%   inference(canonicalize, [], [negate_2_0])).
-% fof(normalize_2_1, plain, ~ p <=> (~ q <=> ~ r),
-%     inference(conjunct, [], [normalize_2_0])).
-% fof(normalize_2_2, plain, ~ q <=> ~ r,
-%     inference(conjunct, [], [normalize_2_0])).
-% fof(normalize_2_3, plain, ~ p,
-%   inference(conjunct, [], [normalize_2_0])).
-% fof(normalize_2_4, plain, $false,
-%     inference(simplify, [],
-%       [normalize_2_1, normalize_2_2, normalize_2_3])).
-% ...
-% \end{tptp}
-% \end{frame}
-
-% \begin{frame}[fragile, label=failure-example-2]{Bug in the Printing of the Proof}
-%   {\texttt{Metis} v2.3 (release 20161108)}
-
-% \[ \varphi := \neg p ∧ (\neg q ⇔ \neg r) ∧ (\neg p ⇔ (\neg q ⇔ \neg r))\]
-
-% \begin{prooftree}
-% \AxiomC{$\vdots$}
-% \RightLabel{\scriptsize{canonicalize}}
-% \UnaryInfC{$\varphi$}
-% \RightLabel{\scriptsize{conjunct}}
-% \UnaryInfC{$\neg p ⇔ (\neg q ⇔ \neg r)$}
-
-% \AxiomC{$\vdots$}
-% \RightLabel{\scriptsize{canonicalize}}
-% \UnaryInfC{$\varphi$}
-% \RightLabel{\scriptsize{conjunct}}
-% \UnaryInfC{$\neg q ⇔ \neg r$}
-
-% \AxiomC{$\vdots$}
-% \RightLabel{\scriptsize{canonicalize}}
-% \UnaryInfC{$\varphi$}
-% \RightLabel{\scriptsize{conjunct}}
-% \UnaryInfC{$\neg p$}
-
-% \RightLabel{\scriptsize{simplify}}
-% \TrinaryInfC{$\bot$}
-% \end{prooftree}
-% \pause
-% The bug was caused by the conversion of \texttt{Xor} sets to \texttt{Iff} lists.
-% After reporting this, Hurd fixed the printing of \texttt{canonicalize} inference rule
-% \[ \varphi := \neg p ∧ (\neg q ⇔ \neg r) ∧ (\neg p ⇔ (\neg q ⇔ {\color{red} r}))\]
-% \gobackreconstruction
-% \end{frame}
-=======
 \end{frame}
 
 \begin{frame}[fragile]{Proposition Type in \Agda}
@@ -2632,32 +1702,21 @@ format to \Agda code\\
 
 
 
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 
 
 % \begin{frame}[fragile, label=hammer]{Related Work}
 % \begin{block}{SledgeHammer} \citep{Paulson2007}
 % \begin{itemize}
 % \item \texttt{Isabelle}/\texttt{HOL} mature tool
-<<<<<<< HEAD
-% \item \texttt{Metis} ported within \texttt{Isabelle/HOL}
-=======
 % \item \Metis ported within \texttt{Isabelle/HOL}
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 % \item Reconstruct proofs of well-known ATPs: \texttt{EProver}, \texttt{Vampire},
 % among others using \texttt{SystemOnTPTP} server
 % \end{itemize}
 % \end{block}
 
-<<<<<<< HEAD
-% \begin{block}{Integrating \texttt{Waldmeister} into \texttt{Agda}} \citep{Foster2011}
-% \begin{itemize}
-%   \item Framework for a integration between \texttt{Agda} and ATPs
-=======
 % \begin{block}{Integrating \texttt{Waldmeister} into \Agda} \citep{Foster2011}
 % \begin{itemize}
 %   \item Framework for a integration between \Agda and ATPs
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 %   \begin{itemize}
 %     \item Equational Logic
 %     \item Reflection Layers
@@ -2670,17 +1729,10 @@ format to \Agda code\\
 
 
 % \begin{frame}[fragile]{Related Work: \texttt{Apia}}
-<<<<<<< HEAD
-%   {Proving First-Order theorems written in \texttt{Agda} using automatic
-%   theorem provers for First-Order Logic}
-
-% \only<1>{At the moment, the communication between \texttt{Agda} and
-=======
 %   {Proving First-Order theorems written in \Agda using automatic
 %   theorem provers for First-Order Logic}
 
 % \only<1>{At the moment, the communication between \Agda and
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 % the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sicard2015}
 % \vfill
 % }
@@ -2744,56 +1796,7 @@ format to \Agda code\\
 % \end{frame}
 
 
-<<<<<<< HEAD
-% \begin{frame}[label=pending-work]{TODO}
-% \begin{itemize}
-% \item Complete implementation for \texttt{simplify} inference\footnote{\url{https://github.com/gilith/metis/issues/3}.}
-% \item Complete implementation for \texttt{canonicalize} inference: what
-% normal form use to transform the formulas
-% \item Complete implementation for Splitting a goal in a list of subgoals
-% \end{itemize}
-% \end{frame}
-
-% \begin{frame}[label=contributions]{Contributions}
-% \vfill
-% \begin{table}[!ht]
-% \begin{center}
-% \scalebox{0.8}{
-% {\renewcommand{\arraystretch}{1.3}%
-% \begin{tabular}{|ll|}
-% \hline
-% \textbf{Name} & \textbf{References} \\
-% \hline
-% \href{http://github.com/jonaprieto/agda-metis}{\texttt{Agda-Metis}}   & \citep{AgdaMetis}\\
-% \href{http://github.com/jonaprieto/agda-prop}{\texttt{Agda-Prop}}     & \citep{AgdaProp}\\
-% \href{http://github.com/jonaprieto/athena}{\texttt{Athena}}           & \citep{Athena}\\
-% \href{http://github.com/jonaprieto/online-atps}{\texttt{OnlineATPs}}  & \citep{OnlineATPs}\\
-% \href{http://github.com/jonaprieto/prop-pack}{\texttt{Prop-Pack}}     & \citep{ProPack}\\[1ex]
-% \hline
-% \end{tabular}}
-% }
-% \end{center}
-% \end{table}
-% \vfill
-% \end{frame}
-
-% \begin{frame}[label=future-work]{Future Work}
-% \begin{itemize}
-%   \item Integration with \texttt{Apia}
-%   \item Support First-Order Logic with Equality
-%   \item Support another prover like \texttt{EProver} or \texttt{Vampire}
-% \end{itemize}
-% \end{frame}
-
-\begin{frame}[allowframebreaks]{References}
-\printbibliography
-\end{frame}
-
-
-% \begin{frame}[fragile,label=metis-inference-rules]{\texttt{Metis} Inference Rules}
-=======
 % \begin{frame}[fragile,label=metis-inference-rules]{\Metis Inference Rules}
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 % \vfill
 % \begin{prooftree}
 % \AxiomC{}
@@ -2829,11 +1832,7 @@ format to \Agda code\\
 % \begin{prooftree}
 % \AxiomC{}
 % \RightLabel{eq $L$ $p$ $t$}
-<<<<<<< HEAD
-% \UnaryInfC{$\neg (L[p] = t) \vee \neg L \vee L[ p ↦ t]$}
-=======
 % \UnaryInfC{$\Gamma, \neg (L[p] = t) \vee \neg L \vee L[ p ↦ t]$}
->>>>>>> 88b455b25200c7d31b6b992a908381677ba2ee40
 % \end{prooftree}
 % \vfill
 %  \begin{tikzpicture}[overlay, remember picture, scale=0.5]
