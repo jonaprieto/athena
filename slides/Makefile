@@ -10,12 +10,6 @@ pdf :
 	- latexmk -pdf -xelatex -shell-escape $(NAME).tex
 
 .PHONY : old-pdf
-old-pdf :
-	- make clean
-	- rm -f $(NAME).pdf
-	- latexmk -pdf -xelatex -shell-escape $(NAME).tex
-
-.PHONY : old-pdf
 old-pdf : dependencies
 	- make clean
 	- rm -f Jonathan-Proof-Reconstruction.pdf
