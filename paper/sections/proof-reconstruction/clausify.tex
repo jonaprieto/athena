@@ -2,24 +2,25 @@
 \begin{document}
 
 
-\subsubsection{Clausification.}
+\subsubsection{Clausify.}
 \label{sssec:clausification}
 
-The \clausify rule is another alternative way to transform a formula into its
-clausal normal form but without any simplification since remember this
-conversion is taking into account by the \canonicalize rule.
-It is important to notice that this kind of conversion between one formula
-to its clausal normal form is not unique, and \Metis has a customized
-approach to perform that transformation. Hence, we perform a
-reordering of the conjunctive normal form for the source formula.
+The \clausify rule is another alternative way to transform a formula
+into its clausal normal form but without any simplification since
+remember this conversion is taking into account by the \canonicalize
+rule. It is important to notice that this kind of conversion between
+one formula to its clausal normal form is not unique, and \Metis has
+a customized approach to perform that transformation. Hence, we
+perform a reordering of the conjunctive normal form for the source
+formula.
 
 \begin{myexamplenum}
 In the following \TSTP derivation by \Metis, we see how
-\clausify transforms the \texttt{norm0} formula to get \texttt{norm1} formula.
+\clausify transforms the \texttt{n₀} formula to get \texttt{n₁} formula.
 
 \begin{verbatim}
-  fof(norm0, ¬ p ∨ (q ∧ r) ...
-  fof(norm1, (¬ p ∨ q) ∧ (¬ p ∨ r), inf(clausify, [norm0])).
+  fof(n₀, ¬ p ∨ (q ∧ r) ...
+  fof(n₁, (¬ p ∨ q) ∧ (¬ p ∨ r), inf(clausify, n₀)).
 \end{verbatim}
 
 \end{myexamplenum}

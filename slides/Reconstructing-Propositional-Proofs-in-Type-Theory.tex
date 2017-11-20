@@ -579,8 +579,8 @@ Software related results:
 \item \Athena: a translator tool for \Metis proofs to \Agda in \Haskell\footnote{\url{https://github.com/jonaprieto/athena}.}
 \item \Agda libraries:
 \begin{itemize}
-  \item \texttt{Agda-Metis}: \Metis prover reasoning for propositional logic\footnote{\url{https://github.com/jonaprieto/agda-metis}.}
-  \item \texttt{Agda-Prop}: intuitionistic propositional logic + PEM\footnote{\url{https://github.com/jonaprieto/agda-prop}.}
+  \item \texttt{agda-metis}: \Metis prover reasoning for propositional logic\footnote{\url{https://github.com/jonaprieto/agda-metis}.}
+  \item \texttt{agda-prop}: intuitionistic propositional logic + PEM\footnote{\url{https://github.com/jonaprieto/agda-prop}.}
 \end{itemize}
 \item Bugs found in \Metis: see issues No.~2, No.~4, and commit
 \name{8a3f11e} in \Metis official
@@ -1581,7 +1581,7 @@ By refutation, we proved $p ⊢ p$:
 
 \begin{frame}[fragile]{\Athena tool}
 
-Is a \Haskell program that translates proofs given by \Metis in \TSTP
+Is an \Haskell program that translates proofs given by \Metis in \TSTP
 format to \Agda code\\
 
 \begin{itemize}
@@ -1598,8 +1598,8 @@ format to \Agda code\\
 \hline
 \textbf{Library} & \textbf{Purpose} \\
 \hline
-\texttt{Agda-Prop}& axioms and theorems of classical propositional logic\\
-\texttt{Agda-Metis} & versions of the inference rules used by \Metis\\
+\texttt{agda-prop}& axioms and theorems of classical propositional logic\\
+\texttt{agda-metis} & versions of the inference rules used by \Metis\\
 \hline
 \end{tabular}}
 }
@@ -1613,7 +1613,7 @@ format to \Agda code\\
 
 
 
-\begin{frame}[fragile, label=conjunct-thm]{\texttt{Agda-Metis}: Conjunct Inference
+\begin{frame}[fragile, label=conjunct-thm]{\texttt{agda-metis}: Conjunct Inference
   \footnote{\url{https://github.com/jonaprieto/agda-metis}.}
   }
 

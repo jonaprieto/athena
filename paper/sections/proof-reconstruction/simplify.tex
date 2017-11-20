@@ -1,22 +1,22 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\subsubsection{Simplification.}
+\subsubsection{Simplify.}
 \label{sssec:simplify}
 
-The \simplify rule is an inference that performs simplification of definitions
-and tautologies. This rule transverses a list of previous derivations by
-applying the theorems for $\fsimplify_{∧}$ and $\fsimplify_{∨}$ functions among
-others to get a contradiction in the first place, or a
-new formula to use later in the derivation.
+The \simplify rule is an inference that performs simplification of
+definitions and tautologies. This rule transverses a list of previous
+derivations by applying the theorems for $\fsimplify_{∧}$ and
+$\fsimplify_{∨}$ functions among others to get a contradiction in the
+first place, or a new formula to use later in the derivation.
 
-We observe based on the analysis of different
-cases in the \TSTP derivations that \simplify can be modeled by a
-function with three arguments: two source formulas and the target formula.
+We observe based on the analysis of different cases in the \TSTP
+derivations that \simplify can be modeled by a function with three
+arguments: two source formulas and the target formula.
 
-Since the main purpose of the \simplify rule is simplification, we first describe
-in \eqref{def:remove-literal}, the auxiliary function $\freduce_{ℓ}$ to remove a
-a negated literal from an formula.
+Since the main purpose of the \simplify rule is simplification, we
+first describe in \eqref{def:remove-literal}, the auxiliary function
+$\freduce_{ℓ}$ to remove a a negated literal from an formula.
 
 \begin{equation}
 \label{def:remove-literal}
@@ -74,13 +74,15 @@ Otherwise, the \fsimplify rule performs an analysis by following the cases to de
 \end{mainth}
 
 \begin{myremark}
+
 Besides the fact that $\List\ \Prop \to \Prop$ is the type that most
-fit with the \simplify rule, we choose a different
-option. In the translation from \TSTP to \Agda, we take the list of
-derivations and we apply the rule by using a left folding ($\rm{foldl}$) with the
-$\fsimplify$ function over the list of $φ₁, φ₂, \cdots, φₙ$
-that avoids us to define a new theorem type to
-support \List \Prop type in the conclusion side.
+fit with the \simplify rule, we choose a different option. In the
+translation from \TSTP to \Agda, we take the list of derivations and
+we apply the rule by using a left folding ($\rm{foldl}$) with the
+$\fsimplify$ function over the list of $φ₁, φ₂, \cdots, φₙ$ that
+avoids us to define a new theorem type to support \List \Prop type in
+the conclusion side.
+
 \end{myremark}
 
 
@@ -88,18 +90,18 @@ support \List \Prop type in the conclusion side.
 Let us review the following \TSTP excerpt where \simplify was used two times.
 
 \begin{verbatim}
-  fof(n0, (¬ p ∨ q) ∧ ¬ r ∧ ¬ q ∧ (p ∨ (¬ s ∨ r)), ...
-  fof(n1, p ∨ (¬ s ∨ r), inf(conjunct, n0)).
-  fof(n2, ¬ p ∨ q, inf(conjunct, n0)).
-  fof(n3, ¬ q, inf(conjunct, n0)).
-  fof(n4, ¬ p, inf(simplify, [n2, n3])).
-  fof(n5, ¬ r, inf(conjunct, n0)).
-  fof(n6, ⊥, inf(simplify, [n1, n4, n5])).
+  fof(n₀, (¬ p ∨ q) ∧ ¬ r ∧ ¬ q ∧ (p ∨ (¬ s ∨ r)), ...
+  fof(n₁, p ∨ (¬ s ∨ r), inf(conjunct, n₀)).
+  fof(n₂, ¬ p ∨ q, inf(conjunct, n₀)).
+  fof(n₃, ¬ q, inf(conjunct, n₀)).
+  fof(n₄, ¬ p, inf(simplify, [n₂, n₃])).
+  fof(n₅, ¬ r, inf(conjunct, n₀)).
+  fof(n₆, ⊥, inf(simplify, [n₁, n₄, n₅])).
 \end{verbatim}
 
 \begin{enumerate}
-\item The \simplify rule derives $¬ p$ in \verb!n4!
-from \verb!n2! and \verb!n3! derivations.
+\item The \simplify rule derives $¬ p$ in \verb!n₄!
+from \verb!n₂! and \verb!n₃! derivations.
 
 $$\fsimplify~(¬ p ∨ q)~(¬ q)~(¬ p) = ¬ p.$$
 % \begin{verbatim}
@@ -107,7 +109,7 @@ $$\fsimplify~(¬ p ∨ q)~(¬ q)~(¬ p) = ¬ p.$$
 % fof(norm3, ¬ q, inf(conjunct, [norm0])).
 % fof(norm4, ¬ p, inf(simplify, [norm2, norm3])).
 % \end{verbatim}
-\item To derive ⊥ in \verb!n6! we use
+\item To derive ⊥ in \verb!n₆! we use
 Theorem~\ref{thm:simplify} and we get the following proof.
 
 \begin{equation*}
