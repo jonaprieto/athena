@@ -20,7 +20,7 @@
 \spnewtheorem*{notation}{Notation}{\it}{\rmfamily}
 \spnewtheorem*{myremark}{Remark}{\bfseries}{\rmfamily}
 % \spnewtheorem*{myexample}{Example}{\bfseries}{\rmfamily}
-
+\usepackage{parskip}
 \usepackage{geometry}   %% helps with the text overflow
 \usepackage{subfiles}
 
@@ -41,6 +41,11 @@
 \def\labelSpacing{3pt}
 \def\defaultHypSeparation{\hskip.2in}
 \def\EnableBpAbbreviations{true}
+
+\newenvironment{scprooftree}[1]%
+  {\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+  {\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center}}
+
 
 \usepackage[title]{appendix}
 
@@ -199,6 +204,7 @@
 \newunicodechar{∘}{\ensuremath{\circ}}
 \newunicodechar{∙}{\ensuremath{\bullet}}
 \newunicodechar{∧}{\ensuremath{\wedge}}
+\newunicodechar{∎}{\ensuremath{\qed}}
 \newunicodechar{∨}{\ensuremath{\vee}}
 \newunicodechar{∼}{\ensuremath{\sim}}
 \newunicodechar{≠}{\ensuremath{\neq}}

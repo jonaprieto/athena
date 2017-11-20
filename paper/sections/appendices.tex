@@ -161,6 +161,7 @@ problem $p\vdash p$.}
 \label{fig:metis-proof-tstp-customized}
 \end{figure}
 
+\newpage
 \section{Complexity Measure of the \strip Function}
 \label{app:strip-cm}
 
@@ -187,7 +188,7 @@ We define in~\eqref{eq:strip-cm} its complexity measure.
 \end{aligned}
 \end{equation*}
 
-
+\newpage
 \section{Complexity Measure of the Negative Normal Form function}
 \label{app:polarity-for-propositions}
 
@@ -218,7 +219,7 @@ Another approach to define the negative normal form in type theory without
 using a complexity measure for the bounded recursion is described in~\cite{Bezem2002}.
 The authors avoid a termination problem by using the
 polarity of the formula as an additional argument of its negative normal form function.
-However, be aware the polarity function is not standard, and \Metis has its own
+However, be aware the polarity function is not standard and \Metis has its own
 definition.
 
 % \begin{equation}
@@ -239,8 +240,8 @@ definition.
 %   \end{aligned}
 % \end{equation}
 
-
-\section{A case in the proof of the \strip inference rule}
+\newpage
+\section{Another Case in the Proof of the \strip Inference Rule}
 \label{app:strip-proof-case}
 
 \begin{itemize}
@@ -306,6 +307,414 @@ definition.
 % \end{aligned}
 % \end{equation}
 
+
+\newpage
+\section{Complete Example}
+\label{app:complete-example}
+
+\subsection{Installing \Athena}
+
+\Athena is the proof-reconstruction tool that accompanying this paper.
+This tool is written in \Haskell and it was tested with \prg{GHC}~8.2.1.
+To install \Athena, the package manager \verb!cabal! is required as well.
+\Athena was tested with \verb!cabal!~1.24.0.
+
+Let us download the \Athena repository running the following command:
+
+\begin{verbatim}
+  $ git clone https://github.com/jonaprieto/athena.git
+  $ cd athena
+\end{verbatim}
+
+To install \Athena run the following command.
+
+\begin{verbatim}
+  $ make install
+\end{verbatim}
+
+To install the \Agda libraries, \verb!agda-prop!, \verb!agda-metis!, and
+the \Agda standard library, run the following command:
+
+\begin{verbatim}
+  $ make install-libraries
+  $ ls lib/
+  agda-metis  agda-prop  agda-stdlib
+\end{verbatim}
+
+\subsection{Installing the \Metis Prover}
+
+To install the \Metis prover, we refer the reader to its official
+repository at \url{https://github.com/gilith/metis}.
+
+As an alternative to install the prover from the \Metis sources,
+we have provided a \Haskell client
+to use this prover but also other provers with \name{Online-ATPs}
+tool\footnote{\url{https://github.com/jonaprieto/online-atps}.}.
+To install this tool run the following command:
+
+\begin{verbatim}
+  $ make online-atps
+  $ online-atps --version
+  Online-atps version 0.1.1
+\end{verbatim}
+
+\subsection{\TPTP problem}
+
+Let us consider the following
+theorem\footnote{Problem No.~13 in Disjunction Section in~\cite{Prieto-Cubides2017}.}:
+
+\[
+(p \Rightarrow q) \wedge (q \Rightarrow p) ⊢ (p \vee q) \Rightarrow (p \wedge q)
+\]
+
+This problem can be encode in \TPTP syntax (file \verb!problem.tptp!) as follows:
+\begin{verbatim}
+  $ cat problem.tptp
+  fof(premise, axiom, (p => q) & (q => p)).
+  fof(goal, conjecture, (p | q) => (p & q)).
+\end{verbatim}
+
+\subsection{\Metis solution}
+
+To obtain its \Metis derivation, make sure your \Metis version is supported:
+
+\begin{verbatim}
+  $ metis --version
+  metis 2.3 (release 20171021)
+\end{verbatim}
+
+and run the following command:
+
+\begin{verbatim}
+  $ metis --show proof problem.tptp > problem.tstp
+  $ cat problem.tstp
+  ...
+  fof(a1, axiom, ((p => q) & (q => p))).
+  fof(goal, conjecture, ((p | q) => (p & q))).
+  fof(subgoal_0, plain, ((p | q) => p), inference(strip, [], [goal])).
+  fof(subgoal_1, plain, (((p | q) & p) => q), inference(strip, [], [goal])).
+  fof(negate_0_0, plain, (~ ((p | q) => p)),
+      inference(negate, [], [subgoal_0])).
+  ...
+\end{verbatim}
+
+If we are using the \name{Online-ATPs} tool run the following command:
+
+\begin{verbatim}
+  online-atps --atp=metis problem.tptp  > problem.tstp
+\end{verbatim}
+
+Using our customized \TSTP syntax, the above \Metis solution looks like:
+
+\begin{verbatim}
+  fof(premise, axiom, (p ⇒ q) ∧ (q ⇒ p)).
+  fof(goal, conjecture, (p ∨ q) ⇒ (p ∧ q))).
+  fof(s₁, (p ∨ q) ⇒ p, inf(strip, goal)).
+  fof(s₂, ((p ∨ q) ∧ p) ⇒ q, inf(strip, goal)).
+  fof(neg₁, ¬ ((p ∨ q) ⇒ p), inf(negate, s₁)).
+  fof(n₀₀, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
+  fof(n₀₁, ¬ q ∨ p, inf(conjunct, n₀₀)).
+  fof(n₀₂, ¬ p ∧ (p ∨ q), inf(canonicalize, neg₁)).
+  fof(n₀₃, p ∨ q, inf(conjunct, n₀₂)).
+  fof(n₀₄, ¬ p, inf(conjunct, n₀₂)).
+  fof(n₀₅, q, inf(simplify,[n₀₃, n₀₄])).
+  cnf(r₀₀, ¬ q ∨ p, inf(canonicalize, n₀₁)).
+  cnf(r₀₁, q, inf(canonicalize, n₀₅)).
+  cnf(r₀₂, p, inf(resolve, q, [r₀₁, r₀₀])).
+  cnf(r₀₃, ¬ p, inf(canonicalize, n₀₄)).
+  cnf(r₀₄, ⊥, inf(resolve, p, [r₀₂, r₀₃])).
+  fof(neg₂, ¬ (((p ∨ q) ∧ p) ⇒ q), inf(negate, s₂)).
+  fof(n₁₀, ¬ q ∧ p ∧ (p ∨ q), inf(canonicalize, neg₂)).
+  fof(n₁₁, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
+  fof(n₁₂, ¬ p ∨ q, inf(conjunct, n₁₁)).
+  fof(n₁₃, ⊥, inf(simplify,[n₁₀, n₁₂])).
+  cnf(r₁₀, ⊥, inf(canonicalize, n₁₃)).
+\end{verbatim}
+
+\subsection{Generating the \Agda proof-term}
+
+To obtain the \Agda proof-term of the \Metis derivation run
+the following command:
+
+\begin{verbatim}
+  $ athena problem.tstp
+\end{verbatim}
+
+The \Agda file will be created in the same directory. This
+file is named by replacing the extension \verb!tstp! with \verb!agda!.
+
+\begin{verbatim}
+  $ cat problem.agda
+  ------------------------------------------------------------------------------
+  -- Athena version 0.1-b3d15b8.
+  -- TSTP file: problem.tstp.
+  ------------------------------------------------------------------------------
+
+  module problem where
+
+  ------------------------------------------------------------------------------
+
+  open import ATP.Metis 2 public
+  open import Data.PropFormula 2 public
+
+  ------------------------------------------------------------------------------
+
+  -- Variables.
+
+  p : PropFormula
+  p = Var (# 0)
+
+  q : PropFormula
+  q = Var (# 1)
+
+  -- Axiom.
+
+  premise : PropFormula
+  premise = ((p ⇒ q) ∧ (q ⇒ p))
+
+  -- Premise.
+
+  Γ : Ctxt
+  Γ = [ premise ]
+
+  -- Conjecture.
+
+  goal : PropFormula
+  goal = ((p ∨ q) ⇒ (p ∧ q))
+
+  -- Subgoals.
+
+  subgoal₀ : PropFormula
+  subgoal₀ = ((p ∨ q) ⇒ p)
+
+  subgoal₁ : PropFormula
+  subgoal₁ = (((p ∨ q) ∧ p) ⇒ q)
+
+  ------------------------------------------------------------------------------
+  -- Proof.
+  ------------------------------------------------------------------------------
+
+  proof₀ : Γ ⊢ subgoal₀
+  proof₀ =
+    (RAA
+      (resolve-thm ⊥ p
+        (resolve-thm p q
+          (simplify-thm q
+            (conjunct-thm (p ∨ q)
+              (canonicalize-thm ((¬ p) ∧ (p ∨ q))
+                (assume {Γ = Γ} (¬ subgoal₀))))
+            (conjunct-thm (¬ p)
+              (canonicalize-thm ((¬ p) ∧ (p ∨ q))
+                (assume {Γ = Γ} (¬ subgoal₀)))))
+          (conjunct-thm ((¬ q) ∨ p)
+            (canonicalize-thm (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+              (weaken (¬ subgoal₀)
+                (assume {Γ = ∅} premise)))))
+        (conjunct-thm (¬ p)
+          (canonicalize-thm ((¬ p) ∧ (p ∨ q))
+            (assume {Γ = Γ} (¬ subgoal₀))))))
+  ---------------------------------------------------------------------------- ∎
+
+  proof₁ : Γ ⊢ subgoal₁
+  proof₁ =
+    (RAA
+      (simplify-thm ⊥
+        (canonicalize-thm ((¬ q) ∧ (p ∧ (p ∨ q)))
+          (assume {Γ = Γ} (¬ subgoal₁)))
+        (conjunct-thm ((¬ p) ∨ q)
+          (canonicalize-thm (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
+            (weaken (¬ subgoal₁)
+              (assume {Γ = ∅} premise))))))
+  ---------------------------------------------------------------------------- ∎
+
+  proof : Γ ⊢ goal
+  proof =
+    ⇒-elim
+      strip-thm
+      (∧-intro proof₀ proof₁)
+  ---------------------------------------------------------------------------- ∎
+\end{verbatim}
+
+Now, we are ready to verify the \Metis solution by type-checking with
+\Agda the reconstructed proof.
+
+\begin{verbatim}
+  $ agda --version
+  Agda version 2.5.3
+  $ agda problem.agda
+\end{verbatim}
+
+As we can see in the \Agda code showed above, the term \verb!proof!, the proof-term
+of the \Metis derivation is referring to the proof-terms \verb!proof₀! and \verb!proof₁!.
+Recall, \Metis stripes the goal into subgoals to prove it. Therefore, these
+terms are the proof-terms for the refutations of the subgoals s₁ and s₂.
+We show in the following the respective natural deduction trees.
+
+\subsection{Refutation tree for the subgoal $s₁$: $(p ∨ q) ⇒ p$}
+For this subgoal, its respective \TSTP derivation is
+the following:
+
+\begin{verbatim}
+  fof(premise, axiom, (p ⇒ q) ∧ (q ⇒ p)).
+  fof(goal, conjecture, (p ∨ q) ⇒ (p ∧ q))).
+  fof(s₁, (p ∨ q) ⇒ p, inf(strip, goal)).
+  ...
+  fof(neg₁, ¬ ((p ∨ q) ⇒ p), inf(negate, s₁)).
+  fof(n₀₀, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
+  fof(n₀₁, ¬ q ∨ p, inf(conjunct, n₀₀)).
+  fof(n₀₂, ¬ p ∧ (p ∨ q), inf(canonicalize, neg₁)).
+  fof(n₀₃, p ∨ q, inf(conjunct, n₀₂)).
+  fof(n₀₄, ¬ p, inf(conjunct, n₀₂)).
+  fof(n₀₅, q, inf(simplify,[n₀₃, n₀₄])).
+  cnf(r₀₀, ¬ q ∨ p, inf(canonicalize, n₀₁)).
+  cnf(r₀₁, q, inf(canonicalize, n₀₅)).
+  cnf(r₀₂, p, inf(resolve, q, [r₀₁, r₀₀])).
+  cnf(r₀₃, ¬ p, inf(canonicalize, n₀₄)).
+  cnf(r₀₄, ⊥, inf(resolve, p, [r₀₂, r₀₃])).
+  ...
+\end{verbatim}
+
+The refutation tree is the following:
+
+\begin{center}
+\begin{scprooftree}{0.85}
+\AxiomC{$\mathcal{D}_1$}
+\UnaryInfC{$Γ, \neg s_1 ⊢ \neg q ∨ p$}
+
+\AxiomC{$\mathcal{D}_2$}
+\UnaryInfC{$Γ, \neg s_1 ⊢ p ∨ q$}
+%
+\AxiomC{$\mathcal{D}_3$}
+\UnaryInfC{$Γ, \neg s_1 ⊢ \neg p$}
+%
+%\LeftLabel{$(\mathcal{D}_4)$\hspace{1.5cm}}
+\RightLabel{Theorem~\ref{thm:simplify}}
+\BinaryInfC{$Γ, \neg s_1 ⊢ q$}
+\RightLabel{Theorem~\ref{thm:resolve}~with $ℓ = q$}
+\BinaryInfC{$Γ, \neg s_1 ⊢ p$}
+\RightLabel{}
+%\AxiomC{$\mathcal{D}_3$}
+\AxiomC{}
+\RightLabel{assume $\neg s_1$}
+\UnaryInfC{$Γ, \neg s_1 ⊢ \neg s_1$}
+% \UnaryInfC{$Γ, \neg s_1 ⊢ (p ∨ q) ⇒ p$}
+%\LeftLabel{$(\mathcal{D}_3)$\hspace{1.5cm}}
+\RightLabel{Theorem~\ref{thm:canonicalize}}
+\UnaryInfC{$Γ, \neg s_1 ⊢ \neg p ∧ (p ∨ q)$}
+\RightLabel{Theorem~\ref{thm:conjunct}}
+\UnaryInfC{$Γ, \neg s_1 ⊢ \neg p$}
+\RightLabel{Theorem~\ref{thm:resolve}~with $ℓ = p$}
+\LeftLabel{$(\mathcal{R}_{1})$\hspace{3cm}}
+\BinaryInfC{$Γ, \neg s_1 ⊢ \bot$}
+\RightLabel{RAA}
+\UnaryInfC{$Γ ⊢ s_1$}
+\end{scprooftree}
+\end{center}
+
+\begin{equation*}
+\begin{bprooftree}
+  \AxiomC{}
+  \RightLabel{axiom $a_1$}
+  \UnaryInfC{$Γ ⊢ (p ⇒ q) ∧ (q ⇒ p)$}
+  \RightLabel{weaken}
+  \UnaryInfC{$Γ, \neg s_1 ⊢ (p ⇒ q) ∧ (q ⇒ p)$}
+  \LeftLabel{$(\mathcal{D}_1)$\hspace{2cm}}
+  \RightLabel{Theorem~\ref{thm:canonicalize}}
+  \UnaryInfC{$Γ, \neg s_1 ⊢ (\neg p ∨ q) ∧ (\neg q ∨ p)$}
+  \RightLabel{Theorem~\ref{thm:conjunct}}
+  \UnaryInfC{$Γ, \neg s_1 ⊢ \neg q ∨ p$}
+\end{bprooftree}
+\end{equation*}
+
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{}
+\RightLabel{assume}
+\UnaryInfC{$Γ, \neg s_1 ⊢ \neg s_1$}
+\LeftLabel{$(\mathcal{D}_2)$\hspace{3cm}}
+\RightLabel{Theorem~\ref{thm:canonicalize}}
+\UnaryInfC{$Γ, \neg s_1 ⊢ \neg p ∧ (p ∨ q)$}
+\RightLabel{Theorem~\ref{thm:conjunct}}
+\UnaryInfC{$Γ, \neg s_1 ⊢ p ∨ q$}
+\end{bprooftree}
+\end{equation*}
+
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{}
+\RightLabel{assume $\neg s_1$}
+\UnaryInfC{$Γ, \neg s_1 ⊢ \neg s_1$}
+% \UnaryInfC{$Γ, \neg s_1 ⊢ (p ∨ q) ⇒ p$}
+\LeftLabel{$(\mathcal{D}_3)$\hspace{1.5cm}}
+\RightLabel{Theorem~\ref{thm:canonicalize}}
+\UnaryInfC{$Γ, \neg s_1 ⊢ \neg p ∧ (p ∨ q)$}
+\RightLabel{Theorem~\ref{thm:conjunct}}
+\UnaryInfC{$Γ, \neg s_1 ⊢ \neg p$}
+\end{bprooftree}
+\end{equation*}
+
+
+
+\subsubsection{Refutation tree for the subgoal $s₂$: $((p ∨ q) ∧ p) ⇒ q$}
+For this subgoal, its respective \TSTP derivation is
+the following:
+
+\begin{verbatim}
+  fof(premise, axiom, (p ⇒ q) ∧ (q ⇒ p)).
+  ...
+  fof(s₂, ((p ∨ q) ∧ p) ⇒ q, inf(strip, goal)).
+  ...
+  fof(neg₂, ¬ (((p ∨ q) ∧ p) ⇒ q), inf(negate, s₂)).
+  fof(n₁₀, ¬ q ∧ p ∧ (p ∨ q), inf(canonicalize, neg₂)).
+  fof(n₁₁, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
+  fof(n₁₂, ¬ p ∨ q, inf(conjunct, n₁₁)).
+  fof(n₁₃, ⊥, inf(simplify,[n₁₀, n₁₂])).
+  cnf(r₁₀, ⊥, inf(canonicalize, n₁₃)).
+\end{verbatim}
+
+The refutation tree is the following:
+
+\begin{center}
+\begin{scprooftree}{0.85}
+\AxiomC{}
+\RightLabel{assume ($\neg s_2)$}
+\UnaryInfC{$Γ,\neg s_2 ⊢ \neg s_2$}
+\RightLabel{Theorem~\ref{thm:canonicalize}}
+\UnaryInfC{$Γ, \neg s_2⊢ \neg q ∧ p ∧ (p ∨ q)$}
+\AxiomC{}
+\RightLabel{axiom $a_1$}
+\UnaryInfC{$Γ ⊢ (p ⇒ q) ∧ (q ⇒ p)$}
+\RightLabel{weaken}
+\UnaryInfC{$Γ, \neg s_2 ⊢ (p⇒ q) ∧ (q ⇒ p)$}
+\RightLabel{Theorem~\ref{thm:canonicalize}}
+\UnaryInfC{$Γ, \neg s_2 ⊢ (\neg p ∨ q) ∧ (\neg q ∨ p)$}
+\RightLabel{Theorem~\ref{thm:conjunct}}
+\UnaryInfC{$Γ, \neg s_2 ⊢ \neg p ∨ q$}
+\LeftLabel{$(\mathcal{R}_{2})$\hspace{1cm}}
+\RightLabel{Theorem~\ref{thm:simplify}}
+\BinaryInfC{$Γ, \neg s_2 ⊢ \bot$}
+\RightLabel{RAA}
+\UnaryInfC{$Γ ⊢ s_2$}
+\end{scprooftree}
+\end{center}
+
+\subsection{The proof of the goal}
+
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{}
+\RightLabel{Theorem~\ref{thm:strip}}
+\UnaryInfC{$Γ ⊢ (s_1 ∧ s_2) ⇒ \text{goal}$}
+\AxiomC{$\mathcal{R}_{1}$}
+\UnaryInfC{$Γ ⊢ s_1$}
+\AxiomC{$\mathcal{R}_2$}
+\UnaryInfC{$Γ ⊢ s_2$}
+\RightLabel{$\wedge$-intro}
+\BinaryInfC{$Γ ⊢ s_1 ∧ s_2$}
+\RightLabel{$⇒$-elim.}
+\BinaryInfC{$Γ ⊢ \text{goal}$}
+\end{scprooftree}
+\end{center}
 
 \end{subappendices}
 

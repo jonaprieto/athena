@@ -268,28 +268,27 @@ in Fig.~\ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
 \end{mainlemma}
 
 Now, we are ready to define the negative normal form of a formula with
-simplifications by applying to it the $\fnnf_{0}$ function defined
+simplifications by applying to it the $\fnnf_{1}$ function defined
 in~\eqref{eq:nnf}. This definition is mainly based on the \Metis
 source code to normalize formulas.
-
 To define such a function in type theory we used bounded recursion
-described in Section~\ref{ssec:structural-recursion}.
+as we describe in Section~\ref{ssec:structural-recursion}.
 
 \begin{equation}
 \label{eq:nnf}
 \begin{aligned}
-&\hspace{.495mm}\fnnfp : \Prop \to \Nat \to \Prop\\
+&\hspace{.495mm}\fnnf_{1} : \Prop \to \Nat \to \Prop\\
 &\begin{array}{llll}
-\fnnfp &(φ₁ ∧ φ₂)     &(n+1) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~φ₁~n ∧ \fnnfp~φ₂~n))\\
-\fnnfp &(φ₁ ∨ φ₂)     &(n+1) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~φ₁~n ∨ \fnnfp~φ₂~n))\\
-\fnnfp &(φ₁ ⇒ φ₂)     &(n+1) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~((¬ φ₁) ∨ φ₂)~n))\\
-\fnnfp &(¬ (φ₁ ∧ φ₂)) &(n+1) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~((¬ φ₁) ∨ (¬ φ₂))~n))\\
-\fnnfp &(¬ (φ₁ ∨ φ₂)) &(n+1) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~((¬ φ₁) ∧ (¬ φ₂))~n))\\
-\fnnfp &(¬ (φ₁ ⇒ φ₂)) &(n+1) &= \fnnfp~φ₁~n\\
-\fnnfp &(¬ (¬ φ))     &(n+1) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~((¬ φ₂) ∧ φ₁)~n))\\
-\fnnfp &(¬ ⊤)         &(n+1) &= ⊥\\
-\fnnfp &(¬ ⊥)         &(n+1) &= ⊤\\
-\fnnfp &φ             &0     &= φ
+\fnnf_{1} &(φ₁ ∧ φ₂)     &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~φ₁~n ∧ \fnnf_{1}~φ₂~n))\\
+\fnnf_{1} &(φ₁ ∨ φ₂)     &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~φ₁~n ∨ \fnnf_{1}~φ₂~n))\\
+\fnnf_{1} &(φ₁ ⇒ φ₂)     &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~((¬ φ₁) ∨ φ₂)~n))\\
+\fnnf_{1} &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~((¬ φ₁) ∨ (¬ φ₂))~n))\\
+\fnnf_{1} &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~((¬ φ₁) ∧ (¬ φ₂))~n))\\
+\fnnf_{1} &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~((¬ φ₂) ∧ φ₁)~n))\\
+\fnnf_{1} &(¬ (¬ φ))     &(\suc~n) &= \fnnf_{1}~φ₁~n\\
+\fnnf_{1} &(¬ ⊤)         &(\suc~n) &= ⊥\\
+\fnnf_{1} &(¬ ⊥)         &(\suc~n) &= ⊤\\
+\fnnf_{1} &φ             &\zero    &= φ
 \end{array}
 \end{aligned}
 \end{equation}
@@ -300,10 +299,11 @@ described in Section~\ref{ssec:structural-recursion}.
   \begin{align*}
    \begin{split}
      &\fnnf : \NProp \to \NProp\\
-     &\fnnf~φ = \fnnfp~φ~(\fnnf_{cm}~φ).
+     &\fnnf~φ = \fnnf_{1}~φ~(\fnnf_{cm}~φ).
    \end{split}
   \end{align*}
-  and $\fnnf_{cm}~φ$ is defined in Appendix~\ref{app:polarity-for-propositions}.
+  and the $\fnnf_{cm}$ function, the complexity measure function
+  defined in Appendix~\ref{app:polarity-for-propositions}.
 \end{mainlemma}
 
 To get the conjunctive normal form, we make sure the formula is a
