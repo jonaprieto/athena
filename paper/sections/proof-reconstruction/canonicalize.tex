@@ -268,11 +268,12 @@ in Fig.~\ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
 \end{mainlemma}
 
 Now, we are ready to define the negative normal form of a formula with
-simplifications by applying to it the $\fnnf_{1}$ function defined
-in~\eqref{eq:nnf}. This definition is mainly based on the \Metis
-source code to normalize formulas.
-To define such a function in type theory we used bounded recursion
-as we describe in Section~\ref{ssec:structural-recursion}.
+simplifications by applying to it the $\fnnf$ function defined in
+Lemma~\ref{lem:nnf} (see more details in Appendix~\ref{app:polarity-for-propositions}).
+This definition is mainly based on the \Metis
+source code to normalize formulas. To define such a function in type
+theory we used bounded recursion as we describe in
+Section~\ref{ssec:structural-recursion}.
 
 \begin{equation}
 \label{eq:nnf}
@@ -302,8 +303,8 @@ as we describe in Section~\ref{ssec:structural-recursion}.
      &\fnnf~φ = \fnnf_{1}~φ~(\fnnf_{cm}~φ).
    \end{split}
   \end{align*}
-  and the $\fnnf_{cm}$ function, the complexity measure function
-  defined in Appendix~\ref{app:polarity-for-propositions}.
+  The $\fnnf_{cm}$  complexity measure function
+  is defined in Appendix~\ref{app:polarity-for-propositions}.
 \end{mainlemma}
 
 To get the conjunctive normal form, we make sure the formula is a

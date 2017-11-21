@@ -202,7 +202,7 @@ section to reorder conjunctive normal forms.
           φ, &\text{ if }φ ≡ ψ;\\
           ψ₁ ∧ ψ₂, &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\text{, }ψ₁ ≡ \freorder_{∧}~φ~ψ₁;\\
                    &\text{ and } ψ₂ ≡ \freorder_{∧}~φ~ψ₂;\\
-          φ,       &\text{ if } ψ ≡ ψ₁ ∧ ψ₂\\
+          φ,       &\text{ if } ψ ≡ ψ₁ ∧ ψ₂;\\
           \fconjunct~φ~ψ, &\text{ otherwise.}
         \end{cases}
       \end{split}
@@ -297,9 +297,9 @@ rule in Fig.~\ref{fig:metis-inferences}.
 \begin{myexamplenum}\hspace{10cm}
 \label{ex:resolve-tstp}
 \begin{verbatim}
-  cnf(r₄, (¬ r ∨ p ∨ q), ...
-  cnf(r₅, (p ∨ q ∨ r), ...
-  cnf(r₆, (p ∨ q), inf(resolve, r, [r₅, r₄])).
+  cnf(r₄, ¬ r ∨ p ∨ q, ...
+  cnf(r₅, p ∨ q ∨ r, ...
+  cnf(r₆, p ∨ q, inf(resolve, r, [r₅, r₄])).
 \end{verbatim}
 
 In the excerpt above, we apply resolution to the first two formulas,
@@ -312,7 +312,7 @@ the pattern required.
 
 If the scenario would have other like replacing \verb!r₅! by
 \begin{verbatim}
-  cnf(r₅, (r ∨ p ∨ q), ...
+  cnf(r₅, r ∨ p ∨ q, ...
 \end{verbatim}
 The \resolve rule have could derive $(p ∨ q) ∨ (p ∨ q)$, but again, that is not the expected result.
 \end{myexamplenum}

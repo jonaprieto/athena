@@ -162,6 +162,7 @@ problem $p\vdash p$.}
 \end{figure}
 
 \newpage
+\newpage
 \section{Complexity Measure of the \strip Function}
 \label{app:strip-cm}
 
@@ -188,59 +189,6 @@ We define in~\eqref{eq:strip-cm} its complexity measure.
 \end{aligned}
 \end{equation*}
 
-\newpage
-\section{Complexity Measure of the Negative Normal Form function}
-\label{app:polarity-for-propositions}
-
-In Section~\ref{sssec:canonicalize} we define a custom negative
-normal form of a formula by defining a bounded recursion
-in~\eqref{eq:nnf}. Its complexity measure is defined as follows.
-
-\begin{equation}
-\label{eq:nnf-cm}
-\begin{aligned}
-&\hspace{.495mm}\fnnf_{cm} : \Prop \to \Nat \to \Prop\\
-&\begin{array}{lll}
-\fnnf_{cm} &(φ₁ ∧ φ₂)      &= \fnnf_{cm}~φ₁ + \fnnf_{cm}~φ₂ + 1 \\
-\fnnf_{cm} &(φ₁ ∨ φ₂)      &= \fnnf_{cm}~φ₁ + \fnnf_{cm}~φ₂ + 1 \\
-\fnnf_{cm} &(φ₁ ⇒ φ₂)      &= 2 \cdot \fnnf_{cm}~φ₁  + \fnnf_{cm}~φ₂ + 1 \\
-\fnnf_{cm} &(¬ (φ₁ ∧ φ₂))  &= \fnnf_{cm}~(¬ φ₁) + \fnnf_{cm}~(¬ φ₂) + 1 \\
-\fnnf_{cm} &(¬ (φ₁ ∨ φ₂))  &= \fnnf_{cm}~(¬ φ₁) + \fnnf_{cm}~(¬ φ₂) + 1 \\
-\fnnf_{cm} &(¬ (φ₁ ⇒ φ₂))  &= \fnnf_{cm}~(¬ φ₁) + 1 \\
-\fnnf_{cm} &(¬ (¬ φ))      &= \fnnf_{cm}~φ₁ + \fnnf_{cm}~(¬ φ₂) + 3 \\
-\fnnf_{cm} &(¬ ⊤)          &= 1 \\
-\fnnf_{cm} &(¬ ⊥)          &= 1 \\
-\fnnf_{cm} &φ              &= 1 \\
-\end{array}
-\end{aligned}
-\end{equation}
-
-Another approach to define the negative normal form in type theory without
-using a complexity measure for the bounded recursion is described in~\cite{Bezem2002}.
-The authors avoid a termination problem by using the
-polarity of the formula as an additional argument of its negative normal form function.
-However, be aware the polarity function is not standard and \Metis has its own
-definition.
-
-% \begin{equation}
-% \label{def:polarity}
-%   \begin{aligned}
-%   &\hspace{.495mm}\fpolarity : \Prop \to \abbre{Polarity}\\
-%     &\begin{array}{lll}
-%       \fpolarity &(φ₁ ∧ φ₂) &= ⊕\\
-%       \fpolarity &(φ₁ ∨ φ₂) &= ⊖\\
-%       \fpolarity &(φ₁ ⇒ φ₂) &= ⊖\\
-%       \fpolarity &(¬ φ)     &=
-%         \begin{cases}
-%         ⊕, &\text{ if }\fpolarity~φ=⊖;\\
-%         ⊖, &\text{ if }\fpolarity~φ=⊕;
-%         \end{cases}\\
-%       \fpolarity &φ     &=⊕
-%     \end{array}
-%   \end{aligned}
-% \end{equation}
-
-\newpage
 \section{Another Case in the Proof of the \strip Inference Rule}
 \label{app:strip-proof-case}
 
@@ -267,6 +215,86 @@ definition.
   \end{bprooftree}
 \end{equation*}
 \end{itemize}
+
+
+\newpage
+\section{Complexity Measure of the Negative Normal Form Function}
+\label{app:polarity-for-propositions}
+
+In Section~\ref{sssec:canonicalize} we discuss a custom negative
+normal form of a formula. To convert a formula to such a normal
+form, we define the function $\fnnf_{0}$ in~\eqref{eq:nnf-zero}.
+
+\begin{equation}
+\label{eq:nnf-zero}
+\begin{aligned}
+&\hspace{.495mm}\fnnf_{0} : \Prop \to \Prop\\
+&\begin{array}{lll}
+\fnnf_{0} &(φ₁ ∧ φ₂)      &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{0}~φ₁ ∧ \fnnf_{0}~φ₂))\\
+\fnnf_{0} &(φ₁ ∨ φ₂)      &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{0}~φ₁ ∨ \fnnf_{0}~φ₂))\\
+\fnnf_{0} &(φ₁ ⇒ φ₂)      &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{0}~((¬ φ₁) ∨ φ₂)))\\
+\fnnf_{0} &(¬ (φ₁ ∧ φ₂))  &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{0}~((¬ φ₁) ∨ (¬ φ₂))))\\
+\fnnf_{0} &(¬ (φ₁ ∨ φ₂))  &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{0}~((¬ φ₁) ∧ (¬ φ₂))))\\
+\fnnf_{0} &(¬ (φ₁ ⇒ φ₂))  &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{0}~((¬ φ₂) ∧ φ₁)))\\
+\fnnf_{0} &(¬ (¬ φ))      &= \fnnf_{0}~φ₁\\
+\fnnf_{0} &(¬ ⊤)          &= ⊥\\
+\fnnf_{0} &(¬ ⊥)          &= ⊤\\
+\fnnf_{0} &φ              &= φ
+\end{array}
+\end{aligned}
+\end{equation}
+
+However, then $\fnnf_{0}$ function is not a structurally recursive
+function. Therefore, we define a bounded recursion in~\eqref{eq:nnf}
+using as the second argument for the bounded recursion its complexity
+measure. The $\fnnf_{cm}$ function in~\eqref{eq:nnf-cm} computes that
+complexity measure.
+
+\begin{equation}
+\label{eq:nnf-cm}
+\begin{aligned}
+&\hspace{.495mm}\fnnf_{cm} : \Prop \to \Nat \to \Prop\\
+&\begin{array}{lll}
+\fnnf_{cm} &(φ₁ ∧ φ₂)      &= \fnnf_{cm}~φ₁ + \fnnf_{cm}~φ₂ + 1 \\
+\fnnf_{cm} &(φ₁ ∨ φ₂)      &= \fnnf_{cm}~φ₁ + \fnnf_{cm}~φ₂ + 1 \\
+\fnnf_{cm} &(φ₁ ⇒ φ₂)      &= 2 \cdot \fnnf_{cm}~φ₁  + \fnnf_{cm}~φ₂ + 1 \\
+\fnnf_{cm} &(¬ (φ₁ ∧ φ₂))  &= \fnnf_{cm}~(¬ φ₁) + \fnnf_{cm}~(¬ φ₂) + 1 \\
+\fnnf_{cm} &(¬ (φ₁ ∨ φ₂))  &= \fnnf_{cm}~(¬ φ₁) + \fnnf_{cm}~(¬ φ₂) + 1 \\
+\fnnf_{cm} &(¬ (φ₁ ⇒ φ₂))  &= \fnnf_{cm}~(¬ φ₁) + 1 \\
+\fnnf_{cm} &(¬ (¬ φ))      &= \fnnf_{cm}~φ₁ + \fnnf_{cm}~(¬ φ₂) + 3 \\
+\fnnf_{cm} &(¬ ⊤)          &= 1 \\
+\fnnf_{cm} &(¬ ⊥)          &= 1 \\
+\fnnf_{cm} &φ              &= 1 \\
+\end{array}
+\end{aligned}
+\end{equation}
+
+Another approach to define the negative normal form in type theory
+without using a complexity measure for the bounded recursion would
+modify the definition of $\fnnf$ defined in~\cite{Bezem2002}. The
+authors avoid the termination problem by using the polarity of the
+formula as an additional argument of its negative normal form
+function. However, be aware the polarity function is not standard and
+\Metis has its own definition.
+
+% \begin{equation}
+% \label{def:polarity}
+%   \begin{aligned}
+%   &\hspace{.495mm}\fpolarity : \Prop \to \abbre{Polarity}\\
+%     &\begin{array}{lll}
+%       \fpolarity &(φ₁ ∧ φ₂) &= ⊕\\
+%       \fpolarity &(φ₁ ∨ φ₂) &= ⊖\\
+%       \fpolarity &(φ₁ ⇒ φ₂) &= ⊖\\
+%       \fpolarity &(¬ φ)     &=
+%         \begin{cases}
+%         ⊕, &\text{ if }\fpolarity~φ=⊖;\\
+%         ⊖, &\text{ if }\fpolarity~φ=⊕;
+%         \end{cases}\\
+%       \fpolarity &φ     &=⊕
+%     \end{array}
+%   \end{aligned}
+% \end{equation}
+
 
 % \section{A Small Example}
 % \label{appendix}
@@ -343,7 +371,8 @@ the \Agda standard library, run the following command:
 
 \subsection{Installing the \Metis Prover}
 
-To install the \Metis prover, we refer the reader to its official
+To install the \Metis prover v2.3 (release 20171021),
+we refer the reader to its official
 repository at \url{https://github.com/gilith/metis}.
 
 As an alternative to install the prover from the \Metis sources,

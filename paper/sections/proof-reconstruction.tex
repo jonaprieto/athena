@@ -75,8 +75,9 @@ rules in Example~\ref{ex:inference-rule-pattern}.
 
 \begin{myexamplenum}
 \label{ex:inference-rule-pattern}
-Let \texttt{metisRule} be a \Metis inference rule. To reconstruct this rule,
-we define the function \fun{metisRule} in type theory that follows the pattern:
+Let \texttt{metisRule} be a \Metis inference rule. To reconstruct
+this rule, we define the function \fun{metisRule} in type theory
+that follows the pattern:
 
 \begin{equation*}
   \begin{aligned}
@@ -84,7 +85,7 @@ we define the function \fun{metisRule} in type theory that follows the pattern:
   &\begin{array}{ll}
   \fun{metisRule}~φ~ψ\ &=
       \begin{cases}
-      ψ, &\text{if the conclusion}ψ\text{ can be}\text{ derived by applying certain inference}\\
+      ψ, &\text{if the conclusion }ψ\text{ can be}\text{ derived by applying certain inference}\\
          &\text{rules to the premise }φ;\\
       φ, &\text{otherwise;}
       \end{cases}
@@ -92,8 +93,8 @@ we define the function \fun{metisRule} in type theory that follows the pattern:
   \end{aligned}
 \end{equation*}
 
-To justify all transformations done by the \fun{metisRule} rule, we prove
-its soundness with a theorem like the following:
+To justify all transformations done by the \fun{metisRule} rule, we
+prove its soundness with a theorem like the following:
 
 \begin{equation*}
   \text{If }Γ ⊢ φ \text{ then }Γ ⊢ \fun{metisRule}~φ~ψ, \text{ where } ψ : \Target.
@@ -108,7 +109,7 @@ example above.  We follow the same order to present the rules as the
 table shows.
 
 
-% -----------------------------------------------------------------------------
+% ------------------------------------------------------------------
 
 \subfile{sections/proof-reconstruction/strip.tex}
 \subfile{sections/proof-reconstruction/conjunct.tex}
@@ -117,15 +118,16 @@ table shows.
 \subfile{sections/proof-reconstruction/clausify.tex}
 \subfile{sections/proof-reconstruction/simplify.tex}
 
-%------------------------------------------------------------------------------
+% -------------------------------------------------------------------
 
 We have finished the formalization of every inference rule in
 a \Metis proof, we are able to justify step-by-step any proof
 for a problem in propositional logic.
-For instance, we tested successfully the translation by \Athena jointly with
-the \Agda formalizations of the rules mentioned above with more than eighty
-representative theorems in propositional logic. An interested reader can test
-the problems~\cite{Prieto-Cubides2017} in the \Athena tool
+For instance, we tested successfully the translation by \Athena
+jointly with the \Agda formalizations of the rules mentioned above
+with more than eighty representative theorems in propositional
+logic. An interested reader can test the
+problems~\cite{Prieto-Cubides2017} in the \Athena tool
 repository~\cite{Athena}.
 
 \end{document}
