@@ -6,88 +6,108 @@
 
 The \simplify rule is an inference that performs simplification of
 definitions and tautologies. This rule transverses a list of previous
-derivations by applying the theorems for $\fsimplify_{∧}$ and
-$\fsimplify_{∨}$ functions among others to get a contradiction in the
-first place, or a new formula to use later in the derivation.
+derivations by applying Lemma~\ref{lem:canon-or},
+Lemma~\ref{lem:canon-and}, among others.
+This rule works to find a contradiction in the first place, or a new
+formula (often smaller than its input formulas) to use later in the
+derivation.
 
 We observe based on the analysis of different cases in the \TSTP
 derivations that \simplify can be modeled by a function with three
 arguments: two source formulas and the target formula.
 
-Since the main purpose of the \simplify rule is simplification, we
-first describe in \eqref{def:remove-literal}, the auxiliary function
-$\freduce_{ℓ}$ to remove a a negated literal from an formula.
+Since the main purpose of the \simplify rule is simplification of
+formulas, we have defined the $\freduce_{ℓ}$ function to help removing
+the negation of a given literal $ℓ$ from a input formula.
 
 \begin{equation}
 \label{def:remove-literal}
   \begin{aligned}
   &\hspace{.495mm}\freduce : \Prop → \Lit → \Prop\hspace*{3.5cm}\\
-  &\begin{array}{llll}
-\freduce_{ℓ} &(φ₁~∧~φ₂)~&ℓ~=~\fsimplify_{∧}~(\freduce_{ℓ}~φ₁~ℓ~∧~\freduce_{ℓ}~φ₂~ℓ)\\
-\freduce_{ℓ} &(φ₁~∨~φ₂)~&ℓ~=~\fsimplify_{∨}~(\freduce_{ℓ}~φ₁~ℓ~∨~\freduce_{ℓ}~φ₂~ℓ) \\[2mm]
-\freduce_{ℓ} &φ &ℓ = \begin{cases}
-⊥,  &\text{ if }φ\text{ is a literal and }ℓ ≡ \fnnf(¬ φ);\\
-φ,  &\text{ otherwise.}
-\end{cases}
+  &\begin{array}{lll}
+\freduce_{ℓ} &(φ₁~∧~φ₂)~&ℓ~= \fsimplify_{∧}~(\freduce_{ℓ}~φ₁~ℓ~∧~\freduce_{ℓ}~φ₂~ℓ)\\
+\freduce_{ℓ} &(φ₁~∨~φ₂)~&ℓ~= \fsimplify_{∨}~(\freduce_{ℓ}~φ₁~ℓ~∨~\freduce_{ℓ}~φ₂~ℓ)\\[2mm]
+\freduce_{ℓ} &φ~&ℓ~=\begin{cases}
+  ⊥,  &\text{ if }φ\text{ is a literal and }ℓ ≡ \fnnf(¬ φ);\\
+  φ,  &\text{ otherwise.}
+  \end{cases}
    \end{array}
   \end{aligned}
 \end{equation}
 
-As we see in~\eqref{eq:simplify-1}, if \fsimplify gets ⊥
-from its input derivations, it derives ⊥. When the target formula, the expected conclusion is ⊤, we derive immediately ⊤.
-Otherwise, the \fsimplify rule performs an analysis by following the cases to determine which case should apply.
+\begin{mainlemma}
+\label{lem:reduce-literal}
+Let $ℓ$ be a literal and $φ : \Prop$. If $Γ ⊢ φ$ and $Γ ⊢ ℓ$ then
+$Γ~⊢~\freduce_{ℓ}~φ~ℓ$.
+\end{mainlemma}
 
- \begin{equation}
-  \label{eq:simplify-1}
-  \begin{aligned}
-  &\hspace{.495mm}\fsimplify : \Source → \Source → \Target → \Prop\hspace*{3.5cm}\\
-  &\begin{array}{ll}
-   \fsimplify~⊥~φ~ψ  &=ψ\\
-   \fsimplify~φ~⊥~ψ  &=ψ\\
-%   \fsimplify~φ₁~φ₂~⊤ &=⊤.
-  \end{array}
-  \end{aligned}
-  \end{equation}
+\begin{proof}
+\end{proof}
+
+The \fsimplify function is defined in~\eqref{eq:simplify}. If some
+input formula is equal to the target formula, we derive that formula.
+If some formula is $⊥$, we derive the target formula by using the
+$⊥-elim$ inference rule. Otherwise, the simplification functions take
+place if the second input formula is a conjunction or a disjunction.
+Otherwise, if the second input formula in the sources is a literal, we
+use the $\freduce_{ℓ}$ function and Lemma~\ref{lem:reduce-literal}.
 
 \begin{equation}
-\label{def:simplify}
+\label{eq:simplify}
   \begin{aligned}
-  &\begin{array}{llll}
-\fsimplify~&φ₁~&(φ₂₁ ∧ φ₂₂)~&ψ=~\fsimplify_{∧}~(\fsimplify~φ₁~φ₂₁~ψ)~φ₂₂~ψ\\
-\fsimplify~&φ₁~&(φ₂₁ ∨ φ₂₂)~&ψ=~\fsimplify_{∨}~(\fsimplify~φ₁~φ₂₁~∨~\fsimplify~φ₁~φ₂₂~ψ) \\[2mm]
-\fsimplify~&φ₁~&φ₂~&ψ =
-\begin{cases}
-\freduce_{ℓ}~φ₁~φ₂,
-&\text{ if }φ₂\text{ is a literal;}\\
-φ₁,  &\text{ otherwise.}
-\end{cases}
-   \end{array}
+  &\hspace{.495mm}\fsimplify : \Source → \Source → \Target → \Prop\hspace*{3.5cm}\\
+  & \fsimplify~φ₁~φ₂~ψ =\\
+  &\hspace{3mm}
+  \begin{cases}
+  ψ, &\text{ if }φᵢ ≡ ⊥\text{ for some }i = 1, 2;\\
+  ψ, &\text{ if }φᵢ ≡ ψ\text{ for some }i = 1, 2;\\
+  \fsimplify_{∧}~(\fsimplify~φ₁~φ₂₁~ψ)~φ₂₂~ψ,
+  &\text{ if }φ₂ ≡ φ₂₁ ∧ φ₂₂;\\
+   \fsimplify_{∧}~\fsimplify_{∨}~(\fsimplify~φ₁~φ₂₁~∨~\fsimplify~φ₁~φ₂₂~ψ)
+  &\text{ if }φ₂ ≡ φ₂₁ ∨ φ₂₂;\\
+  \freduce_{ℓ}~φ₁~φ₂, &\text{ if }φ₂\text{ is a literal};\\
+  φ₁,  &\text{ otherwise.}
+  \end{cases}
   \end{aligned}
 \end{equation}
 
+\begin{mainlemma}
+  \label{lem:binary-simplify}
+  Let $ψ : \Target$. If $Γ ⊢ φ₁$ and $Γ ⊢ φ₂$ then
+  $Γ ⊢ \fsimplify~φ₁~φ₂$.
+\end{mainlemma}
+
+\begin{proof}
+\end{proof}
 
 \begin{mainth}
   \label{thm:simplify}
-  Let $ψ : \Target$ and for $i=1,\dots, n$ $Γ ⊢ φᵢ$. If $n > 2$
-  then $Γ ⊢ \fsimplify~γ_{n-2}~φ_{n}~ψ$, where
-  $γ_{i} = \fsimplify~φ_{i}~φ_{i+1}~ψ$, else $Γ ⊢ \fsimplify~φ₁~φ₂~ψ$.
+  Let $ψ : \Target$. Let $φᵢ : \Source$ such that $Γ ⊢ φᵢ$ for
+  $i = 1, \cdots, n$ and $n \geq 2$.
+  Then $Γ ⊢ \fsimplify~γ_{n-2}~φ_{n}~ψ$ where
+  $γ_{i} ≡ \fsimplify~φ_{i}~φ_{i+1}~ψ$.
 \end{mainth}
+
+\begin{proof} We prove this theorem by induction on $n$.
+∙~If $n = 2$, use Lemma~\ref{lem:binary-simplify}.\\
+∙~If $n > 2$, suppose the theorem is valid for $n$ and let use prove it
+for $n+1$.\\
+\end{proof}
 
 \begin{myremark}
 
-Besides the fact that $\List\ \Prop \to \Prop$ is the type that most
+Besides the fact that $\List~\Prop~\to~\Prop$ is the type that most
 fit with the \simplify rule, we choose a different option. In the
 translation from \TSTP to \Agda, we take the list of derivations and
-we apply the rule by using a left folding ($\rm{foldl}$) with the
-$\fsimplify$ function over the list of $φ₁, φ₂, \cdots, φₙ$ that
-avoids us to define a new theorem type to support \List \Prop type in
-the conclusion side.
+we apply the rule by using a left folding (the \verb!foldl! function
+in functional programming) with the $\fsimplify$ function over the
+list of $φ₁, φ₂, \cdots, φₙ$ that avoids us to define a new theorem
+type to support \List \Prop type in the conclusion side.
 
 \end{myremark}
 
-
 \begin{myexamplenum}
-Let us review the following \TSTP excerpt where \simplify was used two times.
+Let us review the following \TSTP excerpt where \simplify was used twice.
 
 \begin{verbatim}
   fof(n₀, (¬ p ∨ q) ∧ ¬ r ∧ ¬ q ∧ (p ∨ (¬ s ∨ r)), ...

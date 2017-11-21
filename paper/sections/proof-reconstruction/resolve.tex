@@ -13,7 +13,7 @@ Below, we provide Lemma~\ref{lem:reorder-or},
 Lemma~\ref{lem:reorder-and}, Lemma~\ref{lem:reorder-and-or} to perform such reordering tasks, the omitted proofs can be found
 in~\cite{AgdaMetis}.
 
-First, we define the \fassoc$_{⬓}$ function in~\eqref{eq:fassoc} to
+First, we define the $\fassoc_{⬓}$ function in~\eqref{eq:fassoc} to
 convert a disjunction or a conjunction into its right-associative
 form. The square symbol (⬓) can be the conjunction symbol or the
 disjunction symbol. We use $\fassoc_{∧}$ to convert conjunctions and
@@ -275,14 +275,19 @@ by using the previous lemma.
 \end{mainlemma}
 
 Now, we are ready to reconstruct the \resolve rule using
-Lemma~\ref{lem:reorder-and-or}.
-The \resolve rule is a generalization of the resolution theorem.
-This rule has three arguments: a positive literal $ℓ$ to apply the
-resolution theorem and two derivations.
+Lemma~\ref{lem:reorder-and-or}. As we see in the following, the
+\resolve rule is the \Metis version of the resolution theorem. This
+rule takes into account, two propositions that contain a positive
+literal $ℓ$ and its negation $¬ ℓ$ respectively. Then, it produces the
+\emph{resolvent}, a disjunction of two propositions: the first
+proposition after removing the literal $ℓ$ and the second proposition
+after removing its negation $¬ ℓ$.
 
 \begin{mydefinition}
-A \emph{literal} is an atom (positive literal) or a negation
-of an atom (negative literal).
+
+A \emph{literal} is an propositional variable (positive literal) or a
+negation of an propositional variable (negative literal).
+
 \end{mydefinition}
 
 \begin{notation}
@@ -335,8 +340,8 @@ result.
     &\begin{array}{ll}
       \frsol~φ &=
         \begin{cases}
-          φ₂,      &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (¬φ₁ ∨ φ₂);\\
-          φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∨ (¬φ₁ ∨ φ₄);\\\
+          φ₂,      &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∧ (¬ φ₁ ∨ φ₂);\\
+          φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∧ (¬ φ₁ ∨ φ₄);\\\
           φ, &\text{ otherwise.}
         \end{cases}
       \end{array}

@@ -5,14 +5,16 @@
 \subsubsection{Clausify.}
 \label{sssec:clausification}
 
-The \clausify rule is another alternative way to transform a formula
-into its clausal normal form but without any simplification since
-remember this conversion is taking into account by the \canonicalize
-rule. It is important to notice that this kind of conversion between
-one formula to its clausal normal form is not unique, and \Metis has
-a customized approach to perform that transformation. Hence, we
-perform a reordering of the conjunctive normal form for the source
-formula.
+The \clausify rule is an alternative rule to transform a formula into
+its clausal normal form but without performing simplifications with
+tautologies or definitions. Recall, this kind of conversion was
+addressed by the \canonicalize rule. It is important to notice that
+this kind of conversions between one formula to its clausal normal
+form are not unique, and \Metis has customized approaches to perform
+that transformations. Therefore, we perform a reordering of the
+conjunctive normal form given by the $\fcnf$ function defined in
+Lemma~\ref{lem:cnf} with the $\freorder_{∧∨}$ function from
+Lemma~\ref{lem:reorder-and-or} to the input formula of the rule.
 
 \begin{myexamplenum}
 In the following \TSTP derivation by \Metis, we see how
