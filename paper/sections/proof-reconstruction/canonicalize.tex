@@ -356,17 +356,16 @@ the $\fnnf$ function follow by the $\fdist$ function.
 
 Since all the transformations in Lemma~\ref{lem:nnf} and
 Lemma~\ref{lem:dist} came from logical equivalences in propositional
-logic, we state the following lemmas used in the reconstruction of the \canonicalize rule in Theorem~\ref{thm:canonicalize} and the
-\simplify rule in Lemma~\ref{lem:reduce-literal} respectively.
+logic, we state the following lemmas used in the reconstruction of the \simplify rule in Lemma~\ref{lem:reduce-literal} and in
+Theorem~\ref{thm:canonicalize} for the \canonicalize rule.
+\begin{mainlemma}
+\label{lem:nnf-inv}
+  If $Γ ⊢ \fnnf~φ$ then $Γ ⊢ φ$.
+\end{mainlemma}
 
 \begin{mainlemma}
 \label{lem:cnf-inv}
   If $Γ ⊢ \fcnf~φ$ then $Γ ⊢ φ$.
-\end{mainlemma}
-
-\begin{mainlemma}
-\label{lem:nnf-inv}
-  If $Γ ⊢ \fnnf~φ$ then $Γ ⊢ φ$.
 \end{mainlemma}
 
 Now, we are ready to reconstruct the \fcanonicalize rule. This inference rule

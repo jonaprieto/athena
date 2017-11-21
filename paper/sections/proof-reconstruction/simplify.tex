@@ -257,14 +257,26 @@ $ℓ = φ₂$.
   \label{thm:simplify}
   Let $ψ : \Target$. Let $φᵢ : \Source$ such that $Γ ⊢ φᵢ$ for
   $i = 1, \cdots, n$ and $n \geq 2$.
-  Then $Γ ⊢ \fsimplify~γ_{n-2}~φ_{n}~ψ$ where
-  $γ_{i} ≡ \fsimplify~φ_{i}~φ_{i+1}~ψ$.
+  Then $Γ ⊢ \fsimplify~γ_{n-1}~φ_{n}~ψ$ where
+  $γ₁ = φ₁$, and $γᵢ ≡ \fsimplify~γ_{i-1}~φᵢ~ψ$.
 \end{mainth}
 
 \begin{proof} We prove this theorem by induction on $n$.\\
-∙~If $n = 2$, use Lemma~\ref{lem:binary-simplify}.\\
-∙~If $n > 2$, suppose the theorem is valid for $n$ and let use prove it
-for $n+1$.\\
+∙~Case $n = 2$. Use Lemma~\ref{lem:binary-simplify}.\\
+∙~Case $n > 2$. Suppose this theorem is valid for $n$, that is,
+for $i = 1, \cdots, n$, $Γ ⊢ \fsimplify~γ_{n-1}~φ_{n}~ψ$. Let us prove it for $n+1$.\\
+
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{$Γ ⊢ \fsimplify~γ_{n-1}~φ_{n}~ψ$}
+\AxiomC{$γ_{n} ≡ \fsimplify~γ_{n-1}~φ_{n}~ψ$}
+\RightLabel{subst}
+\BinaryInfC{$Γ ⊢ γ_{n}$}
+\AxiomC{$Γ ⊢ φ_{n+1}$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ ⊢ \fsimplify~γ_{n}~φ_{n+1}~ψ$}
+\end{bprooftree}
+\end{equation*}
 \end{proof}
 
 \begin{myremark}

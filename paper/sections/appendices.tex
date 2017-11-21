@@ -656,7 +656,7 @@ the following:
 The refutation tree is the following:
 
 \begin{center}
-\begin{scprooftree}{0.85}
+\begin{scprooftree}{0.9}
 \AxiomC{}
 \RightLabel{assume ($\neg s_2)$}
 \UnaryInfC{$Γ,\neg s_2 ⊢ \neg s_2$}
@@ -671,7 +671,7 @@ The refutation tree is the following:
 \UnaryInfC{$Γ, \neg s_2 ⊢ (\neg p ∨ q) ∧ (\neg q ∨ p)$}
 \RightLabel{Theorem~\ref{thm:conjunct}}
 \UnaryInfC{$Γ, \neg s_2 ⊢ \neg p ∨ q$}
-\LeftLabel{$(\mathcal{R}_{2})$\hspace{1cm}}
+\LeftLabel{$(\mathcal{R}_{2})$\hspace{3mm}}
 \RightLabel{Theorem~\ref{thm:simplify}}
 \BinaryInfC{$Γ, \neg s_2 ⊢ \bot$}
 \RightLabel{RAA.}
@@ -692,7 +692,7 @@ The refutation tree is the following:
 \UnaryInfC{$Γ ⊢ s_2$}
 \RightLabel{$\wedge$-intro}
 \BinaryInfC{$Γ ⊢ s_1 ∧ s_2$}
-\RightLabel{$⇒$-elim.}
+\RightLabel{$⇒$-elim}
 \BinaryInfC{$Γ ⊢ \text{goal}$}
 \end{scprooftree}
 \end{center}
