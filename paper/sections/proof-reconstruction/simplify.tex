@@ -140,7 +140,7 @@ use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
   ψ, &\text{ if }φᵢ ≡ ψ\text{ for some }i = 1, 2;\\
   \fsimplify_{∧}~(\fsimplify~φ₁~φ₂₁~ψ)~φ₂₂~ψ,
   &\text{ if }φ₂ ≡ φ₂₁ ∧ φ₂₂;\\
-   \fsimplify_{∨}~(\fsimplify~φ₁~φ₂₁~∨~\fsimplify~φ₁~φ₂₂~ψ)
+   \fsimplify_{∨}~(\fsimplify~φ₁~φ₂₁~ψ~∨~\fsimplify~φ₁~φ₂₂~ψ)
   &\text{ if }φ₂ ≡ φ₂₁ ∨ φ₂₂;\\
   \freduce~φ₁~φ₂, &\text{ if }φ₂\text{ is a literal};\\
   φ₁,  &\text{ otherwise.}
@@ -192,12 +192,62 @@ $Γ ⊢ φᵢ$ we derive $Γ ⊢ ψ$.\\
 
 ∙~Case $φ₂ ≡ φ₂₁ ∨ φ₂₂$.
 
-\begin{equation*}
-\begin{bprooftree}
-\AxiomC{...}
-\end{bprooftree}
-\end{equation*}
+\def\defaultHypSeparation{\hskip.2in}
 
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{$Γ ⊢ φ₁$}
+\RightLabel{weaken}
+\UnaryInfC{$Γ , φ₂₁ ⊢ φ₁$}
+\AxiomC{$Γ , φ₂₁ ⊢ φ₂₁$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ , φ₂₁ ⊢ \fsimplify~φ₁~φ₂₁~ψ$}
+\LeftLabel{$(\mathcal{D}_{1})$\hspace{5mm}}
+\RightLabel{∨-intro₁}
+\UnaryInfC{$Γ , φ₂₁ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₁~ψ$}
+\end{scprooftree}
+\end{center}
+\medskip
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{$Γ ⊢ φ₁$}
+\RightLabel{weaken}
+\UnaryInfC{$Γ , φ₂₂ ⊢ φ₁$}
+\AxiomC{$Γ , φ₂₂ ⊢ φ₂₂$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ , φ₂₂ ⊢ \fsimplify~φ₁~φ₂₂~ψ$}
+\LeftLabel{$(\mathcal{D}_{2})$\hspace{5mm}}
+\RightLabel{∨-intro₂}
+\UnaryInfC{$Γ , φ₂₂ ⊢ \fsimplify~φ₁~φ₂₂~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ$}
+\end{scprooftree}
+\end{center}
+\medskip
+\begin{center}
+\begin{scprooftree}{0.85}
+\AxiomC{$\mathcal{D}_{1}$}
+\UnaryInfC{$Γ , φ₂₁ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₁~ψ$}
+\AxiomC{$\mathcal{D}_{2}$}
+\UnaryInfC{$Γ , φ₂₂ ⊢ \fsimplify~φ₁~φ₂₂~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ$}
+\RightLabel{∨-elim}
+\BinaryInfC{$Γ , φ₂₁ ∨ φ₂₂ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ$}
+\RightLabel{⇒-intro}
+\LeftLabel{$(\mathcal{D}_{3})$\hspace{5mm}}
+\UnaryInfC{$Γ ⊢  φ₂₁ ∨ φ₂₂ ⇒ (\fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ)$}
+\end{scprooftree}
+\end{center}
+\medskip
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{$\mathcal{D}_{3}$}
+\UnaryInfC{$Γ ⊢  φ₂₁ ∨ φ₂₂ ⇒ (\fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ)$}
+\RightLabel{⇒-elim}
+\AxiomC{$Γ ⊢ φ₂₁ ∨ φ₂₂$}
+\BinaryInfC{$Γ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₂~φ₂₂~ψ$}
+\RightLabel{Lemma~\ref{lem:canon-or}}
+\UnaryInfC{$Γ ⊢ \fsimplify_{∨}~(\fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₂~φ₂₂~ψ)$}
+\end{scprooftree}
+\end{center}
+\medskip
 
 ∙~Case $φ₂$ is a literal. Use Lemma~\ref{lem:reduce-literal} with $φ = φ₁$ and
 $ℓ = φ₂$.
