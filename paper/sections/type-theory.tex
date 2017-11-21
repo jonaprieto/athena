@@ -11,13 +11,15 @@ that follows the same basis of constructive mathematics where the witness of a s
 In that direction, we could say the main actors in type theory are the statements and their proofs.
 
 By following the Curry-Howard correspondence (see, for
-example,~\cite{Wadler-2015}), we say \emph{types} are \emph{}propositions}.
-Inhabitant types are theorems and their proofs we called their terms.
+example,~\cite{Wadler-2015}), a formula corresponds to a \emph{type},
+and one proof of that formula is a \emph{term} of the correspondent type.
+Therefore, inhabitants types are such formulas with proofs, that is, theorems.
 
 Since type theory is a formal system, we have a syntax and a set of
 derivation rules. These rules enables us to derive a kind of
 conclusions called \emph{judgments}. A judgment is another way to say
-that a term has a certain type.
+that a term has a certain type. Each term has associated a derivation,
+we refer to this derivation as proof-terms.
 
 \begin{notation}
   Types are written using \abbre{small caps}.  We write the type
@@ -28,7 +30,7 @@ that a term has a certain type.
 We produce derivation trees inside the judgments using the derivation
 rules. Since type theory can be seen as typed $λ$-calculus with
 dependent function types, evaluation of $λ$-terms also called
-\emph{normalization} of the proof- terms, are reductions using the
+\emph{normalization} of the proof-terms, are reductions using the
 system inference rules.
 
 Therefore, the proof verification task becomes in type theory as
@@ -48,8 +50,8 @@ sections.
 \label{ssec:structural-recursion}
 
 To reconstruct \Metis inference rules in type theory, we observed
-that some rules or their inner functions are implemented by \emph{
-general recursive} functions.
+that some rules or their inner functions are implemented by
+\emph{general recursive} functions.
 
 Functions defined by a general recursion can not be directly
 translated in type theory since it is not a guarantee they terminate.
@@ -60,9 +62,9 @@ recursive functions to be \emph{structurally recursive}.
 A recursive function is structurally recursive if it calls itself
 with only structurally smaller arguments~\cite{Abel2002}.
 General recursive functions can be rewrote into structurally
-recursive functions by  using for instance, the \emph{bounded
-recursion} technique. For a yet another methods, we refer the reader
-to \cite{Coquand1992,Abel2002,Bove2005}.
+recursive functions by  using for instance, the
+\emph{bounded recursion} technique. For a yet another methods, we refer the
+reader to \cite{Coquand1992,Abel2002,Bove2005}.
 
 The bounded technique defines a new structural recursive function
 based on the general recursive function by adding an argument. The
