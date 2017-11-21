@@ -41,7 +41,7 @@ Let $ℓ$ be a literal and $φ : \Prop$. If $Γ ⊢ φ$ and $Γ ⊢ ℓ$ then
 $Γ~⊢~\freduce~φ~ℓ$.
 \end{mainlemma}
 
-\begin{proof} This proof is by induction on the structure of the formula $φ$.\\
+\begin{proof} This proof is by induction on the structure of $φ$.\\
 
 ∙~Case $φ ≡ φ₁ ∧ φ₂$.
 
@@ -100,15 +100,25 @@ $Γ~⊢~\freduce~φ~ℓ$.
 \end{scprooftree}
 \end{center}
 
+\def\defaultHypSeparation{\hskip.2in}
+
 ∙~Case $φ$ is a literal and $ℓ ≡ \fnnf~(¬ φ)$.
 
-% \begin{center}
-% \begin{scprooftree}{1}
-% \AxiomC{$Γ , φ₂ ⊢ φ₁$}
-% \end{scprooftree}
-% \end{center}
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{$Γ ⊢ ℓ$}
+\AxiomC{$ℓ ≡ \fnnf~(¬ φ)$}
+\RightLabel{subst}
+\BinaryInfC{$Γ ⊢ \fnnf~(¬ φ)$}
+\RightLabel{Lemma~\ref{lem:nnf-inv}}
+\RightLabel{$Γ ⊢ ¬ φ$}
+\AxiomC{$Γ ⊢ φ$}
+\RightLabel{¬-elim}
+\BinaryInfC{$Γ ⊢ ⊥$}
+\end{scprooftree}
+\end{center}
 
-∙ Otherwise, from the same hypothesis we derive $Γ ⊢ φ$.
+∙ Otherwise use the same hypothesis $Γ ⊢ φ$.
 \end{proof}
 
 The \fsimplify function is defined in~\eqref{eq:simplify}. If some
@@ -130,7 +140,7 @@ use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
   ψ, &\text{ if }φᵢ ≡ ψ\text{ for some }i = 1, 2;\\
   \fsimplify_{∧}~(\fsimplify~φ₁~φ₂₁~ψ)~φ₂₂~ψ,
   &\text{ if }φ₂ ≡ φ₂₁ ∧ φ₂₂;\\
-   \fsimplify_{∧}~\fsimplify_{∨}~(\fsimplify~φ₁~φ₂₁~∨~\fsimplify~φ₁~φ₂₂~ψ)
+   \fsimplify_{∨}~(\fsimplify~φ₁~φ₂₁~∨~\fsimplify~φ₁~φ₂₂~ψ)
   &\text{ if }φ₂ ≡ φ₂₁ ∨ φ₂₂;\\
   \freduce~φ₁~φ₂, &\text{ if }φ₂\text{ is a literal};\\
   φ₁,  &\text{ otherwise.}
@@ -145,6 +155,52 @@ use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
 \end{mainlemma}
 
 \begin{proof}
+This proof is by induction on the structure of $φ$. \\
+
+∙~Case $φᵢ ≡ ψ$ for some $i = 1, 2$. If $φᵢ ≡ ψ$ then by subst lemma since
+$Γ ⊢ φᵢ$ we derive $Γ ⊢ ψ$.\\
+
+∙~Case $φᵢ ≡ ⊥$ for some $i = 1, 2$.
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{$Γ ⊢ φᵢ$}
+\AxiomC{$φᵢ ≡ ⊥$}
+\RightLabel{subst}
+\BinaryInfC{$Γ ⊢ ⊥$}
+\RightLabel{⊥-elim}
+\UnaryInfC{$Γ ⊢ ψ$}
+\end{bprooftree}
+\end{equation*}
+
+∙~Case $φ₂ ≡ φ₂₁ ∧ φ₂₂$.
+
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{$Γ ⊢ φ₁$}
+\AxiomC{$Γ ⊢ φ₂₁ ∧ φ₂₂$}
+\RightLabel{∧-proj₁}
+\UnaryInfC{$Γ ⊢ φ₂₁$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ ⊢ \fsimplify~φ₁~φ₂₁~ψ$}
+\AxiomC{$Γ ⊢ φ₂₁ ∧ φ₂₂$}
+\RightLabel{∧-proj₂}
+\UnaryInfC{$Γ ⊢ φ₂₂$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ ⊢ \fsimplify~(\fsimplify~φ₁~φ₂₁~ψ)~φ₂₂~ψ$}
+\end{bprooftree}
+\end{equation*}
+
+∙~Case $φ₂ ≡ φ₂₁ ∨ φ₂₂$.
+
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{...}
+\end{bprooftree}
+\end{equation*}
+
+
+∙~Case $φ₂$ is a literal. Use Lemma~\ref{lem:reduce-literal} with $φ = φ₁$ and
+$ℓ = φ₂$.
 \end{proof}
 
 \begin{mainth}
