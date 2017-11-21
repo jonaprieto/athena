@@ -421,7 +421,7 @@ docProofGoal agdaFile =
      pretty "proof" <+> colon
        <+> pretty "Γ ⊢ " <> (pretty (fileConjecture agdaFile)) <> line
   <> pretty "proof" <+> equals <> line
-  <> indent 2 (pretty "⇒-elim" <> line)
+  <> indent 2 (pretty "⊃-elim" <> line)
   <> indent 2 (pretty Strip <> line <> nestedproofs) <> line
   <> hypenlineQED
     where

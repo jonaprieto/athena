@@ -24,7 +24,7 @@ import Athena.Utils.PrettyPrint ( Pretty(pretty) )
 
 -- | Binary formula connectives.
 data BinOp = (:<=>:)  -- ^ ⇔ /Equivalence/
-           | (:=>:)   -- ^ ⇒ /Implication/
+           | (:=>:)   -- ^ ⊃ /Implication/
            | (:<=:)   -- ^ ⇐ /Reverse Implication/
            | (:&:)    -- ^ ∧ /AND/
            | (:|:)    -- ^ ∨ /OR/
@@ -35,7 +35,7 @@ data BinOp = (:<=>:)  -- ^ ⇔ /Equivalence/
 
 instance Pretty BinOp where
   pretty (:<=>:) = pretty "⇔"
-  pretty (:=>:)  = pretty "⇒"
+  pretty (:=>:)  = pretty "⊃"
   pretty (:<=:)  = pretty "⇐"
   pretty (:&:)   = pretty "∧"
   pretty (:|:)   = pretty "∨"

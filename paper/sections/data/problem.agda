@@ -41,10 +41,10 @@ goal = (p ∨ (q ∧ r))
 -- Subgoals.
 
 subgoal₀ : PropFormula
-subgoal₀ = ((¬ p) ⇒ q)
+subgoal₀ = ((¬ p) ⊃ q)
 
 subgoal₁ : PropFormula
-subgoal₁ = (((¬ p) ∧ q) ⇒ r)
+subgoal₁ = (((¬ p) ∧ q) ⊃ r)
 
 ------------------------------------------------------------------------------
 -- Proof.
@@ -76,6 +76,6 @@ proof₁ =
 
 proof : Γ ⊢ goal
 proof =
-  ⇒-elim
+  ⊃-elim
     thm-strip
     (∧-intro proof₀ proof₁)

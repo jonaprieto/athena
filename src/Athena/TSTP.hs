@@ -37,7 +37,7 @@ import Data.TSTP.F
 --     F { name = "a2", role = Axiom, formula = b, source = NoSource},
 --     F { name = "a3"
 --       , role = Axiom
---       , formula = ( a ∧ b ⇒ z )
+--       , formula = ( a ∧ b ⊃ z )
 --       , source = NoSource
 --       },
 --     ...

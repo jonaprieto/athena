@@ -81,7 +81,7 @@ subgoal₀ : PropFormula
 subgoal₀ = p
 
 subgoal₁ : PropFormula
-subgoal₁ = (p ⇒ q)
+subgoal₁ = (p ⊃ q)
 
 -- Proof.
 
@@ -112,7 +112,7 @@ proof₁ =
 
 proof : Γ ⊢ goal
 proof =
-  ⇒-elim
+  ⊃-elim
     thm-strip
     (∧-intro proof₀ proof₁)
 ```
