@@ -17,7 +17,7 @@ derivations that \simplify can be modeled by a function with three
 arguments: two source formulas and the target formula.
 
 Since the main purpose of the \simplify rule is simplification of
-formulas, we have defined the $\freduce_{ℓ}$ function to help removing
+formulas, we have defined the $\freduce$ function to help removing
 the negation of a given literal $ℓ$ from a input formula.
 
 \begin{equation}
@@ -25,9 +25,9 @@ the negation of a given literal $ℓ$ from a input formula.
   \begin{aligned}
   &\hspace{.495mm}\freduce : \Prop → \Lit → \Prop\hspace*{3.5cm}\\
   &\begin{array}{lll}
-\freduce_{ℓ} &(φ₁~∧~φ₂)~&ℓ~= \fsimplify_{∧}~(\freduce_{ℓ}~φ₁~ℓ~∧~\freduce_{ℓ}~φ₂~ℓ)\\
-\freduce_{ℓ} &(φ₁~∨~φ₂)~&ℓ~= \fsimplify_{∨}~(\freduce_{ℓ}~φ₁~ℓ~∨~\freduce_{ℓ}~φ₂~ℓ)\\[2mm]
-\freduce_{ℓ} &φ~&ℓ~=\begin{cases}
+\freduce &(φ₁~∧~φ₂)~&ℓ~= \fsimplify_{∧}~(\freduce~φ₁~ℓ~∧~\freduce~φ₂~ℓ)\\
+\freduce &(φ₁~∨~φ₂)~&ℓ~= \fsimplify_{∨}~(\freduce~φ₁~ℓ~∨~\freduce~φ₂~ℓ)\\[2mm]
+\freduce &φ~&ℓ~=\begin{cases}
   ⊥,  &\text{ if }φ\text{ is a literal and }ℓ ≡ \fnnf(¬ φ);\\
   φ,  &\text{ otherwise.}
   \end{cases}
@@ -38,10 +38,77 @@ the negation of a given literal $ℓ$ from a input formula.
 \begin{mainlemma}
 \label{lem:reduce-literal}
 Let $ℓ$ be a literal and $φ : \Prop$. If $Γ ⊢ φ$ and $Γ ⊢ ℓ$ then
-$Γ~⊢~\freduce_{ℓ}~φ~ℓ$.
+$Γ~⊢~\freduce~φ~ℓ$.
 \end{mainlemma}
 
-\begin{proof}
+\begin{proof} This proof is by induction on the structure of the formula $φ$.\\
+
+∙~Case $φ ≡ φ₁ ∧ φ₂$.
+
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{$Γ ⊢ φ₁ ∧ φ₂$}
+\RightLabel{∧-proj₁}
+\UnaryInfC{$Γ ⊢ φ₁$}
+\AxiomC{$Γ ⊢ ℓ$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ ⊢ \freduce~φ₁~ℓ$}
+\AxiomC{$Γ ⊢ φ₁ ∧ φ₂$}
+\RightLabel{∧-proj₂}
+\UnaryInfC{$Γ ⊢ φ₂$}
+\AxiomC{$Γ ⊢ ℓ$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ ⊢ \freduce~φ₂~ℓ$}
+\RightLabel{∧-intro}
+\BinaryInfC{$Γ ⊢ \freduce~φ₁~ℓ~∧~\freduce~φ₂~ℓ$}
+\RightLabel{Lemma~\ref{lem:canon-and}}
+\UnaryInfC{$Γ ⊢ \fsimplify_{∧}~(\freduce~φ₁~ℓ~∧~\freduce~φ₂~ℓ)$}
+\end{scprooftree}
+\end{center}
+
+∙~Case $φ ≡ φ₁ ∨ φ₂$.
+
+\begin{center}
+\begin{scprooftree}{0.85}
+\AxiomC{$Γ , φ₁ ⊢ φ₁$}
+\AxiomC{$Γ ⊢ ℓ$}
+\RightLabel{weaken}
+\UnaryInfC{$Γ , φ₁ ⊢ ℓ$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ , φ₁ ⊢ \freduce~φ₁~ℓ$}
+\RightLabel{∨-intro₁}
+\UnaryInfC{$Γ , φ₁ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
+%
+\AxiomC{$Γ , φ₂ ⊢ φ₂$}
+\AxiomC{$Γ ⊢ ℓ$}
+\RightLabel{weaken}
+\UnaryInfC{$Γ , φ₂ ⊢ ℓ$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ , φ₂ ⊢ \freduce~φ₂~ℓ$}
+\RightLabel{∨-intro₂}
+\UnaryInfC{$Γ , φ₂ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
+\RightLabel{∨-elim}
+\BinaryInfC{$Γ , φ₁ ∨ φ₂ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
+\RightLabel{⇒-intro}
+\UnaryInfC{$Γ ⊢  φ₁ ∨ φ₂ ⇒ (\freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ)$}
+\RightLabel{⇒-elim}
+\def\defaultHypSeparation{\hskip.01in}
+\AxiomC{$Γ ⊢ φ₁ ∨ φ₂$}
+\BinaryInfC{$Γ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
+\RightLabel{Lemma~\ref{lem:canon-or}}
+\UnaryInfC{$Γ ⊢ \fsimplify_{∨}~(\freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ)$}
+\end{scprooftree}
+\end{center}
+
+∙~Case $φ$ is a literal and $ℓ ≡ \fnnf~(¬ φ)$.
+
+% \begin{center}
+% \begin{scprooftree}{1}
+% \AxiomC{$Γ , φ₂ ⊢ φ₁$}
+% \end{scprooftree}
+% \end{center}
+
+∙ Otherwise, from the same hypothesis we derive $Γ ⊢ φ$.
 \end{proof}
 
 The \fsimplify function is defined in~\eqref{eq:simplify}. If some
@@ -50,7 +117,7 @@ If some formula is $⊥$, we derive the target formula by using the
 $⊥-elim$ inference rule. Otherwise, the simplification functions take
 place if the second input formula is a conjunction or a disjunction.
 Otherwise, if the second input formula in the sources is a literal, we
-use the $\freduce_{ℓ}$ function and Lemma~\ref{lem:reduce-literal}.
+use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
 
 \begin{equation}
 \label{eq:simplify}
@@ -65,7 +132,7 @@ use the $\freduce_{ℓ}$ function and Lemma~\ref{lem:reduce-literal}.
   &\text{ if }φ₂ ≡ φ₂₁ ∧ φ₂₂;\\
    \fsimplify_{∧}~\fsimplify_{∨}~(\fsimplify~φ₁~φ₂₁~∨~\fsimplify~φ₁~φ₂₂~ψ)
   &\text{ if }φ₂ ≡ φ₂₁ ∨ φ₂₂;\\
-  \freduce_{ℓ}~φ₁~φ₂, &\text{ if }φ₂\text{ is a literal};\\
+  \freduce~φ₁~φ₂, &\text{ if }φ₂\text{ is a literal};\\
   φ₁,  &\text{ otherwise.}
   \end{cases}
   \end{aligned}
@@ -88,7 +155,7 @@ use the $\freduce_{ℓ}$ function and Lemma~\ref{lem:reduce-literal}.
   $γ_{i} ≡ \fsimplify~φ_{i}~φ_{i+1}~ψ$.
 \end{mainth}
 
-\begin{proof} We prove this theorem by induction on $n$.
+\begin{proof} We prove this theorem by induction on $n$.\\
 ∙~If $n = 2$, use Lemma~\ref{lem:binary-simplify}.\\
 ∙~If $n > 2$, suppose the theorem is valid for $n$ and let use prove it
 for $n+1$.\\
