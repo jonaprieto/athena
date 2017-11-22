@@ -412,6 +412,53 @@ Using our customized \TSTP syntax, the above \Metis solution looks like:
 
 \subsection{Generating the \Agda proof-term}
 
+\begin{table}[!ht]
+\caption{\Metis inference rules implemented in \name{agda-metis}.}
+  \begin{center}
+  {\renewcommand{\arraystretch}{1.6}%
+    \begin{tabular}
+      {|@{\hspace{2mm}}l@{\hspace{2mm}}c@{\hspace{2mm}}l@{\hspace{2mm}}|}
+
+    \hline
+    \textbf{\Metis rule} &\textbf{Theorem number}
+     &\textbf{Implementation}
+     \\ \hline
+
+      \texttt{strip}
+      &\ref{thm:strip}
+      &\texttt{strip-thm}
+      \\
+
+      \texttt{conjunct}
+      &\ref{thm:conjunct}
+      &\texttt{conjunct-thm}
+      \\
+
+      \texttt{resolve}
+      &\ref{thm:resolve}
+      &\texttt{resolve-thm}
+      \\
+
+      \texttt{canonicalize}
+      &\ref{thm:canonicalize}
+      &\texttt{canonicalize-thm}
+      \\
+
+      \texttt{clausify}
+      &\ref{thm:clausify}
+      &\texttt{clausify-thm}
+      \\
+
+      \texttt{simplify}
+      &\ref{thm:simplify}
+      &\texttt{simplify-thm}
+      \\[1ex]
+    \hline
+    \end{tabular}}
+  \end{center}
+\end{table}
+
+
 To obtain the \Agda proof-term of the \Metis derivation run
 the following command:
 
@@ -419,8 +466,8 @@ the following command:
   $ athena problem.tstp
 \end{verbatim}
 
-The \Agda file will be created in the same directory. This
-file is named by replacing the extension \verb!tstp! with \verb!agda!.
+The correspondent \Agda file will be created in the same directory that contains \verb!problem.tstp! using the same name but the extension of \Agda, that is, \verb!.agda!.
+
 
 \begin{verbatim}
   $ cat problem.agda
@@ -470,7 +517,7 @@ file is named by replacing the extension \verb!tstp! with \verb!agda!.
   subgoal₁ = (((p ∨ q) ∧ p) ⇒ q)
 
   ------------------------------------------------------------------------------
-  -- Proof.
+  -- Proof of subgoal #0.
   ------------------------------------------------------------------------------
 
   proof₀ : Γ ⊢ subgoal₀
@@ -492,7 +539,10 @@ file is named by replacing the extension \verb!tstp! with \verb!agda!.
         (conjunct-thm (¬ p)
           (canonicalize-thm ((¬ p) ∧ (p ∨ q))
             (assume {Γ = Γ} (¬ subgoal₀))))))
-  ---------------------------------------------------------------------------- ∎
+
+  ------------------------------------------------------------------------------
+  -- Proof of subgoal #1.
+  ------------------------------------------------------------------------------
 
   proof₁ : Γ ⊢ subgoal₁
   proof₁ =
@@ -504,15 +554,18 @@ file is named by replacing the extension \verb!tstp! with \verb!agda!.
           (canonicalize-thm (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
             (weaken (¬ subgoal₁)
               (assume {Γ = ∅} premise))))))
-  ---------------------------------------------------------------------------- ∎
+
+  ------------------------------------------------------------------------------
+  -- Proof of the goal.
+  ------------------------------------------------------------------------------
 
   proof : Γ ⊢ goal
   proof =
     ⇒-elim
       strip-thm
       (∧-intro proof₀ proof₁)
-  ---------------------------------------------------------------------------- ∎
-\end{verbatim}
+  ------------------------------------------------------------------------------
+  \end{verbatim}
 
 Now, we are ready to verify the \Metis derivation by type-checking with
 \Agda the reconstructed proof showed above. Make sure the \Agda version is
@@ -558,22 +611,8 @@ the following:
 The refutation tree is the following:
 
 \begin{center}
-\begin{scprooftree}{0.85}
+\begin{scprooftree}{1}
 \AxiomC{$\mathcal{D}_1$}
-\UnaryInfC{$Γ, \neg s_1 ⊢ \neg q ∨ p$}
-
-\AxiomC{$\mathcal{D}_2$}
-\UnaryInfC{$Γ, \neg s_1 ⊢ p ∨ q$}
-%
-\AxiomC{$\mathcal{D}_3$}
-\UnaryInfC{$Γ, \neg s_1 ⊢ \neg p$}
-%
-%\LeftLabel{$(\mathcal{D}_4)$\hspace{1.5cm}}
-\RightLabel{Theorem~\ref{thm:simplify}}
-\BinaryInfC{$Γ, \neg s_1 ⊢ q$}
-\RightLabel{Theorem~\ref{thm:resolve}~with $ℓ = q$}
-\BinaryInfC{$Γ, \neg s_1 ⊢ p$}
-\RightLabel{}
 %\AxiomC{$\mathcal{D}_3$}
 \AxiomC{}
 \RightLabel{assume $\neg s_1$}
@@ -585,7 +624,7 @@ The refutation tree is the following:
 \RightLabel{Theorem~\ref{thm:conjunct}}
 \UnaryInfC{$Γ, \neg s_1 ⊢ \neg p$}
 \RightLabel{Theorem~\ref{thm:resolve}~with $ℓ = p$}
-\LeftLabel{$(\mathcal{R}_{1})$\hspace{3cm}}
+\LeftLabel{$(\mathcal{R}_{1})$\hspace{2mm}}
 \BinaryInfC{$Γ, \neg s_1 ⊢ \bot$}
 \RightLabel{RAA.}
 \UnaryInfC{$Γ ⊢ s_1$}
@@ -595,12 +634,32 @@ The refutation tree is the following:
 
 \begin{equation*}
 \begin{bprooftree}
+\AxiomC{$\mathcal{D}_2$}
+\UnaryInfC{$Γ, \neg s_1 ⊢ \neg q ∨ p$}
+
+\AxiomC{$\mathcal{D}_3$}
+\UnaryInfC{$Γ, \neg s_1 ⊢ p ∨ q$}
+%
+\AxiomC{$\mathcal{D}_4$}
+\UnaryInfC{$Γ, \neg s_1 ⊢ \neg p$}
+%
+%\LeftLabel{$(\mathcal{D}_4)$\hspace{1.5cm}}
+\RightLabel{Theorem~\ref{thm:simplify}}
+\BinaryInfC{$Γ, \neg s_1 ⊢ q$}
+\LeftLabel{$(\mathcal{D}_1)$\hspace{2mm}}
+\RightLabel{Theorem~\ref{thm:resolve}~with $ℓ = q$}
+\BinaryInfC{$Γ, \neg s_1 ⊢ p$}
+\end{bprooftree}
+\end{equation*}
+
+\begin{equation*}
+\begin{bprooftree}
   \AxiomC{}
   \RightLabel{axiom premise}
   \UnaryInfC{$Γ ⊢ (p ⇒ q) ∧ (q ⇒ p)$}
   \RightLabel{weaken}
   \UnaryInfC{$Γ, \neg s_1 ⊢ (p ⇒ q) ∧ (q ⇒ p)$}
-  \LeftLabel{$(\mathcal{D}_1)$\hspace{2cm}}
+  \LeftLabel{$(\mathcal{D}_2)$\hspace{2mm}}
   \RightLabel{Theorem~\ref{thm:canonicalize}}
   \UnaryInfC{$Γ, \neg s_1 ⊢ (\neg p ∨ q) ∧ (\neg q ∨ p)$}
   \RightLabel{Theorem~\ref{thm:conjunct}}
@@ -613,7 +672,7 @@ The refutation tree is the following:
 \AxiomC{}
 \RightLabel{assume}
 \UnaryInfC{$Γ, \neg s_1 ⊢ \neg s_1$}
-\LeftLabel{$(\mathcal{D}_2)$\hspace{3cm}}
+\LeftLabel{$(\mathcal{D}_3)$\hspace{2mm}}
 \RightLabel{Theorem~\ref{thm:canonicalize}}
 \UnaryInfC{$Γ, \neg s_1 ⊢ \neg p ∧ (p ∨ q)$}
 \RightLabel{Theorem~\ref{thm:conjunct}}
@@ -627,13 +686,15 @@ The refutation tree is the following:
 \RightLabel{assume $\neg s_1$}
 \UnaryInfC{$Γ, \neg s_1 ⊢ \neg s_1$}
 % \UnaryInfC{$Γ, \neg s_1 ⊢ (p ∨ q) ⇒ p$}
-\LeftLabel{$(\mathcal{D}_3)$\hspace{3cm}}
+\LeftLabel{$(\mathcal{D}_4)$\hspace{2mm}}
 \RightLabel{Theorem~\ref{thm:canonicalize}}
 \UnaryInfC{$Γ, \neg s_1 ⊢ \neg p ∧ (p ∨ q)$}
 \RightLabel{Theorem~\ref{thm:conjunct}}
 \UnaryInfC{$Γ, \neg s_1 ⊢ \neg p$}
 \end{bprooftree}
 \end{equation*}
+
+
 
 \subsection{Refutation tree for the subgoal $s₂$}
 
@@ -656,7 +717,7 @@ the following:
 The refutation tree is the following:
 
 \begin{center}
-\begin{scprooftree}{0.9}
+\begin{scprooftree}{0.95}
 \AxiomC{}
 \RightLabel{assume ($\neg s_2)$}
 \UnaryInfC{$Γ,\neg s_2 ⊢ \neg s_2$}
@@ -671,7 +732,7 @@ The refutation tree is the following:
 \UnaryInfC{$Γ, \neg s_2 ⊢ (\neg p ∨ q) ∧ (\neg q ∨ p)$}
 \RightLabel{Theorem~\ref{thm:conjunct}}
 \UnaryInfC{$Γ, \neg s_2 ⊢ \neg p ∨ q$}
-\LeftLabel{$(\mathcal{R}_{2})$\hspace{3mm}}
+\LeftLabel{$(\mathcal{R}_{2})$\hspace{1mm}}
 \RightLabel{Theorem~\ref{thm:simplify}}
 \BinaryInfC{$Γ, \neg s_2 ⊢ \bot$}
 \RightLabel{RAA.}

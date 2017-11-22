@@ -69,7 +69,7 @@ $Γ~⊢~\freduce~φ~ℓ$.
 ∙~Case $φ ≡ φ₁ ∨ φ₂$.
 
 \begin{center}
-\begin{scprooftree}{0.85}
+\begin{scprooftree}{1}
 \AxiomC{$Γ , φ₁ ⊢ φ₁$}
 \AxiomC{$Γ ⊢ ℓ$}
 \RightLabel{weaken}
@@ -87,12 +87,20 @@ $Γ~⊢~\freduce~φ~ℓ$.
 \BinaryInfC{$Γ , φ₂ ⊢ \freduce~φ₂~ℓ$}
 \RightLabel{∨-intro₂}
 \UnaryInfC{$Γ , φ₂ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
+\LeftLabel{$(\mathcal{D})$\hspace{3mm}}
 \RightLabel{∨-elim}
 \BinaryInfC{$Γ , φ₁ ∨ φ₂ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
 \RightLabel{⇒-intro}
 \UnaryInfC{$Γ ⊢  φ₁ ∨ φ₂ ⇒ (\freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ)$}
+\end{scprooftree}
+\end{center}
+\medskip
+
+\def\defaultHypSeparation{\hskip.4in}
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{$\mathcal{D}$}
 \RightLabel{⇒-elim}
-\def\defaultHypSeparation{\hskip.01in}
 \AxiomC{$Γ ⊢ φ₁ ∨ φ₂$}
 \BinaryInfC{$Γ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
 \RightLabel{Lemma~\ref{lem:canon-or}}
@@ -111,7 +119,7 @@ $Γ~⊢~\freduce~φ~ℓ$.
 \RightLabel{subst}
 \BinaryInfC{$Γ ⊢ \fnnf~(¬ φ)$}
 \RightLabel{Lemma~\ref{lem:nnf-inv}}
-\RightLabel{$Γ ⊢ ¬ φ$}
+\UnaryInfC{$Γ ⊢ ¬ φ$}
 \AxiomC{$Γ ⊢ φ$}
 \RightLabel{¬-elim}
 \BinaryInfC{$Γ ⊢ ⊥$}
@@ -223,11 +231,11 @@ $Γ ⊢ φᵢ$ we derive $Γ ⊢ ψ$.\\
 \end{center}
 \medskip
 \begin{center}
-\begin{scprooftree}{0.85}
+\begin{scprooftree}{1}
 \AxiomC{$\mathcal{D}_{1}$}
-\UnaryInfC{$Γ , φ₂₁ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₁~ψ$}
+% \UnaryInfC{$Γ , φ₂₁ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₁~ψ$}
 \AxiomC{$\mathcal{D}_{2}$}
-\UnaryInfC{$Γ , φ₂₂ ⊢ \fsimplify~φ₁~φ₂₂~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ$}
+% \UnaryInfC{$Γ , φ₂₂ ⊢ \fsimplify~φ₁~φ₂₂~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ$}
 \RightLabel{∨-elim}
 \BinaryInfC{$Γ , φ₂₁ ∨ φ₂₂ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ$}
 \RightLabel{⇒-intro}
@@ -235,6 +243,7 @@ $Γ ⊢ φᵢ$ we derive $Γ ⊢ ψ$.\\
 \UnaryInfC{$Γ ⊢  φ₂₁ ∨ φ₂₂ ⇒ (\fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ)$}
 \end{scprooftree}
 \end{center}
+
 \medskip
 \begin{center}
 \begin{scprooftree}{1}
