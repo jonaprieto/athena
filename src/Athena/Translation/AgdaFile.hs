@@ -369,13 +369,10 @@ subgoalName n = pretty "subgoal" <> (pretty . stdName . show) n
 
 docProof ∷ AgdaFile → Doc
 docProof agdaFile =
-     hypenline
-  <> comment (pretty "Proof" <> dot)
-  <> hypenline
-  <@> vsep
-       [ docProofSubgoals agdaFile
-       , docProofGoal agdaFile
-       ]
+  vsep
+    [ docProofSubgoals agdaFile
+    , docProofGoal agdaFile
+    ]
 
 docProofSubgoals ∷ AgdaFile → Doc
 docProofSubgoals agdaFile =
@@ -389,9 +386,13 @@ docProofSubgoals agdaFile =
 
 docProofSubgoal ∷ Int → ProofTree → AgdaFile → Doc
 docProofSubgoal n tree agdaFile =
-     proof
+     hypenline
+  <> comment (pretty "Proof of subgoal"<> (pretty . stdName . show) n <> dot)
+  <> hypenline
   <> line
-  <> hypenlineQED
+  <> proof
+  <> line
+  -- <> hypenlineQED
   where
     pName ∷  Doc
     pName = pretty "proof" <> (pretty . stdName . show) n
@@ -418,12 +419,16 @@ docProofSubgoal n tree agdaFile =
 
 docProofGoal ∷ AgdaFile → Doc
 docProofGoal agdaFile =
-     pretty "proof" <+> colon
+     hypenline
+  <> comment (pretty "Proof of the goal.")
+  <> hypenline
+  <> line
+  <> pretty "proof" <+> colon
        <+> pretty "Γ ⊢ " <> (pretty (fileConjecture agdaFile)) <> line
   <> pretty "proof" <+> equals <> line
   <> indent 2 (pretty "⊃-elim" <> line)
   <> indent 2 (pretty Strip <> line <> nestedproofs) <> line
-  <> hypenlineQED
+  -- <> hypenlineQED
     where
       nestedproofs ∷ Doc
       nestedproofs =
