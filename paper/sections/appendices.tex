@@ -377,17 +377,17 @@ run the following command:
 If we are using the \name{Online-ATPs} tool run the following command:
 
 \begin{verbatim}
-  online-atps --atp=metis problem.tptp  > problem.tstp
+  $ online-atps --atp=metis problem.tptp  > problem.tstp
 \end{verbatim}
 
-Using our customized \TSTP syntax, the above \Metis solution looks like:
+Using our customized \TSTP syntax, the above \Metis derivation looks like:
 
 \begin{verbatim}
   fof(premise, axiom, (p ⇒ q) ∧ (q ⇒ p)).
-  fof(goal, conjecture, (p ∨ q) ⇒ (p ∧ q))).
-  fof(s₁, (p ∨ q) ⇒ p, inf(strip, goal)).
-  fof(s₂, ((p ∨ q) ∧ p) ⇒ q, inf(strip, goal)).
-  fof(neg₁, ¬ ((p ∨ q) ⇒ p), inf(negate, s₁)).
+  fof(goal, conjecture, (p ∨ q) ⇒ (p ∧ q)).
+  fof(s₀, (p ∨ q) ⇒ p, inf(strip, goal)).
+  fof(s₁, ((p ∨ q) ∧ p) ⇒ q, inf(strip, goal)).
+  fof(neg₁, ¬ ((p ∨ q) ⇒ p), inf(negate, s₀)).
   fof(n₀₀, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
   fof(n₀₁, ¬ q ∨ p, inf(conjunct, n₀₀)).
   fof(n₀₂, ¬ p ∧ (p ∨ q), inf(canonicalize, neg₁)).
@@ -399,8 +399,8 @@ Using our customized \TSTP syntax, the above \Metis solution looks like:
   cnf(r₀₂, p, inf(resolve, q, [r₀₁, r₀₀])).
   cnf(r₀₃, ¬ p, inf(canonicalize, n₀₄)).
   cnf(r₀₄, ⊥, inf(resolve, p, [r₀₂, r₀₃])).
-  fof(neg₂, ¬ (((p ∨ q) ∧ p) ⇒ q), inf(negate, s₂)).
-  fof(n₁₀, ¬ q ∧ p ∧ (p ∨ q), inf(canonicalize, neg₂)).
+  fof(neg₁, ¬ (((p ∨ q) ∧ p) ⇒ q), inf(negate, s₁)).
+  fof(n₁₀, ¬ q ∧ p ∧ (p ∨ q), inf(canonicalize, neg₁)).
   fof(n₁₁, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
   fof(n₁₂, ¬ p ∨ q, inf(conjunct, n₁₁)).
   fof(n₁₃, ⊥, inf(simplify,[n₁₀, n₁₂])).
@@ -472,7 +472,7 @@ The correspondent \Agda file will be created in the same directory that contains
 \begin{verbatim}
   $ cat problem.agda
   ------------------------------------------------------------------------------
-  -- Athena version 0.1-b3d15b8.
+  -- Athena version 0.1-f54e580.
   -- TSTP file: problem.tstp.
   ------------------------------------------------------------------------------
 
@@ -495,29 +495,29 @@ The correspondent \Agda file will be created in the same directory that contains
 
   -- Axiom.
 
-  premise : PropFormula
-  premise = ((p ⇒ q) ∧ (q ⇒ p))
+  a₁ : PropFormula
+  a₁ = ((p ⊃ q) ∧ (q ⊃ p))
 
   -- Premise.
 
   Γ : Ctxt
-  Γ = [ premise ]
+  Γ = [ a₁ ]
 
   -- Conjecture.
 
   goal : PropFormula
-  goal = ((p ∨ q) ⇒ (p ∧ q))
+  goal = ((p ∨ q) ⊃ (p ∧ q))
 
   -- Subgoals.
 
   subgoal₀ : PropFormula
-  subgoal₀ = ((p ∨ q) ⇒ p)
+  subgoal₀ = ((p ∨ q) ⊃ p)
 
   subgoal₁ : PropFormula
-  subgoal₁ = (((p ∨ q) ∧ p) ⇒ q)
+  subgoal₁ = (((p ∨ q) ∧ p) ⊃ q)
 
   ------------------------------------------------------------------------------
-  -- Proof of subgoal #0.
+  -- Proof of subgoal₀.
   ------------------------------------------------------------------------------
 
   proof₀ : Γ ⊢ subgoal₀
@@ -535,13 +535,13 @@ The correspondent \Agda file will be created in the same directory that contains
           (conjunct-thm ((¬ q) ∨ p)
             (canonicalize-thm (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
               (weaken (¬ subgoal₀)
-                (assume {Γ = ∅} premise)))))
+                (assume {Γ = ∅} a₁)))))
         (conjunct-thm (¬ p)
           (canonicalize-thm ((¬ p) ∧ (p ∨ q))
             (assume {Γ = Γ} (¬ subgoal₀))))))
 
   ------------------------------------------------------------------------------
-  -- Proof of subgoal #1.
+  -- Proof of subgoal₁.
   ------------------------------------------------------------------------------
 
   proof₁ : Γ ⊢ subgoal₁
@@ -553,7 +553,7 @@ The correspondent \Agda file will be created in the same directory that contains
         (conjunct-thm ((¬ p) ∨ q)
           (canonicalize-thm (((¬ p) ∨ q) ∧ ((¬ q) ∨ p))
             (weaken (¬ subgoal₁)
-              (assume {Γ = ∅} premise))))))
+              (assume {Γ = ∅} a₁))))))
 
   ------------------------------------------------------------------------------
   -- Proof of the goal.
@@ -561,10 +561,9 @@ The correspondent \Agda file will be created in the same directory that contains
 
   proof : Γ ⊢ goal
   proof =
-    ⇒-elim
+    ⊃-elim
       strip-thm
       (∧-intro proof₀ proof₁)
-  ------------------------------------------------------------------------------
   \end{verbatim}
 
 Now, we are ready to verify the \Metis derivation by type-checking with
@@ -580,23 +579,23 @@ Now, we are ready to verify the \Metis derivation by type-checking with
 As we can see in the \Agda code showed above, the term \verb!proof!, the proof-term
 of the \Metis derivation is referring to the proof-terms \verb!proof₀! and \verb!proof₁!.
 Recall, \Metis stripes the goal into subgoals to prove it. Therefore, these
-terms are the proof-terms for the refutations of the subgoals s₁ and s₂.
+terms are the proof-terms for the refutations of the subgoals s₀ and s₁.
 We show in the following sections the respective natural deduction trees for these
 refutations.
 
-\subsection{Refutation tree for the subgoal $s₁$}
+\subsection{Refutation tree for the subgoal $s₀$}
 For this subgoal, its respective \TSTP derivation is
 the following:
 
 \begin{verbatim}
   fof(premise, axiom, (p ⇒ q) ∧ (q ⇒ p)).
   fof(goal, conjecture, (p ∨ q) ⇒ (p ∧ q))).
-  fof(s₁, (p ∨ q) ⇒ p, inf(strip, goal)).
+  fof(s₀, (p ∨ q) ⇒ p, inf(strip, goal)).
   ...
-  fof(neg₁, ¬ ((p ∨ q) ⇒ p), inf(negate, s₁)).
+  fof(neg₀, ¬ ((p ∨ q) ⇒ p), inf(negate, s₀)).
   fof(n₀₀, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
   fof(n₀₁, ¬ q ∨ p, inf(conjunct, n₀₀)).
-  fof(n₀₂, ¬ p ∧ (p ∨ q), inf(canonicalize, neg₁)).
+  fof(n₀₂, ¬ p ∧ (p ∨ q), inf(canonicalize, neg₀)).
   fof(n₀₃, p ∨ q, inf(conjunct, n₀₂)).
   fof(n₀₄, ¬ p, inf(conjunct, n₀₂)).
   fof(n₀₅, q, inf(simplify,[n₀₃, n₀₄])).
@@ -615,19 +614,19 @@ The refutation tree is the following:
 \AxiomC{$\mathcal{D}_1$}
 %\AxiomC{$\mathcal{D}_3$}
 \AxiomC{}
-\RightLabel{assume $\neg s_1$}
-\UnaryInfC{$Γ, \neg s_1 ⊢ \neg s_1$}
-% \UnaryInfC{$Γ, \neg s_1 ⊢ (p ∨ q) ⇒ p$}
+\RightLabel{assume $\neg s_0$}
+\UnaryInfC{$Γ, \neg s_0 ⊢ \neg s_0$}
+% \UnaryInfC{$Γ, \neg s_0 ⊢ (p ∨ q) ⇒ p$}
 %\LeftLabel{$(\mathcal{D}_3)$\hspace{1.5cm}}
 \RightLabel{Theorem~\ref{thm:canonicalize}}
-\UnaryInfC{$Γ, \neg s_1 ⊢ \neg p ∧ (p ∨ q)$}
+\UnaryInfC{$Γ, \neg s_0 ⊢ \neg p ∧ (p ∨ q)$}
 \RightLabel{Theorem~\ref{thm:conjunct}}
-\UnaryInfC{$Γ, \neg s_1 ⊢ \neg p$}
+\UnaryInfC{$Γ, \neg s_0 ⊢ \neg p$}
 \RightLabel{Theorem~\ref{thm:resolve}~with $ℓ = p$}
 \LeftLabel{$(\mathcal{R}_{1})$\hspace{2mm}}
-\BinaryInfC{$Γ, \neg s_1 ⊢ \bot$}
+\BinaryInfC{$Γ, \neg s_0 ⊢ \bot$}
 \RightLabel{RAA.}
-\UnaryInfC{$Γ ⊢ s_1$}
+\UnaryInfC{$Γ ⊢ s_0$}
 \end{scprooftree}
 \end{center}
 \medskip
@@ -635,20 +634,20 @@ The refutation tree is the following:
 \begin{equation*}
 \begin{bprooftree}
 \AxiomC{$\mathcal{D}_2$}
-\UnaryInfC{$Γ, \neg s_1 ⊢ \neg q ∨ p$}
+\UnaryInfC{$Γ, \neg s_0 ⊢ \neg q ∨ p$}
 
 \AxiomC{$\mathcal{D}_3$}
-\UnaryInfC{$Γ, \neg s_1 ⊢ p ∨ q$}
+\UnaryInfC{$Γ, \neg s_0 ⊢ p ∨ q$}
 %
 \AxiomC{$\mathcal{D}_4$}
-\UnaryInfC{$Γ, \neg s_1 ⊢ \neg p$}
+\UnaryInfC{$Γ, \neg s_0 ⊢ \neg p$}
 %
 %\LeftLabel{$(\mathcal{D}_4)$\hspace{1.5cm}}
 \RightLabel{Theorem~\ref{thm:simplify}}
-\BinaryInfC{$Γ, \neg s_1 ⊢ q$}
+\BinaryInfC{$Γ, \neg s_0 ⊢ q$}
 \LeftLabel{$(\mathcal{D}_1)$\hspace{2mm}}
 \RightLabel{Theorem~\ref{thm:resolve}~with $ℓ = q$}
-\BinaryInfC{$Γ, \neg s_1 ⊢ p$}
+\BinaryInfC{$Γ, \neg s_0 ⊢ p$}
 \end{bprooftree}
 \end{equation*}
 
@@ -658,12 +657,12 @@ The refutation tree is the following:
   \RightLabel{axiom premise}
   \UnaryInfC{$Γ ⊢ (p ⇒ q) ∧ (q ⇒ p)$}
   \RightLabel{weaken}
-  \UnaryInfC{$Γ, \neg s_1 ⊢ (p ⇒ q) ∧ (q ⇒ p)$}
+  \UnaryInfC{$Γ, \neg s_0 ⊢ (p ⇒ q) ∧ (q ⇒ p)$}
   \LeftLabel{$(\mathcal{D}_2)$\hspace{2mm}}
   \RightLabel{Theorem~\ref{thm:canonicalize}}
-  \UnaryInfC{$Γ, \neg s_1 ⊢ (\neg p ∨ q) ∧ (\neg q ∨ p)$}
+  \UnaryInfC{$Γ, \neg s_0 ⊢ (\neg p ∨ q) ∧ (\neg q ∨ p)$}
   \RightLabel{Theorem~\ref{thm:conjunct}}
-  \UnaryInfC{$Γ, \neg s_1 ⊢ \neg q ∨ p$}
+  \UnaryInfC{$Γ, \neg s_0 ⊢ \neg q ∨ p$}
 \end{bprooftree}
 \end{equation*}
 \medskip
@@ -671,32 +670,32 @@ The refutation tree is the following:
 \begin{bprooftree}
 \AxiomC{}
 \RightLabel{assume}
-\UnaryInfC{$Γ, \neg s_1 ⊢ \neg s_1$}
+\UnaryInfC{$Γ, \neg s_0 ⊢ \neg s_0$}
 \LeftLabel{$(\mathcal{D}_3)$\hspace{2mm}}
 \RightLabel{Theorem~\ref{thm:canonicalize}}
-\UnaryInfC{$Γ, \neg s_1 ⊢ \neg p ∧ (p ∨ q)$}
+\UnaryInfC{$Γ, \neg s_0 ⊢ \neg p ∧ (p ∨ q)$}
 \RightLabel{Theorem~\ref{thm:conjunct}}
-\UnaryInfC{$Γ, \neg s_1 ⊢ p ∨ q$}
+\UnaryInfC{$Γ, \neg s_0 ⊢ p ∨ q$}
 \end{bprooftree}
 \end{equation*}
 \medskip
 \begin{equation*}
 \begin{bprooftree}
 \AxiomC{}
-\RightLabel{assume $\neg s_1$}
-\UnaryInfC{$Γ, \neg s_1 ⊢ \neg s_1$}
-% \UnaryInfC{$Γ, \neg s_1 ⊢ (p ∨ q) ⇒ p$}
+\RightLabel{assume $\neg s_0$}
+\UnaryInfC{$Γ, \neg s_0 ⊢ \neg s_0$}
+% \UnaryInfC{$Γ, \neg s_0 ⊢ (p ∨ q) ⇒ p$}
 \LeftLabel{$(\mathcal{D}_4)$\hspace{2mm}}
 \RightLabel{Theorem~\ref{thm:canonicalize}}
-\UnaryInfC{$Γ, \neg s_1 ⊢ \neg p ∧ (p ∨ q)$}
+\UnaryInfC{$Γ, \neg s_0 ⊢ \neg p ∧ (p ∨ q)$}
 \RightLabel{Theorem~\ref{thm:conjunct}}
-\UnaryInfC{$Γ, \neg s_1 ⊢ \neg p$}
+\UnaryInfC{$Γ, \neg s_0 ⊢ \neg p$}
 \end{bprooftree}
 \end{equation*}
 
 
 
-\subsection{Refutation tree for the subgoal $s₂$}
+\subsection{Refutation tree for the subgoal $s₁$}
 
 For this subgoal, its respective \TSTP derivation is
 the following:
@@ -704,10 +703,10 @@ the following:
 \begin{verbatim}
   fof(premise, axiom, (p ⇒ q) ∧ (q ⇒ p)).
   ...
-  fof(s₂, ((p ∨ q) ∧ p) ⇒ q, inf(strip, goal)).
+  fof(s₁, ((p ∨ q) ∧ p) ⇒ q, inf(strip, goal)).
   ...
-  fof(neg₂, ¬ (((p ∨ q) ∧ p) ⇒ q), inf(negate, s₂)).
-  fof(n₁₀, ¬ q ∧ p ∧ (p ∨ q), inf(canonicalize, neg₂)).
+  fof(neg₁, ¬ (((p ∨ q) ∧ p) ⇒ q), inf(negate, s₁)).
+  fof(n₁₀, ¬ q ∧ p ∧ (p ∨ q), inf(canonicalize, neg₁)).
   fof(n₁₁, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
   fof(n₁₂, ¬ p ∨ q, inf(conjunct, n₁₁)).
   fof(n₁₃, ⊥, inf(simplify,[n₁₀, n₁₂])).
@@ -719,24 +718,24 @@ The refutation tree is the following:
 \begin{center}
 \begin{scprooftree}{0.95}
 \AxiomC{}
-\RightLabel{assume ($\neg s_2)$}
-\UnaryInfC{$Γ,\neg s_2 ⊢ \neg s_2$}
+\RightLabel{assume ($\neg s₁)$}
+\UnaryInfC{$Γ,\neg s₁ ⊢ \neg s₁$}
 \RightLabel{Theorem~\ref{thm:canonicalize}}
-\UnaryInfC{$Γ, \neg s_2⊢ \neg q ∧ p ∧ (p ∨ q)$}
+\UnaryInfC{$Γ, \neg s₁⊢ \neg q ∧ p ∧ (p ∨ q)$}
 \AxiomC{}
 \RightLabel{axiom premise}
 \UnaryInfC{$Γ ⊢ (p ⇒ q) ∧ (q ⇒ p)$}
 \RightLabel{weaken}
-\UnaryInfC{$Γ, \neg s_2 ⊢ (p⇒ q) ∧ (q ⇒ p)$}
+\UnaryInfC{$Γ, \neg s₁ ⊢ (p ⇒ q) ∧ (q ⇒ p)$}
 \RightLabel{Theorem~\ref{thm:canonicalize}}
-\UnaryInfC{$Γ, \neg s_2 ⊢ (\neg p ∨ q) ∧ (\neg q ∨ p)$}
+\UnaryInfC{$Γ, \neg s₁ ⊢ (\neg p ∨ q) ∧ (\neg q ∨ p)$}
 \RightLabel{Theorem~\ref{thm:conjunct}}
-\UnaryInfC{$Γ, \neg s_2 ⊢ \neg p ∨ q$}
+\UnaryInfC{$Γ, \neg s₁ ⊢ \neg p ∨ q$}
 \LeftLabel{$(\mathcal{R}_{2})$\hspace{1mm}}
 \RightLabel{Theorem~\ref{thm:simplify}}
-\BinaryInfC{$Γ, \neg s_2 ⊢ \bot$}
+\BinaryInfC{$Γ, \neg s₁ ⊢ \bot$}
 \RightLabel{RAA.}
-\UnaryInfC{$Γ ⊢ s_2$}
+\UnaryInfC{$Γ ⊢ s₁$}
 \end{scprooftree}
 \end{center}
 
@@ -746,13 +745,13 @@ The refutation tree is the following:
 \begin{scprooftree}{1}
 \AxiomC{}
 \RightLabel{Theorem~\ref{thm:strip}}
-\UnaryInfC{$Γ ⊢ (s_1 ∧ s_2) ⇒ \text{goal}$}
+\UnaryInfC{$Γ ⊢ (s_0 ∧ s₁) ⇒ \text{goal}$}
 \AxiomC{$\mathcal{R}_{1}$}
-\UnaryInfC{$Γ ⊢ s_1$}
+\UnaryInfC{$Γ ⊢ s_0$}
 \AxiomC{$\mathcal{R}_2$}
-\UnaryInfC{$Γ ⊢ s_2$}
+\UnaryInfC{$Γ ⊢ s₁$}
 \RightLabel{$\wedge$-intro}
-\BinaryInfC{$Γ ⊢ s_1 ∧ s_2$}
+\BinaryInfC{$Γ ⊢ s_0 ∧ s₁$}
 \RightLabel{$⇒$-elim}
 \BinaryInfC{$Γ ⊢ \text{goal}$}
 \end{scprooftree}
