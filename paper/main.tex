@@ -20,7 +20,7 @@
 \spnewtheorem*{notation}{Notation}{\it}{\rmfamily}
 \spnewtheorem*{myremark}{Remark}{\bfseries}{\rmfamily}
 % \spnewtheorem*{myexample}{Example}{\bfseries}{\rmfamily}
-
+% \usepackage{parskip}
 \usepackage{geometry}   %% helps with the text overflow
 \usepackage{subfiles}
 
@@ -41,6 +41,11 @@
 \def\labelSpacing{3pt}
 \def\defaultHypSeparation{\hskip.2in}
 \def\EnableBpAbbreviations{true}
+
+\newenvironment{scprooftree}[1]%
+  {\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+  {\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center}}
+
 
 \usepackage[title]{appendix}
 
@@ -192,13 +197,14 @@
 \newunicodechar{ₙ}{\ensuremath{{}_{n}}}
 \newunicodechar{ℓ}{\ensuremath{\ell}}
 \newunicodechar{→}{\ensuremath{\rightarrow}}
-\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
+\newunicodechar{⇒}{\ensuremath{\supset}}
 \newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
 \newunicodechar{∅}{\ensuremath{\emptyset}}
 \newunicodechar{∈}{\ensuremath{\in}}
 \newunicodechar{∘}{\ensuremath{\circ}}
 \newunicodechar{∙}{\ensuremath{\bullet}}
 \newunicodechar{∧}{\ensuremath{\wedge}}
+\newunicodechar{∎}{\ensuremath{\qed}}
 \newunicodechar{∨}{\ensuremath{\vee}}
 \newunicodechar{∼}{\ensuremath{\sim}}
 \newunicodechar{≠}{\ensuremath{\neq}}
@@ -285,7 +291,8 @@
 
 \newcommand{\NN}{\ensuremath{\mathbb{N}}}
 
-\newcommand{\fun}[1]{ {\fontseries{sb}\selectfont \textsf{#1}} \xspace}
+\newcommand{\fun}[1]
+  {{\fontseries{sb}\selectfont\textsf{#1}}\xspace}
 
 \newcommand{\zero}{\fun{zero}}
 \newcommand{\suc}{\fun{succ}}
@@ -314,6 +321,7 @@
 \newcommand{\frm}{\fun{rm}}
 \newcommand{\frsol}{\fun{rsol}}
 \newcommand{\fsbuild}{\fun{sbuild}}
+\newcommand{\freduce}{\fun{reduce}_{ℓ}}
 \newcommand{\fsimplify}{\fun{simplify}}
 \newcommand{\fstripp}{\fun{strip}\prime}
 \newcommand{\fstrip}{\fun{strip}}
@@ -428,14 +436,14 @@ maxbibnames=6,%
 % Include a footer with date and hour of the compilation
 % -------------------------------------------------------------------
 
-\usepackage{fancyhdr}
-\usepackage[us,12hr]{datetime} % `us' makes \today behave as usual in TeX/LaTeX
-\fancypagestyle{plain}{
-\fancyhf{}
-\rfoot{Compiled on {\ddmmyyyydate\today} at \currenttime}
-\lfoot{Page \thepage}
-\renewcommand{\headrulewidth}{0pt}}
-\pagestyle{plain}
+% \usepackage{fancyhdr}
+% \usepackage[us,12hr]{datetime} % `us' makes \today behave as usual in TeX/LaTeX
+% \fancypagestyle{plain}{
+% \fancyhf{}
+% \rfoot{Compiled on {\ddmmyyyydate\today} at \currenttime}
+% \lfoot{Page \thepage}
+% \renewcommand{\headrulewidth}{0pt}}
+% \pagestyle{plain}
 
 % -------------------------------------------------------------------
 

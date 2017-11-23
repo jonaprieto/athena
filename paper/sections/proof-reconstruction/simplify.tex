@@ -1,88 +1,321 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\subsubsection{Simplification.}
+\subsubsection{Simplify.}
 \label{sssec:simplify}
 
-The \simplify rule is an inference that performs simplification of definitions
-and tautologies. This rule transverses a list of previous derivations by
-applying different theorems (e.g., \emph{modus pones}, \emph{modus tollens}, or
-\emph{disjunctive syllogism}) to get a contradiction in the first place, or a
-new formula to use later in the derivation.
+The \simplify rule is an inference that performs simplification of
+definitions and tautologies. This rule transverses a list of previous
+derivations by applying Lemma~\ref{lem:canon-or},
+Lemma~\ref{lem:canon-and}, among others.
+This rule works to find a contradiction in the first place, or a new
+formula (often smaller than its input formulas) to use later in the
+derivation.
 
-We observe based on the analysis of different
-cases in the \TSTP derivations that \simplify can be modeled by a
-function with three arguments: two source formulas and the target formula.
-As we see in~\eqref{eq:simplify-1}, if \fsimplify gets ⊥
-from its input derivations, it derives ⊥. When the target formula, the expected conclusion is ⊤, we derive immediately ⊤.
-Otherwise, the \fsimplify rule performs  in~\eqref{eq:simplify-2} an analysis by following the cases to determine which case should apply.
+We observe based on the analysis of different cases in the \TSTP
+derivations that \simplify can be modeled by a function with three
+arguments: two source formulas and the target formula.
 
- \begin{equation}
-  \label{eq:simplify-1}
+Since the main purpose of the \simplify rule is simplification of
+formulas, we have defined the $\freduce$ function to help removing
+the negation of a given literal $ℓ$ from a input formula.
+
+\begin{equation}
+\label{def:remove-literal}
+  \begin{aligned}
+  &\hspace{.495mm}\freduce : \Prop → \Lit → \Prop\hspace*{3.5cm}\\
+  &\begin{array}{lll}
+\freduce &(φ₁~∧~φ₂)~&ℓ~= \fsimplify_{∧}~(\freduce~φ₁~ℓ~∧~\freduce~φ₂~ℓ)\\
+\freduce &(φ₁~∨~φ₂)~&ℓ~= \fsimplify_{∨}~(\freduce~φ₁~ℓ~∨~\freduce~φ₂~ℓ)\\[2mm]
+\freduce &φ~&ℓ~=\begin{cases}
+  ⊥,  &\text{ if }φ\text{ is a literal and }ℓ ≡ \fnnf(¬ φ);\\
+  φ,  &\text{ otherwise.}
+  \end{cases}
+   \end{array}
+  \end{aligned}
+\end{equation}
+
+\begin{mainlemma}
+\label{lem:reduce-literal}
+Let $ℓ$ be a literal and $φ : \Prop$. If $Γ ⊢ φ$ and $Γ ⊢ ℓ$ then
+$Γ~⊢~\freduce~φ~ℓ$.
+\end{mainlemma}
+
+\begin{proof} This proof is by induction on the structure of $φ$.\\
+
+∙~Case $φ ≡ φ₁ ∧ φ₂$.
+
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{$Γ ⊢ φ₁ ∧ φ₂$}
+\RightLabel{∧-proj₁}
+\UnaryInfC{$Γ ⊢ φ₁$}
+\AxiomC{$Γ ⊢ ℓ$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ ⊢ \freduce~φ₁~ℓ$}
+\AxiomC{$Γ ⊢ φ₁ ∧ φ₂$}
+\RightLabel{∧-proj₂}
+\UnaryInfC{$Γ ⊢ φ₂$}
+\AxiomC{$Γ ⊢ ℓ$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ ⊢ \freduce~φ₂~ℓ$}
+\RightLabel{∧-intro}
+\BinaryInfC{$Γ ⊢ \freduce~φ₁~ℓ~∧~\freduce~φ₂~ℓ$}
+\RightLabel{Lemma~\ref{lem:canon-and}}
+\UnaryInfC{$Γ ⊢ \fsimplify_{∧}~(\freduce~φ₁~ℓ~∧~\freduce~φ₂~ℓ)$}
+\end{scprooftree}
+\end{center}
+
+∙~Case $φ ≡ φ₁ ∨ φ₂$.
+
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{$Γ , φ₁ ⊢ φ₁$}
+\AxiomC{$Γ ⊢ ℓ$}
+\RightLabel{weaken}
+\UnaryInfC{$Γ , φ₁ ⊢ ℓ$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ , φ₁ ⊢ \freduce~φ₁~ℓ$}
+\RightLabel{∨-intro₁}
+\UnaryInfC{$Γ , φ₁ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
+%
+\AxiomC{$Γ , φ₂ ⊢ φ₂$}
+\AxiomC{$Γ ⊢ ℓ$}
+\RightLabel{weaken}
+\UnaryInfC{$Γ , φ₂ ⊢ ℓ$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ , φ₂ ⊢ \freduce~φ₂~ℓ$}
+\RightLabel{∨-intro₂}
+\UnaryInfC{$Γ , φ₂ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
+\LeftLabel{$(\mathcal{D})$\hspace{3mm}}
+\RightLabel{∨-elim}
+\BinaryInfC{$Γ , φ₁ ∨ φ₂ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
+\RightLabel{⇒-intro}
+\UnaryInfC{$Γ ⊢  φ₁ ∨ φ₂ ⇒ (\freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ)$}
+\end{scprooftree}
+\end{center}
+\medskip
+
+\def\defaultHypSeparation{\hskip.4in}
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{$\mathcal{D}$}
+\RightLabel{⇒-elim}
+\AxiomC{$Γ ⊢ φ₁ ∨ φ₂$}
+\BinaryInfC{$Γ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
+\RightLabel{Lemma~\ref{lem:canon-or}}
+\UnaryInfC{$Γ ⊢ \fsimplify_{∨}~(\freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ)$}
+\end{scprooftree}
+\end{center}
+
+\def\defaultHypSeparation{\hskip.2in}
+
+∙~Case $φ$ is a literal and $ℓ ≡ \fnnf~(¬ φ)$.
+
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{$Γ ⊢ ℓ$}
+\AxiomC{$ℓ ≡ \fnnf~(¬ φ)$}
+\RightLabel{subst}
+\BinaryInfC{$Γ ⊢ \fnnf~(¬ φ)$}
+\RightLabel{Lemma~\ref{lem:nnf-inv}}
+\UnaryInfC{$Γ ⊢ ¬ φ$}
+\AxiomC{$Γ ⊢ φ$}
+\RightLabel{¬-elim}
+\BinaryInfC{$Γ ⊢ ⊥$}
+\end{scprooftree}
+\end{center}
+
+∙ Otherwise use the same hypothesis $Γ ⊢ φ$.
+\end{proof}
+
+The \fsimplify function is defined in~\eqref{eq:simplify}. If some
+input formula is equal to the target formula, we derive that formula.
+If some formula is $⊥$, we derive the target formula by using the
+$⊥-elim$ inference rule. Otherwise, the simplification functions take
+place if the second input formula is a conjunction or a disjunction.
+Otherwise, if the second input formula in the sources is a literal, we
+use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
+
+\begin{equation}
+\label{eq:simplify}
   \begin{aligned}
   &\hspace{.495mm}\fsimplify : \Source → \Source → \Target → \Prop\hspace*{3.5cm}\\
-  &\begin{array}{ll}
-   \fsimplify~⊥~φ~ψ  &=ψ\\
-   \fsimplify~φ~⊥~ψ  &=ψ\\
-%   \fsimplify~φ₁~φ₂~⊤ &=⊤.
-  \end{array}
+  & \fsimplify~φ₁~φ₂~ψ =\\
+  &\hspace{3mm}
+  \begin{cases}
+  ψ, &\text{ if }φᵢ ≡ ⊥\text{ for some }i = 1, 2;\\
+  ψ, &\text{ if }φᵢ ≡ ψ\text{ for some }i = 1, 2;\\
+  \fsimplify_{∧}~(\fsimplify~φ₁~φ₂₁~ψ)~φ₂₂~ψ,
+  &\text{ if }φ₂ ≡ φ₂₁ ∧ φ₂₂;\\
+   \fsimplify_{∨}~(\fsimplify~φ₁~φ₂₁~ψ~∨~\fsimplify~φ₁~φ₂₂~ψ)
+  &\text{ if }φ₂ ≡ φ₂₁ ∨ φ₂₂;\\
+  \freduce~φ₁~φ₂, &\text{ if }φ₂\text{ is a literal};\\
+  φ₁,  &\text{ otherwise.}
+  \end{cases}
   \end{aligned}
-  \end{equation}
-For $i,\, j = 1, 2$, $i\neq j$ and $γ : \Prop$,
-\begin{equation}
-  \label{eq:simplify-2}
-  \begin{aligned}
-  \begin{array}{ll}
-   \fsimplify~φ₁~φ₂~ψ &=
-      \begin{cases}
-        ψ,           &\text{ if }φᵢ ≡ ψ;\\
-        γ,           &\text{ if }φᵢ ≡ φⱼ ⇒ γ;\\
-        \fnnf~(¬ γ), &\text{ if }φᵢ ≡ γ ⇒ \fnnf~(¬ φⱼ);\\
-        γ,           &\text{ if }φᵢ ≡ (\fnnf~(¬ φⱼ)) ∨ γ;\\
-        ψ,           &\text{ if } \fnnf~(¬ φⱼ) ≡ \fconjunct~φᵢ~(\fnnf~(¬ φⱼ));\\
-      % φ          &\text{ if }\fconjunct(nnf(¬ φᵢ), φⱼ) ≡  φⱼ;\\
-        ψ,           &\text{ if } (¬ φⱼ) ≡ \fcanonicalize~φᵢ~(¬φⱼ);\\
-        φ₁,          &\text{ otherwise.}
-      \end{cases}
-  \end{array}
-  \end{aligned}
-  \end{equation}
+\end{equation}
+
+\begin{mainlemma}
+  \label{lem:binary-simplify}
+  Let $ψ : \Target$. If $Γ ⊢ φ₁$ and $Γ ⊢ φ₂$ then
+  $Γ ⊢ \fsimplify~φ₁~φ₂$.
+\end{mainlemma}
+
+\begin{proof}
+This proof is by induction on the structure of $φ$. \\
+
+∙~Case $φᵢ ≡ ψ$ for some $i = 1, 2$. If $φᵢ ≡ ψ$ then by subst lemma since
+$Γ ⊢ φᵢ$ we derive $Γ ⊢ ψ$.\\
+
+∙~Case $φᵢ ≡ ⊥$ for some $i = 1, 2$.
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{$Γ ⊢ φᵢ$}
+\AxiomC{$φᵢ ≡ ⊥$}
+\RightLabel{subst}
+\BinaryInfC{$Γ ⊢ ⊥$}
+\RightLabel{⊥-elim}
+\UnaryInfC{$Γ ⊢ ψ$}
+\end{bprooftree}
+\end{equation*}
+
+∙~Case $φ₂ ≡ φ₂₁ ∧ φ₂₂$.
+
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{$Γ ⊢ φ₁$}
+\AxiomC{$Γ ⊢ φ₂₁ ∧ φ₂₂$}
+\RightLabel{∧-proj₁}
+\UnaryInfC{$Γ ⊢ φ₂₁$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ ⊢ \fsimplify~φ₁~φ₂₁~ψ$}
+\AxiomC{$Γ ⊢ φ₂₁ ∧ φ₂₂$}
+\RightLabel{∧-proj₂}
+\UnaryInfC{$Γ ⊢ φ₂₂$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ ⊢ \fsimplify~(\fsimplify~φ₁~φ₂₁~ψ)~φ₂₂~ψ$}
+\end{bprooftree}
+\end{equation*}
+
+∙~Case $φ₂ ≡ φ₂₁ ∨ φ₂₂$.
+
+\def\defaultHypSeparation{\hskip.2in}
+
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{$Γ ⊢ φ₁$}
+\RightLabel{weaken}
+\UnaryInfC{$Γ , φ₂₁ ⊢ φ₁$}
+\AxiomC{$Γ , φ₂₁ ⊢ φ₂₁$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ , φ₂₁ ⊢ \fsimplify~φ₁~φ₂₁~ψ$}
+\LeftLabel{$(\mathcal{D}_{1})$\hspace{5mm}}
+\RightLabel{∨-intro₁}
+\UnaryInfC{$Γ , φ₂₁ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₁~ψ$}
+\end{scprooftree}
+\end{center}
+\medskip
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{$Γ ⊢ φ₁$}
+\RightLabel{weaken}
+\UnaryInfC{$Γ , φ₂₂ ⊢ φ₁$}
+\AxiomC{$Γ , φ₂₂ ⊢ φ₂₂$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ , φ₂₂ ⊢ \fsimplify~φ₁~φ₂₂~ψ$}
+\LeftLabel{$(\mathcal{D}_{2})$\hspace{5mm}}
+\RightLabel{∨-intro₂}
+\UnaryInfC{$Γ , φ₂₂ ⊢ \fsimplify~φ₁~φ₂₂~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ$}
+\end{scprooftree}
+\end{center}
+\medskip
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{$\mathcal{D}_{1}$}
+% \UnaryInfC{$Γ , φ₂₁ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₁~ψ$}
+\AxiomC{$\mathcal{D}_{2}$}
+% \UnaryInfC{$Γ , φ₂₂ ⊢ \fsimplify~φ₁~φ₂₂~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ$}
+\RightLabel{∨-elim}
+\BinaryInfC{$Γ , φ₂₁ ∨ φ₂₂ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ$}
+\RightLabel{⇒-intro}
+\LeftLabel{$(\mathcal{D}_{3})$\hspace{5mm}}
+\UnaryInfC{$Γ ⊢  φ₂₁ ∨ φ₂₂ ⇒ (\fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ)$}
+\end{scprooftree}
+\end{center}
+
+\medskip
+\begin{center}
+\begin{scprooftree}{1}
+\AxiomC{$\mathcal{D}_{3}$}
+\UnaryInfC{$Γ ⊢  φ₂₁ ∨ φ₂₂ ⇒ (\fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ)$}
+\RightLabel{⇒-elim}
+\AxiomC{$Γ ⊢ φ₂₁ ∨ φ₂₂$}
+\BinaryInfC{$Γ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₂~φ₂₂~ψ$}
+\RightLabel{Lemma~\ref{lem:canon-or}}
+\UnaryInfC{$Γ ⊢ \fsimplify_{∨}~(\fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₂~φ₂₂~ψ)$}
+\end{scprooftree}
+\end{center}
+\medskip
+
+∙~Case $φ₂$ is a literal. Use Lemma~\ref{lem:reduce-literal} with $φ = φ₁$ and
+$ℓ = φ₂$.
+\end{proof}
 
 \begin{mainth}
   \label{thm:simplify}
-  Let $ψ : \Target$ and $Γ ⊢ φᵢ$, for $i=1,\, 2, \dots, n$. If $n > 2$
-  then $Γ ⊢ \fsimplify~γ_{n-2}~φ_{n}~ψ$, where
-  $γ_{i} = \fsimplify~φ_{i}~φ_{i+1}~ψ$, else $Γ ⊢ \fsimplify~φ₁~φ₂~ψ$.
+  Let $ψ : \Target$. Let $φᵢ : \Source$ such that $Γ ⊢ φᵢ$ for
+  $i = 1, \cdots, n$ and $n \geq 2$.
+  Then $Γ ⊢ \fsimplify~γ_{n-1}~φ_{n}~ψ$ where
+  $γ₁ = φ₁$, and $γᵢ ≡ \fsimplify~γ_{i-1}~φᵢ~ψ$.
 \end{mainth}
 
+\begin{proof} We prove this theorem by induction on $n$.\\
+∙~Case $n = 2$. Use Lemma~\ref{lem:binary-simplify}.\\
+∙~Case $n > 2$. Suppose this theorem is valid for $n$, that is,
+for $i = 1, \cdots, n$, $Γ ⊢ \fsimplify~γ_{n-1}~φ_{n}~ψ$. Let us prove it for $n+1$.\\
+
+\begin{equation*}
+\begin{bprooftree}
+\AxiomC{$Γ ⊢ \fsimplify~γ_{n-1}~φ_{n}~ψ$}
+\AxiomC{$γ_{n} ≡ \fsimplify~γ_{n-1}~φ_{n}~ψ$}
+\RightLabel{subst}
+\BinaryInfC{$Γ ⊢ γ_{n}$}
+\AxiomC{$Γ ⊢ φ_{n+1}$}
+\RightLabel{by~ind.~hyp.}
+\BinaryInfC{$Γ ⊢ \fsimplify~γ_{n}~φ_{n+1}~ψ$}
+\end{bprooftree}
+\end{equation*}
+\end{proof}
+
 \begin{myremark}
-Besides the fact that $\List\ \Prop \to \Prop$ is the type that most
-fit with the \simplify rule in \TSTP derivations, we choose a different
-option. In the translation from \TSTP to \Agda, we take the list of
-derivations to use a classical left folding ($\rm{foldl}$) with the
-$\fsimplify$ function over the list of $φ₁, φ₂, \cdots, φₙ$
-that avoids us to define a new theorem type to
-support \List \Prop type in the conclusion side.
+
+Besides the fact that $\List~\Prop~\to~\Prop$ is the type that most
+fit with the \simplify rule, we choose a different option. In the
+translation from \TSTP to \Agda, we take the list of derivations and
+we apply the rule by using a left folding (the \verb!foldl! function
+in functional programming) with the $\fsimplify$ function over the
+list of $φ₁, φ₂, \cdots, φₙ$ that avoids us to define a new theorem
+type to support \List \Prop type in the conclusion side.
+
 \end{myremark}
 
-
 \begin{myexamplenum}
-Let us review the following \TSTP excerpt where \simplify was used two times.
+Let us review the following \TSTP excerpt where \simplify was used twice.
 
 \begin{verbatim}
-  fof(n0, (¬ p ∨ q) ∧ ¬ r ∧ ¬ q ∧ (p ∨ (¬ s ∨ r)), ...
-  fof(n1, p ∨ (¬ s ∨ r), inf(conjunct, [n0])).
-  fof(n2, ¬ p ∨ q, inf(conjunct, [n0])).
-  fof(n3, ¬ q, inf(conjunct, [n0])).
-  fof(n4, ¬ p, inf(simplify, [n2, n3])).
-  fof(n5, ¬ r, inf(conjunct, [n0])).
-  fof(n6, ⊥, inf(simplify, [n1, n4, n5])).
+  fof(n₀, (¬ p ∨ q) ∧ ¬ r ∧ ¬ q ∧ (p ∨ (¬ s ∨ r)), ...
+  fof(n₁, p ∨ (¬ s ∨ r), inf(conjunct, n₀)).
+  fof(n₂, ¬ p ∨ q, inf(conjunct, n₀)).
+  fof(n₃, ¬ q, inf(conjunct, n₀)).
+  fof(n₄, ¬ p, inf(simplify, [n₂, n₃])).
+  fof(n₅, ¬ r, inf(conjunct, n₀)).
+  fof(n₆, ⊥, inf(simplify, [n₁, n₄, n₅])).
 \end{verbatim}
 
 \begin{enumerate}
-\item The \simplify rule derives $¬ p$ in \verb!n4!
-from \verb!n2! and \verb!n3! derivations using the fourth case
-in~\eqref{eq:simplify-2}, that is,
+\item The \simplify rule derives $¬ p$ in \verb!n₄!
+from \verb!n₂! and \verb!n₃! derivations.
 
 $$\fsimplify~(¬ p ∨ q)~(¬ q)~(¬ p) = ¬ p.$$
 % \begin{verbatim}
@@ -90,7 +323,7 @@ $$\fsimplify~(¬ p ∨ q)~(¬ q)~(¬ p) = ¬ p.$$
 % fof(norm3, ¬ q, inf(conjunct, [norm0])).
 % fof(norm4, ¬ p, inf(simplify, [norm2, norm3])).
 % \end{verbatim}
-\item To derive ⊥ in \verb!n6! we use
+\item To derive ⊥ in \verb!n₆! we use
 Theorem~\ref{thm:simplify} and we get the following proof.
 
 \begin{equation*}

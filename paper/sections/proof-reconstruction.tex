@@ -75,28 +75,31 @@ rules in Example~\ref{ex:inference-rule-pattern}.
 
 \begin{myexamplenum}
 \label{ex:inference-rule-pattern}
-\Metis has an inference rule named \conjunct. We reconstruct this
-inference rule as follow. We define in \Agda the function
-\fconjunct which has the following pattern:
+Let \texttt{metisRule} be a \Metis inference rule. To reconstruct
+this rule, we define the function \fun{metisRule} in type theory
+that follows the pattern:
+
 \begin{equation*}
   \begin{aligned}
-  &\hspace{.495mm}\fconjunct : \Source → \Target → \Prop\\
+  &\hspace{.495mm}\fun{metisRule} : \Source → \Target → \Prop\\
   &\begin{array}{ll}
-  \fconjunct~φ~ψ\ &=
+  \fun{metisRule}~φ~ψ\ &=
       \begin{cases}
-      ψ, &\text{if }\fconjunct \text{ built }ψ\text{ by applying valid}\\
-         &\text{transformations or other rules to }φ;\\
+      ψ, &\text{if the conclusion }ψ\text{ can be}\text{ derived by applying certain inference}\\
+         &\text{rules to the premise }φ;\\
       φ, &\text{otherwise;}
       \end{cases}
   \end{array}
   \end{aligned}
 \end{equation*}
 
-To justify all transformations done by the \fconjunct rule, we prove
-its soundness with a theorem. This theorem would be
+To justify all transformations done by the \fun{metisRule} rule, we
+prove its soundness with a theorem like the following:
+
 \begin{equation*}
-  \text{If }Γ ⊢ φ \text{ then }Γ ⊢ \fconjunct~φ~ψ, \text{ where } ψ : \Target.
+  \text{If }Γ ⊢ φ \text{ then }Γ ⊢ \fun{metisRule}~φ~ψ, \text{ where } ψ : \Target.
 \end{equation*}
+
 \end{myexamplenum}
 
 The remainder of this section will be devoted to present a formal
@@ -106,7 +109,7 @@ example above.  We follow the same order to present the rules as the
 table shows.
 
 
-% -----------------------------------------------------------------------------
+% ------------------------------------------------------------------
 
 \subfile{sections/proof-reconstruction/strip.tex}
 \subfile{sections/proof-reconstruction/conjunct.tex}
@@ -115,15 +118,16 @@ table shows.
 \subfile{sections/proof-reconstruction/clausify.tex}
 \subfile{sections/proof-reconstruction/simplify.tex}
 
-%------------------------------------------------------------------------------
+% -------------------------------------------------------------------
 
 We have finished the formalization of every inference rule in
-a \Metis proof, we are able to justify step-by-step any proof
+a \Metis derivation, we are able to justify step-by-step any proof
 for a problem in propositional logic.
-For instance, we tested successfully the translation by \Athena jointly with
-the \Agda formalizations of the rules mentioned above with more than eighty
-representative theorems in propositional logic. An interested reader can test
-the problems~\cite{Prieto-Cubides2017} in the \Athena tool
+For instance, we tested successfully the translation by \Athena
+jointly with the \Agda formalizations of the rules mentioned above
+with more than eighty representative theorems in propositional
+logic. An interested reader can test the
+problems~\cite{Prieto-Cubides2017} in the \Athena tool
 repository~\cite{Athena}.
 
 \end{document}

@@ -1,9 +1,12 @@
 NAME=Reconstructing-Propositional-Proofs-in-Type-Theory
 
-.PHONY : pdf
-pdf : dependencies
+.PHONY : fast
+fast :
 	- make clean
-	- rm -f $(NAME).pdf
+	- xelatex -shell-escape  $(NAME).tex
+
+.PHONY : pdf
+pdf :
 	- latexmk -pdf -xelatex -shell-escape $(NAME).tex
 
 .PHONY : old-pdf

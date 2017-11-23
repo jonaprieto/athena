@@ -1,28 +1,27 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\subsubsection{Splitting a conjunct.}
+\subsubsection{Conjunct.}
 \label{sssec:splitting-a-conjunct}
 
-The \conjunct rule extracts from a
-conjunction one of its conjuncts. This rule is a generalization of the
-projection rules for the conjunction connective as the
-following \TSTP excerpt shows.
+The \conjunct rule extracts from a conjunction one of its conjuncts.
+This rule is a generalization of the projection rules for the
+conjunction connective as the following \TSTP excerpt shows.
 
 \begin{myexamplenum}\hspace{10cm}
 
 \begin{verbatim}
-  fof(p1, p ∧ q ∧ (r ∨ ¬ p), inf(canonicalize, [x])).
-  fof(p2, q, inf(conjunct, [p1])).
-  fof(p3, (r ∨ ¬ p), inf(conjunct, [p1])).
+  fof(p₁, p ∧ q ∧ (r ∨ ¬ p), ...
+  fof(p₂, q, inf(conjunct, p₁)).
+  fof(p₃, r ∨ ¬ p, inf(conjunct, p₁)).
 \end{verbatim}
 
 In the first formula, $p ∧ q ∧ (r ∨ ¬ p)$, we find a left-associative
-conjunction named \verb!p1!.
-The \conjunct rule extracts $q$ from the \verb!p1! using a left
-projection (∧-proj₁) follow by a right projection (∧-proj₂).
-After, the \conjunct rule extracts $r ∨ ¬ p$ by using a right projection
-on \verb!p1!.
+conjunction named \verb!p₁!. The \conjunct rule extracts $q$ from the
+\verb!p₁! using a left projection (∧-proj₁) follow by a right
+projection (∧-proj₂). After, the \conjunct rule extracts $r ∨ ¬ p$ by
+using a right projection on \verb!p₁!.
+
 \end{myexamplenum}
 
 \begin{mainth}

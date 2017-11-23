@@ -13,3 +13,5 @@
 *.xdv
  _*
  auto
+ [.tex
+ _minted-Reconstructing-Propositional-Proofs-in-Type-Theory/*

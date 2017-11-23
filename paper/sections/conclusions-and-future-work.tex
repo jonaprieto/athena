@@ -7,11 +7,10 @@
 \section{Conclusions and Future Work}
 \label{sec:conclusions}
 
-We presented a reliable proof-reconstruction in type theory
-for the propositional fragment of the \Metis prover. We provided for
-each \Metis inference rule a formal description in type theory
-following a syntactical approach.
-This formalizations are mainly exposed in
+We presented a proof-reconstruction approach in type theory for the
+propositional fragment of the \Metis prover. We provided for each
+\Metis inference rule a formal description in type theory following a
+syntactical approach. This formalizations are mainly exposed in
 Section~\ref{ssec:emulating-inferences}.
 
 We built the \Athena translator tool written in \Haskell
@@ -30,9 +29,9 @@ description of every transformation or deduction step performed by
 the prover, which is rarely included in the output of these programs,
 see Section~\ref{ssec:emulating-inferences}.
 Nevertheless, we chose that syntactical treatment instead of using
-semantics to extend this work towards the support of first-order logic
-or other non-classical logics.
-For predicative logic, recall satisfiability is undecidable and
+semantics to extend this work towards the support of first-order
+logic or other non-classical logics.
+For first-order logic, recall satisfiability is undecidable and
 its syntactical aspect plays an important role to reconstruct proofs.
 
 One of the main contribution of this study was increasing the
@@ -55,14 +54,14 @@ Further research directions include, but are not limited to:
 \begin{itemize}
 \item extend the proof-reconstruction presented in this paper to
   \begin{itemize}
-    \item support the proposition fragment with equality of \Metis.
+    \item support \Metis inference rules with equality (\eg, equality).
     \item support other \ATPs for propositional logic like \name{EProver} or \name{Z3}. This development can be carried out by following the \name{EProver}
 description on Kanso's Ph.D. thesis~\cite{Kanso2012}.
     \item support \Metis first-order proofs.
   \end{itemize}
 
-\item use a shallow embedding instead the deep embedding
-implemented in~\cite{AgdaProp} to reconstruct proofs.
+% \item use a shallow embedding instead the deep embedding
+% implemented in~\cite{AgdaProp} to reconstruct proofs.
 \item improve some functions in Section~\ref{ssec:emulating-inferences}
 \begin{itemize}
   \item by investigating the consequences of removing the \clausify

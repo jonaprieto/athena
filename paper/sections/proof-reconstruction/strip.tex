@@ -1,7 +1,7 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\subsubsection{Stripping a goal.}
+\subsubsection{Strip.}
 \label{sssec:strip-a-goal}
 
 To prove a goal, \Metis splits the goal into
@@ -15,9 +15,9 @@ with the \strip inference rule.
 
 \begin{verbatim}
   fof(goal, conjecture, (p ∧ r) ∧ q)).
-  fof(sg0, p, inf(strip, [goal])).
-  fof(sg1, p ⇒ r, inf(strip, [goal])).
-  fof(sg2, (p ∧ r) ⇒ q, inf(strip, [goal])).
+  fof(s₁, p, inf(strip, goal)).
+  fof(s₂, p ⇒ r, inf(strip, goal)).
+  fof(s₃, (p ∧ r) ⇒ q, inf(strip, goal)).
 \end{verbatim}
 
 In this example, the conjecture $(p ∧ r) ∧ q$ is stripped into
@@ -120,12 +120,17 @@ Now, using \texttt{⇒∧⇒\textsf{-to-}⇒∧} theorem from~\cite{AgdaProp},
 \end{itemize}
 \end{proof}
 
-The $\fstrip₀$ function yields the conjunction of subgoals that implies the
-goal of the problem in the \Metis \TSTP derivations but is not a structurally
-recursive function.  Instead, we present its structural recursive version
-in~\eqref{eq:strip-fixed}, the $\fstrip₁$ function after applying the bounded
-technique described in Section~\ref{ssec:structural-recursion}. We define the
-$\fstrip₁$ function based on the definition from the \Metis source code.
+The $\fstrip₀$ function defined in~\eqref{eq:strip-zero} yields the
+conjunction of subgoals that implies the goal of the problem in the
+\Metis \TSTP derivations. Nonetheless, this function is not a
+structurally recursive function (see more details in
+Appendix~\ref{app:strip-cm}).
+Therefore, we present the $\fstrip₁$ function
+in~\eqref{eq:strip-fixed} as the structurally recursive version
+of the $\fstrip₀$ function by applying the
+bounded technique described in
+Section~\ref{ssec:structural-recursion}.
+We define the $\fstrip₁$ function based on the reading of the \Metis source code.
 
 \begin{equation}
 \label{eq:strip-fixed}
@@ -146,8 +151,9 @@ $\fstrip₁$ function based on the definition from the \Metis source code.
 \end{aligned}
 \end{equation}
 
-In a similar way as we define $\fuh_{cm}$ in~\eqref{eq:uh-complexity}, we
-define $\fstrip_{cm}$ as the complexity measure for the $\fstrip₀$ function.
+In a similar way as we define $\fuh_{cm}$
+in~\eqref{eq:uh-complexity}, we
+define the $\fstrip_{cm}$ function in Appendix~\ref{app:strip-cm} as the complexity measure for the $\fstrip₀$ function.
 Then we define the \fstrip function as follows in~\ref{eq:strip}.
 
 \begin{align}
@@ -288,9 +294,9 @@ we extend the theorem in the natural way.
 \label{thm:strip}
 Let $\text{n} : \Nat$ be the complexity measure of the strip function defined
 in~\eqref{eq:strip-fixed}.
-Let $s₁$ and $s₂$ be the subgoals of the goal $φ$, that is,
-$$\fstrip₁~φ~n~≡~s₁∧~s₂.$$
-If $Γ ⊢ s₁$ and $Γ ⊢ s₂$ then $Γ ⊢ φ$.
+Let $s₂$ and $s₃$ be the subgoals of the goal $φ$, that is,
+$$\fstrip₁~φ~n~≡~s₂∧~s₃.$$
+If $Γ ⊢ s₂$ and $Γ ⊢ s₃$ then $Γ ⊢ φ$.
 \end{mainth}
 
 \begin{proof}
@@ -318,19 +324,19 @@ that introduce such a subgoal.
 
 \begin{myexamplenum}
 In the following \TSTP derivation, note that the three subgoals
-\verb!sg0!, \verb!sg1! and \verb!sg2! are assumed by the \negate
-rule in \verb!neg0!, \verb!neg1! and  \verb!neg2! respectively.
+\verb!s₁!, \verb!s₂! and \verb!s₃! are assumed by the \negate
+rule in \verb!neg₁!, \verb!neg₂! and  \verb!neg₃! respectively.
 
 \begin{verbatim}
-  fof(goal, conjecture, (p ∧ r ∧ q)).
-  fof(sg0, p, inf(strip,[goal])).
-  fof(sg1, p ⇒ r, inf(strip,[goal])).
-  fof(sg2, (p ∧ r) ⇒ q, inf(strip,[goal])).
-  fof(neg0, ¬ p, inf(negate,[sg0])).
+  fof(goal, conjecture, p ∧ r ∧ q).
+  fof(s₁, p, inf(strip, goal)).
+  fof(s₂, p ⇒ r, inf(strip, goal)).
+  fof(s₃, (p ∧ r) ⇒ q, inf(strip, goal)).
+  fof(neg₁, ¬ p, inf(negate, s₁)).
   ...
-  fof(neg1, ¬ (p ⇒ r), inf(negate,[sg1])).
+  fof(neg₂, ¬ (p ⇒ r), inf(negate, s₂)).
   ...
-  fof(neg2, ¬ ((p ∧ r) ⇒ q), inf(negate,[sg2])).
+  fof(neg₃, ¬ ((p ∧ r) ⇒ q), inf(negate, s₃)).
 \end{verbatim}
 \end{myexamplenum}
 

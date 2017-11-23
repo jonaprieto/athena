@@ -19,12 +19,12 @@
 \label{ssec:agda}\
 
 \Agda is an interactive system for constructing proofs and programs,
-based on Martin-L\"{o}f's type theory and extended with records, parametrised
+based on Martin-L\"{o}f's type theory and extended with records, parametrized
 modules, among other features.
 One of the main strengths of \Agda is its support for writing proofs,
 which we shall call \Agda's proof engine. It consists of: support for
 inductively defined types, including inductive families, and function
-definitions using pattern matching on such types, normalisation during type-
+definitions using pattern matching on such types, normalization during type-
 checking, commands for refining proof-terms, coverage checker and termination
 checker.
 The inductive approach for representing classical propositional logic

@@ -5,11 +5,12 @@
 \subsubsection{Canonicalize.}
 \label{sssec:canonicalize}
 
-The \canonicalize rule is an inference that transforms a formula to a its
-negative normal form or its conjunctive normal form depending on the role that
-the formula plays in the problem as we will explain in a moment. However, in
-both cases, this rule removes inside of the formula  any redundancy as long as
-possible (\ie, tautologies or definitions).
+The \canonicalize rule is an inference that transforms a formula to a
+its negative normal form or its conjunctive normal form depending on
+the role that the formula plays in the problem as we will explain in
+a moment. However, in both cases, this rule removes inside of the
+formula  any redundancy as long as possible (\ie, tautologies or
+definitions).
 
 \begin{mydefinition}
 
@@ -21,30 +22,34 @@ contain any implications.
 
 \begin{mydefinition}
 
-The \emph{conjunctive normal form} of a formula also called clausal normal form
-is the logical equivalent version expressed as a conjunction of clauses where
-a \emph{clause} is the disjunction of zero or more literals.
+The \emph{conjunctive normal form} of a formula also called clausal
+normal form is the logical equivalent version expressed as a
+conjunction of clauses where a \emph{clause} is the disjunction of
+zero or more literals.
 
 \end{mydefinition}
 
-The \canonicalize rule is used by \Metis to introduce the subgoals in their
-refutation proofs but also helps to simplify formulas at intermediate steps in
-the derivations. As far as we know, the \canonicalize rule in these cases uses
-the conjunctive normal form with simplifications. Otherwise, when an axiom,
-definition or hypothesis is needed to prove some goal, this rule gets the
-negative normal form of the formula. The \canonicalize rule jointly with the
-\clausify rule perform the so-called \emph{clausification} process mainly
-described in~\cite{Sutcliffe1996}.
+The \canonicalize rule is used by \Metis to introduce the subgoals in
+their refutation proofs but also helps to simplify formulas at
+intermediate steps in the derivations. As far as we know, the
+\canonicalize rule implements a conjunctive normal form conversion
+with simplifications of tautologies and definitions. Otherwise, when
+an axiom, definition or hypothesis is needed to prove some goal, this
+rule gets the negative normal form of the formula. The \canonicalize
+rule jointly with the \clausify rule perform the so-called
+\emph{clausification} process mainly described
+in~\cite{Sutcliffe1996}.
 
-To reconstruct the \canonicalize rule, we adapted some ideas from the \Metis
-source code. The presentation of this reconstruction is as follows. We firstly
-describe functions to remove redundancies inside of the formula. After, we
-present the negative normal form conversion in~Lemma~\ref{lem:nnf} and the
-conjunctive normal form in Lemma~\ref{lem:cnf}. At the end of this section, we
-state Theorem~\ref{thm:canonicalize} to reconstruct the \canonicalize rule.
+To reconstruct the \canonicalize rule, we adapted some ideas from the
+\Metis source code. The presentation of this reconstruction is as
+follows. We firstly describe functions to remove redundancies inside
+of the formula. After, we present the negative normal form conversion
+in~Lemma~\ref{lem:nnf} and the conjunctive normal form in
+Lemma~\ref{lem:cnf}. At the end of this section, we state
+Theorem~\ref{thm:canonicalize} to reconstruct the \canonicalize rule.
 
-Now, we say that there are redundancies in a formula when some of the theorems
-in~Fig.~\ref{fig:redundancies} can be applied inside of it.
+Now, we say that there are redundancies in a formula when some of the
+theorems in~Fig.~\ref{fig:redundancies} can be applied inside of it.
 
 \begin{figure}
   \[
@@ -98,7 +103,7 @@ in~Fig.~\ref{fig:redundancies} can be applied inside of it.
 \begin{notation}
 In a disjunction, $φ ≡ φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
 if there is some $i = 1, \cdots, n$ such that $ψ ≡ φᵢ$.
-Note that $ψ ∈_{∨} φ$ is another name for the equality
+Note that $ψ ∈_{∨} φ$ is another representation for the equality
 $ψ ≡ \freorder_{∨}~φ~ψ$.
 \end{notation}
 
@@ -132,7 +137,8 @@ We assume the formulas to be right-associative unless otherwise stated.
 \begin{mainlemma}
   \label{lem:canon-or}
 
-  If $Γ ⟝ φ$ and let $φ : \Prop$ be a right-associative formula then $Γ ⟝ \fcanon_{∨}~φ$, where
+  Let $φ : \Prop$ be a right-associative formula. If $Γ ⟝ φ$
+  then $Γ ⟝ \fcanon_{∨}~φ$, where
 
 \begin{equation}
 \label{eq:canon-or}
@@ -196,7 +202,8 @@ to work with conjunctions.
 \begin{notation}
 In a conjunction, $φ ≡ φ₁ ∧ φ₂ ∧ \cdots ∧ φₙ$, we say
 $ψ ∈_{∧} φ$, if there is some $i = 1, \cdots, n$ such that $ψ ≡ φᵢ$.
-Note that $ψ ∈_{∧} φ$ as the equality $ψ ≡ \fconjunct~φ~ψ$.
+Note that $ψ ∈_{∧} φ$ is another representation of
+the equality $ψ ≡ \fconjunct~φ~ψ$.
 \end{notation}
 
 In right-associative conjunctions we remove the redundancies
@@ -228,7 +235,7 @@ in Fig.~\ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
 \begin{mainlemma}
   \label{lem:canon-and}
 
-  If $Γ ⟝ φ$ and let $φ : \Prop$ be a right-associative formula
+  Let $φ : \Prop$ be a right-associative formula. If $Γ ⟝ φ$
   then $Γ ⟝ \fcanon_{∧}~φ$, where
 
   \begin{equation}
@@ -263,45 +270,32 @@ in Fig.~\ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
     \end{equation}
 \end{mainlemma}
 
-Now, we are ready to define the negative normal form of a formula after
-simplifications by applying to it the $\fnnfp$ function defined
-in~\eqref{eq:nnf-zero} and the $\fcanon_{∨}$ and $\fcanon_{∧}$) functions.  Its definition is mainly based on the \Metis source code to normalize formulas.
-To define such a function in type theory we follow the same approach described
-in~\cite{Bezem2002}. The authors avoid a termination problem by using the
-polarity of the formula as an additional argument of the function.
+Now, we are ready to define the negative normal form of a formula with
+simplifications by applying to it the $\fnnf$ function defined in
+Lemma~\ref{lem:nnf} (see more details in Appendix~\ref{app:polarity-for-propositions}).
+This definition is mainly based on the \Metis
+source code to normalize formulas. To define such a function in type
+theory we used bounded recursion as we describe in
+Section~\ref{ssec:structural-recursion}.
 
 \begin{equation}
-\label{eq:nnf-zero}
-  \begin{aligned}
-  &\hspace{.495mm}\fnnfp : \abbre{Polarity} \to \Prop \to \NProp\\
-&\begin{array}{lll}
-  \fnnfp~⊕~(φ₁ ∧ φ₂) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~⊕~φ₁ ∧ \fnnfp~⊕~φ₂))\\
-  \fnnfp~⊕~(φ₁ ∨ φ₂) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~⊕~φ₁ ∨ \fnnfp~⊕~φ₂))\\
-  \fnnfp~⊕~(φ₁ ⇒ φ₂) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊕~φ₂))\\
-  \fnnfp~⊕~(¬ φ)     &= \fnnfp~⊖~φ\\
-  \fnnfp~⊕~φ         &= φ        \\
-  \fnnfp~⊖~(φ₁ ∧ φ₂) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnfp~⊖~φ₁ ∨ \fnnfp~⊖~φ₂))\\
-  \fnnfp~⊖~(φ₁ ∨ φ₂) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~⊖~φ₁ ∧ \fnnfp~⊖~φ₂))\\
-  \fnnfp~⊖~(φ₁ ⇒ φ₂) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnfp~⊖~φ₂ ∧ \fnnfp~⊕~φ₁))\\
-  \fnnfp~⊖~(¬ φ)     &= \fnnfp~⊕~φ\\
-  \fnnfp~⊖~⊤         &= ⊥\\
-  \fnnfp~⊖~⊥         &= ⊤\\
-  \fnnfp~⊖~φ         &= ¬ φ.
+\label{eq:nnf}
+\begin{aligned}
+&\hspace{.495mm}\fnnf_{1} : \Prop \to \Nat \to \Prop\\
+&\begin{array}{llll}
+\fnnf_{1} &(φ₁ ∧ φ₂)     &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~φ₁~n ∧ \fnnf_{1}~φ₂~n))\\
+\fnnf_{1} &(φ₁ ∨ φ₂)     &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~φ₁~n ∨ \fnnf_{1}~φ₂~n))\\
+\fnnf_{1} &(φ₁ ⇒ φ₂)     &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~((¬ φ₁) ∨ φ₂)~n))\\
+\fnnf_{1} &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~((¬ φ₁) ∨ (¬ φ₂))~n))\\
+\fnnf_{1} &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~((¬ φ₁) ∧ (¬ φ₂))~n))\\
+\fnnf_{1} &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~((¬ φ₂) ∧ φ₁)~n))\\
+\fnnf_{1} &(¬ (¬ φ))     &(\suc~n) &= \fnnf_{1}~φ₁~n\\
+\fnnf_{1} &(¬ ⊤)         &(\suc~n) &= ⊥\\
+\fnnf_{1} &(¬ ⊥)         &(\suc~n) &= ⊤\\
+\fnnf_{1} &φ             &\zero    &= φ
 \end{array}
-  \end{aligned}
+\end{aligned}
 \end{equation}
-
-We define the \abbre{Polarity} type which has
-two constructors: $⊕$ to denote positive polarity, and $⊖$ to denote
-negative polarity of a formula. A function to get the polarity of a function
-is defined in Appendix~\ref{app:polarity-for-propositions}.
-
-% \begin{myremark}
-% The formula polarity was not
-% relevant in the following description since we found using the $⊕$ polarity to
-% call \fpolarity function for the first time was enough to get
-% the normalized normal form for propositions.
-% \end{myremark}
 
 \begin{mainlemma}
   \label{lem:nnf}
@@ -309,11 +303,12 @@ is defined in Appendix~\ref{app:polarity-for-propositions}.
   \begin{align*}
    \begin{split}
      &\fnnf : \NProp \to \NProp\\
-     &\fnnf~φ = \fnnfp~⊕~φ.
+     &\fnnf~φ = \fnnf_{1}~φ~(\fnnf_{cm}~φ).
    \end{split}
   \end{align*}
+  The $\fnnf_{cm}$  complexity measure function
+  is defined in Appendix~\ref{app:polarity-for-propositions}.
 \end{mainlemma}
-
 
 To get the conjunctive normal form, we make sure the formula is a
 conjunction of disjunctions. For such a purpose, we use distributive laws in
@@ -359,10 +354,14 @@ the $\fnnf$ function follow by the $\fdist$ function.
   Composition of Lemma~\ref{lem:dist} and Lemma~\ref{lem:nnf}.
 \end{proof}
 
-Since all the transformations in Lemma~\ref{lem:nnf} and Lemma~\ref{lem:dist}
-came from logical equivalences in propositional logic, we state the following
-lemma used in the reconstruction of the \canonicalize rule in
-Theorem~\ref{thm:canonicalize}.
+Since all the transformations in Lemma~\ref{lem:nnf} and
+Lemma~\ref{lem:dist} came from logical equivalences in propositional
+logic, we state the following lemmas used in the reconstruction of the \simplify rule in Lemma~\ref{lem:reduce-literal} and in
+Theorem~\ref{thm:canonicalize} for the \canonicalize rule.
+\begin{mainlemma}
+\label{lem:nnf-inv}
+  If $Γ ⊢ \fnnf~φ$ then $Γ ⊢ φ$.
+\end{mainlemma}
 
 \begin{mainlemma}
 \label{lem:cnf-inv}
