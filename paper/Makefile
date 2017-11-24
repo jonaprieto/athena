@@ -1,6 +1,6 @@
 .PHONY : pdf
 pdf :
-	- latexmk -pdf main.tex
+	- latexmk -pdf Reconstructing-Propositional-Proofs-in-Type-Theory.tex
 
 # references-mendeley:
 #
