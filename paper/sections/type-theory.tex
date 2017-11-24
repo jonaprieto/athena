@@ -22,9 +22,10 @@ that a term has a certain type. Each term has associated a derivation,
 we refer to this derivation as proof-terms.
 
 \begin{notation}
-  Types are written using \abbre{small caps}.  We write the type
-  judgments as $a : \abbre{a}$ to denote that the term~$a$ is of
-  type~$\abbre{a}$.
+
+  We write the type judgments as $a : \type{A}$ to denote that the
+  term~$a$ is of type~$\type{A}$.
+
 \end{notation}
 
 We produce derivation trees inside the judgments using the derivation
@@ -75,9 +76,9 @@ the function needs to call itself to get the expected outcome.
 \begin{notation}
   We use \Prop for the type of propositions.
   A proposition is an expression of indivisible propositional variables (\eg, symbols $φ₀, φ₁, \cdots$), the logic constants:
-  $⊥$, $⊤$, the binary connectives ($∧, ∨, ⇒, ⇔)$, and the negation
+  $⊥$, $⊤$, the binary connectives ($∧, ∨, ⇒)$, and the negation
   $(\neg)$.
-  We write the equality using the symbol (≡) as $φ ≡ ψ$, for $φ,~ψ :
+  We write the syntactical equality using the symbol (≡) as $φ ≡ ψ$, for $φ,~ψ :
   \Prop$. For this equality, we assume the reflexivity, symmetry and
   transitivity properties.
   % We say $φ$ and $ψ$ are syntactically equivalent if there is a derivation from $φ$ to $ψ$ and
@@ -92,9 +93,9 @@ the function needs to call itself to get the expected outcome.
 
 Hence, one approach to define a structural recursive function based
 on a general
-recursive function $\rm{f}:\,\abbre{a}~\to~\abbre{b}$ is to
+recursive function $\rm{f}:\,\type{A}~\to~\type{B}$ is to
 formulate a new
-function $\rm{f}^{*}:\,\abbre{a}~\to~\Nat~\to~\abbre{b}$ where all
+function $\rm{f}^{*}:\,\type{A}~\to~\Nat~\to~\type{B}$ where all
 of its recursive calls are done on smaller arguments.
 
 \begin{notation}

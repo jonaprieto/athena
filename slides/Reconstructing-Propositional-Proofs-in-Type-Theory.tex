@@ -339,12 +339,6 @@
 \newcommand{\ITP}{\abbre{ITP}}
 \newcommand{\ITPs}{\abbre{ITPs}}
 \newcommand{\List}{\abbre{List}}
-\newcommand{\NProp}{\abbre{Prop}}
-\newcommand{\Nat}{\abbre{Nat}}
-\newcommand{\Prop}{\abbre{Prop}}
-\newcommand{\Source}{\abbre{Premise}}
-\newcommand{\Target}{\abbre{Conclusion}}
-\newcommand{\Lit}{\abbre{Lit}}
 \newcommand{\SAT}{\abbre{SAT}}
 \newcommand{\SMT}{\abbre{SMT}}
 
@@ -372,8 +366,17 @@
 \newcommand{\TPTP}{\len{TPTP}}
 \newcommand{\TSTP}{\len{TSTP}}
 
-\newcommand{\NN}{\ensuremath{\mathbb{N}}}
+% -- Type notation.
+\newcommand{\type}[1]{ {\fontseries{sb}\selectfont \textsf{#1}} \xspace}
+\newcommand{\NProp}{\type{Prop}}
+\newcommand{\Nat}{\type{Nat}}
+\newcommand{\Prop}{\type{Prop}}
+\newcommand{\Source}{\type{Premise}}
+\newcommand{\Target}{\type{Conclusion}}
+\newcommand{\Lit}{\type{Lit}}
+% --
 
+\newcommand{\NN}{\ensuremath{\mathbb{N}}}
 \newcommand{\fun}[1]{ {\fontseries{sb}\selectfont \textsf{#1}} \xspace}
 
 \newcommand{\zero}{\fun{zero}}
@@ -1708,18 +1711,15 @@ format to \Agda code\\
 \fun{conjunct}$(\varphi , \varphi_3 ∧ \varphi_1) ≡ \varphi$
 \vskip 3mm
 \item
-\fun{conjunct}$(\varphi , \varphi_3)      ≡ \varphi_3$
+\fun{conjunct}$(\varphi , \varphi_3) ≡ \varphi_3$
 \vskip 3mm
 \item
-\fun{conjunct}$(\varphi , \varphi_2)      ≡ \varphi_2$
+\fun{conjunct}$(\varphi , \varphi_2) ≡ \varphi_2$
 \vskip 3mm
 \end{itemize}
 
 \end{itemize}
 \end{frame}
-
-
-
 
 
 % \begin{frame}[fragile, label=hammer]{Related Work}
