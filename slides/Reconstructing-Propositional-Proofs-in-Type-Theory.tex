@@ -525,7 +525,8 @@ maxbibnames=6,%
 
 \title[Reconstructing Propositional Proofs in Type Theory]
   {\textbf{Reconstructing Propositional Proofs in Type Theory}}
-\date{\today}
+\date{November 16, 2017\\
+Update: \today}
 \author[Jonathan Prieto-Cubides]{Jonathan Prieto-Cubides\\
 Advisor: Andr\'es Sicard-Ram\'irez
 }
@@ -582,7 +583,7 @@ Software related results:
   \item \texttt{agda-metis}: \Metis prover reasoning for propositional logic\footnote{\url{https://github.com/jonaprieto/agda-metis}.}
   \item \texttt{agda-prop}: intuitionistic propositional logic + PEM\footnote{\url{https://github.com/jonaprieto/agda-prop}.}
 \end{itemize}
-\item Bugs found in \Metis: see issues No.~2, No.~4, and commit
+\item Bugs found in \Metis: see Issues No.~2, No.~4, and commit
 \name{8a3f11e} in \Metis official
 repository\footnote{\url{https://github.com/gilith/metis}.}
 \end{itemize}
@@ -631,7 +632,7 @@ After reporting this, \Metis developer fixed the printing of \texttt{canonicaliz
 \end{frame}
 
 
-\begin{frame}[fragile]{Soundness Bug in Splitting goals}
+\begin{frame}[fragile]{Soundness Bug in Splitting Goals}
   {Fixed in \Metis v2.3 (release 20170810)}
 
 Consider this \TPTP problem
@@ -659,7 +660,19 @@ Testing with \name{EProver} with a client for \name{SystemOnTPTP} (\name{Online-
 
 \end{frame}
 
-\begin{frame}[fragile]{Soundness Bug in Splitting goals}
+\begin{frame}[fragile]
+\begin{tabular}{@{ }c@{ }@{ }c | c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{}c@{}@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{}c@{}@{ }c}
+p & q &  & $¬$ & ( & p & $⇔$ & q & ) & $⇔$ & ( & ( & p & $⊃$ & $¬$ & q & ) & $\&$ & ( & q & $⊃$ & $¬$ & p & ) & ) & \\
+\hline
+$\top$ & $\top$ &  & $\bot$ &  & $\top$ & $\top$ & $\top$ &  & \textcolor{red}{$\top$} &  &  & $\top$ & $\bot$ & $\bot$ & $\top$ &  & $\bot$ &  & $\top$ & $\bot$ & $\bot$ & $\top$ &  &  & \\
+$\top$ & $\bot$ &  & $\top$ &  & $\top$ & $\bot$ & $\bot$ &  & \textcolor{red}{$\top$} &  &  & $\top$ & $\top$ & $\top$ & $\bot$ &  & $\top$ &  & $\bot$ & $\top$ & $\bot$ & $\top$ &  &  & \\
+$\bot$ & $\top$ &  & $\top$ &  & $\bot$ & $\bot$ & $\top$ &  & \textcolor{red}{$\top$} &  &  & $\bot$ & $\top$ & $\bot$ & $\top$ &  & $\top$ &  & $\top$ & $\top$ & $\top$ & $\bot$ &  &  & \\
+$\bot$ & $\bot$ &  & $\bot$ &  & $\bot$ & $\top$ & $\bot$ &  & \textcolor{red}{$\bot$} &  &  & $\bot$ & $\top$ & $\top$ & $\bot$ &  & $\top$ &  & $\bot$ & $\top$ & $\top$ & $\bot$ &  &  & \\
+\end{tabular}
+\end{frame}
+
+
+\begin{frame}[fragile]{Soundness Bug in Splitting Goals}
   {Fixed in \Metis v2.3 (release 20170810)}
 
 The bug was in the \texttt{strip} inference rule:
@@ -1117,7 +1130,7 @@ fof(norm₁, (¬ p ∨ q) ∧ (¬ p ∨ r), inf(clausify, norm₀)).
 \end{frame}
 
 % --------------------------------------------------------------------
-\begin{frame}[fragile]{The Intuition behind the \Metis Algorithm}
+\begin{frame}[fragile]{Sketch of the \Metis Algorithm}
 \begin{center}
 \scalebox{0.75}{
 \begin{minipage}{\textwidth}
@@ -1193,60 +1206,65 @@ Its \TSTP solution using \Metis:
 
 \begin{frame}[fragile,plain]
 \begin{verbatim}
-fof(s₁, (p ∨ q) ⇒ p, inf(strip, goal)).
-fof(s₂, ((p ∨ q) ∧ p) ⇒ q, inf(strip, goal)).
-fof(neg₁, ¬ ((p ∨ q) ⇒ p), inf(negate, s₁)).
-fof(n00, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, a₁)).
-fof(n01, ¬ q ∨ p, inf(conjunct, n00)).
-fof(n02, ¬ p ∧ (p ∨ q), inf(canonicalize, neg₁)).
-fof(n03, p ∨ q, inf(conjunct, n02)).
-fof(n04, ¬ p, inf(conjunct, n02)).
-fof(n05, q, inf(simplify,[n03, n04])).
-cnf(r00, ¬ q ∨ p, inf(canonicalize, n01)).
-cnf(r01, q, inf(canonicalize, n05)).
-cnf(r02, p, inf(resolve, q, [r01, r00])).
-cnf(r03, ¬ p, inf(canonicalize, n04)).
-cnf(r04, ⊥, inf(resolve, p, [r02, r03])).
-fof(neg₂, ¬ (((p ∨ q) ∧ p) ⇒ q), inf(negate, s2)).
-fof(n10, ¬ q ∧ p ∧ (p ∨ q), inf(canonicalize, neg₂)).
-fof(n11, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, a₁)).
-fof(n12, ¬ p ∨ q, inf(conjunct, n11)).
-fof(n13, ⊥, inf(simplify,[n10, n12])).
-cnf(r10, ⊥, inf(canonicalize, n13)).
+  fof(premise, axiom, (p ⊃ q) ∧ (q ⊃ p)).
+  fof(goal, conjecture, (p ∨ q) ⊃ (p ∧ q)).
+  fof(s₀, (p ∨ q) ⊃ p, inf(strip, goal)).
+  fof(s₁, ((p ∨ q) ∧ p) ⊃ q, inf(strip, goal)).
+  fof(neg₀, ¬ ((p ∨ q) ⊃ p), inf(negate, s₀)).
+  fof(n₀₀, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
+  fof(n₀₁, ¬ q ∨ p, inf(conjunct, n₀₀)).
+  fof(n₀₂, ¬ p ∧ (p ∨ q), inf(canonicalize, neg₀)).
+  fof(n₀₃, p ∨ q, inf(conjunct, n₀₂)).
+  fof(n₀₄, ¬ p, inf(conjunct, n₀₂)).
+  fof(n₀₅, q, inf(simplify, [n₀₃, n₀₄])).
+  cnf(r₀₀, ¬ q ∨ p, inf(canonicalize, n₀₁)).
+  cnf(r₀₁, q, inf(canonicalize, n₀₅)).
+  cnf(r₀₂, p, inf(resolve, q, [r₀₁, r₀₀])).
+  cnf(r₀₃, ¬ p, inf(canonicalize, n₀₄)).
+  cnf(r₀₄, ⊥, inf(resolve, p, [r₀₂, r₀₃])).
+  fof(neg₁, ¬ ((p ∨ q) ∧ p) ⊃ q), inf(negate, s₁)).
+  fof(n₁₀, ¬ q ∧ p ∧ (p ∨ q), inf(canonicalize, neg₁)).
+  fof(n₁₁, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
+  fof(n₁₂, ¬ p ∨ q, inf(conjunct, n₁₁)).
+  fof(n₁₃, ⊥, inf(simplify, [n₁₀, n₁₂])).
+  cnf(r₁₀, ⊥, inf(canonicalize, n₁₃)).
 \end{verbatim}
 \end{frame}
 
 \begin{frame}[fragile]{\TSTP Refutation of Subgoal No. 1}
 \begin{verbatim}
-fof(s₁, (p ∨ q) ⇒ p, inf(strip, goal)).
-fof(neg₁, ¬ ((p ∨ q) ⇒ p), inf(negate, s₁)).
-fof(n00, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, a₁)).
-fof(n01, ¬ q ∨ p, inf(conjunct, n00)).
-fof(n02, ¬ p ∧ (p ∨ q), inf(canonicalize, neg₁)).
-fof(n03, p ∨ q, inf(conjunct, n02)).
-fof(n04, ¬ p, inf(conjunct, n02)).
-fof(n05, q, inf(simplify,[n03, n04])).
-cnf(r00, ¬ q ∨ p, inf(canonicalize, n01)).
-cnf(r01, q, inf(canonicalize, n05)).
-cnf(r02, p, inf(resolve, q, [r01, r00])).
-cnf(r03, ¬ p, inf(canonicalize, n04)).
-cnf(r04, ⊥, inf(resolve, p, [r02, r03])).
+  fof(premise, axiom, (p ⊃ q) ∧ (q ⊃ p)).
+  fof(goal, conjecture, (p ∨ q) ⊃ (p ∧ q)).
+  fof(s₀, (p ∨ q) ⊃ p, inf(strip, goal)).
+  ...
+  fof(neg₀, ¬ ((p ∨ q) ⊃ p), inf(negate, s₀)).
+  fof(n₀₀, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
+  fof(n₀₁, ¬ q ∨ p, inf(conjunct, n₀₀)).
+  fof(n₀₂, ¬ p ∧ (p ∨ q), inf(canonicalize, neg₀)).
+  fof(n₀₃, p ∨ q, inf(conjunct, n₀₂)).
+  fof(n₀₄, ¬ p, inf(conjunct, n₀₂)).
+  fof(n₀₅, q, inf(simplify, [n₀₃, n₀₄])).
+  cnf(r₀₀, ¬ q ∨ p, inf(canonicalize, n₀₁)).
+  cnf(r₀₁, q, inf(canonicalize, n₀₅)).
+  cnf(r₀₂, p, inf(resolve, q, [r₀₁, r₀₀])).
+  cnf(r₀₃, ¬ p, inf(canonicalize, n₀₄)).
+  cnf(r₀₄, ⊥, inf(resolve, p, [r₀₂, r₀₃])).
 \end{verbatim}
 \end{frame}
 
-\begin{frame}[fragile]{Tree for the Subgoal No.~1: $(p ∨ q) ⇒ p$}
+\begin{frame}[fragile]{Refutation Tree for $s₀$}
 
 \begin{verbatim}
-fof(a₁, axiom, (p ⇒ q) ∧ (q ⇒ p)).
-...
-fof(n00, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, a₁)).
-fof(n01, ¬ q ∨ p, inf(conjunct, n00)).
-...
+  fof(premise, axiom, (p ⊃ q) ∧ (q ⊃ p)).
+  ...
+  fof(n₀₀, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
+  fof(n₀₁, ¬ q ∨ p, inf(conjunct, n₀₀)).
+  ...
 \end{verbatim}
 
 \begin{prooftree}
 \AxiomC{}
-\RightLabel{axiom $a_1$}
+\RightLabel{axiom premise}
 \UnaryInfC{$\Gamma \vdash (p \Rightarrow q) \wedge (q \Rightarrow p)$}
 \RightLabel{weaken}
 \UnaryInfC{$\Gamma, \neg s_1 \vdash (p \Rightarrow q) \wedge (q \Rightarrow p)$}
@@ -1403,7 +1421,7 @@ Further research directions include, but are not limited to:
 \item improve the performance of the \canonicalize rule
 \item extend the proof-reconstruction presented in this paper to
   \begin{itemize}
-    \item support the proposition logic with equality of \Metis
+    \item support the identity theory
     \item support other \ATPs for propositional logic like \name{EProver}
      or \name{Z3}.\\
      See Kanso's Ph.D. thesis~\cite{Kanso2012}
