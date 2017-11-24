@@ -14,7 +14,7 @@ This tool is written in Haskell and it was tested with
 To install Athena, the package manager `cabal` is required as well.
 Athena was tested with
 
-  - [cabal 1.24.0](https://hackage.haskell.org/package/cabal-install-1.24.0.0)
+  - [Cabal 1.24.0](https://hackage.haskell.org/package/cabal-install-1.24.0.0)
 
 Let us download the Athena repository running the following command:
 
@@ -34,8 +34,6 @@ the Agda standard library, run the following command:
 
 ```bash
   $ make install-libraries
-  $ ls lib/
-  agda-metis  agda-prop  agda-stdlib
 ```
 
 ## Installing the Metis Prover
@@ -267,7 +265,7 @@ As we can see in the Agda code showed above, the term `proof`,
 the proof-term of the Metis derivation is referring to the
 proof-terms `proof₀` and `proof₁`. Recall, Metis stripes the goal
 into subgoals to prove it. Therefore, these terms are the proof-terms
-for the refutations of the subgoals s₁ and s₂. We show in the
+for the refutations of the subgoals s₀ and s₁. We show in the
 following sections the respective natural deduction trees for these
 refutations.
 
