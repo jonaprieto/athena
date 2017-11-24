@@ -44,9 +44,9 @@ Athena supports reconstruction for the prover
 
 -  [Metis v2.3 (release 20171021)](https://github.com/gilith/metis)
 
-As an alternative to install the prover from the Metis sources,
-we have provided a Haskell client
-to use this prover but also other provers with
+As an alternative to install the prover from the Metis sources, we
+have provided a Haskell client to use this prover but also other
+provers with
 
 - [Online-ATPs v0.1.1][online-atps]
 
@@ -63,7 +63,7 @@ To install this tool run the following command:
 ## TPTP problem
 
 Let us consider the following
-theorem Problem No. 13 in Disjunction Section
+theorem problem No. 13 in Disjunction Section
 in [Prop-Pack][problems]:
 
 <img align="center" src="https://tex.s2cms.ru/svg/%0A(p%20%5CRightarrow%20q)%20%5Cwedge%20(q%20%5CRightarrow%20p)%5C%20%5Cvdash%5C%20(p%20%5Cvee%20q)%20%5CRightarrow%20(p%20%5Cwedge%20q)%0A" alt="
@@ -106,36 +106,37 @@ run the following command:
   ...
 ```
 
-If we are using the Online-ATPs tool run the following command:
+If you are using the Online-ATPs tool run the following command:
 
 ```
   $ online-atps --atp=metis problem.tptp  > problem.tstp
 ```
 
-Using our customized TSTP syntax, the above Metis derivation looks like:
+Using our customized TSTP syntax, the above Metis derivation
+looks like:
 
 ```
-  fof(premise, axiom, (p \supset q) \wedge (q \supset p)).
-  fof(goal, conjecture, (p \vee q) \supset (p \wedge q)).
-  fof(s₀, (p \vee q) \supset p, inf(strip, goal)).
-  fof(s_{1}, ((p \vee q) \wedge p) \supset q, inf(strip, goal)).
-  fof(neg₁, ¬ ((p \vee q) \supset p), inf(negate, s₀)).
-  fof(n₀₀, (¬ p \vee q) \wedge (¬ q \vee p), inf(canonicalize, premise)).
-  fof(n₀₁, ¬ q \vee p, inf(conjunct, n₀₀)).
-  fof(n₀₂, ¬ p \wedge (p \vee q), inf(canonicalize, neg₁)).
-  fof(n₀₃, p \vee q, inf(conjunct, n₀₂)).
+  fof(premise, axiom, (p ⊃ q) ∧ (q ⊃ p)).
+  fof(goal, conjecture, (p ∨ q) ⊃ (p ∧ q)).
+  fof(s₀, (p ∨ q) ⊃ p, inf(strip, goal)).
+  fof(s₁, ((p ∨ q) ∧ p) ⊃ q, inf(strip, goal)).
+  fof(neg₀, ¬ ((p ∨ q) ⊃ p), inf(negate, s₀)).
+  fof(n₀₀, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
+  fof(n₀₁, ¬ q ∨ p, inf(conjunct, n₀₀)).
+  fof(n₀₂, ¬ p ∧ (p ∨ q), inf(canonicalize, neg₀)).
+  fof(n₀₃, p ∨ q, inf(conjunct, n₀₂)).
   fof(n₀₄, ¬ p, inf(conjunct, n₀₂)).
-  fof(n₀₅, q, inf(simplify,[n₀₃, n₀₄])).
-  cnf(r₀₀, ¬ q \vee p, inf(canonicalize, n₀₁)).
+  fof(n₀₅, q, inf(simplify, [n₀₃, n₀₄])).
+  cnf(r₀₀, ¬ q ∨ p, inf(canonicalize, n₀₁)).
   cnf(r₀₁, q, inf(canonicalize, n₀₅)).
   cnf(r₀₂, p, inf(resolve, q, [r₀₁, r₀₀])).
   cnf(r₀₃, ¬ p, inf(canonicalize, n₀₄)).
   cnf(r₀₄, ⊥, inf(resolve, p, [r₀₂, r₀₃])).
-  fof(neg₁, ¬ (((p \vee q) \wedge p) \supset q), inf(negate, s_{1})).
-  fof(n₁₀, ¬ q \wedge p \wedge (p \vee q), inf(canonicalize, neg₁)).
-  fof(n₁₁, (¬ p \vee q) \wedge (¬ q \vee p), inf(canonicalize, premise)).
-  fof(n₁₂, ¬ p \vee q, inf(conjunct, n₁₁)).
-  fof(n₁₃, ⊥, inf(simplify,[n₁₀, n₁₂])).
+  fof(neg₁, ¬ ((p ∨ q) ∧ p) ⊃ q), inf(negate, s₁)).
+  fof(n₁₀, ¬ q ∧ p ∧ (p ∨ q), inf(canonicalize, neg₁)).
+  fof(n₁₁, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
+  fof(n₁₂, ¬ p ∨ q, inf(conjunct, n₁₁)).
+  fof(n₁₃, ⊥, inf(simplify, [n₁₀, n₁₂])).
   cnf(r₁₀, ⊥, inf(canonicalize, n₁₃)).
 ```
 
@@ -148,7 +149,9 @@ the following command:
   $ athena problem.tstp
 ```
 
-The correspondent Agda file will be created in the same directory that contains `problem.tstp` using the same name but the extension of Agda, that is, `.agda`.
+The correspondent Agda file will be created in the same directory
+that contains `problem.tstp` using the same name but the extension
+of Agda, that is, `.agda`.
 
 
 ```agda
@@ -251,8 +254,8 @@ The correspondent Agda file will be created in the same directory that contains 
 ### Type-checking the proof
 
 Now, we are ready to verify the Metis derivation by type-checking
-with Agda the reconstructed proof showed above. Make sure the Agda
-version is 2.5.3.
+with Agda the reconstructed proof showed above.
+Make sure the Agda version is 2.5.3.
 
 ```
   $ agda --version
@@ -261,10 +264,10 @@ version is 2.5.3.
 ```
 
 As we can see in the Agda code showed above, the term `proof`,
-the proof-term of the Metis derivation is referring to the proof-
-terms `proof₀` and `proof₁`. Recall, Metis stripes the goal
+the proof-term of the Metis derivation is referring to the
+proof-terms `proof₀` and `proof₁`. Recall, Metis stripes the goal
 into subgoals to prove it. Therefore, these terms are the proof-terms
-for the refutations of the subgoals s_{1} and s₂. We show in the
+for the refutations of the subgoals s₁ and s₂. We show in the
 following sections the respective natural deduction trees for these
 refutations.
 
@@ -275,17 +278,17 @@ For this subgoal, its respective TSTP derivation is
 the following:
 
 ```
-  fof(premise, axiom, (p ⇒ q) ∧ (q ⇒ p)).
-  fof(goal, conjecture, (p ∨ q) ⇒ (p ∧ q))).
-  fof(s₀, (p ∨ q) ⇒ p, inf(strip, goal)).
+  fof(premise, axiom, (p ⊃ q) ∧ (q ⊃ p)).
+  fof(goal, conjecture, (p ∨ q) ⊃ (p ∧ q)).
+  fof(s₀, (p ∨ q) ⊃ p, inf(strip, goal)).
   ...
-  fof(neg₀, ¬ ((p ∨ q) ⇒ p), inf(negate, s₀)).
+  fof(neg₀, ¬ ((p ∨ q) ⊃ p), inf(negate, s₀)).
   fof(n₀₀, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
   fof(n₀₁, ¬ q ∨ p, inf(conjunct, n₀₀)).
   fof(n₀₂, ¬ p ∧ (p ∨ q), inf(canonicalize, neg₀)).
   fof(n₀₃, p ∨ q, inf(conjunct, n₀₂)).
   fof(n₀₄, ¬ p, inf(conjunct, n₀₂)).
-  fof(n₀₅, q, inf(simplify,[n₀₃, n₀₄])).
+  fof(n₀₅, q, inf(simplify, [n₀₃, n₀₄])).
   cnf(r₀₀, ¬ q ∨ p, inf(canonicalize, n₀₁)).
   cnf(r₀₁, q, inf(canonicalize, n₀₅)).
   cnf(r₀₂, p, inf(resolve, q, [r₀₁, r₀₀])).
@@ -293,30 +296,6 @@ the following:
   cnf(r₀₄, ⊥, inf(resolve, p, [r₀₂, r₀₃])).
   ...
 ```
-
-The refutation tree is the following:
-
-<img align="center" src="https://tex.s2cms.ru/svg/%0A%5Cbegin%7Bprooftree%7D%0A%5CAxiomC%7B%24%5Cmathcal%7BD%7D_1%24%7D%0A%25%5CAxiomC%7B%24%5Cmathcal%7BD%7D_3%24%7D%0A%5CAxiomC%7B%7D%0A%5CRightLabel%7Bassume%20%24%5Cneg%20s_{0}%24%7D%0A%5CUnaryInfC%7B%24%5CGamma%2C%20%5Cneg%20s_{0}%20%5Cvdash%20%5Cneg%20s_{0}%24%7D%0A%25%20%5CUnaryInfC%7B%24%5CGamma%2C%20%5Cneg%20s_{0}%20%5Cvdash%20(p%20%E2%88%A8%20q)%20%5Csupset%20p%24%7D%0A%25%5CLeftLabel%7B%24(%5Cmathcal%7BD%7D_3)%24%5Chspace%7B1.5cm%7D%7D%0A%5CRightLabel%7Bcanonicalize%7D%0A%5CUnaryInfC%7B%24%5CGamma%2C%20%5Cneg%20s_{0}%20%5Cvdash%20%5Cneg%20p%20%E2%88%A7%20(p%20%E2%88%A8%20q)%24%7D%0A%5CRightLabel%7Bconjunct%7D%0A%5CUnaryInfC%7B%24%5CGamma%2C%20%5Cneg%20s_{0}%20%5Cvdash%20%5Cneg%20p%24%7D%0A%5CRightLabel%7Bresolve%20with%20%24%5Cell%20%3D%20p%24%7D%0A%5CLeftLabel%7B%24(%5Cmathcal%7BR%7D_%7B1%7D)%24%5Chspace%7B2mm%7D%7D%0A%5CBinaryInfC%7B%24%5CGamma%2C%20%5Cneg%20s_{0}%20%5Cvdash%20%5Cbot%24%7D%0A%5CRightLabel%7BRAA.%7D%0A%5CUnaryInfC%7B%24%5CGamma%20%5Cvdash%20s_{0}%24%7D%0A%5Cend%7Bprooftree%7D%0A" alt="
-$$\begin{prooftree}
-\AxiomC{$\mathcal{D}_1$}
-%\AxiomC{$\mathcal{D}_3$}
-\AxiomC{}
-\RightLabel{assume $\neg s_{0}$}
-\UnaryInfC{$\Gamma, \neg s_{0} \vdash \neg s_{0}$}
-% \UnaryInfC{$\Gamma, \neg s_{0} \vdash (p \vee q) \supset p$}
-%\LeftLabel{$(\mathcal{D}_3)$\hspace{1.5cm}}
-\RightLabel{canonicalize}
-\UnaryInfC{$\Gamma, \neg s_{0} \vdash \neg p \wedge (p \vee q)$}
-\RightLabel{conjunct}
-\UnaryInfC{$\Gamma, \neg s_{0} \vdash \neg p$}
-\RightLabel{resolve with $\ell = p$}
-\LeftLabel{$(\mathcal{R}_{1})$\hspace{2mm}}
-\BinaryInfC{$\Gamma, \neg s_{0} \vdash \bot$}
-\RightLabel{RAA.}
-\UnaryInfC{$\Gamma \vdash s_{0}$}
-\end{prooftree}$$
-" />
-
 
 The refutation tree is the following:
 
@@ -407,15 +386,15 @@ For this subgoal, its respective TSTP derivation is
 the following:
 
 ```
-  fof(premise, axiom, (p ⇒ q) ∧ (q ⇒ p)).
+  fof(premise, axiom, (p ⊃ q) ∧ (q ⊃ p)).
   ...
-  fof(s₁, ((p ∨ q) ∧ p) ⇒ q, inf(strip, goal)).
+  fof(s₁, ((p ∨ q) ∧ p) ⊃ q, inf(strip, goal)).
   ...
-  fof(neg₁, ¬ (((p ∨ q) ∧ p) ⇒ q), inf(negate, s₁)).
+  fof(neg₁, ¬ (((p ∨ q) ∧ p) ⊃ q), inf(negate, s₁)).
   fof(n₁₀, ¬ q ∧ p ∧ (p ∨ q), inf(canonicalize, neg₁)).
   fof(n₁₁, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).
   fof(n₁₂, ¬ p ∨ q, inf(conjunct, n₁₁)).
-  fof(n₁₃, ⊥, inf(simplify,[n₁₀, n₁₂])).
+  fof(n₁₃, ⊥, inf(simplify, [n₁₀, n₁₂])).
   cnf(r₁₀, ⊥, inf(canonicalize, n₁₃)).
 ```
 
@@ -446,8 +425,6 @@ The refutation tree is the following:
 
 
 ### The proof of the goal
-
-
 
 <img src="https://tex.s2cms.ru/svg/%5Cbegin%7Bprooftree%7D%0A%5CAxiomC%7B%7D%0A%5CRightLabel%7Bstrip%7D%0A%5CUnaryInfC%7B%24%5CGamma%20%5Cvdash%20(s_%7B0%7D%20%5Cwedge%20s_%7B1%7D)%20%5Csupset%20%5Ctext%7Bgoal%7D%24%7D%0A%5CAxiomC%7B%24%5Cmathcal%7BR%7D_%7B1%7D%24%7D%0A%5CUnaryInfC%7B%24%5CGamma%20%5Cvdash%20s_%7B0%7D%24%7D%0A%5CAxiomC%7B%24%5Cmathcal%7BR%7D_2%24%7D%0A%5CUnaryInfC%7B%24%5CGamma%20%5Cvdash%20s_%7B1%7D%24%7D%0A%5CRightLabel%7B%24%5Cwedge%24-intro%7D%0A%5CBinaryInfC%7B%24%5CGamma%20%5Cvdash%20s_%7B0%7D%20%5Cwedge%20s_%7B1%7D%24%7D%0A%5CRightLabel%7B%24%5Csupset%24-elim%7D%0A%5CBinaryInfC%7B%24%5CGamma%20%5Cvdash%20%5Ctext%7Bgoal%7D%24%7D%0A%5Cend%7Bprooftree%7D" alt="\begin{prooftree}
 \AxiomC{}
