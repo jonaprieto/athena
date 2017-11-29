@@ -97,8 +97,8 @@ We use this function in Lemma~\ref{lem:sbuild-or}.
 To construct a disjunction~$ψ$ from a disjunction~$φ$, we have used
 ideas from the description in~\cite{bohme2010} to prove equality
 between nested disjunctions.  We define the $\fsbuild_{∨}$ function
-in~\eqref{eq:strong-build-or} that uses every disjunct from the source
-formula, $φ$, to build up the target disjunction $ψ$.
+in~\eqref{eq:strong-build-or} that uses every disjunct from the
+source formula, $φ$, to build up the target disjunction $ψ$.
 
 \begin{mainlemma}
 \label{lem:sbuild-or}
@@ -118,6 +118,7 @@ If $Γ ⊢ φ$ and $ψ : \Target$ then $Γ ⊢ \fsbuild_{∨}~φ~ψ$, where
 \begin{myexamplenum}
 We build the disjunction $(p ∨ q) ∨ r$ from the disjunction
 $r ∨ (q ∨ p)$ using Lemma~\ref{lem:sbuild-or}.
+
 \begin{equation*}
 (\mathcal{D})\hspace{3mm}
   \begin{bprooftree}

@@ -51,7 +51,7 @@ sections.
 
 To reconstruct \Metis inference rules in type theory, we observed
 that some rules or their inner functions are implemented by
-\emph{general recursive} functions.
+\emph{general recursive} functions (see a definition of these functions in~\cite{Bove2002}.
 
 Functions defined by a general recursion can not be directly
 translated in type theory since it is not a guarantee they terminate.
@@ -133,7 +133,7 @@ theory is to define a new function using a bounded recursion.
 \begin{equation}
 \label{eq:uh-structured}
 \begin{aligned}
-&\hspace{.495mm} \fuh_{1} : \Prop → \Nat \to \Prop\\
+&\hspace{.495mm} \fuh_{1} : \Prop → \Nat → \Prop\\
 &\begin{array}{llll}
 \fuh_{1} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &(\suc~n) &= \fuh_{1}~((φ₁ ∧ φ₂) ⇒ φ₃)~n\\
 \fuh_{1} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &(\suc~n) &= \fuh_{1}~(φ₁ ⇒ φ₂)~n ∧ \fuh_{1}~(φ₁ ⇒ φ₃)~n\\
@@ -216,7 +216,7 @@ of~$φ$.
 \end{notation}
 
 We formalise the syntactical consequence relation of \CPL by an
-inductive family $\_⊢\_$ with two indexes, a set of propositions (the
+inductive family \verb!_⊢_! with two indexes, a set of propositions (the
 premises) and a proposition (the conclusion), that is, $Γ ⊢ φ$
 represents that there is derivation with conclusion $φ : \Prop$ from
 the set of premises $Γ : \List~\Prop$. We implemented

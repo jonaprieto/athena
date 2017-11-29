@@ -166,7 +166,6 @@
 
 \renewcommand\qedsymbol{$\blacksquare$}
 
-%\usepackage{stmaryrd} %new symbol font for tcs
 \usepackage{color}
 \usepackage{fancybox}
 
@@ -180,6 +179,7 @@
 \newunicodechar{¬}{\ensuremath{\neg}\;}
 \newunicodechar{Γ}{\ensuremath{\Gamma}}
 \newunicodechar{γ}{\ensuremath{\gamma}}
+\newunicodechar{λ}{\ensuremath{\lambda}}
 \newunicodechar{φ}{\ensuremath{\varphi}}
 \newunicodechar{ψ}{\ensuremath{\psi}}
 \newunicodechar{ϕ}{\ensuremath{\varphi}}
@@ -198,18 +198,17 @@
 \newunicodechar{ℓ}{\ensuremath{\ell}}
 \newunicodechar{→}{\ensuremath{\rightarrow}}
 \newunicodechar{⇒}{\ensuremath{\supset}}
-\newunicodechar{⊃}{\ensuremath{\supset}}
 \newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
 \newunicodechar{∅}{\ensuremath{\emptyset}}
 \newunicodechar{∈}{\ensuremath{\in}}
 \newunicodechar{∘}{\ensuremath{\circ}}
 \newunicodechar{∙}{\ensuremath{\bullet}}
 \newunicodechar{∧}{\ensuremath{\wedge}}
-\newunicodechar{∎}{\ensuremath{\qed}}
 \newunicodechar{∨}{\ensuremath{\vee}}
 \newunicodechar{∼}{\ensuremath{\sim}}
 \newunicodechar{≠}{\ensuremath{\neq}}
 \newunicodechar{≡}{\ensuremath{\equiv}}
+\newunicodechar{⊃}{\ensuremath{\supset}}
 \newunicodechar{⊕}{\ensuremath{\oplus}}
 \newunicodechar{⊖}{\ensuremath{\ominus}}
 \newunicodechar{⊢}{\ensuremath{\vdash}}
@@ -219,7 +218,6 @@
 \newunicodechar{⟝}{\ensuremath{\vdash}}
 \newunicodechar{⬓}{\ensuremath{\square}}
 \newunicodechar{ⱼ}{\ensuremath{{}_{j}}}
-\newunicodechar{λ}{\ensuremath{\lambda}}
 
 % -------------------------------------------------------------------
 % Verbatim.
@@ -256,13 +254,6 @@
 \newcommand{\CPL}{\abbre{CPL}}
 \newcommand{\ITP}{\abbre{ITP}}
 \newcommand{\ITPs}{\abbre{ITPs}}
-\newcommand{\List}{\abbre{List}}
-\newcommand{\NProp}{\abbre{Prop}}
-\newcommand{\Nat}{\abbre{Nat}}
-\newcommand{\Prop}{\abbre{Prop}}
-\newcommand{\Source}{\abbre{Premise}}
-\newcommand{\Target}{\abbre{Conclusion}}
-\newcommand{\Lit}{\abbre{Lit}}
 \newcommand{\SAT}{\abbre{SAT}}
 \newcommand{\SMT}{\abbre{SMT}}
 
@@ -296,6 +287,14 @@
   {{\fontseries{sb}\selectfont\textsf{#1}}\xspace}
 
 \newcommand{\type}[1]{ {\fontseries{sb}\selectfont \textsf{#1}} \xspace}
+
+\newcommand{\List}{\type{List}}
+\newcommand{\NProp}{\type{Prop}}
+\newcommand{\Nat}{\type{Nat}}
+\newcommand{\Prop}{\type{Prop}}
+\newcommand{\Source}{\type{Premise}}
+\newcommand{\Target}{\type{Conclusion}}
+\newcommand{\Lit}{\type{Lit}}
 
 \newcommand{\zero}{\fun{zero}}
 \newcommand{\suc}{\fun{succ}}
@@ -439,14 +438,14 @@ maxbibnames=6,%
 % Include a footer with date and hour of the compilation
 % -------------------------------------------------------------------
 
-% \usepackage{fancyhdr}
-% \usepackage[us,12hr]{datetime} % `us' makes \today behave as usual in TeX/LaTeX
-% \fancypagestyle{plain}{
-% \fancyhf{}
-% \rfoot{Compiled on {\ddmmyyyydate\today} at \currenttime}
-% \lfoot{Page \thepage}
-% \renewcommand{\headrulewidth}{0pt}}
-% \pagestyle{plain}
+\usepackage{fancyhdr}
+\usepackage[us,12hr]{datetime} % `us' makes \today behave as usual in TeX/LaTeX
+\fancypagestyle{plain}{
+\fancyhf{}
+\rfoot{Compiled on {\ddmmyyyydate\today} at \currenttime}
+\lfoot{Page \thepage}
+\renewcommand{\headrulewidth}{0pt}}
+\pagestyle{plain}
 
 % -------------------------------------------------------------------
 
