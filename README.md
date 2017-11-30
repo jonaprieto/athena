@@ -47,17 +47,18 @@ To install Athena run the following command:
 ```
 
 To install the Agda libraries (`agda-prop`, `agda-metis` and
-the Agda standard library) run the following command:
+the Agda standard library) run the following command and
+follow the instructions given by this command:
 
 ```bash
   $ make install-libraries
 ```
 
 Now, the libraries will be installed in the `lib` folder.
-If you are using your own `.agda`, you probably want to
-specify in your `.agda/defaults` and `.agda/libraries` files
-the path to these libraries. If you are an expert user, download
-directly the libraries from their repositories:
+If you are using your own `.agda` files, you probably want to
+specify in the `.agda/defaults` and `.agda/libraries` files
+the paths of the libraries necessary for proof-reconstruction.
+The libraries can be downloaded directly from their repositories:
 
 - [agda-metis][agda-metis]
 - [agda-prop][agda-prop]
@@ -175,10 +176,8 @@ the following command:
   $ athena problem.tstp
 ```
 
-The correspondent Agda file will be created in the same directory
-that contains `problem.tstp` using the same name but the extension
-of Agda, that is, `.agda`.
-
+Athena will create the Agda file of the solution.
+The Agda file should look like this one:
 
 ```agda
   $ cat problem.agda
