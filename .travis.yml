@@ -107,7 +107,7 @@ script:
 # - make hlint
 # - make checklines
 # testing the reconstruction
- - make recontruct
+ - make small-check
 
 branches:
   only:

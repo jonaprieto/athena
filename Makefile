@@ -431,7 +431,7 @@ reconstruct : problems
 	@echo "If you want to generate an Agda file from the tests,"
 	@echo "you can execute the following command in your shell:"
 	@echo
-	@echo "  $$ athena TSTPFileGeneratedByMETIS.tpsp"
+	@echo "  $$ athena TSTPFileGeneratedByMETIS.tstp"
 	@echo
 	@echo ${SEP}
 	@for tptpFile in `find ${TEST_DIR} \
@@ -559,6 +559,7 @@ check-asr : reconstruct
 	@echo "    were excluded for type-checking since it does not supported"
 	@echo "    by Agda-Metis at the moment."
 
+
 # -----------------------------------------------------------------------------
 # Commit the log file
 # -----------------------------------------------------------------------------
@@ -579,3 +580,4 @@ commit-test:
 debug :
 	@echo "TIMELIMIT = $(TIMELIMIT)"
 	@echo "AGDACALL  = $(AGDACALL)"
+	@echo "ATHENA  = $(ATHENA)"
