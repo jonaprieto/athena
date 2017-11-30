@@ -10,10 +10,10 @@ pdf :
 	- latexmk -pdf -xelatex -shell-escape $(NAME).tex
 
 .PHONY : agda-meeting
-agda-meeting : dependencies
+agda-meeting :
 	- make clean
 	- rm -f Jonathan-Proof-Reconstruction.pdf
-	- latexmk -pdf -xelatex -shell-escape Jonathan-Proof-Reconstruction.tex
+	- latexmk -pdf -xelatex -shell-escape Jonathan-Proof-Reconstruction-AIM.tex
 
 .PHONY : dependencies
 dependencies :
