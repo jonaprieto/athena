@@ -11,7 +11,7 @@
 *bcf
 *blg
 *.xdv
- _*
- auto
- [.tex
- _minted*
+_*
+auto
+[.tex
+_minted*
