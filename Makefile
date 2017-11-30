@@ -512,6 +512,38 @@ check : reconstruct
 	@echo "    were excluded for type-checking since it does not supported"
 	@echo "    by Agda-Metis at the moment."
 
+.PHONY : small-check
+small-check : export AGDA_DIR := $(ATHENA_AGDA_LIB)
+small-check :
+
+	@echo "==================================================================="
+	@echo "============== Type-checking Agda files in Travis CI =============="
+	@echo "==================================================================="
+	@echo
+	@echo "[!] AGDA_DIR=${AGDA_DIR}"
+	@echo
+	@echo "If you want to type-check an isolate Agda file from the tests,"
+	@echo "you can execute the following command in your shell:"
+	@echo
+	@echo "  $$ pwd"
+	@echo "  $(PWD)"
+	@echo "  $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
+	@echo "  $$ agda --library=test AgdaFileGeneratedByAthena"
+	@echo
+	@echo ${SEP}
+
+	@for agdaFile in `find ${AGDA_BASIC} \
+			-type f -name "*.agda" | sort`; do \
+		echo $$agdaFile; \
+		if ! ${AGDA} --verbose=0 --library=test $$agdaFile; then \
+									exit 1; \
+								fi; \
+		echo ${SEP}; \
+	done
+	@echo "[!] TSTP solutions using (<=>) operator"
+	@echo "    were excluded for type-checking since it does not supported"
+	@echo "    by Agda-Metis at the moment."
+
 .PHONY : check-asr
 check-asr : reconstruct
 	@echo "==================================================================="
@@ -551,8 +583,8 @@ check-asr : reconstruct
 			-not -path "*prop-23*" | sort`; do \
 		echo $$agdaFile; \
 		if ! ${AGDA} --verbose=0 --library=test $$agdaFile; then \
-                  exit 1; \
-                fi; \
+									exit 1; \
+								fi; \
 		echo ${SEP}; \
 	done
 	@echo "[!] TSTP solutions using (<=>) operator"
