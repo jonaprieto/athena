@@ -33,7 +33,7 @@ Athena was tested with
 
   - [Cabal 1.24.0](https://hackage.haskell.org/package/cabal-install-1.24.0.0)
 
-Let us download the Athena repository running the following command:
+Now, download the Athena repository by running the following command:
 
 ```bash
   $ git clone https://github.com/jonaprieto/athena.git
@@ -46,12 +46,23 @@ To install Athena run the following command:
   $ make install
 ```
 
-To install the Agda libraries, `agda-prop`, `agda-metis`, and
-the Agda standard library, run the following command:
+To install the Agda libraries (`agda-prop`, `agda-metis` and
+the Agda standard library) run the following command:
 
 ```bash
   $ make install-libraries
 ```
+
+Now, the libraries will be installed in the `lib` folder.
+If you are using your own `.agda`, you probably want to
+specify in your `.agda/defaults` and `.agda/libraries` files
+the path to these libraries. If you are an expert user, download
+directly the libraries from their repositories:
+
+- [agda-metis][agda-metis]
+- [agda-prop][agda-prop]
+- [agda-stdlib][agda-stdlib]
+
 
 ## Installing the Metis Prover
 
