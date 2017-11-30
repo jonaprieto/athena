@@ -9,8 +9,8 @@ fast :
 pdf :
 	- latexmk -pdf -xelatex -shell-escape $(NAME).tex
 
-.PHONY : old-pdf
-old-pdf : dependencies
+.PHONY : agda-meeting
+agda-meeting : dependencies
 	- make clean
 	- rm -f Jonathan-Proof-Reconstruction.pdf
 	- latexmk -pdf -xelatex -shell-escape Jonathan-Proof-Reconstruction.tex
