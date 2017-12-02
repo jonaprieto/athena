@@ -8,7 +8,7 @@
 
 \renewcommand{\thesection}{\Alph{section}}%
 
-\section{Customized \TSTP syntax}
+\section{Customized TSTP syntax}
 \label{app:tstp-syntax}
 
 We adopted a special \TSTP syntax to improve the readability of the \TSTP
@@ -81,7 +81,7 @@ problem $p\vdash p$.}
 \vfill
 
 \clearpage
-\section{Bounded Recursion of the \strip Function}
+\section{Bounded Recursion of the Strip Function}
 \label{app:strip-cm}
 
 In Section~\ref{sssec:strip-a-goal} we describe the
@@ -160,7 +160,7 @@ defined in~\eqref{eq:strip-cm}.
 
 
 \clearpage
-\section{Bounded Recursion of the $\fnnf$ Function}
+\section{Bounded Recursion of the Negative Normal Form Function}
 \label{app:polarity-for-propositions}
 
 In Section~\ref{sssec:canonicalize} we discuss a custom negative
@@ -279,15 +279,15 @@ function. However, be aware the polarity function is not standard and
 
 
 \clearpage
-\section{A Complete Example}
+\section{A Complete Example of Proof-Reconstruction}
 \label{app:complete-example}
 
-\subsection{Installing \Athena}
+\subsection{Installing Athena}
 
 \Athena is the proof-reconstruction tool that accompanying this paper.
-This tool is written in \Haskell and it was tested with \prg{GHC}~8.2.1.
-To install \Athena, the package manager \verb!cabal! is required as well.
-\Athena was tested with \verb!cabal!~1.24.0.
+This tool is written in \Haskell and it was tested with
+\prg{GHC}~8.2.1. To install \Athena, the package manager \verb!cabal!
+is required as well. \Athena was tested with \verb!cabal!~1.24.0.
 
 Let us download the \Athena repository running the following command:
 
@@ -309,7 +309,7 @@ the \Agda standard library, run the following command:
   $ make install-libraries
 \end{verbatim}
 
-\subsection{Installing the \Metis Prover}
+\subsection{Installing Metis}
 
 To install the \Metis prover v2.3 (release 20171021),
 we refer the reader to its official
@@ -327,7 +327,7 @@ To install this tool run the following command:
   Online-atps version 0.1.1
 \end{verbatim}
 
-\subsection{\TPTP problem}
+\subsection{TPTP problem}
 
 Let us consider the following
 theorem\footnote{Problem No.~13 in Disjunction Section in~\cite{Prieto-Cubides2017}.}:
@@ -345,7 +345,7 @@ This problem can be encode in \TPTP syntax (file \verb!problem.tptp!) as follows
   fof(goal, conjecture, (p | q) => (p & q)).
 \end{verbatim}
 
-\subsection{\Metis derivation}
+\subsection{Metis derivation}
 
 To obtain the \Metis derivation of the \TPTP problem showed above,
 make sure your \Metis version is supported by running the following
@@ -408,7 +408,7 @@ Using our customized \TSTP syntax, the above \Metis derivation looks like:
 % \label{app:customized-metis-complete-example}
 % \end{figure}
 
-\subsection{Generating the \Agda proof-term}
+\subsection{Generating the Agda file}
 
 \begin{table}[!ht]
 \caption{\Metis inference rules implemented in \name{agda-metis}.}
@@ -464,7 +464,9 @@ the following command:
   $ athena problem.tstp
 \end{verbatim}
 
-The correspondent \Agda file will be created in the same directory that contains \verb!problem.tstp! using the same name but the extension of \Agda, that is, \verb!.agda!.
+The correspondent \Agda file will be created in the same directory
+that contains \verb!problem.tstp! using the same name but the
+extension of \Agda, that is, \verb!.agda!.
 
 
 \begin{verbatim}
@@ -582,9 +584,10 @@ proof-terms for the refutations of the subgoals s₀ and s₁. We show
 in the following sections the respective natural deduction trees for
 these refutations.
 
-\subsection{Refutation tree for the subgoal $s₀$}
-For this subgoal, its respective \TSTP derivation is
-the following:
+\subsection{First refutation tree}
+
+The \TSTP derivation that corresponds with the refutation
+tree of the subgoal $s₀$ is the following:
 
 \begin{verbatim}
   fof(premise, axiom, (p ⇒ q) ∧ (q ⇒ p)).
@@ -692,12 +695,10 @@ The refutation tree is the following:
 \end{bprooftree}
 \end{equation*}
 
+\subsection{Second refutation tree}
 
-
-\subsection{Refutation tree for the subgoal $s₁$}
-
-For this subgoal, its respective \TSTP derivation is
-the following:
+The \TSTP derivation that corresponds with the refutation
+tree of the subgoal $s₁$ is the following:
 
 \begin{verbatim}
   fof(premise, axiom, (p ⇒ q) ∧ (q ⇒ p)).
