@@ -6,18 +6,6 @@ matrix:
 
   include:
 
-    - env: TEST=MAIN GHC_VER=8.2.1 BUILD=CABAL CABAL_VER=1.24
-      addons:
-        apt:
-          packages:
-            - alex-3.1.7
-            - cabal-install-1.24
-            - ghc-8.2.1
-            - happy-1.19.5
-            - texlive-binaries
-          sources:
-            - hvr-ghc
-
     - env: TEST=main GHC_VER=8.0.2 CABAL_VER=1.24
       addons:
         apt:
