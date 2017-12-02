@@ -505,7 +505,7 @@ If anything didn't work as you expected, please report it
 opening an [issue]. Thanks!
 
 [diagram]: https://raw.githubusercontent.com/jonaprieto/athena/master/slides/diagram.png
-[doc]: https://github.com/jonaprieto/athena/releases/download/v0.1/Reconstructing-Propositional-Proofs-in-Type-Theory.pdf
+[doc]: https://github.com/jonaprieto/athena/releases/tag/v0.1
 [haskell]: http://www.haskell.org
 [issue]: http://github.com/jonaprieto/athena/issues/new
 [tptp]:    http://www.cs.miami.edu/~tptp/TPTP/SyntaxBNF.html
