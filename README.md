@@ -501,8 +501,7 @@ To type-check the derivations:
 $ make check
 ```
 
-If anything didn't work as you expected, please report it
-opening an [issue]. Thanks!
+Please report any inconsistency to improve this work by opening an [issue]. Thanks!
 
 [diagram]: https://raw.githubusercontent.com/jonaprieto/athena/master/slides/diagram.png
 [doc]: https://github.com/jonaprieto/athena/releases/tag/v0.1
