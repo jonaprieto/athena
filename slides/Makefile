@@ -1,13 +1,15 @@
 NAME=Reconstructing-Propositional-Proofs-in-Type-Theory
 
+.PHONY : pdf
+pdf :
+	- latexmk -pdf -xelatex -shell-escape $(NAME).tex
+
+
 .PHONY : fast
 fast :
 	- make clean
 	- xelatex -shell-escape  $(NAME).tex
 
-.PHONY : pdf
-pdf :
-	- latexmk -pdf -xelatex -shell-escape $(NAME).tex
 
 .PHONY : agda-meeting
 agda-meeting :
