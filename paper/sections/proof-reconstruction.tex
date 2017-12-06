@@ -69,7 +69,6 @@ source code. For the other rules, we present a pattern of the formal
 description for these rules in
 Example~\ref{ex:inference-rule-pattern} to reconstruct such rules.
 
-
 \begin{notation}
   The function name written in \texttt{typewriter} font refers to a
   \Metis inference rule in the \TSTP derivations. The same function
@@ -87,6 +86,9 @@ Example~\ref{ex:inference-rule-pattern} to reconstruct such rules.
 
 \subfile{sections/proof-reconstruction/strip.tex}
 
+As we mention in the beginning of this section, to reconstruct
+the \Metis inference rules, we use the following pattern in
+the formalization.
 
 \begin{myexamplenum}
 \label{ex:inference-rule-pattern}
@@ -112,15 +114,15 @@ To justify all transformations done by the \fun{metisRule} rule, we
 prove its soundness with a theorem like the following:
 
 \begin{equation*}
-  \text{If }Γ ⊢ φ \text{ then }Γ ⊢ \fun{metisRule}~φ~ψ, \text{ where } ψ : \Target.
+  \text{If }Γ ⊢ φ \text{ then }Γ ⊢ \fun{metisRule}~φ~ψ\enspace.
 \end{equation*}
 
 \end{myexamplenum}
 
 The remainder of this section will be devoted to present a formal
-description in type theory of each rule presented in
-Table~\ref{tab:agda-metis-table} using the pattern present in the
-example above.  We follow the same order to present the rules as the
+description in type theory of remaining \Metis rules presented in
+Table~\ref{tab:agda-metis-table} using the pattern presented in the
+example above. We follow the same order to present the rules as the
 table shows.
 
 
