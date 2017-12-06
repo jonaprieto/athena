@@ -56,24 +56,37 @@ In the remainder part of this section, a formal description using
 type theory is presented to build definitions and theorems of
 functions necessary to reconstruct \Metis inference rules.
 
-% % ................................................
+% ...................................................................
 
 \subsection{Reconstructing \Metis inference rules}
 \label{ssec:emulating-inferences}
 
 In this section, we reconstruct each \Metis inference rule in
-Table~\ref{tab:agda-metis-table} via a function and its respective
-theorem. We present a pattern of the formal description for these
-rules in Example~\ref{ex:inference-rule-pattern}.
+Table~\ref{tab:agda-metis-table}.
+We begin describing the reconstruction of the \strip inference rule
+since this rule  is the only one that closely follows the \Metis
+source code. For the other rules, we present a pattern of the formal
+description for these rules in
+Example~\ref{ex:inference-rule-pattern} to reconstruct such rules.
+
 
 \begin{notation}
   The function name written in \texttt{typewriter} font refers to a
-  \Metis inference rule. The same function name written using
+  \Metis inference rule in the \TSTP derivations. The same function
+  name written using
   \textsf{sans serif} font refers to our formalized version to
-  reconstruct the rule and implemented in~\cite{AgdaMetis}. We use
-  \Source and \Target as synonyms of the \Prop type to describe in the
-  function types the role of the arguments.
+  reconstruct the rule and formally implemented in~\cite{AgdaMetis}.
+  To increase the readability of our formal descriptions in
+  functions and theorems, we adopt
+  the convention to use \Source and \Target as synonyms of the \Prop
+  type. The \Source type in the reconstructed rule definition refers
+  to the argument in the \TSTP derivations, \ie the input formula of
+  the inference rule. A formula of \Target type refers to the
+  expected result of the rule found in the \TSTP derivation.
 \end{notation}
+
+\subfile{sections/proof-reconstruction/strip.tex}
+
 
 \begin{myexamplenum}
 \label{ex:inference-rule-pattern}
@@ -112,8 +125,8 @@ table shows.
 
 
 % ------------------------------------------------------------------
+% Rules that follow the pattern:
 
-\subfile{sections/proof-reconstruction/strip.tex}
 \subfile{sections/proof-reconstruction/conjunct.tex}
 \subfile{sections/proof-reconstruction/resolve.tex}
 \subfile{sections/proof-reconstruction/canonicalize.tex}
