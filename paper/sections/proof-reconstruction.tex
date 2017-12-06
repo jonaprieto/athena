@@ -7,10 +7,10 @@
 \section{Proof-Reconstruction}
 \label{sec:proof-reconstruction}
 
-The proof-reconstruction approach proposed consists of a series of
-steps similar to the workflow presented~\cite{sultana2015}. This
-process is a translation from a source system to a target system. In
-our case, the system of origin, the automatic theorem prover, is
+In this section, we describe one approach to reconstruct
+propositional proofs. This reconstruction is a translation
+process from a source system to the target system.
+In our case, the system of origin, the automatic theorem prover, is
 \Metis; the target system is a proof-assistant, \Agda. We choose
 \Agda, but another proof-assistant with the same support of type
 theory and inductive types could be used.
@@ -19,13 +19,15 @@ theory and inductive types could be used.
 \label{ssec:workflow}
 
 \input{sections/diagram.tex}
-%  (see a description of \Agda for its main features in
-% Section~\ref{sec:implementation}).
-The overview of the proof-reconstruction is presented in
-Fig.~\ref{fig:proof-reconstruction-workflow}. The process begins with
-a \TPTP file that encodes a problem in \CPL. We use this file as the
-input of the \Metis prover. If the problem is a theorem, \Metis
-generates a derivation of the proof in \TSTP format.
+The overview of the proof-reconstruction is presented as a workflow
+in Fig.~\ref{fig:proof-reconstruction-workflow}. This workflow
+follow the same basis of the proposed workflow presented
+in~\cite{sultana2015}.
+
+The process begins with a \TPTP file that encodes a problem in \CPL.
+We use this file as the input of the \Metis prover. If the problem is
+a theorem, \Metis generates a derivation of the proof in \TSTP
+format.
 
 With the \TSTP derivation from Step~2, we process the derivation with the
 \Athena translator tool.
