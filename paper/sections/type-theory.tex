@@ -77,7 +77,8 @@ the function needs to call itself to get the expected outcome.
   We use \Prop for the type of propositions.
   A proposition is an expression of indivisible propositional variables (\eg, symbols $φ₀, φ₁, \cdots$), the logic constants:
   $⊥$, $⊤$, the binary connectives ($∧, ∨, ⇒)$, and the negation
-  $(\neg)$.
+  $(\neg)$. We use the inductive definition for propositions presented in~\cite{VanDalen1994}.
+
   We write the syntactical equality using the symbol (≡) as $φ ≡ ψ$, for $φ,~ψ :
   \Prop$. For this equality, we assume the reflexivity, symmetry and
   transitivity properties.
@@ -99,7 +100,13 @@ function $\rm{f}^{*}:\,\type{A}~\to~\Nat~\to~\type{B}$ where all
 of its recursive calls are done on smaller arguments.
 
 \begin{notation}
-We define some functions by pattern-matching on \Prop or \Nat.
+In the latter definitions and theorems, we  use a common notation in
+type theory, pattern-matching~\cite{Coquand1992} to define by cases
+on the inductive definition of types.
+
+We adopt pattern-matching to define some functions.
+These pattern-matching definitions follow the inductive definitions
+of the type.
 \end{notation}
 
 \begin{myexamplenum}
