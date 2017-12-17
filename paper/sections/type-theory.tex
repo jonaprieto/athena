@@ -75,28 +75,27 @@ the function needs to call itself to get the expected outcome.
 
 \begin{notation}
   We use \Prop for the type of propositions.
-  A proposition is an expression of indivisible propositional variables (\eg, symbols $φ₀, φ₁, \cdots$), the logic constants:
+  A proposition is an expression of indivisible propositional variables (\eg, symbols $φ₀, φ₁, \cdots$), and the logic constants:
   $⊥$, $⊤$, the binary connectives ($∧, ∨, ⇒)$, and the negation
   $(\neg)$. We use the inductive definition for propositions presented in~\cite{VanDalen1994}.
 
-  We write the syntactical equality using the symbol (≡) as $φ ≡ ψ$, for $φ,~ψ :
-  \Prop$. For this equality, we assume the reflexivity, symmetry and
+  We write the syntactical equality between two propositions φ and ψ using the symbol (≡) as $φ ≡ ψ$. For this equality, we assume the reflexivity, symmetry and
   transitivity properties.
-  % We say $φ$ and $ψ$ are syntactically equivalent if there is a derivation from $φ$ to $ψ$ and
-  % a derivation from $ψ$ to $φ$.
+
   The type of natural numbers is called \Nat,
-  and it is defined as usual, where $\zero$ and $\suc$ are its data
-  constructors. We use names and symbols for the arithmetic operations
-  as usual (\eg, $+$, $-$, $*$).  We use syntax sugar for $\zero$, $\suc$,
+  and it is defined as usual, \ie, $\zero$ and $\suc$ are its data
+  constructors. We use names and symbols for the arithmetic
+  operations as usual (\eg, $+$, $-$, $*$).
+  We use syntax sugar for $\zero$, $\suc$,
   $\suc~\zero$, $\dots$, with the decimal representation~$0$, $1$,
   $2$, $\dots$ as well.
 \end{notation}
 
 Hence, one approach to define a structural recursive function based
 on a general
-recursive function $\rm{f}:\,\type{A}~\to~\type{B}$ is to
+recursive function $f₀ : \type{A} \to \type{B}$ is to
 formulate a new
-function $\rm{f}^{*}:\,\type{A}~\to~\Nat~\to~\type{B}$ where all
+function $f₁ : \type{A} \to \Nat \to \type{B}$ where all
 of its recursive calls are done on smaller arguments.
 
 \begin{notation}
