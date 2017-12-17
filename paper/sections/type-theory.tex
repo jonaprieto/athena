@@ -128,11 +128,16 @@ Section~\ref{sssec:strip-a-goal}.
 \end{aligned}
 \end{equation}
 
-In~\eqref{eq:uh-definition}, the first two equations
-call on arguments no structurally smaller.
-For instance, in the first equation,
-$$\fuh_{0} (φ₁ ⇒ (φ₂ ⇒ φ₃)) = \fuh_{0}~((φ₁ ∧ φ₂) ⇒ φ₃),$$
-the function $\fuh_{0}$ calls on the  $(φ₁ ∧ φ₂) ⇒ φ₃$ argument in the right-hand side but this formula is not a subformula of $φ₁ ⇒ (φ₂ ⇒ φ₃)$.
+In~\eqref{eq:uh-definition} is a definition no structurally recursive.
+
+% TODO
+% , the first two equations
+% call on arguments no structurally smaller.
+% For instance, in the first equation,
+% $$\fuh_{0} (φ₁ ⇒ (φ₂ ⇒ φ₃)) = \fuh_{0}~((φ₁ ∧ φ₂) ⇒ φ₃),$$
+% the function $\fuh_{0}$ calls on the argument $(φ₁ ∧ φ₂) ⇒ φ₃$ argument. However, this formula is not a subformula of $φ₁ ⇒ (φ₂ ⇒ φ₃)$.
+
+
 Therefore, one way to translate $\fuh_{0}$ to type
 theory is to define a new function using a bounded recursion.
 
@@ -161,6 +166,14 @@ following the pattern-matching cases of its definition.
 Therefore, we define in~\eqref{eq:uh-complexity} the complexity
 measure function of $\fuh_{0}$ by assigning the number of steps to
 finish for each pattern-matching case.
+
+% In this particular case,
+% as we can see by the definition of the $\fuh_{0}$ function, the pattern-matching cases depend on the formula structure for implications. For example, when φ ≡ in the consequent when the input formula is an implication. For example, when the input formula
+% is an implication like φ₁ ⇒ (φ₂ ∧ φ₃) then, the recursive calls
+% are using only the consequent φ₂ ∧ φ₃, otherwise, if φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃) based on the cases of the function definition, we only need
+% to take care of φ₃.
+
+
 We have used the complexity measure definition for a formula defined in~\cite{Agudelo-Agudelo2017} to define other complexity measures
 in this paper.
 
@@ -221,7 +234,7 @@ of~$φ$.
   for lists.
 \end{notation}
 
-We formalise the syntactical consequence relation of \CPL by an
+We formalize the syntactical consequence relation of \CPL by an
 inductive family \verb!_⊢_! with two indexes, a set of propositions (the
 premises) and a proposition (the conclusion), that is, $Γ ⊢ φ$
 represents that there is derivation with conclusion $φ : \Prop$ from

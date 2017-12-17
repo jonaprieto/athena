@@ -140,10 +140,10 @@ use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
 \begin{equation}
 \label{eq:simplify}
   \begin{aligned}
-  &\hspace{.495mm}\fsimplify : \Source → \Source → \Target → \Prop\hspace*{3.5cm}\\
-  & \fsimplify~φ₁~φ₂~ψ =\\
-  &\hspace{3mm}
-  \begin{cases}
+  &\hspace{.495mm}\fsimplify : \Source → \Source → \Target → \Prop \hspace*{3.5cm}\\
+  &\begin{array}{l}
+  \fsimplify~φ₁~φ₂~ψ~=\\
+  \hspace{3mm}\begin{cases}
   ψ, &\text{ if }φᵢ ≡ ⊥\text{ for some }i = 1, 2;\\
   ψ, &\text{ if }φᵢ ≡ ψ\text{ for some }i = 1, 2;\\
   \fsimplify_{∧}~(\fsimplify~φ₁~φ₂₁~ψ)~φ₂₂~ψ,
@@ -153,6 +153,7 @@ use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
   \freduce~φ₁~φ₂, &\text{ if }φ₂\text{ is a literal};\\
   φ₁,  &\text{ otherwise.}
   \end{cases}
+  \end{array}
   \end{aligned}
 \end{equation}
 
