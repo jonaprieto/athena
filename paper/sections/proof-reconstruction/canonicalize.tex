@@ -8,15 +8,13 @@
 The \canonicalize rule is an inference that transforms a formula to a
 its negative normal form or its conjunctive normal form depending on
 the role that the formula plays in the problem.
-The rule jointly with the \clausify rule perform the so-called
+This rule jointly with the \clausify rule perform the so-called
 \emph{clausification} process mainly described
 in~\cite{Sutcliffe1996}.
 
-The \canonicalize rule removes inside of the formula redundancies
-(tautologies or definitions) listed in~Fig.~\ref{fig:redundancies}.
-
-Now, we say that there are redundancies in a formula when some of the
-theorems in~Fig.~\ref{fig:redundancies} can be applied inside of it.
+The \canonicalize rule also removes inside of the formula
+redundancies (\ie tautologies or definitions) listed
+in~Fig.~\ref{fig:redundancies}.
 
 \begin{figure}
   \[
@@ -65,23 +63,6 @@ theorems in~Fig.~\ref{fig:redundancies} can be applied inside of it.
   \caption{Theorems to remove redundancies inside of a formula.}
 \label{fig:redundancies}
 \end{figure}
-
-\begin{mydefinition}
-
-The \emph{negative normal form} of a formula is the logical
-equivalent version of it in which negations appear only in the
-literals and the formula does not contain any implications.
-
-\end{mydefinition}
-
-\begin{mydefinition}
-
-The \emph{conjunctive normal form} of a formula also called clausal
-normal form is the logical equivalent version expressed as a
-conjunction of clauses where a \emph{clause} is the disjunction of
-zero or more literals.
-
-\end{mydefinition}
 
 The \canonicalize rule is used by \Metis to introduce the subgoals in
 their refutation proofs but also helps to simplify formulas at
@@ -374,15 +355,18 @@ That is, depending on the role of the formula in the problem, it converts that
 formula to its negative normal form or its conjunctive normal form. In both
 cases, \canonicalize simplifies the formula by removing redundancies inside of
 it as we widely described above for theorems in Fig.~\ref{fig:redundancies}.
-When the formula plays the axiom or definition role, the \canonicalize rule
-transforms the source formula to its negative normal form. Otherwise, this rule
-converts the formula to its conjunctive normal form.
 
-Since this rule mostly consists of dealing with clauses, to reconstruct this
-rule, our strategy mainly consists of checking the equality of negative normal
-form between the source and the target formula. If it fails, we try to reorder
-the conjunctive normal form of the source formula to match with the conjunctive
-normal form of the target formula. It definition is as follows.
+Based on the \Metis source code, when the formula plays the axiom or
+definition role, the \canonicalize rule transforms the source formula
+to its negative normal form. Otherwise, this rule converts the
+formula to a simplified conjunctive normal form.
+
+Since this rule mostly consists of dealing with clauses, to
+reconstruct this rule, our strategy mainly consists of checking the
+equality of negative normal form between the source and the target
+formula. If it fails, we try to reorder the conjunctive normal form
+of the source formula to match with the conjunctive normal form of
+the target formula. It definition is as follows.
 
 
 \begin{mainth} % (fold)
