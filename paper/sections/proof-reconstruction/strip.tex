@@ -4,14 +4,15 @@
 \subsubsection{Strip.}
 \label{sssec:strip-a-goal}
 
-To prove a goal, \Metis splits the goal into
-disjoint cases. This process produces a list of new subgoals, the
-conjunction of these subgoals implies the goal. Then, a proof of the
-goal becomes, in smaller proofs, one refutation for each subgoal.
+To prove a goal, \Metis splits the goal into disjoint cases. This
+process produces a list of new subgoals, the conjunction of these
+subgoals implies the goal. Then, a proof of the goal becomes into a
+set of smaller proofs, one refutation for each subgoal.
 
 \begin{myexamplenum}
-The subgoals associated to a goal are introduced in the \TSTP derivation
-with the \strip inference rule.
+
+The subgoals associated to a goal are introduced
+in the \TSTP derivation with the \strip inference rule.
 
 \begin{verbatim}
   fof(goal, conjecture, (p ∧ r) ∧ q)).
@@ -71,7 +72,7 @@ $\fuh_{1}$ function.
 \end{equation*}
 using the following theorem proved in~\cite{AgdaProp},
   \begin{equation*}
-  \texttt{∧⇒\textsf{-to-}⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).
+  \texttt{∧⇒\textsf{-to-}⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃)\enspace.
   \end{equation*}
 
 \item Case $φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)$.
@@ -103,7 +104,7 @@ using the following theorem proved in~\cite{AgdaProp},
 
 Now, using \texttt{⇒∧⇒\textsf{-to-}⇒∧} theorem from~\cite{AgdaProp},
 \begin{equation*}
-  \texttt{⇒∧⇒\textsf{-to-}⇒∧}\ :\ Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃) → Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃),
+  \texttt{⇒∧⇒\textsf{-to-}⇒∧}\ :\ Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃) → Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃)\enspace,
 \end{equation*}
 \begin{equation*}
   \begin{bprooftree}
@@ -153,8 +154,9 @@ We define the $\fstrip₁$ function based on the reading of the \Metis source co
 
 In a similar way as we define $\fuh_{cm}$
 in~\eqref{eq:uh-complexity}, we
-define the $\fstrip_{cm}$ function in Appendix~\ref{app:strip-cm} as the complexity measure for the $\fstrip₀$ function.
-Then we define the \fstrip function as follows in~\ref{eq:strip}.
+define the $\fstrip_{cm}$ function in Appendix~\ref{app:strip-cm} as
+the complexity measure for the $\fstrip₀$ function.
+We define the \fstrip function as follows in~\ref{eq:strip}.
 
 \begin{align}
   \label{eq:strip}
@@ -292,10 +294,9 @@ we extend the theorem in the natural way.
 
 \begin{mainth}
 \label{thm:strip}
-Let $\text{n} : \Nat$ be the complexity measure of the strip function defined
-in~\eqref{eq:strip-fixed}.
+Let $\text{n} : \Nat$ be the complexity measure of the strip function defined in Appendix~\ref{app:strip-cm}~\eqref{eq:strip-cm}.
 Let $s₂$ and $s₃$ be the subgoals of the goal $φ$, that is,
-$$\fstrip₁~φ~n~≡~s₂∧~s₃.$$
+$$\fstrip₁~φ~n~≡~s₂∧~s₃\enspace.$$
 If $Γ ⊢ s₂$ and $Γ ⊢ s₃$ then $Γ ⊢ φ$.
 \end{mainth}
 

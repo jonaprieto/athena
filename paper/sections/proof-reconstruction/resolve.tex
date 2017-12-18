@@ -49,7 +49,7 @@ into account for the proof-reconstruction.
 The $\fbuild_{∨}$ function defined in~\eqref{eq:build-or} intends to
 construct a disjunction from another disjunction, specifically, this
 function will try to rearrange the disjuncts in the source formula to
-match with the target disjunction formula.
+be the target disjunction formula.
 
 \begin{mainlemma}
 \label{lem:build-or}
@@ -342,7 +342,7 @@ result.
       \frsol~φ &=
         \begin{cases}
           φ₂,      &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∧ (¬ φ₁ ∨ φ₂);\\
-          φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∧ (¬ φ₁ ∨ φ₄);\\\
+          φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∧ (¬ φ₁ ∨ φ₄);\\
           φ, &\text{ otherwise.}
         \end{cases}
       \end{array}

@@ -65,9 +65,11 @@ In this section, we reconstruct each \Metis inference rule in
 Table~\ref{tab:agda-metis-table}.
 We begin describing the reconstruction of the \strip inference rule
 since this rule  is the only one that closely follows the \Metis
-source code. For the other rules, we present a pattern of the formal
-description for these rules in
-Example~\ref{ex:inference-rule-pattern} to reconstruct such rules.
+source code.
+
+To reconstruct the other rules, we use for their formalization
+a pattern in their description and definition,
+see Example~\ref{ex:inference-rule-pattern}.
 
 \begin{notation}
   The function name written in \texttt{typewriter} font refers to a
@@ -79,14 +81,14 @@ Example~\ref{ex:inference-rule-pattern} to reconstruct such rules.
   functions and theorems, we adopt
   the convention to use \Source and \Target as synonyms of the \Prop
   type. The \Source type in the reconstructed rule definition refers
-  to the argument in the \TSTP derivations, \ie the input formula of
+  to the argument in the \TSTP derivation, \ie the input formula of
   the inference rule. A formula of \Target type refers to the
   expected result of the rule found in the \TSTP derivation.
 \end{notation}
 
 \subfile{sections/proof-reconstruction/strip.tex}
 
-As we mention in the beginning of this section, to reconstruct
+Now, as we mention in the beginning of this section, to reconstruct
 the \Metis inference rules, we use the following pattern in
 the formalization.
 
@@ -124,7 +126,6 @@ description in type theory of remaining \Metis rules presented in
 Table~\ref{tab:agda-metis-table} using the pattern presented in the
 example above. We follow the same order to present the rules as the
 table shows.
-
 
 % ------------------------------------------------------------------
 % Rules that follow the pattern:
