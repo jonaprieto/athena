@@ -5,7 +5,7 @@
 \subsubsection{Canonicalize.}
 \label{sssec:canonicalize}
 
-The \canonicalize rule is an inference that transforms a formula to a
+The \canonicalize rule is an inference that transforms a formula to
 its negative normal form or its conjunctive normal form depending on
 the role that the formula plays in the problem.
 This rule jointly with the \clausify rule perform the so-called
@@ -13,8 +13,7 @@ This rule jointly with the \clausify rule perform the so-called
 in~\cite{Sutcliffe1996}.
 
 The \canonicalize rule also removes inside of the formula
-redundancies (\ie tautologies or definitions) listed
-in~Fig.~\ref{fig:redundancies}.
+the tautologies listed in~Fig.~\ref{fig:redundancies}.
 
 \begin{figure}
   \[
@@ -60,7 +59,8 @@ in~Fig.~\ref{fig:redundancies}.
       \UnaryInfC{$Γ ⟝ ⊥$}
     \end{bprooftree}
   \]
-  \caption{Theorems to remove redundancies inside of a formula.}
+  \caption{Theorems to remove inside of a formula by the
+  \canonicalize rule.}
 \label{fig:redundancies}
 \end{figure}
 
@@ -68,13 +68,13 @@ The \canonicalize rule is used by \Metis to introduce the subgoals in
 their refutation proofs but also helps to simplify formulas at
 intermediate steps in the derivations. As far as we know, the
 \canonicalize rule implements a conjunctive normal form conversion
-with simplifications of tautologies and definitions. Otherwise, when
+with simplifications of tautologies. Otherwise, when
 an axiom, definition or hypothesis is needed to prove some goal, this
 rule gets the negative normal form of the formula.
 
 To reconstruct the \canonicalize rule, we adapted some ideas from the
 \Metis source code. The presentation of this reconstruction is as
-follows. We firstly describe functions to remove redundancies inside
+follows. We firstly describe functions to remove tautologies inside
 of the formula. After, we present the negative normal form conversion
 in~Lemma~\ref{lem:nnf} and the conjunctive normal form in
 Lemma~\ref{lem:cnf}. At the end of this section, we state
@@ -88,9 +88,10 @@ Note that $ψ ∈_{∨} φ$ is another representation for the equality
 $ψ ≡ \freorder_{∨}~φ~ψ$.
 \end{notation}
 
-In right-associative disjunctions we remove the redundancies
+In right-associative disjunctions we remove the tautologies
 in Fig.~\ref{fig:or-redundancies} using Lemma~\ref{lem:canon-or}.
-We assume the formulas to be right-associative unless otherwise stated.
+We assume the formulas to be right-associative unless otherwise
+stated.
 
 \begin{figure}
 \begin{equation*}
@@ -111,15 +112,16 @@ We assume the formulas to be right-associative unless otherwise stated.
   \UnaryInfC{$Γ ⟝ ⊤$}
 \end{bprooftree}\qquad
 \end{equation*}
-\caption{Theorems to remove redundancies inside of a disjunction.}
+\caption{Theorems to remove inside of a disjunction by
+the \canonicalize rule.}
 \label{fig:or-redundancies}
 \end{figure}
 
 \begin{mainlemma}
   \label{lem:canon-or}
 
-  Let $φ : \Prop$ be a right-associative formula. If $Γ ⟝ φ$
-  then $Γ ⟝ \fcanon_{∨}~φ$, where
+  Let $φ : \Prop$ be a right-associative formula. If $Γ~⟝~φ$
+  then $Γ~⟝~\fcanon_{∨}~φ$, where
 
 \begin{equation}
 \label{eq:canon-or}
@@ -128,8 +130,8 @@ We assume the formulas to be right-associative unless otherwise stated.
  &\begin{array}{lll}
    \fcanon_{∨} &(⊥ ∨ φ)     &= \fcanon_{∨}~φ \\
    \fcanon_{∨} &(φ ∨ ⊥)     &= \fcanon_{∨}~φ \\
-   \fcanon_{∨} &(⊤ ∨ φ)     &= ⊤  \\
-   \fcanon_{∨} &(φ ∨ ⊤)     &= ⊤  \\
+   \fcanon_{∨} &(⊤ ∨ φ)     &= ⊤\\
+   \fcanon_{∨} &(φ ∨ ⊤)     &= ⊤\\
    % \fcanon_{∨} &(¬ φ₁ ∨ φ₂) &=
    %      \begin{cases}
    %       \fcanon_{∨}~φ₂,        &\text{ if } ¬ φ₁ ∈_{∨} φ₂;\\
@@ -139,15 +141,15 @@ We assume the formulas to be right-associative unless otherwise stated.
    %       ¬ φ₁ ∨ \fcanon_{∨}~φ₂, &\text{ otherwise.}
    %      \end{cases}\\
    \fcanon_{∨} &(φ₁ ∨ φ₂)   &=
-        \begin{cases}
-         ⊤,                     & \text{ if } φ₁ ≡ ¬ ψ \text{ for some }ψ : \Prop \text{ and } ψ ∈_{∨} φ₂;\\
-         ⊤,                     & \text{ if } (¬ φ₁) ∈_{∨} φ₂;\\
-         \fcanon_{∨}~φ₂,        & \text{ if } φ₁ ∈_{∨} φ₂;\\
-         ⊤,                     & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊤;\\
-         φ₁,                    & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊥;\\
-         φ₁ ∨ \fcanon_{∨}~φ₂,   & \text{ otherwise.}
-        \end{cases}\\
-   \fcanon_{∨} &φ         &= φ.
+    \begin{cases}
+     ⊤,                     & \text{ if } φ₁ ≡ ¬ ψ \text{ for some }ψ : \Prop \text{ and } ψ ∈_{∨} φ₂;\\
+     ⊤,                     & \text{ if } (¬ φ₁) ∈_{∨} φ₂;\\
+     \fcanon_{∨}~φ₂,        & \text{ if } φ₁ ∈_{∨} φ₂;\\
+     ⊤,                     & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊤;\\
+     φ₁,                    & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊥;\\
+     φ₁ ∨ \fcanon_{∨}~φ₂,   & \text{ otherwise.}
+    \end{cases}\\
+   \fcanon_{∨} &φ           &= φ.
   \end{array}
 \end{aligned}
 \end{equation}
@@ -155,10 +157,11 @@ We assume the formulas to be right-associative unless otherwise stated.
 
 \begin{myexamplenum}
 
-The formula $φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ$ in \eqref{eq:lemma-rm-or-example} has
-redundancies. To remove such redundancies we first use Lemma~\ref{lem:rassoc}
-to get the right-associative version of the formula. Then, we can use the
-$\fcanon_{∨}$ function to get the logical equivalent formula $ψ ∨ φ$.
+The formula $φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ$ in \eqref{eq:lemma-rm-or-example}
+has some tautologies. To remove such tautologies we first use
+Lemma~\ref{lem:rassoc} to get the right-associative version of the
+formula. Then, we can use the $\fcanon_{∨}$ function to get the
+logical equivalent formula $ψ ∨ φ$.
 
 \begin{equation}
 \label{eq:lemma-rm-or-example}
@@ -176,9 +179,9 @@ $\fcanon_{∨}$ function to get the logical equivalent formula $ψ ∨ φ$.
   \end{equation}
 \end{myexamplenum}
 
-Now, we have removed redundancies in disjunctions by applying the
-$\fcanon_{∨}$ function. In a similar way, we define the $\fcanon_{∧}$ function
-to work with conjunctions.
+Now, we have removed tautologies in disjunctions by applying the
+$\fcanon_{∨}$ function. In a similar way, we define the $\fcanon_{∧}$
+function to work with conjunctions.
 
 \begin{notation}
 In a conjunction, $φ ≡ φ₁ ∧ φ₂ ∧ \cdots ∧ φₙ$, we say
@@ -187,7 +190,7 @@ Note that $ψ ∈_{∧} φ$ is another representation of
 the equality $ψ ≡ \fconjunct~φ~ψ$.
 \end{notation}
 
-In right-associative conjunctions we remove the redundancies
+In right-associative conjunctions we remove the tautologies
 in Fig.~\ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
 
 \begin{figure}
@@ -209,15 +212,15 @@ in Fig.~\ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
   \UnaryInfC{$Γ ⟝ ⊥$}
 \end{bprooftree}
 \end{equation*}
-\caption{Theorems to remove redundancies inside of a conjunction.}
+\caption{Conjunction tautologies.}
 \label{fig:and-redundancies}
 \end{figure}
 
 \begin{mainlemma}
   \label{lem:canon-and}
 
-  Let $φ : \Prop$ be a right-associative formula. If $Γ ⟝ φ$
-  then $Γ ⟝ \fcanon_{∧}~φ$, where
+  Let $φ : \Prop$ be a right-associative formula. If $Γ~⟝~φ$
+  then $Γ~⟝~\fcanon_{∧}~φ$, where
 
   \begin{equation}
    \label{eq:canon-and}
@@ -353,7 +356,7 @@ Now, we are ready to reconstruct the \fcanonicalize rule. This inference rule
 defined in \eqref{eq:canonicalize} performs normalization for a proposition.
 That is, depending on the role of the formula in the problem, it converts that
 formula to its negative normal form or its conjunctive normal form. In both
-cases, \canonicalize simplifies the formula by removing redundancies inside of
+cases, \canonicalize simplifies the formula by removing tautologies inside of
 it as we widely described above for theorems in Fig.~\ref{fig:redundancies}.
 
 Based on the \Metis source code, when the formula plays the axiom or

@@ -5,12 +5,12 @@
 \label{sssec:simplify}
 
 The \simplify rule is an inference that performs simplification of
-definitions and tautologies. This rule transverses a list of previous
-derivations by applying Lemma~\ref{lem:canon-or},
+tautologies in a list of derivations. This rule simplifies such a list
+by transversing the list while applying Lemma~\ref{lem:canon-or},
 Lemma~\ref{lem:canon-and}, among others theorems presented in the following.
-This rule works to find a contradiction in the first place or a new
-formula (often smaller than its input formulas) to use later in the
-derivation.
+The goal of this rule despites simplifying the list of derivations to a
+new formula (often smaller than its input formulas), consists of finding
+a contradiction.
 
 We observe based on the analysis of different cases in the \TSTP
 derivations that \simplify can be modeled by a function with three

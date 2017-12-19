@@ -26,7 +26,7 @@ tree subgoals: $p$, $p ⇒ r$ and $(p ∧ r) ⇒ q$.
 
 \begin{equation}
 \label{eq:strip-example}
-(p ∧ (p ⇒ r) ∧ ((p ∧ r) ⇒ q)) ⇒ ((p ∧ r) ∧ q)\enspace.
+(p ∧ (p ⇒ r) ∧ ((p ∧ r) ⇒ q)) ⇒ ((p ∧ r) ∧ q).
 \end{equation}
 
 \Metis proves each subgoal in the same order above from left to right
@@ -72,7 +72,7 @@ $\fuh_{1}$ function.
 \end{equation*}
 using the following theorem proved in~\cite{AgdaProp},
   \begin{equation*}
-  \texttt{∧⇒\textsf{-to-}⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃)\enspace.
+  \texttt{∧⇒\textsf{-to-}⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).
   \end{equation*}
 
 \item Case $φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)$.
@@ -104,7 +104,7 @@ using the following theorem proved in~\cite{AgdaProp},
 
 Now, using \texttt{⇒∧⇒\textsf{-to-}⇒∧} theorem from~\cite{AgdaProp},
 \begin{equation*}
-  \texttt{⇒∧⇒\textsf{-to-}⇒∧}\ :\ Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃) → Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃)\enspace,
+  \texttt{⇒∧⇒\textsf{-to-}⇒∧}\ :\ Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃) → Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃),
 \end{equation*}
 \begin{equation*}
   \begin{bprooftree}
@@ -144,7 +144,7 @@ We define the $\fstrip₁$ function based on the reading of the \Metis source co
 \fstrip₁ &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
 \fstrip₁ &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~((¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n)\\
 \fstrip₁ &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
-\fstrip₁ &(¬ (¬ φ₁))      &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n)\\
+\fstrip₁ &(¬ (¬ φ₁))    &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n)\\
 \fstrip₁ &(¬ ⊥)         &(\suc~n) &= ⊤\\
 \fstrip₁ &(¬ ⊤)         &(\suc~n) &= ⊥\\
 \fstrip₁ &φ             &n        &= φ.
@@ -296,7 +296,7 @@ we extend the theorem in the natural way.
 \label{thm:strip}
 Let $\text{n} : \Nat$ be the complexity measure of the strip function defined in Appendix~\ref{app:strip-cm}~\eqref{eq:strip-cm}.
 Let $s₂$ and $s₃$ be the subgoals of the goal $φ$, that is,
-$$\fstrip₁~φ~n~≡~s₂∧~s₃\enspace.$$
+$$\fstrip₁~φ~n~≡~s₂∧~s₃.$$
 If $Γ ⊢ s₂$ and $Γ ⊢ s₃$ then $Γ ⊢ φ$.
 \end{mainth}
 
