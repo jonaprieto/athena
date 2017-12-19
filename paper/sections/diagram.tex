@@ -69,12 +69,18 @@
      ]
 (tstp) {2.~\TSTP file\\(derivation)};
 
-\node[ program
+\node[ Rhoumbus
      , below of=tstp
-     , node distance=1.5cm
+     , node distance=2cm
      ]
 (athena) {\Athena tool\\(translator)
 };
+
+\node[ right of =athena
+     , node distance=4cm
+     ]
+(athenafailure) {};
+
 
 % ---- Agda libraries
 \node[ library
@@ -85,18 +91,18 @@
 (agdaprop) {\texttt{agda-prop}\\(dictionary)};
 
 
-\node[ library
-     , right of=athena
-     , align=center
-     , node distance=4cm
-     ]
-(agdametis) {\texttt{agda-metis}\\(dictionary) };
+% \node[ library
+%      , right of=athena
+%      , align=center
+%      , node distance=4cm
+%      ]
+% (agdametis) {\texttt{agda-metis}\\(dictionary) };
 
 % ---------------------------------------------------
 
 \node[ file
      , below of =athena
-     , node distance=1.5cm
+     , node distance=2cm
      ]
 (agdaproof) {3.~\Agda file\\(proof-term)};
 
@@ -129,30 +135,30 @@
      , below of= agda
      , node distance=2.2cm
      ]
-(agdai) {4.1. Interface\\ \Agda file};
+(agdai) {4. Interface\\ \Agda file};
 
-\node[ file
-     , right of =agda
+\node[ right of =agda
      , node distance=4cm
      ]
-(invalid) {4.2. Invalid\\ \Agda file};
+(invalid) {};
 
 \path [line, thick] (tptp)      -- (metis);
 \path [line, thick] (metis)     -- node {theorem} (tstp);
 \draw [-o,   thick] (metis)     -- node {no theorem} (nothm);
 \path [line, thick] (tstp)      -- (athena);
 \path [line, thick] (athena)    -- (agdaproof);
+\path [-o, thick] (athena)    -- node[align=center] {parsing\\failure} (athenafailure);
 \path [line, thick] (agdaprop)  -- (athena);
-\path [line, thick] (agdametis) -- (athena);
+% \path [line, thick] (agdametis) -- (athena);
 \path [line, thick] (agdaproof) -- (agda);
 \path [line, thick] (libraries) -- (agda);
 \path [line, thick] (agda)      -- node {success} (agdai);
-\path [line, thick] (agda)      -- node {failure} (invalid);
+\path [-o, thick] (agda)      -- node {failure} (invalid);
 
 \end{tikzpicture}
 
 \caption{Proof-reconstruction overview.
-The rectangles nodes represent text files. The direct edges in the diagram represent calls to programs where the input file is pointed by the edge entering and the out edge points to the output file.
+The rectangles nodes represent text files.
 The rhombus nodes represent a process with two possible outcomes.
 }
 

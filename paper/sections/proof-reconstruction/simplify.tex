@@ -160,7 +160,7 @@ use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
 \begin{mainlemma}
   \label{lem:binary-simplify}
   Let $ψ : \Target$. If $Γ ⊢ φ₁$ and $Γ ⊢ φ₂$ then
-  $Γ ⊢ \fsimplify~φ₁~φ₂$.
+  $Γ ⊢ \fsimplify~φ₁~φ₂~ψ$.
 \end{mainlemma}
 
 \begin{proof}
@@ -297,7 +297,7 @@ translation from \TSTP to \Agda, we take the list of derivations and
 we apply the rule by using a left folding (the \verb!foldl! function
 in functional programming) with the $\fsimplify$ function over the
 list of $φ₁, φ₂, \cdots, φₙ$. This design decision avoids us to define a new theorem
-type to support \List~\Prop type in the conclusion side.
+type to support \List~\Prop type in the premise side.
 \end{myremark}
 
 \begin{myexamplenum}
