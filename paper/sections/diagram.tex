@@ -88,15 +88,11 @@
      , align=center
      , node distance=4cm
      ]
-(agdaprop) {\texttt{agda-prop}\\(dictionary)};
-
-
-% \node[ library
-%      , right of=athena
-%      , align=center
-%      , node distance=4cm
-%      ]
-% (agdametis) {\texttt{agda-metis}\\(dictionary) };
+(agdaprop) {
+\texttt{agda-prop}\\
+\texttt{agda-metis}\\
+(dictionary)
+};
 
 % ---------------------------------------------------
 
@@ -105,12 +101,6 @@
      , node distance=2cm
      ]
 (agdaproof) {3.~\Agda file\\(proof-term)};
-
-
-% \node[ align=center
-%      , left=0mm of libraries
-%      ]
-% (plus) {\textbf{+}};
 
 \node[ Rhoumbus
      , below of=agdaproof
@@ -147,13 +137,12 @@
 \draw [-o,   thick] (metis)     -- node {no theorem} (nothm);
 \path [line, thick] (tstp)      -- (athena);
 \path [line, thick] (athena)    -- (agdaproof);
-\path [-o, thick] (athena)    -- node[align=center] {parsing\\failure} (athenafailure);
+\draw [-o, thick] (athena)    -- node[align=center] {parsing\\failure} (athenafailure);
 \path [line, thick] (agdaprop)  -- (athena);
-% \path [line, thick] (agdametis) -- (athena);
 \path [line, thick] (agdaproof) -- (agda);
 \path [line, thick] (libraries) -- (agda);
 \path [line, thick] (agda)      -- node {success} (agdai);
-\path [-o, thick] (agda)      -- node {failure} (invalid);
+\draw [-o, thick] (agda)      -- node {failure} (invalid);
 
 \end{tikzpicture}
 
