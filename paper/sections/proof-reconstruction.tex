@@ -7,10 +7,10 @@
 \section{Proof-Reconstruction}
 \label{sec:proof-reconstruction}
 
-The proof-reconstruction approach proposed consists of a series of
-steps similar to the workflow presented~\cite{sultana2015}. This
-process is a translation from a source system to a target system. In
-our case, the system of origin, the automatic theorem prover, is
+In this section, we describe our approach to reconstruct
+propositional proofs. This reconstruction is a translation
+process from a source system to the target system.
+In our case, the system of origin, the automatic theorem prover, is
 \Metis; the target system is a proof-assistant, \Agda. We choose
 \Agda, but another proof-assistant with the same support of type
 theory and inductive types could be used.
@@ -19,15 +19,17 @@ theory and inductive types could be used.
 \label{ssec:workflow}
 
 \input{sections/diagram.tex}
-%  (see a description of \Agda for its main features in
-% Section~\ref{sec:implementation}).
-The overview of the proof-reconstruction is presented in
-Fig.~\ref{fig:proof-reconstruction-workflow}. The process begins with
-a \TPTP file that encodes a problem in \CPL. We use this file as the
-input of the \Metis prover. If the problem is a theorem, \Metis
-generates a derivation of the proof in \TSTP format.
+The overview of the proof-reconstruction is presented as a workflow
+in Fig.~\ref{fig:proof-reconstruction-workflow}. This workflow
+follow the same basis of the proposed workflow presented
+in~\cite{sultana2015}.
 
-With the \TSTP derivation from Step~2, we process the derivation with the
+The process begins with a \TPTP file that encodes a problem in \CPL.
+We use this file as the input of the \Metis prover. If the problem is
+a theorem, \Metis generates a derivation of the proof in \TSTP
+format.
+
+With a \TSTP derivation file, we process the derivation with the
 \Athena translator tool.
 \Athena parses the \TSTP format, analyzes the
 derivation and generates a representation of the natural deduction
@@ -54,24 +56,41 @@ In the remainder part of this section, a formal description using
 type theory is presented to build definitions and theorems of
 functions necessary to reconstruct \Metis inference rules.
 
-% % ................................................
+% ...................................................................
 
 \subsection{Reconstructing \Metis inference rules}
 \label{ssec:emulating-inferences}
 
 In this section, we reconstruct each \Metis inference rule in
-Table~\ref{tab:agda-metis-table} via a function and its respective
-theorem. We present a pattern of the formal description for these
-rules in Example~\ref{ex:inference-rule-pattern}.
+Table~\ref{tab:agda-metis-table}.
+We begin describing the reconstruction of the \strip inference rule
+since this rule  is the only one that closely follows the \Metis
+source code.
+
+To reconstruct the other rules, we use for their formalization
+a pattern in their description and definition,
+see Example~\ref{ex:inference-rule-pattern}.
 
 \begin{notation}
   The function name written in \texttt{typewriter} font refers to a
-  \Metis inference rule. The same function name written using
+  \Metis inference rule in the \TSTP derivations. The same function
+  name written using
   \textsf{sans serif} font refers to our formalized version to
-  reconstruct the rule and implemented in~\cite{AgdaMetis}. We use
-  \Source and \Target as synonyms of the \Prop type to describe in the
-  function types the role of the arguments.
+  reconstruct the rule and formally implemented in~\cite{AgdaMetis}.
+  To increase the readability of our formal descriptions in
+  functions and theorems, we adopt
+  the convention to use \Source and \Target as synonyms of the \Prop
+  type. The \Source type in the reconstructed rule definition refers
+  to the argument in the \TSTP derivation, \ie the input formula of
+  the inference rule. A formula of \Target type refers to the
+  expected result of the rule found in the \TSTP derivation.
 \end{notation}
+
+\subfile{sections/proof-reconstruction/strip.tex}
+
+Now, as we mention in the beginning of this section, to reconstruct
+the \Metis inference rules, we use the following pattern in
+the formalization.
 
 \begin{myexamplenum}
 \label{ex:inference-rule-pattern}
@@ -97,21 +116,20 @@ To justify all transformations done by the \fun{metisRule} rule, we
 prove its soundness with a theorem like the following:
 
 \begin{equation*}
-  \text{If }Γ ⊢ φ \text{ then }Γ ⊢ \fun{metisRule}~φ~ψ, \text{ where } ψ : \Target.
+  \text{If }Γ ⊢ φ \text{ then }Γ ⊢ \fun{metisRule}~φ~ψ.
 \end{equation*}
 
 \end{myexamplenum}
 
 The remainder of this section will be devoted to present a formal
-description in type theory of each rule presented in
-Table~\ref{tab:agda-metis-table} using the pattern present in the
-example above.  We follow the same order to present the rules as the
+description in type theory of remaining \Metis rules presented in
+Table~\ref{tab:agda-metis-table} using the pattern presented in the
+example above. We follow the same order to present the rules as the
 table shows.
 
-
 % ------------------------------------------------------------------
+% Rules that follow the pattern:
 
-\subfile{sections/proof-reconstruction/strip.tex}
 \subfile{sections/proof-reconstruction/conjunct.tex}
 \subfile{sections/proof-reconstruction/resolve.tex}
 \subfile{sections/proof-reconstruction/canonicalize.tex}

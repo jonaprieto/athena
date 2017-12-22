@@ -26,8 +26,8 @@ inference rules for first-order logic (see, for example,
 \begin{equation*}
   \begin{bprooftree}
     \AxiomC{}
-    \RightLabel{axiom}
-    \UnaryInfC{$Γ ⊢ φ$}
+    \RightLabel{axiom~$φ₁,\cdots,φₙ$}
+    \UnaryInfC{$Γ ⊢ φ₁ ∨ \cdots ∨ φₙ$}
   \end{bprooftree}
   \qquad
   \begin{bprooftree}
@@ -141,7 +141,7 @@ the customized \TSTP syntax (see the original \TSTP derivation and customization
 \begin{verbatim}
   fof(premise, axiom, p).
   fof(goal, conjecture, p).
-  fof(s₀, p, inf(strip, goal)).
+  fof(s₀, inf(strip, goal)).
   fof(neg₀, ¬ p, inf(negate, s₀)).
   fof(n₀, ¬ p, inf(canonicalize, neg₀)).
   fof(n₁, p, inf(canonicalize, premise)).
@@ -213,8 +213,8 @@ level of complexity of their definitions and the formalization presented in
 Section~\ref{ssec:emulating-inferences}. Some inference rules depend on the
 formalizations of other rules. For instance, the \simplify rule and the
 \clausify rule need theorems developed for the \canonicalize rule. The
-\canonicalize rule needs theorems developed in the \resolve section. But the
-\resolve rule depends on the \conjunct rule.
+\canonicalize rule needs theorems developed in the \resolve formalization,
+and \resolve depends on the \conjunct rule.
 
 % \Metis looks for a refutation to prove \verb!fof! problems.
 % A \verb!fof! problem contains the conjecture, the \emph{goal}, in the
@@ -236,9 +236,9 @@ formalizations of other rules. For instance, the \simplify rule and the
   \begin{center}
   {\renewcommand{\arraystretch}{1.6}%
     \label{tab:agda-metis-table}
-    \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{2mm}}l@{\hspace{2mm}}c@{\hspace{2mm}}|}
+    \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{4mm}}l@{\hspace{2mm}}c@{\hspace{2mm}}|}
     \hline
-    \textbf{\Metis rule} & \textbf{Purpose} &\textbf{Theorem number}\\ \hline
+    \textbf{Rule} & \textbf{Purpose} &\textbf{Theorem number}\\ \hline
 
       \texttt{strip}
       &Strip a goal into subgoals

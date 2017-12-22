@@ -283,10 +283,9 @@
 
 \newcommand{\NN}{\ensuremath{\mathbb{N}}}
 
-\newcommand{\fun}[1]
-  {{\fontseries{sb}\selectfont\textsf{#1}}\xspace}
+\newcommand{\fun}[1]{{\fontseries{sb}\selectfont\textsf{#1}}\xspace}
 
-\newcommand{\type}[1]{ {\fontseries{sb}\selectfont \textsf{#1}} \xspace}
+\newcommand{\type}[1]{{\fontseries{sb}\selectfont \textsf{#1}}\xspace}
 
 \newcommand{\List}{\type{List}}
 \newcommand{\NProp}{\type{Prop}}
@@ -331,18 +330,18 @@
 \newcommand{\fuh}{\fun{uh}}
 
 % latin etc. abbrev
-\newcommand{\abbrev}[1]{#1} % alternative: \emph{#1}
+\newcommand{\abbrev}[1]{#1\xspace} % alternative: \emph{#1}
 \newcommand{\cf}{\abbrev{cf.}\ }
 \newcommand{\eg}{\abbrev{e.\,g.}}
 \newcommand{\Eg}{\abbrev{E.\,g.}}
 \newcommand{\ie}{\abbrev{i.\,e.}}
 \newcommand{\Ie}{\abbrev{I.\,e.}}
 \newcommand{\etal}{\abbrev{et.\,al.}}
-\newcommand{\wwlog}{w.\,l.\,o.\,g.} % \wlog is ``write into log file''
-\newcommand{\Wlog}{W.\,l.\,o.\,g.}
 \newcommand{\wrt}{w.\,r.\,t.}
 \newcommand{\TheEnd}{\\\hspace*{0.975\textwidth}$\blacksquare$}
 
+
+\hyphenation{Me-de-llín}
 % -------------------------------------------------------------------
 % Rest.
 % -------------------------------------------------------------------
@@ -350,7 +349,7 @@
 \usepackage{url}
 % \urldef{\mailsc}\path|{jprieto9, asr}@eafit.edu.co|
 \newcommand{\keywords}[1]{\par\addvspace\baselineskip
-\noindent\keywordname\enspace\ignorespaces#1}
+\noindent\keywordname\ignorespaces#1}
 
 % -------------------------------------------------------------------
 % biblatex.
@@ -438,14 +437,14 @@ maxbibnames=6,%
 % Include a footer with date and hour of the compilation
 % -------------------------------------------------------------------
 
-% \usepackage{fancyhdr}
-% \usepackage[us,12hr]{datetime} % `us' makes \today behave as usual in TeX/LaTeX
-% \fancypagestyle{plain}{
-% \fancyhf{}
-% \rfoot{Compiled on {\ddmmyyyydate\today} at \currenttime}
-% \lfoot{Page \thepage}
-% \renewcommand{\headrulewidth}{0pt}}
-% \pagestyle{plain}
+\usepackage{fancyhdr}
+\usepackage[us,12hr]{datetime} % `us' makes \today behave as usual in TeX/LaTeX
+\fancypagestyle{plain}{
+\fancyhf{}
+\rfoot{Compiled on {\ddmmyyyydate\today} at \currenttime}
+\lfoot{Page \thepage}
+\renewcommand{\headrulewidth}{0pt}}
+\pagestyle{plain}
 
 % -------------------------------------------------------------------
 

@@ -9,6 +9,35 @@ prover reasoning steps. Since we left out semantics to treat only the
 syntax aspects of propositional logic, our approach shows logic
 equivalence by converting propositions to their conjunctive normal
 form, and reordering those and the inner disjunctions to match them.
+
+\begin{mydefinition}
+
+A \emph{literal} is an propositional variable (positive literal) or a
+negation of an propositional variable (negative literal).
+
+\end{mydefinition}
+
+\begin{notation}
+We use \Lit as synonym of \Prop type to refer literals.
+\end{notation}
+
+\begin{mydefinition}
+
+The \emph{negative normal form} of a formula is the logical
+equivalent version of it in which negations appear only in the
+literals and the formula does not contain any implications.
+
+\end{mydefinition}
+
+\begin{mydefinition}
+
+The \emph{conjunctive normal form} of a formula also called clausal
+normal form is the logical equivalent version expressed as a
+conjunction of clauses where a \emph{clause} is the disjunction of
+zero or more literals.
+
+\end{mydefinition}
+
 Below, we provide Lemma~\ref{lem:reorder-or},
 Lemma~\ref{lem:reorder-and}, Lemma~\ref{lem:reorder-and-or} to perform such reordering tasks, the omitted proofs can be found
 in~\cite{AgdaMetis}.
@@ -49,7 +78,7 @@ into account for the proof-reconstruction.
 The $\fbuild_{∨}$ function defined in~\eqref{eq:build-or} intends to
 construct a disjunction from another disjunction, specifically, this
 function will try to rearrange the disjuncts in the source formula to
-match with the target disjunction formula.
+be the target disjunction formula.
 
 \begin{mainlemma}
 \label{lem:build-or}
@@ -284,17 +313,6 @@ literal $ℓ$ and its negation $¬ ℓ$ respectively. Then, it produces the
 proposition after removing the literal $ℓ$ and the second proposition
 after removing its negation $¬ ℓ$.
 
-\begin{mydefinition}
-
-A \emph{literal} is an propositional variable (positive literal) or a
-negation of an propositional variable (negative literal).
-
-\end{mydefinition}
-
-\begin{notation}
-We use \Lit as synonym of \Prop type to refer literals.
-\end{notation}
-
 The positive literal~$ℓ$ must occur in the formula from the first
 derivation and the negative literal~$¬ ℓ$ must occur in the formula
 from the second derivation, see the pattern of the \emph{resolve}
@@ -342,7 +360,7 @@ result.
       \frsol~φ &=
         \begin{cases}
           φ₂,      &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∧ (¬ φ₁ ∨ φ₂);\\
-          φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∧ (¬ φ₁ ∨ φ₄);\\\
+          φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∧ (¬ φ₁ ∨ φ₄);\\
           φ, &\text{ otherwise.}
         \end{cases}
       \end{array}
@@ -353,7 +371,7 @@ result.
 \begin{mainth}
   \label{thm:resolve}
   Let $ℓ$ be a literal, $ℓ : \Lit$, and $ψ : \Target$. If $Γ ⊢ φ₁$ and
-  $Γ ⊢ φ₂$ then $Γ ⊢ \fresolve~φ₁~φ₂~ℓ~ψ$, where
+  $Γ~⊢~φ₂$ then $Γ~⊢~\fresolve~φ₁~φ₂~ℓ~ψ$, where
   \begin{equation}
   \begin{split}
   \label{eq:resolve}
@@ -388,7 +406,7 @@ result.
 \begin{myexamplenum}
 
 Continuing with the problem presented in
-Example~\ref{ex:resolve-tstp}, we can use Theorem \ref{thm:resolve} to derive $Γ ⊢ p ∨ q$.
+Example~\ref{ex:resolve-tstp}, we can use Theorem \ref{thm:resolve} to derive $Γ~⊢~p~∨~q$.
 
 \begin{equation*}
   \begin{bprooftree}

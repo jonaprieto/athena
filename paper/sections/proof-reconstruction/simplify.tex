@@ -5,12 +5,12 @@
 \label{sssec:simplify}
 
 The \simplify rule is an inference that performs simplification of
-definitions and tautologies. This rule transverses a list of previous
-derivations by applying Lemma~\ref{lem:canon-or},
-Lemma~\ref{lem:canon-and}, among others.
-This rule works to find a contradiction in the first place, or a new
-formula (often smaller than its input formulas) to use later in the
-derivation.
+tautologies in a list of derivations. This rule simplifies such a list
+by transversing the list while applying Lemma~\ref{lem:canon-or},
+Lemma~\ref{lem:canon-and}, among others theorems presented in the following.
+The goal of this rule despites simplifying the list of derivations to a
+new formula (often smaller than its input formulas), consists of finding
+a contradiction.
 
 We observe based on the analysis of different cases in the \TSTP
 derivations that \simplify can be modeled by a function with three
@@ -25,9 +25,9 @@ the negation of a given literal $ℓ$ from a input formula.
   \begin{aligned}
   &\hspace{.495mm}\freduce : \Prop → \Lit → \Prop\hspace*{3.5cm}\\
   &\begin{array}{lll}
-\freduce &(φ₁~∧~φ₂)~&ℓ~= \fsimplify_{∧}~(\freduce~φ₁~ℓ~∧~\freduce~φ₂~ℓ)\\
-\freduce &(φ₁~∨~φ₂)~&ℓ~= \fsimplify_{∨}~(\freduce~φ₁~ℓ~∨~\freduce~φ₂~ℓ)\\[2mm]
-\freduce &φ~&ℓ~=\begin{cases}
+\freduce &(φ₁~∧~φ₂) &ℓ~= \fsimplify_{∧}~(\freduce~φ₁~ℓ~∧~\freduce~φ₂~ℓ)\\
+\freduce &(φ₁~∨~φ₂) &ℓ~= \fsimplify_{∨}~(\freduce~φ₁~ℓ~∨~\freduce~φ₂~ℓ)\\[2mm]
+\freduce &φ &ℓ~=\begin{cases}
   ⊥,  &\text{ if }φ\text{ is a literal and }ℓ ≡ \fnnf(¬ φ);\\
   φ,  &\text{ otherwise.}
   \end{cases}
@@ -132,18 +132,18 @@ $Γ~⊢~\freduce~φ~ℓ$.
 The \fsimplify function is defined in~\eqref{eq:simplify}. If some
 input formula is equal to the target formula, we derive that formula.
 If some formula is $⊥$, we derive the target formula by using the
-$⊥-elim$ inference rule. Otherwise, the simplification functions take
-place if the second input formula is a conjunction or a disjunction.
-Otherwise, if the second input formula in the sources is a literal, we
+⊥-elim inference rule.
+Otherwise, we proceed by cases on the structure of the formula.
+For example, when the second source formula is a literal, we
 use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
 
 \begin{equation}
 \label{eq:simplify}
   \begin{aligned}
-  &\hspace{.495mm}\fsimplify : \Source → \Source → \Target → \Prop\hspace*{3.5cm}\\
-  & \fsimplify~φ₁~φ₂~ψ =\\
-  &\hspace{3mm}
-  \begin{cases}
+  &\hspace{.495mm}\fsimplify : \Source → \Source → \Target → \Prop \hspace*{3.5cm}\\
+  &\begin{array}{l}
+  \fsimplify~φ₁~φ₂~ψ~=\\
+  \hspace{3mm}\begin{cases}
   ψ, &\text{ if }φᵢ ≡ ⊥\text{ for some }i = 1, 2;\\
   ψ, &\text{ if }φᵢ ≡ ψ\text{ for some }i = 1, 2;\\
   \fsimplify_{∧}~(\fsimplify~φ₁~φ₂₁~ψ)~φ₂₂~ψ,
@@ -153,13 +153,14 @@ use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
   \freduce~φ₁~φ₂, &\text{ if }φ₂\text{ is a literal};\\
   φ₁,  &\text{ otherwise.}
   \end{cases}
+  \end{array}
   \end{aligned}
 \end{equation}
 
 \begin{mainlemma}
   \label{lem:binary-simplify}
   Let $ψ : \Target$. If $Γ ⊢ φ₁$ and $Γ ⊢ φ₂$ then
-  $Γ ⊢ \fsimplify~φ₁~φ₂$.
+  $Γ ⊢ \fsimplify~φ₁~φ₂~ψ$.
 \end{mainlemma}
 
 \begin{proof}
@@ -290,14 +291,13 @@ for $i = 1, \cdots, n$, $Γ ⊢ \fsimplify~γ_{n-1}~φ_{n}~ψ$. Let us prove it 
 
 \begin{myremark}
 
-Besides the fact that $\List~\Prop~\to~\Prop$ is the type that most
+Besides the fact that $\List~\Prop~\to~\Prop$ is the type that mostly
 fit with the \simplify rule, we choose a different option. In the
 translation from \TSTP to \Agda, we take the list of derivations and
 we apply the rule by using a left folding (the \verb!foldl! function
 in functional programming) with the $\fsimplify$ function over the
-list of $φ₁, φ₂, \cdots, φₙ$ that avoids us to define a new theorem
-type to support \List \Prop type in the conclusion side.
-
+list of $φ₁, φ₂, \cdots, φₙ$. This design decision avoids us to define a new theorem
+type to support \List~\Prop type in the premise side.
 \end{myremark}
 
 \begin{myexamplenum}
@@ -323,8 +323,8 @@ $$\fsimplify~(¬ p ∨ q)~(¬ q)~(¬ p) = ¬ p.$$
 % fof(norm3, ¬ q, inf(conjunct, [norm0])).
 % fof(norm4, ¬ p, inf(simplify, [norm2, norm3])).
 % \end{verbatim}
-\item To derive ⊥ in \verb!n₆! we use
-Theorem~\ref{thm:simplify} and we get the following proof.
+\item We use Theorem~\ref{thm:simplify} to derive ⊥ in \verb!n₆!, the
+following is a proof.
 
 \begin{equation*}
 \begin{bprooftree}
