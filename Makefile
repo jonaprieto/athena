@@ -30,7 +30,7 @@ endif
 
 GHC_VERSION := $(shell ghc --version 2>/dev/null)
 TESTED_GHC_VERSION1 :=The Glorious Glasgow Haskell Compilation System, version 8.0.2
-TESTED_GHC_VERSION2 :=The Glorious Glasgow Haskell Compilation System, version 8.2.1
+TESTED_GHC_VERSION2 :=The Glorious Glasgow Haskell Compilation System, version 8.2.2
 
 ghcversion:
 
