@@ -1,0 +1,425 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+
+\subsubsection{Canonicalize.}
+\label{sssec:canonicalize}
+
+The \canonicalize rule is an inference that transforms a formula to
+its negative normal form or its conjunctive normal form depending on
+the role that the formula plays in the problem.
+This rule jointly with the \clausify rule perform the so-called
+\emph{clausification} process mainly described
+in~\cite{Sutcliffe1996}.
+
+The \canonicalize rule also removes inside of the formula
+the tautologies listed in~Fig.~\ref{fig:redundancies}.
+
+\begin{figure}
+  \[
+    \begin{bprooftree}
+      \AxiomC{$Γ ⟝ φ ∨ ⊥$}
+      \UnaryInfC{$Γ ⟝ φ$}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+      \AxiomC{$Γ ⟝ φ ∨ ⊤$}
+      \UnaryInfC{$Γ ⟝ ⊤$}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+      \AxiomC{$Γ ⟝ φ ∨ ¬ φ$}
+      \UnaryInfC{$Γ ⟝ ⊤$}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+      \AxiomC{$Γ ⟝ φ ∨ φ$}
+      \UnaryInfC{$Γ ⟝ φ$}
+    \end{bprooftree}
+  \]
+
+  \[
+    \begin{bprooftree}
+      \AxiomC{$Γ ⟝ φ ∧ ⊥$}
+      \UnaryInfC{$Γ ⟝ ⊥$}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+      \AxiomC{$Γ ⟝ φ ∧ ⊤$}
+      \UnaryInfC{$Γ ⟝ φ$}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+      \AxiomC{$Γ ⟝ φ ∧ φ$}
+      \UnaryInfC{$Γ ⟝ φ$}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+      \AxiomC{$Γ ⟝ φ ∧ ¬ φ$}
+      \UnaryInfC{$Γ ⟝ ⊥$}
+    \end{bprooftree}
+  \]
+  \caption{Theorems to remove inside of a formula by the
+  \canonicalize rule.}
+\label{fig:redundancies}
+\end{figure}
+
+The \canonicalize rule is used by \Metis to introduce the subgoals in
+their refutation proofs but also helps to simplify formulas at
+intermediate steps in the derivations. As far as we know, the
+\canonicalize rule implements a conjunctive normal form conversion
+with simplifications of tautologies. Otherwise, when
+an axiom, definition or hypothesis is needed to prove some goal, this
+rule gets the negative normal form of the formula.
+
+To reconstruct the \canonicalize rule, we adapted some ideas from the
+\Metis source code. The presentation of this reconstruction is as
+follows. We firstly describe functions to remove tautologies inside
+of the formula. After, we present the negative normal form conversion
+in~Lemma~\ref{lem:nnf} and the conjunctive normal form in
+Lemma~\ref{lem:cnf}. At the end of this section, we state
+Theorem~\ref{thm:canonicalize} to reconstruct the \canonicalize rule.
+
+
+\begin{notation}
+In a disjunction, $φ ≡ φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
+if there is some $i = 1, \cdots, n$ such that $ψ ≡ φᵢ$.
+Note that $ψ ∈_{∨} φ$ is another representation for the equality
+$ψ ≡ \freorder_{∨}~φ~ψ$.
+\end{notation}
+
+In right-associative disjunctions we remove the tautologies
+in Fig.~\ref{fig:or-redundancies} using Lemma~\ref{lem:canon-or}.
+We assume the formulas to be right-associative unless otherwise
+stated.
+
+\begin{figure}
+\begin{equation*}
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∨ ⊥$}
+  \UnaryInfC{$Γ ⟝ φ$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∨ ⊤$}
+  \UnaryInfC{$Γ ⟝ ⊤$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∨ φ$}
+  \UnaryInfC{$Γ ⟝ φ$}
+\end{bprooftree}
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∨ ¬~φ$}
+  \UnaryInfC{$Γ ⟝ ⊤$}
+\end{bprooftree}\qquad
+\end{equation*}
+\caption{Theorems to remove inside of a disjunction by
+the \canonicalize rule.}
+\label{fig:or-redundancies}
+\end{figure}
+
+\begin{mainlemma}
+  \label{lem:canon-or}
+
+  Let $φ : \Prop$ be a right-associative formula. If $Γ~⟝~φ$
+  then $Γ~⟝~\fcanon_{∨}~φ$, where
+
+\begin{equation}
+\label{eq:canon-or}
+\begin{aligned}
+ &\hspace{.495mm}\fcanon_{∨} : \NProp \to \NProp\\
+ &\begin{array}{lll}
+   \fcanon_{∨} &(⊥ ∨ φ)     &= \fcanon_{∨}~φ \\
+   \fcanon_{∨} &(φ ∨ ⊥)     &= \fcanon_{∨}~φ \\
+   \fcanon_{∨} &(⊤ ∨ φ)     &= ⊤\\
+   \fcanon_{∨} &(φ ∨ ⊤)     &= ⊤\\
+   % \fcanon_{∨} &(¬ φ₁ ∨ φ₂) &=
+   %      \begin{cases}
+   %       \fcanon_{∨}~φ₂,        &\text{ if } ¬ φ₁ ∈_{∨} φ₂;\\
+   %       ⊤,                     &\text{ if } φ₁ ∈_{∨} φ₂;\\
+   %       ⊤,                     &\text{ if } \fcanon_{∨}~φ₂≡ ⊤;\\
+   %       ¬ φ₁,                  &\text{ if } \fcanon_{∨}~φ₂≡ ⊥;\\
+   %       ¬ φ₁ ∨ \fcanon_{∨}~φ₂, &\text{ otherwise.}
+   %      \end{cases}\\
+   \fcanon_{∨} &(φ₁ ∨ φ₂)   &=
+    \begin{cases}
+     ⊤,                     & \text{ if } φ₁ ≡ ¬ ψ \text{ for some }ψ : \Prop \text{ and } ψ ∈_{∨} φ₂;\\
+     ⊤,                     & \text{ if } (¬ φ₁) ∈_{∨} φ₂;\\
+     \fcanon_{∨}~φ₂,        & \text{ if } φ₁ ∈_{∨} φ₂;\\
+     ⊤,                     & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊤;\\
+     φ₁,                    & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊥;\\
+     φ₁ ∨ \fcanon_{∨}~φ₂,   & \text{ otherwise.}
+    \end{cases}\\
+   \fcanon_{∨} &φ           &= φ.
+  \end{array}
+\end{aligned}
+\end{equation}
+\end{mainlemma}
+
+\begin{myexamplenum}
+
+The formula $φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ$ in \eqref{eq:lemma-rm-or-example}
+has some tautologies. To remove such tautologies we first use
+Lemma~\ref{lem:rassoc} to get the right-associative version of the
+formula. Then, we can use the $\fcanon_{∨}$ function to get the
+logical equivalent formula $ψ ∨ φ$.
+
+\begin{equation}
+\label{eq:lemma-rm-or-example}
+  \begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ $}
+  \RightLabel{Lemma~\ref{lem:rassoc}}
+  \UnaryInfC{$Γ ⟝ \fassoc_{∨}~(φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ) $}
+  \RightLabel{by (\ref{eq:fassoc})}
+  \UnaryInfC{$Γ ⟝ φ ∨ (ψ ∨ (φ ∨ (φ ∨ φ)))$}
+  \RightLabel{Lemma~\ref{lem:canon-or}}
+  \UnaryInfC{$Γ ⟝ \fcanon_{∨}~(φ ∨ (ψ ∨ (φ ∨ (φ ∨ φ))))$}
+  \RightLabel{\eqref{eq:canon-or}}
+  \UnaryInfC{$Γ ⟝ ψ ∨ φ$}
+  \end{bprooftree}
+  \end{equation}
+\end{myexamplenum}
+
+Now, we have removed tautologies in disjunctions by applying the
+$\fcanon_{∨}$ function. In a similar way, we define the $\fcanon_{∧}$
+function to work with conjunctions.
+
+\begin{notation}
+In a conjunction, $φ ≡ φ₁ ∧ φ₂ ∧ \cdots ∧ φₙ$, we say
+$ψ ∈_{∧} φ$, if there is some $i = 1, \cdots, n$ such that $ψ ≡ φᵢ$.
+Note that $ψ ∈_{∧} φ$ is another representation of
+the equality $ψ ≡ \fconjunct~φ~ψ$.
+\end{notation}
+
+In right-associative conjunctions we remove the tautologies
+in Fig.~\ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
+
+\begin{figure}
+\begin{equation*}
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∧ ⊤$}
+  \UnaryInfC{$Γ ⟝ φ$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∧ ⊥$}
+  \UnaryInfC{$Γ ⟝ ⊥$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∧ φ$}
+  \UnaryInfC{$Γ ⟝ φ$}
+\end{bprooftree}\qquad
+\begin{bprooftree}
+  \AxiomC{$Γ ⟝ φ ∧ ¬~φ$}
+  \UnaryInfC{$Γ ⟝ ⊥$}
+\end{bprooftree}
+\end{equation*}
+\caption{Conjunction tautologies.}
+\label{fig:and-redundancies}
+\end{figure}
+
+\begin{mainlemma}
+  \label{lem:canon-and}
+
+  Let $φ : \Prop$ be a right-associative formula. If $Γ~⟝~φ$
+  then $Γ~⟝~\fcanon_{∧}~φ$, where
+
+  \begin{equation}
+   \label{eq:canon-and}
+    \begin{aligned}
+     &\hspace{.495mm}\fcanon_{∧} : \NProp \to \NProp\\
+      &\begin{array}{lll}
+        \fcanon_{∧} &(⊥ ∧ φ)     &= ⊥  \\
+        \fcanon_{∧} &(φ ∧ ⊥)     &= ⊥  \\
+        \fcanon_{∧} &(⊤ ∧ φ)     &= \fcanon_{∧}~φ \\
+        \fcanon_{∧} &(φ ∧ ⊤)     &= \fcanon_{∧}~φ \\
+        % \fcanon_{∧} &(¬ φ₁ ∧ φ₂) &=
+        %   \begin{cases}
+        %     ⊥,                     &\text{ if } φ₁ ∈_{∧} φ₂;\\
+        %     \fcanon_{∧}~φ₂,        &\text{ if } ¬ φ₁ ∈_{∧} φ₂;\\
+        %     ⊥,                     &\text{ if } \fcanon_{∧}~φ₂~≡ ⊥;\\
+        %      \fcanon_{∧}~φ₂,       &\text{ if } \fcanon_{∧}~φ₂~≡ ⊤;\\
+        %     ¬ φ₁ ∧ \fcanon_{∧}~φ₂, &\text{ otherwise.}
+        %   \end{cases}\\
+        \fcanon_{∧} &(φ₁ ∧ φ₂) &=
+          \begin{cases}
+            ⊥,                   & \text{ if } φ₁ ≡ ¬ ψ \text{ for some }ψ : \Prop \text{ and } ψ ∈_{∧} φ₂;\\
+            ⊥,                   & \text{ if } (¬ φ₁) ∈_{∧} φ₂;\\
+            \fcanon_{∧}~φ₂,      & \text{ if } φ₁ ∈_{∧} φ₂;\\
+            φ₁,                  & \text{ if } \fcanon_{∧}~φ₂~≡ ⊤;\\
+            ⊥,                   & \text{ if } \fcanon_{∧}~φ₂~≡ ⊥;\\
+            φ₁ ∧ \fcanon_{∧}~φ₂, &\text{ otherwise.}
+          \end{cases}\\
+        \fcanon_{∧} &φ         &= φ.
+       \end{array}
+    \end{aligned}
+    \end{equation}
+\end{mainlemma}
+
+Now, we are ready to define the negative normal form of a formula with
+simplifications by applying to it the $\fnnf$ function defined in
+Lemma~\ref{lem:nnf} (see more details in Appendix~\ref{app:polarity-for-propositions}).
+This definition is mainly based on the \Metis
+source code to normalize formulas. To define such a function in type
+theory we used bounded recursion as we describe in
+Section~\ref{ssec:structural-recursion}.
+
+\begin{equation}
+\label{eq:nnf}
+\begin{aligned}
+&\hspace{.495mm}\fnnf_{1} : \Prop \to \Nat \to \Prop\\
+&\begin{array}{llll}
+\fnnf_{1} &(φ₁ ∧ φ₂)     &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~φ₁~n ∧ \fnnf_{1}~φ₂~n))\\
+\fnnf_{1} &(φ₁ ∨ φ₂)     &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~φ₁~n ∨ \fnnf_{1}~φ₂~n))\\
+\fnnf_{1} &(φ₁ ⇒ φ₂)     &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~((¬ φ₁) ∨ φ₂)~n))\\
+\fnnf_{1} &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~((¬ φ₁) ∨ (¬ φ₂))~n))\\
+\fnnf_{1} &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~((¬ φ₁) ∧ (¬ φ₂))~n))\\
+\fnnf_{1} &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~((¬ φ₂) ∧ φ₁)~n))\\
+\fnnf_{1} &(¬ (¬ φ))     &(\suc~n) &= \fnnf_{1}~φ₁~n\\
+\fnnf_{1} &(¬ ⊤)         &(\suc~n) &= ⊥\\
+\fnnf_{1} &(¬ ⊥)         &(\suc~n) &= ⊤\\
+\fnnf_{1} &φ             &\zero    &= φ
+\end{array}
+\end{aligned}
+\end{equation}
+
+\begin{mainlemma}
+  \label{lem:nnf}
+  If $Γ ⊢ φ$ then $Γ ⟝ \fnnf~φ$, where
+  \begin{align*}
+   \begin{split}
+     &\fnnf : \NProp \to \NProp\\
+     &\fnnf~φ = \fnnf_{1}~φ~(\fnnf_{cm}~φ).
+   \end{split}
+  \end{align*}
+  The $\fnnf_{cm}$  complexity measure function
+  is defined in Appendix~\ref{app:polarity-for-propositions}.
+\end{mainlemma}
+
+To get the conjunctive normal form, we make sure the formula is a
+conjunction of disjunctions. For such a purpose, we use distributive laws in
+Lemma~\ref{lem:dist} to get that form after applying the $\fnnf$ function.
+
+\begin{mainlemma}
+  \label{lem:dist}
+  $Γ ⟝ φ$ then $Γ ⟝ \fdist~φ$, where
+  \begin{equation*}
+  \begin{aligned}
+  &\hspace{.495mm}\fdist : \NProp \to \NProp\\
+  &\begin{array}{lll}
+    \fdist &(φ₁ ∧ φ₂) &= \fdist~φ₁ ∧ \fdist~φ₂\\
+    \fdist &(φ₁ ∨ φ₂) &= \fdist_{∨}~(\fdist~φ₁ ∨ \fdist~φ₂)\\
+    \fdist &φ         &= φ
+   \end{array}\\
+  \text{and}\\
+  &\hspace{.495mm}\fdist_{∨} : \NProp \to \NProp\\
+  &\begin{array}{lll}
+    \fdist_{∨}&((φ₁ ∧ φ₂) ∨ φ₃) &= \fdist_{∨}~(φ₁ ∨ φ₂) ∧ \fdist_{∨}~(φ₂ ∨ φ₃)\\
+    \fdist_{∨}&(φ₁ ∨ (φ₂ ∧ φ₃)) &= \fdist_{∨}~(φ₁ ∨ φ₂) ∧ \fdist_{∨}~(φ₁ ∨ φ₃)\\
+    \fdist_{∨}&φ &= φ.
+    \end{array}
+   \end{aligned}
+  \end{equation*}
+\end{mainlemma}
+
+We get the conjunctive normal form by applying
+the $\fnnf$ function follow by the $\fdist$ function.
+
+\begin{mainlemma}
+\label{lem:cnf}
+  If $Γ ⊢ φ$ then $Γ ⊢ \fcnf~φ$, where
+  \begin{align*}
+    \begin{split}
+    &\fcnf : \Prop \to \Prop\\
+    &\fcnf~φ = \fdist~(\fnnf~φ).
+    \end{split}
+  \end{align*}
+\end{mainlemma}
+
+\begin{proof}
+  Composition of Lemma~\ref{lem:dist} and Lemma~\ref{lem:nnf}.
+\end{proof}
+
+Since all the transformations in Lemma~\ref{lem:nnf} and
+Lemma~\ref{lem:dist} came from logical equivalences in propositional
+logic, we state the following lemmas used in the reconstruction of the \simplify rule in Lemma~\ref{lem:reduce-literal} and in
+Theorem~\ref{thm:canonicalize} for the \canonicalize rule.
+\begin{mainlemma}
+\label{lem:nnf-inv}
+  If $Γ ⊢ \fnnf~φ$ then $Γ ⊢ φ$.
+\end{mainlemma}
+
+\begin{mainlemma}
+\label{lem:cnf-inv}
+  If $Γ ⊢ \fcnf~φ$ then $Γ ⊢ φ$.
+\end{mainlemma}
+
+Now, we are ready to reconstruct the \fcanonicalize rule. This inference rule
+defined in \eqref{eq:canonicalize} performs normalization for a proposition.
+That is, depending on the role of the formula in the problem, it converts that
+formula to its negative normal form or its conjunctive normal form. In both
+cases, \canonicalize simplifies the formula by removing tautologies inside of
+it as we widely described above for theorems in Fig.~\ref{fig:redundancies}.
+
+Based on the \Metis source code, when the formula plays the axiom or
+definition role, the \canonicalize rule transforms the source formula
+to its negative normal form. Otherwise, this rule converts the
+formula to a simplified conjunctive normal form.
+
+Since this rule mostly consists of dealing with clauses, to
+reconstruct this rule, our strategy mainly consists of checking the
+equality of negative normal form between the source and the target
+formula. If it fails, we try to reorder the conjunctive normal form
+of the source formula to match with the conjunctive normal form of
+the target formula. It definition is as follows.
+
+
+\begin{mainth} % (fold)
+  \label{thm:canonicalize}
+   Let $ψ : \Target$. If $Γ ⊢ φ$ then $Γ~⊢~\fcanonicalize~φ~ψ$, where
+  \begin{equation}
+  \label{eq:canonicalize}
+  \begin{aligned}
+  &\hspace{.495mm}\fcanonicalize : \Source \to \Target \to \Prop\\
+  &\fcanonicalize~φ~ψ = \begin{cases}
+        ψ, &\text{ if  } ψ ≡ φ;\\
+        ψ, &\text{ if  } ψ ≡ \fnnf~φ;\\
+        ψ, &\text{ if  } \fcnf~ψ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ);\\
+        φ, &\text{ otherwise. }
+        \end{cases}
+   \end{aligned}
+  \end{equation}
+\end{mainth}
+
+\begin{proof}\hspace{3mm}
+\begin{itemize}
+\item[∙] Case $φ ≡ ψ$. By substitution theorem we conclude $Γ ⊢ ψ$.
+\item[∙] Case $ψ ≡ \fnnf~φ$.
+\begin{equation*}
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ φ$}
+    \RightLabel{Lemma~\ref{lem:nnf}}
+    \UnaryInfC{$Γ ⊢~\fnnf~φ$}
+    \AxiomC{$ψ ≡ \fnnf~φ$}
+    \RightLabel{\fsubst}
+    \BinaryInfC{$Γ ⊢ ψ$}
+  \end{bprooftree}
+\end{equation*}
+
+\item[∙] Case $\fcnf~ψ ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$.
+  \begin{equation*}
+    \begin{bprooftree}
+      \AxiomC{$Γ ⊢ φ$}
+      \RightLabel{Lemma~\ref{lem:cnf}}
+      \UnaryInfC{$Γ ⊢ \fcnf~φ$}
+      \RightLabel{Lemma~\ref{lem:reorder-and-or}}
+      \UnaryInfC{$Γ ⊢ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$}
+      \AxiomC{$\fcnf~ψ~≡~\freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$}
+      \RightLabel{\fsubst}
+      \BinaryInfC{$Γ ⊢ \fcnf~ψ$}
+      \RightLabel{Lemma~\ref{lem:cnf-inv}}
+      \UnaryInfC{$Γ ⊢ ψ$}
+    \end{bprooftree}
+  \end{equation*}
+\end{itemize}
+\end{proof}
+
+\end{document}

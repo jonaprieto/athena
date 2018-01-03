@@ -1,0 +1,69 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+\subsubsection{Conjunct.}
+\label{sssec:splitting-a-conjunct}
+
+The \conjunct rule extracts from a conjunction one of its conjuncts.
+This rule is a generalization of the projection rules for the
+conjunction connective as the following \TSTP excerpt shows.
+
+\begin{myexamplenum}\hspace{10cm}
+
+\begin{verbatim}
+  fof(p₁, p ∧ q ∧ (r ∨ ¬ p), ...
+  fof(p₂, q, inf(conjunct, p₁)).
+  fof(p₃, r ∨ ¬ p, inf(conjunct, p₁)).
+\end{verbatim}
+
+In the first formula, $p ∧ q ∧ (r ∨ ¬ p)$, we find a left-associative
+conjunction named \verb!p₁!. The \conjunct rule extracts $q$ from the
+\verb!p₁! using a left projection (∧-proj₁) follow by a right
+projection (∧-proj₂). After, the \conjunct rule extracts $r ∨ ¬ p$ by
+using a right projection on \verb!p₁!.
+
+\end{myexamplenum}
+
+\begin{mainth}
+  \label{thm:conjunct}
+  Let $ψ : \Target$. If $Γ ⊢ φ$ then $Γ ⊢ \fconjunct~φ~ψ$, where
+  \begin{equation*}
+  % \label{eq:rank-definition}
+  \begin{aligned}
+  &\hspace{.495mm}\fconjunct : \Source \to \Target \to \Prop\\
+  &\begin{array}{llll}
+  \fconjunct~φ~ψ &=
+        \begin{cases}
+            ψ, &\text{ if }φ ≡ ψ;\\
+            ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ and }ψ ≡ \fconjunct~φ₁~ψ;\\
+            ψ, &\text{ if }φ ≡ φ₁ ∧ φ₂\text{ and }ψ ≡ \fconjunct~φ₂~ψ;\\
+            φ, &\text{ otherwise.}
+          \end{cases}
+  \end{array}
+  \end{aligned}
+  \end{equation*}
+\end{mainth}
+
+\begin{proof}\hspace{10cm}
+\begin{itemize}
+\item[∙] Case $φ ≡ ψ$. $Γ ⊢ \fconjunct~φ~ψ$ normalizes to $Γ ⊢ ψ$.
+Then, we get the desire conclusion by applying the $\fsubst$ lemma.
+\item[∙] Case $φ ≡ φ₁ ∧ φ₂$. If we can get $ψ ≡ \fconjunct~φ_{i}~ψ$ for some $i = 1,\ 2$, then,
+
+\begin{equation*}
+  \begin{bprooftree}
+  \AxiomC{$Γ ⊢ φ₁ ∧ φ₂$}
+  \RightLabel{∧-proj$_{i}$}
+  \UnaryInfC{$Γ ⊢ φ_{i}$}
+  \RightLabel{by~ind.~hyp.}
+  \UnaryInfC{$Γ ⊢ \fconjunct~φ_{i}~ψ$}
+  \AxiomC{$ψ ≡ \fconjunct~φ_{i}~ψ$}
+  \RightLabel{\fsubst}
+  \BinaryInfC{$Γ ⊢ ψ$}
+  \end{bprooftree}
+\end{equation*}
+\item[∙] Otherwise, the last case follows from the hypothesis.
+\end{itemize}
+\end{proof}
+
+\end{document}

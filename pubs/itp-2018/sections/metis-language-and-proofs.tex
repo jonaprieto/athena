@@ -1,0 +1,277 @@
+%
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+% ===================================================================
+
+% \begin{myremark}
+% We address proof-reconstruction in this paper for refutation proofs.
+% We annotate \abbre{CPL} problems using \verb!fof! formulas that
+% \Metis converts to \abbre{CNF} clauses to look for a refutation.
+% \end{myremark}
+
+
+\section{Metis: Language and Proofs}
+\label{sec:metis-language-and-proofs}
+
+\Metis is an automatic theorem prover for first-order logic with
+equality developed by Hurd~\cite{hurd2003first}. This prover is
+suitable for proof-reconstruction since it provides well-documented
+proofs to justify its deduction steps from the basis of only six
+inference rules for first-order logic (see, for example,
+\cite{paulson2007source,Farber2015}). For the propositional fragment,
+\Metis has three inference rules, see Fig.~\ref{fig:metis-inferences}.
+
+\begin{figure}
+\begin{equation*}
+  \begin{bprooftree}
+    \AxiomC{}
+    \RightLabel{axiom~$φ₁,\cdots,φₙ$}
+    \UnaryInfC{$Γ ⊢ φ₁ ∨ \cdots ∨ φₙ$}
+  \end{bprooftree}
+  \qquad
+  \begin{bprooftree}
+    \AxiomC{}
+    \RightLabel{assume $φ$}
+    \UnaryInfC{$Γ ⊢ φ ∨ ¬ φ$}
+  \end{bprooftree}
+  \end{equation*}
+  \vskip2mm
+  \begin{equation*}
+  \begin{bprooftree}
+    \AxiomC{$Γ ⊢ ℓ ∨ φ$}
+    \AxiomC{$Γ ⊢ ¬ ℓ ∨ ψ$}
+    \RightLabel{resolve $ℓ$}
+    \BinaryInfC{$Γ ⊢ φ ∨ ψ$}
+  \end{bprooftree}
+\end{equation*}
+\caption{Propositional logic inference rules of the \texttt{Metis} prover.}
+\label{fig:metis-inferences}
+\end{figure}
+
+% -------------------------------------------------------------------
+
+\subsection{Input language}
+\label{ssec:input-language}
+
+The \TPTP language is the input language to encode problems used by \Metis.
+It includes the first-order form (denoted by \name{fof}) and clause normal form (denoted by \name{cnf}) formats~\cite{sutcliffe2009}.
+The \TPTP syntax\footnote{See the complete syntax grammar
+at \url{http://www.cs.miami.edu/~tptp/TPTP/SyntaxBNF.html}} describes a well-defined grammar to handle annotated
+formulas with the following form:
+
+\begin{verbatim}
+  language(name, role, formula).,
+\end{verbatim}
+
+where the \name{language} can be \name{fof} or \name{cnf}. The
+\name{name} serves to identify the formula within the problem. Each
+formula assumes a \name{role}, this could be an \name{axiom},
+\name{conjecture}, \name{definition}, \name{plain} or an
+\name{hypothesis}.
+
+The formulas include the constants
+\verb!$true! and \verb!$false!, the negation unary
+operator~(\verb!~!), and the binary connectives
+(\verb!&!, \verb!|!, \verb!=>!) to represent
+($⊤$, $⊥$, $¬$, $∧$, $∨$, $⇒$) respectively.
+
+\begin{myexamplenum}
+  For instance, let us express the problem
+  $p\, ⊢ ¬ (p ∧ ¬ p) ∨ (q ∧ ¬ q)$ in \TPTP syntax. We begin by
+  declaring the $p$ axiom using the \verb!axiom!  keyword. Next, we
+  include the expected conclusion using the \verb!conjecture! keyword.
+
+\begin{verbatim}
+  fof(h, axiom, p).
+  fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
+\end{verbatim}
+
+\end{myexamplenum}
+
+
+\subsection{Output language}
+\label{ssec:output-language}
+
+The \TSTP language is an output language for derivations of
+ATPs~\cite{Sutcliffe-Schulz-Claessen-VanGelder-2006}.
+A \TSTP derivation is a directed acyclic graph, a proof tree,
+where each leaf is a formula from the \TPTP input. A node is a formula
+inferred from the parent formulas. The root is the final derived formula,
+such a derivation is a list of annotated formulas with the following form:
+
+\begin{verbatim}
+  language(name, role, formula, source [,useful info]).
+\end{verbatim}
+
+The \name{source} field is an inference record with the following
+pattern:
+
+\begin{verbatim}
+  inference(rule, useful info, parents).
+\end{verbatim}
+
+The \name{rule} in the line above stands for the inference name;
+the other fields are supporting arguments or useful information to
+apply the reasoning step, and list the parents nodes.
+
+\begin{myexamplenum}
+
+In the script below, \strip is the name of the inference.
+It has no arguments and derives from one parent node named  \verb!goal!. The
+result of this inference when it applies to the \verb!goal! formula is
+\verb!p!.
+
+\begin{verbatim}
+  fof(subgoal_0, plain, p, inference(strip, [], [goal])).
+\end{verbatim}
+\end{myexamplenum}
+
+\begin{notation}
+
+We adopt a customized \TSTP syntax to keep as short as possible the
+\Metis derivations for increasing the readability of this paper.
+
+\begin{myexamplenum}
+\label{fig:metis-example-tree}
+
+Let us consider the following \TSTP derivation using
+the customized \TSTP syntax (see the original \TSTP derivation and customizations in Appendix~\ref{app:tstp-syntax}).
+
+\begin{verbatim}
+  fof(premise, axiom, p).
+  fof(goal, conjecture, p).
+  fof(s₀, inf(strip, goal)).
+  fof(neg₀, ¬ p, inf(negate, s₀)).
+  fof(n₀, ¬ p, inf(canonicalize, neg₀)).
+  fof(n₁, p, inf(canonicalize, premise)).
+  fof(n₂, ⊥, inf(simplify, [n₀, n₁]))
+  cnf(r₀, ⊥, inf(canonicalize, n₂)).
+\end{verbatim}
+
+\end{myexamplenum}
+\end{notation}
+
+% -------------------------------------------------------------------
+
+\subsection{Derivations}
+\label{ssec:metis-proofs}
+
+A derivation generated by \Metis encodes a natural
+deduction proof, Fig.~\ref{fig:metis-example} is an example of such kind of proof. With the inference rules in
+Fig.~\ref{tab:agda-metis-table}
+as the only valid deduction steps, \Metis
+attempts to prove conjectures by refutation (\ie,
+\emph{falsium} in the root of the \TSTP derivation).
+
+These derivations are directed acyclic graphs, trees of refutations.
+Each node stands for an application of an inference rule and the leaves in the tree represent formulas in the given problem.
+Each node is labeled with a name of the inference rule
+(\eg, \canonicalize).
+Each edge links a premise with one conclusion.
+The proof graphs have at their root the conclusion
+$⊥$, since \Metis derivations are refutations.
+
+\begin{figure}[!ht]
+\centering
+  \begin{bprooftree}\tt
+    \AxiomC{}
+    \RightLabel{negate}
+    \UnaryInfC{$\neg p$}
+    \RightLabel{strip}
+    \UnaryInfC{$\neg p$}
+    \AxiomC{}
+    \RightLabel{axiom}
+    \UnaryInfC{$p$}
+    \RightLabel{canonicalize}
+    \UnaryInfC{$p$}
+    \RightLabel{simplify}
+    \BinaryInfC{$⊥$}
+    \RightLabel{canonicalize}
+    \UnaryInfC{$⊥$}
+  \end{bprooftree}
+  \caption{\Metis derivation tree of Example~\ref{fig:metis-example-tree}.}
+  \label{fig:metis-example}
+\end{figure}
+
+\subsection{Inference rules}
+\label{ssec:metis-inferences-rules}
+
+We present the list of inference rules used by \Metis in the \TSTP derivations
+for propositional logic in Table~\ref{tab:agda-metis-table}. We reconstruct
+these rules in Section~\ref{sec:proof-reconstruction}. The reader may notice
+that the inference rules presented in Fig~\ref{fig:metis-inferences} diverge
+from the rules in aforementioned table. The former rules are implemented by the
+latter rules in the \TSTP derivations.
+For instance, as far as we know, in \TSTP
+derivations,  the \emph{axiom} rule is implemented by the rules
+\canonicalize, \clausify, \conjunct, and \simplify.
+
+We first present the \strip inference rule since it is the rule that appears
+first after each conjecture. The other rules are sorted mainly follow their
+level of complexity of their definitions and the formalization presented in
+Section~\ref{ssec:emulating-inferences}. Some inference rules depend on the
+formalizations of other rules. For instance, the \simplify rule and the
+\clausify rule need theorems developed for the \canonicalize rule. The
+\canonicalize rule needs theorems developed in the \resolve formalization,
+and \resolve depends on the \conjunct rule.
+
+% \Metis looks for a refutation to prove \verb!fof! problems.
+% A \verb!fof! problem contains the conjecture, the \emph{goal}, in the
+% problem. This goal is stripped into subgoals by using the \strip rule. The
+% subgoals are the conjuncts in a general conjunction that is equivalent to the
+% aforementioned goal.
+% Therefore, to prove the goal, \Metis proves independently each subgoal since
+% they tend to be less complex or even fewer propositions. At the end, the
+% conjunction of all subgoal proofs must prove the goal. Nevertheless, this last
+% reasoning is not explicit neither in the \TSTP derivations nor in the
+% documentation available about \Metis.
+% Since \Metis replies refutation proofs, to prove each subgoal, in the \TSTP
+% derivation, the inference rule \negate introduces the negation of such
+% subgoals. The \negate rule is a specification of the \emph{assume} rule.
+
+\begin{table}[!ht]
+
+\caption{\Metis inference rules.}
+  \begin{center}
+  {\renewcommand{\arraystretch}{1.6}%
+    \label{tab:agda-metis-table}
+    \begin{tabular}{|@{\hspace{2mm}}l@{\hspace{4mm}}l@{\hspace{2mm}}c@{\hspace{2mm}}|}
+    \hline
+    \textbf{Rule} & \textbf{Purpose} &\textbf{Theorem number}\\ \hline
+
+      \texttt{strip}
+      &Strip a goal into subgoals
+      &\ref{thm:strip}
+      \\
+
+      \texttt{conjunct}
+      &Takes a formula from a conjunction
+      &\ref{thm:conjunct}
+      \\
+
+      \texttt{resolve}
+      &A general form of the resolution theorem
+      &\ref{thm:resolve}
+      \\
+
+      \texttt{canonicalize}
+      &Normalization of the formula
+      &\ref{thm:canonicalize}
+      \\
+
+      \texttt{clausify}
+      &Performs clausification
+      &\ref{thm:clausify}
+      \\
+
+      \texttt{simplify}
+      &Simplify definitions and theorems
+      &\ref{thm:simplify}
+      \\[1ex]
+    \hline
+    \end{tabular}}
+  \end{center}
+\end{table}
+
+\end{document}

@@ -1,0 +1,498 @@
+\documentclass[
+  envcountsame
+  % envcountchap
+    % envcountsect    %% In order to provide the usual behaviour expected
+                    %% from \newtheorem
+  , runningheads
+  ]{llncs}
+
+% \setlength{\mathindent}{1cm}
+% \let\remark\relax
+% \let\theorem\relax
+% \let\lemma\relax
+% \let\definition\relax
+
+\spnewtheorem{mainth}{Theorem}{\bfseries}{\rmfamily}
+\spnewtheorem{mainlemma}[mainth]{Lemma}{\bfseries}{\rmfamily}
+\spnewtheorem{mydefinition}[mainth]{Definition}{\bfseries}{\rmfamily}
+\spnewtheorem{myexamplenum}[mainth]{Example}{\bfseries}{\rmfamily}
+
+\spnewtheorem*{notation}{Notation}{\bfseries}{\rmfamily}
+\spnewtheorem*{myremark}{Remark}{\bfseries}{\rmfamily}
+% \spnewtheorem*{myexample}{Example}{\bfseries}{\rmfamily}
+% \usepackage{parskip}
+\usepackage{geometry}   %% helps with the text overflow
+\usepackage{subfiles}
+
+\usepackage{needspace}  %% https://tex.stackexchange.com/questions/28203/
+                        %% thmtools-how-to-prevent-pagebreak-between-theorem-
+                        %% and-proof
+
+\setcounter{tocdepth}{5}
+\usepackage{graphicx}
+\usepackage{array}
+
+\usepackage{bussproofs}
+\newenvironment{bprooftree}
+  {\leavevmode\hbox\bgroup}
+  {\DisplayProof\egroup}
+
+\def\extraVskip{3pt}
+\def\labelSpacing{3pt}
+\def\defaultHypSeparation{\hskip.2in}
+\def\EnableBpAbbreviations{true}
+
+\newenvironment{scprooftree}[1]%
+  {\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+  {\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center}}
+
+
+\usepackage[title]{appendix}
+
+\usepackage{hyphenat}
+\hyphenation{proof-re-cons-truc-tion proof-ob-ject}
+
+% -------------------------------------------------------------------
+% TODO notes
+% -------------------------------------------------------------------
+
+\usepackage{xargs}
+
+% If we are using the tikz package we must declare the color package
+% before it.
+% \usepackage[svgnames,dvipsnames]{xcolor}
+
+\usepackage[pdftex,svgnames,dvipsnames]{xcolor}
+
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\newcommandx{\unsure}[2][1=]
+  {\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]
+  {\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommandx{\info}[2][1=]
+  {\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25
+        ,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]
+  {\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+\newcommandx{\thiswillnotshow}[2][1=]
+  {\todo[disable,#1]{#2}}
+
+% -------------------------------------------------------------------
+% Tikz Configuration
+% -------------------------------------------------------------------
+
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes}
+\usepackage{rotating}
+
+\tikzset{
+  hyperlink node/.style={
+    alias=sourcenode,
+    append after command={
+        let     \p1 = (sourcenode.north west),
+            \p2=(sourcenode.south east),
+            \n1={\x2-\x1},
+            \n2={\y1-\y2} in
+        node [inner sep=0pt, outer sep=0pt,anchor=north west,at=(\p1)]
+        {\hyperlink{#1}{\XeTeXLinkBox{\phantom{\rule{\n1}{\n2}}}}}
+                %xelatex needs \XeTeXLinkBox, won't create a link unless it
+                %finds text --- rules don't work without \XeTeXLinkBox.
+                %Still builds correctly with pdflatex and lualatex
+    }
+  }
+}
+
+\tikzstyle{vertex}=[
+    auto=left
+  , circle
+  , fill=black!25
+  , minimum size=5pt
+  , inner sep=0pt
+  ]
+
+% -------------------------------------------------------------------
+% Listings
+% -------------------------------------------------------------------
+
+\usepackage{listings}
+\usepackage{lstautogobble}
+
+\lstdefinestyle{TPTP}{
+    aboveskip=10pt
+  , basicstyle=\tt
+  , belowskip=10pt
+  , keywords=[2]{axiom
+    , conjecture
+    , inference
+    , negated_conjecture
+    , plain
+    , source}
+  , keywords=[3]{fof, cnf}
+  , keywords=[4]{canonicalize, resolve, conjunct,
+    strip, simplify, negate, clausify}
+  , keywordstyle=[2]\bfseries
+  , keywordstyle=[3]\bfseries
+  , keywordstyle=[4]\bfseries
+  , showstringspaces=false
+  , keepspaces=true
+}
+
+\lstnewenvironment{tptp}
+  {\lstset{style=TPTP,columns=fullflexible}\csname lst@SetFirstLabel\endcsname}
+  {\csname lst@SaveFirstLabel\endcsname}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage[utf8]{inputenc}
+\usepackage{autofe}
+\usepackage{afterpage}
+\usepackage{comment}
+\usepackage[hyphens]{url}
+\usepackage{bm}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+\let\proof\relax      %% https://tex.stackexchange.com/questions/43835/
+\let\endproof\relax   %% conflict-between-amsthm-and-some-other-package
+\usepackage{amsthm}
+
+\newenvironment{sketchproof}{%
+  \renewcommand{\proofname}{Sketch of the Proof}\proof}{\endproof}
+
+\renewcommand\qedsymbol{$\blacksquare$}
+
+\usepackage{color}
+\usepackage{fancybox}
+
+% -------------------------------------------------------------------
+% Unicode Characters.
+% -------------------------------------------------------------------
+
+\usepackage{textcomp}
+\usepackage[verbose]{newunicodechar}
+
+\newunicodechar{¬}{\ensuremath{\neg}\;}
+\newunicodechar{Γ}{\ensuremath{\Gamma}}
+\newunicodechar{γ}{\ensuremath{\gamma}}
+\newunicodechar{λ}{\ensuremath{\lambda}}
+\newunicodechar{φ}{\ensuremath{\varphi}}
+\newunicodechar{ψ}{\ensuremath{\psi}}
+\newunicodechar{ϕ}{\ensuremath{\varphi}}
+\newunicodechar{ᵢ}{\ensuremath{{}_{i}}}
+\newunicodechar{₀}{\ensuremath{{}_{0}}}
+\newunicodechar{₁}{\ensuremath{{}_{1}}}
+\newunicodechar{₂}{\ensuremath{{}_{2}}}
+\newunicodechar{₃}{\ensuremath{{}_{3}}}
+\newunicodechar{₄}{\ensuremath{{}_{4}}}
+\newunicodechar{₅}{\ensuremath{{}_{5}}}
+\newunicodechar{₆}{\ensuremath{{}_{6}}}
+\newunicodechar{₇}{\ensuremath{{}_{7}}}
+\newunicodechar{₈}{\ensuremath{{}_{8}}}
+\newunicodechar{₉}{\ensuremath{{}_{9}}}
+\newunicodechar{ₙ}{\ensuremath{{}_{n}}}
+\newunicodechar{ℓ}{\ensuremath{\ell}}
+\newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{⇒}{\ensuremath{\supset}}
+\newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
+\newunicodechar{∅}{\ensuremath{\emptyset}}
+\newunicodechar{∈}{\ensuremath{\in}}
+\newunicodechar{∘}{\ensuremath{\circ}}
+\newunicodechar{∙}{\ensuremath{\bullet}}
+\newunicodechar{∧}{\ensuremath{\wedge}}
+\newunicodechar{∨}{\ensuremath{\vee}}
+\newunicodechar{∼}{\ensuremath{\sim}}
+\newunicodechar{≠}{\ensuremath{\neq}}
+\newunicodechar{≡}{\ensuremath{\equiv}}
+\newunicodechar{⊃}{\ensuremath{\supset}}
+\newunicodechar{⊕}{\ensuremath{\oplus}}
+\newunicodechar{⊖}{\ensuremath{\ominus}}
+\newunicodechar{⊢}{\ensuremath{\vdash}}
+\newunicodechar{⊤}{\ensuremath{\top}}
+\newunicodechar{⊥}{\ensuremath{\bot}}
+\newunicodechar{⊻}{\ensuremath{\veebar}}
+\newunicodechar{⟝}{\ensuremath{\vdash}}
+\newunicodechar{⬓}{\ensuremath{\square}}
+\newunicodechar{ⱼ}{\ensuremath{{}_{j}}}
+
+% -------------------------------------------------------------------
+% Verbatim.
+% -------------------------------------------------------------------
+
+\usepackage{verbatim}
+\usepackage{relsize}
+\usepackage{fancyvrb}
+% \DefineVerbatimEnvironment
+%   {code}{Verbatim}
+%   { fontsize=\relsize{-2}
+%   , fontfamily=freemodo
+%   , frame =single
+%   , framesep=5mm
+%   , showspaces=true
+%   , obeytabs=true
+%   } % {}
+
+\setcounter{secnumdepth}{5}
+
+\renewcommand*\rmdefault{cmr}
+
+% -------------------------------------------------------------------
+% New commands
+% -------------------------------------------------------------------
+
+\usepackage{xspace}
+
+\newcommand{\abbre}[1]{\textsc{#1}\xspace}
+\newcommand{\ATPs}{\abbre{ATPs}}
+\newcommand{\ATP}{\abbre{ATP}}
+\newcommand{\Bool}{\abbre{Bool}}
+\newcommand{\CNF}{\abbre{CNF}}
+\newcommand{\CPL}{\abbre{CPL}}
+\newcommand{\ITP}{\abbre{ITP}}
+\newcommand{\ITPs}{\abbre{ITPs}}
+\newcommand{\SAT}{\abbre{SAT}}
+\newcommand{\SMT}{\abbre{SMT}}
+
+\newcommand{\name}[1]{\texttt{#1}\xspace}
+\newcommand{\canonicalize}{\name{canonicalize}}
+\newcommand{\clausify}{\name{clausify}}
+\newcommand{\conjunct}{\name{conjunct}}
+\newcommand{\negate}{\name{negate}}
+\newcommand{\resolve}{\name{resolve}}
+\newcommand{\simplify}{\name{simplify}}
+\newcommand{\strip}{\name{strip}}
+\newcommand{\tptpaxiom}{\name{axiom}}
+\newcommand{\tptpconjecture}{\name{conjecture}}
+
+\newcommand{\nnf}{\name{nnf}}
+
+\newcommand{\prg}[1]{\texttt{#1}\xspace}
+\newcommand{\Agda}{\prg{Agda}}
+\newcommand{\Athena}{\prg{Athena}}
+\newcommand{\IsabelleHOL}{\prg{IsabelleHOL}}
+\newcommand{\Metis}{\prg{Metis}}
+
+\newcommand{\len}[1]{\texttt{#1}\xspace}
+\newcommand{\Haskell}{\len{Haskell}}
+\newcommand{\TPTP}{\len{TPTP}}
+\newcommand{\TSTP}{\len{TSTP}}
+
+\newcommand{\NN}{\ensuremath{\mathbb{N}}}
+
+\newcommand{\fun}[1]{{\fontseries{sb}\selectfont\textsf{#1}}\xspace}
+
+\newcommand{\type}[1]{{\fontseries{sb}\selectfont \textsf{#1}}\xspace}
+
+\newcommand{\List}{\type{List}}
+\newcommand{\NProp}{\type{Prop}}
+\newcommand{\Nat}{\type{Nat}}
+\newcommand{\Prop}{\type{Prop}}
+\newcommand{\Source}{\type{Premise}}
+\newcommand{\Target}{\type{Conclusion}}
+\newcommand{\Lit}{\type{Lit}}
+
+\newcommand{\zero}{\fun{zero}}
+\newcommand{\suc}{\fun{succ}}
+\newcommand{\fassoc}{\fun{assoc}}
+\newcommand{\fbuild}{\fun{build}}
+\newcommand{\fcanonicalize}{\fun{canonicalize}}
+\newcommand{\fcanon}{\fun{simplify}}
+\newcommand{\fclausify}{\fun{clausify}}
+\newcommand{\fcnf}{\fun{cnf}}
+\newcommand{\fconjunctor}{\fun{disj}}
+\newcommand{\fconjunct}{\fun{conjunct}}
+\newcommand{\fdist}{\fun{dist}}
+\newcommand{\ffactor}{\fun{factor}}
+\newcommand{\fform}{\fun{form}}
+\newcommand{\fmax}{\fun{max}}
+\newcommand{\fndisj}{\fun{ndisj}}
+\newcommand{\fnegate}{\fun{negate}}
+\newcommand{\fnnfp}{\fun{nnf}₀}
+\newcommand{\fnnf}{\fun{nnf}}
+\newcommand{\fpolarity}{\fun{polarity}}
+\newcommand{\frank}{\fun{rank}}
+\newcommand{\frconj}{\fun{rconj}}
+\newcommand{\frdisj}{\fun{rdisj}}
+\newcommand{\freorder}{\fun{reorder}}
+\newcommand{\fresolve}{\fun{resolve}}
+\newcommand{\frm}{\fun{rm}}
+\newcommand{\frsol}{\fun{rsol}}
+\newcommand{\fsbuild}{\fun{sbuild}}
+\newcommand{\freduce}{\fun{reduce}_{ℓ}}
+\newcommand{\fsimplify}{\fun{simplify}}
+\newcommand{\fstripp}{\fun{strip}\prime}
+\newcommand{\fstrip}{\fun{strip}}
+\newcommand{\fsubst}{\fun{subst}}
+\newcommand{\fuh}{\fun{uh}}
+
+% latin etc. abbrev
+\newcommand{\abbrev}[1]{#1\xspace} % alternative: \emph{#1}
+\newcommand{\cf}{\abbrev{cf.}\ }
+\newcommand{\eg}{\abbrev{e.\,g.}}
+\newcommand{\Eg}{\abbrev{E.\,g.}}
+\newcommand{\ie}{\abbrev{i.\,e.}}
+\newcommand{\Ie}{\abbrev{I.\,e.}}
+\newcommand{\etal}{\abbrev{et.\,al.}}
+\newcommand{\wrt}{w.\,r.\,t.}
+\newcommand{\TheEnd}{\\\hspace*{0.975\textwidth}$\blacksquare$}
+
+
+\hyphenation{Me-de-llín}
+% -------------------------------------------------------------------
+% Rest.
+% -------------------------------------------------------------------
+
+\usepackage{url}
+% \urldef{\mailsc}\path|{jprieto9, asr}@eafit.edu.co|
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+\noindent\keywordname\ignorespaces#1}
+
+% -------------------------------------------------------------------
+% biblatex.
+% -------------------------------------------------------------------
+
+\usepackage[%
+backend=biber,
+backref=true,%
+% bibstyle=authoryear,%
+% citestyle=authoryear-comp,%
+% giveninits=false,%%
+isbn=false,%
+maxbibnames=6,%
+% maxcitenames=4,%
+]{biblatex}
+\usepackage{csquotes}
+
+\addbibresource{ref.bib}
+
+% Remove the quotes from the title.
+\DeclareFieldFormat
+  [article,%
+  incollection,%
+  inproceedings,%
+  thesis,% works for mastersthesis and phdthesis
+  unpublished,%
+  ]{title}{#1}
+
+% Remove "In:" before journal names.
+%
+% From
+% http://tex.stackexchange.com/questions/10682/suppress-in-biblatex
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+
+% Remove italics from journal names.
+\DeclareFieldFormat{journaltitle}{#1}
+
+% Remove italics from proceedings names in articles in proceedings.
+\DeclareFieldFormat%
+  [incollection,%
+  inproceedings,%
+  ]{booktitle}{#1}
+
+% Remove italics from the title names.
+\DeclareFieldFormat%
+ [book,%
+ misc,%
+ online,%
+ report,%
+ ]{title}{#1}
+
+% Remove URL if there is DOI.
+%
+% From:
+% https://tex.stackexchange.com/questions/154864/biblatex-use-doi-only-if-there-is-no-url
+
+\renewbibmacro*{doi+eprint+url}{%
+  \iftoggle{bbx:url}
+    {\iffieldundef{doi}{\usebibmacro{url+urldate}}{}}
+    {}%
+  \newunit\newblock
+  \iftoggle{bbx:eprint}
+    {\usebibmacro{eprint}}
+    {}%
+  \newunit\newblock
+    \iftoggle{bbx:doi}
+    {\printfield{doi}}
+    {}}
+
+% -------------------------------------------------------------------
+% Hyperef.
+% -------------------------------------------------------------------
+
+\usepackage{hyperref}
+
+\hypersetup{citecolor=DarkGreen}
+
+% Colors the text instead of their the anchors.
+\hypersetup{colorlinks=true}
+
+\hypersetup{urlcolor=blue}
+
+% -------------------------------------------------------------------
+% Include a footer with date and hour of the compilation
+% -------------------------------------------------------------------
+
+\usepackage{fancyhdr}
+\usepackage[us,12hr]{datetime} % `us' makes \today behave as usual in TeX/LaTeX
+\fancypagestyle{plain}{
+\fancyhf{}
+\rfoot{Compiled on {\ddmmyyyydate\today} at \currenttime}
+\lfoot{Page \thepage}
+\renewcommand{\headrulewidth}{0pt}}
+\pagestyle{plain}
+
+% -------------------------------------------------------------------
+
+\begin{document}
+
+\mainmatter
+
+
+\title{Reconstructing Propositional Proofs in Type Theory}
+% \title{Proof-Reconstruction in Type Theory for Propositional Logic}
+\author{Jonathan Prieto-Cubides%
+\and Andr\'es Sicard-Ram\'irez
+}
+%
+
+\institute{Logic and Computation Research Group,\\
+Universidad EAFIT, Medell\'in, Colombia\\
+\email{\{jprieto9, asr\}@eafit.edu.co}}
+
+% \toctitle{Lecture Notes in Computer Science}
+% \tocauthor{Authors' Instructions}
+
+% \listoftodos[Notes]
+
+% TODO commands!
+% \unsure
+% \change
+% \info
+% \improvement
+% \thiswillnotshow
+
+\maketitle
+
+\subfile{sections/abstract.tex}
+% \tableofcontents
+\subfile{sections/introduction.tex}
+\subfile{sections/type-theory.tex}
+\subfile{sections/metis-language-and-proofs.tex}
+\subfile{sections/proof-reconstruction.tex}
+% \subfile{sections/implementation.tex}
+\subfile{sections/related-work.tex}
+\subfile{sections/conclusions-and-future-work.tex}
+\subfile{sections/acknowledgements.tex}
+
+\printbibliography
+\addcontentsline{toc}{section}{References}
+
+% \newpage
+\subfile{sections/appendices.tex}
+
+\end{document}

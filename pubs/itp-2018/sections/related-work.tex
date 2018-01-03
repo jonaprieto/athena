@@ -1,0 +1,61 @@
+
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+% ===================================================================
+
+\section{Related Work}
+\label{sec:related-work}
+
+Many approaches have been proposed for proof-reconstruction and some tools have
+been implemented in the last decades. We first mention some tools in type
+theory and later we listed some proof-reconstruction tools for classical logic.
+
+\citeauthor{Kanso2012} in~\cite{Kanso2012,kanso2016light} presents a
+proof-reconstruction in \Agda for propositional logic. Its tool support
+proof-reconstruction for \name{EProver} and \name{Z3} ATPs following a similar work-flow as we presented in Section~\ref{ssec:workflow}.
+Nonetheless, its approach
+employs semantics for logic equivalences. We have avoided the use of
+propositions meanings towards a future work to support other logics where a
+syntactical approach plays an important role~(for an example of such logics, we
+refer the reader to \cite{Agudelo-Agudelo2017}).
+\citeauthor{foster2011integrating}~\cite{foster2011integrating} describe  the
+proof-reconstruction in \Agda for \name{Waldmeister}~\cite{hillenbrand1997}, a
+prover for pure equational logic. As far as we know, no other
+proof-reconstruction has been carried out neither in \Agda nor with \Metis prover.
+
+Another important proof-assistant in type theory is \name{Coq}~\cite{coqteam}.
+We found the \name{SMTCoq}~\cite{armand2011,Ekici2017} tool which provides a
+certified checker for proof witness coming from the \SMT solver
+\name{veriT}~\cite{bouton2009} and adds a new tactic named verit, that calls
+\name{veriT} on any \name{Coq} goal. Also for \name{Coq}, given a fixed but
+arbitrary first-order signature, \citeauthor{Bezem2002} in \cite{Bezem2002}
+transform a proof produced by the first-order automatic theorem prover
+\name{Bliksem}~\cite{deNivelle2003} in a \name{Coq} proof-term.
+
+There are some successful attempts using proof-assistants for classical logic
+instead of type theory.
+Let us mention some representative of such tools. This description is
+mainly based on~\citeauthor{Sicard-Ramirez2016}~\cite{Sicard-Ramirez2016}.
+
+The \name{Isabelle} proof-assistant has the \name{Sledgehammer} tool.
+This program provides a full integration between
+automatic theorem provers~\cite{blanchette2013extending,Fleury2014,bohme2010} and
+\name{Isabelle/HOL}~\cite{nipkow2002isabelle}, the specialization of
+\name{Isabelle} for higher-order logic.
+A modular proof-reconstruction workflow is presented jointly with
+the full integration of \name{Leo-II} and \name{Satallax} provers with
+\name{Isabelle/HOL} in \citeauthor{Een2004}~\cite{Een2004}.
+
+\citeauthor{Hurd1999}~\cite{Hurd1999} integrates the first-order resolution
+prover \name{Gandalf} with the high-order theorem prover
+\name{HOL}~\cite{norrish2017hol}.
+Its \verb!GANDALF_TAC! tactic is able to reconstruct \name{Gandalf} proofs
+by using a \abbre{LCF} model. For \name{HOL Light}, a version of
+\name{HOL} but with a simpler logic core, the \SMT solver \name{CVC4}
+was integrated. \citeauthor{kaliszyk2013}~\cite{kaliszyk2013}
+reconstruct proofs from different \ATPs with the \name{PRocH} tool by
+replaying detailed inference steps from the \ATPs with internal
+inference methods implemented in \name{HOL Light}.
+
+\end{document}

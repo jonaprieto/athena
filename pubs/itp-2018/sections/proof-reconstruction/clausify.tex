@@ -1,0 +1,51 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+
+\subsubsection{Clausify.}
+\label{sssec:clausification}
+
+The \clausify rule is a rule that transforms a formula into
+its clausal normal form but without performing simplifications of
+tautologies. Recall, this kind of conversion was already
+addressed by the \canonicalize rule. It is important to notice that
+this kind of conversions between one formula to its clausal normal
+form are not unique, and \Metis has customized approaches to perform
+that transformations. Therefore, we perform a reordering of the
+conjunctive normal form given by the $\fcnf$ function defined in
+Lemma~\ref{lem:cnf} with the $\freorder_{∧∨}$ function from
+Lemma~\ref{lem:reorder-and-or} to the input formula of the rule.
+
+\begin{myexamplenum}
+In the following \TSTP derivation by \Metis, we see how
+\clausify transforms the \texttt{n₀} formula to get \texttt{n₁} formula.
+
+\begin{verbatim}
+  fof(n₀, ¬ p ∨ (q ∧ r) ...
+  fof(n₁, (¬ p ∨ q) ∧ (¬ p ∨ r), inf(clausify, n₀)).
+\end{verbatim}
+
+\end{myexamplenum}
+
+\begin{mainth}
+\label{thm:clausify}
+   Let $ψ : \Target$. If $Γ ⊢ φ$ then $Γ ⊢ \fclausify~φ~ψ$, where
+  \begin{equation*}
+  \begin{aligned}
+  &\hspace{.495mm}\fclausify : \Source → \Target → \Prop\\
+  &\begin{array}{llll}
+  \fclausify~φ~ψ &=
+         \begin{cases}
+        ψ, &\text{ if }φ≡ψ;\\
+        \freorder_{∧∨}~(\fcnf~φ)~ψ, &\text{ otherwise.}
+      \end{cases}
+  \end{array}
+  \end{aligned}
+  \end{equation*}
+\end{mainth}
+
+\begin{proof}
+If $φ ≡ ψ$, $Γ ⊢ \fclausify~φ~ψ$ normalizes to $Γ ⊢ ψ$. The conclusion follows by applying the $\fsubst$ lemma. Otherwise, we use Lemma~\ref{lem:reorder-and-or} and Lemma~\ref{lem:cnf}.
+\end{proof}
+
+\end{document}
