@@ -69,6 +69,10 @@ endif
 
 # https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
 
+# For OSX install for testing using homebrew the following:
+# $ brew install gnu-time
+# $ brew install timelimit
+
 ifeq ($(uname_S),OSF1)
 		TIMELIMIT =timelimit -T60 -t60 -S9
 		TIME_BIN  := $(shell which gtime) # install gnu-time
