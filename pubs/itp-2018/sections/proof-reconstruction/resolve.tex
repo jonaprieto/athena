@@ -102,25 +102,4 @@ result.
   \end{equation}
 \end{mainth}
 
-\Needspace{3\baselineskip}
-\begin{proof}
-  \begin{equation*}
-  \begin{bprooftree}
-    \AxiomC{$Γ ⊢ φ₁$}
-    \RightLabel{Lemma~\ref{lem:reorder-and-or}}
-    \UnaryInfC{$Γ ⊢ \freorder_{∨}~φ₁~(ℓ ∨ ψ)$}
-    \RightLabel{Lemma~\ref{lem:reorder-and-or}}
-    \AxiomC{$Γ ⊢ φ₂$}
-    \UnaryInfC{$Γ ⊢ \freorder_{∨}~φ₂~(¬ ℓ ∨ ψ)$}
-    \RightLabel{∧-intro}
-    \BinaryInfC{$Γ ⊢ \freorder_{∨}~φ₁~(ℓ ∨ ψ) ∧ \freorder_{∨}~φ₂~(¬ ℓ ∨ ψ)$}
-    \RightLabel{Lemma~\ref{lem:rsol}}
-    \UnaryInfC{$Γ ⊢ \frsol~(\freorder_{∨}~φ₁~(ℓ ∨ ψ) ∧
-     \freorder_{∨}~φ₂~(¬ ℓ ∨ ψ))$}
-    \RightLabel{by (\ref{eq:resolve})}
-    \UnaryInfC{$Γ ⊢ \fresolve~φ₁~φ₂~ℓ~ψ$}
-  \end{bprooftree}
-  \end{equation*}
-\end{proof}
-
 \end{document}

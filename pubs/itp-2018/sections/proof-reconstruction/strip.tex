@@ -48,62 +48,6 @@ If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$ where $\fuh₁$ is the function define
 in~\eqref{eq:uh-structured}.
 \end{mainlemma}
 
-\begin{proof}
-The proof is by induction on the cases defined by the outcome of the
-$\fuh_{1}$ function.
-\begin{itemize}
-  \item If $n = 0$, by definition in~\eqref{eq:uh-structured}
-        we conclude $Γ ⊢ φ$.
-  \item For $n \geq 1$, we use induction on the structure of the first
-        argument.
-\vskip 2mm
-\begin{itemize}
-\item Case $φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)$.
-\begin{equation*}
-  (\mathcal{D}_1)
-  \begin{bprooftree}
-    \AxiomC{$Γ ⊢ \fuh_1~(φ₁ ⇒ (φ₂ ∧ φ₃))~(\suc~n)$}
-    \RightLabel{by~(\ref{eq:uh-structured})}
-    \UnaryInfC{$Γ ⊢ \fuh_1~(φ₁ ⇒ φ₂)~n ∧ \fuh_1~(φ₁ ⇒ φ₃)~n$}
-    \RightLabel{∧-proj₁}
-    \UnaryInfC{$Γ ⊢ \fuh_1~(φ₁ ⇒ φ₂)~n$}
-    \RightLabel{by~ind.~hyp.}
-    \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₂$}
-  \end{bprooftree}
-\end{equation*}
-
-\begin{equation*}
-  (\mathcal{D}_2)
-  \begin{bprooftree}
-    \AxiomC{$Γ ⊢ \fuh_1~(φ₁ ⇒ (φ₂ ∧ φ₃))~(\suc~n)$}
-    \RightLabel{by~(\ref{eq:uh-structured})}
-    \UnaryInfC{$Γ ⊢ \fuh_1~(φ₁ ⇒ φ₂)~n ∧ \fuh_1~(φ₁ ⇒ φ₃)~n$}
-    \RightLabel{∧-proj₂}
-    \UnaryInfC{$Γ ⊢ \fuh_1~(φ₁ ⇒ φ₃)~n$}
-    \RightLabel{by~ind.~hyp.}
-    \UnaryInfC{$Γ ⊢ φ₁ ⇒ φ₃$}
-    \end{bprooftree}
-\end{equation*}
-
-Now, using \texttt{⇒∧⇒\textsf{-to-}⇒∧} theorem from~\cite{AgdaProp},
-\begin{equation*}
-  \texttt{⇒∧⇒\textsf{-to-}⇒∧}\ :\ Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃) → Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃),
-\end{equation*}
-\begin{equation*}
-  \begin{bprooftree}
-  \AxiomC{$\mathcal{D}_1$}
-  \AxiomC{$\mathcal{D}_2$}
-  \RightLabel{∧-intro}
-  \BinaryInfC{$Γ ⊢ (φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃)$}
-  \RightLabel{\tt ⇒∧⇒\textsf{-to-}⇒∧}
-  \UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ∧ φ₃)}
-  \end{bprooftree}
-\end{equation*}
-\item Other cases are proved in a similar way.
-\end{itemize}
-\end{itemize}
-\end{proof}
-
 The $\fstrip₀$ function defined in~\eqref{eq:strip-zero} yields the
 conjunction of subgoals that implies the goal of the problem in the
 \Metis \TSTP derivations. Nonetheless, this function is not a
@@ -156,53 +100,6 @@ in~\eqref{eq:strip-fixed}.
 If $Γ~⊢~\fstrip₁~φ~n$ then $Γ~⊢~φ$.
 \end{mainlemma}
 
-\begin{proof}
-The proof is by induction on the structure of the
-formula~$φ$ by following the equations in~\eqref{eq:strip-fixed}.
-We present a straightforward case with double negation, the case for
-conjunctions, and last, the case for a negated disjunction.
-We refer the reader to~\cite{AgdaMetis} for the complete proof in \Agda.
-
-∙~Case $φ ≡ ¬ (φ₁ ∨ φ₂)$.
-We prove $Γ ⊢ ¬ φ₁$ and $Γ ⊢ ¬ φ₂$.
-From the conjunction of $¬ φ₁$ and $¬ φ₂$ by applying De Morgan Law
-and the result follows.
-
-\begin{equation*}
-(\mathcal{D})\hspace{3mm}
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ \fstrip₁~(¬ (φ₁ ∨ φ₂))~(\suc~n)$}
-\RightLabel{by~(\ref{eq:strip-fixed})}
-\UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~((¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n)$}
-\RightLabel{∧-proj₁}
-\UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~(¬ φ₁)~n)$}
-\RightLabel{Lemma~\ref{lem:inv-uh-lem}}
-\UnaryInfC{$Γ ⊢ \fstrip₁~(¬ φ₁)~n$}
-\RightLabel{by~ind.~hyp.}
-  \UnaryInfC{$Γ ⊢ ¬φ₁$}
-\end{bprooftree}
-\end{equation*}
-\begin{equation*}
-  \begin{bprooftree}
-  \AxiomC{$\mathcal{D}$}
-  \UnaryInfC{$Γ ⊢ ¬ φ₁$}
-  \AxiomC{$Γ ⊢ \fstrip₁~(¬ (φ₁ ∨ φ₂))~(\suc~n)$}
-  \RightLabel{by~(\ref{eq:strip-fixed})}
-  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~((¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n)$}
-  \RightLabel{∧-proj₂}
-  \UnaryInfC{$Γ ⊢ \fuh~((¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n)$}
-  \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
-  \UnaryInfC{$Γ ⊢ (¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n$}
-  \RightLabel{⇒-elim}
-  \BinaryInfC{$Γ ⊢ \fstrip₁~(¬ φ₂)~n$}
-  \RightLabel{by~ind.~hyp.}
-  \UnaryInfC{$Γ ⊢ ¬ φ₂$}
-  \end{bprooftree}
-\end{equation*}
-∙~  Other cases are proved in a similar way, see Appendix~\ref{app:strip-proof-case}.
-
-\end{proof} % the proof continue...
-
 The following theorem is convenient to substitute equals by equals in
 a theorem. Recall the equality (≡) is symmetric and transitive as well.
 We use these properties without any mention.
@@ -233,23 +130,6 @@ Let $s₂$ and $s₃$ be the subgoals of the goal $φ$, that is,
 $$\fstrip₁~φ~n~≡~s₂∧~s₃.$$
 If $Γ ⊢ s₂$ and $Γ ⊢ s₃$ then $Γ ⊢ φ$.
 \end{mainth}
-
-\begin{proof}
-\begin{equation*}
-  \begin{bprooftree}
-  \AxiomC{$ Γ ⊢ s_1 $}
-  \AxiomC{$ Γ ⊢ s_2 $}
-  \RightLabel{∧-intro}
-  \BinaryInfC{$Γ ⊢ s_1\wedge s_2$}
-  \AxiomC{$\fstrip₁~φ~n ≡ s_1\wedge s_2 $}
-  \RightLabel{\fsubst}
-  \BinaryInfC{$Γ ⊢ \fstrip₁~φ~n$}
-  \RightLabel{Lemma~\ref{lem:lem-inv-strip}}
-  \UnaryInfC{$Γ ⊢ φ$}
-\end{bprooftree}
-\end{equation*}
-\end{proof}
-
 % -------------------------------------------------------------------
 
 Since \Metis proves a conjecture by refutation,

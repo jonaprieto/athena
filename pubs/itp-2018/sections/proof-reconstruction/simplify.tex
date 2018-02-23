@@ -41,55 +41,6 @@ Let $ℓ$ be a literal and $φ : \Prop$. If $Γ ⊢ φ$ and $Γ ⊢ ℓ$ then
 $Γ~⊢~\freduce~φ~ℓ$.
 \end{mainlemma}
 
-\begin{proof} This proof is by induction on the structure of $φ$.\\
-
-∙~Case $φ ≡ φ₁ ∨ φ₂$.
-
-\begin{center}
-\begin{scprooftree}{1}
-\AxiomC{$Γ , φ₁ ⊢ φ₁$}
-\AxiomC{$Γ ⊢ ℓ$}
-\RightLabel{weaken}
-\UnaryInfC{$Γ , φ₁ ⊢ ℓ$}
-\RightLabel{by~ind.~hyp.}
-\BinaryInfC{$Γ , φ₁ ⊢ \freduce~φ₁~ℓ$}
-\RightLabel{∨-intro₁}
-\UnaryInfC{$Γ , φ₁ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
-%
-\AxiomC{$Γ , φ₂ ⊢ φ₂$}
-\AxiomC{$Γ ⊢ ℓ$}
-\RightLabel{weaken}
-\UnaryInfC{$Γ , φ₂ ⊢ ℓ$}
-\RightLabel{by~ind.~hyp.}
-\BinaryInfC{$Γ , φ₂ ⊢ \freduce~φ₂~ℓ$}
-\RightLabel{∨-intro₂}
-\UnaryInfC{$Γ , φ₂ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
-\LeftLabel{$(\mathcal{D})$\hspace{3mm}}
-\RightLabel{∨-elim}
-\BinaryInfC{$Γ , φ₁ ∨ φ₂ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
-\RightLabel{⇒-intro}
-\UnaryInfC{$Γ ⊢  φ₁ ∨ φ₂ ⇒ (\freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ)$}
-\end{scprooftree}
-\end{center}
-\medskip
-
-\def\defaultHypSeparation{\hskip.4in}
-\begin{center}
-\begin{scprooftree}{1}
-\AxiomC{$\mathcal{D}$}
-\RightLabel{⇒-elim}
-\AxiomC{$Γ ⊢ φ₁ ∨ φ₂$}
-\BinaryInfC{$Γ ⊢ \freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ$}
-\RightLabel{Lemma~\ref{lem:canon-or}}
-\UnaryInfC{$Γ ⊢ \fsimplify_{∨}~(\freduce~φ₁~ℓ ∨ \freduce~φ₂~ℓ)$}
-\end{scprooftree}
-\end{center}
-
-\def\defaultHypSeparation{\hskip.2in}
-
-∙ Otherwise use the same hypothesis $Γ ⊢ φ$.
-\end{proof}
-
 The \fsimplify function is defined in~\eqref{eq:simplify}. If some
 input formula is equal to the target formula, we derive that formula.
 If some formula is $⊥$, we derive the target formula by using the
@@ -124,73 +75,6 @@ use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
   $Γ ⊢ \fsimplify~φ₁~φ₂~ψ$.
 \end{mainlemma}
 
-\begin{proof}
-This proof is by induction on the structure of $φ$. \\
-
-∙~Case $φ₂ ≡ φ₂₁ ∨ φ₂₂$.
-
-\def\defaultHypSeparation{\hskip.2in}
-
-\begin{center}
-\begin{scprooftree}{1}
-\AxiomC{$Γ ⊢ φ₁$}
-\RightLabel{weaken}
-\UnaryInfC{$Γ , φ₂₁ ⊢ φ₁$}
-\AxiomC{$Γ , φ₂₁ ⊢ φ₂₁$}
-\RightLabel{by~ind.~hyp.}
-\BinaryInfC{$Γ , φ₂₁ ⊢ \fsimplify~φ₁~φ₂₁~ψ$}
-\LeftLabel{$(\mathcal{D}_{1})$\hspace{5mm}}
-\RightLabel{∨-intro₁}
-\UnaryInfC{$Γ , φ₂₁ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₁~ψ$}
-\end{scprooftree}
-\end{center}
-\medskip
-\begin{center}
-\begin{scprooftree}{1}
-\AxiomC{$Γ ⊢ φ₁$}
-\RightLabel{weaken}
-\UnaryInfC{$Γ , φ₂₂ ⊢ φ₁$}
-\AxiomC{$Γ , φ₂₂ ⊢ φ₂₂$}
-\RightLabel{by~ind.~hyp.}
-\BinaryInfC{$Γ , φ₂₂ ⊢ \fsimplify~φ₁~φ₂₂~ψ$}
-\LeftLabel{$(\mathcal{D}_{2})$\hspace{5mm}}
-\RightLabel{∨-intro₂}
-\UnaryInfC{$Γ , φ₂₂ ⊢ \fsimplify~φ₁~φ₂₂~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ$}
-\end{scprooftree}
-\end{center}
-\medskip
-\begin{center}
-\begin{scprooftree}{1}
-\AxiomC{$\mathcal{D}_{1}$}
-% \UnaryInfC{$Γ , φ₂₁ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₁~ψ$}
-\AxiomC{$\mathcal{D}_{2}$}
-% \UnaryInfC{$Γ , φ₂₂ ⊢ \fsimplify~φ₁~φ₂₂~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ$}
-\RightLabel{∨-elim}
-\BinaryInfC{$Γ , φ₂₁ ∨ φ₂₂ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ$}
-\RightLabel{⇒-intro}
-\LeftLabel{$(\mathcal{D}_{3})$\hspace{5mm}}
-\UnaryInfC{$Γ ⊢  φ₂₁ ∨ φ₂₂ ⇒ (\fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ)$}
-\end{scprooftree}
-\end{center}
-
-\medskip
-\begin{center}
-\begin{scprooftree}{1}
-\AxiomC{$\mathcal{D}_{3}$}
-\UnaryInfC{$Γ ⊢  φ₂₁ ∨ φ₂₂ ⇒ (\fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₁~φ₂₂~ψ)$}
-\RightLabel{⇒-elim}
-\AxiomC{$Γ ⊢ φ₂₁ ∨ φ₂₂$}
-\BinaryInfC{$Γ ⊢ \fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₂~φ₂₂~ψ$}
-\RightLabel{Lemma~\ref{lem:canon-or}}
-\UnaryInfC{$Γ ⊢ \fsimplify_{∨}~(\fsimplify~φ₁~φ₂₁~ψ ∨ \fsimplify~φ₂~φ₂₂~ψ)$}
-\end{scprooftree}
-\end{center}
-\medskip
-
-∙~Case $φ₂$ is a literal. Use Lemma~\ref{lem:reduce-literal} with $φ = φ₁$ and
-$ℓ = φ₂$.
-\end{proof}
-
 \begin{mainth}
   \label{thm:simplify}
   Let $ψ : \Target$. Let $φᵢ : \Source$ such that $Γ ⊢ φᵢ$ for
@@ -198,24 +82,6 @@ $ℓ = φ₂$.
   Then $Γ ⊢ \fsimplify~γ_{n-1}~φ_{n}~ψ$ where
   $γ₁ = φ₁$, and $γᵢ ≡ \fsimplify~γ_{i-1}~φᵢ~ψ$.
 \end{mainth}
-
-\begin{proof} We prove this theorem by induction on $n$.\\
-∙~Case $n = 2$. Use Lemma~\ref{lem:binary-simplify}.\\
-∙~Case $n > 2$. Suppose this theorem is valid for $n$, that is,
-for $i = 1, \cdots, n$, $Γ ⊢ \fsimplify~γ_{n-1}~φ_{n}~ψ$. Let us prove it for $n+1$.\\
-
-\begin{equation*}
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ \fsimplify~γ_{n-1}~φ_{n}~ψ$}
-\AxiomC{$γ_{n} ≡ \fsimplify~γ_{n-1}~φ_{n}~ψ$}
-\RightLabel{subst}
-\BinaryInfC{$Γ ⊢ γ_{n}$}
-\AxiomC{$Γ ⊢ φ_{n+1}$}
-\RightLabel{by~ind.~hyp.}
-\BinaryInfC{$Γ ⊢ \fsimplify~γ_{n}~φ_{n+1}~ψ$}
-\end{bprooftree}
-\end{equation*}
-\end{proof}
 
 \begin{myremark}
 

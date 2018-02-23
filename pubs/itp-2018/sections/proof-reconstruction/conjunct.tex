@@ -44,26 +44,4 @@ using a right projection on \verb!p₁!.
   \end{equation*}
 \end{mainth}
 
-\begin{proof}\hspace{10cm}
-\begin{itemize}
-\item[∙] Case $φ ≡ ψ$. $Γ ⊢ \fconjunct~φ~ψ$ normalizes to $Γ ⊢ ψ$.
-Then, we get the desire conclusion by applying the $\fsubst$ lemma.
-\item[∙] Case $φ ≡ φ₁ ∧ φ₂$. If we can get $ψ ≡ \fconjunct~φ_{i}~ψ$ for some $i = 1,\ 2$, then,
-
-\begin{equation*}
-  \begin{bprooftree}
-  \AxiomC{$Γ ⊢ φ₁ ∧ φ₂$}
-  \RightLabel{∧-proj$_{i}$}
-  \UnaryInfC{$Γ ⊢ φ_{i}$}
-  \RightLabel{by~ind.~hyp.}
-  \UnaryInfC{$Γ ⊢ \fconjunct~φ_{i}~ψ$}
-  \AxiomC{$ψ ≡ \fconjunct~φ_{i}~ψ$}
-  \RightLabel{\fsubst}
-  \BinaryInfC{$Γ ⊢ ψ$}
-  \end{bprooftree}
-\end{equation*}
-\item[∙] Otherwise, the last case follows from the hypothesis.
-\end{itemize}
-\end{proof}
-
 \end{document}
