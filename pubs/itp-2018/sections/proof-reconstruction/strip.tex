@@ -58,23 +58,6 @@ $\fuh_{1}$ function.
         argument.
 \vskip 2mm
 \begin{itemize}
-\item Case $φ ≡ φ₁ ⇒ (φ₂ ⇒ φ₃)$.
-\begin{equation*}
-  \begin{bprooftree}
-  \AxiomC{$Γ ⊢ \fuh_1~(φ₁ ⇒ (φ₂ ⇒ φ₃))~(\suc~n)$}
-  \RightLabel{by~(\ref{eq:uh-structured})}
-  \UnaryInfC{$Γ ⊢ \fuh_1~((φ₁ ∧ φ₂) ⇒ φ₃)~n$}
-  \RightLabel{by~ind.~hyp.}
-  \UnaryInfC{Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃}
-  \RightLabel{∧⇒\textsf{-to-}⇒⇒}
-  \UnaryInfC{Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃)}
-  \end{bprooftree}
-\end{equation*}
-using the following theorem proved in~\cite{AgdaProp},
-  \begin{equation*}
-  \texttt{∧⇒\textsf{-to-}⇒⇒}\ :\  Γ ⊢ (φ₁ ∧ φ₂) ⇒ φ₃ → Γ ⊢ φ₁ ⇒ (φ₂ ⇒ φ₃).
-  \end{equation*}
-
 \item Case $φ ≡ φ₁ ⇒ (φ₂ ∧ φ₃)$.
 \begin{equation*}
   (\mathcal{D}_1)
@@ -180,55 +163,6 @@ We present a straightforward case with double negation, the case for
 conjunctions, and last, the case for a negated disjunction.
 We refer the reader to~\cite{AgdaMetis} for the complete proof in \Agda.
 
-∙~Case $φ ≡ ¬ (¬ φ₁) $.
-\begin{equation*}
-  \begin{bprooftree}
- \AxiomC{$Γ ⊢ \fstrip₁~(¬(¬φ₁))~(\suc~n)$}
-  \RightLabel{by~(\ref{eq:strip-fixed})}
-  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~φ₁~n)$}
-  \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
-  \UnaryInfC{$Γ ⊢ \fstrip₁~φ₁~n$}
-  \RightLabel{by~ind.~hyp.}
-  \UnaryInfC{$Γ ⊢ φ₁$}
-  \end{bprooftree}
-\end{equation*}
-
-∙~Case $φ ≡ φ₁ ∧ φ₂$. We prove $Γ ⊢ φ₁$ and $Γ ⊢ φ₂$.
-From the conjunction of φ₁ and φ₂, the expected result follows.
-
-\begin{equation*}
-(\mathcal{D})\hspace{3mm}
-  \begin{bprooftree}
-  \AxiomC{$Γ ⊢ \fstrip₁~(φ₁ ∧ φ₂)~(\suc\,\textit{n})$}
-  \RightLabel{by~(\ref{eq:strip-fixed})}
-  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)$}
-  \RightLabel{∧-proj₁}
-  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~φ₁~n)$}
-  \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
-  \UnaryInfC{$Γ ⊢ \fstrip₁~φ₁~n$}
-  \RightLabel{by~ind.~hyp.}
-  \UnaryInfC{$Γ ⊢ φ₁$}
-    \end{bprooftree}
-\end{equation*}
-
-\begin{equation*}
-  \begin{bprooftree}
-  \AxiomC{$\mathcal{D}$}
-  \UnaryInfC{Γ ⊢ φ₁}
-  \AxiomC{$Γ ⊢ \fstrip₁~(φ₁ ∧ φ₂)~(\suc~n)$}
-  \RightLabel{by~(\ref{eq:strip-fixed})}
-  \UnaryInfC{$Γ ⊢ \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)$}
-  \RightLabel{$∧$-proj$₂$}
-  \UnaryInfC{$Γ ⊢ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)$}
-  \RightLabel{Lemma~\ref{lem:inv-uh-lem}}
-  \UnaryInfC{$Γ ⊢ φ₁ ⇒ \fstrip₁~φ₂~n$}
-  \RightLabel{$⇒$-elim}
-  \BinaryInfC{$Γ ⊢ \fstrip₁~φ₂~n$}
-  \RightLabel{by~ind.~hyp.}
-  \UnaryInfC{$Γ ⊢ φ₂$}
-  \end{bprooftree}
-\end{equation*}
-
 ∙~Case $φ ≡ ¬ (φ₁ ∨ φ₂)$.
 We prove $Γ ⊢ ¬ φ₁$ and $Γ ⊢ ¬ φ₂$.
 From the conjunction of $¬ φ₁$ and $¬ φ₂$ by applying De Morgan Law
@@ -321,24 +255,6 @@ If $Γ ⊢ s₂$ and $Γ ⊢ s₃$ then $Γ ⊢ φ$.
 Since \Metis proves a conjecture by refutation,
 to prove each subgoal, \Metis assumes the negation of it
 by using the \negate rule after the \strip inference application
-that introduce such a subgoal.
-
-\begin{myexamplenum}
-In the following \TSTP derivation, note that the three subgoals
-\verb!s₁!, \verb!s₂! and \verb!s₃! are assumed by the \negate
-rule in \verb!neg₁!, \verb!neg₂! and  \verb!neg₃! respectively.
-
-\begin{verbatim}
-  fof(goal, conjecture, p ∧ r ∧ q).
-  fof(s₁, p, inf(strip, goal)).
-  fof(s₂, p ⇒ r, inf(strip, goal)).
-  fof(s₃, (p ∧ r) ⇒ q, inf(strip, goal)).
-  fof(neg₁, ¬ p, inf(negate, s₁)).
-  ...
-  fof(neg₂, ¬ (p ⇒ r), inf(negate, s₂)).
-  ...
-  fof(neg₃, ¬ ((p ∧ r) ⇒ q), inf(negate, s₃)).
-\end{verbatim}
-\end{myexamplenum}
+that introduces such a subgoal.
 
 \end{document}

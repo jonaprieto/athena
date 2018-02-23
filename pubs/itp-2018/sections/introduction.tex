@@ -43,7 +43,8 @@ them show their proofs.
 
 One approach to address the proof-reconstruction problem is
 proving each deduction of the prover, the \emph{source} system,
-with a formalization of the prover reasoning in a proof-assistant, the \emph{target} system. The target system is the
+with a formalization of the prover reasoning in a proof-assistant, the
+\emph{target} system. The target system is the
 proof \emph{checker} in charge to verify the source system reasoning
 for each derivation.
 These proof-assistants allow us to formalize the logical system used
@@ -69,8 +70,11 @@ The \Metis reasoning was formalized in
 libraries~\cite{AgdaProp,AgdaMetis} and we implemented a
 proof-reconstruction tool named \Athena~\cite{Athena} written in
 \Haskell that is able to generate \Agda proof-terms for \Metis
-derivations. During writing this document, our formalization helps to report two programming errors in \Metis.
-A bug\footnote{Issue No.\,2 at \url{https://github.com/gilith/metis/issues/2}} in the printing of the derivation and a soundness bug\footnote{Issue No.\,4 at \url{https://github.com/gilith/metis/issues/4}} in the stripping of the goal.
+derivations. During writing this document, our formalization helps to report
+two programming errors in \Metis.
+A bug\footnote{Issue No.\,2 at \url{https://github.com/gilith/metis/issues/2}}
+in the printing of the derivation and a soundness
+bug\footnote{Issue No.\,4 at \url{https://github.com/gilith/metis/issues/4}} in the stripping of the goal.
 
 
 This paper has been organized in the following way.  In
@@ -103,7 +107,8 @@ examples) is available at \verb!GitHub!:
 The proof-reconstruction tool \Athena was tested with \prg{GHC}~8.2.2.
 Both libraries, \verb!agda-prop! and \verb!agda-metis! were tested with
 \Agda~2.5.3 and \Agda standard library~0.14.
-\Athena jointly with \verb!agda-prop! and \verb!agda-metis! are able to reconstruct propositional proofs of \Metis~2.3 (release~20171021).
+\Athena jointly with \verb!agda-prop! and \verb!agda-metis! are able
+to reconstruct propositional proofs of \Metis~2.3 (release~20171021).
 We successfully reconstruct around eighty theorems in classical propositional
 logic from the \TPTP collection~\cite{Prieto-Cubides2017} to test
 the developments and the formalization presented in this research.

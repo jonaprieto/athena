@@ -155,30 +155,6 @@ the \canonicalize rule.}
 \end{equation}
 \end{mainlemma}
 
-\begin{myexamplenum}
-
-The formula $φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ$ in \eqref{eq:lemma-rm-or-example}
-has some tautologies. To remove such tautologies we first use
-Lemma~\ref{lem:rassoc} to get the right-associative version of the
-formula. Then, we can use the $\fcanon_{∨}$ function to get the
-logical equivalent formula $ψ ∨ φ$.
-
-\begin{equation}
-\label{eq:lemma-rm-or-example}
-  \begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ $}
-  \RightLabel{Lemma~\ref{lem:rassoc}}
-  \UnaryInfC{$Γ ⟝ \fassoc_{∨}~(φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ) $}
-  \RightLabel{by (\ref{eq:fassoc})}
-  \UnaryInfC{$Γ ⟝ φ ∨ (ψ ∨ (φ ∨ (φ ∨ φ)))$}
-  \RightLabel{Lemma~\ref{lem:canon-or}}
-  \UnaryInfC{$Γ ⟝ \fcanon_{∨}~(φ ∨ (ψ ∨ (φ ∨ (φ ∨ φ))))$}
-  \RightLabel{\eqref{eq:canon-or}}
-  \UnaryInfC{$Γ ⟝ ψ ∨ φ$}
-  \end{bprooftree}
-  \end{equation}
-\end{myexamplenum}
-
 Now, we have removed tautologies in disjunctions by applying the
 $\fcanon_{∨}$ function. In a similar way, we define the $\fcanon_{∧}$
 function to work with conjunctions.

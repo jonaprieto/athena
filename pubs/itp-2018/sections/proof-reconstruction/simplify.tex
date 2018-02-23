@@ -43,29 +43,6 @@ $Γ~⊢~\freduce~φ~ℓ$.
 
 \begin{proof} This proof is by induction on the structure of $φ$.\\
 
-∙~Case $φ ≡ φ₁ ∧ φ₂$.
-
-\begin{center}
-\begin{scprooftree}{1}
-\AxiomC{$Γ ⊢ φ₁ ∧ φ₂$}
-\RightLabel{∧-proj₁}
-\UnaryInfC{$Γ ⊢ φ₁$}
-\AxiomC{$Γ ⊢ ℓ$}
-\RightLabel{by~ind.~hyp.}
-\BinaryInfC{$Γ ⊢ \freduce~φ₁~ℓ$}
-\AxiomC{$Γ ⊢ φ₁ ∧ φ₂$}
-\RightLabel{∧-proj₂}
-\UnaryInfC{$Γ ⊢ φ₂$}
-\AxiomC{$Γ ⊢ ℓ$}
-\RightLabel{by~ind.~hyp.}
-\BinaryInfC{$Γ ⊢ \freduce~φ₂~ℓ$}
-\RightLabel{∧-intro}
-\BinaryInfC{$Γ ⊢ \freduce~φ₁~ℓ~∧~\freduce~φ₂~ℓ$}
-\RightLabel{Lemma~\ref{lem:canon-and}}
-\UnaryInfC{$Γ ⊢ \fsimplify_{∧}~(\freduce~φ₁~ℓ~∧~\freduce~φ₂~ℓ)$}
-\end{scprooftree}
-\end{center}
-
 ∙~Case $φ ≡ φ₁ ∨ φ₂$.
 
 \begin{center}
@@ -110,22 +87,6 @@ $Γ~⊢~\freduce~φ~ℓ$.
 
 \def\defaultHypSeparation{\hskip.2in}
 
-∙~Case $φ$ is a literal and $ℓ ≡ \fnnf~(¬ φ)$.
-
-\begin{center}
-\begin{scprooftree}{1}
-\AxiomC{$Γ ⊢ ℓ$}
-\AxiomC{$ℓ ≡ \fnnf~(¬ φ)$}
-\RightLabel{subst}
-\BinaryInfC{$Γ ⊢ \fnnf~(¬ φ)$}
-\RightLabel{Lemma~\ref{lem:nnf-inv}}
-\UnaryInfC{$Γ ⊢ ¬ φ$}
-\AxiomC{$Γ ⊢ φ$}
-\RightLabel{¬-elim}
-\BinaryInfC{$Γ ⊢ ⊥$}
-\end{scprooftree}
-\end{center}
-
 ∙ Otherwise use the same hypothesis $Γ ⊢ φ$.
 \end{proof}
 
@@ -165,39 +126,6 @@ use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
 
 \begin{proof}
 This proof is by induction on the structure of $φ$. \\
-
-∙~Case $φᵢ ≡ ψ$ for some $i = 1, 2$. If $φᵢ ≡ ψ$ then by subst lemma since
-$Γ ⊢ φᵢ$ we derive $Γ ⊢ ψ$.\\
-
-∙~Case $φᵢ ≡ ⊥$ for some $i = 1, 2$.
-\begin{equation*}
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ φᵢ$}
-\AxiomC{$φᵢ ≡ ⊥$}
-\RightLabel{subst}
-\BinaryInfC{$Γ ⊢ ⊥$}
-\RightLabel{⊥-elim}
-\UnaryInfC{$Γ ⊢ ψ$}
-\end{bprooftree}
-\end{equation*}
-
-∙~Case $φ₂ ≡ φ₂₁ ∧ φ₂₂$.
-
-\begin{equation*}
-\begin{bprooftree}
-\AxiomC{$Γ ⊢ φ₁$}
-\AxiomC{$Γ ⊢ φ₂₁ ∧ φ₂₂$}
-\RightLabel{∧-proj₁}
-\UnaryInfC{$Γ ⊢ φ₂₁$}
-\RightLabel{by~ind.~hyp.}
-\BinaryInfC{$Γ ⊢ \fsimplify~φ₁~φ₂₁~ψ$}
-\AxiomC{$Γ ⊢ φ₂₁ ∧ φ₂₂$}
-\RightLabel{∧-proj₂}
-\UnaryInfC{$Γ ⊢ φ₂₂$}
-\RightLabel{by~ind.~hyp.}
-\BinaryInfC{$Γ ⊢ \fsimplify~(\fsimplify~φ₁~φ₂₁~ψ)~φ₂₂~ψ$}
-\end{bprooftree}
-\end{equation*}
 
 ∙~Case $φ₂ ≡ φ₂₁ ∨ φ₂₂$.
 

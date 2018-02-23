@@ -6,6 +6,7 @@
   , runningheads
   ]{llncs}
 
+
 % \setlength{\mathindent}{1cm}
 % \let\remark\relax
 % \let\theorem\relax
@@ -160,6 +161,10 @@
 \let\proof\relax      %% https://tex.stackexchange.com/questions/43835/
 \let\endproof\relax   %% conflict-between-amsthm-and-some-other-package
 \usepackage{amsthm}
+
+
+
+\allowdisplaybreaks  %%
 
 \newenvironment{sketchproof}{%
   \renewcommand{\proofname}{Sketch of the Proof}\proof}{\endproof}
@@ -485,7 +490,6 @@ Universidad EAFIT, Medell\'in, Colombia\\
 \subfile{sections/type-theory.tex}
 \subfile{sections/metis-language-and-proofs.tex}
 \subfile{sections/proof-reconstruction.tex}
-% \subfile{sections/implementation.tex}
 \subfile{sections/related-work.tex}
 \subfile{sections/conclusions-and-future-work.tex}
 \subfile{sections/acknowledgements.tex}
