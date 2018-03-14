@@ -65,11 +65,8 @@ In this section, we reconstruct each \Metis inference rule in
 Table~\ref{tab:agda-metis-table}.
 We begin describing the reconstruction of the \strip inference rule
 since this rule  is the only one that closely follows the \Metis
-source code.
-
-To reconstruct the other rules, we use for their formalization
-a pattern in their description and definition,
-see Example~\ref{ex:inference-rule-pattern}.
+source code. To reconstruct the other rules, we use a pattern for their
+formalization showed in Example~\ref{ex:inference-rule-pattern}.
 
 \begin{notation}
   The function name written in \texttt{typewriter} font refers to a
@@ -77,9 +74,8 @@ see Example~\ref{ex:inference-rule-pattern}.
   name written using
   \textsf{sans serif} font refers to our formalized version to
   reconstruct the rule and formally implemented in~\cite{AgdaMetis}.
-  To increase the readability of our formal descriptions in
-  functions and theorems, we adopt
-  the convention to use \Source and \Target as synonyms of the \Prop
+  To increase the readability for functions and theorems, we use
+  the convention \Source and \Target as synonyms of the \Prop
   type. The \Source type in the reconstructed rule definition refers
   to the argument in the \TSTP derivation, \ie the input formula of
   the inference rule. A formula of \Target type refers to the
