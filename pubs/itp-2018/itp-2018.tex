@@ -114,37 +114,6 @@
   , inner sep=0pt
   ]
 
-% -------------------------------------------------------------------
-% Listings
-% -------------------------------------------------------------------
-
-\usepackage{listings}
-\usepackage{lstautogobble}
-
-\lstdefinestyle{TPTP}{
-    aboveskip=10pt
-  , basicstyle=\tt
-  , belowskip=10pt
-  , keywords=[2]{axiom
-    , conjecture
-    , inference
-    , negated_conjecture
-    , plain
-    , source}
-  , keywords=[3]{fof, cnf}
-  , keywords=[4]{canonicalize, resolve, conjunct,
-    strip, simplify, negate, clausify}
-  , keywordstyle=[2]\bfseries
-  , keywordstyle=[3]\bfseries
-  , keywordstyle=[4]\bfseries
-  , showstringspaces=false
-  , keepspaces=true
-}
-
-\lstnewenvironment{tptp}
-  {\lstset{style=TPTP,columns=fullflexible}\csname lst@SetFirstLabel\endcsname}
-  {\csname lst@SaveFirstLabel\endcsname}
-
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 
@@ -227,22 +196,9 @@
 % -------------------------------------------------------------------
 % Verbatim.
 % -------------------------------------------------------------------
-
-\usepackage{verbatim}
-\usepackage{relsize}
 \usepackage{fancyvrb}
-% \DefineVerbatimEnvironment
-%   {code}{Verbatim}
-%   { fontsize=\relsize{-2}
-%   , fontfamily=freemodo
-%   , frame =single
-%   , framesep=5mm
-%   , showspaces=true
-%   , obeytabs=true
-%   } % {}
 
 \setcounter{secnumdepth}{5}
-
 \renewcommand*\rmdefault{cmr}
 
 % -------------------------------------------------------------------
