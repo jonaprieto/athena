@@ -6,6 +6,7 @@
   , runningheads
   ]{llncs}
 
+
 % \setlength{\mathindent}{1cm}
 % \let\remark\relax
 % \let\theorem\relax
@@ -113,37 +114,6 @@
   , inner sep=0pt
   ]
 
-% -------------------------------------------------------------------
-% Listings
-% -------------------------------------------------------------------
-
-\usepackage{listings}
-\usepackage{lstautogobble}
-
-\lstdefinestyle{TPTP}{
-    aboveskip=10pt
-  , basicstyle=\tt
-  , belowskip=10pt
-  , keywords=[2]{axiom
-    , conjecture
-    , inference
-    , negated_conjecture
-    , plain
-    , source}
-  , keywords=[3]{fof, cnf}
-  , keywords=[4]{canonicalize, resolve, conjunct,
-    strip, simplify, negate, clausify}
-  , keywordstyle=[2]\bfseries
-  , keywordstyle=[3]\bfseries
-  , keywordstyle=[4]\bfseries
-  , showstringspaces=false
-  , keepspaces=true
-}
-
-\lstnewenvironment{tptp}
-  {\lstset{style=TPTP,columns=fullflexible}\csname lst@SetFirstLabel\endcsname}
-  {\csname lst@SaveFirstLabel\endcsname}
-
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 
@@ -160,6 +130,10 @@
 \let\proof\relax      %% https://tex.stackexchange.com/questions/43835/
 \let\endproof\relax   %% conflict-between-amsthm-and-some-other-package
 \usepackage{amsthm}
+
+
+
+\allowdisplaybreaks  %%
 
 \newenvironment{sketchproof}{%
   \renewcommand{\proofname}{Sketch of the Proof}\proof}{\endproof}
@@ -222,22 +196,9 @@
 % -------------------------------------------------------------------
 % Verbatim.
 % -------------------------------------------------------------------
-
-\usepackage{verbatim}
-\usepackage{relsize}
 \usepackage{fancyvrb}
-% \DefineVerbatimEnvironment
-%   {code}{Verbatim}
-%   { fontsize=\relsize{-2}
-%   , fontfamily=freemodo
-%   , frame =single
-%   , framesep=5mm
-%   , showspaces=true
-%   , obeytabs=true
-%   } % {}
 
 \setcounter{secnumdepth}{5}
-
 \renewcommand*\rmdefault{cmr}
 
 % -------------------------------------------------------------------
@@ -272,6 +233,7 @@
 
 \newcommand{\prg}[1]{\texttt{#1}\xspace}
 \newcommand{\Agda}{\prg{Agda}}
+\newcommand{\Coq}{\prg{Coq}}
 \newcommand{\Athena}{\prg{Athena}}
 \newcommand{\IsabelleHOL}{\prg{IsabelleHOL}}
 \newcommand{\Metis}{\prg{Metis}}
@@ -485,7 +447,6 @@ Universidad EAFIT, Medell\'in, Colombia\\
 \subfile{sections/type-theory.tex}
 \subfile{sections/metis-language-and-proofs.tex}
 \subfile{sections/proof-reconstruction.tex}
-% \subfile{sections/implementation.tex}
 \subfile{sections/related-work.tex}
 \subfile{sections/conclusions-and-future-work.tex}
 \subfile{sections/acknowledgements.tex}

@@ -155,30 +155,6 @@ the \canonicalize rule.}
 \end{equation}
 \end{mainlemma}
 
-\begin{myexamplenum}
-
-The formula $φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ$ in \eqref{eq:lemma-rm-or-example}
-has some tautologies. To remove such tautologies we first use
-Lemma~\ref{lem:rassoc} to get the right-associative version of the
-formula. Then, we can use the $\fcanon_{∨}$ function to get the
-logical equivalent formula $ψ ∨ φ$.
-
-\begin{equation}
-\label{eq:lemma-rm-or-example}
-  \begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ $}
-  \RightLabel{Lemma~\ref{lem:rassoc}}
-  \UnaryInfC{$Γ ⟝ \fassoc_{∨}~(φ ∨ (ψ ∨ (φ ∨ φ)) ∨ φ) $}
-  \RightLabel{by (\ref{eq:fassoc})}
-  \UnaryInfC{$Γ ⟝ φ ∨ (ψ ∨ (φ ∨ (φ ∨ φ)))$}
-  \RightLabel{Lemma~\ref{lem:canon-or}}
-  \UnaryInfC{$Γ ⟝ \fcanon_{∨}~(φ ∨ (ψ ∨ (φ ∨ (φ ∨ φ))))$}
-  \RightLabel{\eqref{eq:canon-or}}
-  \UnaryInfC{$Γ ⟝ ψ ∨ φ$}
-  \end{bprooftree}
-  \end{equation}
-\end{myexamplenum}
-
 Now, we have removed tautologies in disjunctions by applying the
 $\fcanon_{∨}$ function. In a similar way, we define the $\fcanon_{∧}$
 function to work with conjunctions.
@@ -334,9 +310,6 @@ the $\fnnf$ function follow by the $\fdist$ function.
   \end{align*}
 \end{mainlemma}
 
-\begin{proof}
-  Composition of Lemma~\ref{lem:dist} and Lemma~\ref{lem:nnf}.
-\end{proof}
 
 Since all the transformations in Lemma~\ref{lem:nnf} and
 Lemma~\ref{lem:dist} came from logical equivalences in propositional
@@ -388,38 +361,5 @@ the target formula. It definition is as follows.
    \end{aligned}
   \end{equation}
 \end{mainth}
-
-\begin{proof}\hspace{3mm}
-\begin{itemize}
-\item[∙] Case $φ ≡ ψ$. By substitution theorem we conclude $Γ ⊢ ψ$.
-\item[∙] Case $ψ ≡ \fnnf~φ$.
-\begin{equation*}
-  \begin{bprooftree}
-    \AxiomC{$Γ ⊢ φ$}
-    \RightLabel{Lemma~\ref{lem:nnf}}
-    \UnaryInfC{$Γ ⊢~\fnnf~φ$}
-    \AxiomC{$ψ ≡ \fnnf~φ$}
-    \RightLabel{\fsubst}
-    \BinaryInfC{$Γ ⊢ ψ$}
-  \end{bprooftree}
-\end{equation*}
-
-\item[∙] Case $\fcnf~ψ ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$.
-  \begin{equation*}
-    \begin{bprooftree}
-      \AxiomC{$Γ ⊢ φ$}
-      \RightLabel{Lemma~\ref{lem:cnf}}
-      \UnaryInfC{$Γ ⊢ \fcnf~φ$}
-      \RightLabel{Lemma~\ref{lem:reorder-and-or}}
-      \UnaryInfC{$Γ ⊢ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$}
-      \AxiomC{$\fcnf~ψ~≡~\freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ)$}
-      \RightLabel{\fsubst}
-      \BinaryInfC{$Γ ⊢ \fcnf~ψ$}
-      \RightLabel{Lemma~\ref{lem:cnf-inv}}
-      \UnaryInfC{$Γ ⊢ ψ$}
-    \end{bprooftree}
-  \end{equation*}
-\end{itemize}
-\end{proof}
 
 \end{document}
