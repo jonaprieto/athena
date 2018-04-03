@@ -10,35 +10,21 @@ subgoals implies the goal. Then, a proof of the goal becomes into a
 set of smaller proofs, one refutation for each subgoal.
 
 \begin{myexamplenum}
-
-The subgoals associated to a goal are introduced
-in the \TSTP derivation with the \strip inference rule.
-
-\begin{verbatim}
-  fof(goal, conjecture, (p ∧ r) ∧ q)).
-  fof(s₁, p, inf(strip, goal)).
-  fof(s₂, p ⇒ r, inf(strip, goal)).
-  fof(s₃, (p ∧ r) ⇒ q, inf(strip, goal)).
-\end{verbatim}
-
-In this example, the conjecture $(p ∧ r) ∧ q$ is stripped into
-tree subgoals: $p$, $p ⇒ r$ and $(p ∧ r) ⇒ q$.
-
-\begin{equation}
-\label{eq:strip-example}
-(p ∧ (p ⇒ r) ∧ ((p ∧ r) ⇒ q)) ⇒ ((p ∧ r) ∧ q).
-\end{equation}
-
-\Metis proves each subgoal in the same order above from left to right
-in~\eqref{eq:strip-example}.
-So far, very little attention has been paid to the role of the \strip rule
-in \TSTP derivations since \Metis does not make explicit the way
-it uses the subgoals to prove the conjecture.
+In Fig.~\ref{complete-metis-example}, we can see how
+the subgoals associated to a goal are introduced
+in the \TSTP derivation line \ref{line3} with the \strip inference rule.
+The conjecture in line \ref{line2}, $(p ∨ q) ⇒ (p ∧ q)$,
+is stripped into two subgoals (line~\ref{line4} and \ref{line5}):
+$(p ∨ q) ⇒ p$ and $((p ∨ q) ∧ p) ⇒ q$.
+\Metis proves each subgoal separately following the same order as
+they appeared in the \TSTP derivation.
 \end{myexamplenum}
 
-We prove the correctness of the \strip inference rule in
-Theorem~\ref{thm:strip}. To show that theorem, we need to prove
-Lemma~\ref{lem:inv-uh-lem} and Lemma~\ref{lem:lem-inv-strip}.
+Unluckily, \Metis does not make explicit the way it uses the subgoals
+to prove the goal by the time this document is written. Thus we show the
+explicit description of this stripping process in the correctness of
+the \strip inference rule in Theorem~\ref{thm:strip}. We first need
+to prove Lemma~\ref{lem:inv-uh-lem} and Lemma~\ref{lem:lem-inv-strip}.
 
 \begin{mainlemma}
   \label{lem:inv-uh-lem}
