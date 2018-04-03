@@ -20,19 +20,52 @@ $(p ∨ q) ⇒ p$ and $((p ∨ q) ∧ p) ⇒ q$.
 they appeared in the \TSTP derivation.
 \end{myexamplenum}
 
-Unluckily, \Metis does not make explicit the way it uses the subgoals
-to prove the goal by the time this document is written. Thus we show the
-explicit description of this stripping process in the correctness of
-the \strip inference rule in Theorem~\ref{thm:strip}. We first need
-to prove Lemma~\ref{lem:inv-uh-lem} and Lemma~\ref{lem:lem-inv-strip}.
+Unluckily, \Metis does not make explicit in the \TSTP derivation
+the way it uses the subgoals to prove the goal. We show that way
+in the correctness of the \strip inference rule in Theorem~\ref{thm:strip}.
+To show that, we first need to prove Lemma~\ref{lem:inv-uh-lem} and
+Lemma~\ref{lem:lem-inv-strip}.
 
 \begin{mainlemma}
   \label{lem:inv-uh-lem}
-Let $\text{n} : \Nat$ be the complexity measure of the $\fuh_0$ function
-in~\eqref{eq:uh-definition}.
-If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$ where $\fuh₁$ is the function defined
-in~\eqref{eq:uh-structured}.
+Let $\text{n} : \Nat$. If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$ where
+
+\begin{equation}
+\label{eq:uh-structured}
+\begin{aligned}
+&\hspace{.495mm} \fuh_{1} : \Prop → \Nat → \Prop\\
+&\begin{array}{llll}
+\fuh_{1} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &(\suc~n) &= \fuh_{1}~((φ₁ ∧ φ₂) ⇒ φ₃)~n\\
+\fuh_{1} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &(\suc~n) &= \fuh_{1}~(φ₁ ⇒ φ₂)~n ∧ \fuh_{1}~(φ₁ ⇒ φ₃)~n\\
+\fuh_{1} &φ &n &= φ.
+\end{array}
+\end{aligned}
+\end{equation}
 \end{mainlemma}
+
+To keep simpler the coming definitions, we use instead of $\fuh_{1}$ function
+a unary function defined in~\eqref{eq:uh}.
+
+\begin{align*}
+  \label{eq:uh}
+  \begin{split}
+  &\fuh : \Prop → \Prop\\
+  &\fuh~φ~ = \fuh_{1}~φ~(\fuh_{cm}~φ).
+  \end{split}
+\end{align*}
+Using the $\fuh_{cm}$ function defined in~\eqref{eq:uh-complexity}.
+
+\begin{equation}
+  \label{eq:uh-complexity}
+  \begin{aligned}
+    &\hspace{.495mm}\fuh_{cm} : \Prop → \Nat\\
+    &\begin{array}{llll}
+    \fuh_{cm}~(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{cm}~φ₃ + 2\\
+    \fuh_{cm}~(φ₁ ⇒ (φ₂ ∧ φ₃)) &= \fmax~(\fuh_{cm}~φ₂)~(\fuh_{cm}~φ₃) + 1\\
+    \fuh_{cm}~φ                &= 0.
+    \end{array}
+  \end{aligned}
+\end{equation}
 
 The $\fstrip₀$ function defined in~\eqref{eq:strip-zero} yields the
 conjunction of subgoals that implies the goal of the problem in the
