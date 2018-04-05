@@ -66,6 +66,12 @@ since this rule  is the only one that closely follows the \Metis
 source code. To reconstruct the other rules, we follow a pattern showed
 in Example~\ref{ex:inference-rule-pattern}.
 
+We skip all the proofs in the following sections to keep the length of
+this document. Nevertheless, these proofs and other intermediate
+results are presented in~\cite{Prieto-Cubides2017a}. We remind the
+reader the formalisation~\cite{AgdaMetis,AgdaProp} contains also these
+proofs type-checked by \Agda.
+
 \begin{notation}
   The function name written in \texttt{typewriter} font refers to a
   \Metis inference rule in the \TSTP derivations. The same function
@@ -116,7 +122,7 @@ prove its soundness with a theorem like the following:
 \end{myexamplenum}
 
 The remainder of this section will be devoted to present a formal
-description in type theory of remaining \Metis rules presented in
+description in type theory of the remaining \Metis rules presented in
 Table~\ref{tab:agda-metis-table} using the pattern presented in the
 example above. We follow the same order to present the rules as the
 table shows.

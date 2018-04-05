@@ -23,12 +23,28 @@ they appeared in the \TSTP derivation.
 Unluckily, \Metis does not make explicit in the \TSTP derivation
 the way it uses the subgoals to prove the goal. We show that way
 in the correctness of the \strip inference rule in Theorem~\ref{thm:strip}.
-To show that, we first need to prove Lemma~\ref{lem:inv-uh-lem} and
+To show that, we first need to state Lemma~\ref{lem:inv-uh-lem} and
 Lemma~\ref{lem:lem-inv-strip}.
 
 \begin{mainlemma}
   \label{lem:inv-uh-lem}
-Let $\text{n} : \Nat$. If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$ where
+If $Γ ⊢ \fuh~φ$ then $Γ ⊢ φ$ where
+\begin{align}
+  \label{eq:uh}
+  \begin{split}
+  &\fuh : \Prop → \Prop\\
+  &\fuh~φ~ = \fuh_{1}~φ~(\fuh_{cm}~φ).
+  \end{split}
+\end{align}
+\end{mainlemma}
+
+In~\cite{Prieto-Cubides2017a}, we make a complete treatment for
+terminating functions including the analysis of the function $\fuh$
+showed in~\eqref{eq:uh}. The goal of this function comes from the
+defintion of $\fuh_{1}$ function in~\eqref{eq:uh-structured}. It consists of
+contracting a formula $φ₁ ⇒ (φ₂ ⇒ φ₃)$ to $(φ₁ ∧ φ₂) ⇒ φ₃$, and expanding a
+formula $φ₁ ⇒ (φ₂ ∧ φ₃)$ to $(φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃)$.
+
 
 \begin{equation}
 \label{eq:uh-structured}
@@ -41,19 +57,9 @@ Let $\text{n} : \Nat$. If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$ where
 \end{array}
 \end{aligned}
 \end{equation}
-\end{mainlemma}
-
-To keep simpler the coming definitions, we use instead of $\fuh_{1}$ function
-a unary function defined in~\eqref{eq:uh}.
-
-\begin{align*}
-  \label{eq:uh}
-  \begin{split}
-  &\fuh : \Prop → \Prop\\
-  &\fuh~φ~ = \fuh_{1}~φ~(\fuh_{cm}~φ).
-  \end{split}
-\end{align*}
-Using the $\fuh_{cm}$ function defined in~\eqref{eq:uh-complexity}.
+The remining function is $\fuh_{cm}$. This functions outputs the complexity
+measure for the $\fuh_{1}$ function (see more details in Section 2.1
+in~\cite{Prieto-Cubides2017a}).
 
 \begin{equation}
   \label{eq:uh-complexity}
