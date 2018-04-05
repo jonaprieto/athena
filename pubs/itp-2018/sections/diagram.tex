@@ -4,10 +4,10 @@
 
 \begin{tikzpicture}[
    auto
- , scale=0.9
+ % , scale=0.15
+ , font=\small
  , base/.style =
-      { font=\small
-      , align=center
+      { align=center
       }
  , file/.style =
       { base
@@ -21,28 +21,25 @@
       }
   , program/.style =
       { base
-      %% , fill=gray!1
+      % , fill=gray!1
       % , rounded corners
       , inner sep=3pt
       , outer sep=1pt
       }
   , library/.style =
       { shape=rectangle
-      , font=\small
       % , rounded corners
-%      , fill=blue!2
+     % , fill=blue!2
       , draw%=blue!20
       , inner sep=3pt
       , outer sep=1pt
       }
   , Rhoumbus/.style =
-      { font=\small
-      , base
+      { base
       , aspect=2
       % , fill=blue!2
       , draw%=blue!20
       , diamond
-      , draw
       , align=center
       , inner xsep=1pt,
       , inner ysep=1.5pt
@@ -50,58 +47,47 @@
       }
  ]
 \node[file]
-(tptp){\TPTP file \\ (CPL problem)};
+(tptp) at (0,0) {\TPTP file \\ (CPL problem)};
 
 \node[ Rhoumbus
-     , below of=tptp
-     , node distance=1.75cm
+     , right of=tptp
+     , node distance=3.8cm
      ]
 (metis) {\Metis \\ (prover) };
 
-\node[ right of= metis
-     , node distance=4cm
+\node[ below of= metis
+     , node distance=1.6cm
      ]
 (nothm) {};
 
 \node[ file
-     , below of=metis
-     , node distance=2cm
+     , right of=metis
+     , node distance=3.8cm
      ]
 (tstp) {\TSTP file\\(derivation)};
 
-\node[ Rhoumbus
+\node[ program
      , below of=tstp
-     , node distance=2cm
+     , node distance=2.5cm
      ]
 (athena) {\Athena tool\\(translator)
 };
 
-\node[ right of =athena
-     , node distance=4cm
-     ]
-(athenafailure) {};
-
-
-% ---- Agda libraries
 \node[ library
-     , left of=athena
+     , right of=athena
      , align=center
-     , node distance=4cm
+     , node distance=2.5cm
      ]
-(agdaprop) {
+(agdaprop)
+{\texttt{agda-metis}\\
 \texttt{agda-prop}\\
-\texttt{agda-metis}\\
-(dictionary)
-};
-
-% ---------------------------------------------------
+(dictionaries)};
 
 \node[ file
-     , below of =athena
-     , node distance=2cm
+     , left of =athena
+     , node distance=3.8cm
      ]
 (agdaproof) {\Agda file\\(proof-term)};
-
 \node[ Rhoumbus
      , below of=agdaproof
      , node distance=2cm
@@ -111,7 +97,7 @@
 \node[ library
      , align=center
      , left of=agda
-     , node distance=4cm
+     , node distance=3.8cm
      ]
 (libraries)
 {
@@ -123,27 +109,26 @@
 
 \node[ file
      , below of= agda
-     , node distance=2.2cm
+     , node distance=2.1cm
      ]
 (agdai) {Interface\\ \Agda file};
 
-\node[ right of =agda
-     , node distance=4cm
+\node[ file
+     , right of =agda
+     , node distance=3.8cm
      ]
-(invalid) {};
+(invalid) {Invalid\\ \Agda file};
 
 \path [line, thick] (tptp)      -- (metis);
-\path [line, thick] (metis)     -- node {theorem} (tstp);
-\draw [-o,   thick] (metis)     -- node {no theorem} (nothm);
+\path [line, thick] (metis)     -- node {\color{darkgreen}theorem} (tstp);
+\draw [-o,   thick] (metis)     -- node {\color{darkred}no theorem} (nothm);
 \path [line, thick] (tstp)      -- (athena);
 \path [line, thick] (athena)    -- (agdaproof);
-\draw [-o, thick] (athena)    -- node[align=center] {parsing\\failure} (athenafailure);
 \path [line, thick] (agdaprop)  -- (athena);
 \path [line, thick] (agdaproof) -- (agda);
 \path [line, thick] (libraries) -- (agda);
-\path [line, thick] (agda)      -- node {success} (agdai);
-\draw [-o, thick] (agda)      -- node {failure} (invalid);
-
+\path [line, thick] (agda)      -- node {\color{darkgreen}success} (agdai);
+\path [line, thick] (agda)      -- node {\color{darkred}failure} (invalid);
 \end{tikzpicture}
 
 \caption{Proof-reconstruction overview.
