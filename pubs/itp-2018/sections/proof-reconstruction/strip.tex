@@ -20,11 +20,14 @@ $(p ∨ q) ⇒ p$ and $((p ∨ q) ∧ p) ⇒ q$.
 they appeared in the \TSTP derivation.
 \end{myexamplenum}
 
-Unluckily, \Metis does not make explicit in the \TSTP derivation
-the way it uses the subgoals to prove the goal. We show that way
-in the correctness of the \strip inference rule in Theorem~\ref{thm:strip}.
-To show that, we first need to prove Lemma~\ref{lem:inv-uh-lem} and
-Lemma~\ref{lem:lem-inv-strip}.
+\begin{remark}
+\Metis does not make explicit in the \TSTP derivation the way it uses the
+subgoals to prove the goal. We show this approach in the correctness of the
+\strip inference rule in Theorem~\ref{thm:strip}. To show this theorem, we prove
+Lemma~\ref{lem:inv-uh-lem} and  Lemma~\ref{lem:lem-inv-strip}. In the former, we
+introduce the auxiliary function $\fuh_1$ to define the $\fuh$ function used to
+define the $\fstrip_1$ function in the latter.
+\end{remark}
 
 \begin{mainlemma}
   \label{lem:inv-uh-lem}
@@ -43,17 +46,12 @@ Let $\text{n} : \Nat$. If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$ where
 \end{equation}
 \end{mainlemma}
 
-To keep simpler the coming definitions, we use instead of $\fuh_{1}$ function
-a unary function defined in~\eqref{eq:uh}.
-
-\begin{align*}
-  \label{eq:uh}
-  \begin{split}
-  &\fuh : \Prop → \Prop\\
-  &\fuh~φ~ = \fuh_{1}~φ~(\fuh_{cm}~φ).
-  \end{split}
-\end{align*}
-Using the $\fuh_{cm}$ function defined in~\eqref{eq:uh-complexity}.
+The second argument in the $\fuh_1$ function is a natural number that constrains
+the number of recursive calls. To provide such a number given a formula
+$\varphi$, we call the $\fuh_{cm}$ function defined in~\eqref{eq:uh-complexity}.
+This function finds what we call the \emph{function complexity} of the function
+$\fuh_1$. For the convenience in the following descriptions, we use the
+function $\fuh : \Prop → \Prop$ for $\varphi \mapsto \fuh_{1}~φ~(\fuh_{cm}~φ)$.
 
 \begin{equation}
   \label{eq:uh-complexity}
@@ -66,6 +64,17 @@ Using the $\fuh_{cm}$ function defined in~\eqref{eq:uh-complexity}.
     \end{array}
   \end{aligned}
 \end{equation}
+
+
+% \begin{align}
+%   \label{eq:uh}
+%   \begin{split}
+%   &\fuh : \Prop → \Prop\\
+%   &\fuh~φ~ = \fuh_{1}~φ~(\fuh_{cm}~φ).
+%   \end{split}
+% \end{align}
+
+% == CONTINUAR DESDE AQUI
 
 The $\fstrip₀$ function defined in~\eqref{eq:strip-zero} yields the
 conjunction of subgoals that implies the goal of the problem in the
