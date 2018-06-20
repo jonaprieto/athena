@@ -2,6 +2,9 @@
 pdf :
 	- latexmk -pdf itp-2018.tex
 
+.PHONY : watch-pdf
+watch-pdf :
+	- latexmk -pdf -pvc itp-2018.tex
 # references-mendeley:
 #
 # From now on, we maintain both references (ref.bib and
