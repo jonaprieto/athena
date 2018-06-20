@@ -4,7 +4,10 @@ pdf :
 
 .PHONY : watch-pdf
 watch-pdf :
+<<<<<<< HEAD
 	- pkill pdflatex
+=======
+>>>>>>> a9fedb680d16b5a15e7397f9111524be5f53f071
 	- latexmk -pdf -pvc itp-2018.tex
 # references-mendeley:
 #

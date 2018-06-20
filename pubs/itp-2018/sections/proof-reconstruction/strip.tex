@@ -104,9 +104,15 @@ the reading of the \Metis source code and its \TSTP derivations.
 Let $n : \Nat$. If $Γ~⊢~\fstrip₁~φ~n$ then $Γ~⊢~φ$.
 \end{mainlemma}
 
+<<<<<<< HEAD
 The following lemma is convenient to substitute in a theorem equals by equals in
 the conclusion of the sequent. Recall the equality (≡) is symmetric and
 transitive, and we use these properties without any mention.
+=======
+The following lemma is convenient to substitute equals by equals in a theorem.
+Recall the equality (≡) is symmetric and transitive, and we use these properties
+without any mention.
+>>>>>>> a9fedb680d16b5a15e7397f9111524be5f53f071
 
 \begin{mainlemma}[\fsubst]
   \label{lem:subst}
@@ -157,9 +163,15 @@ If $Γ ⊢ s₂$ and $Γ ⊢ s₃$ then $Γ ⊢ φ$.
 
 The user of \Metis will probably note another rule in the derivations related
 with these subgoals, the \negate rule. Since \Metis proves a conjecture by
+<<<<<<< HEAD
 refutation, to prove a subgoal, \Metis assumes its negation using the \negate
 rule. This rule always ocurrs in the \TSTP derivation after the application of
 the \strip rule that introduces the subgoal.
+=======
+refutation, to prove a subgoal, \Metis assumes its negation with the \negate
+rule. This negation ocurrs always after the application of the \strip rule which
+as we mentioned before it is the rule that introduces each subgoal.
+>>>>>>> a9fedb680d16b5a15e7397f9111524be5f53f071
 
 \end{remark}
 
