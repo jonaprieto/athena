@@ -6,21 +6,14 @@
 
 The \conjunct rule extracts from a conjunction one of its conjuncts.
 This rule is a generalization of the projection rules for the
-conjunction connective as the following \TSTP excerpt shows.
+conjunction connective.
+See in  as the following \TSTP excerpt shows.
 
-\begin{myexamplenum}\hspace{10cm}
+\begin{myexamplenum}
 
-\begin{verbatim}
-  fof(p₁, p ∧ q ∧ (r ∨ ¬ p), ...
-  fof(p₂, q, inf(conjunct, p₁)).
-  fof(p₃, r ∨ ¬ p, inf(conjunct, p₁)).
-\end{verbatim}
-
-In the first formula, $p ∧ q ∧ (r ∨ ¬ p)$, we find a left-associative
-conjunction named \verb!p₁!. The \conjunct rule extracts $q$ from the
-\verb!p₁! using a left projection (∧-proj₁) follow by a right
-projection (∧-proj₂). After, the \conjunct rule extracts $r ∨ ¬ p$ by
-using a right projection on \verb!p₁!.
+In Fig.~\ref{complete-metis-example}, we see in line~\ref{line20} how we get $ ¬
+p ∨ q$ from the formula in line~\ref{line19}, $(¬ p ∨ q) ∧ (¬ q ∨ p)$, by means
+of the \conjunct rule, that in this case acts as a left projection (∧-proj₁).
 
 \end{myexamplenum}
 
