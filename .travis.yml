@@ -6,7 +6,7 @@ before_install:
   - brew install ghc
   - brew install agda
   - brew install cabal-install
-  - export PATH=/home/travis/.cabal/bin:${PATH}
+  - export PATH=/Users/travis/.cabal/bin:${PATH}
 
 script:
   - cabal update
