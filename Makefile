@@ -291,13 +291,13 @@ agda :
 .PHONY : online-atps
 online-atps:
 	@echo "==================================================================="
-	@echo "================= Installing Online-ATPs v0.1.1 ==================="
+	@echo "================= Installing Online-ATPs v0.1.2 ==================="
 	@echo "==================================================================="
 	@rm -Rf bin
 	@mkdir -p bin
 	@git config --global advice.detachedHead false && \
 		git clone -q --progress \
-		-b 'v0.1.1' \
+		-b 'v0.1.2' \
 		--single-branch \
 		https://github.com/jonaprieto/online-atps.git \
 		bin/online-atps
