@@ -57,6 +57,7 @@ ATHENA_AGDA_LIB =$(addprefix $(ATHENA_LIB),/.agda)
 
 TIME_BIN        := $(shell which time)
 TIMELIMIT       =timeout 10m
+
 SEP='-------------------------------------------------------------------'
 
 
@@ -73,18 +74,18 @@ endif
 # $ brew install timelimit
 
 ifeq ($(uname_S),OSF1)
-		TIMELIMIT =timelimit -T120 -t120 -S9
+		TIMELIMIT =timelimit -T360 -t360 -S9
 		TIME_BIN  := $(shell which gtime) # install gnu-time
 endif
 ifeq ($(uname_S),Darwin)
-		TIMELIMIT =timelimit -T120 -t120 -S9
+		TIMELIMIT =timelimit -T360 -t360 -S9
 		TIME_BIN  := $(shell which gtime)
 endif
 ifeq ($(uname_S),Linux)
 		TIMELIMIT =timeout 340m
 endif
 ifeq ($(uname_S),GNU/kFreeBSD)
-		TIMELIMIT =timelimit -T120 -t120 -S9
+		TIMELIMIT =timelimit -T360 -t360 -S9
 		TIME_BIN  := $(shell which gtime)
 endif
 ifeq ($(uname_S),UnixWare)
@@ -99,12 +100,12 @@ endif
 PROP_PACK =test/prop-pack
 PROBLEMS  =$(addprefix $(PROP_PACK),/problems)
 
-BASIC     =$(addprefix $(PROBLEMS),/basic)
-CONJ      =$(addprefix $(PROBLEMS),/conjunction)
-DISJ      =$(addprefix $(PROBLEMS),/disjunction)
-IMPL      =$(addprefix $(PROBLEMS),/implication)
-NEG       =$(addprefix $(PROBLEMS),/negation)
-PMETIS    =$(addprefix $(PROBLEMS),/prop-metis)
+BASIC  =$(addprefix $(PROBLEMS),/basic)
+CONJ   =$(addprefix $(PROBLEMS),/conjunction)
+DISJ   =$(addprefix $(PROBLEMS),/disjunction)
+IMPL   =$(addprefix $(PROBLEMS),/implication)
+NEG    =$(addprefix $(PROBLEMS),/negation)
+PMETIS =$(addprefix $(PROBLEMS),/prop-metis)
 
 TPTP_BASIC := $(wildcard $(BASIC)/*.tptp)
 TSTP_BASIC := $(addprefix $(BASIC)/,$(notdir $(TPTP_BASIC:.tptp=.tstp)))
