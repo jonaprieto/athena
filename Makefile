@@ -302,7 +302,6 @@ metis :
 		--single-branch \
 		https://github.com/gilith/metis.git \
 		bin/metis
-	@cabal update
 	@cd bin/metis && make init && make mlton
 	@echo "  [!] To run metis in the current session run this command:"
 	@echo "       $$ export PATH=${PWD}/bin/metis/bin/mlton:$$${sPath}"
