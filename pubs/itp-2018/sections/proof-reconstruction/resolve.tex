@@ -1,24 +1,18 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-\subsubsection{Resolve.}
-\label{sssec:resolve}
 
-Logic equivalence between propositions is a major issue to justify
-prover reasoning steps. Since we left out semantics to treat only the
-syntax aspects of propositional logic, our approach shows logic
-equivalence by converting propositions to their conjunctive normal
-form, and reordering those and the inner disjunctions to match them.
+% -- TODO algun texto aqui?
 
 \begin{mydefinition}
 
-A \emph{literal} is an propositional variable (positive literal) or a
-negation of an propositional variable (negative literal).
+A \emph{literal} is a propositional variable (positive literal) or a
+negation of a propositional variable (negative literal).
 
 \end{mydefinition}
 
 \begin{notation}
-We use \Lit as synonym of \Prop type to refer literals.
+\Lit is a synonym of \Prop to refer to literals.
 \end{notation}
 
 \begin{mydefinition}
@@ -35,35 +29,37 @@ The \emph{conjunctive normal form} of a formula also called clausal
 normal form is the logical equivalent version expressed as a
 conjunction of clauses where a \emph{clause} is the disjunction of
 zero or more literals.
-
 \end{mydefinition}
 
-\begin{myexamplenum}\hspace{10cm}
-\label{ex:resolve-tstp}
-\begin{verbatim}
-  cnf(r₄, ¬ r ∨ p ∨ q, ...
-  cnf(r₅, p ∨ q ∨ r, ...
-  cnf(r₆, p ∨ q, inf(resolve, r, [r₅, r₄])).
-\end{verbatim}
+% ----------------------------------------------------------------------------
+% -- RESOLVE --
+% ----------------------------------------------------------------------------
 
-In the excerpt above, we apply resolution to the first two formulas,
-$¬ r ∨ p ∨ q$ and $p ∨ q ∨ r$.
-The last line tells us the literal used
-for resolution is $r$. Syntactically speaking, we can not derive
-neither the conclusion $p ∨ q$ in \verb!r₆! nor apply the resolution
-theorem with \verb!r₄! and \verb!r₅! since the formulas do not fit
-the pattern required.
+\subsubsection{Resolve.}
+\label{sssec:resolve}
 
-If the scenario would have other like replacing \verb!r₅! by
-\begin{verbatim}
-  cnf(r₅, r ∨ p ∨ q, ...
-\end{verbatim}
-The \resolve rule have could derive $(p ∨ q) ∨ (p ∨ q)$, but again, that is not the expected result.
-\end{myexamplenum}
+The \resolve inference rule in combination with the \simplify rule is  the
+resolution theorem for propositional logic that we found in the \Metis \TSTP
+derivations (see this rule in~Fig.~\ref{fig:metis-inferences}). In particular,
+to reconstruct the \resolve rule following the pattern in
+Example~\ref{ex:inference-rule-pattern}, it is necessary to have a mechanism to
+test for logic equivalence between propositions. The challenge is because of we
+left out the semantics to treat only the syntax aspects of the propositional
+formulas, therefore we have to manipulate in somehow the formulas to see if they
+are logically equivalent.
 
-Therefore, we perform a sequence of rearrangements inside the
-involved formulas to match with the expected pattern by the
-\emph{resolve} inference rule in Fig.~\ref{fig:metis-inferences}.
+Our approach to address this issue mainly consists of checking for syntactical
+equality between the formulas. Firstly by converting them to their conjunctive
+normal and secondly, by performing reordering of the inner formulas of the
+resulting normal forms in the first conversion when they were not equal.
+
+In~\cite{Prieto-Cubides2017a}, we make a description of the complete machinery
+we use for that purpose. For instance, we define functions of the type ($\Source
+\to  \Target \to \Prop$) like $\freorder_{∨}$ to fix the order of a disjunction
+(premise) given by the order in the literals of another disjunction (conclusion)
+if it is possible. Following the same way, we define for conjunctions the
+function $\freorder_{\wedge}$ and for conjunctive normal forms the function
+$\freorder_{\wedge\vee}$.
 
 Using reordering after applying a customized version of the
 resolution theorem defined in~\eqref{eq:rsol} we get the expected
