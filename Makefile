@@ -14,7 +14,7 @@ default: install
 # -----------------------------------------------------------------------------
 
 AGDA_VERSION := $(shell agda --version 2>/dev/null)
-TESTED_AGDA_VERSION1 =Agda version 2.5.3
+TESTED_AGDA_VERSION1 =Agda version 2.5.4
 
 agdaversion:
 
@@ -57,7 +57,6 @@ ATHENA_AGDA_LIB =$(addprefix $(ATHENA_LIB),/.agda)
 
 TIME_BIN        := $(shell which time)
 TIMELIMIT       =timeout 10m
-# timelimit -T60 -t60 -S9
 SEP='-------------------------------------------------------------------'
 
 
@@ -74,22 +73,22 @@ endif
 # $ brew install timelimit
 
 ifeq ($(uname_S),OSF1)
-		TIMELIMIT =timelimit -T60 -t60 -S9
+		TIMELIMIT =timelimit -T120 -t120 -S9
 		TIME_BIN  := $(shell which gtime) # install gnu-time
 endif
 ifeq ($(uname_S),Darwin)
-		TIMELIMIT =timelimit -T60 -t60 -S9
+		TIMELIMIT =timelimit -T120 -t120 -S9
 		TIME_BIN  := $(shell which gtime)
 endif
 ifeq ($(uname_S),Linux)
-		TIMELIMIT =timeout 240m
+		TIMELIMIT =timeout 340m
 endif
 ifeq ($(uname_S),GNU/kFreeBSD)
-		TIMELIMIT =timelimit -T60 -t60 -S9
+		TIMELIMIT =timelimit -T120 -t120 -S9
 		TIME_BIN  := $(shell which gtime)
 endif
 ifeq ($(uname_S),UnixWare)
-		TIMELIMIT =timeout 240m
+		TIMELIMIT =timeout 340m
 endif
 
 
@@ -284,17 +283,36 @@ clean :
 .PHONY : agda
 agda :
 	@echo "==================================================================="
-	@echo "===================== Installing Agda v2.5.3  ====================="
+	@echo "===================== Installing Agda v2.5.4  ====================="
 	@echo "==================================================================="
-	@cabal install agda-2.5.3
+	@cabal install agda-2.5.4
+
+sPath := "PATH"
+.PHONY : metis
+metis :
+	@echo "==================================================================="
+	@echo "===================== Installing Metis v2.4 ======================="
+	@echo "==================================================================="
+	@rm -Rf bin/metis
+	@mkdir -p bin/
+	@git config --global advice.detachedHead false && \
+		git clone -q --progress \
+		-b 'v2.4.20180301' \
+		--single-branch \
+		https://github.com/gilith/metis.git \
+		bin/metis
+	@cabal update
+	@cd bin/metis && make init && make mlton
+	@echo "  [!] To run metis in the current session run this command:"
+	@echo "       $$ export PATH=${PWD}/bin/metis/bin/mlton:$$${sPath}"
 
 .PHONY : online-atps
 online-atps:
 	@echo "==================================================================="
 	@echo "================= Installing Online-ATPs v0.1.2 ==================="
 	@echo "==================================================================="
-	@rm -Rf bin
-	@mkdir -p bin
+	@rm -Rf bin/online-atps
+	@mkdir -p bin/
 	@git config --global advice.detachedHead false && \
 		git clone -q --progress \
 		-b 'v0.1.2' \
@@ -303,7 +321,7 @@ online-atps:
 		bin/online-atps
 	@cabal update
 	@cd bin/online-atps && cabal install
-	@rm -Rf bin
+
 
 .PHONY : agda-stdlib
 agda-stdlib:
@@ -470,6 +488,7 @@ AGDACALL ="${TIMELIMIT} \
 	${AGDA} $$agdaFile --verbose=0 --library=test"
 
 .PHONY : check
+
 check : export AGDA_DIR := $(ATHENA_AGDA_LIB)
 check : reconstruct
 
@@ -477,18 +496,6 @@ check : reconstruct
 	@echo "================== Type-checking Agda files ======================="
 	@echo "==================================================================="
 	@echo
-	@echo "[!] AGDA_DIR=${AGDA_DIR}"
-	@echo
-	@echo "If you want to type-check an isolate Agda file from the tests,"
-	@echo "you can execute the following command in your shell:"
-	@echo
-	@echo "  $$ pwd"
-	@echo "  $(PWD)"
-	@echo "  $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
-	@echo "  $$ agda --library=test AgdaFileGeneratedByAthena"
-	@echo
-	@echo ${SEP}
-
 	@for agdaFile in `find ${TEST_DIR} \
 			-type f -name "*.agda" \
 			-not -path "*bicond*" \
@@ -512,9 +519,26 @@ check : reconstruct
 		sh -c $(AGDACALL); \
 		echo ${SEP}; \
 	done
+	@echo
+	@echo "[!] AGDA_DIR=${AGDA_DIR}"
+	@echo
+	@echo "If you want to type-check an isolate Agda file from the tests,"
+	@echo "using the same version for the agda libraries, you can execute"
+	@echo "the following command in your shell:"
+	@echo
+	@echo "  $$ pwd"
+	@echo "  $(PWD)"
+	@echo "  $$ export AGDA_DIR=${ATHENA_AGDA_LIB}"
+	@echo "  $$ agda --library=test AgdaFileGeneratedByAthena"
+	@echo
 	@echo "[!] TSTP solutions using (<=>) operator"
 	@echo "    were excluded for type-checking since it does not supported"
 	@echo "    by Agda-Metis at the moment."
+	@echo "[!] To check there are also two alternative commands:"
+	@echo "      $$ make check-asr"
+	@echo "    or"
+	@echo "      $$ make small-check"
+	@echo ${SEP}
 
 .PHONY : small-check
 small-check : export AGDA_DIR := $(ATHENA_AGDA_LIB)
