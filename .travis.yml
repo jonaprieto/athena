@@ -4,12 +4,14 @@ os:
 before_install:
   - brew update
   - brew install ghc
-  - brew install cabal-install
   - brew install agda
+  - brew install cabal-install
   - export PATH=/home/travis/.cabal/bin:${PATH}
 
 script:
   - cabal update
+  - cabal install alex
+  - cabal install happy
   - make online-atps
   - make install-libraries
   - make problems
