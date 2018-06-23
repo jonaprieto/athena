@@ -8,6 +8,7 @@ before_install:
   - brew install cabal-install
   - export PATH=/Users/travis/.cabal/bin:${PATH}
   - brew install gnu-time
+  - brew install timelimit
   - brew install mlton
   - export PATH=/Users/travis/build/jonaprieto/athena/bin/metis/bin/mlton:${PATH}
   - export ATP="metis --show proof"
