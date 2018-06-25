@@ -1,0 +1,77 @@
+% SZS start RequiredInformation
+% Congratulations - you have become a registered power user of SystemOnTPTP, at IP address 129.177.123.98.
+% Please consider donating to the TPTP project - see www.tptp.org for details.
+% When you donate this message will disappear.
+% If you do not donate a random delay might be added to your processing time.
+% SZS end RequiredInformation
+% START OF SYSTEM OUTPUT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SZS status Theorem for /tmp/SystemOnTPTPFormReply50093/SOT_I16Pwe
+
+% SZS output start CNFRefutation for /tmp/SystemOnTPTPFormReply50093/SOT_I16Pwe
+fof(premise, axiom, ((p => q) & (q => p))).
+
+fof(goal, conjecture, ((p | q) => (p & q))).
+
+fof(subgoal_0, plain, ((p | q) => p), inference(strip, [], [goal])).
+
+fof(subgoal_1, plain, (((p | q) & p) => q), inference(strip, [], [goal])).
+
+fof(negate_0_0, plain, (~ ((p | q) => p)),
+    inference(negate, [], [subgoal_0])).
+
+fof(normalize_0_0, plain, ((~ p | q) & (~ q | p)),
+    inference(canonicalize, [], [premise])).
+
+fof(normalize_0_1, plain, (~ q | p),
+    inference(conjunct, [], [normalize_0_0])).
+
+fof(normalize_0_2, plain, (~ p & (p | q)),
+    inference(canonicalize, [], [negate_0_0])).
+
+fof(normalize_0_3, plain, (p | q),
+    inference(conjunct, [], [normalize_0_2])).
+
+fof(normalize_0_4, plain, (~ p), inference(conjunct, [], [normalize_0_2])).
+
+fof(normalize_0_5, plain, (q),
+    inference(simplify, [], [normalize_0_3, normalize_0_4])).
+
+cnf(refute_0_0, plain, (~ q | p),
+    inference(canonicalize, [], [normalize_0_1])).
+
+cnf(refute_0_1, plain, (q), inference(canonicalize, [], [normalize_0_5])).
+
+cnf(refute_0_2, plain, (p),
+    inference(resolve, [$cnf(q)], [refute_0_1, refute_0_0])).
+
+cnf(refute_0_3, plain, (~ p),
+    inference(canonicalize, [], [normalize_0_4])).
+
+cnf(refute_0_4, plain, ($false),
+    inference(resolve, [$cnf(p)], [refute_0_2, refute_0_3])).
+
+fof(negate_1_0, plain, (~ (((p | q) & p) => q)),
+    inference(negate, [], [subgoal_1])).
+
+fof(normalize_1_0, plain, (~ q & p & (p | q)),
+    inference(canonicalize, [], [negate_1_0])).
+
+fof(normalize_1_1, plain, ((~ p | q) & (~ q | p)),
+    inference(canonicalize, [], [premise])).
+
+fof(normalize_1_2, plain, (~ p | q),
+    inference(conjunct, [], [normalize_1_1])).
+
+fof(normalize_1_3, plain, ($false),
+    inference(simplify, [], [normalize_1_0, normalize_1_2])).
+
+cnf(refute_1_0, plain, ($false),
+    inference(canonicalize, [], [normalize_1_3])).
+% SZS output end CNFRefutation for /tmp/SystemOnTPTPFormReply50093/SOT_I16Pwe
+
+
+% END OF SYSTEM OUTPUT
+% RESULT: SOT_I16Pwe - Metis---2.3 says Theorem - CPU = 0.00 WC = 0.00 
+% OUTPUT: SOT_I16Pwe - Metis---2.3 says CNFRefutation - CPU = 0.00 WC = 0.00 
+
