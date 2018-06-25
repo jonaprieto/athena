@@ -540,7 +540,8 @@ docScriptMode subgoalN (Root Resolve tag [left, right]) agdaFile =
       <> (  docTypeStep subgoalN tag agdaFile
          <> pretty (stdName tag) <+> pretty "=" <> line
          <> indent 2
-            (  pretty Resolve <+> getFormulaByTag agdaFile tag <+> pretty literal
+            ( ( if fileScriptMode agdaFile then pretty "original-resolve-thm"
+                else pretty Resolve) <+> getFormulaByTag agdaFile tag <+> pretty literal
             <+> pretty (extractTagTree left) <+> pretty (extractTagTree right)
             )
          <> line

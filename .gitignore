@@ -136,3 +136,4 @@ cnf*
 cabal.config
 lib/agda-stdlib
 lib/.agda
+bin/
