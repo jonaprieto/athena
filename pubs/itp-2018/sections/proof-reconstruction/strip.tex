@@ -111,14 +111,6 @@ transitive, and we use these properties without any mention.
 \begin{mainlemma}[\fsubst]
   \label{lem:subst}
   If $Γ ⊢ φ$ and $ψ ≡ φ$ then $Γ ⊢ ψ$.
-% \begin{equation*}
-%   \label{eq:substitution-theorem}
-%   \begin{bprooftree}
-%   \AxiomC{$Γ ⊢ φ$}   \AxiomC{$ψ ≡ φ$}
-%   \RightLabel{\fsubst}
-%   \BinaryInfC{$Γ ⊢ ψ$}
-%   \end{bprooftree}
-% \end{equation*}
 \end{mainlemma}
 
 We can now formulate the result that justifies the stripping strategy of \Metis
@@ -133,23 +125,24 @@ $\fstrip~\varphi≡~s_{1}∧~s_{2}$.
 % $\fstrip₁~φ~n~≡~s₂∧~s₃$ where $\text{n} : \Nat$ is the complexity measure $\fstrip_{cm}$.
 If $Γ ⊢ s₂$ and $Γ ⊢ s₃$ then $Γ ⊢ φ$.
 \end{mainth}
-\begin{proof}
-\begin{equation*}
-  \begin{bprooftree}
-  \AxiomC{$ Γ ⊢ s_1 $}
-  \AxiomC{$ Γ ⊢ s_2 $}
-  \RightLabel{∧-intro}
-  \BinaryInfC{$Γ ⊢ s_1\wedge s_2$}
-  \AxiomC{$\fstrip~φ ≡ s_1\wedge s_2 $}
-  \RightLabel{By def.~\eqref{eq:strip}}
-  \UnaryInfC{$\fstrip₁~φ~(\fstrip_{cm}~\varphi) ≡ s_1\wedge s_2 $}
-  \RightLabel{\fsubst}
-  \BinaryInfC{$Γ ⊢ \fstrip₁~φ~n$}
-  \RightLabel{Lemma~\ref{lem:lem-inv-strip}}
-  \UnaryInfC{$Γ ⊢ φ$}
-\end{bprooftree}
-\end{equation*}
-\end{proof}
+% % No creo que sea necesario presentar las demostraciones
+% \begin{proof}
+% \begin{equation*}
+%   \begin{bprooftree}
+%   \AxiomC{$ Γ ⊢ s_1 $}
+%   \AxiomC{$ Γ ⊢ s_2 $}
+%   \RightLabel{∧-intro}
+%   \BinaryInfC{$Γ ⊢ s_1\wedge s_2$}
+%   \AxiomC{$\fstrip~φ ≡ s_1\wedge s_2 $}
+%   \RightLabel{By def.~\eqref{eq:strip}}
+%   \UnaryInfC{$\fstrip₁~φ~(\fstrip_{cm}~\varphi) ≡ s_1\wedge s_2 $}
+%   \RightLabel{\fsubst}
+%   \BinaryInfC{$Γ ⊢ \fstrip₁~φ~n$}
+%   \RightLabel{Lemma~\ref{lem:lem-inv-strip}}
+%   \UnaryInfC{$Γ ⊢ φ$}
+% \end{bprooftree}
+% \end{equation*}
+% \end{proof}
 
 % -------------------------------------------------------------------
 
@@ -159,7 +152,7 @@ The user of \Metis will probably note another rule in the derivations related
 with these subgoals, the \negate rule. Since \Metis proves a conjecture by
 refutation, to prove a subgoal, \Metis assumes its negation using the \negate
 rule. This rule always ocurrs in the \TSTP derivation after the application of
-the \strip rule that introduces the subgoal.
+the \strip rule per each subgoal.
 
 \end{remark}
 

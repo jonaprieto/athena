@@ -1,36 +1,6 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
-
-% -- TODO algun texto aqui?
-
-\begin{mydefinition}
-
-A \emph{literal} is a propositional variable (positive literal) or a
-negation of a propositional variable (negative literal).
-
-\end{mydefinition}
-
-\begin{notation}
-\Lit is a synonym of \Prop to refer to literals.
-\end{notation}
-
-\begin{mydefinition}
-
-The \emph{negative normal form} of a formula is the logical
-equivalent version of it in which negations appear only in the
-literals and the formula does not contain any implications.
-
-\end{mydefinition}
-
-\begin{mydefinition}
-
-The \emph{conjunctive normal form} of a formula also called clausal
-normal form is the logical equivalent version expressed as a
-conjunction of clauses where a \emph{clause} is the disjunction of
-zero or more literals.
-\end{mydefinition}
-
 % ----------------------------------------------------------------------------
 % -- RESOLVE --
 % ----------------------------------------------------------------------------
@@ -38,51 +8,24 @@ zero or more literals.
 \subsubsection{Resolve.}
 \label{sssec:resolve}
 
-The \resolve inference rule in combination with the \simplify rule is  the
-resolution theorem for propositional logic that we found in the \Metis \TSTP
-derivations (see this rule in~Fig.~\ref{fig:metis-inferences}). In particular,
-to reconstruct the \resolve rule following the pattern in
-Example~\ref{ex:inference-rule-pattern}, it is necessary to have a mechanism to
-test for logic equivalence between propositions. The challenge is because of we
-left out the semantics to treat only the syntax aspects of the propositional
-formulas, therefore we have to manipulate in somehow the formulas to see if they
-are logically equivalent.
+The \resolve inference rule in combination with the \simplify rule are the
+responsable rules to perform resolution. The \fresolve rules is a particular
+version of the resolution theorem for propositional logic \TSTP derivations (see
+this rule in~Fig.~\ref{fig:metis-inferences}).
 
-Our approach to address this issue mainly consists of checking for syntactical
-equality between the formulas. Firstly by converting them to their conjunctive
-normal and secondly, by performing reordering of the inner formulas of the
-resulting normal forms in the first conversion when they were not equal.
+\begin{example} In the \TSTP derivation in
+Fig.~\ref{eq:complete-example-problem}, there are two ocurrences in
+line~\ref{line14} and line~\ref{line16}~of the \resolve rule. This rule has two
+inputs: the \emph{resolvent}, a literal denoted by ℓ in~Fig.\ref{fig:metis-inferences},
+and a list of two formulas. \end{example}
 
-In~\cite{Prieto-Cubides2017a}, we make a description of the complete machinery
-we use for that purpose. For instance, we define functions of the type ($\Source
-\to  \Target \to \Prop$) like $\freorder_{∨}$ to fix the order of a disjunction
-(premise) given by the order in the literals of another disjunction (conclusion)
-if it is possible. Following the same way, we define for conjunctions the
-function $\freorder_{\wedge}$ and for conjunctive normal forms the function
-$\freorder_{\wedge\vee}$.
-
-Using reordering after applying a customized version of the
-resolution theorem defined in~\eqref{eq:rsol} we get the expected
-result.
-
-\begin{mainlemma}
-  \label{lem:rsol}
-  If $Γ ⊢ φ$ then $Γ ⊢ \frsol~φ$, where
-  \begin{equation}
-    \label{eq:rsol}
-    \begin{aligned}
-    &\frsol : \Prop \to \Prop\\
-    &\begin{array}{ll}
-      \frsol~φ &=
-        \begin{cases}
-          φ₂,      &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∧ (¬ φ₁ ∨ φ₂);\\
-          φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∧ (¬ φ₁ ∨ φ₄);\\
-          φ, &\text{ otherwise.}
-        \end{cases}
-      \end{array}
-      \end{aligned}
-\end{equation}
-\end{mainlemma}
+In~\cite{Prieto-Cubides2017a}, we describe our first attempt to reconstruct this
+rule that performs reordering of formulas jointly with the application of a
+customized version of the resolution theorem to reconstruct the rule. We propose
+an alternative definition formulated as a particular case
+of the \fsimplify rule. We do this after seeing the behavior
+of this rule in the \TSTP derivations from a more practical point of view for
+the type-checking.
 
 \begin{mainth}
   \label{thm:resolve}
@@ -92,10 +35,24 @@ result.
   \begin{split}
   \label{eq:resolve}
     &\fresolve : \Source \to \Source \to \Lit \to \Target \to \Prop\\
-    &\fresolve~φ₁~φ₂~ℓ~ψ =
-      \frsol~(\freorder_{∨}~φ₁~(ℓ ∨ ψ) ∧ \freorder_{∨}~φ₂~(¬ ℓ ∨ ψ)).
+    &\fresolve~φ₁~φ₂~ℓ~ψ~=~\fsimplify~(φ₁ ∧ φ₂)~(¬ ℓ ∨ ℓ)~ψ
   \end{split}
   \end{equation}
 \end{mainth}
+
+%% maybe we want to show this easy proof.
+% \begin{proof}
+%   \begin{equation*}
+%   \begin{bprooftree}
+%     \AxiomC{$Γ ⊢ φ₁$}
+%     \AxiomC{$Γ ⊢ φ₂$}
+%     \RightLabel{∧-intro}
+%     \BinaryInfC{$Γ ⊢~\varphi_1~\wedge~\varphi_2$}
+%     \AxiomC{\abbre{PEM}~$\ell$}
+%     \RightLabel{Theorem~\ref{thm:simplify}.}
+%     \BinaryInfC{$\Gamma\vdash~\fsimplify~~(φ₁ ∧ φ₂)~(¬ ℓ ∨ ℓ)~ψ$}
+%   \end{bprooftree}
+%   \end{equation*}
+% \end{proof}
 
 \end{document}

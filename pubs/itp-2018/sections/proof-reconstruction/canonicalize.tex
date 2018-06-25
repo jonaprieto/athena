@@ -1,6 +1,61 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
+% ----------------------------------------------------------------------------
+% -- Preliminars --
+% ----------------------------------------------------------------------------
+
+\begin{mydefinition}
+
+A \emph{literal} is a propositional variable (positive literal) or a
+negation of a propositional variable (negative literal).
+
+\end{mydefinition}
+
+\begin{notation}
+\Lit is a synonym of \Prop to refer to literals.
+\end{notation}
+
+\begin{mydefinition}
+
+The \emph{negative normal form} of a formula is the logical
+equivalent version of it in which negations appear only in the
+literals and the formula does not contain any implications.
+
+\end{mydefinition}
+
+\begin{mydefinition}
+
+The \emph{conjunctive normal form} of a formula also called clausal
+normal form is the logical equivalent version expressed as a
+conjunction of clauses where a \emph{clause} is the disjunction of
+zero or more literals.
+\end{mydefinition}
+
+
+\begin{remark} The proof-reconstruction we are exposing needs a mechanism to
+test logic equivalence between propositions in some cases. This task is not
+trivial since we left out the semantics to treat only the syntax aspects of the
+propositional formulas, and therefore we have to manipulate in somehow the
+formulas to see if they are logically equivalent.
+
+We address this challenge by converting the formulas to their conjunctive
+normal. We check if their normal forms are equal and if they are not, we try to
+reorder the first formula to match with the second one to fulfill the
+syntactical equality. In~\cite{Prieto-Cubides2017a}, we make a description of a
+set of functions and lemmas for such a purpose. For instance, we define
+functions of ($\Source \to  \Target \to \Prop$) type following the pattern in
+Example~\ref{ex:inference-rule-pattern} like the $\freorder_{∨}$ function. This
+function try to fix the order of a \emph{premise} disjunction given by following
+the order about the \emph{conclusion} disjunction, the target. Similarly, we
+define the function $\freorder_{\wedge}$ for conjunctions and the function
+$\freorder_{\wedge\vee}$ for conjunctive normal forms.
+
+\end{remark}
+
+% ----------------------------------------------------------------------------
+% -- CANONICALIZE --
+% ----------------------------------------------------------------------------
 
 \subsubsection{Canonicalize.}
 \label{sssec:canonicalize}
@@ -12,11 +67,9 @@ This rule jointly with the \clausify rule perform the so-called
 \emph{clausification} process mainly described
 in~\cite{Sutcliffe1996}.
 
-The \canonicalize rule also removes inside of the formula
-the tautologies listed in~Fig.~\ref{fig:redundancies}.
-
 \begin{figure}
   \[
+    \text{Disjunction:}
     \begin{bprooftree}
       \AxiomC{$Γ ⟝ φ ∨ ⊥$}
       \UnaryInfC{$Γ ⟝ φ$}
@@ -39,6 +92,7 @@ the tautologies listed in~Fig.~\ref{fig:redundancies}.
   \]
 
   \[
+    \text{Conjunction:}
     \begin{bprooftree}
       \AxiomC{$Γ ⟝ φ ∧ ⊥$}
       \UnaryInfC{$Γ ⟝ ⊥$}
@@ -64,64 +118,38 @@ the tautologies listed in~Fig.~\ref{fig:redundancies}.
 \label{fig:redundancies}
 \end{figure}
 
-The \canonicalize rule is used by \Metis to introduce the subgoals in
-their refutation proofs but also helps to simplify formulas at
-intermediate steps in the derivations. As far as we know, the
-\canonicalize rule implements a conjunctive normal form conversion
-with simplifications of tautologies. Otherwise, when
-an axiom, definition or hypothesis is needed to prove some goal, this
-rule gets the negative normal form of the formula.
+The \canonicalize rule is mainly used by \Metis to introduce the negation of a
+subgoal in its refutation proof. When the input formula is an axiom, definition
+or hypothesis introduced in the \TPTP file of the problem, the \canonicalize
+rule returns its negative normal form. In the remaining cases, as far as we
+know, \Metis uses the \canonicalize rule to performs a sort of simplifications
+to remove the tautologies listed in~Fig.~\ref{fig:redundancies} in the
+conjunctive normal form of the input formula.
 
-To reconstruct the \canonicalize rule, we adapted some ideas from the
-\Metis source code. The presentation of this reconstruction is as
-follows. We firstly describe functions to remove tautologies inside
-of the formula. After, we present the negative normal form conversion
-in~Lemma~\ref{lem:nnf} and the conjunctive normal form in
-Lemma~\ref{lem:cnf}. At the end of this section, we state
-Theorem~\ref{thm:canonicalize} to reconstruct the \canonicalize rule.
+To reconstruct this rule, we guide its prensentation as follows. In
+Lemma~\ref{lem:simplify-or} and Lemma~\ref{lem:simplify-and}, we show how to
+simplify in disjunctions and conjunctions, respectively. The negative normal form
+is stated in~Lemma~\ref{lem:nnf} and the conjunctive normal form in
+Lemma~\ref{lem:cnf}. Finally, the reconstruction of the \canonicalize rule is
+stated in Theorem~\ref{thm:canonicalize}.
 
+% ----------------------------------------------------------------------------
+% -- Simplify-Or --
+% ----------------------------------------------------------------------------
 
 \begin{notation}
 In a disjunction, $φ ≡ φ₁ ∨ φ₂ ∨ \cdots ∨ φₙ$, we say $ψ ∈_{∨} φ$,
 if there is some $i = 1, \cdots, n$ such that $ψ ≡ φᵢ$.
 Note that $ψ ∈_{∨} φ$ is another representation for the equality
 $ψ ≡ \freorder_{∨}~φ~ψ$.
+We assume all disjunctions to be right-associative unless otherwise
+stated.
 \end{notation}
 
-In right-associative disjunctions we remove the tautologies
-in Fig.~\ref{fig:or-redundancies} using Lemma~\ref{lem:canon-or}.
-We assume the formulas to be right-associative unless otherwise
-stated.
-
-\begin{figure}
-\begin{equation*}
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∨ ⊥$}
-  \UnaryInfC{$Γ ⟝ φ$}
-\end{bprooftree}\qquad
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∨ ⊤$}
-  \UnaryInfC{$Γ ⟝ ⊤$}
-\end{bprooftree}\qquad
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∨ φ$}
-  \UnaryInfC{$Γ ⟝ φ$}
-\end{bprooftree}
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∨ ¬~φ$}
-  \UnaryInfC{$Γ ⟝ ⊤$}
-\end{bprooftree}\qquad
-\end{equation*}
-\caption{Theorems to remove inside of a disjunction by
-the \canonicalize rule.}
-\label{fig:or-redundancies}
-\end{figure}
-
 \begin{mainlemma}
-  \label{lem:canon-or}
-
-  Let $φ : \Prop$ be a right-associative formula. If $Γ~⟝~φ$
-  then $Γ~⟝~\fcanon_{∨}~φ$, where
+  \label{lem:simplify-or}
+  %Let $φ : \Prop$ be a right-associative formula.
+  If $Γ~⟝~φ$ then $Γ~⟝~\fcanon_{∨}~φ$, where
 
 \begin{equation}
 \label{eq:canon-or}
@@ -132,14 +160,6 @@ the \canonicalize rule.}
    \fcanon_{∨} &(φ ∨ ⊥)     &= \fcanon_{∨}~φ \\
    \fcanon_{∨} &(⊤ ∨ φ)     &= ⊤\\
    \fcanon_{∨} &(φ ∨ ⊤)     &= ⊤\\
-   % \fcanon_{∨} &(¬ φ₁ ∨ φ₂) &=
-   %      \begin{cases}
-   %       \fcanon_{∨}~φ₂,        &\text{ if } ¬ φ₁ ∈_{∨} φ₂;\\
-   %       ⊤,                     &\text{ if } φ₁ ∈_{∨} φ₂;\\
-   %       ⊤,                     &\text{ if } \fcanon_{∨}~φ₂≡ ⊤;\\
-   %       ¬ φ₁,                  &\text{ if } \fcanon_{∨}~φ₂≡ ⊥;\\
-   %       ¬ φ₁ ∨ \fcanon_{∨}~φ₂, &\text{ otherwise.}
-   %      \end{cases}\\
    \fcanon_{∨} &(φ₁ ∨ φ₂)   &=
     \begin{cases}
      ⊤,                     & \text{ if } φ₁ ≡ ¬ ψ \text{ for some }ψ : \Prop \text{ and } ψ ∈_{∨} φ₂;\\
@@ -155,51 +175,30 @@ the \canonicalize rule.}
 \end{equation}
 \end{mainlemma}
 
-Now, we have removed tautologies in disjunctions by applying the
-$\fcanon_{∨}$ function. In a similar way, we define the $\fcanon_{∧}$
-function to work with conjunctions.
+% ----------------------------------------------------------------------------
+% -- Simplify-and --
+% ----------------------------------------------------------------------------
+
+Now, we have removed tautologies in disjunctions by applying the $\fcanon_{∨}$
+function, we formulate in a similar way, the $\fcanon_{∧}$ function to simplify
+tautologies about conjunctions.
 
 \begin{notation}
 In a conjunction, $φ ≡ φ₁ ∧ φ₂ ∧ \cdots ∧ φₙ$, we say
 $ψ ∈_{∧} φ$, if there is some $i = 1, \cdots, n$ such that $ψ ≡ φᵢ$.
 Note that $ψ ∈_{∧} φ$ is another representation of
 the equality $ψ ≡ \fconjunct~φ~ψ$.
+We assume all conjunctions to be right-associative unless otherwise
+stated.
 \end{notation}
 
-In right-associative conjunctions we remove the tautologies
-in Fig.~\ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
-
-\begin{figure}
-\begin{equation*}
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∧ ⊤$}
-  \UnaryInfC{$Γ ⟝ φ$}
-\end{bprooftree}\qquad
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∧ ⊥$}
-  \UnaryInfC{$Γ ⟝ ⊥$}
-\end{bprooftree}\qquad
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∧ φ$}
-  \UnaryInfC{$Γ ⟝ φ$}
-\end{bprooftree}\qquad
-\begin{bprooftree}
-  \AxiomC{$Γ ⟝ φ ∧ ¬~φ$}
-  \UnaryInfC{$Γ ⟝ ⊥$}
-\end{bprooftree}
-\end{equation*}
-\caption{Conjunction tautologies.}
-\label{fig:and-redundancies}
-\end{figure}
-
 \begin{mainlemma}
-  \label{lem:canon-and}
-
-  Let $φ : \Prop$ be a right-associative formula. If $Γ~⟝~φ$
-  then $Γ~⟝~\fcanon_{∧}~φ$, where
+  \label{lem:simplify-and}
+  %Let $φ : \Prop$ be a right-associative formula.
+  If $Γ~⟝~φ$ then $Γ~⟝~\fcanon_{∧}~φ$, where
 
   \begin{equation}
-   \label{eq:canon-and}
+   \label{eq:simplify-and}
     \begin{aligned}
      &\hspace{.495mm}\fcanon_{∧} : \NProp \to \NProp\\
       &\begin{array}{lll}
@@ -207,14 +206,6 @@ in Fig.~\ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
         \fcanon_{∧} &(φ ∧ ⊥)     &= ⊥  \\
         \fcanon_{∧} &(⊤ ∧ φ)     &= \fcanon_{∧}~φ \\
         \fcanon_{∧} &(φ ∧ ⊤)     &= \fcanon_{∧}~φ \\
-        % \fcanon_{∧} &(¬ φ₁ ∧ φ₂) &=
-        %   \begin{cases}
-        %     ⊥,                     &\text{ if } φ₁ ∈_{∧} φ₂;\\
-        %     \fcanon_{∧}~φ₂,        &\text{ if } ¬ φ₁ ∈_{∧} φ₂;\\
-        %     ⊥,                     &\text{ if } \fcanon_{∧}~φ₂~≡ ⊥;\\
-        %      \fcanon_{∧}~φ₂,       &\text{ if } \fcanon_{∧}~φ₂~≡ ⊤;\\
-        %     ¬ φ₁ ∧ \fcanon_{∧}~φ₂, &\text{ otherwise.}
-        %   \end{cases}\\
         \fcanon_{∧} &(φ₁ ∧ φ₂) &=
           \begin{cases}
             ⊥,                   & \text{ if } φ₁ ≡ ¬ ψ \text{ for some }ψ : \Prop \text{ and } ψ ∈_{∧} φ₂;\\
@@ -230,13 +221,14 @@ in Fig.~\ref{fig:and-redundancies} using Lemma~\ref{lem:canon-and}.
     \end{equation}
 \end{mainlemma}
 
-Now, we are ready to define the negative normal form of a formula with
-simplifications by applying to it the $\fnnf$ function defined in
-Lemma~\ref{lem:nnf} (see more details in Appendix~\ref{app:polarity-for-propositions}).
-This definition is mainly based on the \Metis
-source code to normalize formulas. To define such a function in type
-theory we used bounded recursion as we describe in
-Section~\ref{ssec:structural-recursion}.
+Using the functions $\fcanon_{∨}$ and $\fcanon_{∧}$ we can define our function for
+the negative normal form present in \Metis, we once again formulate this version
+based on the \Metis source code to \emph{normalize} formulas. We use bounded
+recursion to define the function $\fnnf_{1}$ in~\eqref{eq:nnf}.
+
+% ----------------------------------------------------------------------------
+% -- NNF --
+% ----------------------------------------------------------------------------
 
 \begin{equation}
 \label{eq:nnf}
@@ -257,18 +249,26 @@ Section~\ref{ssec:structural-recursion}.
 \end{aligned}
 \end{equation}
 
+The function $\fnnf$ in~\eqref{eq:fnnf} is defined similarly as the \fstrip
+function in~\eqref{eq:strip}, the complexity measure function $\fnnf_{cm}$ is
+defined in Appendix in~\cite{Prieto-Cubides2017a}.
+
+\begin{align}
+  \label{eq:fnnf}
+ \begin{split}
+   &\fnnf : \NProp \to \NProp\\
+   &\fnnf~φ = \fnnf_{1}~φ~(\fnnf_{cm} \varphi).
+ \end{split}
+\end{align}
+
 \begin{mainlemma}
   \label{lem:nnf}
-  If $Γ ⊢ φ$ then $Γ ⟝ \fnnf~φ$, where
-  \begin{align*}
-   \begin{split}
-     &\fnnf : \NProp \to \NProp\\
-     &\fnnf~φ = \fnnf_{1}~φ~(\fnnf_{cm}~φ).
-   \end{split}
-  \end{align*}
-  The $\fnnf_{cm}$  complexity measure function
-  is defined in Appendix~\ref{app:polarity-for-propositions}.
+  If $Γ ⊢ φ$ then $Γ ⟝ \fnnf~φ$.
 \end{mainlemma}
+
+%%%
+%%% TODO: 2018-06-25 17:14
+%%%
 
 To get the conjunctive normal form, we make sure the formula is a
 conjunction of disjunctions. For such a purpose, we use distributive laws in

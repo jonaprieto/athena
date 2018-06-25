@@ -114,12 +114,12 @@ where the \name{rule} is the inference name, the next field
 includes supporting arguments to apply the reasoning step, and the
 last field is a list of the parents nodes.
 
-For increasing the readability of this paper, we are not presenting
-these \TSTP derivations using the above description. Instead of it, we
-have adopted a customized \TSTP syntax to keep as short as possible
-the \Metis derivations. For instance,  we shortened some keywords,
-removed unnecessary arguments, and replaced some symbols.
-The complete description of these customizations are showed in Appendix~\ref{app:tstp-syntax}.
+For increasing the readability of this paper, we are not presenting these \TSTP
+derivations using the above description. Instead of it, we have adopted a
+customized \TSTP syntax to keep as short as possible the \Metis derivations. For
+instance,  we shortened some keywords, removed unnecessary arguments, and
+replaced some symbols. The complete description of these customizations are
+showed in Appendix~\ref{app:tstp-syntax}.
 
 \begin{myexamplenum}
 \label{fig:metis-example-tree}
@@ -221,29 +221,30 @@ rules in the \TSTP derivations. For instance, as far as we know, in
       \\
 
       \texttt{conjunct}
-      &Takes a formula from a conjunction
+      &Take a formula from a conjunction
       &\ref{thm:conjunct}
       \\
 
-      \texttt{resolve}
-      &A general form of the resolution theorem
-      &\ref{thm:resolve}
-      \\
-
       \texttt{canonicalize}
-      &Normalization of the formula
+      &Normalize a formula
       &\ref{thm:canonicalize}
       \\
 
       \texttt{clausify}
-      &Performs clausification
+      &Perform clausification
       &\ref{thm:clausify}
       \\
 
       \texttt{simplify}
       &Simplify definitions and theorems
       &\ref{thm:simplify}
+      \\
+
+      \texttt{resolve}
+      &Apply one form of the resolution theorem
+      &\ref{thm:resolve}
       \\[1ex]
+
     \hline
     \end{tabular}}
   \end{center}
