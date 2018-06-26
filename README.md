@@ -67,9 +67,9 @@ The proofs generated using this tool were tested with
 
 Using the Agda libraries listed below:
 
-- [agda-metis][agda-metis]
-- [agda-prop][agda-prop]
-- [agda-stdlib][agda-stdlib]
+- [agda-metis v0.2][agda-metis]
+- [agda-prop v0.1.1][agda-prop]
+- [agda-stdlib v0.16][agda-stdlib]
 
 There is a possibility to install the Agda libraries (`agda-prop`, `agda-metis` and
 the Agda standard library) run the following command:
@@ -86,7 +86,7 @@ libraries necessary for proof-reconstruction.
 
 ## Installing the Metis Prover
 
-Athena only supports reconstruction for the Metis prover:
+Athena only supports reconstruction for the Metis prover, we tested with:
 
 -  [Metis v2.4 (release 20180301)](https://github.com/gilith/metis)
 
@@ -99,14 +99,14 @@ To install this tool run the following command and follow the instructions.
 We have an alternative way to use this prover and many others. Its our
 client for the Systems on the TPTP World:
 
-- [Online-ATPs v0.1.1][online-atps]
+- [Online-ATPs v0.1.2][online-atps]
 
 To install this tool run the following command:
 
 ```bash
   $ make online-atps
   $ online-atps --version
-  Online-atps version 0.1.1
+  Online-atps version 0.1.2
 ```
 
 
@@ -153,11 +153,11 @@ This problem can be encode in [TPTP][tptp] syntax
 
 To obtain the Metis derivation of the TPTP problem showed above,
 make sure your Metis version is supported by running the following
-command. Recall we support the version 2.3 (release 20171021).
+command. Recall we support the version 2.4 (release 20180301).
 
 ```bash
   $ metis --version
-  metis 2.3 (release 20171021)
+  metis 2.4 (release 20180301)
 ```
 
 To generate the TSTP derivation of `problem.tptp`
