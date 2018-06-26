@@ -4,7 +4,7 @@ SRC_DIR  =src
 TEST_DIR =test
 
 ATHENA    =athena
-ATHENAOPTIONS ="--script"
+#ATHENAOPTIONS ="--script"
 AGDA      =agda
 
 .PHONY : default
@@ -239,10 +239,10 @@ TODO :
 TAGS :
 	fast-tags -e -R src/
 
-.PHONY : paper
-paper :
-	make --directory paper pdf
-	@echo "File: paper/main.pdf"
+.PHONY : thesis
+thesis :
+	make --directory pubs/thesis pdf
+	@echo "File in pubs/thesis"
 
 .PHONY : slides
 slides :
@@ -275,6 +275,7 @@ clean :
 		-name '*.agda' -delete
 	rm -rf dist
 	rm -rf lib/.agda
+	rm -rf lib/agda-stdlib
 	@echo
 	@echo 'Cleaning Prop-Pack test problems.'
 	@echo ${SEP}
@@ -334,15 +335,15 @@ agda-stdlib:
 	@if [ ! -d lib/agda-stdlib ] ; \
 	 then \
 	 echo "===================================================================";\
-	 echo "=========== Downloading Agda Standard Library v0.14    ============";\
+	 echo "=========== Downloading Agda Standard Library v0.16    ============";\
 	 echo "===================================================================";\
 	 git config --global advice.detachedHead false && \
 	 git clone -q --progress \
-			-b 'v0.14' \
+			-b 'v0.16' \
 			--single-branch \
 			https://github.com/agda/agda-stdlib.git \
 			lib/agda-stdlib; \
-	 echo "Installed agda-stdlib v0.14  in ${ATHENA_LIB}/agda-stdlib"; \
+	 echo "Installed agda-stdlib v0.16  in ${ATHENA_LIB}/agda-stdlib"; \
 	 else \
 		 echo "[!] agda-stdlib directory already exists"; \
 	 fi;
@@ -649,4 +650,3 @@ debug :
 	@echo "TIMELIMIT = $(TIMELIMIT)"
 	@echo "AGDACALL  = $(AGDACALL)"
 	@echo "ATHENA  = $(ATHENA)"
-
