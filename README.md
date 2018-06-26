@@ -43,10 +43,10 @@ This tool is written in Haskell and it was tested with
 
   - [GHC v8.4.3](https://www.haskell.org/ghc/download_ghc_8_4_3.html)
 
-To install Athena, the package manager `cabal` is required as well.
-Athena was tested with
+To install Athena, the package manager `cabal` is required as well,
+version ≥2.2.0.0. Athena was tested with
 
-  - [Cabal 1.24.0](https://hackage.haskell.org/package/cabal-install-1.24.0.0)
+  - [Cabal 2.2.0.0](https://hackage.haskell.org/package/cabal-install-2.2.0.0)
 
 Now, to install Athena just download this repository by running the following command:
 
