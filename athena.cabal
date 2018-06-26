@@ -10,7 +10,7 @@ category:      Language
 homepage:      https://github.com/jonaprieto/athena
 bug-reports:   https://github.com/jonaprieto/athena/issues/
 synopsis:      TSTP to Agda
-tested-with:   GHC == 8.0.2, GHC == 8.2.1
+tested-with:   GHC == 8.0.2, GHC == 8.2.2, GHC == 8.4.3
 description:
   Athena is a Haskell program that translates proofs given by Metis
   ATP in TSTP format to Agda code.
