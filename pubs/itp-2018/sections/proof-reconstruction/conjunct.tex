@@ -11,16 +11,16 @@ See in  as the following \TSTP excerpt shows.
 
 \begin{myexamplenum}
 
-In Fig.~\ref{complete-metis-example}, we see in line~\ref{line20} how we get $ ¬
-p ∨ q$ from the formula in line~\ref{line19}, $(¬ p ∨ q) ∧ (¬ q ∨ p)$, by means
-of the \conjunct rule, that in this case acts as a left projection (∧-proj₁).
+In Fig.~\ref{complete-metis-example} line~\ref{line20},
+the \conjunct rule acts as a left projection (∧-proj₁) taking
+$ ¬ p ∨ q$ from $(¬ p ∨ q) ∧ (¬ q ∨ p)$ in line~\ref{line19}.
 
 \end{myexamplenum}
 
 \begin{mainth}
   \label{thm:conjunct}
   Let $ψ : \Target$. If $Γ ⊢ φ$ then $Γ ⊢ \fconjunct~φ~ψ$, where
-  \begin{equation*}
+  \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation*}
   % \label{eq:rank-definition}
   \begin{aligned}
   &\hspace{.495mm}\fconjunct : \Source \to \Target \to \Prop\\
@@ -34,7 +34,7 @@ of the \conjunct rule, that in this case acts as a left projection (∧-proj₁)
           \end{cases}
   \end{array}
   \end{aligned}
-  \end{equation*}
+  \end{empheq}
 \end{mainth}
 
 \end{document}

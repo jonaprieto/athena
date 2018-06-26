@@ -33,17 +33,17 @@ in the latter in the definition of the $\fstrip$ function.
   \label{lem:inv-uh-lem}
 Let be $\text{n} : \Nat$. If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$ where
 
-\begin{equation}
-\label{eq:uh-structured}
-\begin{aligned}
-&\hspace{.495mm} \fuh_{1} : \Prop → \Nat → \Prop\\
-&\begin{array}{llll}
-\fuh_{1} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &(\suc~n) &= \fuh_{1}~((φ₁ ∧ φ₂) ⇒ φ₃)~n\\
-\fuh_{1} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &(\suc~n) &= \fuh_{1}~(φ₁ ⇒ φ₂)~n ∧ \fuh_{1}~(φ₁ ⇒ φ₃)~n\\
-\fuh_{1} &φ &n &= φ.
-\end{array}
-\end{aligned}
-\end{equation}
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
+  \label{eq:uh-structured}
+  \begin{aligned}
+  &\hspace{.495mm} \fuh_{1} : \Prop → \Nat → \Prop\\
+  &\begin{array}{llll}
+  \fuh_{1} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &(\suc~n) &= \fuh_{1}~((φ₁ ∧ φ₂) ⇒ φ₃)~n\\
+  \fuh_{1} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &(\suc~n) &= \fuh_{1}~(φ₁ ⇒ φ₂)~n ∧ \fuh_{1}~(φ₁ ⇒ φ₃)~n\\
+  \fuh_{1} &φ &n &= φ.
+  \end{array}
+  \end{aligned}
+\end{empheq}
 \end{mainlemma}
 
 The second argument in the $\fuh_1$ function is a natural number that constrains
@@ -52,7 +52,7 @@ $\varphi$, we call the $\fuh_{cm}$ function defined in~\eqref{eq:uh-complexity}.
 This function finds what we call the \emph{complexity measure} of the function
 $\fuh_1$. For the convenience in the following descriptions, we have the
 function $\fuh : \Prop → \Prop$ for $\varphi \mapsto \fuh_{1}~φ~(\fuh_{cm}~φ)$.
-\begin{equation}
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
   \label{eq:uh-complexity}
   \begin{aligned}
     &\hspace{.495mm}\fuh_{cm} : \Prop → \Nat\\
@@ -62,42 +62,43 @@ function $\fuh : \Prop → \Prop$ for $\varphi \mapsto \fuh_{1}~φ~(\fuh_{cm}~φ
     \fuh_{cm}~φ                &= 0.
     \end{array}
   \end{aligned}
-\end{equation}
+\end{empheq}
+
 Now, we define the $\fstrip$ function in \eqref{eq:strip} in a similar way as we
 did above for the $\fuh$ function. We have a definition of the $\fstrip₁$ function
 in~\eqref{eq:strip-fixed} and a complexity measure denoted by $\fstrip_{cm}$
 and defined in~\cite{Prieto-Cubides2017a}.
 % \vspace*{-5mm}
-\begin{align}
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{align}
   \label{eq:strip}
   \begin{split}
   &\fstrip : \Prop → \Prop\\
   &\fstrip~φ~ = \fstrip₁~φ~(\fstrip_{cm}~φ).
   \end{split}
-\end{align}
+\end{empheq}
 
 The $\fstrip$ function yields the conjunction of subgoals that implies the goal
 of the problem in the \Metis \TSTP derivations. Its definition comes mainly from
 the reading of the \Metis source code and its \TSTP derivations.
 
-\begin{equation}
-\label{eq:strip-fixed}
-\begin{aligned}
-&\hspace{.495mm}\fstrip₁ : \Prop → \Nat → \Prop\\
-&\begin{array}{llll}
-\fstrip₁ &(φ₁ ∧ φ₂)     &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
-\fstrip₁ &(φ₁ ∨ φ₂)     &(\suc~n) &= \fuh~((¬ φ₁) ⇒ \fstrip₁~φ₂~n)\\
-\fstrip₁ &(φ₁ ⇒ φ₂)     &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
-\fstrip₁ &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
-\fstrip₁ &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~((¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n)\\
-\fstrip₁ &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
-\fstrip₁ &(¬ (¬ φ₁))    &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n)\\
-\fstrip₁ &(¬ ⊥)         &(\suc~n) &= ⊤\\
-\fstrip₁ &(¬ ⊤)         &(\suc~n) &= ⊥\\
-\fstrip₁ &φ             &n        &= φ.
-\end{array}
-\end{aligned}
-\end{equation}
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
+  \label{eq:strip-fixed}
+  \begin{aligned}
+  &\hspace{.495mm}\fstrip₁ : \Prop → \Nat → \Prop\\
+  &\begin{array}{llll}
+  \fstrip₁ &(φ₁ ∧ φ₂)     &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
+  \fstrip₁ &(φ₁ ∨ φ₂)     &(\suc~n) &= \fuh~((¬ φ₁) ⇒ \fstrip₁~φ₂~n)\\
+  \fstrip₁ &(φ₁ ⇒ φ₂)     &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
+  \fstrip₁ &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
+  \fstrip₁ &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~((¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n)\\
+  \fstrip₁ &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
+  \fstrip₁ &(¬ (¬ φ₁))    &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n)\\
+  \fstrip₁ &(¬ ⊥)         &(\suc~n) &= ⊤\\
+  \fstrip₁ &(¬ ⊤)         &(\suc~n) &= ⊥\\
+  \fstrip₁ &φ             &n        &= φ.
+  \end{array}
+  \end{aligned}
+\end{empheq}
 
 \begin{mainlemma}
 \label{lem:lem-inv-strip}

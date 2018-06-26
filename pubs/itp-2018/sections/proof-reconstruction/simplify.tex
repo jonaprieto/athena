@@ -20,7 +20,7 @@ Since the main purpose of the \simplify rule is simplification of
 formulas, we have defined the $\freduce$ function to help removing
 the negation of a given literal $ℓ$ from a input formula.
 
-\begin{equation}
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
 \label{def:remove-literal}
   \begin{aligned}
   &\hspace{.495mm}\freduce : \Prop → \Lit → \Prop\hspace*{3.5cm}\\
@@ -33,7 +33,7 @@ the negation of a given literal $ℓ$ from a input formula.
   \end{cases}
    \end{array}
   \end{aligned}
-\end{equation}
+\end{empheq}
 
 \begin{mainlemma}
 \label{lem:reduce-literal}
@@ -49,7 +49,7 @@ Otherwise, we proceed by cases on the structure of the formula.
 For example, when the second source formula is a literal, we
 use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
 
-\begin{equation}
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
 \label{eq:simplify}
   \begin{aligned}
   &\hspace{.495mm}\fsimplify : \Source → \Source → \Target → \Prop \hspace*{3.5cm}\\
@@ -67,7 +67,7 @@ use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
   \end{cases}
   \end{array}
   \end{aligned}
-\end{equation}
+\end{empheq}
 
 \begin{mainlemma}
   \label{lem:binary-simplify}

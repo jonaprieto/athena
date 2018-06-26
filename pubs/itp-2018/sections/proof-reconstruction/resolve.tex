@@ -31,13 +31,13 @@ the type-checking.
   \label{thm:resolve}
   Let $ℓ$ be a literal, $ℓ : \Lit$, and $ψ : \Target$. If $Γ ⊢ φ₁$ and
   $Γ~⊢~φ₂$ then $Γ~⊢~\fresolve~φ₁~φ₂~ℓ~ψ$, where
-  \begin{equation}
+  \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
   \begin{split}
   \label{eq:resolve}
     &\fresolve : \Source \to \Source \to \Lit \to \Target \to \Prop\\
     &\fresolve~φ₁~φ₂~ℓ~ψ~=~\fsimplify~(φ₁ ∧ φ₂)~(¬ ℓ ∨ ℓ)~ψ
   \end{split}
-  \end{equation}
+  \end{empheq}
 \end{mainth}
 
 %% maybe we want to show this easy proof.

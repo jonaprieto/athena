@@ -5,6 +5,10 @@
 % -- Preliminars --
 % ----------------------------------------------------------------------------
 
+Before continuing with the remaining rules, let us mention the normal forms we
+are using for propositions and one comment about their pertinence in the
+reconstruction process.
+
 \begin{mydefinition}
 
 A \emph{literal} is a propositional variable (positive literal) or a
@@ -47,7 +51,7 @@ set of functions and lemmas for such a purpose. For instance, we define
 functions of ($\Source \to  \Target \to \Prop$) type following the pattern in
 Example~\ref{ex:inference-rule-pattern} like the $\freorder_{∨}$ function. This
 function try to fix the order of a \emph{premise} disjunction given by following
-the order about the \emph{conclusion} disjunction, the target. Similarly, we
+the order of the \emph{conclusion} disjunction. Similarly, we
 define the function $\freorder_{\wedge}$ for conjunctions and the function
 $\freorder_{\wedge\vee}$ for conjunctive normal forms.
 
@@ -151,28 +155,29 @@ stated.
   %Let $φ : \Prop$ be a right-associative formula.
   If $Γ~⟝~φ$ then $Γ~⟝~\fcanon_{∨}~φ$, where
 
-\begin{equation}
-\label{eq:canon-or}
-\begin{aligned}
- &\hspace{.495mm}\fcanon_{∨} : \NProp \to \NProp\\
- &\begin{array}{lll}
-   \fcanon_{∨} &(⊥ ∨ φ)     &= \fcanon_{∨}~φ \\
-   \fcanon_{∨} &(φ ∨ ⊥)     &= \fcanon_{∨}~φ \\
-   \fcanon_{∨} &(⊤ ∨ φ)     &= ⊤\\
-   \fcanon_{∨} &(φ ∨ ⊤)     &= ⊤\\
-   \fcanon_{∨} &(φ₁ ∨ φ₂)   &=
-    \begin{cases}
-     ⊤,                     & \text{ if } φ₁ ≡ ¬ ψ \text{ for some }ψ : \Prop \text{ and } ψ ∈_{∨} φ₂;\\
-     ⊤,                     & \text{ if } (¬ φ₁) ∈_{∨} φ₂;\\
-     \fcanon_{∨}~φ₂,        & \text{ if } φ₁ ∈_{∨} φ₂;\\
-     ⊤,                     & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊤;\\
-     φ₁,                    & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊥;\\
-     φ₁ ∨ \fcanon_{∨}~φ₂,   & \text{ otherwise.}
-    \end{cases}\\
-   \fcanon_{∨} &φ           &= φ.
-  \end{array}
-\end{aligned}
-\end{equation}
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
+  \label{eq:canon-or}
+  \begin{aligned}
+   &\hspace{.495mm}\fcanon_{∨} : \NProp \to \NProp\\
+   &\begin{array}{lll}
+     \fcanon_{∨} &(⊥ ∨ φ)     &= \fcanon_{∨}~φ \\
+     \fcanon_{∨} &(φ ∨ ⊥)     &= \fcanon_{∨}~φ \\
+     \fcanon_{∨} &(⊤ ∨ φ)     &= ⊤\\
+     \fcanon_{∨} &(φ ∨ ⊤)     &= ⊤\\
+     \fcanon_{∨} &(φ₁ ∨ φ₂)   &=
+      \begin{cases}
+       ⊤,                     & \text{ if } φ₁ ≡ ¬ ψ \text{ for some }ψ : \Prop \text{ and } ψ ∈_{∨} φ₂;\\
+       ⊤,                     & \text{ if } (¬ φ₁) ∈_{∨} φ₂;\\
+       \fcanon_{∨}~φ₂,        & \text{ if } φ₁ ∈_{∨} φ₂;\\
+       ⊤,                     & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊤;\\
+       φ₁,                    & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊥;\\
+       φ₁ ∨ \fcanon_{∨}~φ₂,   & \text{ otherwise.}
+      \end{cases}\\
+     \fcanon_{∨} &φ           &= φ.
+    \end{array}
+  \end{aligned}
+\end{empheq}
+
 \end{mainlemma}
 
 % ----------------------------------------------------------------------------
@@ -197,7 +202,7 @@ stated.
   %Let $φ : \Prop$ be a right-associative formula.
   If $Γ~⟝~φ$ then $Γ~⟝~\fcanon_{∧}~φ$, where
 
-  \begin{equation}
+  \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
    \label{eq:simplify-and}
     \begin{aligned}
      &\hspace{.495mm}\fcanon_{∧} : \NProp \to \NProp\\
@@ -218,7 +223,7 @@ stated.
         \fcanon_{∧} &φ         &= φ.
        \end{array}
     \end{aligned}
-    \end{equation}
+    \end{empheq}
 \end{mainlemma}
 
 Using the functions $\fcanon_{∨}$ and $\fcanon_{∧}$ we can define our function for
@@ -230,36 +235,36 @@ recursion to define the function $\fnnf_{1}$ in~\eqref{eq:nnf}.
 % -- NNF --
 % ----------------------------------------------------------------------------
 
-\begin{equation}
-\label{eq:nnf}
-\begin{aligned}
-&\hspace{.495mm}\fnnf_{1} : \Prop \to \Nat \to \Prop\\
-&\begin{array}{llll}
-\fnnf_{1} &(φ₁ ∧ φ₂)     &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~φ₁~n ∧ \fnnf_{1}~φ₂~n))\\
-\fnnf_{1} &(φ₁ ∨ φ₂)     &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~φ₁~n ∨ \fnnf_{1}~φ₂~n))\\
-\fnnf_{1} &(φ₁ ⇒ φ₂)     &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~((¬ φ₁) ∨ φ₂)~n))\\
-\fnnf_{1} &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~((¬ φ₁) ∨ (¬ φ₂))~n))\\
-\fnnf_{1} &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~((¬ φ₁) ∧ (¬ φ₂))~n))\\
-\fnnf_{1} &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~((¬ φ₂) ∧ φ₁)~n))\\
-\fnnf_{1} &(¬ (¬ φ))     &(\suc~n) &= \fnnf_{1}~φ₁~n\\
-\fnnf_{1} &(¬ ⊤)         &(\suc~n) &= ⊥\\
-\fnnf_{1} &(¬ ⊥)         &(\suc~n) &= ⊤\\
-\fnnf_{1} &φ             &\zero    &= φ
-\end{array}
-\end{aligned}
-\end{equation}
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
+  \label{eq:nnf}
+  \begin{aligned}
+    &\hspace{.495mm}\fnnf_{1} : \Prop \to \Nat \to \Prop\\
+    &\begin{array}{llll}
+    \fnnf_{1} &(φ₁ ∧ φ₂)     &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~φ₁~n ∧ \fnnf_{1}~φ₂~n))\\
+    \fnnf_{1} &(φ₁ ∨ φ₂)     &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~φ₁~n ∨ \fnnf_{1}~φ₂~n))\\
+    \fnnf_{1} &(φ₁ ⇒ φ₂)     &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~((¬ φ₁) ∨ φ₂)~n))\\
+    \fnnf_{1} &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~((¬ φ₁) ∨ (¬ φ₂))~n))\\
+    \fnnf_{1} &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~((¬ φ₁) ∧ (¬ φ₂))~n))\\
+    \fnnf_{1} &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~((¬ φ₂) ∧ φ₁)~n))\\
+    \fnnf_{1} &(¬ (¬ φ))     &(\suc~n) &= \fnnf_{1}~φ₁~n\\
+    \fnnf_{1} &(¬ ⊤)         &(\suc~n) &= ⊥\\
+    \fnnf_{1} &(¬ ⊥)         &(\suc~n) &= ⊤\\
+    \fnnf_{1} &φ             &\zero    &= φ
+    \end{array}
+  \end{aligned}
+\end{empheq}
 
 The function $\fnnf$ in~\eqref{eq:fnnf} is defined similarly as the \fstrip
 function in~\eqref{eq:strip}, the complexity measure function $\fnnf_{cm}$ is
 defined in Appendix in~\cite{Prieto-Cubides2017a}.
 
-\begin{align}
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{align}
   \label{eq:fnnf}
  \begin{split}
    &\fnnf : \NProp \to \NProp\\
    &\fnnf~φ = \fnnf_{1}~φ~(\fnnf_{cm} \varphi).
  \end{split}
-\end{align}
+\end{empheq}
 
 \begin{mainlemma}
   \label{lem:nnf}
@@ -277,15 +282,19 @@ Lemma~\ref{lem:dist} to get that form after applying the $\fnnf$ function.
 \begin{mainlemma}
   \label{lem:dist}
   $Γ ⟝ φ$ then $Γ ⟝ \fdist~φ$, where
-  \begin{equation*}
+  \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation*}
   \begin{aligned}
   &\hspace{.495mm}\fdist : \NProp \to \NProp\\
   &\begin{array}{lll}
     \fdist &(φ₁ ∧ φ₂) &= \fdist~φ₁ ∧ \fdist~φ₂\\
     \fdist &(φ₁ ∨ φ₂) &= \fdist_{∨}~(\fdist~φ₁ ∨ \fdist~φ₂)\\
     \fdist &φ         &= φ
-   \end{array}\\
-  \text{and}\\
+   \end{array}
+   \end{aligned}
+  \end{empheq}
+and
+  \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation*}
+  \begin{aligned}
   &\hspace{.495mm}\fdist_{∨} : \NProp \to \NProp\\
   &\begin{array}{lll}
     \fdist_{∨}&((φ₁ ∧ φ₂) ∨ φ₃) &= \fdist_{∨}~(φ₁ ∨ φ₂) ∧ \fdist_{∨}~(φ₂ ∨ φ₃)\\
@@ -293,7 +302,7 @@ Lemma~\ref{lem:dist} to get that form after applying the $\fnnf$ function.
     \fdist_{∨}&φ &= φ.
     \end{array}
    \end{aligned}
-  \end{equation*}
+ \end{empheq}
 \end{mainlemma}
 
 We get the conjunctive normal form by applying
@@ -302,12 +311,12 @@ the $\fnnf$ function follow by the $\fdist$ function.
 \begin{mainlemma}
 \label{lem:cnf}
   If $Γ ⊢ φ$ then $Γ ⊢ \fcnf~φ$, where
-  \begin{align*}
+  \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{align*}
     \begin{split}
     &\fcnf : \Prop \to \Prop\\
     &\fcnf~φ = \fdist~(\fnnf~φ).
     \end{split}
-  \end{align*}
+  \end{empheq}
 \end{mainlemma}
 
 
@@ -348,18 +357,18 @@ the target formula. It definition is as follows.
 \begin{mainth} % (fold)
   \label{thm:canonicalize}
    Let $ψ : \Target$. If $Γ ⊢ φ$ then $Γ~⊢~\fcanonicalize~φ~ψ$, where
-  \begin{equation}
-  \label{eq:canonicalize}
-  \begin{aligned}
-  &\hspace{.495mm}\fcanonicalize : \Source \to \Target \to \Prop\\
-  &\fcanonicalize~φ~ψ = \begin{cases}
-        ψ, &\text{ if  } ψ ≡ φ;\\
-        ψ, &\text{ if  } ψ ≡ \fnnf~φ;\\
-        ψ, &\text{ if  } \fcnf~ψ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ);\\
-        φ, &\text{ otherwise. }
-        \end{cases}
-   \end{aligned}
-  \end{equation}
+  \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
+    \label{eq:canonicalize}
+    \begin{aligned}
+    &\hspace{.495mm}\fcanonicalize : \Source \to \Target \to \Prop\\
+    &\fcanonicalize~φ~ψ = \begin{cases}
+          ψ, &\text{ if  } ψ ≡ φ;\\
+          ψ, &\text{ if  } ψ ≡ \fnnf~φ;\\
+          ψ, &\text{ if  } \fcnf~ψ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ);\\
+          φ, &\text{ otherwise. }
+          \end{cases}
+     \end{aligned}
+ \end{empheq}
 \end{mainth}
 
 \end{document}

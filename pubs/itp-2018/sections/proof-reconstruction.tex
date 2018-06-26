@@ -97,7 +97,7 @@ To reconstruct this \texttt{metisRule}, we define in the type theory
 a function preserving the name of the original rule. This function should follow
 the following pattern.
 
-\begin{equation*}
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation*}
   \begin{aligned}
   &\hspace{.495mm}\fun{metisRule} : \Source → \Target → \Prop\\
   &\begin{array}{ll}
@@ -109,7 +109,7 @@ the following pattern.
       \end{cases}
   \end{array}
   \end{aligned}
-\end{equation*}
+\end{empheq}
 
 To justify that all transformations performed by the \fun{metisRule} rule are correct, we
 will provide a theorem to show its soundness that says:
