@@ -336,23 +336,10 @@ Theorem~\ref{thm:canonicalize} for the \canonicalize rule.
 
 Now, we are ready to reconstruct the \fcanonicalize rule. This inference rule
 defined in \eqref{eq:canonicalize} performs normalization for a proposition.
-That is, depending on the role of the formula in the problem, it converts that
+That is, depending on the role of the formula in the problem, it converts the
 formula to its negative normal form or its conjunctive normal form. In both
-cases, \canonicalize simplifies the formula by removing tautologies inside of
-it as we widely described above for theorems in Fig.~\ref{fig:redundancies}.
-
-Based on the \Metis source code, when the formula plays the axiom or
-definition role, the \canonicalize rule transforms the source formula
-to its negative normal form. Otherwise, this rule converts the
-formula to a simplified conjunctive normal form.
-
-Since this rule mostly consists of dealing with clauses, to
-reconstruct this rule, our strategy mainly consists of checking the
-equality of negative normal form between the source and the target
-formula. If it fails, we try to reorder the conjunctive normal form
-of the source formula to match with the conjunctive normal form of
-the target formula. It definition is as follows.
-
+cases, the \canonicalize rule simplifies the formula by removing tautologies
+inside of it.
 
 \begin{mainth} % (fold)
   \label{thm:canonicalize}

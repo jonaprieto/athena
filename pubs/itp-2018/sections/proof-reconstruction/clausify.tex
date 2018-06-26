@@ -5,21 +5,22 @@
 \subsubsection{Clausify.}
 \label{sssec:clausification}
 
-The \clausify rule is a rule that transforms a formula into
-its clausal normal form but without performing simplifications of
-tautologies. Recall, this kind of conversion was already
-addressed by the \canonicalize rule. It is important to notice that
-this kind of conversions between one formula to its clausal normal
-form are not unique, and \Metis has customized approaches to perform
-that transformations. Therefore, we perform a reordering of the
-conjunctive normal form given by the $\fcnf$ function defined in
-Lemma~\ref{lem:cnf} with the $\freorder_{∧∨}$ function from
-Lemma~\ref{lem:reorder-and-or} to the input formula of the rule.
+The \clausify rule is a rule that transforms a formula into its clausal normal
+form but without performing simplifications of tautologies. Recall, this kind of
+conversion was already addressed by the \canonicalize rule. It is important to
+notice that this kind of conversions between one formula to its clausal normal
+form are not unique, and \Metis has customized approaches to perform such
+transformations.
+
+To address the reconstruction of this rule, we perform a
+reordering of the conjunctive normal form given by the $\fcnf$ function defined
+in Lemma~\ref{lem:cnf} with the aforementioned function  $\freorder_{∧∨}$ to the
+input formula of the rule.
 
 
-\begin{myexamplenum}
-In the following \TSTP derivation by \Metis, we see how
-\clausify transforms the \texttt{n₀} formula to get \texttt{n₁} formula.
+\begin{myexamplenum} In the following \TSTP derivation by \Metis, the \clausify
+rule transforms the \texttt{n₀} formula to get the \texttt{n₁} formula, that is
+just the application of the distribution laws.
 
 \begin{verbatim}
   fof(n₀, ¬ p ∨ (q ∧ r) ...
