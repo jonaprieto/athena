@@ -29,14 +29,19 @@ introduce the auxiliary function $\fuh_1$ to define the $\fuh$ function used in
 in the latter in the definition of the $\fstrip$ function.
 \end{remark}
 
+\begin{notation}
+$\Bound$ is a synonym for $\Nat$ type to refer to a natural number that constrains
+the number of recursive calls for the function that use it in its type.
+\end{notation}
+
 \begin{mainlemma}
   \label{lem:inv-uh-lem}
-Let be $\text{n} : \Nat$. If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$ where
+Let be $n : \Bound$. If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$ where
 
 \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
   \label{eq:uh-structured}
   \begin{aligned}
-  &\hspace{.495mm} \fuh_{1} : \Prop → \Nat → \Prop\\
+  &\hspace{.495mm} \fuh_{1} : \Prop → \Bound → \Prop\\
   &\begin{array}{llll}
   \fuh_{1} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &(\suc~n) &= \fuh_{1}~((φ₁ ∧ φ₂) ⇒ φ₃)~n\\
   \fuh_{1} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &(\suc~n) &= \fuh_{1}~(φ₁ ⇒ φ₂)~n ∧ \fuh_{1}~(φ₁ ⇒ φ₃)~n\\
@@ -46,16 +51,15 @@ Let be $\text{n} : \Nat$. If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$ where
 \end{empheq}
 \end{mainlemma}
 
-The second argument in the $\fuh_1$ function is a natural number that constrains
-the number of recursive calls. To provide such a number given a formula
+To provide such a number given a formula
 $\varphi$, we call the $\fuh_{cm}$ function defined in~\eqref{eq:uh-complexity}.
-This function finds what we call the \emph{complexity measure} of the function
-$\fuh_1$. For the convenience in the following descriptions, we have the
+For the convenience in the following descriptions, we have the
 function $\fuh : \Prop → \Prop$ for $\varphi \mapsto \fuh_{1}~φ~(\fuh_{cm}~φ)$.
+
 \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
   \label{eq:uh-complexity}
   \begin{aligned}
-    &\hspace{.495mm}\fuh_{cm} : \Prop → \Nat\\
+    &\hspace{.495mm}\fuh_{cm} : \Prop → \Bound\\
     &\begin{array}{llll}
     \fuh_{cm}~(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{cm}~φ₃ + 2\\
     \fuh_{cm}~(φ₁ ⇒ (φ₂ ∧ φ₃)) &= \fmax~(\fuh_{cm}~φ₂)~(\fuh_{cm}~φ₃) + 1\\
@@ -66,8 +70,8 @@ function $\fuh : \Prop → \Prop$ for $\varphi \mapsto \fuh_{1}~φ~(\fuh_{cm}~φ
 
 Now, we define the $\fstrip$ function in \eqref{eq:strip} in a similar way as we
 did above for the $\fuh$ function. We have a definition of the $\fstrip₁$ function
-in~\eqref{eq:strip-fixed} and a complexity measure denoted by $\fstrip_{cm}$
-and defined in~\cite{Prieto-Cubides2017a}.
+in~\eqref{eq:strip-fixed} and a function to find its bound for its recursive calls
+by $\fstrip_{cm}$ defined in~\cite{Prieto-Cubides2017a}.
 % \vspace*{-5mm}
 \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{align}
   \label{eq:strip}
@@ -79,12 +83,12 @@ and defined in~\cite{Prieto-Cubides2017a}.
 
 The $\fstrip$ function yields the conjunction of subgoals that implies the goal
 of the problem in the \Metis \TSTP derivations. Its definition comes mainly from
-the reading of the \Metis source code and its \TSTP derivations.
+the reading of the \Metis source code and some examples from \TSTP derivations.
 
 \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
   \label{eq:strip-fixed}
   \begin{aligned}
-  &\hspace{.495mm}\fstrip₁ : \Prop → \Nat → \Prop\\
+  &\hspace{.495mm}\fstrip₁ : \Prop → \Bound → \Prop\\
   &\begin{array}{llll}
   \fstrip₁ &(φ₁ ∧ φ₂)     &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
   \fstrip₁ &(φ₁ ∨ φ₂)     &(\suc~n) &= \fuh~((¬ φ₁) ⇒ \fstrip₁~φ₂~n)\\
@@ -102,7 +106,7 @@ the reading of the \Metis source code and its \TSTP derivations.
 
 \begin{mainlemma}
 \label{lem:lem-inv-strip}
-Let $n : \Nat$. If $Γ~⊢~\fstrip₁~φ~n$ then $Γ~⊢~φ$.
+Let $n : \Bound$. If $Γ~⊢~\fstrip₁~φ~n$ then $Γ~⊢~φ$.
 \end{mainlemma}
 
 The following lemma is convenient to substitute in a theorem equals by equals in
@@ -124,8 +128,9 @@ theorem in the natural way.
 Let $s_1$ and $s_2$ be the subgoals of the goal $φ$, that is,
 $\fstrip~\varphi≡~s_{1}∧~s_{2}$.
 % $\fstrip₁~φ~n~≡~s₂∧~s₃$ where $\text{n} : \Nat$ is the complexity measure $\fstrip_{cm}$.
-If $Γ ⊢ s₂$ and $Γ ⊢ s₃$ then $Γ ⊢ φ$.
+If $Γ ⊢ s_{1}$ and $Γ ⊢ s_{2}$ then $Γ ⊢ φ$.
 \end{mainth}
+
 % % No creo que sea necesario presentar las demostraciones
 % \begin{proof}
 % \begin{equation*}
@@ -152,8 +157,8 @@ If $Γ ⊢ s₂$ and $Γ ⊢ s₃$ then $Γ ⊢ φ$.
 The user of \Metis will probably note another rule in the derivations related
 with these subgoals, the \negate rule. Since \Metis proves a conjecture by
 refutation, to prove a subgoal, \Metis assumes its negation using the \negate
-rule. This rule always ocurrs in the \TSTP derivation after the application of
-the \strip rule per each subgoal.
+rule. We will find this rule always after the \strip rule per each subgoal in the
+\TSTP derivation.
 
 \end{remark}
 

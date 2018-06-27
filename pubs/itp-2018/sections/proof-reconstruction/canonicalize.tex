@@ -126,8 +126,8 @@ The \canonicalize rule is mainly used by \Metis to introduce the negation of a
 subgoal in its refutation proof. When the input formula is an axiom, definition
 or hypothesis introduced in the \TPTP file of the problem, the \canonicalize
 rule returns its negative normal form. In the remaining cases, as far as we
-know, \Metis uses the \canonicalize rule to performs a sort of simplifications
-to remove the tautologies listed in~Fig.~\ref{fig:redundancies} in the
+know, \Metis uses the \canonicalize rule to perform a sort of simplifications
+to remove the tautologies listed in~Fig.~\ref{fig:redundancies} from the
 conjunctive normal form of the input formula.
 
 To reconstruct this rule, we guide its prensentation as follows. In
@@ -238,7 +238,7 @@ recursion to define the function $\fnnf_{1}$ in~\eqref{eq:nnf}.
 \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
   \label{eq:nnf}
   \begin{aligned}
-    &\hspace{.495mm}\fnnf_{1} : \Prop \to \Nat \to \Prop\\
+    &\hspace{.495mm}\fnnf_{1} : \Prop \to \Bound \to \Prop\\
     &\begin{array}{llll}
     \fnnf_{1} &(φ₁ ∧ φ₂)     &(\suc~n) &= \fcanon_{∧}~(\fassoc_{∧}~(\fnnf_{1}~φ₁~n ∧ \fnnf_{1}~φ₂~n))\\
     \fnnf_{1} &(φ₁ ∨ φ₂)     &(\suc~n) &= \fcanon_{∨}~(\fassoc_{∨}~(\fnnf_{1}~φ₁~n ∨ \fnnf_{1}~φ₂~n))\\
@@ -255,8 +255,8 @@ recursion to define the function $\fnnf_{1}$ in~\eqref{eq:nnf}.
 \end{empheq}
 
 The function $\fnnf$ in~\eqref{eq:fnnf} is defined similarly as the \fstrip
-function in~\eqref{eq:strip}, the complexity measure function $\fnnf_{cm}$ is
-defined in Appendix in~\cite{Prieto-Cubides2017a}.
+function in~\eqref{eq:strip} with a function $\fnnf_{cm}$ that finds a bound
+for its recursive calls (See its definition in Appendix in~\cite{Prieto-Cubides2017a}).
 
 \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{align}
   \label{eq:fnnf}
