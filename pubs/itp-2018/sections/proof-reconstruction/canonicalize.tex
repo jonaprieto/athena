@@ -171,7 +171,7 @@ stated.
        \fcanon_{∨}~φ₂,        & \text{ if } φ₁ ∈_{∨} φ₂;\\
        ⊤,                     & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊤;\\
        φ₁,                    & \text{ if } \fcanon_{∨}~φ₂~ ≡ ⊥;\\
-       φ₁ ∨ \fcanon_{∨}~φ₂,   & \text{ otherwise.}
+       φ₁ ∨ \fcanon_{∨}~φ₂,   & \text{ otherwise,}
       \end{cases}\\
      \fcanon_{∨} &φ           &= φ.
     \end{array}
@@ -218,7 +218,7 @@ stated.
             \fcanon_{∧}~φ₂,      & \text{ if } φ₁ ∈_{∧} φ₂;\\
             φ₁,                  & \text{ if } \fcanon_{∧}~φ₂~≡ ⊤;\\
             ⊥,                   & \text{ if } \fcanon_{∧}~φ₂~≡ ⊥;\\
-            φ₁ ∧ \fcanon_{∧}~φ₂, &\text{ otherwise.}
+            φ₁ ∧ \fcanon_{∧}~φ₂, &\text{ otherwise,}
           \end{cases}\\
         \fcanon_{∧} &φ         &= φ.
        \end{array}
@@ -226,10 +226,10 @@ stated.
     \end{empheq}
 \end{mainlemma}
 
-Using the functions $\fcanon_{∨}$ and $\fcanon_{∧}$ we can define our function for
-the negative normal form present in \Metis, we once again formulate this version
-based on the \Metis source code to \emph{normalize} formulas. We use bounded
-recursion to define the function $\fnnf_{1}$ in~\eqref{eq:nnf}.
+Using the functions $\fcanon_{∨}$ and $\fcanon_{∧}$ we formulate the functions
+that finds the normal form based on the \Metis source code used to
+\emph{normalize} formulas. We use bounded recursion to define the function
+$\fnnf_{1}$ in~\eqref{eq:nnf}.
 
 % ----------------------------------------------------------------------------
 % -- NNF --
@@ -249,14 +249,14 @@ recursion to define the function $\fnnf_{1}$ in~\eqref{eq:nnf}.
     \fnnf_{1} &(¬ (¬ φ))     &(\suc~n) &= \fnnf_{1}~φ₁~n\\
     \fnnf_{1} &(¬ ⊤)         &(\suc~n) &= ⊥\\
     \fnnf_{1} &(¬ ⊥)         &(\suc~n) &= ⊤\\
-    \fnnf_{1} &φ             &\zero    &= φ
+    \fnnf_{1} &φ             &\zero    &= φ.
     \end{array}
   \end{aligned}
 \end{empheq}
 
-The function $\fnnf$ in~\eqref{eq:fnnf} is defined similarly as the \fstrip
-function in~\eqref{eq:strip} with a function $\fnnf_{cm}$ that finds a bound
-for its recursive calls (See its definition in Appendix in~\cite{Prieto-Cubides2017a}).
+The function $\fnnf$ in~\eqref{eq:fnnf} is defined by using the function $\fnnf_{cm}$ encharges to find
+the bound for the recursive calls of the $\fnnf_{1}$ function. The interested reader can find the complete
+definition from Appendix in~\cite{Prieto-Cubides2017a}, we do not include it for the seek of brevity.
 
 \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{align}
   \label{eq:fnnf}
@@ -349,9 +349,9 @@ inside of it.
     \begin{aligned}
     &\hspace{.495mm}\fcanonicalize : \Source \to \Target \to \Prop\\
     &\fcanonicalize~φ~ψ = \begin{cases}
-          ψ, &\text{ if  } ψ ≡ φ;\\
-          ψ, &\text{ if  } ψ ≡ \fnnf~φ;\\
-          ψ, &\text{ if  } \fcnf~ψ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ);\\
+          ψ, &\text{ if } ψ ≡ φ;\\
+          ψ, &\text{ if } ψ ≡ \fnnf~φ;\\
+          ψ, &\text{ if } \fcnf~ψ≡ \freorder_{∧∨}~(\fcnf~φ)~(\fcnf~ψ);\\
           φ, &\text{ otherwise. }
           \end{cases}
      \end{aligned}

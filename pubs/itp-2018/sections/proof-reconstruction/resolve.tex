@@ -9,23 +9,24 @@
 \label{sssec:resolve}
 
 The \resolve inference rule in combination with the \simplify rule are the
-responsable rules to perform resolution. The \fresolve rules is a particular
-version of the resolution theorem for propositional logic \TSTP derivations (see
-this rule in~Fig.~\ref{fig:metis-inferences}).
+responsable rules to perform resolution, in particular, the \resolve rule is is
+the version of the resolution theorem showed in~Fig.~\ref{fig:metis-inferences}.
 
 \begin{example} In the \TSTP derivation in
 Fig.~\ref{eq:complete-example-problem}, there are two ocurrences in
 line~\ref{line14} and line~\ref{line16}~of the \resolve rule. This rule has two
-inputs: the \emph{resolvent}, a literal denoted by ℓ in~Fig.\ref{fig:metis-inferences},
-and a list of two formulas. \end{example}
+inputs in the following order: the \emph{resolvent} which is the literal denoted
+by ℓ in~Fig.~\ref{fig:metis-inferences} and a list formed by two formulas to
+resolve. \end{example}
 
 In~\cite{Prieto-Cubides2017a}, we describe our first attempt to reconstruct this
 rule that performs reordering of formulas jointly with the application of a
-customized version of the resolution theorem to reconstruct the rule. We propose
-an alternative definition formulated as a particular case
-of the \fsimplify rule. We do this after seeing the behavior
-of this rule in the \TSTP derivations from a more practical point of view for
-the type-checking.
+customized version of the resolution theorem to reconstruct the rule.
+Unfortunately, that approach suffers of an exponential computational cost for
+each searching by reordering the formulas. This time, we propose an alternative
+formulation to reconstruct this rule as a particular case of the \fsimplify rule.
+This observation was taken from the \TSTP derivations in order to improve
+the timing of the type-checking. Futher improvements are future work.
 
 \begin{mainth}
   \label{thm:resolve}
@@ -35,7 +36,7 @@ the type-checking.
   \begin{split}
   \label{eq:resolve}
     &\fresolve : \Source \to \Source \to \Lit \to \Target \to \Prop\\
-    &\fresolve~φ₁~φ₂~ℓ~ψ~=~\fsimplify~(φ₁ ∧ φ₂)~(¬ ℓ ∨ ℓ)~ψ
+    &\fresolve~φ₁~φ₂~ℓ~ψ~=~\fsimplify~(φ₁ ∧ φ₂)~(¬ ℓ ∨ ℓ)~ψ.
   \end{split}
   \end{empheq}
 \end{mainth}
