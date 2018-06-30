@@ -23,10 +23,10 @@ In~\cite{Prieto-Cubides2017a}, we describe our first attempt to reconstruct this
 rule that performs reordering of formulas jointly with the application of a
 customized version of the resolution theorem to reconstruct the rule.
 Unfortunately, that approach suffers of an exponential computational cost for
-each searching by reordering the formulas. This time, we propose an alternative
-formulation to reconstruct this rule as a particular case of the \fsimplify rule.
-This observation was taken from the \TSTP derivations in order to improve
-the timing of the type-checking. Futher improvements are future work.
+each searching to reorder the formulas. Therefore, we propose
+in~\label{eq:resolve} an alternative formulation to reconstruct this rule by
+using the \fsimplify rule. This observation was taken from the \TSTP derivations
+and we check that improves significantly the timing of the type-checking.
 
 \begin{mainth}
   \label{thm:resolve}
