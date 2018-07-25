@@ -4,10 +4,10 @@
 \subsubsection{Strip.}
 \label{sssec:strip-a-goal}
 
-To prove a goal, \Metis splits the goal into disjoint cases. This
-process produces a list of new subgoals, the conjunction of these
-subgoals implies the goal. Then, a proof of the goal becomes into a
-set of smaller proofs, one refutation for each subgoal.
+To prove a goal, \Metis splits the goal into disjoint cases. This process
+produces a list of new subgoals, the conjunction of these subgoals implies the
+goal. Then, a proof of the goal becomes into a set of smaller proofs, one
+refutation for each subgoal.
 
 \begin{myexamplenum}
 In Fig.~\ref{complete-metis-example}, we can see how
@@ -20,146 +20,147 @@ $(p ∨ q) ⇒ p$ and $((p ∨ q) ∧ p) ⇒ q$.
 they appeared in the \TSTP derivation.
 \end{myexamplenum}
 
-Unluckily, \Metis does not make explicit in the \TSTP derivation
-the way it uses the subgoals to prove the goal. We show that way
-in the correctness of the \strip inference rule in Theorem~\ref{thm:strip}.
-To show that, we first need to state Lemma~\ref{lem:inv-uh-lem} and
-Lemma~\ref{lem:lem-inv-strip}.
+\begin{remark}
+\Metis does not make explicit in the \TSTP derivation the way it uses the
+subgoals to prove the goal. We show this approach in the correctness of the
+\strip inference rule in Theorem~\ref{thm:strip}. To show this theorem, we prove
+Lemma~\ref{lem:inv-uh-lem} and  Lemma~\ref{lem:lem-inv-strip}. In the former, we
+introduce the auxiliary function $\fuh_1$ to define the $\fuh$ function used in
+in the latter in the definition of the $\fstrip$ function.
+\end{remark}
+
+\begin{notation}
+$\Bound$ is a synonym for $\Nat$ type to refer to a natural number that constrains
+the number of recursive calls done by a function. We use this type mostly in
+the type of the function.
+\end{notation}
 
 \begin{mainlemma}
   \label{lem:inv-uh-lem}
-If $Γ ⊢ \fuh~φ$ then $Γ ⊢ φ$ where
-\begin{align}
-  \label{eq:uh}
-  \begin{split}
-  &\fuh : \Prop → \Prop\\
-  &\fuh~φ~ = \fuh_{1}~φ~(\fuh_{cm}~φ).
-  \end{split}
-\end{align}
+Let be $n : \Bound$. If $Γ ⊢ \fuh₁~φ~n$ then $Γ ⊢ φ$ where
+
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
+  \label{eq:uh-structured}
+  \begin{aligned}
+  &\hspace{.495mm} \fuh_{1} : \Prop → \Bound → \Prop\\
+  &\begin{array}{llll}
+  \fuh_{1} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &(\suc~n) &= \fuh_{1}~((φ₁ ∧ φ₂) ⇒ φ₃)~n\\
+  \fuh_{1} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &(\suc~n) &= \fuh_{1}~(φ₁ ⇒ φ₂)~n ∧ \fuh_{1}~(φ₁ ⇒ φ₃)~n\\
+  \fuh_{1} &φ &n &= φ.
+  \end{array}
+  \end{aligned}
+\end{empheq}
 \end{mainlemma}
 
-In~\cite{Prieto-Cubides2017a}, we make a complete treatment for
-terminating functions including the analysis of the function $\fuh$
-showed in~\eqref{eq:uh}. The goal of this function comes from the
-defintion of $\fuh_{1}$ function in~\eqref{eq:uh-structured}. It consists of
-contracting a formula $φ₁ ⇒ (φ₂ ⇒ φ₃)$ to $(φ₁ ∧ φ₂) ⇒ φ₃$, and expanding a
-formula $φ₁ ⇒ (φ₂ ∧ φ₃)$ to $(φ₁ ⇒ φ₂) ∧ (φ₁ ⇒ φ₃)$.
+To provide such a number given a formula
+$\varphi$, we call the $\fuh_{cm}$ function defined in~\eqref{eq:uh-complexity}.
+For the convenience in the following descriptions, we have the
+function $\fuh : \Prop → \Prop$ for $\varphi \mapsto \fuh_{1}~φ~(\fuh_{cm}~φ)$.
 
-
-\begin{equation}
-\label{eq:uh-structured}
-\begin{aligned}
-&\hspace{.495mm} \fuh_{1} : \Prop → \Nat → \Prop\\
-&\begin{array}{llll}
-\fuh_{1} &(φ₁ ⇒ (φ₂ ⇒ φ₃)) &(\suc~n) &= \fuh_{1}~((φ₁ ∧ φ₂) ⇒ φ₃)~n\\
-\fuh_{1} &(φ₁ ⇒ (φ₂ ∧ φ₃)) &(\suc~n) &= \fuh_{1}~(φ₁ ⇒ φ₂)~n ∧ \fuh_{1}~(φ₁ ⇒ φ₃)~n\\
-\fuh_{1} &φ &n &= φ.
-\end{array}
-\end{aligned}
-\end{equation}
-The remining function is $\fuh_{cm}$. This functions outputs the complexity
-measure for the $\fuh_{1}$ function (see more details in Section 2.1
-in~\cite{Prieto-Cubides2017a}).
-
-\begin{equation}
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
   \label{eq:uh-complexity}
   \begin{aligned}
-    &\hspace{.495mm}\fuh_{cm} : \Prop → \Nat\\
+    &\hspace{.495mm}\fuh_{cm} : \Prop → \Bound\\
     &\begin{array}{llll}
     \fuh_{cm}~(φ₁ ⇒ (φ₂ ⇒ φ₃)) &= \fuh_{cm}~φ₃ + 2\\
     \fuh_{cm}~(φ₁ ⇒ (φ₂ ∧ φ₃)) &= \fmax~(\fuh_{cm}~φ₂)~(\fuh_{cm}~φ₃) + 1\\
     \fuh_{cm}~φ                &= 0.
     \end{array}
   \end{aligned}
-\end{equation}
+\end{empheq}
 
-The $\fstrip₀$ function defined in~\eqref{eq:strip-zero} yields the
-conjunction of subgoals that implies the goal of the problem in the
-\Metis \TSTP derivations. Nonetheless, this function is not a
-structurally recursive function (see more details in
-Appendix~\ref{app:strip-cm}).
-Therefore, we present the $\fstrip₁$ function
-in~\eqref{eq:strip-fixed} as the structurally recursive version
-of the $\fstrip₀$ function by applying the
-bounded technique described in
-Section~\ref{ssec:structural-recursion}.
-We define the $\fstrip₁$ function based on the reading of the \Metis source code.
-
-\begin{equation}
-\label{eq:strip-fixed}
-\begin{aligned}
-&\hspace{.495mm}\fstrip₁ : \Prop → \Nat → \Prop\\
-&\begin{array}{llll}
-\fstrip₁ &(φ₁ ∧ φ₂)     &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
-\fstrip₁ &(φ₁ ∨ φ₂)     &(\suc~n) &= \fuh~((¬ φ₁) ⇒ \fstrip₁~φ₂~n)\\
-\fstrip₁ &(φ₁ ⇒ φ₂)     &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
-\fstrip₁ &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
-\fstrip₁ &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~((¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n)\\
-\fstrip₁ &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
-\fstrip₁ &(¬ (¬ φ₁))    &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n)\\
-\fstrip₁ &(¬ ⊥)         &(\suc~n) &= ⊤\\
-\fstrip₁ &(¬ ⊤)         &(\suc~n) &= ⊥\\
-\fstrip₁ &φ             &n        &= φ.
-\end{array}
-\end{aligned}
-\end{equation}
-
-In a similar way as we define $\fuh_{cm}$
-in~\eqref{eq:uh-complexity}, we
-define the $\fstrip_{cm}$ function in Appendix~\ref{app:strip-cm} as
-the complexity measure for the $\fstrip₀$ function.
-We define the \fstrip function as follows in~\ref{eq:strip}.
-
-\begin{align}
+Now, we define the $\fstrip$ function in \eqref{eq:strip} in a similar way as we
+did above for the $\fuh$ function. We have a definition of the $\fstrip₁$ function
+in~\eqref{eq:strip-fixed} and a function to find its bound for its recursive calls
+by $\fstrip_{cm}$ defined in~\cite{Prieto-Cubides2017a}.
+% \vspace*{-5mm}
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{align}
   \label{eq:strip}
   \begin{split}
   &\fstrip : \Prop → \Prop\\
-  &\fstrip~φ~ = \fstrip_{1}~φ~(\fstrip_{cm}~φ).
+  &\fstrip~φ~ = \fstrip₁~φ~(\fstrip_{cm}~φ).
   \end{split}
-\end{align}
+\end{empheq}
+
+The $\fstrip$ function yields the conjunction of subgoals that implies the goal
+of the problem in the \Metis \TSTP derivations. Its definition comes mainly from
+the reading of the \Metis source code and some examples from \TSTP derivations.
+
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
+  \label{eq:strip-fixed}
+  \begin{aligned}
+  &\hspace{.495mm}\fstrip₁ : \Prop → \Bound → \Prop\\
+  &\begin{array}{llll}
+  \fstrip₁ &(φ₁ ∧ φ₂)     &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
+  \fstrip₁ &(φ₁ ∨ φ₂)     &(\suc~n) &= \fuh~((¬ φ₁) ⇒ \fstrip₁~φ₂~n)\\
+  \fstrip₁ &(φ₁ ⇒ φ₂)     &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~φ₂~n)\\
+  \fstrip₁ &(¬ (φ₁ ∧ φ₂)) &(\suc~n) &= \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
+  \fstrip₁ &(¬ (φ₁ ∨ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~(¬ φ₁)~n) ∧ \fuh~((¬ φ₁) ⇒ \fstrip₁~(¬ φ₂)~n)\\
+  \fstrip₁ &(¬ (φ₁ ⇒ φ₂)) &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n) ∧ \fuh~(φ₁ ⇒ \fstrip₁~(¬ φ₂)~n)\\
+  \fstrip₁ &(¬ (¬ φ₁))    &(\suc~n) &= \fuh~(\fstrip₁~φ₁~n)\\
+  \fstrip₁ &(¬ ⊥)         &(\suc~n) &= ⊤\\
+  \fstrip₁ &(¬ ⊤)         &(\suc~n) &= ⊥\\
+  \fstrip₁ &φ             &n        &= φ.
+  \end{array}
+  \end{aligned}
+\end{empheq}
 
 \begin{mainlemma}
 \label{lem:lem-inv-strip}
-Let $\text{n} : \Nat$ be the complexity measure of the \fstrip function defined
-in~\eqref{eq:strip-fixed}.
-If $Γ~⊢~\fstrip₁~φ~n$ then $Γ~⊢~φ$.
+Let $n : \Bound$. If $Γ~⊢~\fstrip₁~φ~n$ then $Γ~⊢~φ$.
 \end{mainlemma}
 
-The following theorem is convenient to substitute equals by equals in
-a theorem. Recall the equality (≡) is symmetric and transitive as well.
-We use these properties without any mention.
+The following lemma is convenient to substitute in a theorem equals by equals in
+the conclusion of the sequent. Recall the equality (≡) is symmetric and
+transitive, and we use these properties without any mention.
 
-\begin{mainlemma}
+\begin{mainlemma}[\fsubst]
   \label{lem:subst}
-  Substitution theorem.
-\begin{equation*}
-  \label{eq:substitution-theorem}
-  \begin{bprooftree}
-  \AxiomC{$Γ ⊢ φ$}   \AxiomC{$ψ ≡ φ$}
-  \RightLabel{\fsubst}
-  \BinaryInfC{$Γ ⊢ ψ$}
-  \end{bprooftree}
-\end{equation*}
+  If $Γ ⊢ φ$ and $ψ ≡ φ$ then $Γ ⊢ ψ$.
 \end{mainlemma}
 
-We can now formulate the result that justifies the stripping strategy
-of \Metis to prove goals.
-For the sake of brevity, we state the following theorem for the
-\strip function when the goal has two subgoals. In other cases,
-we extend the theorem in the natural way.
+We can now formulate the result that justifies the stripping strategy of \Metis
+to prove goals. For the sake of brevity, we state the following theorem for the
+\strip function when the goal has two subgoals. In other cases, we extend the
+theorem in the natural way.
 
 \begin{mainth}
 \label{thm:strip}
-Let $\text{n} : \Nat$ be the complexity measure of the strip function defined in Appendix~\ref{app:strip-cm}~\eqref{eq:strip-cm}.
-Let $s₂$ and $s₃$ be the subgoals of the goal $φ$, that is,
-$$\fstrip₁~φ~n~≡~s₂∧~s₃.$$
-If $Γ ⊢ s₂$ and $Γ ⊢ s₃$ then $Γ ⊢ φ$.
+Let $s_1$ and $s_2$ be the subgoals of the goal $φ$, that is,
+$\fstrip~\varphi≡~s_{1}∧~s_{2}$.
+% $\fstrip₁~φ~n~≡~s₂∧~s₃$ where $\text{n} : \Nat$ is the complexity measure $\fstrip_{cm}$.
+If $Γ ⊢ s_{1}$ and $Γ ⊢ s_{2}$ then $Γ ⊢ φ$.
 \end{mainth}
+
+% % No creo que sea necesario presentar las demostraciones
+% \begin{proof}
+% \begin{equation*}
+%   \begin{bprooftree}
+%   \AxiomC{$ Γ ⊢ s_1 $}
+%   \AxiomC{$ Γ ⊢ s_2 $}
+%   \RightLabel{∧-intro}
+%   \BinaryInfC{$Γ ⊢ s_1\wedge s_2$}
+%   \AxiomC{$\fstrip~φ ≡ s_1\wedge s_2 $}
+%   \RightLabel{By def.~\eqref{eq:strip}}
+%   \UnaryInfC{$\fstrip₁~φ~(\fstrip_{cm}~\varphi) ≡ s_1\wedge s_2 $}
+%   \RightLabel{\fsubst}
+%   \BinaryInfC{$Γ ⊢ \fstrip₁~φ~n$}
+%   \RightLabel{Lemma~\ref{lem:lem-inv-strip}}
+%   \UnaryInfC{$Γ ⊢ φ$}
+% \end{bprooftree}
+% \end{equation*}
+% \end{proof}
+
 % -------------------------------------------------------------------
 
-Since \Metis proves a conjecture by refutation,
-to prove each subgoal, \Metis assumes the negation of it
-by using the \negate rule after the \strip inference application
-that introduces such a subgoal.
+\begin{remark}
+
+The user of \Metis will probably note another rule in the derivations related
+with these subgoals, the \negate rule. Since \Metis proves a conjecture by
+refutation, to prove a subgoal, \Metis assumes its negation using the \negate
+rule. We will find this rule always after the \strip rule per each subgoal in the
+\TSTP derivation.
+
+\end{remark}
 
 \end{document}

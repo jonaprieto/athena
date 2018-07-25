@@ -1,105 +1,59 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
 
+% ----------------------------------------------------------------------------
+% -- RESOLVE --
+% ----------------------------------------------------------------------------
+
 \subsubsection{Resolve.}
 \label{sssec:resolve}
 
-Logic equivalence between propositions is a major issue to justify
-prover reasoning steps. Since we left out semantics to treat only the
-syntax aspects of propositional logic, our approach shows logic
-equivalence by converting propositions to their conjunctive normal
-form, and reordering those and the inner disjunctions to match them.
+The \resolve inference rule in combination with the \simplify rule are the
+responsable rules to perform resolution, in particular, the \resolve rule is is
+the version of the resolution theorem showed in~Fig.~\ref{fig:metis-inferences}.
 
-\begin{mydefinition}
+\begin{example} In the \TSTP derivation in
+Fig.~\ref{eq:complete-example-problem}, there are two ocurrences in
+line~\ref{line14} and line~\ref{line16}~of the \resolve rule. This rule has two
+inputs in the following order: the \emph{resolvent} which is the literal denoted
+by ℓ in~Fig.~\ref{fig:metis-inferences} and a list formed by two formulas to
+resolve. \end{example}
 
-A \emph{literal} is an propositional variable (positive literal) or a
-negation of an propositional variable (negative literal).
-
-\end{mydefinition}
-
-\begin{notation}
-We use \Lit as synonym of \Prop type to refer literals.
-\end{notation}
-
-\begin{mydefinition}
-
-The \emph{negative normal form} of a formula is the logical
-equivalent version of it in which negations appear only in the
-literals and the formula does not contain any implications.
-
-\end{mydefinition}
-
-\begin{mydefinition}
-
-The \emph{conjunctive normal form} of a formula also called clausal
-normal form is the logical equivalent version expressed as a
-conjunction of clauses where a \emph{clause} is the disjunction of
-zero or more literals.
-
-\end{mydefinition}
-
-\begin{myexamplenum}\hspace{10cm}
-\label{ex:resolve-tstp}
-\begin{verbatim}
-  cnf(r₄, ¬ r ∨ p ∨ q, ...
-  cnf(r₅, p ∨ q ∨ r, ...
-  cnf(r₆, p ∨ q, inf(resolve, r, [r₅, r₄])).
-\end{verbatim}
-
-In the excerpt above, we apply resolution to the first two formulas,
-$¬ r ∨ p ∨ q$ and $p ∨ q ∨ r$.
-The last line tells us the literal used
-for resolution is $r$. Syntactically speaking, we can not derive
-neither the conclusion $p ∨ q$ in \verb!r₆! nor apply the resolution
-theorem with \verb!r₄! and \verb!r₅! since the formulas do not fit
-the pattern required.
-
-If the scenario would have other like replacing \verb!r₅! by
-\begin{verbatim}
-  cnf(r₅, r ∨ p ∨ q, ...
-\end{verbatim}
-The \resolve rule have could derive $(p ∨ q) ∨ (p ∨ q)$, but again, that is not the expected result.
-\end{myexamplenum}
-
-Therefore, we perform a sequence of rearrangements inside the
-involved formulas to match with the expected pattern by the
-\emph{resolve} inference rule in Fig.~\ref{fig:metis-inferences}.
-
-Using reordering after applying a customized version of the
-resolution theorem defined in~\eqref{eq:rsol} we get the expected
-result.
-
-\begin{mainlemma}
-  \label{lem:rsol}
-  If $Γ ⊢ φ$ then $Γ ⊢ \frsol~φ$, where
-  \begin{equation}
-    \label{eq:rsol}
-    \begin{aligned}
-    &\frsol : \Prop \to \Prop\\
-    &\begin{array}{ll}
-      \frsol~φ &=
-        \begin{cases}
-          φ₂,      &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∧ (¬ φ₁ ∨ φ₂);\\
-          φ₂ ∨ φ₄, &\text{ if }φ ≡ (φ₁ ∨ φ₂) ∧ (¬ φ₁ ∨ φ₄);\\
-          φ, &\text{ otherwise.}
-        \end{cases}
-      \end{array}
-      \end{aligned}
-\end{equation}
-\end{mainlemma}
+In~\cite{Prieto-Cubides2017a}, we describe our first attempt to reconstruct this
+rule that performs reordering of formulas jointly with the application of a
+customized version of the resolution theorem to reconstruct the rule.
+Unfortunately, that approach suffers of an exponential computational cost for
+each searching to reorder the formulas. Therefore, we propose
+in~\label{eq:resolve} an alternative formulation to reconstruct this rule by
+using the \fsimplify rule. This observation was taken from the \TSTP derivations
+and we check that improves significantly the timing of the type-checking.
 
 \begin{mainth}
   \label{thm:resolve}
   Let $ℓ$ be a literal, $ℓ : \Lit$, and $ψ : \Target$. If $Γ ⊢ φ₁$ and
   $Γ~⊢~φ₂$ then $Γ~⊢~\fresolve~φ₁~φ₂~ℓ~ψ$, where
-  \begin{equation}
+  \begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
   \begin{split}
   \label{eq:resolve}
     &\fresolve : \Source \to \Source \to \Lit \to \Target \to \Prop\\
-    &\fresolve~φ₁~φ₂~ℓ~ψ =
-      \frsol~(\freorder_{∨}~φ₁~(ℓ ∨ ψ) ∧ \freorder_{∨}~φ₂~(¬ ℓ ∨ ψ)).
+    &\fresolve~φ₁~φ₂~ℓ~ψ~=~\fsimplify~(φ₁ ∧ φ₂)~(¬ ℓ ∨ ℓ)~ψ.
   \end{split}
-  \end{equation}
+  \end{empheq}
 \end{mainth}
+
+%% maybe we want to show this easy proof.
+% \begin{proof}
+%   \begin{equation*}
+%   \begin{bprooftree}
+%     \AxiomC{$Γ ⊢ φ₁$}
+%     \AxiomC{$Γ ⊢ φ₂$}
+%     \RightLabel{∧-intro}
+%     \BinaryInfC{$Γ ⊢~\varphi_1~\wedge~\varphi_2$}
+%     \AxiomC{\abbre{PEM}~$\ell$}
+%     \RightLabel{Theorem~\ref{thm:simplify}.}
+%     \BinaryInfC{$\Gamma\vdash~\fsimplify~~(φ₁ ∧ φ₂)~(¬ ℓ ∨ ℓ)~ψ$}
+%   \end{bprooftree}
+%   \end{equation*}
+% \end{proof}
 
 \end{document}

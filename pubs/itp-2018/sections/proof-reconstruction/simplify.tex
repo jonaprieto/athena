@@ -4,23 +4,22 @@
 \subsubsection{Simplify.}
 \label{sssec:simplify}
 
-The \simplify rule is an inference that performs simplification of
-tautologies in a list of derivations. This rule simplifies such a list
-by transversing the list while applying Lemma~\ref{lem:canon-or},
-Lemma~\ref{lem:canon-and}, among others theorems presented in the following.
-The goal of this rule despites simplifying the list of derivations to a
-new formula (often smaller than its input formulas), consists of finding
-a contradiction.
+The \simplify rule is an inference that performs simplification of tautologies
+in a list of derivations. This rule simplifies such a list by transversing the
+list while applying Lemma~\ref{lem:simplify-or}, Lemma~\ref{lem:simplify-and},
+among others theorems presented in the following description. The goal of this
+rule despites simplifying the list of derivations to a new formula (often
+smaller than its input formulas), consists of finding a contradiction.
 
 We observe based on the analysis of different cases in the \TSTP
 derivations that \simplify can be modeled by a function with three
 arguments: two source formulas and the target formula.
 
-Since the main purpose of the \simplify rule is simplification of
-formulas, we have defined the $\freduce$ function to help removing
-the negation of a given literal $ℓ$ from a input formula.
+Since the main purpose of the \simplify rule is to simplify formulas to get
+$⊥$, we have defined the $\freduce$ function to help removing the negation
+of a given literal $ℓ$ from a input formula.
 
-\begin{equation}
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
 \label{def:remove-literal}
   \begin{aligned}
   &\hspace{.495mm}\freduce : \Prop → \Lit → \Prop\hspace*{3.5cm}\\
@@ -33,7 +32,7 @@ the negation of a given literal $ℓ$ from a input formula.
   \end{cases}
    \end{array}
   \end{aligned}
-\end{equation}
+\end{empheq}
 
 \begin{mainlemma}
 \label{lem:reduce-literal}
@@ -43,13 +42,13 @@ $Γ~⊢~\freduce~φ~ℓ$.
 
 The \fsimplify function is defined in~\eqref{eq:simplify}. If some
 input formula is equal to the target formula, we derive that formula.
-If some formula is $⊥$, we derive the target formula by using the
+If any formula is $⊥$, we derive the target formula by using the
 ⊥-elim inference rule.
 Otherwise, we proceed by cases on the structure of the formula.
 For example, when the second source formula is a literal, we
 use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
 
-\begin{equation}
+\begin{empheq}[box=\fcolorbox{bocolor}{bgcolor}]{equation}
 \label{eq:simplify}
   \begin{aligned}
   &\hspace{.495mm}\fsimplify : \Source → \Source → \Target → \Prop \hspace*{3.5cm}\\
@@ -67,7 +66,7 @@ use the $\freduce$ function and Lemma~\ref{lem:reduce-literal}.
   \end{cases}
   \end{array}
   \end{aligned}
-\end{equation}
+\end{empheq}
 
 \begin{mainlemma}
   \label{lem:binary-simplify}

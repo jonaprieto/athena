@@ -258,6 +258,8 @@
 \newcommand{\Source}{\type{Premise}}
 \newcommand{\Target}{\type{Conclusion}}
 \newcommand{\Lit}{\type{Lit}}
+\newcommand{\Bound}{\type{Bound}}
+
 
 \newcommand{\zero}{\fun{zero}}
 \newcommand{\suc}{\fun{succ}}
@@ -409,6 +411,13 @@ maxbibnames=6,%
 \lfoot{Page \thepage}
 \renewcommand{\headrulewidth}{0pt}}
 \pagestyle{plain}
+
+% --
+% Equation boxes:
+% --
+\usepackage{empheq} %visual markup extension to amsmath.
+\definecolor{bocolor}{rgb}{1.0, 0.98, 0.98}
+\definecolor{bgcolor}{rgb}{0.94, 0.97, 1.0}
 
 % -------------------------------------------------------------------
 

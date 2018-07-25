@@ -1,0 +1,2 @@
+fof(premise, axiom, (p => q) &  (q => p)).
+fof(goal, conjecture, (p | q) => (p & q)).

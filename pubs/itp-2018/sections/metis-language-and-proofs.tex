@@ -114,12 +114,12 @@ where the \name{rule} is the inference name, the next field
 includes supporting arguments to apply the reasoning step, and the
 last field is a list of the parents nodes.
 
-For increasing the readability of this paper, we are not presenting
-these \TSTP derivations using the above description. Instead of it, we
-have adopted a customized \TSTP syntax to keep as short as possible
-the \Metis derivations. For instance,  we shortened some keywords,
-removed unnecessary arguments, and replaced some symbols.
-The complete description of these customizations are showed in Appendix~\ref{app:tstp-syntax}.
+For increasing the readability of this paper, we are not presenting these \TSTP
+derivations using the above description. Instead of it, we have adopted a
+customized \TSTP syntax to keep as short as possible the \Metis derivations. For
+instance,  we shortened some keywords, removed unnecessary arguments, and
+replaced some symbols. The complete description of these customizations are
+showed in Appendix~\ref{app:tstp-syntax}.
 
 \begin{myexamplenum}
 \label{fig:metis-example-tree}
@@ -133,34 +133,7 @@ present the proof-reconstruction process.
 (p \Rightarrow q) \wedge (q \Rightarrow p) ⊢ (p \vee q) \Rightarrow (p \wedge q)
 \end{equation}
 
-\begin{figure}
-\begin{Verbatim}[commandchars=\\\{\}, numbers=left,xleftmargin=5mm]
-fof(premise, axiom, (p ⇒ q) ∧ (q ⇒ p)).  \label{line1}
-fof(goal, conjecture, (p ∨ q) ⇒ (p ∧ q)).  \label{line2}
-fof(s₀, (p ∨ q) ⇒ p, inf(strip, goal)).  \label{line3}
-fof(s₁, ((p ∨ q) ∧ p) ⇒ q, inf(strip, goal)).  \label{line4}
-fof(neg₀, ¬ ((p ∨ q) ⇒ p), inf(negate, s₀)).  \label{line5}
-fof(n₀₀, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).  \label{line6}
-fof(n₀₁, ¬ q ∨ p, inf(conjunct, n₀₀)).  \label{line7}
-fof(n₀₂, ¬ p ∧ (p ∨ q), inf(canonicalize, neg₀)).  \label{line8}
-fof(n₀₃, p ∨ q, inf(conjunct, n₀₂)).  \label{line9}
-fof(n₀₄, ¬ p, inf(conjunct, n₀₂)).  \label{line10}
-fof(n₀₅, q, inf(simplify, [n₀₃, n₀₄])).  \label{line11}
-cnf(r₀₀, ¬ q ∨ p, inf(canonicalize, n₀₁)).  \label{line12}
-cnf(r₀₁, q, inf(canonicalize, n₀₅)).  \label{line13}
-cnf(r₀₂, p, inf(resolve, q, [r₀₁, r₀₀])).  \label{line14}
-cnf(r₀₃, ¬ p, inf(canonicalize, n₀₄)).  \label{line15}
-cnf(r₀₄, ⊥, inf(resolve, p, [r₀₂, r₀₃])).  \label{line16}
-fof(neg₁, ¬ ((p ∨ q) ∧ p) ⇒ q, inf(negate, s₁)).  \label{line17}
-fof(n₁₀, ¬ q ∧ p ∧ (p ∨ q), inf(canonicalize, neg₁)).  \label{line18}
-fof(n₁₁, (¬ p ∨ q) ∧ (¬ q ∨ p), inf(canonicalize, premise)).  \label{line19}
-fof(n₁₂, ¬ p ∨ q, inf(conjunct, n₁₁)).  \label{line20}
-fof(n₁₃, ⊥, inf(simplify,[n₁₀, n₁₂])).  \label{line21}
-cnf(r₁₀, ⊥, inf(canonicalize, n₁₃)).  \label{line22}
-\end{Verbatim}
-\caption{Customized \Metis \TSTP derivation of the theorem in~\eqref{eq:complete-example-problem}.}
-\label{complete-metis-example}
-\end{figure}
+\input{sections/data/problem.tstp.tex}
 
 \end{myexamplenum}
 
@@ -221,29 +194,30 @@ rules in the \TSTP derivations. For instance, as far as we know, in
       \\
 
       \texttt{conjunct}
-      &Takes a formula from a conjunction
+      &Take a formula from a conjunction
       &\ref{thm:conjunct}
       \\
 
-      \texttt{resolve}
-      &A general form of the resolution theorem
-      &\ref{thm:resolve}
-      \\
-
       \texttt{canonicalize}
-      &Normalization of the formula
+      &Normalize a formula
       &\ref{thm:canonicalize}
       \\
 
       \texttt{clausify}
-      &Performs clausification
+      &Perform clausification
       &\ref{thm:clausify}
       \\
 
       \texttt{simplify}
       &Simplify definitions and theorems
       &\ref{thm:simplify}
+      \\
+
+      \texttt{resolve}
+      &Apply one form of the resolution theorem
+      &\ref{thm:resolve}
       \\[1ex]
+
     \hline
     \end{tabular}}
   \end{center}
