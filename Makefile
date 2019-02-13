@@ -335,15 +335,15 @@ agda-stdlib:
 	@if [ ! -d lib/agda-stdlib ] ; \
 	 then \
 	 echo "===================================================================";\
-	 echo "=========== Downloading Agda Standard Library v0.16    ============";\
+	 echo "=========== Downloading Agda Standard Library v0.17    ============";\
 	 echo "===================================================================";\
 	 git config --global advice.detachedHead false && \
 	 git clone -q --progress \
-			-b 'v0.16' \
+			-b 'v0.17' \
 			--single-branch \
 			https://github.com/agda/agda-stdlib.git \
 			lib/agda-stdlib; \
-	 echo "Installed agda-stdlib v0.16  in ${ATHENA_LIB}/agda-stdlib"; \
+	 echo "Installed agda-stdlib v0.17  in ${ATHENA_LIB}/agda-stdlib"; \
 	 else \
 		 echo "[!] agda-stdlib directory already exists"; \
 	 fi;
