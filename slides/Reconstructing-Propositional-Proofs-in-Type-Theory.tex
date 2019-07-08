@@ -138,18 +138,18 @@
 \usepackage{mathtools}
 \usepackage{unicode-math}
 
-\newfontfamily\djvu[ExternalLocation=fonts/
-  , BoldFont=DejaVuSansMono-Bold.ttf
-  , BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
-  , ItalicFont=DejaVuSansMono-Oblique.ttf
-  ]{DejaVuSansMono.ttf}
+% \newfontfamily\djvu[ExternalLocation=fonts/
+%   , BoldFont=DejaVuSansMono-Bold.ttf
+%   , BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
+%   , ItalicFont=DejaVuSansMono-Oblique.ttf
+%   ]{DejaVuSansMono.ttf}
 
 
-\newfontfamily\djvumathfont[ExternalLocation=fonts/,
-, BoldFont=DejaVuSansMono-Bold.ttf
-, BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
-, ItalicFont=DejaVuSansMono-Oblique.ttf
-]{DejaVuMathTeXGyre.ttf}
+% \newfontfamily[ExternalLocation=fonts/,
+% , BoldFont=DejaVuSansMono-Bold.ttf
+% , BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
+% , ItalicFont=DejaVuSansMono-Oblique.ttf
+% ]{DejaVuMathTeXGyre.ttf}
 
 % \setmonofont[ExternalLocation=fonts/
 % , BoldFont=DejaVuSansMono-Bold.ttf
@@ -167,11 +167,11 @@
 %   , ItalicFont=SourceSansPro-It.otf
 %   ]{SourceSansPro-Regular.otf}
 
-\newfontfamily\sourcecode[ExternalLocation=fonts/
-  , BoldFont=SourceCodePro-Semibold.ttf
-  , BoldItalicFont=SourceCodePro-SemiboldIt.ttf
-  , ItalicFont=SourceCodePro-It.ttf
-  ]{SourceCodePro-Regular.ttf}
+% \newfontfamily\sourcecode[ExternalLocation=fonts/
+%   , BoldFont=SourceCodePro-Semibold.ttf
+%   , BoldItalicFont=SourceCodePro-SemiboldIt.ttf
+%   , ItalicFont=SourceCodePro-It.ttf
+%   ]{SourceCodePro-Regular.ttf}
 
 %following lines borrowed from cmbright.sty
 % \DeclareSymbolFont      {operators} {OT1}{cmbr}{m}{n}
@@ -502,23 +502,14 @@ maxbibnames=6,%
 \WarningFilter{hyperref}{Token not allowed in a PDF string}
 
 \usepackage{minted}
-\setminted[cagda]{
-  bgcolor    = aliceblue
-, fontsize   = \footnotesize
-, frame      = none
-, mathescape = true
-% , framerule = 0.4pt
-% , framesep  = 0pt
-, style     = cagda
-}
 
 \newenvironment{MyAgda}{%
   \VerbatimEnvironment
   \begin{center}%
-  \djvumathfont\bfseries
+  \bfseries
   \vskip 1.5mm
     \begin{minipage}{\linewidth}%
-      \begin{minted}{cagda}}
+      \begin{minted}{agda}}
 {%
       \end{minted}%
     \end{minipage}%
@@ -882,7 +873,7 @@ A data type for formulas
 % \end{center}
 % \vfill
 
-{\djvu
+{
 \begin{MyAgda}
 data PropFormula : Set where
   Var  -- Propositional Variables
@@ -901,7 +892,7 @@ data PropFormula : Set where
 \medskip
 To write expressions as we get used to write in math:
 
-{\djvu
+{
 \begin{center}
 \begin{MyAgda}
 ¬ (p ⇒ q) ⇒ ((p ∧ ¬ q) ∧ ( q ⊃ ¬ p))
@@ -1440,12 +1431,12 @@ cnf(r₁₀, ⊥, inf(canonicalize, n₁₃)).
 
 \end{frame}
 
-\begin{frame}[fragile]{Summarizing the Example}
-The problem was:
+\begin{frame}[fragile]{Summarizing}
+The problem is:
 \begin{equation*}
 (p \Rightarrow q) \wedge (q \Rightarrow p) ⊢ (p \vee q) \Rightarrow (p \wedge q)
 \end{equation*}
-Its \TSTP solution using \Metis was:
+Its \TSTP solution using \Metis is:
 \begin{verbatim}
   fof(premise, axiom, (p ⇒ q) ∧ (q ⇒ p)).
   fof(goal, conjecture, (p ∨ q) ⇒ (p ∧ q)).

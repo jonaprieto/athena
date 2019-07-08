@@ -50,7 +50,7 @@
   \begin{tikzpicture}[overlay, remember picture, scale=0.5]
     \tikzset{shift={(current page.center)}, xshift=11.8cm,yshift=-8.4cm}
     \node[fill=plum,text=white, hyperlink node = reconstruction]
-      (go) at (0,0) {\tiny Go Back};
+      (go) at (0,0) {\tiny back};
   \end{tikzpicture}}
 
 
@@ -87,7 +87,7 @@
 % --------------------------------------------------------------------------
 \usetheme{default}
 \usecolortheme{default}
-\usefonttheme{serif}
+% \usefonttheme{serif}
 
 \beamertemplatenavigationsymbolsempty
 \setbeamertemplate{navigation symbols}{}
@@ -98,17 +98,32 @@
 \setbeamertemplate{footline}{
   \leavevmode%
   \hbox{%
+  % \begin{beamercolorbox}
+  %   [wd=.8\paperwidth,ht=2.3ex,dp=1ex,left]{headFoot}%
+  %   \hspace*{2ex}\textbf\insertshorttitle\hspace*{2mm}|
+  %   \hspace*{2mm}\textbf\insertshortauthor
+  % \end{beamercolorbox}%
   \begin{beamercolorbox}
-    [wd=.8\paperwidth,ht=2.3ex,dp=1ex,left]{headFoot}%
-    \hspace*{2ex}\textbf\insertshorttitle\hspace*{2mm}|
-    \hspace*{2mm}\textbf\insertshortauthor
-  \end{beamercolorbox}%
-  \begin{beamercolorbox}
-    [wd=.2\paperwidth,ht=2.3ex,dp=1ex,right]{headFoot}%
+    [wd=\paperwidth,ht=2.4ex,dp=1ex,right]{headFoot}%
     \insertframenumber{}/\inserttotalframenumber\hspace*{2ex}
   \end{beamercolorbox}}%
   \vskip 0pt%
 }
+
+% \setbeamertemplate{footline}{
+%   \leavevmode%
+%   \hbox{%
+%   \begin{beamercolorbox}
+%     [wd=.8\paperwidth,ht=2.3ex,dp=1ex,left]{headFoot}%
+%     \hspace*{2ex}\textbf\insertshorttitle\hspace*{2mm}|
+%     \hspace*{2mm}\textbf\insertshortauthor
+%   \end{beamercolorbox}%
+%   \begin{beamercolorbox}
+%     [wd=.2\paperwidth,ht=2.3ex,dp=1ex,right]{headFoot}%
+%     \insertframenumber{}/\inserttotalframenumber\hspace*{2ex}
+%   \end{beamercolorbox}}%
+%   \vskip 0pt%
+% }
 
 \setbeamerfont{frametitle}{size=\small,series=\bfseries}
 \setbeamercolor{frametitle}{fg=white,bg=plum}
@@ -139,51 +154,14 @@
 % Fonts
 % --------------------------------------------------------------------------
 \usefonttheme{professionalfonts}
-\usefonttheme{serif}
+% \usefonttheme{serif}
+
 \usepackage{fontspec}
 \usepackage{mathtools}
 \usepackage{unicode-math}
 
-\newfontfamily\djvu[ExternalLocation=fonts/
-  , BoldFont=DejaVuSansMono-Bold.ttf
-  , BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
-  , ItalicFont=DejaVuSansMono-Oblique.ttf
-  ]{DejaVuSansMono.ttf}
-
-\setmonofont[ExternalLocation=fonts/
-, BoldFont=DejaVuSansMono-Bold.ttf
-, BoldItalicFont=DejaVuSansMono-BoldOblique.ttf
-, ItalicFont=DejaVuSansMono-Oblique.ttf
-]{DejaVuSansMono.ttf}
-
-\setmathfont[ExternalLocation=fonts/
-  ]{DejaVuMathTeXGyre.ttf}
-\newfontfamily\mathfont{fonts/DejaVuMathTeXGyre.ttf}
-
-\setmainfont[ExternalLocation=fonts/
-  , BoldFont=SourceSansPro-Semibold.otf
-  , BoldItalicFont=SourceSansPro-SemiboldIt.otf
-  , ItalicFont=SourceSansPro-It.otf
-  ]{SourceSansPro-Regular.otf}
-
-
-\newfontfamily\sourcecode[ExternalLocation=fonts/
-  , BoldFont=SourceCodePro-Semibold.ttf
-  , BoldItalicFont=SourceCodePro-SemiboldIt.ttf
-  , ItalicFont=SourceCodePro-It.ttf
-  ]{SourceCodePro-Regular.ttf}
-
 
 \usepackage{minted}
-\setminted[cagda]{
-  bgcolor   = aliceblue
-, fontsize  = \footnotesize
-, frame     = none
-% , framerule = 0.4pt
-% , framesep  = 0pt
-, style     = cagda
-}
-
 
 % --------------------------------------------------------------------------
 % References
@@ -226,6 +204,157 @@ Medell\'in, Colombia}
 % --------------------------------------------------------------------------
 
 \newsavebox\agdapragma
+
+\renewcommand*\rmdefault{cmr}
+
+% -------------------------------------------------------------------
+% New commands
+% -------------------------------------------------------------------
+
+\usepackage{textcomp}
+\usepackage[verbose]{newunicodechar}
+
+\newunicodechar{¬}{\ensuremath{\neg}\;}
+\newunicodechar{Γ}{\ensuremath{\Gamma}}
+\newunicodechar{γ}{\ensuremath{\gamma}}
+\newunicodechar{φ}{\ensuremath{\varphi}}
+\newunicodechar{ψ}{\ensuremath{\psi}}
+\newunicodechar{ϕ}{\ensuremath{\varphi}}
+\newunicodechar{ᵢ}{\ensuremath{{}_{i}}}
+\newunicodechar{₀}{\ensuremath{{}_{0}}}
+\newunicodechar{₁}{\ensuremath{{}_{1}}}
+\newunicodechar{₂}{\ensuremath{{}_{2}}}
+\newunicodechar{₃}{\ensuremath{{}_{3}}}
+\newunicodechar{₄}{\ensuremath{{}_{4}}}
+\newunicodechar{₅}{\ensuremath{{}_{5}}}
+\newunicodechar{₆}{\ensuremath{{}_{6}}}
+\newunicodechar{₇}{\ensuremath{{}_{7}}}
+\newunicodechar{₈}{\ensuremath{{}_{8}}}
+\newunicodechar{₉}{\ensuremath{{}_{9}}}
+\newunicodechar{ₙ}{\ensuremath{{}_{n}}}
+\newunicodechar{ₘ}{\ensuremath{{}_{m}}}
+\newunicodechar{ℓ}{\ensuremath{\ell}}
+\newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{⇒}{\ensuremath{\supset}}
+\newunicodechar{⊃}{\ensuremath{\supset}}
+\newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
+\newunicodechar{∅}{\ensuremath{\emptyset}}
+\newunicodechar{∈}{\ensuremath{\in}}
+\newunicodechar{∀}{\ensuremath{\forall}}
+\newunicodechar{∘}{\ensuremath{\circ}}
+\newunicodechar{∙}{\ensuremath{\bullet}}
+\newunicodechar{∧}{\ensuremath{\wedge}}
+\newunicodechar{∨}{\ensuremath{\vee}}
+\newunicodechar{∼}{\ensuremath{\sim}}
+\newunicodechar{≠}{\ensuremath{\neq}}
+\newunicodechar{≡}{\ensuremath{\equiv}}
+\newunicodechar{⊕}{\ensuremath{\oplus}}
+\newunicodechar{⊖}{\ensuremath{\ominus}}
+\newunicodechar{⊢}{\ensuremath{⊢}}
+\newunicodechar{⊤}{\ensuremath{\top}}
+\newunicodechar{⊥}{\ensuremath{\bot}}
+\newunicodechar{⊻}{\ensuremath{\veebar}}
+\newunicodechar{⟝}{\ensuremath{⊢}}
+\newunicodechar{⬓}{\ensuremath{\square}}
+\newunicodechar{ⱼ}{\ensuremath{{}_{j}}}
+\newunicodechar{λ}{\ensuremath{\lambda}}
+
+\usepackage{xspace}
+
+\newcommand{\abbre}[1]{\textsc{#1}\xspace}
+\newcommand{\ATPs}{\abbre{ATPs}}
+\newcommand{\ATP}{\abbre{ATP}}
+\newcommand{\Bool}{\abbre{Bool}}
+\newcommand{\CNF}{\abbre{CNF}}
+\newcommand{\CPL}{\abbre{CPL}}
+\newcommand{\ITP}{\abbre{ITP}}
+\newcommand{\ITPs}{\abbre{ITPs}}
+\newcommand{\List}{\abbre{List}}
+\newcommand{\SAT}{\abbre{SAT}}
+\newcommand{\SMT}{\abbre{SMT}}
+
+\newcommand{\name}[1]{\texttt{#1}\xspace}
+\newcommand{\canonicalize}{\name{canonicalize}}
+\newcommand{\clausify}{\name{clausify}}
+\newcommand{\conjunct}{\name{conjunct}}
+\newcommand{\negate}{\name{negate}}
+\newcommand{\resolve}{\name{resolve}}
+\newcommand{\simplify}{\name{simplify}}
+\newcommand{\strip}{\name{strip}}
+\newcommand{\tptpaxiom}{\name{axiom}}
+\newcommand{\tptpconjecture}{\name{conjecture}}
+
+\newcommand{\nnf}{\name{nnf}}
+
+\newcommand{\prg}[1]{\texttt{#1}\xspace}
+\newcommand{\Agda}{\prg{Agda}}
+\newcommand{\Athena}{\prg{Athena}}
+\newcommand{\IsabelleHOL}{\prg{IsabelleHOL}}
+\newcommand{\Metis}{\prg{Metis}}
+
+\newcommand{\len}[1]{\texttt{#1}\xspace}
+\newcommand{\Haskell}{\len{Haskell}}
+\newcommand{\TPTP}{\len{TPTP}}
+\newcommand{\TSTP}{\len{TSTP}}
+
+% -- Type notation.
+\newcommand{\type}[1]{ {\fontseries{sb}\selectfont \textsf{#1}} \xspace}
+\newcommand{\NProp}{\type{Prop}}
+\newcommand{\Nat}{\type{Nat}}
+\newcommand{\Prop}{\type{Prop}}
+\newcommand{\Source}{\type{Premise}}
+\newcommand{\Target}{\type{Conclusion}}
+\newcommand{\Lit}{\type{Lit}}
+% --
+
+\newcommand{\NN}{\ensuremath{\mathbb{N}}}
+\newcommand{\fun}[1]{ {\fontseries{sb}\selectfont \textsf{#1}} \xspace}
+
+\newcommand{\zero}{\fun{zero}}
+\newcommand{\suc}{\fun{succ}}
+\newcommand{\fassoc}{\fun{assoc}}
+\newcommand{\fbuild}{\fun{build}}
+\newcommand{\fcanonicalize}{\fun{canonicalize}}
+\newcommand{\fcanon}{\fun{simplify}}
+\newcommand{\fclausify}{\fun{clausify}}
+\newcommand{\fcnf}{\fun{cnf}}
+\newcommand{\fconjunctor}{\fun{disj}}
+\newcommand{\fconjunct}{\fun{conjunct}}
+\newcommand{\fdist}{\fun{dist}}
+\newcommand{\ffactor}{\fun{factor}}
+\newcommand{\fform}{\fun{form}}
+\newcommand{\fmax}{\fun{max}}
+\newcommand{\fndisj}{\fun{ndisj}}
+\newcommand{\fnegate}{\fun{negate}}
+\newcommand{\fnnfp}{\fun{nnf}₀}
+\newcommand{\fnnf}{\fun{nnf}}
+\newcommand{\fpolarity}{\fun{polarity}}
+\newcommand{\frank}{\fun{rank}}
+\newcommand{\frconj}{\fun{rconj}}
+\newcommand{\frdisj}{\fun{rdisj}}
+\newcommand{\freorder}{\fun{reorder}}
+\newcommand{\fresolve}{\fun{resolve}}
+\newcommand{\frm}{\fun{rm}}
+\newcommand{\frsol}{\fun{rsol}}
+\newcommand{\fsbuild}{\fun{sbuild}}
+\newcommand{\fsimplify}{\fun{simplify}}
+\newcommand{\fstripp}{\fun{strip}\prime}
+\newcommand{\fstrip}{\fun{strip}}
+\newcommand{\fsubst}{\fun{subst}}
+\newcommand{\fuh}{\fun{uh}}
+
+% latin etc. abbrev
+\newcommand{\abbrev}[1]{#1} % alternative: \emph{#1}
+\newcommand{\cf}{\abbrev{cf.}\ }
+\newcommand{\eg}{\abbrev{e.\,g.}}
+\newcommand{\Eg}{\abbrev{E.\,g.}}
+\newcommand{\ie}{\abbrev{i.\,e.}}
+\newcommand{\Ie}{\abbrev{I.\,e.}}
+\newcommand{\etal}{\abbrev{et.\,al.}}
+\newcommand{\wwlog}{w.\,l.\,o.\,g.} % \wlog is ``write into log file''
+\newcommand{\Wlog}{W.\,l.\,o.\,g.}
+\newcommand{\wrt}{w.\,r.\,t.}
+\newcommand{\TheEnd}{\\\hspace*{0.975\textwidth}$\blacksquare$}
 
 \begin{document}
 \setcounter{page}{1}
@@ -400,9 +529,11 @@ they are given
   \item Is the input of the ATPs
   \item Annotated formulas with the form
    \begin{center}
-\begin{tptp}
+
+\begin{verbatim}
 language(name, role, formula).
-\end{tptp}
+\end{verbatim}
+   
     \end{center}
     \begin{itemize}
       \item[\texttt{language}] FOF or CNF
@@ -417,15 +548,15 @@ language(name, role, formula).
 
 \begin{itemize}
   \item $p ⊢ p$
-\begin{tptp}
+\begin{verbatim}
 fof(myaxiom, axiom, p).
 fof(goal, conjecture, p).
-\end{tptp}
+\end{verbatim}
 
   \item $⊢ ¬ (p ∧ ¬ p) ∨ (q ∧ ¬ q)$
-\begin{tptp}
+\begin{verbatim}
 fof(goal, conjecture, ~ ((p & ~ p) | (q & ~ q))).
-\end{tptp}
+\end{verbatim}
   \end{itemize}
 \gobackreconstruction
 \end{frame}
@@ -498,17 +629,17 @@ A \texttt{TSTP} derivation\footnote{\url{http://www.cs.miami.edu/~tptp/TPTP/Quic
 
 \begin{center}
   {\footnotesize
-\begin{tptp}
+\begin{verbatim}
 language(name, role, formula, source [,useful info]).
-\end{tptp}}
+\end{verbatim}}
 \end{center}
 
 where \texttt{\color{plum} source} typically is an inference record
 \begin{center}
 {\footnotesize
-\begin{tptp}
+\begin{verbatim}
 inference(rule, useful info, parents).
-\end{tptp}
+\end{verbatim}
 }
 \end{center}
 \end{frame}
@@ -521,8 +652,9 @@ inference(rule, useful info, parents).
 
 \begin{itemize}
   \item Proof found by \texttt{Metis} for the problem $p ⊢ p$
-{\small
-\begin{tptp}
+
+{\footnotesize
+\begin{verbatim}
 $ metis --show proof problem.tptp
 fof(a, axiom, p).
 fof(goal, conjecture, p).
@@ -539,7 +671,7 @@ fof(normalize_0_2, plain, $false,
     [normalize_0_0, normalize_0_1])).
 cnf(refute_0_0, plain, $false,
     inference(canonicalize, [], [normalize_0_2])).
-\end{tptp}
+\end{verbatim}
 }
 \end{itemize}
 \end{frame}
@@ -588,7 +720,7 @@ By refutation, we proved $p ⊢ p$:
     {\includegraphics[width=0.15\textwidth]{figures/athena}};
 \end{tikzpicture}
 
-Is a \texttt{Haskell} program
+Is a \texttt{agda} program
 that translates proofs given by \texttt{Metis}
 in \texttt{TSTP} format to \texttt{Agda} code\\
 
@@ -624,7 +756,7 @@ in \texttt{TSTP} format to \texttt{Agda} code\\
   \item A data type for formulas
   \vspace*{1mm}
 
-\begin{minted}{cagda}
+\begin{minted}{agda}
 data Prop : Set where
   Var : Fin n → Prop
   ⊤   : Prop
@@ -642,14 +774,14 @@ data Prop : Set where
 \begin{itemize}
   \item A data type for theorems
   \vspace*{1mm}
-\begin{minted}{cagda}
+\begin{minted}{agda}
 data _⊢_ : (Γ : Ctxt)(φ : Prop) → Set
 \end{minted}
 
 \item Constructors
   \vspace*{1mm}
 
-\begin{minted}{cagda}
+\begin{minted}{agda}
 assume, axiom, weaken, ⊤-intro, ⊥-elim, ¬-intro,
 ¬-elim, ∧-intro, ∧-proj₁, ∧-proj₂, ∨-intro₁,
 ∨-intro₂, ∨-elim, ⇒-intro, ⇒-elim, ⇔-intro,
@@ -657,7 +789,7 @@ assume, axiom, weaken, ⊤-intro, ⊥-elim, ¬-intro,
 \end{minted}
   \item Natural deduction proofs for more than 71 theorems
   \vspace*{1mm}
-\begin{minted}{cagda}
+\begin{minted}{agda}
 ⇔-equiv, ⇔-assoc, ⇔-comm, ⇒-⇔-¬∨, ⇔-¬-to-¬,
 ¬⇔-to-¬, ¬¬-equiv, ⇒⇒-⇔-∧⇒, ⇔-trans, ∧-assoc,
 ∧-comm, ∧-dist, ¬∧-to-¬∨¬, ¬∨¬-to-¬∧, ¬∨¬-⇔-¬∧,
@@ -788,7 +920,8 @@ subst⊢∧₁, subst⊢∧₂, ∨-assoc, ∨-comm, ∨-dist,
 
 \begin{frame}[fragile]
 
-\begin{minted}{cagda}
+{\footnotesize
+\begin{minted}{agda}
 data ConjView : Prop → Set where
   conj  : (φ₁ φ₂ : Prop) → ConjView (φ₁ ∧ φ₂)
   other : (φ : Prop)     → ConjView φ
@@ -808,21 +941,23 @@ Path = List Step
 conjunct-path : (φ ψ : Prop) → Path → Path
 conjunct-path φ ψ path with ⌊ eq φ ψ ⌋
 ... | true  = path ∷ʳ pick
-... | false with conj-view φ
-...   | other _ = []
-...   | conj φ₁ φ₂ with conjunct-path φ₁ ψ []
-...     | subpath@(_ ∷ _) = (path ∷ʳ proj₁) ++ subpath
-...     | [] with conjunct-path φ₂ ψ []
+... | false 
+    with conj-view φ
+...    | other _ = []
+...    | conj φ₁ φ₂ with conjunct-path φ₁ ψ []
+...       | subpath@(_ ∷ _) = (path ∷ʳ proj₁) ++ subpath
+...       | [] with conjunct-path φ₂ ψ []
 ...          | subpath@(_ ∷ _) = (path ∷ʳ proj₂) ++ subpath
 ...          | []              = []
 \end{minted}
-
+}
 \end{frame}
 
 
 \begin{frame}[fragile, label=atp-conjunct-proof]{The \texttt{conjunct} function and its theorem, \texttt{atp-conjunct}}
 \vfill
-\begin{minted}{cagda}
+{\footnotesize
+\begin{minted}{agda}
 conjunct : Prop → Prop → Prop
 conjunct φ ψ with conj-view φ | conjunct-path φ ψ []
 ... | _          | []        = φ
@@ -845,6 +980,7 @@ atp-conjunct {Γ} {φ} ψ Γ⊢φ
 ...  | conj _ _    | proj₂ ∷ _ = atp-conjunct ψ (∧-proj₂ Γ⊢φ)
 ...  | other _     | (_ ∷ _)   = Γ⊢φ
 \end{minted}
+}
 \vfill
 \gobackreconstruction
 \end{frame}
@@ -855,23 +991,24 @@ atp-conjunct {Γ} {φ} ψ Γ⊢φ
 \begin{itemize}
   \item The problem is $p ∧ q ⊢ q ∧ p$
   \item In \texttt{TPTP} format
-\begin{tptp}
+\begin{verbatim}
 $ cat problem.tptp
 fof(a, axiom, p & q).
 fof(goal, conjecture, q & p).
-\end{tptp}
+\end{verbatim}
   \item How to use Athena with your problem
 
-\begin{tptp}
+\begin{verbatim}
 $ metis --show proof problem.tptp > problem.tstp
 $ athena problem.tstp
 $ agda problem.tstp
-\end{tptp}
+\end{verbatim}
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile, allowframebreaks]{\texttt{TSTP} Derivation given by \texttt{Metis}}
-\begin{tptp}
+
+\begin{verbatim}
 fof(a, axiom, p & q).
 fof(goal, conjecture, q & p).
 fof(subgoal_0, plain, q,
@@ -906,12 +1043,12 @@ fof(normalize_1_4, plain, $false,
       [normalize_1_0, normalize_1_2, normalize_1_3])).
 cnf(refute_1_0, plain, ($false),
     inference(canonicalize, [], [normalize_1_4])).
-\end{tptp}
+\end{verbatim}
 \end{frame}
 
 \begin{frame}[fragile, label=verified-example]{Problem $p ∧ q ⊢ q ∧ p$}{Proof generated with \texttt{Athena}}
 \vfill
-\begin{minted}{cagda}
+\begin{minted}{agda}
 p, q, a, goal, subgoal₀, subgoal₁ : Prop
 
 -- Axiom.
@@ -933,7 +1070,8 @@ subgoal₁ = q ⇒ p
 
 \begin{frame}[fragile, label=verified-example-2]{Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
 \vfill
-\begin{minted}{cagda}
+{\footnotesize
+\begin{minted}{agda}
 a : Prop
 a = p ∧ q
 
@@ -951,13 +1089,15 @@ proof₀ =
           (weaken (¬ subgoal₀)
             (assume {Γ = ∅} a))))))
 \end{minted}
+}
 \vfill
 \end{frame}
 
 \begin{frame}[fragile, label=verified-example-3]
   {Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed Proof}
 \vfill
-\begin{minted}{cagda}
+{\footnotesize
+\begin{minted}{agda}
 subgoal₁ : Prop
 subgoal₁ = q ⇒ p
 
@@ -978,12 +1118,14 @@ proof₁ =
             (weaken (¬ subgoal₁)
               (assume {Γ = ∅} a)))))))
 \end{minted}
+}
 \vfill
 \end{frame}
 
 \begin{frame}[fragile, label=verified-example-4]{Problem $p ∧ q ⊢ q ∧ p$}{Reconstructed proof}
 \vfill
-\begin{minted}{cagda}
+{\footnotesize
+\begin{minted}{agda}
 -- Premise.
 Γ = [ a ]
 
@@ -1004,6 +1146,7 @@ proof =
     atp-splitGoal            -- q ∧ (q ⇒ p) ⇒ p
     (∧-intro proof₀ proof₁)
 \end{minted}
+}
 \vfill
 \gobackreconstruction
 \end{frame}
@@ -1011,12 +1154,16 @@ proof =
 \begin{frame}[fragile, label=failure-example]{Bug\footnote{\url{https://github.com/gilith/metis/issues/2}.} in the Printing of the Proof}
   {\texttt{Metis} v2.3 (release 20161108)}
 % {}
-\begin{tptp}
+{\footnotesize 
+\begin{verbatim}
 $ cat problem.tptp
 fof(goal, conjecture,
   ((p <=> q) <=> r) <=> (p <=> (q <=> r))).
-\end{tptp}
-\begin{tptp}
+\end{verbatim}
+}
+
+{\footnotesize
+\begin{verbatim}
 $ metis --show proof problem.tptp
 ...
 fof(normalize_2_0, plain,
@@ -1032,7 +1179,8 @@ fof(normalize_2_4, plain, $false,
     inference(simplify, [],
       [normalize_2_1, normalize_2_2, normalize_2_3])).
 ...
-\end{tptp}
+\end{verbatim}
+}
 \end{frame}
 
 \begin{frame}[fragile, label=failure-example-2]{Bug in the Printing of the Proof}
@@ -1103,7 +1251,7 @@ the ATPs is unidirectional because the ATPs are being used as oracles \citep{Sic
 \vfill
 }
 \only<1>{
-\inputminted{cagda}{Or.agda}
+\inputminted{agda}{Or.agda}
 \begin{tikzpicture}[overlay, remember picture, scale=0.5]
 \tikzset{shift={(current page.center)}, xshift=6cm,yshift=-2cm}
 \node(agdafile) at (0,0){
@@ -1249,7 +1397,7 @@ normal form use to transform the formulas
  \begin{tikzpicture}[overlay, remember picture, scale=0.5]
     \tikzset{shift={(current page.center)}, xshift=11.8cm,yshift=-8.4cm}
     \node[fill=plum,text=white, hyperlink node = metis]
-      (go) at (0,0) {\tiny Go Back};
+      (go) at (0,0) {\tiny back};
   \end{tikzpicture}
 \end{frame}
 \end{document}

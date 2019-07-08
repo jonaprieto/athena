@@ -1,28 +1,14 @@
-NAME=Reconstructing-Propositional-Proofs-in-Type-Theory
-
-.PHONY : pdf
-pdf :
-	- latexmk -pdf -xelatex -shell-escape $(NAME).tex
-
-
-.PHONY : fast
-fast :
+.PHONY : agda-meeting
+thesis-defense :
 	- make clean
-	- xelatex -shell-escape  $(NAME).tex
-
+	- rm -f Reconstructing-Propositional-Proofs-in-Type-Theory.pdf
+	- latexmk -pdf -xelatex -shell-escape Reconstructing-Propositional-Proofs-in-Type-Theory.tex
 
 .PHONY : agda-meeting
 agda-meeting :
 	- make clean
 	- rm -f Jonathan-Proof-Reconstruction.pdf
 	- latexmk -pdf -xelatex -shell-escape Jonathan-Proof-Reconstruction-AIM.tex
-
-.PHONY : dependencies
-dependencies :
-	- cd fonts && git submodule update --init --recursive
-	- git submodule update --init --recursive pygments-cagda/
-	- cd pygments-cagda && pip install .
-
 
 .PHONY: clean
 clean :
@@ -43,4 +29,4 @@ clean :
 	@rm -Rf _*
 	@rm -Rf auto
 
-default: pdf
+default: thesis-defense
