@@ -1,11 +1,11 @@
 .PHONY : pdf
 pdf :
-	- latexmk -pdf itp-2018.tex
+	- latexmk -pdf paper.tex
 
 .PHONY : watch-pdf
 watch-pdf :
 	- pkill pdflatex
-	- latexmk -pdf -pvc itp-2018.tex
+	- latexmk -pdf -pvc paper.tex
 # references-mendeley:
 #
 # From now on, we maintain both references (ref.bib and
