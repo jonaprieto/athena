@@ -65,13 +65,13 @@ mainCore ∷ Options → IO ()
 mainCore opts = do
 
   when (optDebug opts) $
-    putStrLn ("tstp proof: " ++ show (optInputFile opts))
+    putStrLn ("TSTP proof: " ++ show (optInputFile opts))
 
   tstp ∷ [F] ← parseFile . fromJust $ optInputFile opts
 
   let conj ∷ F
       conj = fromMaybe
-        (error "Couldn't find a conjecture, or it was not unique")
+        (error "[!] Athena works only with one conjecture. ")
         (getConjeture tstp)
 
   let rulesMap ∷ ProofMap
