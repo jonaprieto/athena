@@ -15,7 +15,7 @@ default: install
 # -----------------------------------------------------------------------------
 
 AGDA_VERSION := $(shell agda --version 2>/dev/null)
-TESTED_AGDA_VERSION1 =Agda version 2.5.4
+TESTED_AGDA_VERSION1 =Agda version 2.6.0.1
 
 agdaversion:
 
@@ -30,8 +30,8 @@ ifneq ($(AGDA_VERSION),$(TESTED_AGDA_VERSION1))
 endif
 
 GHC_VERSION := $(shell ghc --version 2>/dev/null)
-TESTED_GHC_VERSION1 :=The Glorious Glasgow Haskell Compilation System, version 8.2.2
 TESTED_GHC_VERSION2 :=The Glorious Glasgow Haskell Compilation System, version 8.4.3
+TESTED_GHC_VERSION1 :=The Glorious Glasgow Haskell Compilation System, version 8.6.5
 
 ghcversion:
 
@@ -219,7 +219,7 @@ haddock :
 
 .PHONY : install-fix-whitespace
 install-fix-whitespace :
-	cd src/fix-whitespace && cabal install
+	cd src/fix-whitespace && cabal v1-install
 
 .PHONY : fix-whitespace
 fix-whitespace :
@@ -286,9 +286,9 @@ clean :
 .PHONY : agda
 agda :
 	@echo "==================================================================="
-	@echo "===================== Installing Agda v2.5.4  ====================="
+	@echo "===================== Installing Agda v2.6.0.1 ===================="
 	@echo "==================================================================="
-	@cabal install agda-2.5.4
+	@cabal install agda-2.6.0.1
 
 sPath := "PATH"
 .PHONY : metis
@@ -300,7 +300,7 @@ metis :
 	@mkdir -p bin/
 	@git config --global advice.detachedHead false && \
 		git clone -q --progress \
-		-b 'v2.4.20180301' \
+		-b 'v2.4.20180810' \
 		--single-branch \
 		https://github.com/gilith/metis.git \
 		bin/metis
@@ -313,13 +313,13 @@ metis :
 .PHONY : online-atps
 online-atps:
 	@echo "==================================================================="
-	@echo "================= Installing Online-ATPs v0.1.2 ==================="
+	@echo "================= Installing Online-ATPs v0.1.3 ==================="
 	@echo "==================================================================="
 	@rm -Rf bin/online-atps
 	@mkdir -p bin/
 	@git config --global advice.detachedHead false && \
 		git clone -q --progress \
-		-b 'v0.1.2' \
+		-b 'v0.1.3' \
 		--single-branch \
 		https://github.com/jonaprieto/online-atps.git \
 		bin/online-atps
@@ -335,15 +335,15 @@ agda-stdlib:
 	@if [ ! -d lib/agda-stdlib ] ; \
 	 then \
 	 echo "===================================================================";\
-	 echo "=========== Downloading Agda Standard Library v0.16    ============";\
+	 echo "=========== Downloading Agda Standard Library v1.1  ===============";\
 	 echo "===================================================================";\
 	 git config --global advice.detachedHead false && \
 	 git clone -q --progress \
-			-b 'v0.16' \
+			-b 'v1.1' \
 			--single-branch \
 			https://github.com/agda/agda-stdlib.git \
 			lib/agda-stdlib; \
-	 echo "Installed agda-stdlib v0.16  in ${ATHENA_LIB}/agda-stdlib"; \
+	 echo "Installed agda-stdlib v1.1  in ${ATHENA_LIB}/agda-stdlib"; \
 	 else \
 		 echo "[!] agda-stdlib directory already exists"; \
 	 fi;
@@ -411,9 +411,12 @@ install-libraries: agda-stdlib agda-libraries
 .PHONY : install
 install : ghcversion
 	@echo "==================================================================="
-	@echo "===================== Installing Athena v0.1 ======================"
+	@echo "===================== Installing Athena v0.2 ======================"
 	@echo "==================================================================="
-	cabal install --disable-documentation -g --ghc
+	cabal v1-install --disable-documentation -g --ghc
+	@echo "  [!] Next step to test Athena is:"
+	@echo "       $$ make install-libraries"
+	@echo "       $$ make
 
 .PHONY : prop-pack
 prop-pack :
