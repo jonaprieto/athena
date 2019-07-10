@@ -416,7 +416,6 @@ install : ghcversion
 	cabal v1-install --disable-documentation -g --ghc
 	@echo "  [!] Next step to test Athena is:"
 	@echo "       $$ make install-libraries"
-	@echo "       $$ make
 
 .PHONY : prop-pack
 prop-pack :

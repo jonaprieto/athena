@@ -15,10 +15,10 @@ before_install:
   
 script:
   - cabal update
-  - cabal install alex
-  - cabal install happy
+  - cabal v1-install alex
+  - cabal v1-install happy
   - make metis
   - make install-libraries
-  - cabal install cpphs
-  - make install
+  - cabal v1-install cpphs
+  - cabal v1-install --force-reinstalls --disable-documentation -g --ghc
   - make check
