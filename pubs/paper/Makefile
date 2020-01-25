@@ -5,11 +5,8 @@ pdf :
 .PHONY : watch-pdf
 watch-pdf :
 	- pkill pdflatex
-<<<<<<< HEAD:pubs/paper/Makefile
 	- latexmk -pdf -pvc paper.tex
-=======
-	- latexmk -pdf -pvc itp-2018.tex
->>>>>>> 078fe67b5636e860b63c9f7ccb7fedded0cdfd44:pubs/itp-2018/Makefile
+
 # references-mendeley:
 #
 # From now on, we maintain both references (ref.bib and
