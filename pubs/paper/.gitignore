@@ -9,7 +9,6 @@
 *.log
 *.nav
 *.out
-*.pdf
 *.ptb
 *.run.xml
 *.snm
