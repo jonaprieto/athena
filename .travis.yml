@@ -12,7 +12,7 @@ before_install:
   - brew install mlton
   - export PATH=/Users/travis/build/jonaprieto/athena/bin/metis/bin/mlton:${PATH}
   - export ATP="metis --show proof"
-  
+
 script:
   - cabal update
   - cabal v1-install alex
