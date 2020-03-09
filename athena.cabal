@@ -68,7 +68,7 @@ executable athena
   include-dirs:     src/Athena
 
   build-depends:  array >= 0.4 && < 1.0
-                , base >= 4.6.0.1 && <= 4.13
+                , base >= 4.6.0.1 && < 4.15
                 , base-compat >= 0.9 && < 0.11
                 , bytestring >= 0.10.0.2 && < 0.11
                 , containers >= 0.5.0.0 && < 0.7
@@ -116,63 +116,3 @@ executable athena
     Data.TSTP.Theory
     Data.TSTP.V
     Paths_athena
-
-  -- ghc-options: -w
-  --              -Werror
-  --              -- Using cpphs as the C preprocessor.
-  --              -pgmP cpphs -optP --cpp
-
-  -- if impl(ghc >= 7.6)
-  --    ghc-options: -fwarn-alternative-layout-rule-transitional
-  --                 -- The above option isn't documented in GHC 7.10.1.
-  --                 -fwarn-deprecated-flags
-  --                 -fwarn-dodgy-exports
-  --                 -fwarn-dodgy-foreign-imports
-  --                 -fwarn-dodgy-imports
-  --                 -fwarn-duplicate-exports
-  --                 -fwarn-hi-shadowing
-  --                 -fwarn-identities
-  --                 -fwarn-incomplete-patterns
-  --                 -fwarn-incomplete-record-updates
-  --                 -fwarn-incomplete-uni-patterns
-  --                 -fwarn-missing-fields
-  --                 -- 18 July 2014. We cannot enable this option
-  --                 -- because we are using the Paths_apia module.
-  --                 -- -fwarn-missing-import-lists
-  --                 -fwarn-missing-methods
-  --                 -fwarn-missing-signatures
-  --                 -fwarn-monomorphism-restriction
-  --                 -fwarn-name-shadowing
-  --                 -fwarn-orphans
-  --                 -fwarn-overlapping-patterns
-  --                 -fwarn-tabs
-  --                 -fwarn-type-defaults
-  --                 -fwarn-unrecognised-pragmas
-  --                 -fwarn-unused-binds
-  --                 -fwarn-unused-do-bind
-  --                 -fwarn-unused-imports
-  --                 -fwarn-unused-matches
-  --                 -fwarn-unsupported-calling-conventions
-  --                 -fwarn-warnings-deprecations
-  --                 -fwarn-wrong-do-bind
-
-  -- if impl(ghc >= 7.8)
-  --    ghc-options: -fwarn-empty-enumerations
-  --                 -fwarn-inline-rule-shadowing
-  --                 -fwarn-overflowed-literals
-  --                 -fwarn-typed-holes
-  --                 -fwarn-unsupported-llvm-version
-
-  -- if impl(ghc >= 7.10)
-  --    ghc-options: -fwarn-deriving-typeable
-  --                 -fwarn-unticked-promoted-constructors
-
-  -- if impl(ghc >= 8.0)
-  --   ghc-options: -Wmissing-monadfail-instances
-  --                -Wmissing-pattern-synonym-signatures
-  --                -Wnoncanonical-monad-instances
-  --                -Wnoncanonical-monoid-instances
-  --                -Wredundant-constraints
-  --                -Wsemigroup
-  --                -Wunrecognised-warning-flags
-  --                -Wunused-foralls
